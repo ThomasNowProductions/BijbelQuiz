@@ -1,0 +1,3566 @@
+[
+  {
+      "vraag": "Hoeveel Bijbelboeken heeft het Nieuwe Testament?",
+      "juisteAntwoord": "27",
+      "fouteAntwoorden": [
+          "26",
+          "66",
+          "39"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "New Testament",
+          "Facts and Numbers"
+      ]
+  },
+  {
+      "vraag": "Hoe noemde Hanna haar kind?",
+      "juisteAntwoord": "Samuel",
+      "fouteAntwoorden": [
+          "Saul",
+          "Simson",
+          "Gideon"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Samuel",
+          "Women in the Bible",
+          "Old Testament"
+      ]
+  },
+  {
+      "vraag": "Wie was verantwoordelijk voor de kindermoord in Bethlehem, vlak na de geboorte van de Heere Jezus?",
+      "juisteAntwoord": "Herodes",
+      "fouteAntwoorden": [
+          "Pilatus",
+          "De Hogepriester",
+          "Quirinius"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Jesus",
+          "Birth of Jesus",
+          "Kings",
+          "Gospels",
+          "New Testament"
+      ]
+  },
+  {
+      "vraag": "De Heere Jezus genas de schoonmoeder van Petrus. Wat mankeerde haar?",
+      "juisteAntwoord": "Koorts",
+      "fouteAntwoorden": [
+          "Verlamming",
+          "Blind aan een oog",
+          "Bloedvloeiingen"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Jesus",
+          "Miracles",
+          "Gospels",
+          "New Testament"
+      ]
+  },
+  {
+      "vraag": "Welke belofte krijgen de zachtmoedigen van de Heere Jezus in de zaligsprekingen?",
+      "juisteAntwoord": "Zij zullen het aardrijk be\u00ebrven",
+      "fouteAntwoorden": [
+          "Voor hen is het Koninkrijk der hemelen",
+          "Zij zullen kinderen van God genoemd worden",
+          "Zij zullen God zien"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Jesus",
+          "Gospels",
+          "Promises",
+          "New Testament"
+      ]
+  },
+  {
+      "vraag": "Welke belofte staat na de zaligspreking 'zalig zijn de reinen van hart'?",
+      "juisteAntwoord": "zij zullen God zien",
+      "fouteAntwoorden": [
+          "Voor hen is het Koninkrijk der hemelen",
+          "Zij zullen kinderen van God genoemd worden",
+          "Zij zullen het aardrijk be\u00ebrven"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Jesus",
+          "Gospels",
+          "Promises",
+          "New Testament"
+      ]
+  },
+  {
+      "vraag": "Welke profeet mocht niet trouwen van de Heere?",
+      "juisteAntwoord": "Jeremia",
+      "fouteAntwoorden": [
+          "Jesaja",
+          "Ezechiel",
+          "Hosea"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Prophets",
+          "Jeremiah",
+          "Old Testament"
+      ]
+  },
+  {
+      "vraag": "Welke profeet moest trouwen in opdracht van de Heere?",
+      "juisteAntwoord": "Hosea",
+      "fouteAntwoorden": [
+          "Jesaja",
+          "Jeremia",
+          "Ezechiel"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Prophets",
+          "Hosea",
+          "Old Testament"
+      ]
+  },
+  {
+      "vraag": "Welke profeet en zijn kinderen waren een zinnebeeld voor Isra\u00ebl?",
+      "juisteAntwoord": "Jesaja",
+      "fouteAntwoorden": [
+          "Jeremia",
+          "Ezechiel",
+          "Hosea"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Prophets",
+          "Isaiah",
+          "Old Testament"
+      ]
+  },
+  {
+      "vraag": "Welke profeet verloor zijn vrouw tijdens zijn tijd als profeet?",
+      "juisteAntwoord": "Ezechiel",
+      "fouteAntwoorden": [
+          "Jesaja",
+          "Jeremia",
+          "Hosea"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Prophets",
+          "Ezekiel",
+          "Old Testament"
+      ]
+  },
+  {
+      "vraag": "Op de 1e dag schiep God...",
+      "juisteAntwoord": "Het licht",
+      "fouteAntwoorden": [
+          "De mens",
+          "De planten",
+          "De vissen"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Creation",
+          "Genesis",
+          "Old Testament"
+      ]
+  },
+  {
+      "vraag": "Op de 2e dag kwam er scheiding tussen...",
+      "juisteAntwoord": "Zee en lucht",
+      "fouteAntwoorden": [
+          "Zee en land",
+          "Licht en duisternis",
+          "Licht en land"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Creation",
+          "Genesis",
+          "Old Testament"
+      ]
+  },
+  {
+      "vraag": "God rustte op de ...",
+      "juisteAntwoord": "7e dag",
+      "fouteAntwoorden": [
+          "1e dag",
+          "5e dag",
+          "6e dag"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Creation",
+          "Sabbath",
+          "Genesis",
+          "Old Testament"
+      ]
+  },
+  {
+      "vraag": "Waar stond de boom der kennis, des goeds en des kwaads?",
+      "juisteAntwoord": "In de hof van Eden",
+      "fouteAntwoorden": [
+          "In de hof van Aden",
+          "Net buiten de hof van Eden",
+          "In Sinear"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Creation",
+          "Genesis",
+          "Old Testament"
+      ]
+  },
+  {
+      "vraag": "Wie werd door Kain vermoord?",
+      "juisteAntwoord": "Abel",
+      "fouteAntwoorden": [
+          "Zijn moeder",
+          "Zijn vader",
+          "Ezau"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Genesis",
+          "Old Testament",
+          "Sin and Forgiveness"
+      ]
+  },
+  {
+      "vraag": "Hoe oud was Methusalach toen hij stierf?",
+      "juisteAntwoord": "969",
+      "fouteAntwoorden": [
+          "996",
+          "966",
+          "669"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Genesis",
+          "Old Testament",
+          "Facts and Numbers"
+      ]
+  },
+  {
+      "vraag": "Hoe lang is Noach en zijn gezin in de ark?",
+      "juisteAntwoord": "Ruim een jaar",
+      "fouteAntwoorden": [
+          "40 dagen",
+          "7 maanden",
+          "1,5 jaar"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Genesis",
+          "Old Testament",
+          "Major Events"
+      ]
+  },
+  {
+      "vraag": "De top van de toren van Babel moest reiken tot...",
+      "juisteAntwoord": "De hemel",
+      "fouteAntwoorden": [
+          "De wolken",
+          "Grote hoogte",
+          "Een onzichtbare hoogte"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Genesis",
+          "Old Testament",
+          "Major Events"
+      ]
+  },
+  {
+      "vraag": "Wat betekent het woord 'Babel'?",
+      "juisteAntwoord": "Verwarring",
+      "fouteAntwoorden": [
+          "Grote stad",
+          "Grote toren",
+          "Verderving"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Genesis",
+          "Old Testament",
+          "Facts and Numbers"
+      ]
+  },
+  {
+      "vraag": "Waar is Abram geboren?",
+      "juisteAntwoord": "Ur der Chaldee\u00ebn",
+      "fouteAntwoorden": [
+          "Kanaan",
+          "Egypte",
+          "Sinear"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Abraham",
+          "Genesis",
+          "Old Testament"
+      ]
+  },
+  {
+      "vraag": "Hoe heette de vader van Abram?",
+      "juisteAntwoord": "Terach",
+      "fouteAntwoorden": [
+          "Lot",
+          "Izak",
+          "Noach"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Abraham",
+          "Genesis",
+          "Old Testament"
+      ]
+  },
+  {
+      "vraag": "Waarom ging Abram naar Kanaan?",
+      "juisteAntwoord": "God vroeg het aan hem",
+      "fouteAntwoorden": [
+          "Daar was werk genoeg",
+          "Er woonde al familie van hem",
+          "Daar was genoeg te eten"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Abraham",
+          "Genesis",
+          "Old Testament"
+      ]
+  },
+  {
+      "vraag": "Wie was de vrouw van Abram?",
+      "juisteAntwoord": "Sarai",
+      "fouteAntwoorden": [
+          "Rebekka",
+          "Rachel",
+          "Zilpa"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Abraham",
+          "Genesis",
+          "Old Testament",
+          "Women in the Bible"
+      ]
+  },
+  {
+      "vraag": "Waarom gingen Abram en Sarai naar Egypte?",
+      "juisteAntwoord": "Er was hongersnood in Kanaan",
+      "fouteAntwoorden": [
+          "Daar was veel geld te verdienen",
+          "Ze gingen op familiebezoek",
+          "Het was een opdracht van de Heere"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Abraham",
+          "Genesis",
+          "Old Testament"
+      ]
+  },
+  {
+      "vraag": "Abram en Lot gaan terug naar Kanaan. Waar gaat Lot wonen?",
+      "juisteAntwoord": "In de Jordaanstreek",
+      "fouteAntwoorden": [
+          "Aan de kust",
+          "In het gebergte",
+          "In Sodom"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Abraham",
+          "Genesis",
+          "Old Testament"
+      ]
+  },
+  {
+      "vraag": "Sarai blijft onvruchtbaar. Wie wordt de 2e vrouw van Abram?",
+      "juisteAntwoord": "Hagar",
+      "fouteAntwoorden": [
+          "Rachel",
+          "Zilpa",
+          "Bilha"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Abraham",
+          "Genesis",
+          "Old Testament",
+          "Women in the Bible"
+      ]
+  },
+  {
+      "vraag": "Abram en Hagar krijgen een zoon, zijn naam is ...",
+      "juisteAntwoord": "Ismael",
+      "fouteAntwoorden": [
+          "Lot",
+          "Izak",
+          "Jakob"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Abraham",
+          "Genesis",
+          "Old Testament"
+      ]
+  },
+  {
+      "vraag": "Wat deed de vrouw van Lot?",
+      "juisteAntwoord": "Ze kijkt achterom bij het verlaten van Sodom",
+      "fouteAntwoorden": [
+          "Ze waarschuwt haar man Lot",
+          "Ze blijft in Sodom",
+          "Ze doet wat God van haar vraagt"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Genesis",
+          "Old Testament",
+          "Women in the Bible"
+      ]
+  },
+  {
+      "vraag": "Abraham en Sara krijgen eindelijk een zoon. Hoe oud is Abraham dan?",
+      "juisteAntwoord": "100",
+      "fouteAntwoorden": [
+          "80",
+          "90",
+          "120"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Abraham",
+          "Genesis",
+          "Old Testament"
+      ]
+  },
+  {
+      "vraag": "Waar moet Abraham Izak offeren?",
+      "juisteAntwoord": "Op de berg Moria",
+      "fouteAntwoorden": [
+          "Op de berg Sinai",
+          "Op de berg Karmel",
+          "Op de berg Horeb"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Abraham",
+          "Genesis",
+          "Old Testament",
+          "Major Events"
+      ]
+  },
+  {
+      "vraag": "Met wie trouwt Izak?",
+      "juisteAntwoord": "Rebekka",
+      "fouteAntwoorden": [
+          "Rachel",
+          "Bilha",
+          "Sara"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Genesis",
+          "Old Testament",
+          "Women in the Bible"
+      ]
+  },
+  {
+      "vraag": "Wie volgt Mozes op?",
+      "juisteAntwoord": "Jozua",
+      "fouteAntwoorden": [
+          "Aaron",
+          "Jaleb",
+          "Elia"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Moses",
+          "Joshua",
+          "Old Testament"
+      ]
+  },
+  {
+      "vraag": "Waar sloeg Mozes op de rots?",
+      "juisteAntwoord": "bij Kades",
+      "fouteAntwoorden": [
+          "bij Edom",
+          "bij Mara",
+          "bij Elim "
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Moses",
+          "Old Testament",
+          "Major Events"
+      ]
+  },
+  {
+      "vraag": "Na .... is een groot gedeelte van Kanaan veroverd",
+      "juisteAntwoord": "7 jaar",
+      "fouteAntwoorden": [
+          "4 jaar",
+          "6 jaar",
+          "9 jaar"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Moses",
+          "Joshua",
+          "Old Testament",
+          "Facts and Numbers"
+      ]
+  },
+  {
+      "vraag": "Na het overlijden van Jozua ...",
+      "juisteAntwoord": "is er geen leider meer",
+      "fouteAntwoorden": [
+          "volgt zijn zoon hem op",
+          "volgt Juda hem op",
+          "volgt Eleazer hem op"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Joshua",
+          "Old Testament",
+          "Leadership"
+      ]
+  },
+  {
+      "vraag": "Wat was de eerste taak van Isra\u00ebl na de dood van Jozua?",
+      "juisteAntwoord": "Vechten tegen de overgebleven Kaananieten",
+      "fouteAntwoorden": [
+          "Het vinden van een nieuwe leider",
+          "Het volk kreeg een periode rust",
+          "Het vinden van waterbronnen"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Joshua",
+          "Old Testament",
+          "Major Events"
+      ]
+  },
+  {
+      "vraag": "Een lange periode na het overlijden van Jozua komt er...",
+      "juisteAntwoord": "een richter",
+      "fouteAntwoorden": [
+          "een koning",
+          "een keizer",
+          "een profeet"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Judges",
+          "Old Testament",
+          "Leadership"
+      ]
+  },
+  {
+      "vraag": "Wie was de eerste richter?",
+      "juisteAntwoord": "Otniel",
+      "fouteAntwoorden": [
+          "Ehud",
+          "Samgar",
+          "Barak"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Judges",
+          "Old Testament",
+          "Leadership"
+      ]
+  },
+  {
+      "vraag": "Onder leiding van de eerste richter ... ",
+      "juisteAntwoord": "gaat men God weer dienen",
+      "fouteAntwoorden": [
+          "gaat men de afgoden weer dienen",
+          "wordt de vijand verjaagd",
+          "wordt het volk weer opstandig"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Judges",
+          "Old Testament",
+          "Religion"
+      ]
+  },
+  {
+      "vraag": "Wie zijn de meest bekende richters?",
+      "juisteAntwoord": "Gideon, Simson en Samuel",
+      "fouteAntwoorden": [
+          "Saul, David en Salomo",
+          "Jeftha, Debora en Barak",
+          "Otniel, Ehud en Samgar"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Judges",
+          "Old Testament",
+          "Leadership"
+      ]
+  },
+  {
+      "vraag": "Met hoeveel man verjaagt Gideon een groot leger van de Midianieten?",
+      "juisteAntwoord": "300 man",
+      "fouteAntwoorden": [
+          "1000 man",
+          "100 man",
+          "500 man"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Judges",
+          "Old Testament",
+          "Major Events",
+          "Facts and Numbers"
+      ]
+  },
+  {
+      "vraag": "Wie was de laatste richter?",
+      "juisteAntwoord": "Samuel",
+      "fouteAntwoorden": [
+          "Eli",
+          "Simson",
+          "Jeftha"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Judges",
+          "Old Testament",
+          "Leadership"
+      ]
+  },
+  {
+      "vraag": "Welk antwoord hoort er niet tussen. Simson mag ...",
+      "juisteAntwoord": "niet trouwen",
+      "fouteAntwoorden": [
+          "geen wijn of bier drinken",
+          "zijn haren niet afknippen",
+          "geen dode aanraken"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Judges",
+          "Old Testament",
+          "Samson",
+          "Laws"
+      ]
+  },
+  {
+      "vraag": "Debora versloeg de ...",
+      "juisteAntwoord": "Kaananieten",
+      "fouteAntwoorden": [
+          "Midianieten",
+          "Ammonieten",
+          "Filistijnen"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Judges",
+          "Old Testament",
+          "Deborah",
+          "Major Events"
+      ]
+  },
+  {
+      "vraag": "Verschillende richters worden geloofshelden genoemd in de Hebree\u00ebnbrief. Welke richter wordt hierin niet genoemd?",
+      "juisteAntwoord": "Debora",
+      "fouteAntwoorden": [
+          "Gideon",
+          "Simson",
+          "Samuel"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Judges",
+          "Old Testament",
+          "Faith"
+      ]
+  },
+  {
+      "vraag": "Wie leidt het volk na Samuel?",
+      "juisteAntwoord": "Koning Saul",
+      "fouteAntwoorden": [
+          "Koning David",
+          "Hogepriester Eli",
+          "Richter Simson"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Kings",
+          "Old Testament",
+          "Saul"
+      ]
+  },
+  {
+      "vraag": "Wie is de eerste koning van Isra\u00ebl?",
+      "juisteAntwoord": "Saul",
+      "fouteAntwoorden": [
+          "David",
+          "Salomo",
+          "Herodes"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Kings",
+          "Old Testament",
+          "Saul"
+      ]
+  },
+  {
+      "vraag": "Saul wordt door Samuel ...",
+      "juisteAntwoord": "gezalfd",
+      "fouteAntwoorden": [
+          "gekroond",
+          "ingewijd",
+          "gedoopt"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Kings",
+          "Old Testament",
+          "Saul"
+      ]
+  },
+  {
+      "vraag": "Maar ik haat hem, omdat hij over mij niets goeds profeteert, maar kwaad. Wie zei dat?",
+      "juisteAntwoord": "Achab",
+      "fouteAntwoorden": [
+          "Micha",
+          "Izeb\u00e9l",
+          "Baesa"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Kings",
+          "Old Testament",
+          "Ahab",
+          "Prophets"
+      ]
+  },
+  {
+      "vraag": "In welke tijd speelt de geschiedenis van Ruth zich af?",
+      "juisteAntwoord": "Richterentijd",
+      "fouteAntwoorden": [
+          "Koningentijd",
+          "Ballingschap",
+          "Profetentijd"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Ruth",
+          "Old Testament",
+          "Women in the Bible"
+      ]
+  },
+  {
+      "vraag": "Uit welke plaatse kwamen Elimelech en Naomi?",
+      "juisteAntwoord": "Bethlehem",
+      "fouteAntwoorden": [
+          "Jeruzalem",
+          "Kana",
+          "Moab"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Ruth",
+          "Old Testament",
+          "Women in the Bible"
+      ]
+  },
+  {
+      "vraag": "Hoe heetten de vrouwen waar de zonen van Naomi mee trouwden?",
+      "juisteAntwoord": "Orpa en Ruth",
+      "fouteAntwoorden": [
+          "Orpa en Rebekka",
+          "Ruth en Rachel",
+          "Ruth en Rebekka"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Ruth",
+          "Old Testament",
+          "Women in the Bible"
+      ]
+  },
+  {
+      "vraag": "Hoe wilde Naomi genoemd worden?",
+      "juisteAntwoord": "Mara",
+      "fouteAntwoorden": [
+          "Martha",
+          "Maria",
+          "Mirjam"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Ruth",
+          "Old Testament",
+          "Women in the Bible"
+      ]
+  },
+  {
+      "vraag": "Waarom was Boaz zo vriendelijk voor Ruth?",
+      "juisteAntwoord": "Ruth's toewijding aan Naomi raakte hem",
+      "fouteAntwoorden": [
+          "Hij was verliefd op Ruth",
+          "Omdat hij familie was van Naomi",
+          "God vroeg dit van hem"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Ruth",
+          "Old Testament",
+          "Women in the Bible"
+      ]
+  },
+  {
+      "vraag": "Wat is een losser?",
+      "juisteAntwoord": "Een nabij familielid, die de plicht heeft een ander lid van de familie te helpen",
+      "fouteAntwoorden": [
+          "Een nabij familielid",
+          "Een nabij familielid die veel geld heeft",
+          "Een nabij familielid die in dezelfde plaats woont"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Ruth",
+          "Old Testament",
+          "Women in the Bible"
+      ]
+  },
+  {
+      "vraag": "Wat gaf Boaz aan de andere losser als bewijs?",
+      "juisteAntwoord": "Zijn schoen",
+      "fouteAntwoorden": [
+          "Een kleitafeltje",
+          "Zijn ring",
+          "Zijn overjas"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Ruth",
+          "Old Testament",
+          "Women in the Bible"
+      ]
+  },
+  {
+      "vraag": "Hoe heet de zoon van Boaz en Ruth?",
+      "juisteAntwoord": "Obed",
+      "fouteAntwoorden": [
+          "Juda",
+          "Machlon",
+          "Chilion"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Ruth",
+          "Old Testament",
+          "Women in the Bible"
+      ]
+  },
+  {
+      "vraag": "Van wie werd Obed vader?",
+      "juisteAntwoord": "Isai",
+      "fouteAntwoorden": [
+          "Izak",
+          "Ismael",
+          "Issachar"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Ruth",
+          "Old Testament",
+          "Women in the Bible"
+      ]
+  },
+  {
+      "vraag": "Van wie werd Isai de vader?",
+      "juisteAntwoord": "Van koning David",
+      "fouteAntwoorden": [
+          "Van koning Salomo",
+          "Van koning Saul",
+          "Van koning Abia"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Ruth",
+          "Old Testament",
+          "Women in the Bible",
+          "Kings"
+      ]
+  },
+  {
+      "vraag": "Hoeveel vrouwen had Elkana?",
+      "juisteAntwoord": "Twee",
+      "fouteAntwoorden": [
+          "Een",
+          "Drie",
+          "Vier"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Samuel",
+          "Old Testament",
+          "Women in the Bible"
+      ]
+  },
+  {
+      "vraag": "Wat dacht de oude priester toen Hanna in de tempel bad?",
+      "juisteAntwoord": "Dat ze dronken was",
+      "fouteAntwoorden": [
+          "Dat ze ernstig bad",
+          "Dat ze verdrietig was",
+          "Dat ze moe was"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Samuel",
+          "Old Testament",
+          "Women in the Bible"
+      ]
+  },
+  {
+      "vraag": "Hoe noemde Hanna haar zoon?",
+      "juisteAntwoord": "Samuel",
+      "fouteAntwoorden": [
+          "Simson",
+          "Gideon",
+          "Juda"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Samuel",
+          "Old Testament",
+          "Women in the Bible"
+      ]
+  },
+  {
+      "vraag": "Wat betekent Samuel?",
+      "juisteAntwoord": "Van God gebeden",
+      "fouteAntwoorden": [
+          "Man van God",
+          "Trooster",
+          "God geeft"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Samuel",
+          "Old Testament",
+          "Prophets"
+      ]
+  },
+  {
+      "vraag": "Waar bracht Hanna Samuel toe?",
+      "juisteAntwoord": "Naar Eli",
+      "fouteAntwoorden": [
+          "Naar Jeruzalem",
+          "Naar Elia",
+          "Naar de tempel in Jeruzalem"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Samuel",
+          "Old Testament",
+          "Women in the Bible",
+          "Priests"
+      ]
+  },
+  {
+      "vraag": "Wat had Hanna niet bij zich toen ze Samuel naar Eli bracht?",
+      "juisteAntwoord": "2 maten gerst",
+      "fouteAntwoorden": [
+          "3 varren",
+          "een efa meel",
+          "een fles wijn"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Samuel",
+          "Old Testament",
+          "Women in the Bible",
+          "Facts and Numbers"
+      ]
+  },
+  {
+      "vraag": "Wie dacht dat Samuel hem riep?",
+      "juisteAntwoord": "Eli",
+      "fouteAntwoorden": [
+          "Hofni",
+          "Pinehas",
+          "de Heere"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Samuel",
+          "Old Testament",
+          "Priests"
+      ]
+  },
+  {
+      "vraag": "Welke functie had Samuel niet in zijn leven?",
+      "juisteAntwoord": "Koning",
+      "fouteAntwoorden": [
+          "Profeet",
+          "Priester",
+          "Richter"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Samuel",
+          "Old Testament",
+          "Prophets",
+          "Priests",
+          "Judges"
+      ]
+  },
+  {
+      "vraag": "Hoe wordt de heilige stad in Ezechi\u00ebl 48 genoemd?",
+      "juisteAntwoord": "De Heere is aldaar",
+      "fouteAntwoorden": [
+          "Sion",
+          "Jeruzalem",
+          "Stad Gods"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Ezekiel",
+          "Old Testament",
+          "Prophets"
+      ]
+  },
+  {
+      "vraag": "Welke psalm wordt wel de herderspsalm genoemd?",
+      "juisteAntwoord": "Psalm 23",
+      "fouteAntwoorden": [
+          "Psalm 1",
+          "Psalm 25",
+          "Psalm 42"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Psalms",
+          "Old Testament",
+          "Facts and Numbers"
+      ]
+  },
+  {
+      "vraag": "Hoe noem je een mannetjesschaap?",
+      "juisteAntwoord": "Een ram",
+      "fouteAntwoorden": [
+          "Een reu",
+          "Een lam",
+          "Een ooi"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Facts and Numbers",
+          "Old Testament"
+      ]
+  },
+  {
+      "vraag": "Op welk instrument speelde David vaak?",
+      "juisteAntwoord": "Harp",
+      "fouteAntwoorden": [
+          "Citer",
+          "Fluit",
+          "Cimbaal"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "David",
+          "Old Testament",
+          "Psalms",
+          "Facts and Numbers"
+      ]
+  },
+  {
+      "vraag": "Wie schreef het Bijbelboek Spreuken?",
+      "juisteAntwoord": "Salomo",
+      "fouteAntwoorden": [
+          "David",
+          "Asaf",
+          "Josafat"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Wisdom Literature",
+          "Old Testament"
+      ]
+  },
+  {
+      "vraag": "Wat is het beginsel der wetenschap (Spreuken 1)?",
+      "juisteAntwoord": "De vreze des Heeren",
+      "fouteAntwoorden": [
+          "De kennis des Heeren",
+          "De onderwijzing des Heeren",
+          "De bedachtzaamheid des Heeren"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Wisdom Literature",
+          "Old Testament",
+          "Proverbs"
+      ]
+  },
+  {
+      "vraag": "Wat is God voor degenen die oprecht wandelen (Spreuken 2)?",
+      "juisteAntwoord": "Een Schild",
+      "fouteAntwoorden": [
+          "Een Burcht",
+          "Een Toevlucht",
+          "Een Hoog Vertrek"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Wisdom Literature",
+          "Old Testament",
+          "Proverbs"
+      ]
+  },
+  {
+      "vraag": "Waarmee moet men de Heere vereren (Spreuken 3)",
+      "juisteAntwoord": "Met bezit",
+      "fouteAntwoorden": [
+          "Met gebed ",
+          "Met wijsheid",
+          "Met oprechtheid"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Wisdom Literature",
+          "Old Testament",
+          "Proverbs"
+      ]
+  },
+  {
+      "vraag": "Wat is kostbaarder dan koralen (Spreuken 3)?",
+      "juisteAntwoord": "De wijsheid",
+      "fouteAntwoorden": [
+          "De liefde",
+          "De deugd",
+          "De kennis"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Wisdom Literature",
+          "Old Testament",
+          "Proverbs"
+      ]
+  },
+  {
+      "vraag": "Wie moeten er gered worden (Spreuken 24)?",
+      "juisteAntwoord": "Die in doodsgevaar zijn",
+      "fouteAntwoorden": [
+          "Die wankelen",
+          "Die dwalen",
+          "Die goddeloos leven"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Wisdom Literature",
+          "Old Testament",
+          "Proverbs"
+      ]
+  },
+  {
+      "vraag": "De wijsheid is als ... (Spreuken 4)?",
+      "juisteAntwoord": "een sierlijke kroon op het hoofd",
+      "fouteAntwoorden": [
+          "een gouden snoer om de hals",
+          "een sierraad van kennis",
+          "een band van inzicht"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Wisdom Literature",
+          "Old Testament",
+          "Proverbs"
+      ]
+  },
+  {
+      "vraag": "Waar moet onze voet van verwijderd blijven (Spreuken 4)?",
+      "juisteAntwoord": "Van het kwade",
+      "fouteAntwoorden": [
+          "Van de weg der goddelozen",
+          "Van oneffen paden",
+          "Van de paden des doods"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Wisdom Literature",
+          "Old Testament",
+          "Proverbs"
+      ]
+  },
+  {
+      "vraag": "Hoeveel dingen zijn de Heere een gruwel (Spreuken 6)?",
+      "juisteAntwoord": "Zeven",
+      "fouteAntwoorden": [
+          "Vijf",
+          "Zes",
+          "Drie"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Wisdom Literature",
+          "Old Testament",
+          "Proverbs",
+          "Facts and Numbers"
+      ]
+  },
+  {
+      "vraag": "Wat bedekt de liefde (Spreuken 10)?",
+      "juisteAntwoord": "Alle overtredingen",
+      "fouteAntwoorden": [
+          "Alle begerigheid",
+          "Alle onverstrand",
+          "Alle haat"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Wisdom Literature",
+          "Old Testament",
+          "Proverbs"
+      ]
+  },
+  {
+      "vraag": "Wat is er in het huis van een rechtvaardige (Spreuken 15)?",
+      "juisteAntwoord": "Een grote schat",
+      "fouteAntwoorden": [
+          "Liefde en trouw",
+          "Verstand",
+          "Kennis"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Wisdom Literature",
+          "Old Testament",
+          "Proverbs"
+      ]
+  },
+  {
+      "vraag": "Wie zal er in een kuil vallen (Spreuken 26)?",
+      "juisteAntwoord": "Die er een graaft",
+      "fouteAntwoorden": [
+          "Die brandende pijlen afschiet",
+          "Wie wijs is in eigen ogen",
+          "Die een dwaas eer geeft"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Wisdom Literature",
+          "Old Testament",
+          "Proverbs"
+      ]
+  },
+  {
+      "vraag": "Wanneer vind men ontferming (Spreuken 28)?",
+      "juisteAntwoord": "Als men zijn zonden belijdt en nalaat",
+      "fouteAntwoorden": [
+          "Als men een man van inzicht is",
+          "Als men in het verborgene liefheeft",
+          "Als men zijn hart niet verhard"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Wisdom Literature",
+          "Old Testament",
+          "Proverbs"
+      ]
+  },
+  {
+      "vraag": "Waar is Jezus opgegroeid?",
+      "juisteAntwoord": "Nazareth",
+      "fouteAntwoorden": [
+          "Jeruzalem",
+          "Bethlehem",
+          "Kapernaum"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Jesus",
+          "Gospels",
+          "New Testament"
+      ]
+  },
+  {
+      "vraag": "Hoeveel dagen werd Jezus verzocht door de duivel:",
+      "juisteAntwoord": "40 dagen",
+      "fouteAntwoorden": [
+          "3 dagen",
+          "10 dagen",
+          "7 weken"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Jesus",
+          "Gospels",
+          "New Testament",
+          "Facts and Numbers"
+      ]
+  },
+  {
+      "vraag": "Waarop moet men zijn levenshuis bouwen?",
+      "juisteAntwoord": "Rots",
+      "fouteAntwoorden": [
+          "Zand",
+          "Een berg",
+          "Kleigrond"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Jesus",
+          "Gospels",
+          "New Testament",
+          "Parables"
+      ]
+  },
+  {
+      "vraag": "Van wie zei Jezus: Ik heb zo groot een geloof zelfs in Isra\u00ebl niet gevonden?",
+      "juisteAntwoord": "De hoofdman",
+      "fouteAntwoorden": [
+          "Petrus",
+          "De melaatse",
+          "De blindgeborene"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Jesus",
+          "Gospels",
+          "New Testament",
+          "Faith"
+      ]
+  },
+  {
+      "vraag": "Waar zat Mattheus toen Jezus hem riep?",
+      "juisteAntwoord": "In het tolhuis",
+      "fouteAntwoorden": [
+          "Op het tempelplein",
+          "In een boom",
+          "Voor zijn huis"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Jesus",
+          "Gospels",
+          "New Testament",
+          "Disciples"
+      ]
+  },
+  {
+      "vraag": "Hoe groot moet volgens Jezus ons geloof zijn?",
+      "juisteAntwoord": "Als een mosterdzaad",
+      "fouteAntwoorden": [
+          "Als een berg",
+          "Als een rots",
+          "Als een ceder van de Libanon"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Jesus",
+          "Gospels",
+          "New Testament",
+          "Faith"
+      ]
+  },
+  {
+      "vraag": "Hoe vaak moeten we elkaar vergeven?",
+      "juisteAntwoord": "70 x 7 maal",
+      "fouteAntwoorden": [
+          "7 maal",
+          "3 maal",
+          "altijd"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Jesus",
+          "Gospels",
+          "New Testament",
+          "Forgiveness"
+      ]
+  },
+  {
+      "vraag": "Wie riepen: Heere, Gij Zone Davids, ontferm U onzer",
+      "juisteAntwoord": "2 blinden",
+      "fouteAntwoorden": [
+          "10 melaatsen",
+          "de kinderen",
+          "de kreupelen"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Jesus",
+          "Gospels",
+          "New Testament",
+          "Miracles"
+      ]
+  },
+  {
+      "vraag": "Welke boom werd door Jezus vervloekt?",
+      "juisteAntwoord": "De vijgeboom",
+      "fouteAntwoorden": [
+          "De olijfboom",
+          "De ceder",
+          "De dadelpalm"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Jesus",
+          "Gospels",
+          "New Testament",
+          "Miracles"
+      ]
+  },
+  {
+      "vraag": "Door wie is het boek Openbaring geschreven?",
+      "juisteAntwoord": "Johannes",
+      "fouteAntwoorden": [
+          "Paulus",
+          "Petrus",
+          "Mattheus"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Revelation",
+          "New Testament",
+          "John"
+      ]
+  },
+  {
+      "vraag": "Aan hoeveel gemeenten schreef Johannes een brief?",
+      "juisteAntwoord": "7",
+      "fouteAntwoorden": [
+          "6",
+          "8",
+          "5"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Revelation",
+          "New Testament",
+          "John",
+          "Facts and Numbers"
+      ]
+  },
+  {
+      "vraag": "Wat moest Johannes schrijven aan Efeze?",
+      "juisteAntwoord": "Gij hebt uw eerste liefde verlaten",
+      "fouteAntwoorden": [
+          "Wees getrouw tot de dood",
+          "Ik heb voor u een geopende deur gegeven",
+          "En Ik zal u geven ieder naar uw werken"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Revelation",
+          "New Testament",
+          "John",
+          "Letters"
+      ]
+  },
+  {
+      "vraag": "Wat zal Jezus aan de gemeente te Smyrna geven als ze getrouw zijn?",
+      "juisteAntwoord": "De kroon des levens",
+      "fouteAntwoorden": [
+          "Een witte steen",
+          "Een nieuwe naam",
+          "Het verborgen manna"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Revelation",
+          "New Testament",
+          "Jesus",
+          "Promises"
+      ]
+  },
+  {
+      "vraag": "Aan welke leer hielden ze in Pergamum vast?",
+      "juisteAntwoord": "De leer van Bileam",
+      "fouteAntwoorden": [
+          "De leer van de Farizeeen",
+          "Er is geen opstanding",
+          "De leer van Paulus"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Revelation",
+          "New Testament",
+          "Pergamum",
+          "Teachings"
+      ]
+  },
+  {
+      "vraag": "Welke vrouw hebben ze in Thyatira laten begaan?",
+      "juisteAntwoord": "Izeb\u00e9l",
+      "fouteAntwoorden": [
+          "de vrouw van Herodes",
+          "De vrouw van Potifar",
+          "Salome"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Revelation",
+          "New Testament",
+          "Thyatira",
+          "Women in the Bible"
+      ]
+  },
+  {
+      "vraag": "Waar zal Jezus de gemeente Filadelfia voor bewaren?",
+      "juisteAntwoord": "De ure der verzoeking",
+      "fouteAntwoorden": [
+          "Voor armoede",
+          "Voor ziekten",
+          "Voor geestelijk verval"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Revelation",
+          "New Testament",
+          "Filadelfia",
+          "Promises"
+      ]
+  },
+  {
+      "vraag": "Waarom zal Jezus Laodicea uit zijn mond spuwen?",
+      "juisteAntwoord": "Omdat ze lauw zijn",
+      "fouteAntwoorden": [
+          "Omdat ze heet zijn",
+          "Omdat ze koud zijn",
+          "Omdat ze hard zijn"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Revelation",
+          "New Testament",
+          "Laodicea",
+          "Judgment"
+      ]
+  },
+  {
+      "vraag": "Wat was er rondom de troon van God in openbaring?",
+      "juisteAntwoord": "Een regenboog",
+      "fouteAntwoorden": [
+          "Een licht",
+          "Gouden stralen",
+          "Een wolk"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Revelation",
+          "New Testament",
+          "Throne of God",
+          "Visions"
+      ]
+  },
+  {
+      "vraag": "En rondom de troon waren ... tronen; en op de tronen zag ik ... ouderlingen zittende, bekleed met witte klederen, en zij hadden gouden kronen op hun hoofden. ",
+      "juisteAntwoord": "24",
+      "fouteAntwoorden": [
+          "7",
+          "7 x 7",
+          "3"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Revelation",
+          "New Testament",
+          "Throne of God",
+          "Facts and Numbers"
+      ]
+  },
+  {
+      "vraag": "Wat had de schare die niemand tellen kon in zijn hand?",
+      "juisteAntwoord": "Palmtakken",
+      "fouteAntwoorden": [
+          "Fakkels",
+          "Trompetten",
+          "Schalen met wierook"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Revelation",
+          "New Testament",
+          "Visions",
+          "Symbols"
+      ]
+  },
+  {
+      "vraag": "Wat doet God met de mensen die uit de grote verdrukking komen?",
+      "juisteAntwoord": "God zal alle tranen van hun ogen afwissen",
+      "fouteAntwoorden": [
+          "God zal hen een nieuwe naam geven",
+          "God zal hun voor hoofden verzegelen",
+          "God zal bij hen wonen"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Revelation",
+          "New Testament",
+          "Promises",
+          "Comfort"
+      ]
+  },
+  {
+      "vraag": "Wat gebeurde er toen de derde engel heeft gebazuind?",
+      "juisteAntwoord": "Een grote ster, brandende als een fakkel, viel uit de hemel",
+      "fouteAntwoorden": [
+          "De rook des reukwerks met de gebeden der heiligen ging op",
+          "Er is geworden hagel en vuur, gemengd met bloed",
+          "Er werd iets als een grote berg, van vuur brandende, in de zee geworpen"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Revelation",
+          "New Testament",
+          "Visions",
+          "Angels"
+      ]
+  },
+  {
+      "vraag": "Hoe heet de engel van de afgrond in Openbaring?",
+      "juisteAntwoord": "Abaddon",
+      "fouteAntwoorden": [
+          "Lucifer",
+          "De draak",
+          "Het Beest"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Revelation",
+          "New Testament",
+          "Angels",
+          "Abbadon"
+      ]
+  },
+  {
+      "vraag": "Wat moest Johannes opeten in Openbaring?",
+      "juisteAntwoord": "Een boeksken",
+      "fouteAntwoorden": [
+          "Een honingkoek",
+          "Brood",
+          "Vijgen"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Revelation",
+          "New Testament",
+          "John",
+          "Visions"
+      ]
+  },
+  {
+      "vraag": "Hoeveel getuigen gaan er 1260 dagen lang profeteren (Openbaring)?",
+      "juisteAntwoord": "2",
+      "fouteAntwoorden": [
+          "3",
+          "7",
+          "12"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Revelation",
+          "New Testament",
+          "Prophecy",
+          "Facts and Numbers"
+      ]
+  },
+  {
+      "vraag": "En de vrouw vluchtte naar de ..., waar zij een plaats had, die door God bereid was (Openbaring)",
+      "juisteAntwoord": "woestijn",
+      "fouteAntwoorden": [
+          "tempel",
+          "bergen",
+          "stad"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Revelation",
+          "New Testament",
+          "Wilderness",
+          "Visions"
+      ]
+  },
+  {
+      "vraag": "Hoeveel schalen van gramschap zijn er (Openbaring)?",
+      "juisteAntwoord": "Zeven",
+      "fouteAntwoorden": [
+          "Drie",
+          "Vijf",
+          "Vier"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Revelation",
+          "New Testament",
+          "Visions",
+          "Facts and Numbers"
+      ]
+  },
+  {
+      "vraag": "Welke stad daalt er neder uit de hemel (Openbaring)?",
+      "juisteAntwoord": "Het nieuwe Jeruzalem",
+      "fouteAntwoorden": [
+          "De stad Gods",
+          "De stad met vele woningen",
+          "Die stad die fundamenten heeft"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Revelation",
+          "New Testament",
+          "New Jerusalem",
+          "Visions"
+      ]
+  },
+  {
+      "vraag": "Wat zeggen de Geest en de Bruid?",
+      "juisteAntwoord": "Kom",
+      "fouteAntwoorden": [
+          "Amen",
+          "Halleluja",
+          "Ik ben de Alfa en de Omega"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Revelation",
+          "New Testament",
+          "Spirit and Bride",
+          "Promises"
+      ]
+  },
+  {
+      "vraag": "Hoeveel brieven zijn er van Paulus aan de Korintiers?",
+      "juisteAntwoord": "Twee",
+      "fouteAntwoorden": [
+          "Een",
+          "Drie",
+          "Vier"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Paul",
+          "Epistles",
+          "Corinthians",
+          "Facts and Numbers"
+      ]
+  },
+  {
+      "vraag": "Hoeveel heeft Jezus opgewekt?",
+      "juisteAntwoord": "Drie",
+      "fouteAntwoorden": [
+          "Twee",
+          "Een",
+          "Vier"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Jesus",
+          "Resurrection",
+          "Facts and Numbers"
+      ]
+  },
+  {
+      "vraag": "Hoeveel heeft Jezus ongeveer gepreekt?",
+      "juisteAntwoord": "Drie",
+      "fouteAntwoorden": [
+          "Twee",
+          "Een",
+          "Vier"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Jesus",
+          "Sermon on the Mount",
+          "Facts and Numbers"
+      ]
+  },
+  {
+      "vraag": "In welke plaatst dreven ze Jezus uit de stad, naar de rand de berg, om Hem in de afgrond te werpen?",
+      "juisteAntwoord": "Nazareth",
+      "fouteAntwoorden": [
+          "Jeruzalem",
+          "Bethlehem",
+          "Samaria"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Jesus",
+          "Nazareth",
+          "Persecution"
+      ]
+  },
+  {
+      "vraag": "In welke plaats zat Bartimeus bij de poort te bedelen?",
+      "juisteAntwoord": "Jericho",
+      "fouteAntwoorden": [
+          "Jeruzalem",
+          "Samaria",
+          "Kapernaum"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Bartimeus",
+          "Jericho",
+          "Miracles"
+      ]
+  },
+  {
+      "vraag": "Aan wie werd gevraagd: Verstaat gij ook hetgeen gij leest?",
+      "juisteAntwoord": "De Moorman",
+      "fouteAntwoorden": [
+          "Filippus",
+          "Petrus",
+          "Saulus"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Acts",
+          "Ethiopian Eunuch",
+          "Faith"
+      ]
+  },
+  {
+      "vraag": "Welk eiland bezochten Paulus en Barnabas op hun eerste zendingsreis?",
+      "juisteAntwoord": "Cyprus",
+      "fouteAntwoorden": [
+          "Kreta",
+          "Malta",
+          "Silicie"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Acts",
+          "Missions",
+          "Cyprus"
+      ]
+  },
+  {
+      "vraag": "Welke koning kreeg een ernstige ziekte, dodelijke ziekte?",
+      "juisteAntwoord": "Hizkia",
+      "fouteAntwoorden": [
+          "Ahaz",
+          "Manasse",
+          "Juda"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Kings",
+          "Hizkiah",
+          "Old Testament",
+          "Illness"
+      ]
+  },
+  {
+      "vraag": "Na zijn vlucht voor koningin Izeb\u00e9l vluchtte Elia naar de spelonk. Welke?",
+      "juisteAntwoord": "De spelonk op de berg Horeb",
+      "fouteAntwoorden": [
+          "De spelonk van Machpela ",
+          "De spelonk van Adullam",
+          "De spelonken van Zefanja"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Elijah",
+          "Horeb",
+          "Old Testament",
+          "Flight"
+      ]
+  },
+  {
+      "vraag": "Wat namen de Isra\u00eblieten niet mee van de Egyptenaren bij de uittocht uit Egypte?",
+      "juisteAntwoord": "Voedsel",
+      "fouteAntwoorden": [
+          "Goud",
+          "Zilver",
+          "Kleding"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Exodus (event)",
+          "Old Testament",
+          "Major Events"
+      ]
+  },
+  {
+      "vraag": "Hoe lang zat Paulus gevangen in Caesarea ten tijde van Felix en Festus?",
+      "juisteAntwoord": "2 jaar",
+      "fouteAntwoorden": [
+          "1,5 jaar",
+          "2,5 jaar",
+          "3 jaar"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Acts",
+          "Paul",
+          "Prison",
+          "Facts and Numbers"
+      ]
+  },
+  {
+      "vraag": "Welke diaken werd in Jeruzalem gestenigd?",
+      "juisteAntwoord": "Stefanus",
+      "fouteAntwoorden": [
+          "Filippus",
+          "Timon",
+          "Nikolaus"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Acts",
+          "Stephen",
+          "Martyrdom"
+      ]
+  },
+  {
+      "vraag": "Welke zoon wilde David van de troon stoten?",
+      "juisteAntwoord": "Absalom",
+      "fouteAntwoorden": [
+          "Joab",
+          "Amnon",
+          "Adonia"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "David",
+          "Absalom",
+          "Old Testament",
+          "Rebellion"
+      ]
+  },
+  {
+      "vraag": "Wie bezochten als eerste Jezus na zijn geboorte?",
+      "juisteAntwoord": "De herders",
+      "fouteAntwoorden": [
+          "De wijzen",
+          "Koning Herodes ",
+          "Zacharias en Elizabet"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Jesus",
+          "Birth of Jesus",
+          "Shepherds",
+          "Gospels",
+          "New Testament"
+      ]
+  },
+  {
+      "vraag": "10 melaatsen werden door Jezus genezen. Wie kwam terug om Hem te danken?",
+      "juisteAntwoord": "Een Samaritaan",
+      "fouteAntwoorden": [
+          "Een Isra\u00ebliet",
+          "Een Jood",
+          "Een Tollenaar"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Jesus",
+          "Miracles",
+          "Samaritan",
+          "Gospels",
+          "New Testament"
+      ]
+  },
+  {
+      "vraag": "Wie was koning toen Daniel in de leeuwenkuil geworpen werd?",
+      "juisteAntwoord": "Darius",
+      "fouteAntwoorden": [
+          "Nebukadnezar",
+          "Belsazar",
+          "Kores"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Daniel",
+          "Darius",
+          "Old Testament",
+          "Miracles"
+      ]
+  },
+  {
+      "vraag": "De schoonmoeder van Petrus werd genezen van de koorts. In welke plaats was dit?",
+      "juisteAntwoord": "Kapernaum",
+      "fouteAntwoorden": [
+          "Kana",
+          "Nain",
+          "Jericho"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Jesus",
+          "Miracles",
+          "Peter's Mother-in-Law",
+          "Kapernaum",
+          "Gospels",
+          "New Testament"
+      ]
+  },
+  {
+      "vraag": "De inwoners van het Tienstammenrijk werden naar ... weggevoerd.",
+      "juisteAntwoord": "Assyrie",
+      "fouteAntwoorden": [
+          "Babel",
+          "Perzie",
+          "Egypte"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Israel",
+          "Assyria",
+          "Old Testament",
+          "Exile"
+      ]
+  },
+  {
+      "vraag": "Uit welke 2 stammen bestond het tweestammenrijk?",
+      "juisteAntwoord": "Juda en Benjamin",
+      "fouteAntwoorden": [
+          "Levi en Juda",
+          "Jozef en Benjamin",
+          "Juda en Levi"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Israel",
+          "Tribes",
+          "Old Testament"
+      ]
+  },
+  {
+      "vraag": "3 namen zijn voor hetzelfde meer/zee. Welke hoort er niet bij?",
+      "juisteAntwoord": "De Dode Zee",
+      "fouteAntwoorden": [
+          "Meer van Galilea",
+          "Meer van Genesareth",
+          "Zee van Tiberias"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Geography",
+          "Sea of Galilee",
+          "Dead Sea",
+          "Lake of Tiberias"
+      ]
+  },
+  {
+      "vraag": "Er werd een nieuwe apostel gekozen in plaats van Judas. Wie was dat?",
+      "juisteAntwoord": "Matthias",
+      "fouteAntwoorden": [
+          "Justus",
+          "Filippus",
+          "Nathanael"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Acts",
+          "Matthias",
+          "Apostles"
+      ]
+  },
+  {
+      "vraag": "Waar denken we aan met Pasen?",
+      "juisteAntwoord": "De opstanding van Jezus",
+      "fouteAntwoorden": [
+          "De geboorte van Jezus",
+          "De dood van Jezus",
+          "De hemelvaart van Jezus"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Jesus",
+          "Resurrection",
+          "Easter",
+          "Festivals"
+      ]
+  },
+  {
+      "vraag": "Daniel kreeg een Babylonische naam. Welke?",
+      "juisteAntwoord": "Beltsazar",
+      "fouteAntwoorden": [
+          "Belsazar",
+          "Sadrach",
+          "Mesach"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Daniel",
+          "Babylon",
+          "Old Testament",
+          "Names"
+      ]
+  },
+  {
+      "vraag": "De blindgeborene moest zich in ... wassen om ziende te worden.",
+      "juisteAntwoord": "het badwater van Siloam",
+      "fouteAntwoorden": [
+          "het badwater van Bethesda",
+          "de Jordaan",
+          "het badwater van de reiniging"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "John",
+          "Blind Man",
+          "Siloam",
+          "Miracles",
+          "Gospels",
+          "New Testament"
+      ]
+  },
+  {
+      "vraag": "In de strijd tegen Egypte sneuvelde koning ... van Juda.",
+      "juisteAntwoord": "Josia",
+      "fouteAntwoorden": [
+          "Amon",
+          "Manasse",
+          "Ahaz"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Kings",
+          "Josiah",
+          "Old Testament",
+          "Battles"
+      ]
+  },
+  {
+      "vraag": "Waar ontstond de eerste christengemeente?",
+      "juisteAntwoord": "Jeruzalem",
+      "fouteAntwoorden": [
+          "Antiochie",
+          "Filippi",
+          "Korinthe"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Church History",
+          "Jerusalem",
+          "Acts",
+          "New Testament"
+      ]
+  },
+  {
+      "vraag": "Wie waren de derde en vierde discipelen van Jezus?",
+      "juisteAntwoord": "Johannes en Jakobus",
+      "fouteAntwoorden": [
+          "Simon en Andreas",
+          "Simon en Jakobus",
+          "Johannes en Andreas"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Jesus",
+          "Disciples",
+          "John",
+          "James"
+      ]
+  },
+  {
+      "vraag": "Elia, Achab en het volk gingen offeren op de berg ...",
+      "juisteAntwoord": "Karmel",
+      "fouteAntwoorden": [
+          "Horeb",
+          "Sinai",
+          "Tabor"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Elijah",
+          "Karmel",
+          "Old Testament",
+          "Worship"
+      ]
+  },
+  {
+      "vraag": "Wat is het laatste woord in de Bijbel?",
+      "juisteAntwoord": "Amen",
+      "fouteAntwoorden": [
+          "Komt",
+          "Sluit",
+          "Prijs"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Bible",
+          "Last Words",
+          "Amen"
+      ]
+  },
+  {
+      "vraag": "Wie hoorde een Grote stem uit de Hemel zeggen: 'Zie, de tabernakel Gods is bij de mensen en Hij zal bij hen wonen'?",
+      "juisteAntwoord": "Johannes",
+      "fouteAntwoorden": [
+          "Petrus",
+          "Jakobus",
+          "Jezus zelf"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "John",
+          "Revelation",
+          "New Testament",
+          "Visions"
+      ]
+  },
+  {
+      "vraag": "Hoe heet de Ruiter op het witte paard in Openbaring?",
+      "juisteAntwoord": "Getrouw en Waarachtig",
+      "fouteAntwoorden": [
+          "Zaligmaker",
+          "Christus Jezus",
+          "Vast en zeker"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Revelation",
+          "New Testament",
+          "Horsemen",
+          "Faithfulness"
+      ]
+  },
+  {
+      "vraag": "Maak de zin af: Wee, wee, de grote stad ... de sterke stad ",
+      "juisteAntwoord": "Babylon",
+      "fouteAntwoorden": [
+          "Jericho",
+          "Jeruzalem",
+          "Ninev\u00e9"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Revelation",
+          "New Testament",
+          "Babylon",
+          "Judgment"
+      ]
+  },
+  {
+      "vraag": "Hoe vaak werd er op de bazuin geblazen in Openbaring?",
+      "juisteAntwoord": "7 keer",
+      "fouteAntwoorden": [
+          "7 keer 70 keer",
+          "70 keer",
+          "700 keer"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Revelation",
+          "New Testament",
+          "Trumpets",
+          "Facts and Numbers"
+      ]
+  },
+  {
+      "vraag": "Hoeveel zegels worden er geopend in Openbaring?",
+      "juisteAntwoord": "7",
+      "fouteAntwoorden": [
+          "8",
+          "6",
+          "3"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Revelation",
+          "New Testament",
+          "Seals",
+          "Facts and Numbers"
+      ]
+  },
+  {
+      "vraag": "Wie alleen kon het boek met de 7 zegels openen?",
+      "juisteAntwoord": "Het Lam",
+      "fouteAntwoorden": [
+          "De Rots",
+          "Het monster met 7 ogen",
+          "Niemand"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Revelation",
+          "New Testament",
+          "Seals",
+          "Lamb"
+      ]
+  },
+  {
+      "vraag": "Wat stond er in de Brief van Christus aan Sardis?",
+      "juisteAntwoord": "Gij hebt een naam dat gij leeft, en gij zijt dood",
+      "fouteAntwoorden": [
+          "Wee u",
+          "De regels waar die gemeente zich aan moest houden",
+          "U is het Eeuwige Leven"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Revelation",
+          "New Testament",
+          "Letters",
+          "Sardis",
+          "Judgment"
+      ]
+  },
+  {
+      "vraag": "Waar schreef Johannes het Bijbelboek Openbaring?",
+      "juisteAntwoord": "Op het eiland Patmos",
+      "fouteAntwoorden": [
+          "In de gevangenis",
+          "Johannes schreef Openbaring niet",
+          "In de woestijn"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Revelation",
+          "New Testament",
+          "John",
+          "Patmos"
+      ]
+  },
+  {
+      "vraag": "Waarvoor waarschuwde Judas in zijn Bijbelboek?",
+      "juisteAntwoord": "Tegen dwaalleraars",
+      "fouteAntwoorden": [
+          "Tegen de duivel",
+          "Tegen de zonde",
+          "Tegen de wereld"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Jude",
+          "New Testament",
+          "Warning",
+          "Heretics"
+      ]
+  },
+  {
+      "vraag": "Aan wie schreef Johannes zijn brief, 3 Johannes?",
+      "juisteAntwoord": "Gajus",
+      "fouteAntwoorden": [
+          "De gemeente van Laocicea",
+          "Aan niemand specifiek",
+          "Aan Di\u00f3trefes"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "John",
+          "New Testament",
+          "Letters",
+          "Gaius"
+      ]
+  },
+  {
+      "vraag": "Vanuit welke plaats schreef Johannes zijn brief, 2 Johannes?",
+      "juisteAntwoord": "Vanuit Efeze",
+      "fouteAntwoorden": [
+          "Vanuit Korinthe",
+          "Vanuit Klein-Azi\u00eb",
+          "Dat is onbekend"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "John",
+          "New Testament",
+          "Letters",
+          "Ephesus"
+      ]
+  },
+  {
+      "vraag": "Welke profeet zei tegen koning Hizkia dat hij moest sterven?",
+      "juisteAntwoord": "Jesaja",
+      "fouteAntwoorden": [
+          "Jeremia",
+          "Micha",
+          "Atmos"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Isaiah",
+          "Old Testament",
+          "Prophecy",
+          "Death"
+      ]
+  },
+  {
+      "vraag": "Van wie sloeg Peterus het oor af?",
+      "juisteAntwoord": "Malchus",
+      "fouteAntwoorden": [
+          "Mattheus",
+          "Maltus",
+          "Kajafas"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Peter",
+          "Acts",
+          "Malchus",
+          "Violence"
+      ]
+  },
+  {
+      "vraag": "Wat vroeg de Macedonishe man in de droom van Paulus?",
+      "juisteAntwoord": "'Kom over in Macedonie en help ons'",
+      "fouteAntwoorden": [
+          "'Kom over en help ons'",
+          "'Kom en zie'",
+          "'Kom over in Macedonie en predik het evangelie'"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Acts",
+          "Paul",
+          "Macedonia",
+          "Dreams"
+      ]
+  },
+  {
+      "vraag": "Welke straf kondigde de profeet Elia aan voor koning Achab?",
+      "juisteAntwoord": "Er zal geen dauw of regen zijn",
+      "fouteAntwoorden": [
+          "Er zal geen regen meer zijn",
+          "Er zal hongersnood komen",
+          "Er zullen veel mensen sterven"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Elijah",
+          "Old Testament",
+          "Prophecy",
+          "Judgment"
+      ]
+  },
+  {
+      "vraag": "Wie was de vader van Samu\u00ebl?",
+      "juisteAntwoord": "Elkana",
+      "fouteAntwoorden": [
+          "Elihu",
+          "Elam",
+          "Jerobiam"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Samuel",
+          "Old Testament",
+          "Elkana"
+      ]
+  },
+  {
+      "vraag": "In welke stad sprak Paulus over de onbekende God?",
+      "juisteAntwoord": "In Athene",
+      "fouteAntwoorden": [
+          "In Korinthe",
+          "In Filippi",
+          "In Thyatira"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Acts",
+          "Paul",
+          "Athens",
+          "Unknown God"
+      ]
+  },
+  {
+      "vraag": "Wie ging er mee op de eerste zendingsreis van Paulus en Barnabas?",
+      "juisteAntwoord": "Johannes Marcus",
+      "fouteAntwoorden": [
+          "Marcus",
+          "Johannes",
+          "Petrus"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Acts",
+          "Paul",
+          "Barnabas",
+          "Missions",
+          "John Mark"
+      ]
+  },
+  {
+      "vraag": "Wie waren de zonen van Zebede\u00fcs?",
+      "juisteAntwoord": "Jakobus en Johannes",
+      "fouteAntwoorden": [
+          "Johannes en Andreas",
+          "Andreas en Petrus",
+          "Jakobus en Petrus"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Jesus",
+          "Disciples",
+          "Zebedee",
+          "James",
+          "John"
+      ]
+  },
+  {
+      "vraag": "In welke plaats werd David tot koning uitgeroepen?",
+      "juisteAntwoord": "Hebron",
+      "fouteAntwoorden": [
+          "Jeruzalem",
+          "Juda",
+          "Gilead"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "David",
+          "Old Testament",
+          "Kings",
+          "Hebron"
+      ]
+  },
+  {
+      "vraag": "Wie zij: 'Gij beweegt mij bijna een Christen te worden'?",
+      "juisteAntwoord": "Koning Agrippa",
+      "fouteAntwoorden": [
+          "Silas",
+          "Stadhouder Felia",
+          "Koning David"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Acts",
+          "Agrippa",
+          "Conversion"
+      ]
+  },
+  {
+      "vraag": "Tijdens de woestijnreis was het water bitter bij ...",
+      "juisteAntwoord": "Mara",
+      "fouteAntwoorden": [
+          "Elim",
+          "Rafidim",
+          "Kades Barnea"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Exodus (event)",
+          "Old Testament",
+          "Mara",
+          "Bitterness"
+      ]
+  },
+  {
+      "vraag": "Welke afgodensienst voerde koning Jerobeam in?",
+      "juisteAntwoord": "De dienst van de gouden kalveren",
+      "fouteAntwoorden": [
+          "De dienst van de Ba\u00ebl",
+          "De dienst van Astarte",
+          "De dienst van de sterren"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Kings",
+          "Jeroboam",
+          "Old Testament",
+          "Idolatry"
+      ]
+  },
+  {
+      "vraag": "Hoeveel zendingsreizen maakte Paulus?",
+      "juisteAntwoord": "3",
+      "fouteAntwoorden": [
+          "2",
+          "4",
+          "5"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Acts",
+          "Paul",
+          "Missions",
+          "Facts and Numbers"
+      ]
+  },
+  {
+      "vraag": "Op welke berg was de Hemelvaart van Jezus?",
+      "juisteAntwoord": "Olijfberg",
+      "fouteAntwoorden": [
+          "Horeb",
+          "Moria",
+          "Nebo"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Jesus",
+          "Ascension",
+          "Olive Mountain",
+          "Gospels",
+          "New Testament"
+      ]
+  },
+  {
+      "vraag": "Waar wonde de moeder van Jezus?",
+      "juisteAntwoord": "Nazareth",
+      "fouteAntwoorden": [
+          "Bethlehem",
+          "Jeruzalem",
+          "Dat is onbekend"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Jesus",
+          "Birth of Jesus",
+          "Nazareth",
+          "Gospels",
+          "New Testament"
+      ]
+  },
+  {
+      "vraag": "Hoeveel dagen zijn er tussen Hemelvaart en Pinksteren?",
+      "juisteAntwoord": "10",
+      "fouteAntwoorden": [
+          "40",
+          "3",
+          "12"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Jesus",
+          "Ascension",
+          "Pentecost",
+          "Facts and Numbers"
+      ]
+  },
+  {
+      "vraag": "Wie was de eerste Christen die stierf voor zijn geloof?",
+      "juisteAntwoord": "Stephanus",
+      "fouteAntwoorden": [
+          "Petrus",
+          "Jakobus",
+          "Filippus"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Acts",
+          "Stephen",
+          "Martyrdom"
+      ]
+  },
+  {
+      "vraag": "Welgelukzalig is de man die niet ... in de raad der goddelozen",
+      "juisteAntwoord": "Wandelt",
+      "fouteAntwoorden": [
+          "Loopt",
+          "Staat",
+          "Gaat"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Proverbs",
+          "Wisdom",
+          "Walking",
+          "Unbelievers"
+      ]
+  },
+  {
+      "vraag": "Hoe heette de vrouw van Aaron",
+      "juisteAntwoord": "Eliseba",
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Genesis"
+      ],
+      "fouteAntwoorden": [
+          "Zippora",
+          "Jehosabat",
+          "Elisabet"
+      ]
+  },
+  {
+      "vraag": "Hoe reageerde het volk bij het voorlezen van de wet, voorgelezen door Ezra?",
+      "juisteAntwoord": "Ze weenden",
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Prophets"
+      ],
+      "fouteAntwoorden": [
+          "Ze dansten",
+          "Ze verlieten de stad",
+          "Ze kwamen in opstand"
+      ]
+  },
+  {
+      "vraag": "Wat was Nehemia's functie aan het hof van de koning van Perzi\u00eb?",
+      "juisteAntwoord": "Schenker",
+      "moeilijkheidsgraad": 4,
+      "type": "mc",
+      "categories": [
+          "Old Testament"
+      ],
+      "fouteAntwoorden": [
+          "Hoofd van de wachters",
+          "Bode",
+          "Boekhouder"
+      ]
+  },
+  {
+      "vraag": "Wat was de belangrijkste taak van Ezra bij zijn komst naar Jeruzalem?",
+      "juisteAntwoord": "Het volk onderwijzen in de wet des Heeren",
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Old Testament"
+      ],
+      "fouteAntwoorden": [
+          "De stad herbouwen",
+          "De muren herstellen",
+          "De tempel reinigen"
+      ]
+  },
+  {
+      "vraag": "Wat gebeurde er met koning Uzzia toen hij het priesterambt wilde uitoefenen?",
+      "juisteAntwoord": "Hij kreeg melaatsheid",
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "Old Testament"
+      ],
+      "fouteAntwoorden": [
+          "Hij werd gezegend",
+          "Hij werd koning over alle stammen",
+          "Hij werd uit Jeruzalem verdreven"
+      ]
+  },
+  {
+      "vraag": "Wat deed Salomo nadat hij de tempel had voltooid?",
+      "juisteAntwoord": "Hij bad",
+      "moeilijkheidsgraad": 4,
+      "type": "mc",
+      "categories": [
+          "Old Testament"
+      ],
+      "fouteAntwoorden": [
+          "Hij verliet Jeruzalem",
+          "Hij vernietigde de hoogten",
+          "Hij verborg de ark"
+      ]
+  },
+  {
+      "vraag": "Wie bracht de ark van God naar Jeruzalem, nadat het eerst was mislukt?",
+      "juisteAntwoord": "David",
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Old Testament"
+      ],
+      "fouteAntwoorden": [
+          "Mozes",
+          "Saul",
+          "Joab"
+      ]
+  },
+  {
+      "vraag": "Wat deed Elisa om het bittere water van Jericho gezond te maken?",
+      "juisteAntwoord": "Hij strooide zout in de bron",
+      "moeilijkheidsgraad": 4,
+      "type": "mc",
+      "categories": [
+          "Old Testament"
+      ],
+      "fouteAntwoorden": [
+          "Hij bad tot God",
+          "Hij sloeg op het water met zijn mantel",
+          "Hij gebood het water stil te staan"
+      ]
+  },
+  {
+      "vraag": "Wat gebeurde er bij de inwijding van de tempel die Salomo bouwde?",
+      "juisteAntwoord": "De wolk vervulde het huis des Heeren",
+      "moeilijkheidsgraad": 4,
+      "type": "mc",
+      "categories": [
+          "Old Testament"
+      ],
+      "fouteAntwoorden": [
+          "Er kwam vuur uit de hemel",
+          "De ark verdween",
+          "De priesters gingen in het heiligdom"
+      ]
+  },
+  {
+      "vraag": "Wat deed David toen hij hoorde van de dood van Absalom?",
+      "juisteAntwoord": "Hij weende en rouwde",
+      "moeilijkheidsgraad": 2,
+      "type": "mc",
+      "categories": [
+          "Old Testament"
+      ],
+      "fouteAntwoorden": [
+          "Hij vierde feest",
+          "Hij vluchtte",
+          "Hij sloeg zich met stenen"
+      ]
+  },
+  {
+      "vraag": "Met hoeveel man versloeg Gideon het leger van Midian?",
+      "juisteAntwoord": "300",
+      "moeilijkheidsgraad": 2,
+      "type": "mc",
+      "categories": [
+          "Old Testament"
+      ],
+      "fouteAntwoorden": [
+          "30",
+          "1000",
+          "3000"
+      ]
+  },
+  {
+      "vraag": "Wie was de enige vrouwelijke richter van Isra\u00ebl?",
+      "juisteAntwoord": "Debora",
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Old Testament"
+      ],
+      "fouteAntwoorden": [
+          "Hanna",
+          "Ruth",
+          "Ja\u00ebl"
+      ]
+  },
+  {
+      "vraag": "Wat zei Jozua tot het volk in zijn afscheidsrede?",
+      "juisteAntwoord": "Maar aangaande mij en mijn huis, wij zullen de Heere dienen",
+      "moeilijkheidsgraad": 2,
+      "type": "mc",
+      "categories": [
+          "Old Testament"
+      ],
+      "fouteAntwoorden": [
+          "Verlaat dit land, want het is onrein",
+          "Zoek u deze dag een andere god",
+          "Laat ons terugkeren naar Egypte"
+      ]
+  },
+  {
+      "vraag": "Wat moest Mozes doen om water uit de rots te krijgen bij Meriba?",
+      "juisteAntwoord": "Tot de rots spreken",
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Old Testament"
+      ],
+      "fouteAntwoorden": [
+          "Met zijn staf op de rots slaan",
+          "Bidden tot de Heere",
+          "De rots besprenkelen met bloed"
+      ]
+  },
+  {
+      "vraag": "Wat moest de priester doen met het bloed van het schuldoffer?",
+      "juisteAntwoord": "Aan de hoornen van het altaar strijken",
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "Old Testament"
+      ],
+      "fouteAntwoorden": [
+          "Op de ark strijken",
+          "Aan de westzijden van het heilige der heiligen strijken",
+          "Met wierook vermengen"
+      ]
+  },
+  {
+      "vraag": "Wat sprak God tot Mozes uit de brandende braambos?",
+      "juisteAntwoord": "Ik ben de God uws vaders",
+      "moeilijkheidsgraad": 4,
+      "type": "mc",
+      "categories": [
+          "Old Testament"
+      ],
+      "fouteAntwoorden": [
+          "Ga heen naar Ninev\u00e9",
+          "Gij zijt uitverkoren boven alle volken",
+          "Ik ben uw God"
+      ]
+  },
+  {
+      "vraag": "Wat bouwde Noach als eerste, na de zondvloed?",
+      "juisteAntwoord": "Een altaar",
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "Old Testament"
+      ],
+      "fouteAntwoorden": [
+          "Een stad",
+          "Een schip",
+          "Een toren"
+      ]
+  },
+  {
+      "vraag": "Wat zei God tot de slang na de zondeval van Adam en Eva?g na de zondeval van Adam en Eva?",
+      "juisteAntwoord": "\"Vervloekt zijt gij boven al het vee\"",
+      "moeilijkheidsgraad": 2,
+      "type": "mc",
+      "categories": [
+          "Old Testament"
+      ],
+      "fouteAntwoorden": [
+          "\"Gij zult tot stof wederkeren\"",
+          "\"Gij zult uw vrouw verlaten\"",
+          "\"Ik zal u genadig zijn\""
+      ]
+  },
+  {
+      "vraag": "Welke naam had de discipel Matthe\u00fcs eerst?",
+      "juisteAntwoord": "Levi",
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "New Jerusalem"
+      ],
+      "fouteAntwoorden": [
+          "Simon",
+          "Markus",
+          "Lazarus"
+      ]
+  },
+  {
+      "vraag": "Bij wie ging Maria, de moeder van de Heere Jezus, wonen na Jezus dood?",
+      "juisteAntwoord": "Bij Johannes",
+      "moeilijkheidsgraad": 2,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Bij Martha",
+          "Bij Petrus",
+          "Bij haar zuster"
+      ]
+  },
+  {
+      "vraag": "Waarheen werd de Heere Jezus door de Geest geleid na zijn doop in de Jordaan?",
+      "juisteAntwoord": "In de woestijn",
+      "moeilijkheidsgraad": 2,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Naar Galilea",
+          "Naar Kaperna\u00fcm",
+          "Naar zijn discipelen"
+      ]
+  },
+  {
+      "vraag": "Hoe begint de bergrede in Matthe\u00fcs 5?",
+      "juisteAntwoord": "Met de zaligsprekingen",
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Met het Onze Vader",
+          "Met de gelijkenissen van het zaad",
+          "Met het gebod der liefde"
+      ]
+  },
+  {
+      "vraag": "Wat is het eerst wonder van Jezus, genoemd in het bijbelboek Markus?",
+      "juisteAntwoord": "Een onreine geest uitdrijven",
+      "moeilijkheidsgraad": 4,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Water in wijn veranderen",
+          "Petrus loopt op het water",
+          "Jezus stilt de storm"
+      ]
+  },
+  {
+      "vraag": "Wie wordt in Matthe\u00fcs het eerst genoemd in de geslachtsrekening van Jezus?",
+      "juisteAntwoord": "Abraham",
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "David",
+          "Adam",
+          "Mozes"
+      ]
+  },
+  {
+      "vraag": "Wat was de eerste boodschap die Jezus predikte in Markus 1?",
+      "juisteAntwoord": "Bekeert u en gelooft het Evangelie",
+      "moeilijkheidsgraad": 4,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Hebt elkander lief",
+          "Gaat heen in de gehele wereld",
+          "Bidt en waakt"
+      ]
+  },
+  {
+      "vraag": "Aan wie is het evangelie van Lukas gericht?",
+      "juisteAntwoord": "Theofilus",
+      "moeilijkheidsgraad": 2,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Timothe\u00fcs",
+          "Titus",
+          "Silas"
+      ]
+  },
+  {
+      "vraag": "Wie zag/zagen Jezus als eerste na Zijn opstanding (Lukas)?",
+      "juisteAntwoord": "De Emma\u00fcsgangers",
+      "moeilijkheidsgraad": 2,
+      "type": "mc",
+      "categories": [
+          "New Jerusalem"
+      ],
+      "fouteAntwoorden": [
+          "Petrus",
+          "Maria Magdalena",
+          "Johannes"
+      ]
+  },
+  {
+      "vraag": "Waar eindigt het bijbelboek Lukas?",
+      "juisteAntwoord": "Bij de hemelvaart van Jezus",
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Bij de kruisiging",
+          "Bij Pinkensteren in Jeruzalem",
+          "Bij de voorzegging van de wederkomst"
+      ]
+  },
+  {
+      "vraag": "Met welke woorden begint Johannes 1?",
+      "juisteAntwoord": "In den beginne was het Woord",
+      "moeilijkheidsgraad": 2,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "In den beginne schiep God",
+          "En het geschiedde",
+          "Deze is het boek der geslachten"
+      ]
+  },
+  {
+      "vraag": "Wie was de vrouw bij de bron (Johannes)?",
+      "juisteAntwoord": "Een Samaritaanse",
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Een Jodin",
+          "Een Romeinse",
+          "Een Filistijnse"
+      ]
+  },
+  {
+      "vraag": "Wie nam de plaats van Judas in als apostel?",
+      "juisteAntwoord": "Matthias",
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Barnabas",
+          "Paulus",
+          "Silas"
+      ]
+  },
+  {
+      "vraag": "Wat deed Petrus na Pinksteren?",
+      "juisteAntwoord": "Hij predikte",
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Hij zweeg",
+          "Hij bad in stilte",
+          "Hij vluchtte"
+      ]
+  },
+  {
+      "vraag": "Wie bekeerde zich op de weg naar Damascus?",
+      "juisteAntwoord": "Saulus",
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Petrus",
+          "Barnabas",
+          "Timothe\u00fcs"
+      ]
+  },
+  {
+      "vraag": "Hoe eindigt het boek Handelingen?",
+      "juisteAntwoord": "Met Paulus' verblijf in Rome",
+      "moeilijkheidsgraad": 4,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Met Paulus' dood",
+          "Met de verwoesting van Jeruzalem",
+          "Met het Pinksteren"
+      ]
+  },
+  {
+      "vraag": "Hoe beschrijft Paulus zichzelf in Romeinen 1:1?",
+      "juisteAntwoord": "Een dienstknecht van Jezus Christus",
+      "moeilijkheidsgraad": 2,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Een profeest van Jezus Christus",
+          "Een dienaar van de mensen",
+          "Een apostel van Johannes"
+      ]
+  },
+  {
+      "vraag": "Wie zijn de ware kinderen van Abraham (Romeinen)?",
+      "juisteAntwoord": "Zij die uit het geloof zijn",
+      "moeilijkheidsgraad": 2,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Zij die uit de Geest zijn",
+          "Zij die in Isra\u00ebl zijn geboren",
+          "Zij die uit het vlees zijn"
+      ]
+  },
+  {
+      "vraag": "Wat zegt Paulus dat wij moeten doen met onze lichamen (Romeinen 12)?",
+      "juisteAntwoord": "Ze stellen tot levende, heilige offeranden",
+      "moeilijkheidsgraad": 4,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Ze onderwerpen aan de wet",
+          "Ze gebruiken voor de goede werken",
+          "Ze stellen tot offeranden"
+      ]
+  },
+  {
+      "vraag": "Wat is de samenvatting van de wet (Romeinen 13)?",
+      "juisteAntwoord": "Liefde",
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Geloof",
+          "Gehoorzaamheid",
+          "Hoop"
+      ]
+  },
+  {
+      "vraag": "Wat is het probleem in de gemeente te Korinthe?",
+      "juisteAntwoord": "Twist en verdeeldheid",
+      "moeilijkheidsgraad": 4,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Vervolging",
+          "Gebrek aan geloof",
+          "Gebrek aan liefde"
+      ]
+  },
+  {
+      "vraag": "Wat is het lichaam van een gelovige (1 Korinthe)?",
+      "juisteAntwoord": "Een tempel van de Heilige Geest",
+      "moeilijkheidsgraad": 2,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Stof der aarde",
+          "Een zondig vat",
+          "Een tijdelijke tent"
+      ]
+  },
+  {
+      "vraag": "Hoeveel brieven schreef Paulus aan de Korinthi\u00ebrs die bewaard zijn gebleven?",
+      "juisteAntwoord": "Twee",
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Een",
+          "Drie",
+          "Vier"
+      ]
+  },
+  {
+      "vraag": "Wat zegt Paulus over zwakheid (2 Korinthe)?",
+      "juisteAntwoord": "Mijn kracht wordt in zwakheid volbracht",
+      "moeilijkheidsgraad": 2,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Zwakheid is een zonde",
+          "Vermijd zwakte ten alle tijde",
+          "Geloof overwint de zwakheid"
+      ]
+  },
+  {
+      "vraag": "Wat is de bediening die God aan ons gegeven heeft (2 Korinthe)?",
+      "juisteAntwoord": "Bediening der verzoening",
+      "moeilijkheidsgraad": 2,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Bediening van het oordeel",
+          "Bediening van genade",
+          "Bediening der geboden"
+      ]
+  },
+  {
+      "vraag": "Wat verwondert Paulus (Galaten 1)?",
+      "juisteAntwoord": "Dat zij haast wijken naar een ander evangelie",
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Dat de Galaten vroom zijn",
+          "Dat zij veel vasten",
+          "Dat zij veel bidden"
+      ]
+  },
+  {
+      "vraag": "Wat zegt Paulus over de wet?",
+      "juisteAntwoord": "Zij is een tuchtmeester tot Christus",
+      "moeilijkheidsgraad": 4,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Zij rechtvaardigt",
+          "Zij leidt weg van de zonden",
+          "Zij is vervuld in Christus"
+      ]
+  },
+  {
+      "vraag": "Door wat zijn wij zalig geworden (Galaten)?",
+      "juisteAntwoord": "Door het geloof, uit genade",
+      "moeilijkheidsgraad": 2,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Door de werken der wet",
+          "Door het onderhouden van de wet",
+          "Door gebed en vasten"
+      ]
+  },
+  {
+      "vraag": "Wat moeten kinderen doen (Efeze 6)?",
+      "juisteAntwoord": "Gehoorzaam zijn aan hun ouders",
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Stil zijn",
+          "Werken",
+          "Bidden"
+      ]
+  },
+  {
+      "vraag": "Wat is het leven voor Paulus (Filippenzen)?",
+      "juisteAntwoord": "Christus",
+      "moeilijkheidsgraad": 2,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Lijden",
+          "Strijd",
+          "Hoop"
+      ]
+  },
+  {
+      "vraag": "Wie wordt genoemd als Paulus' medewerker en vriend?",
+      "juisteAntwoord": "Epafroditus",
+      "moeilijkheidsgraad": 4,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Barnabas",
+          "Silas",
+          "Timothe\u00fcs"
+      ]
+  },
+  {
+      "vraag": "Wie schreef de brief aan de Kolossenzen?",
+      "juisteAntwoord": "Paulus",
+      "moeilijkheidsgraad": 1,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Petrus",
+          "Lukas",
+          "Johannes"
+      ]
+  },
+  {
+      "vraag": "Wie is het beeld van de onzienlijke God (Kolossenzen 1)?",
+      "juisteAntwoord": "Christus",
+      "moeilijkheidsgraad": 3,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Mozes",
+          "De engel des Heeren",
+          "De Heilige Geest"
+      ]
+  },
+  {
+      "vraag": "Wie schreef de brief aan de Thessalonicenzen?",
+      "juisteAntwoord": "Paulus, Silvanus en Timothe\u00fcs",
+      "moeilijkheidsgraad": 5,
+      "type": "mc",
+      "categories": [
+          "New Testament"
+      ],
+      "fouteAntwoorden": [
+          "Paulus",
+          "Paulus en Timothe\u00fcs",
+          "Paulus en Barnabas"
+      ]
+  }
+]

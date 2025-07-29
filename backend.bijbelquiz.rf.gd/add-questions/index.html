@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BijbelQuiz Vraag Editor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>BijbelQuiz Vraag Editor</h1>
+    <form id="questionForm">
+      <label for="type">Vraagtype:</label>
+      <select id="type" name="type" required>
+        <option value="mc">Meerkeuze (MC)</option>
+        <option value="fitb">Invulvraag (FITB)</option>
+        <option value="tf">Waar/Niet Waar (TF)</option>
+      </select>
+      <div id="dynamicFields"></div>
+      <label for="difficulty">Moeilijkheidsgraad (1-5):</label>
+      <select id="difficulty" name="difficulty" required>
+        <option value="1">1 (Makkelijk)</option>
+        <option value="2">2</option>
+        <option value="3">3 (Gemiddeld)</option>
+        <option value="4">4</option>
+        <option value="5">5 (Moeilijk)</option>
+      </select>
+      <div style="display:flex; gap:8px; margin-bottom:8px;">
+        <button type="button" id="restoreBtn" style="display:none;">Herstel Backup</button>
+        <button type="button" id="clearBtn">Verwijder Alles</button>
+      </div>
+      <button type="submit">Vraag toevoegen</button>
+    </form>
+    <div id="questionCountBox" style="display:none; margin-bottom:8px; padding:8px 12px; background:#e0e7ff; color:#1e293b; border-radius:8px; font-weight:600; font-size:1.08rem;"></div>
+    <div id="confirmModal">
+      <div class="modal-content">
+        <p>Weet je zeker dat je alle vragen wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.</p>
+        <button class="confirm" id="confirmDeleteBtn">Bevestigen</button>
+        <button class="cancel" id="cancelDeleteBtn">Annuleren</button>
+      </div>
+    </div>
+    <button id="downloadBtn">Download JSON</button>
+  </div>
+  <div id="toast-region" aria-live="polite" style="position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:9999;"></div>
+  <script src="script.js"></script>
+</body>
+</html> 

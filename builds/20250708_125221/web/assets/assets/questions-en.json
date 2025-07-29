@@ -1,0 +1,2356 @@
+[
+    {
+      "vraag": "How many books does the New Testament have?",
+      "juisteAntwoord": "27",
+      "fouteAntwoorden": [
+        "26",
+        "66",
+        "39"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "What did Hannah name her child?",
+      "juisteAntwoord": "Samuel",
+      "fouteAntwoorden": [
+        "Saul",
+        "Samson",
+        "Gideon"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who was responsible for the murder of children in Bethlehem after Jesus' birth?",
+      "juisteAntwoord": "Herod",
+      "fouteAntwoorden": [
+        "Pilate",
+        "The high priest",
+        "Quirinius"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "What did Jesus heal Peter's mother-in-law from?",
+      "juisteAntwoord": "Fever",
+      "fouteAntwoorden": [
+        "Paralysis",
+        "Blindness in one eye",
+        "Bleeding"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "What promise did Jesus give to the meek in the Beatitudes?",
+      "juisteAntwoord": "They will inherit the earth",
+      "fouteAntwoorden": [
+        "Theirs is the Kingdom of Heaven",
+        "They will be called children of God",
+        "They will see God"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "What promise is given to 'Blessed are the pure in heart' in the Beatitudes?",
+      "juisteAntwoord": "They will see God",
+      "fouteAntwoorden": [
+        "Theirs is the Kingdom of Heaven",
+        "They will be called children of God",
+        "They will inherit the earth"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Which prophet was not allowed to marry by the Lord?",
+      "juisteAntwoord": "Jeremiah",
+      "fouteAntwoorden": [
+        "Isaiah",
+        "Ezekiel",
+        "Hosea"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "Which prophet was commanded by the Lord to marry?",
+      "juisteAntwoord": "Hosea",
+      "fouteAntwoorden": [
+        "Isaiah",
+        "Jeremiah",
+        "Ezekiel"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "Which prophet and his children were a sign for Israel?",
+      "juisteAntwoord": "Isaiah",
+      "fouteAntwoorden": [
+        "Jeremiah",
+        "Ezekiel",
+        "Hosea"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "Which prophet lost his wife during his time as a prophet?",
+      "juisteAntwoord": "Ezekiel",
+      "fouteAntwoorden": [
+        "Isaiah",
+        "Jeremiah",
+        "Hosea"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "On the first day, God created...",
+      "juisteAntwoord": "Light",
+      "fouteAntwoorden": [
+        "Man",
+        "Plants",
+        "The fish"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "On the second day, there was a separation between...",
+      "juisteAntwoord": "Sea and Air",
+      "fouteAntwoorden": [
+        "Sea and land",
+        "Light and darkness",
+        "Light and land"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "On which day did God rest?",
+      "juisteAntwoord": "7th day",
+      "fouteAntwoorden": [
+        "1st day",
+        "5th day",
+        "6th day"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Where was the tree of knowledge of good and evil?",
+      "juisteAntwoord": "In the Garden of Eden",
+      "fouteAntwoorden": [
+        "In the Garden of Aden",
+        "Just outside the Garden of Eden",
+        "In Shinar"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who was murdered by Cain?",
+      "juisteAntwoord": "Abel",
+      "fouteAntwoorden": [
+        "His mother",
+        "His father",
+        "Esau"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "How old was Methuselah when he died?",
+      "juisteAntwoord": "969",
+      "fouteAntwoorden": [
+        "996",
+        "966",
+        "669"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "How long were Noah and his family in the Ark?",
+      "juisteAntwoord": "More than a year",
+      "fouteAntwoorden": [
+        "40 days",
+        "7 months",
+        "1.5 years"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "What was the purpose of the Tower of Babel?",
+      "juisteAntwoord": "To reach heaven",
+      "fouteAntwoorden": [
+        "To reach the clouds",
+        "To reach great height",
+        "To reach an invisible height"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "What does the word 'Babel' mean?",
+      "juisteAntwoord": "Confusion",
+      "fouteAntwoorden": [
+        "Large city",
+        "Large tower",
+        "Rescue"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Where was Abram born?",
+      "juisteAntwoord": "Ur of the Chaldeans",
+      "fouteAntwoorden": [
+        "Canaan",
+        "Egypt",
+        "Shinar"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "What was Abram's father's name?",
+      "juisteAntwoord": "Terah",
+      "fouteAntwoorden": [
+        "Lot",
+        "Isaac",
+        "Noah"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Why did Abram go to Canaan?",
+      "juisteAntwoord": "God called him",
+      "fouteAntwoorden": [
+        "There was work there",
+        "His family was already there",
+        "There was plenty of food there"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who was Abram's wife?",
+      "juisteAntwoord": "Sarai",
+      "fouteAntwoorden": [
+        "Rebekah",
+        "Rachel",
+        "Zilpah"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Why did Abram and Sarai go to Egypt?",
+      "juisteAntwoord": "There was famine in Canaan",
+      "fouteAntwoorden": [
+        "They could earn a lot of money there",
+        "They went to visit family",
+        "It was an assignment from the Lord"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Where did Abram and Lot settle when they returned to Canaan?",
+      "juisteAntwoord": "In the Jordan region",
+      "fouteAntwoorden": [
+        "On the coast",
+        "In the mountains",
+        "In Sodom"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who did Sarai give to Abram because she was barren?",
+      "juisteAntwoord": "Hagar",
+      "fouteAntwoorden": [
+        "Rachel",
+        "Zilpah",
+        "Bilhah"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "What was the name of Abram and Hagar's son?",
+      "juisteAntwoord": "Ishmael",
+      "fouteAntwoorden": [
+        "Lot",
+        "Isaac",
+        "Jacob"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "What did Lot's wife do?",
+      "juisteAntwoord": "She looked back when leaving Sodom",
+      "fouteAntwoorden": [
+        "She warned her husband Lot",
+        "She stayed in Sodom",
+        "She did what God asked of her"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "How old was Abraham when Isaac was born?",
+      "juisteAntwoord": "100",
+      "fouteAntwoorden": [
+        "80",
+        "90",
+        "120"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Where was Abraham supposed to offer Isaac?",
+      "juisteAntwoord": "On Mount Moriah",
+      "fouteAntwoorden": [
+        "On Mount Sinai",
+        "On Mount Carmel",
+        "On Mount Horeb"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who is Izak to get to?",
+      "juisteAntwoord": "Rebekka",
+      "fouteAntwoorden": [
+        "Rachel",
+        "Bilha",
+        "Sara"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who sold his birthright?",
+      "juisteAntwoord": "Esau",
+      "fouteAntwoorden": [
+        "Jacob",
+        "Manasseh",
+        "Ephraim"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "When Jakob is on the road, he has a dream. ",
+      "juisteAntwoord": "In Bethel",
+      "fouteAntwoorden": [
+        "In Hebron",
+        "In Jerusalem",
+        "In Sichem"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Jakob marries four women. ",
+      "juisteAntwoord": "12",
+      "fouteAntwoorden": [
+        "10",
+        "11",
+        "14"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "What new name does Jakob get?",
+      "juisteAntwoord": "Israel",
+      "fouteAntwoorden": [
+        "Ephraim",
+        "Gideon",
+        "Joseph"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "What is the name of the oldest son of Jakob?",
+      "juisteAntwoord": "Ruben",
+      "fouteAntwoorden": [
+        "Simeon",
+        "Levi",
+        "Judah"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "The sons of Rachel are called:",
+      "juisteAntwoord": "Jozef and Benjamin",
+      "fouteAntwoorden": [
+        "Ruben and Simeon",
+        "Levi and Judah",
+        "Gad and Aser"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "What did Joseph dream about?",
+      "juisteAntwoord": "Bow",
+      "fouteAntwoorden": [
+        "The baker and the cupbearer",
+        "Fat and lean cows",
+        "A great image"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "To whom is Joseph sold?",
+      "juisteAntwoord": "Potiphar",
+      "fouteAntwoorden": [
+        "Pharaoh",
+        "Jethro",
+        "Potiphar's wife"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who is Asnath's husband?",
+      "juisteAntwoord": "Joseph",
+      "fouteAntwoorden": [
+        "Jacob",
+        "Manasseh",
+        "Ephraim"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Why do Joseph's brothers travel to Egypt?",
+      "juisteAntwoord": "They are going to buy grain",
+      "fouteAntwoorden": [
+        "They are going to buy Joseph back",
+        "They are going to visit Joseph",
+        "They want to live there"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "The Israelites are called Hebrew. ",
+      "juisteAntwoord": "Those who come from the other side",
+      "fouteAntwoorden": [
+        "Those who come from a distant country",
+        "Those who come from the north",
+        "Those who come from distant places"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "The Hebreen build stock cities. ",
+      "juisteAntwoord": "Pithom and Raamses",
+      "fouteAntwoorden": [
+        "Raamses and Sukkot",
+        "Pithom and Gosen",
+        "Raamses and Gosen"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "Moses has a meeting with God in the desert ...",
+      "juisteAntwoord": "At Berg Sinai",
+      "fouteAntwoorden": [
+        "At Berg Horeb",
+        "At the Schelf Sea",
+        "At Berg Ararat"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "There were 10 pests in Egypt. ",
+      "juisteAntwoord": "Cattle test",
+      "fouteAntwoorden": [
+        "Dust becomes lice",
+        "Swear",
+        "Hail"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "When can the people leave Israel from Egypt?",
+      "juisteAntwoord": "After dying the firstborn",
+      "fouteAntwoorden": [
+        "After 3 days of darkness",
+        "After the locust plague",
+        "After the cattle test"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who releases the people of Israel from Egypt?",
+      "juisteAntwoord": "God",
+      "fouteAntwoorden": [
+        "Moses",
+        "Aaron",
+        "Mirjam"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "How does the water taste like Mara?",
+      "juisteAntwoord": "Bitter",
+      "fouteAntwoorden": [
+        "Sweet",
+        "Lukewarm",
+        "Salty"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "In Rafidim the people get Israel water from ... ",
+      "juisteAntwoord": "A rock",
+      "fouteAntwoorden": [
+        "One source",
+        "A cave",
+        "A water fountain"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Which people are attacked by Rafidim by which people are attacked?",
+      "juisteAntwoord": "The Amalekites",
+      "fouteAntwoorden": [
+        "The Egyptians",
+        "Hethites",
+        "The Jebusites"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Which mountain stands equal to Sinai, where God gave his law?",
+      "juisteAntwoord": "Horeb",
+      "fouteAntwoorden": [
+        "Nebo",
+        "Thaoror",
+        "Sion"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Which object is not in the saint?",
+      "juisteAntwoord": "The Ark",
+      "fouteAntwoorden": [
+        "Table of the showcuts",
+        "The seven -armed candlestick",
+        "The smell of smell"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who die in the desert?",
+      "juisteAntwoord": "All men over 20",
+      "fouteAntwoorden": [
+        "All men under 40",
+        "All men over 40",
+        "All men under 40"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "On which mountain, Moses dies?",
+      "juisteAntwoord": "Nebo",
+      "fouteAntwoorden": [
+        "Sinai",
+        "Mad",
+        "Moria"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who follows Moses?",
+      "juisteAntwoord": "Joshua",
+      "fouteAntwoorden": [
+        "Aaron",
+        "JALEB",
+        "Elijah"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Where did Moses hit the rock?",
+      "juisteAntwoord": "At Kades",
+      "fouteAntwoorden": [
+        "At Edom",
+        "At Mara",
+        "With Elim "
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "After .... a large part of canaan has been conquered",
+      "juisteAntwoord": "7 years",
+      "fouteAntwoorden": [
+        "4 years",
+        "6 years",
+        "9 years"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "After the death of Joshua ...",
+      "juisteAntwoord": "there is no leader anymore",
+      "fouteAntwoorden": [
+        "his son follows him",
+        "Judah follows him",
+        "Eleazer follows him"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "What was Israel's first task after the death of Joshua?",
+      "juisteAntwoord": "Fighting against the remaining Kaananites",
+      "fouteAntwoorden": [
+        "Finding a new leader",
+        "The people received a period of rest",
+        "Finding water sources"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "A long period after the death of Joshua comes ...",
+      "juisteAntwoord": "a judge",
+      "fouteAntwoorden": [
+        "A king",
+        "an emperor",
+        "a prophet"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who was the first judge?",
+      "juisteAntwoord": "Othniel",
+      "fouteAntwoorden": [
+        "Ehud",
+        "Shamgar",
+        "Barak"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Under the leadership of the first judge, what did the people do?",
+      "juisteAntwoord": "They served God again",
+      "fouteAntwoorden": [
+        "They served idols again",
+        "The enemy was chased away",
+        "The people became rebellious again"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who are the most well-known judges?",
+      "juisteAntwoord": "Gideon, Samson, and Samuel",
+      "fouteAntwoorden": [
+        "Saul, David, and Solomon",
+        "Jephthah, Deborah, and Barak",
+        "Othniel, Ehud, and Shamgar"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "With how many men did Gideon drive away a large army of the Midianites?",
+      "juisteAntwoord": "300 men",
+      "fouteAntwoorden": [
+        "1000 men",
+        "100 men",
+        "500 men"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who was the last judge?",
+      "juisteAntwoord": "Samuel",
+      "fouteAntwoorden": [
+        "Eli",
+        "Samson",
+        "Jephthah"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Which answer does not belong?",
+      "juisteAntwoord": "Do not get married",
+      "fouteAntwoorden": [
+        "No wine or beer",
+        "Don't cut his hair",
+        "Don't touch a dead"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who did Deborah defeat?",
+      "juisteAntwoord": "The Canaanites",
+      "fouteAntwoorden": [
+        "The Midianites",
+        "The Ammonites",
+        "The Philistines"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "Which judge is called a faith hero in the Hebrew letter?",
+      "juisteAntwoord": "Deborah",
+      "fouteAntwoorden": [
+        "Gideon",
+        "Samson",
+        "Samuel"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who led the people after Samuel?",
+      "juisteAntwoord": "King Saul",
+      "fouteAntwoorden": [
+        "King David",
+        "High priest Eli",
+        "Judge Samson"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who was the first king of Israel?",
+      "juisteAntwoord": "Saul",
+      "fouteAntwoorden": [
+        "David",
+        "Solomon",
+        "Herod"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Saul is by Samuel ...",
+      "juisteAntwoord": "anointed",
+      "fouteAntwoorden": [
+        "crowned",
+        "initially",
+        "baptized"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who was Saul anointed by?",
+      "juisteAntwoord": "Samuel",
+      "fouteAntwoorden": [
+        "David",
+        "Solomon",
+        "Herod"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who said, 'I hate him because he prophesies nothing good about me, but evil'?",
+      "juisteAntwoord": "Ahab",
+      "fouteAntwoorden": [
+        "Micaiah",
+        "Jezebel",
+        "Baasha"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "In what time does the story of Ruth take place?",
+      "juisteAntwoord": "Time of rest",
+      "fouteAntwoorden": [
+        "Time of exile",
+        "Time of prophets",
+        "Time of judges"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "From where did Elimelech and Naomi come?",
+      "juisteAntwoord": "Bethlehem",
+      "fouteAntwoorden": [
+        "Jerusalem",
+        "Cana",
+        "Moab"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "What were the names of the women married to Naomi's sons?",
+      "juisteAntwoord": "Orpah and Ruth",
+      "fouteAntwoorden": [
+        "Orpah and Rebekah",
+        "Ruth and Rachel",
+        "Ruth and Rebekah"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "What did Naomi want to be called?",
+      "juisteAntwoord": "Mara",
+      "fouteAntwoorden": [
+        "Martha",
+        "Mary",
+        "Miriam"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Why was Boaz so friendly to Ruth?",
+      "juisteAntwoord": "Ruth's dedication to Naomi touched him",
+      "fouteAntwoorden": [
+        "He was in love with Ruth",
+        "Because he was family of Naomi",
+        "God asked this of him"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "What is a kinsman-redeemer?",
+      "juisteAntwoord": "A near family member who has the duty to help another member of the family",
+      "fouteAntwoorden": [
+        "A near family member",
+        "A near family member who has a lot of money",
+        "A near family member who lives in the same place"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "What did Boaz give the other kinsman-redeemer as proof?",
+      "juisteAntwoord": "His sandal",
+      "fouteAntwoorden": [
+        "A clay tablet",
+        "His ring",
+        "His cloak"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "What is the name of Boaz and Ruth's son?",
+      "juisteAntwoord": "Obed",
+      "fouteAntwoorden": [
+        "Judah",
+        "Machlon",
+        "Chilion"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "From whom did Obed become the father?",
+      "juisteAntwoord": "Jesse",
+      "fouteAntwoorden": [
+        "Isaac",
+        "Ishmael",
+        "Issachar"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who became the father of Jesse?",
+      "juisteAntwoord": "King David",
+      "fouteAntwoorden": [
+        "King Solomon",
+        "King Saul",
+        "King Abijah"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "How many wives did Elkanah have?",
+      "juisteAntwoord": "Two",
+      "fouteAntwoorden": [
+        "One",
+        "Three",
+        "Four"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "What did the old priest think when Hannah prayed in the temple?",
+      "juisteAntwoord": "That she was drunk",
+      "fouteAntwoorden": [
+        "That she prayed seriously",
+        "That she was sad",
+        "That she was tired"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "How called Hanna her son?",
+      "juisteAntwoord": "Samuel",
+      "fouteAntwoorden": [
+        "Simson",
+        "Gideon",
+        "Judah"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "What does Samuel mean?",
+      "juisteAntwoord": "God",
+      "fouteAntwoorden": [
+        "Man of God",
+        "Comforter",
+        "God gives"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "To whom did Hannah give Samuel?",
+      "juisteAntwoord": "Eli",
+      "fouteAntwoorden": [
+        "Jerusalem",
+        "Elijah",
+        "The temple in Jerusalem"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "What did Hannah not have when she brought Samuel to Eli?",
+      "juisteAntwoord": "2 measures of barley",
+      "fouteAntwoorden": [
+        "3 rams",
+        "An ephah of flour",
+        "A bottle of wine"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who did Samuel think called him?",
+      "juisteAntwoord": "Eli",
+      "fouteAntwoorden": [
+        "Hophni",
+        "Phinehas",
+        "The Lord"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "What function did Samuel not have in his life?",
+      "juisteAntwoord": "King",
+      "fouteAntwoorden": [
+        "Prophet",
+        "Priest",
+        "Judge"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "What is the Holy City called in Ezekiel 48?",
+      "juisteAntwoord": "The Lord is there",
+      "fouteAntwoorden": [
+        "Zion",
+        "Jerusalem",
+        "City of God"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "Which Psalm is called the Shepherd's Psalm?",
+      "juisteAntwoord": "Psalm 23",
+      "fouteAntwoorden": [
+        "Psalm 1",
+        "Psalm 25",
+        "Psalm 42"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "What do you call a male sheep?",
+      "juisteAntwoord": "A ram",
+      "fouteAntwoorden": [
+        "A male",
+        "A lamb",
+        "An ewe"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "On which instrument did David often play?",
+      "juisteAntwoord": "Harp",
+      "fouteAntwoorden": [
+        "Zither",
+        "Whistle",
+        "Cymbal"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who wrote the Bible book Proverbs?",
+      "juisteAntwoord": "Solomon",
+      "fouteAntwoorden": [
+        "David",
+        "Asaph",
+        "Jehoshaphat"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "What is the principle of wisdom (Proverbs 1)?",
+      "juisteAntwoord": "The fear of the Lord",
+      "fouteAntwoorden": [
+        "The knowledge of the Lord",
+        "The opinion of the Lord",
+        "The thoughtfulness of the Lord"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "What is God for those who sincerely walk (Proverbs 2)?",
+      "juisteAntwoord": "A shield",
+      "fouteAntwoorden": [
+        "A castle",
+        "A refuge",
+        "A high tower"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "What should the Lord be worshiped with (Proverbs 3)?",
+      "juisteAntwoord": "Possessions",
+      "fouteAntwoorden": [
+        "Prayer",
+        "Wisdom",
+        "Sincerely"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "What is more precious than rubies (Proverbs 3)?",
+      "juisteAntwoord": "Wisdom",
+      "fouteAntwoorden": [
+        "Love",
+        "Virtue",
+        "Knowledge"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who needs to be saved (Proverbs 24)?",
+      "juisteAntwoord": "Those who are in danger",
+      "fouteAntwoorden": [
+        "Those who shake",
+        "Those who wander",
+        "Those who live a rough life"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "The wisdom is like ... (Proverbs 4)",
+      "juisteAntwoord": "a graceful crown on the head",
+      "fouteAntwoorden": [
+        "A golden cord around the neck",
+        "A jewel of knowledge",
+        "A bond of insight"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "What should our foot be removed (Proverbs 4)?",
+      "juisteAntwoord": "Evil",
+      "fouteAntwoorden": [
+        "Of the way of the wicked",
+        "Uneven path",
+        "Of the paths of death"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "How many things are the Lord an abomination (Proverbs 6)?",
+      "juisteAntwoord": "Seven",
+      "fouteAntwoorden": [
+        "Five",
+        "Six",
+        "Three"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "What does love cover (spells 10)?",
+      "juisteAntwoord": "All violations",
+      "fouteAntwoorden": [
+        "All the greediness",
+        "All unprocated",
+        "All hatred"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "What's in the house of a just (spells 15)?",
+      "juisteAntwoord": "A big treasure",
+      "fouteAntwoorden": [
+        "Love and loyalty",
+        "Mind",
+        "Knowledge"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who will fall into a pit (spells 26)?",
+      "juisteAntwoord": "Who digs one",
+      "fouteAntwoorden": [
+        "That shoot burning arrows",
+        "Who is wise in their own eyes",
+        "Who gives a fool honor"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "When do people find compassion (spells 28)?",
+      "juisteAntwoord": "If one confesses and leaves his sins",
+      "fouteAntwoorden": [
+        "If one is a man of insight",
+        "If one loves the hidden",
+        "If one doesn't harden his heart"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Where did Jesus grow up?",
+      "juisteAntwoord": "Nazareth",
+      "fouteAntwoorden": [
+        "Jerusalem",
+        "Bethlehem",
+        "Hijacker"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "How many days Jesus was requested by the devil:",
+      "juisteAntwoord": "40 days",
+      "fouteAntwoorden": [
+        "3 days",
+        "10 days",
+        "7 weeks"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "What should people build their life home?",
+      "juisteAntwoord": "Rock",
+      "fouteAntwoorden": [
+        "Sand",
+        "A mountain",
+        "Clay"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "From whom Jesus said: I haven't even found a belief in Israel so big?",
+      "juisteAntwoord": "The chief",
+      "fouteAntwoorden": [
+        "Peter",
+        "Leper",
+        "The blind -born"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Where was Mattheus when Jesus called him?",
+      "juisteAntwoord": "In the Tolhuis",
+      "fouteAntwoorden": [
+        "On the Tempelplein",
+        "In a tree",
+        "In front of his house"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "According to Jesus, how great should our faith be?",
+      "juisteAntwoord": "Mustard seeds",
+      "fouteAntwoorden": [
+        "Mountain",
+        "Rocky",
+        "Libanon"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "How often do we have to forgive each other?",
+      "juisteAntwoord": "70 x 7 times",
+      "fouteAntwoorden": [
+        "7 times",
+        "3 times",
+        "always"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who shouted: Lord, you zone Davids, take care of ours",
+      "juisteAntwoord": "2 blind",
+      "fouteAntwoorden": [
+        "10 lepers",
+        "the children",
+        "the cripple"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Which tree was cursed by Jesus?",
+      "juisteAntwoord": "The fig",
+      "fouteAntwoorden": [
+        "The olive tree",
+        "The cedar",
+        "The date palm"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "What did Judas get for his betrayal?",
+      "juisteAntwoord": "30 Silver",
+      "fouteAntwoorden": [
+        "20 Silver",
+        "30 gold pieces",
+        "A field"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who is the book of Revelation written by?",
+      "juisteAntwoord": "Johannes",
+      "fouteAntwoorden": [
+        "Paulus",
+        "Peter",
+        "Matthew"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "How many municipalities did Johannes write a letter?",
+      "juisteAntwoord": "7",
+      "fouteAntwoorden": [
+        "6",
+        "8",
+        "5"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "What did Johannes have to write about Ephesus?",
+      "juisteAntwoord": "You have left your first love",
+      "fouteAntwoorden": [
+        "Be faithful to death",
+        "I gave an open door for you",
+        "And I will give you everyone to your works"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "What will Jesus give to the church in Smyrna if they are faithful?",
+      "juisteAntwoord": "The crown of life",
+      "fouteAntwoorden": [
+        "A white stone",
+        "A new name",
+        "The hidden manna"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "Which doctrine did they hold on in Pergamum?",
+      "juisteAntwoord": "The teachings of Bilam",
+      "fouteAntwoorden": [
+        "The doctrine of the Faraeene",
+        "There is no resurrection",
+        "The doctrine of Paulus"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "Which woman did they let in Thyatira commit?",
+      "juisteAntwoord": "Jezebél",
+      "fouteAntwoorden": [
+        "Herod's wife",
+        "Potifar's wife",
+        "Salome"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "What will Jesus save the congregation of Philadelfia for?",
+      "juisteAntwoord": "The Ure of Taxation",
+      "fouteAntwoorden": [
+        "For poverty",
+        "For diseases",
+        "For spiritual decay"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "Why will Jesus Laodicea spit out of his mouth?",
+      "juisteAntwoord": "Because they are lukewarm",
+      "fouteAntwoorden": [
+        "Because they are hot",
+        "Because they are cold",
+        "Because they are hard"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "What was around the throne of God in Revelation?",
+      "juisteAntwoord": "A rainbow",
+      "fouteAntwoorden": [
+        "A light",
+        "Golden rays",
+        "A cloud"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "And around the throne were ... thrones;  ",
+      "juisteAntwoord": "24",
+      "fouteAntwoorden": [
+        "7",
+        "7 x 7",
+        "3"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "What did the crowd that nobody could count had in his hand?",
+      "juisteAntwoord": "Palm branches",
+      "fouteAntwoorden": [
+        "Torches",
+        "Trumpet",
+        "Scales with incense"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "What does God do with the people who come from the great tribulation?",
+      "juisteAntwoord": "God will wipe all the tears from their eyes",
+      "fouteAntwoorden": [
+        "God will give them a new name",
+        "God will seal them for heads",
+        "God will live with them"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "What happened when the third angel gave birth?",
+      "juisteAntwoord": "A big star, burning like a torch, fell from heaven",
+      "fouteAntwoorden": [
+        "The smoke of smells with the prayers of the saints went up",
+        "There has been hail and fire, mixed with blood",
+        "Something like a large mountain was thrown into the sea of ​​fire"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "What's the angel of the abyss in Revelation?",
+      "juisteAntwoord": "Abaddon",
+      "fouteAntwoorden": [
+        "Match",
+        "Dragon",
+        "The beast"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "What had to eat in Revelation?",
+      "juisteAntwoord": "Book",
+      "fouteAntwoorden": [
+        "A honey cake",
+        "Bread",
+        "Fig"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "How many witnesses are going to prophesy for 1260 days (revelation)?",
+      "juisteAntwoord": "2",
+      "fouteAntwoorden": [
+        "3",
+        "7",
+        "12"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "And the woman fled to the ..., where she had a place prepared by God (revelation)",
+      "juisteAntwoord": "desert",
+      "fouteAntwoorden": [
+        "Temple",
+        "to put away",
+        "city"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "How many scales of Gramship are there (Revelation)?",
+      "juisteAntwoord": "Seven",
+      "fouteAntwoorden": [
+        "Three",
+        "Five",
+        "Four"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "Which city is falling from heaven (revelation)?",
+      "juisteAntwoord": "The new Jerusalem",
+      "fouteAntwoorden": [
+        "The city of God",
+        "The city with many houses",
+        "That city has those foundations"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "What do the Spirit and the Bride say?",
+      "juisteAntwoord": "Bowl",
+      "fouteAntwoorden": [
+        "Amen",
+        "Halleluja",
+        "I am the Alfa and the Omega"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "How many letters are there from Paul on the Corinthians?",
+      "juisteAntwoord": "Two",
+      "fouteAntwoorden": [
+        "A",
+        "Three",
+        "Four"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "How much has Jesus cheerful?",
+      "juisteAntwoord": "Three",
+      "fouteAntwoorden": [
+        "Two",
+        "A",
+        "Four"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "How much did Jesus preach?",
+      "juisteAntwoord": "Three",
+      "fouteAntwoorden": [
+        "Two",
+        "A",
+        "Four"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "In which place did they play Jesus from the city, to the edge of the mountain, to throw him into the abyss?",
+      "juisteAntwoord": "Nazareth",
+      "fouteAntwoorden": [
+        "Jerusalem",
+        "Bethlehem",
+        "Samaria"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "In what place was Bartimeus begging at the gate?",
+      "juisteAntwoord": "Jericho",
+      "fouteAntwoorden": [
+        "Jerusalem",
+        "Samaria",
+        "That is unknown"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who was asked: do you also understand what you read?",
+      "juisteAntwoord": "The Moorman",
+      "fouteAntwoorden": [
+        "Philip",
+        "Peter",
+        "Saulus"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Which island visited Paul and Barnabas on their first mission trip?",
+      "juisteAntwoord": "Cyprus",
+      "fouteAntwoorden": [
+        "Crete",
+        "Malta",
+        "Silicia"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Which king got a serious illness, deadly disease?",
+      "juisteAntwoord": "Hezekiah",
+      "fouteAntwoorden": [
+        "Ahaz",
+        "Manasse",
+        "Judah"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "After his flight to Queen Izebél, Elia fled to the cave. ",
+      "juisteAntwoord": "The cleft on Mount Horeb",
+      "fouteAntwoorden": [
+        "Machpela's cave ",
+        "The Save of Adullam",
+        "The caves of Zefanja"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "What did the Israelites not include from the Egyptians in the exodus from Egypt?",
+      "juisteAntwoord": "Food",
+      "fouteAntwoorden": [
+        "Gold",
+        "Silver",
+        "Clothing"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "How long was Paul trapped in Caesarea at the time of Felix and Festus?",
+      "juisteAntwoord": "2 years",
+      "fouteAntwoorden": [
+        "1.5 years",
+        "2.5 years",
+        "3 years"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Which deacon was stoned in Jerusalem?",
+      "juisteAntwoord": "Stefanus",
+      "fouteAntwoorden": [
+        "Philip",
+        "Timon",
+        "Nikolaus"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Which son wanted to hit David off the throne?",
+      "juisteAntwoord": "Absalom",
+      "fouteAntwoorden": [
+        "Joab",
+        "Amnon",
+        "Adonia"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who visited Jesus first after birth?",
+      "juisteAntwoord": "The Shepherds",
+      "fouteAntwoorden": [
+        "Wise",
+        "King Herod ",
+        "Zacharias and Elizabet"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "10 lepers were healed by Jesus. ",
+      "juisteAntwoord": "A Samaritan",
+      "fouteAntwoorden": [
+        "An Israelite",
+        "A Jew",
+        "A spinner"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who was King when Daniel was thrown into the Leeuwenkuil?",
+      "juisteAntwoord": "Darius",
+      "fouteAntwoorden": [
+        "Nebuchadnezzar",
+        "Belsazar",
+        "Kores"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Peter's mother -in -law was healed from the fever. ",
+      "juisteAntwoord": "Hijacker",
+      "fouteAntwoorden": [
+        "Cana",
+        "Nain",
+        "Jericho"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "The inhabitants of the ten -tribe kingdom were taken to ... away.",
+      "juisteAntwoord": "Assyria",
+      "fouteAntwoorden": [
+        "Babel",
+        "Persia",
+        "Egypt"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "From which 2 tribes did the two -rich kingdom consist of?",
+      "juisteAntwoord": "Judah and Benjamin",
+      "fouteAntwoorden": [
+        "Levi and Judah",
+        "Jozef and Benjamin",
+        "Judah and Levi"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "3 names are for the same lake/sea. ",
+      "juisteAntwoord": "The Dead Sea",
+      "fouteAntwoorden": [
+        "More from Galilee",
+        "More from Genesareth",
+        "Sea of ​​Tiberias"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "A new apostle was chosen instead of Judas. ",
+      "juisteAntwoord": "Matthias",
+      "fouteAntwoorden": [
+        "Justus",
+        "Philip",
+        "Nathanael"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "What do we think about at Easter?",
+      "juisteAntwoord": "The resurrection of Jesus",
+      "fouteAntwoorden": [
+        "The birth of Jesus",
+        "The death of Jesus",
+        "The Ascension of Jesus"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Daniel was given a Babylonian name. ",
+      "juisteAntwoord": "Beltsazar",
+      "fouteAntwoorden": [
+        "Belsazar",
+        "Sadrach",
+        "Mesach"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "The blindborn had to wash itself to be seen.",
+      "juisteAntwoord": "Siloam's bath water",
+      "fouteAntwoorden": [
+        "Bethesda's bath water",
+        "The Jordaan",
+        "cleaning bath water"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "In the fight against Egypt king ... of Judah.",
+      "juisteAntwoord": "Josia",
+      "fouteAntwoorden": [
+        "Amon",
+        "Manasse",
+        "Ahaz"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "Where did the first Christian municipality arise?",
+      "juisteAntwoord": "Jerusalem",
+      "fouteAntwoorden": [
+        "Antioch",
+        "Filippi",
+        "Corinthe"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who were the third and fourth disciples of Jesus?",
+      "juisteAntwoord": "Johannes and James",
+      "fouteAntwoorden": [
+        "Simon and Andreas",
+        "Simon and James",
+        "Johannes and Andreas"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "Elijah, Ahab and the people went to sacrifice on the mountain ...",
+      "juisteAntwoord": "Cock",
+      "fouteAntwoorden": [
+        "Horeb",
+        "Sinai",
+        "Tabor"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "What is the last word in the Bible?",
+      "juisteAntwoord": "Amen",
+      "fouteAntwoorden": [
+        "Comes",
+        "Closing",
+        "Price"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who heard a big voice from heaven say: \"See, the tabernacle of God is with the people and he will live with them\"?",
+      "juisteAntwoord": "Johannes",
+      "fouteAntwoorden": [
+        "Peter",
+        "James",
+        "Jesus himself"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "What's the rider on the white horse in Revelation?",
+      "juisteAntwoord": "Faithful and true",
+      "fouteAntwoorden": [
+        "Savior",
+        "Christ Jesus",
+        "Certain"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "Finish the sentence: woe, woe, the big city ... the strong city ",
+      "juisteAntwoord": "Babylon",
+      "fouteAntwoorden": [
+        "Jericho",
+        "Jerusalem",
+        "Ninevé"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "How often were the trumpet blown into revelation?",
+      "juisteAntwoord": "7 times",
+      "fouteAntwoorden": [
+        "7 times 70 times",
+        "70 times",
+        "700 times"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "How many stamps are open in Revelation?",
+      "juisteAntwoord": "7",
+      "fouteAntwoorden": [
+        "8",
+        "6",
+        "3"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who could only open the book with the 7 stamps?",
+      "juisteAntwoord": "Lamb",
+      "fouteAntwoorden": [
+        "The rock",
+        "The monster with 7 eyes",
+        "No one"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "What was in the letter from Christ to Sardis?",
+      "juisteAntwoord": "You have a name that you live, and you are dead",
+      "fouteAntwoorden": [
+        "Woe you",
+        "The rules that that municipality had to adhere to",
+        "You are eternal life"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "Where did Johannes write the Bible book of Revelation?",
+      "juisteAntwoord": "On the island of Patmos",
+      "fouteAntwoorden": [
+        "In prison",
+        "Johannes did not write Revelation",
+        "In the desert"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "What did Judas warn about in his Bible book?",
+      "juisteAntwoord": "Against wanderers",
+      "fouteAntwoorden": [
+        "Against the devil",
+        "Against sin",
+        "To the world"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "To whom did Johannes write his letter, 3 Johannes?",
+      "juisteAntwoord": "Gajus",
+      "fouteAntwoorden": [
+        "The municipality of Laocicea",
+        "Not specific to anyone",
+        "To dieórefes"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "From what place did Johannes write his letter, 2 Johannes?",
+      "juisteAntwoord": "From Ephesus",
+      "fouteAntwoorden": [
+        "From Corinth",
+        "From Asia Minor",
+        "That is unknown"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Which prophet told King Hezekiah that he had to die?",
+      "juisteAntwoord": "Isaiah",
+      "fouteAntwoorden": [
+        "Jeremiah",
+        "Micha",
+        "Atmos"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "From whom Peterus took the ear?",
+      "juisteAntwoord": "Malchus",
+      "fouteAntwoorden": [
+        "Matthew",
+        "Maltus",
+        "Kajafas"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "What did the Macedonish man asked in Paul's dream?",
+      "juisteAntwoord": "'Come over in Macedonie and help us'",
+      "fouteAntwoorden": [
+        "'Come over and help us'",
+        "\"Come and see\"",
+        "'Come over in Macedonie and preach the gospel'"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "What punishment did the Prophet Elia announce for King Ahab?",
+      "juisteAntwoord": "There will be no dew or rain",
+      "fouteAntwoorden": [
+        "There will be no rain anymore",
+        "There will be famine",
+        "Many people will die"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who was Samuel's father?",
+      "juisteAntwoord": "Elkana",
+      "fouteAntwoorden": [
+        "Elihu",
+        "Elam",
+        "Jerobiam"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "In which city did Paul spoke about the unknown God?",
+      "juisteAntwoord": "In Athens",
+      "fouteAntwoorden": [
+        "In Corinth",
+        "In Filippi",
+        "In Thyatira"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who went on the first mission trip from Paulus and Barnabas?",
+      "juisteAntwoord": "Johannes Marcus",
+      "fouteAntwoorden": [
+        "Marcus",
+        "Johannes",
+        "Peter"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who were the sons of Zebedee?",
+      "juisteAntwoord": "James and Johannes",
+      "fouteAntwoorden": [
+        "Johannes and Andreas",
+        "Andreas and Peter",
+        "James and Peter"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "In what place was David named Koning?",
+      "juisteAntwoord": "Hebron",
+      "fouteAntwoorden": [
+        "Jerusalem",
+        "Judah",
+        "Gilead"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who she: 'You are almost moving me to become a Christian'?",
+      "juisteAntwoord": "King Agrippa",
+      "fouteAntwoorden": [
+        "Silas",
+        "Stadholder Felia",
+        "King David"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "During the desert trip, the water was bitter at ...",
+      "juisteAntwoord": "Mara",
+      "fouteAntwoorden": [
+        "Elim",
+        "Rafidim",
+        "Kades Barnea"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Which idols employer introduced King JeroBeam?",
+      "juisteAntwoord": "The Golden Calves Service",
+      "fouteAntwoorden": [
+        "The service of the Baal",
+        "Astarte service",
+        "The service of the stars"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "How many mission travel did Paul make?",
+      "juisteAntwoord": "3",
+      "fouteAntwoorden": [
+        "2",
+        "4",
+        "5"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "On what mountain was the Ascension of Jesus?",
+      "juisteAntwoord": "Mount of Olives",
+      "fouteAntwoorden": [
+        "Horeb",
+        "Moria",
+        "Nebo"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Where do the mother of Jesus wound?",
+      "juisteAntwoord": "Nazareth",
+      "fouteAntwoorden": [
+        "Bethlehem",
+        "Jerusalem",
+        "That is unknown"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "How many days are there between Ascension and Pentecost?",
+      "juisteAntwoord": "10",
+      "fouteAntwoorden": [
+        "40",
+        "3",
+        "12"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who was the first Christian who died for his faith?",
+      "juisteAntwoord": "Stephanus",
+      "fouteAntwoorden": [
+        "Peter",
+        "James",
+        "Philip"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Well -happiness is the man who is not ... in the Council of the wicked",
+      "juisteAntwoord": "Walk",
+      "fouteAntwoorden": [
+        "Runs",
+        "Stands",
+        "Go"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who was Isaac supposed to marry?",
+      "juisteAntwoord": "Rebekah",
+      "fouteAntwoorden": [
+        "Rachel",
+        "Bilhah",
+        "Sarah"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Where did Jacob have his dream of the ladder?",
+      "juisteAntwoord": "In Bethel",
+      "fouteAntwoorden": [
+        "In Hebron",
+        "In Jerusalem",
+        "In Shechem"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "How many sons did Jacob have?",
+      "juisteAntwoord": "12",
+      "fouteAntwoorden": [
+        "10",
+        "11",
+        "14"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "What new name did Jacob receive?",
+      "juisteAntwoord": "Israel",
+      "fouteAntwoorden": [
+        "Ephraim",
+        "Gideon",
+        "Joseph"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "What is the name of Jacob's oldest son?",
+      "juisteAntwoord": "Reuben",
+      "fouteAntwoorden": [
+        "Simeon",
+        "Levi",
+        "Judah"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "What were the names of Rachel's sons?",
+      "juisteAntwoord": "Joseph and Benjamin",
+      "fouteAntwoorden": [
+        "Reuben and Simeon",
+        "Levi and Judah",
+        "Gad and Asher"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "To whom was Joseph sold?",
+      "juisteAntwoord": "Potiphar",
+      "fouteAntwoorden": [
+        "Pharaoh",
+        "Jethro",
+        "Potiphar's wife"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who was Asenath's husband?",
+      "juisteAntwoord": "Joseph",
+      "fouteAntwoorden": [
+        "Jacob",
+        "Manasseh",
+        "Ephraim"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Which mountain stands next to Sinai, where God gave His law?",
+      "juisteAntwoord": "Horeb",
+      "fouteAntwoorden": [
+        "Nebo",
+        "Tabor",
+        "Zion"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Which object was not in the Holy Place?",
+      "juisteAntwoord": "The Ark",
+      "fouteAntwoorden": [
+        "Table of showbread",
+        "The seven-branched candlestick",
+        "The altar of incense"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who died in the desert?",
+      "juisteAntwoord": "All men over 20",
+      "fouteAntwoorden": [
+        "All men under 40",
+        "All men over 40",
+        "All men under 40"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "On which mountain did Moses die?",
+      "juisteAntwoord": "Nebo",
+      "fouteAntwoorden": [
+        "Sinai",
+        "Pisgah",
+        "Moriah"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "Who succeeded Moses?",
+      "juisteAntwoord": "Joshua",
+      "fouteAntwoorden": [
+        "Aaron",
+        "Caleb",
+        "Elijah"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    },
+    {
+      "vraag": "Where did Moses strike the rock?",
+      "juisteAntwoord": "At Kadesh",
+      "fouteAntwoorden": [
+        "At Edom",
+        "At Marah",
+        "At Elim"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "After how many years was most of Canaan conquered?",
+      "juisteAntwoord": "7 years",
+      "fouteAntwoorden": [
+        "4 years",
+        "6 years",
+        "9 years"
+      ],
+      "moeilijkheidsgraad": 5,
+      "type": "mc"
+    },
+    {
+      "vraag": "What happened after the death of Joshua?",
+      "juisteAntwoord": "There was no leader anymore",
+      "fouteAntwoorden": [
+        "His son succeeded him",
+        "Judah succeeded him",
+        "Eleazar succeeded him"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "What was Israel's first task after Joshua's death?",
+      "juisteAntwoord": "Fighting against the remaining Canaanites",
+      "fouteAntwoorden": [
+        "Finding a new leader",
+        "The people received a period of rest",
+        "Finding water sources"
+      ],
+      "moeilijkheidsgraad": 3,
+      "type": "mc"
+    },
+    {
+      "vraag": "What came after a long period following Joshua's death?",
+      "juisteAntwoord": "A judge",
+      "fouteAntwoorden": [
+        "A king",
+        "An emperor",
+        "A prophet"
+      ],
+      "moeilijkheidsgraad": 1,
+      "type": "mc"
+    }
+  ]

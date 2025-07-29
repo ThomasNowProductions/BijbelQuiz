@@ -1,0 +1,225 @@
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+/// Manages the app's settings including language and theme preferences
+class SettingsProvider extends ChangeNotifier {
+  static const String _themeModeKey = 'theme_mode';
+  static const String _customThemeKey = 'custom_theme';
+  static const String _unlockedThemesKey = 'unlocked_themes';
+  static const String _slowModeKey = 'slow_mode';
+  static const String _hasSeenGuideKey = 'has_seen_guide';
+  static const String _muteKey = 'mute';
+  static const String _hapticFeedbackKey = 'haptic_feedback';
+  static const String _notificationEnabledKey = 'notification_enabled';
+  
+  SharedPreferences? _prefs;
+  String _language = 'nl';
+  ThemeMode _themeMode = ThemeMode.system;
+  bool _slowMode = false;
+  bool _hasSeenGuide = false;
+  bool _mute = false;
+  String _hapticFeedback = 'medium'; // 'disabled', 'soft', 'medium'
+  bool _notificationEnabled = true;
+  bool _isLoading = true;
+  String? _error;
+  String? _selectedCustomThemeKey;
+  Set<String> _unlockedThemes = {};
+  
+
+
+  SettingsProvider() {
+    _loadSettings();
+  }
+
+  /// De huidige taalinstelling (altijd 'nl')
+  String get language => _language;
+  
+  /// The current theme mode setting
+  ThemeMode get themeMode => _themeMode;
+  
+  /// Whether slow mode is enabled
+  bool get slowMode => _slowMode;
+
+  /// Whether the user has seen the guide
+  bool get hasSeenGuide => _hasSeenGuide;
+
+  /// Whether sound effects are muted
+  bool get mute => _mute;
+
+  /// The current haptic feedback setting
+  String get hapticFeedback => _hapticFeedback;
+  
+  /// Whether settings are currently being loaded
+  bool get isLoading => _isLoading;
+  
+  /// Any error that occurred while loading settings
+  String? get error => _error;
+
+  /// Whether notifications are enabled
+  bool get notificationEnabled => _notificationEnabled;
+
+  String? get selectedCustomThemeKey => _selectedCustomThemeKey;
+  Set<String> get unlockedThemes => _unlockedThemes;
+
+  bool isThemeUnlocked(String key) => _unlockedThemes.contains(key);
+
+  Future<void> unlockTheme(String key) async {
+    if (!_unlockedThemes.contains(key)) {
+      _unlockedThemes.add(key);
+      await _prefs?.setStringList(_unlockedThemesKey, _unlockedThemes.toList());
+      notifyListeners();
+    }
+  }
+
+  Future<void> setCustomTheme(String? key) async {
+    _selectedCustomThemeKey = key;
+    await _prefs?.setString(_customThemeKey, key ?? '');
+    notifyListeners();
+  }
+
+  /// Loads settings from persistent storage
+  Future<void> _loadSettings() async {
+    try {
+      _isLoading = true;
+      _error = null;
+      notifyListeners();
+
+      _prefs = await SharedPreferences.getInstance();
+      // Altijd Nederlands forceren
+      _language = 'nl';
+      final themeModeIndex = _prefs?.getInt(_themeModeKey) ?? 0;
+      _themeMode = ThemeMode.values[themeModeIndex];
+      _slowMode = _prefs?.getBool(_slowModeKey) ?? false;
+      _hasSeenGuide = _prefs?.getBool(_hasSeenGuideKey) ?? false;
+      _mute = _prefs?.getBool(_muteKey) ?? false;
+      _hapticFeedback = _prefs?.getString(_hapticFeedbackKey) ?? 'medium';
+      _notificationEnabled = _prefs?.getBool(_notificationEnabledKey) ?? true;
+      final unlocked = _prefs?.getStringList(_unlockedThemesKey);
+      if (unlocked != null) {
+        _unlockedThemes = unlocked.toSet();
+      } else {
+        _unlockedThemes = {};
+      }
+      // Fix: treat empty string as null for custom theme
+      final loadedCustomTheme = _prefs?.getString(_customThemeKey);
+      _selectedCustomThemeKey = (loadedCustomTheme == null || loadedCustomTheme.isEmpty) ? null : loadedCustomTheme;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  /// Update de taalinstelling (alleen 'nl' toegestaan)
+  Future<void> setLanguage(String language) async {
+    if (language != 'nl') {
+      throw ArgumentError('Taal moet "nl" zijn (alleen Nederlands toegestaan)');
+    }
+    // Geen effect, altijd Nederlands
+    notifyListeners();
+  }
+
+  /// Updates the theme mode setting
+  Future<void> setThemeMode(ThemeMode mode) async {
+    try {
+      _themeMode = mode;
+      await _prefs?.setInt(_themeModeKey, mode.index);
+      notifyListeners();
+    } catch (e) {
+      _error = 'Failed to save theme setting: ${e.toString()}';
+      notifyListeners();
+      rethrow;
+    }
+  }
+
+  /// Updates the slow mode setting
+  Future<void> setSlowMode(bool enabled) async {
+    try {
+      _slowMode = enabled;
+      await _prefs?.setBool(_slowModeKey, enabled);
+      notifyListeners();
+    } catch (e) {
+      _error = 'Failed to save slow mode setting: ${e.toString()}';
+      notifyListeners();
+      rethrow;
+    }
+  }
+
+  /// Updates the mute setting
+  Future<void> setMute(bool enabled) async {
+    try {
+      _mute = enabled;
+      await _prefs?.setBool(_muteKey, enabled);
+      notifyListeners();
+    } catch (e) {
+      _error = 'Failed to save mute setting: ${e.toString()}';
+      notifyListeners();
+      rethrow;
+    }
+  }
+
+  /// Updates the haptic feedback setting
+  Future<void> setHapticFeedback(String level) async {
+    if (level != 'disabled' && level != 'soft' && level != 'medium') {
+      throw ArgumentError('Haptic feedback level must be "disabled", "soft", or "medium"');
+    }
+
+    try {
+      _hapticFeedback = level;
+      await _prefs?.setString(_hapticFeedbackKey, level);
+      notifyListeners();
+    } catch (e) {
+      _error = 'Failed to save haptic feedback setting: ${e.toString()}';
+      notifyListeners();
+      rethrow;
+    }
+  }
+
+
+
+  /// Marks the guide as seen
+  Future<void> markGuideAsSeen() async {
+    try {
+      _hasSeenGuide = true;
+      await _prefs?.setBool(_hasSeenGuideKey, true);
+      notifyListeners();
+    } catch (e) {
+      _error = 'Failed to save guide status: ${e.toString()}';
+      notifyListeners();
+      rethrow;
+    }
+  }
+
+  /// Resets the guide status so it can be shown again
+  Future<void> resetGuideStatus() async {
+    try {
+      _hasSeenGuide = false;
+      await _prefs?.setBool(_hasSeenGuideKey, false);
+      notifyListeners();
+    } catch (e) {
+      _error = 'Failed to reset guide status: ${e.toString()}';
+      notifyListeners();
+      rethrow;
+    }
+  }
+
+
+
+  /// Reloads settings from persistent storage
+  Future<void> reloadSettings() async {
+    await _loadSettings();
+  }
+
+  Future<void> setNotificationEnabled(bool enabled) async {
+    try {
+      _notificationEnabled = enabled;
+      await _prefs?.setBool(_notificationEnabledKey, enabled);
+      notifyListeners();
+    } catch (e) {
+      _error = 'Failed to save notification setting: ${e.toString()}';
+      notifyListeners();
+      rethrow;
+    }
+  }
+  
+
+} 

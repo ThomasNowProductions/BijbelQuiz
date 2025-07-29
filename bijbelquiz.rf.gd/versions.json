@@ -1,0 +1,26 @@
+{
+  "windows": {
+    "version": "0.6.0",
+    "url": ""
+  },
+  "linux": {
+    "version": "0.6.0",
+    "url": ""
+  },
+  "android": {
+    "version": "0.6.0",
+    "url": ""
+  },
+  "ios": {
+    "version": "0.6.0",
+    "url": ""
+  },
+  "macos": {
+    "version": "0.6.0",
+    "url": ""
+  },
+  "web": {
+    "version": "0.6.0",
+    "url": "https://play.bijbelquiz.rf.gd"
+  }
+} 

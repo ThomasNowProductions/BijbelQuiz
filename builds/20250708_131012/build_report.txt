@@ -1,0 +1,23 @@
+BijbelQuiz Build Report
+======================
+
+Build Date: Tue Jul  8 01:11:26 PM CEST 2025
+Flutter Version: Flutter 3.32.5
+Build Directory: builds/20250708_131012
+
+Platform Builds:
+No builds found
+
+Build Commands Used:
+- flutter clean
+- flutter pub get
+- flutter test
+- flutter analyze
+- flutter build apk --release
+- flutter build appbundle --release
+- flutter build web --release
+- flutter build linux --release
+- flutter build windows --release
+- flutter build macos --release
+- flutter build ios --release (macOS only)
+

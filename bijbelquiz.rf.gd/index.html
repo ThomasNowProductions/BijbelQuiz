@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BijbelQuiz - Test Je Bijbelkennis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563EB;
+            --secondary: #7C3AED;
+            --tertiary: #DC2626;
+            --surface: #FAFAFA;
+            --surface-container: #F8FAFC;
+            --on-surface: #0F172A;
+            --outline: #E2E8F0;
+            --card-radius: 20px;
+            --button-radius: 16px;
+            --shadow: 0 4px 24px rgba(15, 23, 42, 0.06);
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary: #3B82F6;
+                --secondary: #8B5CF6;
+                --tertiary: #EF4444;
+                --surface: #0F172A;
+                --surface-container: #1E293B;
+                --on-surface: #F8FAFC;
+                --outline: #334155;
+                --shadow: 0 4px 24px rgba(0,0,0,0.12);
+            }
+        }
+        html {
+            box-sizing: border-box;
+        }
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: var(--surface);
+            color: var(--on-surface);
+            margin: 0;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: none;
+        }
+        .hero-card {
+            background: var(--surface-container);
+            border-radius: var(--card-radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--outline);
+            padding: 48px 32px 40px 32px;
+            margin: 48px 0 32px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        .logo {
+            width: 72px;
+            height: 72px;
+            border-radius: 16px;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 12px rgba(37,99,235,0.10);
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hero h1 {
+            font-size: 2.7rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+            color: var(--on-surface);
+        }
+        .hero p {
+            font-size: 1.18rem;
+            color: var(--on-surface);
+            margin-bottom: 24px;
+            max-width: 600px;
+        }
+        .bible-verse {
+            font-style: italic;
+            color: var(--secondary);
+            margin: 24px 0 32px 0;
+            font-size: 1.08rem;
+        }
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: #fff;
+            padding: 18px 44px;
+            border-radius: var(--button-radius);
+            font-weight: 700;
+            font-size: 1.18rem;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(37,99,235,0.10);
+            border: none;
+            transition: background 0.2s, box-shadow 0.2s, opacity 0.2s;
+            margin-bottom: 22px;
+            letter-spacing: 0.02em;
+        }
+        .cta-button:hover {
+            opacity: 0.93;
+            box-shadow: 0 4px 16px rgba(37,99,235,0.13);
+        }
+        .app-buttons {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        .app-button {
+            color: var(--primary);
+            background: var(--surface-container);
+            border: 1.5px solid var(--outline);
+            border-radius: 14px;
+            text-decoration: none;
+            font-size: 1.04rem;
+            font-weight: 600;
+            padding: 12px 26px;
+            transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s;
+            box-shadow: 0 1px 4px rgba(37,99,235,0.04);
+            display: flex;
+            align-items: center;
+        }
+        .app-button:hover {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+            box-shadow: 0 2px 8px rgba(37,99,235,0.10);
+        }
+        footer {
+            width: 100%;
+            background: var(--surface-container);
+            color: var(--on-surface);
+            text-align: center;
+            padding: 24px 0 16px 0;
+            font-size: 1rem;
+            border-top: 1px solid var(--outline);
+            margin-top: 32px;
+        }
+        .footer-link {
+            color: var(--primary);
+            text-decoration: underline;
+            margin-left: 8px;
+            font-weight: 500;
+        }
+        @media (max-width: 700px) {
+            .hero-card {
+                padding: 28px 4vw 28px 4vw;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .hero-card {
+                padding: 14px 2vw 14px 2vw;
+            }
+            .hero h1 {
+                font-size: 1.4rem;
+            }
+            .cta-button {
+                font-size: 1rem;
+                padding: 12px 18px;
+            }
+            .app-button {
+                font-size: 0.98rem;
+                padding: 10px 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="container">
+            <div class="hero-card">
+                <div class="logo">
+                    <img src="../assets/icon/icon.png" alt="BijbelQuiz Logo" style="width: 56px; height: 56px; border-radius: 12px;" loading="lazy" />
+                </div>
+                <h1>BijbelQuiz</h1>
+                <p>Test je bijbelkennis.</p>
+                <p class="bible-verse">"Uw woord is een lamp voor mijn voet en een licht op mijn pad." - Psalm 119:105</p>
+                <a href="https://play.bijbelquiz.rf.gd" class="cta-button">Nu Spelen</a>
+                <div class="app-buttons">
+                    <a href="#" class="app-button">Linux</a>
+                    <a href="#" class="app-button">Windows</a>
+                    <a href="#" class="app-button">Android</a>
+                    <a href="#" class="app-button">iOS</a>
+                    <a href="#" class="app-button">macOS</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        &copy; 2024 BijbelQuiz. Alle rechten voorbehouden. | <a href="info.md" class="footer-link">Meer info</a>
+    </footer>
+</body>
+</html>
