@@ -5,8 +5,10 @@ import 'logger.dart';
 /// A service for managing platform-specific visual feedback durations
 /// to ensure consistent user experience across Android and Linux platforms.
 class PlatformFeedbackService {
-  static const int _standardFeedbackDuration = 650; // Base duration in milliseconds
-  static const int _slowModeFeedbackDuration = 950; // Slow mode duration in milliseconds
+  // Default visual feedback durations (milliseconds)
+  static const int _normalFeedbackDuration = 750;
+  static const int _slowFeedbackDuration = 1500;
+  
   
   /// Platform-specific timing adjustments to normalize visual feedback
   static const Map<String, double> _platformMultipliers = {
@@ -19,6 +21,9 @@ class PlatformFeedbackService {
   };
   
   late String _currentPlatform;
+  // Runtime-configurable durations (in ms)
+  int _normalDurationMs = _normalFeedbackDuration;
+  int _slowDurationMs = _slowFeedbackDuration;
   late double _platformMultiplier;
   
   /// Initialize the platform feedback service
@@ -45,13 +50,26 @@ class PlatformFeedbackService {
   /// This method ensures that red/green color feedback appears for exactly
   /// the same perceived duration across all platforms by applying platform-specific
   /// timing adjustments.
+  /// Return the visual feedback duration adjusted for the current platform.
+  /// This duration is *independent* of audio, slow-mode settings or other
+  /// animation speeds.  It can be configured via [setFeedbackDuration].
   Duration getStandardizedFeedbackDuration({bool slowMode = false}) {
-    final baseDuration = slowMode ? _slowModeFeedbackDuration : _standardFeedbackDuration;
+    final baseDuration = slowMode ? _slowDurationMs : _normalDurationMs;
     final adjustedDuration = (baseDuration * _platformMultiplier).round();
     
-    AppLogger.debug('Feedback duration: base=$baseDuration, adjusted=$adjustedDuration (platform: $_currentPlatform)');
+    AppLogger.debug('Feedback duration: base=${slowMode ? _slowDurationMs : _normalDurationMs}, adjusted=$adjustedDuration (platform: $_currentPlatform)');
     
     return Duration(milliseconds: adjustedDuration);
+  }
+  
+  /// Allows changing the base visual feedback duration globally (e.g. for
+  /// tests).  The supplied [duration] should be positive.
+  /// Override the feedback durations at runtime, e.g. in tests.
+  /// If [slowDuration] is omitted, it defaults to double the [normalDuration].
+  void setFeedbackDurations({required Duration normalDuration, Duration? slowDuration}) {
+    assert(!normalDuration.isNegative && normalDuration.inMilliseconds > 0);
+    _normalDurationMs = normalDuration.inMilliseconds;
+    _slowDurationMs = slowDuration?.inMilliseconds ?? (normalDuration.inMilliseconds * 2);
   }
   
   /// Get platform-specific transition pause duration
