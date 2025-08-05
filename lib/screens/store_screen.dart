@@ -358,15 +358,46 @@ class _StoreScreenState extends State<StoreScreen> {
               if (success) {
                 final message = onPurchase();
                 if (!localContext.mounted) return;
-                ScaffoldMessenger.of(localContext).showSnackBar(
-                  SnackBar(
-                    content: Text(message),
-                    backgroundColor: colorScheme.primary,
-                    behavior: SnackBarBehavior.floating,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
+                
+                // Show confirmation dialog
+                await showDialog(
+                  context: localContext,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      backgroundColor: colorScheme.surface,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      title: ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.8),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.check_circle_rounded, color: colorScheme.primary, size: 24),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Text(
+                                'Power-up Geactiveerd!',
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      content: Text(message),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            // Navigate back to quiz screen
+                            Navigator.of(localContext).pop();
+                          },
+                          child: Text('Naar de Quiz', style: TextStyle(color: colorScheme.primary)),
+                        ),
+                      ],
+                    );
+                  },
                 );
               }
             } else {

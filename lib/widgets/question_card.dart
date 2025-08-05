@@ -568,8 +568,8 @@ class _FitbAnimatedBlankRowState extends State<_FitbAnimatedBlankRow> with Singl
             },
             child: Container(
               key: ValueKey('blank_$i'),
-              margin: const EdgeInsets.symmetric(horizontal: 8),
-              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+              margin: const EdgeInsets.symmetric(horizontal: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
                 color: widget.selectedAnswerIndex != null 
                     ? _colorAnimation.value?.withOpacity(0.1)
@@ -599,6 +599,8 @@ class _FitbAnimatedBlankRowState extends State<_FitbAnimatedBlankRow> with Singl
                     scale: _scaleAnimation.value,
                     child: Text(
                       i == 0 ? blankText : '______',
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                       style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                         fontWeight: FontWeight.w700,
                         color: i == 0 
@@ -606,7 +608,7 @@ class _FitbAnimatedBlankRowState extends State<_FitbAnimatedBlankRow> with Singl
                                 ? blankColor 
                                 : blankColor)
                             : widget.colorScheme.outlineVariant,
-                        fontSize: getResponsiveFontSize(context, 24),
+                        fontSize: getResponsiveFontSize(context, 20), // Slightly reduced font size
                       ),
                     ),
                   );
@@ -618,12 +620,19 @@ class _FitbAnimatedBlankRowState extends State<_FitbAnimatedBlankRow> with Singl
       }
     }
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4.0),
-      child: Wrap(
-        alignment: WrapAlignment.center,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        children: children,
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        maxWidth: MediaQuery.of(context).size.width * 0.9,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+        child: Wrap(
+          alignment: WrapAlignment.center,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 4.0,
+          runSpacing: 8.0,
+          children: children,
+        ),
       ),
     );
   }
