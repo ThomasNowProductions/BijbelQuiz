@@ -3761,13 +3761,12 @@
         "moeilijkheidsgraad": 3,
         "type": "tf",
         "categories": [
-            "Genesis",
             "Jozua"
         ],
         "fouteAntwoorden": [
             "Niet waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Jozua 10:12-14"
     },
     {
         "vraag": "Het boek Jozua eindigt met de dood van Mozes",
@@ -3780,10 +3779,10 @@
         "fouteAntwoorden": [
             "Waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Jozua 24"
     },
     {
-        "vraag": "Het boek richteren eindigt met de woorden: \"In die dagen was er geen koning in Isra\u00ebl\"",
+        "vraag": "Het boek richteren eindigt met de woorden: \"In die dagen was er geen koning in Israël\\, een iegelijk deed wat recht was in zijn ogen",
         "juisteAntwoord": "Waar",
         "moeilijkheidsgraad": 4,
         "type": "tf",
@@ -3793,38 +3792,36 @@
         "fouteAntwoorden": [
             "Niet waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Richteren 21"
     },
     {
-        "vraag": "Simon was een richter in Isra\u00ebl",
+        "vraag": "Simson was een richter in Isra\u00ebl",
         "juisteAntwoord": "Waar",
         "moeilijkheidsgraad": 3,
         "type": "tf",
         "categories": [
-            "Ruth",
-            "1 Samu\u00ebl"
+            "Richteren"
         ],
         "fouteAntwoorden": [
             "Niet waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Richteren 13"
     },
     {
-        "vraag": "Ruth werd de overgrootmoeder van koning Salomo",
+        "vraag": "Ruth werd de grootmoeder van koning Salómo",
         "juisteAntwoord": "Niet waar",
         "moeilijkheidsgraad": 3,
         "type": "tf",
         "categories": [
-            "Ruth",
-            "Genesis"
+            "Ruth"
         ],
         "fouteAntwoorden": [
             "Waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Ruth 4"
     },
     {
-        "vraag": "Samuel werd opgevoed in het heiligdom in Jeruzalem",
+        "vraag": "Samuël werd opgevoed in het heiligdom in Jeruzalem",
         "juisteAntwoord": "Niet waar",
         "moeilijkheidsgraad": 3,
         "type": "tf",
@@ -3832,7 +3829,7 @@
         "fouteAntwoorden": [
             "Waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "1 Samuël 1:3"
     },
     {
         "vraag": "Saul was de eerste koning van Isra\u00ebl",
@@ -3845,10 +3842,10 @@
         "fouteAntwoorden": [
             "Niet waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "1 Samuël 10:1"
     },
     {
-        "vraag": "Uzza stierf toen hij de ark van God aanraakte",
+        "vraag": "Uza stierf toen hij de ark van God aanraakte",
         "juisteAntwoord": "Waar",
         "moeilijkheidsgraad": 3,
         "type": "tf",
@@ -3858,7 +3855,7 @@
         "fouteAntwoorden": [
             "Niet waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "2 Samuël 6: 6 en 7"
     },
     {
         "vraag": "Absalom, Davids zoon, kwam in opstand tegen David",
@@ -3866,43 +3863,37 @@
         "moeilijkheidsgraad": 1,
         "type": "tf",
         "categories": [
-            "1 Samu\u00ebl",
-            "2 Samu\u00ebl",
-            "1 Koningen"
+            "2 Samuël"
         ],
         "fouteAntwoorden": [
             "Niet waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "2 Samuël 13 - 18"
     },
     {
-        "vraag": "Elia daagde de Ba\u00e4lpriesters uit op de berg Karmel",
+        "vraag": "Elia daagde de Baäl-priesters uit op de berg Karmel",
         "juisteAntwoord": "Waar",
-        "moeilijkheidsgraad": 3,
-        "type": "tf",
+        "moeilijkheidsgraad": 2,
         "categories": [
             "Genesis"
         ],
         "fouteAntwoorden": [
             "Niet waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "1 Koningen 18"
     },
     {
-        "vraag": "Na Salomo bleef het koninkrijk een geheel",
+        "vraag": "Na Salómo bleef het koninkrijk een geheel",
         "juisteAntwoord": "Niet waar",
         "moeilijkheidsgraad": 3,
         "type": "tf",
         "categories": [
-            "1 Koningen",
-            "2 Koningen",
-            "1 Kronieken",
-            "2 Kronieken"
+            "1 Koningen"
         ],
         "fouteAntwoorden": [
             "Waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "1 Koningen 12"
     },
     {
         "vraag": "Elisa kreeg een dubbel deel van Elia's geest",
@@ -3915,7 +3906,7 @@
         "fouteAntwoorden": [
             "Niet waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "2 Koningen 2: 9 en 10"
     },
     {
         "vraag": "David bracht de ark naar Jeruzalem",
@@ -3923,14 +3914,12 @@
         "moeilijkheidsgraad": 3,
         "type": "tf",
         "categories": [
-            "1 Samu\u00ebl",
-            "2 Samu\u00ebl",
-            "1 Koningen"
+            "1 Kronieken 15"
         ],
         "fouteAntwoorden": [
             "Niet waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "1 Kronieken 15"
     },
     {
         "vraag": "David bouwde de tempel in Jeruzalem",
@@ -3938,16 +3927,15 @@
         "moeilijkheidsgraad": 2,
         "type": "tf",
         "categories": [
-            "1 Kronieken",
             "2 Kronieken"
         ],
         "fouteAntwoorden": [
             "Waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "2 Kronieken 2:1"
     },
     {
-        "vraag": "Josia vond het wetboek in de tempel (Kronieken)",
+        "vraag": "Josia vond het wetboek in de tempel",
         "juisteAntwoord": "Waar",
         "moeilijkheidsgraad": 4,
         "type": "tf",
@@ -3957,7 +3945,7 @@
         "fouteAntwoorden": [
             "Niet waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "2 Kronieken 34"
     },
     {
         "vraag": "Kores was de koning van de Meden",
@@ -3970,7 +3958,7 @@
         "fouteAntwoorden": [
             "Waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Ezra 1:1"
     },
     {
         "vraag": "Ezra leidde de eerste groep ballingen terug naar Jeruzalem",
@@ -3983,7 +3971,7 @@
         "fouteAntwoorden": [
             "Waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Ezra 2: 1 en 2"
     },
     {
         "vraag": "Ezra was priester en schriftgeleerde",
@@ -3991,17 +3979,12 @@
         "moeilijkheidsgraad": 4,
         "type": "tf",
         "categories": [
-            "Exodus",
-            "Leviticus",
-            "Numeri",
-            "Deuteronomium",
-            "Ezra",
-            "Romeinen"
+            "Ezra"
         ],
         "fouteAntwoorden": [
             "Niet waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Ezra 7: 6 en 11"
     },
     {
         "vraag": "De tempel werd opnieuw gebouwd tijdens het bijbelboek Ezra",
@@ -4014,7 +3997,7 @@
         "fouteAntwoorden": [
             "Niet waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Ezra 5 en 6"
     },
     {
         "vraag": "De herbouw van de tempel werd nooit tegengehouden",
