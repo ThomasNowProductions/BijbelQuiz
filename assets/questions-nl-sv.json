@@ -2066,8 +2066,8 @@
         "biblicalReference": null
     },
     {
-        "vraag": "De blindgeborene moest zich in _____ wassen om ziende te worden.",
-        "juisteAntwoord": "het badwater van Siloam",
+        "vraag": "De blindgeborene moest zich in ... wassen om ziende te worden.",
+        "juisteAntwoord": "het badwater van Silóam",
         "fouteAntwoorden": [
             "het badwater van Bethesda",
             "de Jordaan",
@@ -2076,13 +2076,13 @@
         "moeilijkheidsgraad": 3,
         "type": "fitb",
         "categories": [
-            "Genesis"
+            "Johannes"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Johannes 9: 1-7"
     },
     {
-        "vraag": "In de strijd tegen Egypte sneuvelde koning _____ van Juda.",
-        "juisteAntwoord": "Josia",
+        "vraag": "In de strijd tegen Egypte sneuvelde koning ... van Juda.",
+        "juisteAntwoord": "Josía",
         "fouteAntwoorden": [
             "Amon",
             "Manasse",
@@ -2091,15 +2091,15 @@
         "moeilijkheidsgraad": 5,
         "type": "fitb",
         "categories": [
-            "1 Koningen"
+            "2 Kronieken"
         ],
-        "biblicalReference": null
+        "biblicalReference": "2 Kronieken 35: 20-24"
     },
     {
         "vraag": "Waar ontstond de eerste christengemeente?",
         "juisteAntwoord": "Jeruzalem",
         "fouteAntwoorden": [
-            "Antiochie",
+            "Antiochië",
             "Filippi",
             "Korinthe"
         ],
@@ -2108,7 +2108,7 @@
         "categories": [
             "Handelingen"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Handelingen 2: 40, 41"
     },
     {
         "vraag": "Wie waren de derde en vierde discipelen van Jezus?",
@@ -2116,45 +2116,44 @@
         "fouteAntwoorden": [
             "Simon en Andreas",
             "Simon en Jakobus",
-            "Johannes en Andreas"
+            "Johannes en Andréas"
         ],
         "moeilijkheidsgraad": 5,
         "type": "mc",
         "categories": [
-            "Jona"
+            "Markus"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Markus 1: 16-20"
     },
     {
-        "vraag": "Elia, Achab en het volk gingen offeren op de berg _____",
+        "vraag": "Elia, Achab en het volk gingen offeren op de berg ... ",
         "juisteAntwoord": "Karmel",
         "fouteAntwoorden": [
             "Horeb",
-            "Sinai",
+            "Sinaï",
             "Tabor"
         ],
         "moeilijkheidsgraad": 3,
         "type": "fitb",
         "categories": [
-            "1 Koningen",
-            "2 Koningen"
+            "1 Koningen"
         ],
-        "biblicalReference": null
+        "biblicalReference": "1 Koningen 18: 20 -40"
     },
     {
         "vraag": "Wat is het laatste woord in de Bijbel?",
         "juisteAntwoord": "Amen",
         "fouteAntwoorden": [
             "Komt",
-            "Sluit",
-            "Prijs"
+            "Gode zij dank",
+            "Zegen"
         ],
         "moeilijkheidsgraad": 1,
         "type": "mc",
         "categories": [
             "Openbaring"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Openbaring 22:21"
     },
     {
         "vraag": "Wie hoorde een Grote stem uit de Hemel zeggen: 'Zie, de tabernakel Gods is bij de mensen en Hij zal bij hen wonen'?",
@@ -2167,9 +2166,9 @@
         "moeilijkheidsgraad": 5,
         "type": "mc",
         "categories": [
-            "Genesis"
+            "Openbaring"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Openbaring 21:3"
     },
     {
         "vraag": "Hoe heet de Ruiter op het witte paard in Openbaring?",
@@ -2184,10 +2183,10 @@
         "categories": [
             "Openbaring"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Openbaring 19:11"
     },
     {
-        "vraag": "Maak de zin af: Wee, wee, de grote stad _____ de sterke stad ",
+        "vraag": "Maak de zin af: Wee, wee, de grote stad ... , de sterke stad ",
         "juisteAntwoord": "Babylon",
         "fouteAntwoorden": [
             "Jericho",
@@ -2197,10 +2196,9 @@
         "moeilijkheidsgraad": 5,
         "type": "fitb",
         "categories": [
-            "Jeremia",
-            "Klaagliederen"
+            "Openbaring"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Openbaring 18:10"
     },
     {
         "vraag": "Hoe vaak werd er op de bazuin geblazen in Openbaring?",
@@ -2215,7 +2213,7 @@
         "categories": [
             "Openbaring"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Openbaring 8, 9, 10, 11"
     },
     {
         "vraag": "Hoeveel zegels worden er geopend in Openbaring?",
@@ -2230,7 +2228,7 @@
         "categories": [
             "Openbaring"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Openbaring 6, 7, 8"
     },
     {
         "vraag": "Wie alleen kon het boek met de 7 zegels openen?",
@@ -2243,9 +2241,9 @@
         "moeilijkheidsgraad": 5,
         "type": "mc",
         "categories": [
-            "Johannes"
+            "Openbaring"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Openbaring 5"
     },
     {
         "vraag": "Wat stond er in de Brief van Christus aan Sardis?",
@@ -2258,9 +2256,9 @@
         "moeilijkheidsgraad": 5,
         "type": "mc",
         "categories": [
-            "Johannes"
+            "Openbaring"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Openbaring 3:1"
     },
     {
         "vraag": "Waar schreef Johannes het Bijbelboek Openbaring?",
@@ -2273,7 +2271,7 @@
         "moeilijkheidsgraad": 1,
         "type": "mc",
         "categories": [],
-        "biblicalReference": null
+        "biblicalReference": "Openbaring 1:9"
     },
     {
         "vraag": "Waarvoor waarschuwde Judas in zijn Bijbelboek?",
@@ -2288,13 +2286,13 @@
         "categories": [
             "Judas"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Judas 1"
     },
     {
         "vraag": "Aan wie schreef Johannes zijn brief, 3 Johannes?",
         "juisteAntwoord": "Gajus",
         "fouteAntwoorden": [
-            "De gemeente van Laocicea",
+            "De gemeente van Laodicéa",
             "Aan niemand specifiek",
             "Aan Di\u00f3trefes"
         ],
@@ -2303,11 +2301,11 @@
         "categories": [
             "3 Johannes"
         ],
-        "biblicalReference": null
+        "biblicalReference": "3 Johannes 1:1"
     },
     {
         "vraag": "Vanuit welke plaats schreef Johannes zijn brief, 2 Johannes?",
-        "juisteAntwoord": "Vanuit Efeze",
+        "juisteAntwoord": "Vanuit Eféze",
         "fouteAntwoorden": [
             "Vanuit Korinthe",
             "Vanuit Klein-Azi\u00eb",
@@ -2318,57 +2316,55 @@
         "categories": [
             "Johannes"
         ],
-        "biblicalReference": null
+        "biblicalReference": "2 Johannes"
     },
     {
-        "vraag": "Welke profeet zei tegen koning Hizkia dat hij moest sterven?",
+        "vraag": "Welke profeet zei tegen koning Hizkía dat hij moest sterven?",
         "juisteAntwoord": "Jesaja",
         "fouteAntwoorden": [
-            "Jeremia",
+            "Jeremía",
             "Micha",
             "Atmos"
         ],
         "moeilijkheidsgraad": 3,
         "type": "mc",
         "categories": [
-            "Jeremia"
+            "Jesaja"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Jesaja 38:1"
     },
     {
         "vraag": "Van wie sloeg Peterus het oor af?",
         "juisteAntwoord": "Malchus",
         "fouteAntwoorden": [
-            "Mattheus",
+            "Matthéüs",
             "Maltus",
             "Kajafas"
         ],
         "moeilijkheidsgraad": 1,
         "type": "mc",
         "categories": [
-            "Matte\u00fcs",
-            "Handelingen"
+            "Johannes"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Johannes 18:10"
     },
     {
-        "vraag": "Wat vroeg de Macedonishe man in de droom van Paulus?",
-        "juisteAntwoord": "'Kom over in Macedonie en help ons'",
+        "vraag": "Wat vroeg de Macedónische man in de droom van Paulus?",
+        "juisteAntwoord": "'Kom over in Macedónië en help ons'",
         "fouteAntwoorden": [
             "'Kom over en help ons'",
             "'Kom en zie'",
-            "'Kom over in Macedonie en predik het evangelie'"
+            "'Kom over in Macedónië en predik het evangelie'"
         ],
         "moeilijkheidsgraad": 3,
         "type": "mc",
         "categories": [
-            "Handelingen",
-            "Matte\u00fcs"
+            "Handelingen"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Handelingen 19: 9, 10"
     },
     {
-        "vraag": "Welke straf kondigde de profeet Elia aan voor koning Achab?",
+        "vraag": "Welke straf kondigde de profeet Elía aan voor koning Achab?",
         "juisteAntwoord": "Er zal geen dauw of regen zijn",
         "fouteAntwoorden": [
             "Er zal geen regen meer zijn",
@@ -2378,10 +2374,9 @@
         "moeilijkheidsgraad": 3,
         "type": "mc",
         "categories": [
-            "1 Koningen",
-            "2 Koningen"
+            "1 Koningen"
         ],
-        "biblicalReference": null
+        "biblicalReference": "1 Koningen 17:1"
     },
     {
         "vraag": "Wie was de vader van Samu\u00ebl?",
@@ -2389,14 +2384,14 @@
         "fouteAntwoorden": [
             "Elihu",
             "Elam",
-            "Jerobiam"
+            "Jerobeam"
         ],
         "moeilijkheidsgraad": 1,
         "type": "mc",
         "categories": [
             "1 Samu\u00ebl"
         ],
-        "biblicalReference": null
+        "biblicalReference": "1 Samuël 1:1"
     },
     {
         "vraag": "In welke stad sprak Paulus over de onbekende God?",
@@ -2412,7 +2407,7 @@
             "Handelingen",
             "Romeinen"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Handelingen 17:23"
     },
     {
         "vraag": "Wie ging er mee op de eerste zendingsreis van Paulus en Barnabas?",
@@ -2425,10 +2420,9 @@
         "moeilijkheidsgraad": 3,
         "type": "mc",
         "categories": [
-            "Handelingen",
-            "1 Korinti\u00ebrs"
+            "Handelingen"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Handelingen 13"
     },
     {
         "vraag": "Wie waren de zonen van Zebede\u00fcs?",
@@ -2441,11 +2435,9 @@
         "moeilijkheidsgraad": 3,
         "type": "mc",
         "categories": [
-            "Matte\u00fcs",
-            "Lucas",
-            "1 Koningen"
+            "Markus"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Markus 1: 19 , 20"
     },
     {
         "vraag": "In welke plaats werd David tot koning uitgeroepen?",
@@ -2458,9 +2450,9 @@
         "moeilijkheidsgraad": 3,
         "type": "mc",
         "categories": [
-            "1 Koningen"
+            "2 Koningen"
         ],
-        "biblicalReference": null
+        "biblicalReference": "2 Koningen 2:4"
     },
     {
         "vraag": "Wie zij: 'Gij beweegt mij bijna een Christen te worden'?",
@@ -2473,10 +2465,10 @@
         "moeilijkheidsgraad": 1,
         "type": "mc",
         "categories": [],
-        "biblicalReference": null
+        "biblicalReference": "Handelingen 26:28"
     },
     {
-        "vraag": "Tijdens de woestijnreis was het water bitter bij _____",
+        "vraag": "Tijdens de woestijnreis was het water bitter bij ... ",
         "juisteAntwoord": "Mara",
         "fouteAntwoorden": [
             "Elim",
@@ -2486,13 +2478,12 @@
         "moeilijkheidsgraad": 1,
         "type": "fitb",
         "categories": [
-            "Genesis",
-            "Exodus"
+            "Éxodus"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Éxodus 15:23"
     },
     {
-        "vraag": "Welke afgodensienst voerde koning Jerobeam in?",
+        "vraag": "Welke afgodendienst voerde koning Jerobeam in?",
         "juisteAntwoord": "De dienst van de gouden kalveren",
         "fouteAntwoorden": [
             "De dienst van de Ba\u00ebl",
@@ -2502,7 +2493,7 @@
         "moeilijkheidsgraad": 3,
         "type": "mc",
         "categories": [],
-        "biblicalReference": null
+        "biblicalReference": "1 Koningen 12: 25-33"
     },
     {
         "vraag": "Hoeveel zendingsreizen maakte Paulus?",
@@ -2515,7 +2506,7 @@
         "moeilijkheidsgraad": 1,
         "type": "mc",
         "categories": [],
-        "biblicalReference": null
+        "biblicalReference": "Handelingen"
     },
     {
         "vraag": "Op welke berg was de Hemelvaart van Jezus?",
@@ -2528,15 +2519,12 @@
         "moeilijkheidsgraad": 1,
         "type": "mc",
         "categories": [
-            "Handelingen",
-            "Matte\u00fcs",
-            "Lucas",
-            "Johannes"
+            "Handelingen"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Handelingen 1: 9-12"
     },
     {
-        "vraag": "Waar wonde de moeder van Jezus?",
+        "vraag": "Waar woonde de moeder van Jezus?",
         "juisteAntwoord": "Nazareth",
         "fouteAntwoorden": [
             "Bethlehem",
@@ -2546,10 +2534,9 @@
         "moeilijkheidsgraad": 1,
         "type": "mc",
         "categories": [
-            "Matte\u00fcs",
             "Lucas"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Lukas 1:26"
     },
     {
         "vraag": "Hoeveel dagen zijn er tussen Hemelvaart en Pinksteren?",
@@ -2562,11 +2549,11 @@
         "moeilijkheidsgraad": 1,
         "type": "mc",
         "categories": [],
-        "biblicalReference": null
+        "biblicalReference": "Handelingen 1 en 2"
     },
     {
         "vraag": "Wie was de eerste Christen die stierf voor zijn geloof?",
-        "juisteAntwoord": "Stephanus",
+        "juisteAntwoord": "Stéfanus",
         "fouteAntwoorden": [
             "Petrus",
             "Jakobus",
@@ -2575,30 +2562,28 @@
         "moeilijkheidsgraad": 1,
         "type": "mc",
         "categories": [
-            "Matte\u00fcs",
             "Handelingen"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Handelingen 7: 54-60"
     },
     {
-        "vraag": "Welgelukzalig is de man die niet _____ in de raad der goddelozen",
-        "juisteAntwoord": "Wandelt",
+        "vraag": "Welgelukzalig is de man die niet ... in de raad der goddelozen",
+        "juisteAntwoord": "wandelt",
         "fouteAntwoorden": [
-            "Loopt",
-            "Staat",
-            "Gaat"
+            "loopt",
+            "staat",
+            "gaat"
         ],
         "moeilijkheidsgraad": 1,
         "type": "fitb",
         "categories": [
-            "Genesis",
-            "Spreuken"
+            "Psalmen"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Psalm 1:1"
     },
     {
         "vraag": "Hoe heette de vrouw van Aaron",
-        "juisteAntwoord": "Eliseba",
+        "juisteAntwoord": "Eliséba",
         "moeilijkheidsgraad": 5,
         "type": "mc",
         "categories": [
@@ -2609,7 +2594,7 @@
             "Jehosabat",
             "Elisabet"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Éxodus 6:22"
     },
     {
         "vraag": "Hoe reageerde het volk bij het voorlezen van de wet, voorgelezen door Ezra?",
