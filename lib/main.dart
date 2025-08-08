@@ -18,6 +18,9 @@ import 'services/performance_service.dart';
 import 'services/connection_service.dart';
 import 'services/question_cache_service.dart';
 import 'screens/store_screen.dart';
+import 'providers/lesson_progress_provider.dart';
+import 'screens/lesson_select_screen.dart';
+import 'settings_screen.dart';
 
 
 
@@ -43,6 +46,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => SettingsProvider()),
         ChangeNotifierProvider.value(value: gameStatsProvider),
+        ChangeNotifierProvider(create: (_) => LessonProgressProvider()),
       ],
       child: BijbelQuizApp(),
     ),
@@ -172,8 +176,9 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
       themeMode: customTheme != null ? ThemeMode.light : settings.themeMode,
       routes: {
         '/store': (context) => const StoreScreen(),
+        '/settings': (context) => const SettingsScreen(),
       },
-      home: const QuizScreen(),
+      home: const LessonSelectScreen(),
     );
     
     // Show guide if needed after app is built

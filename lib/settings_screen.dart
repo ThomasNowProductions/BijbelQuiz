@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'providers/settings_provider.dart';
 import 'providers/game_stats_provider.dart';
+import 'providers/lesson_progress_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'screens/guide_screen.dart';
 import 'dart:io' show Platform;
@@ -408,9 +409,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
               isSmallScreen,
               isDesktop,
               onPressed: () => _showResetScoreDialog(context, settings),
-              label: 'Score Resetten',
+              label: 'Score & voortgang resetten',
               icon: Icons.refresh,
               isDestructive: true,
+              subtitle: 'Reset sterren en ontgrendelde lessen',
             ),
             _buildActionButton(
               context,
@@ -848,17 +850,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
       context: localContext,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Score Resetten'),
-          content: Text('Weet je zeker dat je je score wilt resetten? Deze actie kan niet ongedaan worden gemaakt.'),
+          title: Text('Score en voortgang resetten'),
+          content: Text('Dit reset je score, sterren en ontgrendelde lessen. Deze actie kan niet ongedaan worden gemaakt.'),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
               child: Text('Annuleren'),
             ),
             TextButton(
-              onPressed: () {
+              onPressed: () async {
                 final nav = Navigator.of(context);
                 gameStats.resetStats();
+                await Provider.of<LessonProgressProvider>(context, listen: false).resetAll();
                 if (!context.mounted) return;
                 nav.pop();
               },

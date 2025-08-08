@@ -2617,18 +2617,17 @@
         "moeilijkheidsgraad": 5,
         "type": "mc",
         "categories": [
-            "Ezra",
-            "Leviticus"
+            "Nehemia"
         ],
         "fouteAntwoorden": [
             "Ze dansten",
             "Ze verlieten de stad",
             "Ze kwamen in opstand"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Nehémia 8:9"
     },
     {
-        "vraag": "Wat was Nehemia's functie aan het hof van de koning van Perzi\u00eb?",
+        "vraag": "Wat was Nehémia's functie aan het hof van de koning van Perzi\u00eb?",
         "juisteAntwoord": "Schenker",
         "moeilijkheidsgraad": 4,
         "type": "mc",
@@ -2640,7 +2639,7 @@
             "Bode",
             "Boekhouder"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Nehémia 1:11"
     },
     {
         "vraag": "Wat was de belangrijkste taak van Ezra bij zijn komst naar Jeruzalem?",
@@ -2655,7 +2654,7 @@
             "De muren herstellen",
             "De tempel reinigen"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Ezra 7:10"
     },
     {
         "vraag": "Wat gebeurde er met koning Uzzia toen hij het priesterambt wilde uitoefenen?",
@@ -2663,14 +2662,14 @@
         "moeilijkheidsgraad": 5,
         "type": "mc",
         "categories": [
-            "1 Kronieken"
+            "2 Kronieken"
         ],
         "fouteAntwoorden": [
             "Hij werd gezegend",
             "Hij werd koning over alle stammen",
             "Hij werd uit Jeruzalem verdreven"
         ],
-        "biblicalReference": null
+        "biblicalReference": "2 Kronieken 26: 16-21"
     },
     {
         "vraag": "Wat deed Salomo nadat hij de tempel had voltooid?",
@@ -2678,17 +2677,14 @@
         "moeilijkheidsgraad": 4,
         "type": "mc",
         "categories": [
-            "1 Koningen",
-            "2 Koningen",
-            "1 Kronieken",
-            "2 Kronieken"
+            "1 Koningen"
         ],
         "fouteAntwoorden": [
             "Hij verliet Jeruzalem",
             "Hij vernietigde de hoogten",
             "Hij verborg de ark"
         ],
-        "biblicalReference": null
+        "biblicalReference": "1 Koningen 8: 22, 23"
     },
     {
         "vraag": "Wie bracht de ark van God naar Jeruzalem, nadat het eerst was mislukt?",
@@ -2696,14 +2692,14 @@
         "moeilijkheidsgraad": 3,
         "type": "mc",
         "categories": [
-            "1 Koningen"
+            "2 Samuel"
         ],
         "fouteAntwoorden": [
             "Mozes",
             "Saul",
             "Joab"
         ],
-        "biblicalReference": null
+        "biblicalReference": "2 Samuël 6: 12-15"
     },
     {
         "vraag": "Wat deed Elisa om het bittere water van Jericho gezond te maken?",
@@ -2711,16 +2707,14 @@
         "moeilijkheidsgraad": 4,
         "type": "mc",
         "categories": [
-            "Genesis",
-            "Jeremia",
-            "Ezechi\u00ebl"
+            "2 Koningen"
         ],
         "fouteAntwoorden": [
             "Hij bad tot God",
             "Hij sloeg op het water met zijn mantel",
             "Hij gebood het water stil te staan"
         ],
-        "biblicalReference": null
+        "biblicalReference": "2 Koningen 2:21"
     },
     {
         "vraag": "Wat gebeurde er bij de inwijding van de tempel die Salomo bouwde?",
@@ -2728,17 +2722,14 @@
         "moeilijkheidsgraad": 4,
         "type": "mc",
         "categories": [
-            "1 Koningen",
-            "2 Koningen",
-            "1 Kronieken",
-            "2 Kronieken"
+            "1 Koningen"
         ],
         "fouteAntwoorden": [
             "Er kwam vuur uit de hemel",
             "De ark verdween",
             "De priesters gingen in het heiligdom"
         ],
-        "biblicalReference": null
+        "biblicalReference": "1 Koningen 8: 10, 11"
     },
     {
         "vraag": "Wat deed David toen hij hoorde van de dood van Absalom?",
@@ -2746,47 +2737,44 @@
         "moeilijkheidsgraad": 2,
         "type": "mc",
         "categories": [
-            "1 Samu\u00ebl",
-            "2 Samu\u00ebl",
-            "Hebree\u00ebn"
+            "2 Samu\u00ebl"
         ],
         "fouteAntwoorden": [
             "Hij vierde feest",
             "Hij vluchtte",
             "Hij sloeg zich met stenen"
         ],
-        "biblicalReference": null
+        "biblicalReference": "2 Samuël 18:33"
     },
     {
-        "vraag": "Met hoeveel man versloeg Gideon het leger van Midian?",
+        "vraag": "Met hoeveel man versloeg Gídeon het leger van Midian?",
         "juisteAntwoord": "300",
         "moeilijkheidsgraad": 2,
         "type": "mc",
         "categories": [
-            "Numeri",
-            "1 Samu\u00ebl"
+            "Richteren"
         ],
         "fouteAntwoorden": [
             "30",
             "1000",
             "3000"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Richteren 7:6"
     },
     {
         "vraag": "Wie was de enige vrouwelijke richter van Isra\u00ebl?",
-        "juisteAntwoord": "Debora",
+        "juisteAntwoord": "Debóra",
         "moeilijkheidsgraad": 1,
         "type": "mc",
         "categories": [
-            "Ruth"
+            "Richteren"
         ],
         "fouteAntwoorden": [
             "Hanna",
             "Ruth",
             "Ja\u00ebl"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Richteren 4: 4 en 5"
     },
     {
         "vraag": "Wat zei Jozua tot het volk in zijn afscheidsrede?",
@@ -2794,19 +2782,18 @@
         "moeilijkheidsgraad": 2,
         "type": "mc",
         "categories": [
-            "Jozua",
-            "Deuteronomium"
+            "Jozua"
         ],
         "fouteAntwoorden": [
             "Verlaat dit land, want het is onrein",
             "Zoek u deze dag een andere god",
             "Laat ons terugkeren naar Egypte"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Jozua 25:15"
     },
     {
-        "vraag": "Wat moest Mozes doen om water uit de rots te krijgen bij Meriba?",
-        "juisteAntwoord": "Tot de rots spreken",
+        "vraag": "Wat moest Mozes doen om water uit de rots te krijgen bij Mériba?",
+        "juisteAntwoord": "Met zijn staf op de rots slaan",
         "moeilijkheidsgraad": 3,
         "type": "mc",
         "categories": [
@@ -2814,11 +2801,11 @@
             "Exodus"
         ],
         "fouteAntwoorden": [
-            "Met zijn staf op de rots slaan",
+            "Tot de rots spreken",
             "Bidden tot de Heere",
             "De rots besprenkelen met bloed"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Éxodus 17: 1-7"
     },
     {
         "vraag": "Wat moest de priester doen met het bloed van het schuldoffer?",
@@ -2826,7 +2813,6 @@
         "moeilijkheidsgraad": 3,
         "type": "mc",
         "categories": [
-            "Leviticus",
             "Exodus"
         ],
         "fouteAntwoorden": [
@@ -2834,7 +2820,7 @@
             "Aan de westzijden van het heilige der heiligen strijken",
             "Met wierook vermengen"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Éxodus 29:12"
     },
     {
         "vraag": "Wat sprak God tot Mozes uit de brandende braambos?",
@@ -2850,7 +2836,7 @@
             "Gij zijt uitverkoren boven alle volken",
             "Ik ben uw God"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Éxodus 3:6"
     },
     {
         "vraag": "Wat bouwde Noach als eerste, na de zondvloed?",
@@ -2865,7 +2851,7 @@
             "Een schip",
             "Een toren"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Genesis 8:20"
     },
     {
         "vraag": "Wat zei God tot de slang na de zondeval van Adam en Eva?g na de zondeval van Adam en Eva?",
@@ -2880,7 +2866,7 @@
             "\"Gij zult uw vrouw verlaten\"",
             "\"Ik zal u genadig zijn\""
         ],
-        "biblicalReference": null
+        "biblicalReference": "Genesis 3:14"
     },
     {
         "vraag": "Welke naam had de discipel Matthe\u00fcs eerst?",
@@ -2895,7 +2881,7 @@
             "Markus",
             "Lazarus"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Markus 9:9"
     },
     {
         "vraag": "Bij wie ging Maria, de moeder van de Heere Jezus, wonen na Jezus dood?",
@@ -2903,9 +2889,6 @@
         "moeilijkheidsgraad": 2,
         "type": "mc",
         "categories": [
-            "Matte\u00fcs",
-            "Marcus",
-            "Lucas",
             "Johannes"
         ],
         "fouteAntwoorden": [
@@ -2913,7 +2896,7 @@
             "Bij Petrus",
             "Bij haar zuster"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Johannes 19: 26, 27"
     },
     {
         "vraag": "Waarheen werd de Heere Jezus door de Geest geleid na zijn doop in de Jordaan?",
@@ -2921,16 +2904,14 @@
         "moeilijkheidsgraad": 2,
         "type": "mc",
         "categories": [
-            "Matte\u00fcs",
-            "Johannes",
-            "Handelingen"
+            "Matte\u00fcs"
         ],
         "fouteAntwoorden": [
             "Naar Galilea",
             "Naar Kaperna\u00fcm",
             "Naar zijn discipelen"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Matthéüs 4 : 1-3"
     },
     {
         "vraag": "Hoe begint de bergrede in Matthe\u00fcs 5?",
@@ -2945,7 +2926,7 @@
             "Met de gelijkenissen van het zaad",
             "Met het gebod der liefde"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Matthéüs 5: 1-12"
     },
     {
         "vraag": "Wat is het eerst wonder van Jezus, genoemd in het bijbelboek Markus?",
@@ -2958,7 +2939,7 @@
             "Petrus loopt op het water",
             "Jezus stilt de storm"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Markus 1:21-28"
     },
     {
         "vraag": "Wie wordt in Matthe\u00fcs het eerst genoemd in de geslachtsrekening van Jezus?",
@@ -2969,11 +2950,11 @@
             "Matte\u00fcs"
         ],
         "fouteAntwoorden": [
-            "David",
+            "Jakob",
             "Adam",
             "Mozes"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Mattéüs 1:1"
     },
     {
         "vraag": "Wat was de eerste boodschap die Jezus predikte in Markus 1?",
@@ -2986,11 +2967,11 @@
             "Gaat heen in de gehele wereld",
             "Bidt en waakt"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Markus 1:15"
     },
     {
         "vraag": "Aan wie is het evangelie van Lukas gericht?",
-        "juisteAntwoord": "Theofilus",
+        "juisteAntwoord": "Theófilus",
         "moeilijkheidsgraad": 2,
         "type": "mc",
         "categories": [
@@ -3001,24 +2982,22 @@
             "Titus",
             "Silas"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Lukas 1:3"
     },
     {
-        "vraag": "Wie zag/zagen Jezus als eerste na Zijn opstanding (Lukas)?",
+        "vraag": "Wie zag/zagen Jezus als eerste na Zijn opstanding?",
         "juisteAntwoord": "De Emma\u00fcsgangers",
         "moeilijkheidsgraad": 2,
         "type": "mc",
         "categories": [
-            "Lucas",
-            "Johannes",
-            "Hemelvaart"
+            "Lucas"
         ],
         "fouteAntwoorden": [
             "Petrus",
             "Maria Magdalena",
             "Johannes"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Lukas 24:15"
     },
     {
         "vraag": "Waar eindigt het bijbelboek Lukas?",
@@ -3026,14 +3005,14 @@
         "moeilijkheidsgraad": 3,
         "type": "mc",
         "categories": [
-            "Lucas"
+            "Lukas"
         ],
         "fouteAntwoorden": [
             "Bij de kruisiging",
             "Bij Pinkensteren in Jeruzalem",
             "Bij de voorzegging van de wederkomst"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Lukas 24: 50-53"
     },
     {
         "vraag": "Met welke woorden begint Johannes 1?",
@@ -3046,7 +3025,7 @@
             "En het geschiedde",
             "Deze is het boek der geslachten"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Johannes 1: 1"
     },
     {
         "vraag": "Wie was de vrouw bij de bron (Johannes)?",
@@ -3061,11 +3040,11 @@
             "Een Romeinse",
             "Een Filistijnse"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Johannes 4:7"
     },
     {
         "vraag": "Wie nam de plaats van Judas in als apostel?",
-        "juisteAntwoord": "Matthias",
+        "juisteAntwoord": "Matthías",
         "moeilijkheidsgraad": 3,
         "type": "mc",
         "categories": [
@@ -3076,7 +3055,7 @@
             "Paulus",
             "Silas"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Handelingen 1: 15-26"
     },
     {
         "vraag": "Wat deed Petrus na Pinksteren?",
@@ -3091,7 +3070,7 @@
             "Hij bad in stilte",
             "Hij vluchtte"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Handelingen 2:14-41"
     },
     {
         "vraag": "Wie bekeerde zich op de weg naar Damascus?",
@@ -3099,15 +3078,14 @@
         "moeilijkheidsgraad": 1,
         "type": "mc",
         "categories": [
-            "Handelingen",
-            "Johannes"
+            "Handelingen"
         ],
         "fouteAntwoorden": [
             "Petrus",
             "Barnabas",
             "Timothe\u00fcs"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Handelingen 9: 1-6"
     },
     {
         "vraag": "Hoe eindigt het boek Handelingen?",
@@ -3122,7 +3100,7 @@
             "Met de verwoesting van Jeruzalem",
             "Met het Pinksteren"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Handelingen 28"
     },
     {
         "vraag": "Hoe beschrijft Paulus zichzelf in Romeinen 1:1?",
@@ -3135,10 +3113,10 @@
             "Een dienaar van de mensen",
             "Een apostel van Johannes"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Romeinen 1:1"
     },
     {
-        "vraag": "Wie zijn de ware kinderen van Abraham (Romeinen)?",
+        "vraag": "Wie zijn de ware kinderen van Abraham?",
         "juisteAntwoord": "Zij die uit het geloof zijn",
         "moeilijkheidsgraad": 2,
         "type": "mc",
@@ -3150,11 +3128,11 @@
             "Zij die in Isra\u00ebl zijn geboren",
             "Zij die uit het vlees zijn"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Romeinen 4:16"
     },
     {
         "vraag": "Wat zegt Paulus dat wij moeten doen met onze lichamen?",
-        "juisteAntwoord": "Ze stellen tot levende, heilige offeranden",
+        "juisteAntwoord": "Ze stellen tot een levende, heilige en Gode welbehaaglijke offerande",
         "moeilijkheidsgraad": 4,
         "type": "mc",
         "categories": [
@@ -3165,7 +3143,7 @@
             "Ze gebruiken voor de goede werken",
             "Ze stellen tot offeranden"
         ],
-        "biblicalReference": "Romeinen 12"
+        "biblicalReference": "Romeinen 12: 1"
     },
     {
         "vraag": "Wat is de samenvatting van de wet?",
@@ -3180,7 +3158,7 @@
             "Gehoorzaamheid",
             "Hoop"
         ],
-        "biblicalReference": "Romeinen 13"
+        "biblicalReference": "Romeinen 13: 8-14"
     },
     {
         "vraag": "Wat is het probleem in de gemeente te Korinthe?",
@@ -3195,24 +3173,22 @@
             "Gebrek aan geloof",
             "Gebrek aan liefde"
         ],
-        "biblicalReference": null
+        "biblicalReference": "1 Korinthe 1: 10-13"
     },
     {
-        "vraag": "Wat is het lichaam van een gelovige (1 Korinthe)?",
+        "vraag": "Wat is het lichaam van een gelovige?",
         "juisteAntwoord": "Een tempel van de Heilige Geest",
         "moeilijkheidsgraad": 2,
         "type": "mc",
         "categories": [
-            "1 Korinti\u00ebrs",
-            "Handelingen",
-            "Spreuken"
+            "1 Korinti\u00ebrs"
         ],
         "fouteAntwoorden": [
             "Stof der aarde",
             "Een zondig vat",
             "Een tijdelijke tent"
         ],
-        "biblicalReference": null
+        "biblicalReference": "1 Korinthe 6: 19 en 20"
     },
     {
         "vraag": "Hoeveel brieven schreef Paulus aan de Korinthi\u00ebrs die bewaard zijn gebleven?",
@@ -3227,10 +3203,10 @@
             "Drie",
             "Vier"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Korinthe 1 en 2"
     },
     {
-        "vraag": "Wat zegt Paulus over zwakheid (2 Korinthe)?",
+        "vraag": "Wat zegt Paulus over zwakheid?",
         "juisteAntwoord": "Mijn kracht wordt in zwakheid volbracht",
         "moeilijkheidsgraad": 2,
         "type": "mc",
@@ -3242,10 +3218,10 @@
             "Vermijd zwakte ten alle tijde",
             "Geloof overwint de zwakheid"
         ],
-        "biblicalReference": null
+        "biblicalReference": "2 Korinthe 12:9"
     },
     {
-        "vraag": "Wat is de bediening die God aan ons gegeven heeft (2 Korinthe)?",
+        "vraag": "Wat is de bediening die God aan ons gegeven heeft?",
         "juisteAntwoord": "Bediening der verzoening",
         "moeilijkheidsgraad": 2,
         "type": "mc",
@@ -3257,7 +3233,7 @@
             "Bediening van genade",
             "Bediening der geboden"
         ],
-        "biblicalReference": null
+        "biblicalReference": "2 Korinthe 5:18"
     },
     {
         "vraag": "Wat verwondert Paulus?",
@@ -3270,7 +3246,7 @@
             "Dat zij veel vasten",
             "Dat zij veel bidden"
         ],
-        "biblicalReference": "Galaten 1"
+        "biblicalReference": "Galaten 1:6"
     },
     {
         "vraag": "Wat zegt Paulus over de wet?",
@@ -3278,17 +3254,17 @@
         "moeilijkheidsgraad": 4,
         "type": "mc",
         "categories": [
-            "Romeinen"
+            "Galaten"
         ],
         "fouteAntwoorden": [
             "Zij rechtvaardigt",
             "Zij leidt weg van de zonden",
             "Zij is vervuld in Christus"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Galaten 3:24"
     },
     {
-        "vraag": "Door wat zijn wij zalig geworden (Galaten)?",
+        "vraag": "Door wat zijn wij zalig geworden?",
         "juisteAntwoord": "Door het geloof, uit genade",
         "moeilijkheidsgraad": 2,
         "type": "mc",
@@ -3300,7 +3276,7 @@
             "Door het onderhouden van de wet",
             "Door gebed en vasten"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Galaten 2:16"
     },
     {
         "vraag": "Wat moeten kinderen doen?",
@@ -3313,17 +3289,14 @@
             "Werken",
             "Bidden"
         ],
-        "biblicalReference": "Efeze 6"
+        "biblicalReference": "Éfeze 6: 1-3"
     },
     {
-        "vraag": "Wat is het leven voor Paulus (Filippenzen)?",
+        "vraag": "Wat is het leven voor Paulus?",
         "juisteAntwoord": "Christus",
         "moeilijkheidsgraad": 2,
         "type": "mc",
         "categories": [
-            "Handelingen",
-            "Matte\u00fcs",
-            "Lucas",
             "Filippenzen"
         ],
         "fouteAntwoorden": [
@@ -3331,24 +3304,22 @@
             "Strijd",
             "Hoop"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Filippenzen 1:21"
     },
     {
-        "vraag": "Wie wordt genoemd als Paulus' medewerker en vriend?",
+        "vraag": "Wie wordt genoemd als Paulus' broeder en medearbeider?",
         "juisteAntwoord": "Epafroditus",
         "moeilijkheidsgraad": 4,
         "type": "mc",
         "categories": [
-            "Handelingen",
-            "Matte\u00fcs",
-            "1 Korinti\u00ebrs"
+            "Filippenzen"
         ],
         "fouteAntwoorden": [
             "Barnabas",
             "Silas",
             "Timothe\u00fcs"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Filippenzen 2:25"
     },
     {
         "vraag": "Wie schreef de brief aan de Kolossenzen?",
@@ -3357,26 +3328,9 @@
         "type": "mc",
         "categories": [],
         "fouteAntwoorden": [
-            "Petrus",
-            "Lukas",
-            "Johannes"
-        ],
-        "biblicalReference": null
-    },
-    {
-        "vraag": "Wie is het beeld van de onzienlijke God?",
-        "juisteAntwoord": "Christus",
-        "moeilijkheidsgraad": 3,
-        "type": "mc",
-        "categories": [
             "Kolossenzen"
         ],
-        "fouteAntwoorden": [
-            "Mozes",
-            "De engel des Heeren",
-            "De Heilige Geest"
-        ],
-        "biblicalReference": "Kolossenzen 1"
+        "biblicalReference": "Kolossenzen 1: 1 en 2"
     },
     {
         "vraag": "Wie schreef de brief aan de Thessalonicenzen?",
@@ -3384,14 +3338,14 @@
         "moeilijkheidsgraad": 5,
         "type": "mc",
         "categories": [
-            "1 Tessalonicenzen"
+            "1 Thessalonicenzen"
         ],
         "fouteAntwoorden": [
             "Paulus",
             "Paulus en Timothe\u00fcs",
             "Paulus en Barnabas"
         ],
-        "biblicalReference": null
+        "biblicalReference": "1 Thessalonicenzen 1:1"
     },
     {
         "vraag": "Wie is het beeld van de onzienlijke God?",
@@ -3406,7 +3360,7 @@
             "De engel des Heeren",
             "De Heilige Geest"
         ],
-        "biblicalReference": "Kolossenzen 1"
+        "biblicalReference": "Kolossenzen 1:15"
     },
     {
         "vraag": "Wat gebeurt er met de doden in Christus bij Zijn wederkomst?",
@@ -3414,16 +3368,14 @@
         "moeilijkheidsgraad": 2,
         "type": "mc",
         "categories": [
-            "1 Korinti\u00ebrs",
-            "Openbaring",
-            "Matte\u00fcs"
+            "1 Thessalonicenzen"
         ],
         "fouteAntwoorden": [
             "Zij worden geoordeeld",
             "Zij keren terug met Jezus",
             "Zij zullen als laatsten opstaan"
         ],
-        "biblicalReference": null
+        "biblicalReference": "1 Thessalonicenzen 4:16"
     },
     {
         "vraag": "Wat moet er eerst gebeuren voor de dag des Heeren komt?",
@@ -3431,16 +3383,14 @@
         "moeilijkheidsgraad": 3,
         "type": "mc",
         "categories": [
-            "Genesis",
-            "Deuteronomium",
-            "Spreuken"
+            "2 Thessalonicenzen"
         ],
         "fouteAntwoorden": [
             "De wederkomst",
             "De opstanding uit de doden",
             "De verdrukking"
         ],
-        "biblicalReference": null
+        "biblicalReference": "2 Thessalonicenzen 2"
     },
     {
         "vraag": "Hoe wordt de \"mens der zonde\" ook wel genoemd?",
@@ -3448,17 +3398,14 @@
         "moeilijkheidsgraad": 3,
         "type": "mc",
         "categories": [
-            "Genesis",
-            "Job",
-            "Matte\u00fcs",
-            "Johannes"
+            "2 Thessalonicenzen"
         ],
         "fouteAntwoorden": [
             "De antichrist",
             "De draak",
             "De overste der duisternis"
         ],
-        "biblicalReference": null
+        "biblicalReference": "2 Thessalonicenzen 2:3"
     },
     {
         "vraag": "Wat is Paulus' zegenwens aan het eind van Thessalonicenzen?",
@@ -3466,33 +3413,33 @@
         "moeilijkheidsgraad": 4,
         "type": "mc",
         "categories": [
-            "1 Tessalonicenzen"
+            "2 Thessalonicenzen"
         ],
         "fouteAntwoorden": [
             "Genade en vrede zij met u allen. Amen.",
             "De liefde Gods en de gemeenschap des Heiligen Geestes zij met u allen, Amen.",
             "De vrede Gods zij met u allen. Amen."
         ],
-        "biblicalReference": null
+        "biblicalReference": "2 Thessalonicenzen 3:18"
     },
     {
-        "vraag": "Wat zegt Paulus over vrouwen in de eredienst (Timothe\u00fcs)?",
+        "vraag": "Wat zegt Paulus over vrouwen in de eredienst?",
         "juisteAntwoord": "Dat zij in stilheid zij",
         "moeilijkheidsgraad": 3,
         "type": "mc",
         "categories": [
-            "Handelingen"
+            "1 Timoótheüs"
         ],
         "fouteAntwoorden": [
             "Dat zij profetere",
             "Dat zij het volk onderwijze",
             "Dat zij het volk predike"
         ],
-        "biblicalReference": null
+        "biblicalReference": "1 Timótheüs 2:11"
     },
     {
-        "vraag": "Wat is God niet (2 Timothe\u00fcs)?",
-        "juisteAntwoord": "Een God der vreesachtigheid",
+        "vraag": "Wat is God niet?",
+        "juisteAntwoord": "Een geest der vreesachtigheid",
         "moeilijkheidsgraad": 4,
         "type": "mc",
         "categories": [],
@@ -3501,10 +3448,10 @@
             "Een God van het oordeel",
             "Een God der twist"
         ],
-        "biblicalReference": null
+        "biblicalReference": "2 Timótheüs 1:7"
     },
     {
-        "vraag": "Welke vergelijking gebruikt Paulus voor het leven van een gelovige (2 Timothe\u00fcs)?",
+        "vraag": "Welke vergelijking gebruikt Paulus voor het leven van een gelovige?",
         "juisteAntwoord": "Soldaat, atleet, landbouwer",
         "moeilijkheidsgraad": 5,
         "type": "mc",
@@ -3516,20 +3463,18 @@
             "Vreemdeling, pelgrim, reiziger",
             "Visser, landbouwer, soldaat"
         ],
-        "biblicalReference": null
+        "biblicalReference": "2 Timótheüs 2"
     },
     {
-        "vraag": "Wie heeft Paulus verlaten, hebbende de tegenwoordige wereld lief gekregen (2 Timothe\u00fcs)?",
-        "juisteAntwoord": "Demas",
+        "vraag": "Wie heeft Paulus verlaten, hebbende de tegenwoordige wereld lief gekregen?",
+        "juisteAntwoord": "Démas",
         "moeilijkheidsgraad": 4,
         "type": "mc",
         "categories": [],
         "fouteAntwoorden": [
-            "Timothe\u00fcs",
-            "Lukas",
-            "Tychikus"
+            "Timothe\u00fcs"
         ],
-        "biblicalReference": null
+        "biblicalReference": "2 Timothéüs 4:10"
     },
     {
         "vraag": "Wat moest Titus doen op Kreta?",
@@ -3537,15 +3482,14 @@
         "moeilijkheidsgraad": 4,
         "type": "mc",
         "categories": [
-            "Handelingen",
-            "Matte\u00fcs"
+            "Titus"
         ],
         "fouteAntwoorden": [
             "De Romeinen overtuigen",
             "Diakenen aanstellen in elke stad",
             "Een gemeente stichten"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Titus 1:5"
     },
     {
         "vraag": "Wat zegt Paulus over de zaligmakende genade Gods?",
@@ -3553,17 +3497,17 @@
         "moeilijkheidsgraad": 5,
         "type": "mc",
         "categories": [
-            "Matte\u00fcs"
+            "Titus"
         ],
         "fouteAntwoorden": [
             "Zij is voor Isra\u00ebl gekomen",
             "Zij is voor de uitverkorenen",
             "Zij leert ons door de wet Christus kennen"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Titus 2:11"
     },
     {
-        "vraag": "Wie was Onesimus?",
+        "vraag": "Wie was Onésimus?",
         "juisteAntwoord": "Een weggelopen slaaf",
         "moeilijkheidsgraad": 3,
         "type": "mc",
@@ -3573,15 +3517,14 @@
             "Een ouderling",
             "Een diaken"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Filémon 1:16"
     },
     {
-        "vraag": "Wie was Melchizedek (Hebree\u00ebn)?",
+        "vraag": "Wie was Melchizédek (Hebree\u00ebn)?",
         "juisteAntwoord": "Een priester zonder geslachtsrekening",
         "moeilijkheidsgraad": 3,
         "type": "mc",
         "categories": [
-            "Genesis",
             "Hebree\u00ebn"
         ],
         "fouteAntwoorden": [
@@ -3589,7 +3532,7 @@
             "Een nakomeling van Abraham",
             "Een nakomeling van Mozes"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Hebreeën 7:3"
     },
     {
         "vraag": "Wie worden in Hebree\u00ebn 11 genoemd als voorbeelden van geloof?",
@@ -3597,7 +3540,6 @@
         "moeilijkheidsgraad": 2,
         "type": "mc",
         "categories": [
-            "Genesis",
             "Hebree\u00ebn"
         ],
         "fouteAntwoorden": [
@@ -3605,10 +3547,10 @@
             "Johannes, Petrus, Andreas",
             "Paulus, Timothe\u00fcs, Titus"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Hebreeën 11"
     },
     {
-        "vraag": "Wat is de oorsprong van verzoeking (Jakobus)?",
+        "vraag": "Wat is de oorsprong van verzoeking?",
         "juisteAntwoord": "Eigen begeerlijkheid",
         "moeilijkheidsgraad": 2,
         "type": "mc",
@@ -3620,10 +3562,10 @@
             "Het eigen vlees",
             "De wereld"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Jakobus 1:14" 
     },
     {
-        "vraag": "Wie moet bidden voor de zieke (Jakobus)?",
+        "vraag": "Wie moet bidden voor de zieke?",
         "juisteAntwoord": "De ouderlingen van de gemeente",
         "moeilijkheidsgraad": 3,
         "type": "mc",
@@ -3635,7 +3577,7 @@
             "De voorganger van de gemeente",
             "De medegelovigen uit de gemeente"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Jakobus 5:14-15"
     },
     {
         "vraag": "Goed schiep de hemel en aarde in zeven dagen",
@@ -3648,7 +3590,7 @@
         "fouteAntwoorden": [
             "Waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Genesis 2:2"
     },
     {
         "vraag": "Ka\u00efn doodde zijn neef Abel",
@@ -3661,7 +3603,7 @@
         "fouteAntwoorden": [
             "Waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Genesis 4:8"
     },
     {
         "vraag": "A\u00e4ron was de vader van Mozes",
@@ -3669,12 +3611,12 @@
         "moeilijkheidsgraad": 1,
         "type": "tf",
         "categories": [
-            "Genesis"
+            "Éxodus"
         ],
         "fouteAntwoorden": [
             "Waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Éxodus 6:19"
     },
     {
         "vraag": "De wet van het jubeljaar wordt uitgelegd in Leviticus",
@@ -3687,7 +3629,7 @@
         "fouteAntwoorden": [
             "Niet waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Leviticus 25: 8-55"
     },
     {
         "vraag": "Leviticus richt zich voornamelijk tot de stam van Juda",
@@ -3700,7 +3642,7 @@
         "fouteAntwoorden": [
             "Waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Leviticus"
     },
     {
         "vraag": "Bileam's ezel sprak tot hem",
@@ -3708,12 +3650,12 @@
         "moeilijkheidsgraad": 1,
         "type": "tf",
         "categories": [
-            "Genesis"
+            "Numeri"
         ],
         "fouteAntwoorden": [
             "Niet waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Numeri 22:28"
     },
     {
         "vraag": "Deuteronomium betekent \"herhaling van de wet\"",
@@ -3726,7 +3668,7 @@
         "fouteAntwoorden": [
             "Niet waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Deuteronomium"
     },
     {
         "vraag": "Deuteronomium beschrijft Mozes' laatste toespraak",
@@ -3739,7 +3681,7 @@
         "fouteAntwoorden": [
             "Niet waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Deuteronomium 32 en 33"
     },
     {
         "vraag": "Jozua was de kleinzoon van Nun",
@@ -3747,13 +3689,12 @@
         "moeilijkheidsgraad": 2,
         "type": "tf",
         "categories": [
-            "Genesis",
             "Jozua"
         ],
         "fouteAntwoorden": [
             "Waar"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Jozua 1:1"
     },
     {
         "vraag": "De zon stond stil tijdens een strijd onder Jozua's leiding",
@@ -5242,10 +5183,10 @@
             "recht",
             "liefelijk"
         ],
-        "biblicalReference": "Leviticus 14:26"
+        "biblicalReference": "Leviticus 10:20"
     },
     {
-        "vraag": "Ook zal de _____ van die olie op des priesters linkerhand gieten (Leviticus)",
+        "vraag": "Ook zal de ... van die olie op des priesters linkerhand gieten",
         "juisteAntwoord": "priester",
         "moeilijkheidsgraad": 3,
         "type": "fitb",
@@ -5255,7 +5196,7 @@
             "man",
             "overgeblevene"
         ],
-        "biblicalReference": null
+        "biblicalReference": "Leviticus 14:26"
     },
     {
         "vraag": "Het boek Numeri begint met een telling van de ... ",

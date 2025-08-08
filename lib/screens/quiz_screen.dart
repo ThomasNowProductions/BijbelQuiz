@@ -10,12 +10,14 @@ import '../services/connection_service.dart';
 import '../services/platform_feedback_service.dart';
 import '../providers/settings_provider.dart';
 import '../providers/game_stats_provider.dart';
+import '../models/lesson.dart';
+import '../providers/lesson_progress_provider.dart';
+import 'lesson_complete_screen.dart';
 
 import '../widgets/metric_item.dart';
 import '../widgets/question_card.dart';
 import 'package:flutter/services.dart' show HapticFeedback;
 import 'dart:async';
-import '../settings_screen.dart';
 import '../services/logger.dart';
 import 'dart:math';
 import '../widgets/quiz_skeleton.dart';
@@ -23,7 +25,10 @@ import '../widgets/quiz_skeleton.dart';
 /// The main quiz screen that displays questions and handles user interactions
 /// with performance optimizations for low-end devices and poor connections.
 class QuizScreen extends StatefulWidget {
-  const QuizScreen({super.key});
+  final Lesson? lesson;
+  final int? sessionLimit; // when set, run in lesson mode with capped questions
+
+  const QuizScreen({super.key, this.lesson, this.sessionLimit});
 
   @override
   State<QuizScreen> createState() => _QuizScreenState();
@@ -43,6 +48,13 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
   final Set<String> _usedQuestions = {};
   List<QuizQuestion> _allQuestions = [];
   bool _allQuestionsLoaded = false;
+
+  // Lesson session mode (cap session to N questions with completion screen)
+  bool get _lessonMode => widget.lesson != null && widget.sessionLimit != null;
+  int _sessionAnswered = 0;
+  int _sessionCorrect = 0;
+  int _sessionCurrentStreakLocal = 0;
+  int _sessionBestStreak = 0;
   
   // Performance-optimized animation controllers
   late AnimationController _scoreAnimationController;
@@ -613,6 +625,14 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
       // Mark the first question as used
       _usedQuestions.add(_allQuestions[0].question);
 
+      // Reset lesson session counters if in lesson mode
+      if (_lessonMode) {
+        _sessionAnswered = 0;
+        _sessionCorrect = 0;
+        _sessionCurrentStreakLocal = 0;
+        _sessionBestStreak = 0;
+      }
+
       // Start the timer (reset)
       _startTimer(reset: true);
     } catch (e) {
@@ -838,6 +858,24 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
     _streakAnimationController.forward(from: 0.0);
     _longestStreakAnimationController.forward(from: 0.0);
 
+    // Update lesson session counters
+    if (_lessonMode) {
+      _sessionAnswered += 1;
+      if (isCorrect) {
+        _sessionCorrect += 1;
+        _sessionCurrentStreakLocal += 1;
+      } else {
+        _sessionCurrentStreakLocal = 0;
+      }
+      _sessionBestStreak = max(_sessionBestStreak, _sessionCurrentStreakLocal);
+    }
+
+    // If in lesson mode and session reached limit, show completion screen
+    if (_lessonMode && _sessionAnswered >= (widget.sessionLimit ?? 0)) {
+      await _completeLessonSession();
+      return;
+    }
+
     // Phase 2: Clear feedback and prepare for transition
     setState(() {
       _quizState = _quizState.copyWith(
@@ -1046,50 +1084,16 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
             ),
           ],
         ),
-        actions: [
-          Container(
-            margin: const EdgeInsets.only(right: 4),
-            decoration: BoxDecoration(
-              color: colorScheme.surfaceContainerHighest,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: IconButton(
-              icon: Icon(
-                Icons.store,
-                color: colorScheme.onSurface.withAlpha((0.7 * 255).round()),
-              ),
-              tooltip: 'Winkel',
-              onPressed: () {
-                _pauseTimer();
-                Navigator.of(context).pushNamed('/store').then((_) => _resumeTimer());
-              },
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(right: 8),
-            decoration: BoxDecoration(
-              color: colorScheme.surfaceContainerHighest,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: IconButton(
-              icon: Icon(
-                Icons.settings_rounded,
-                color: colorScheme.onSurface.withAlpha((0.7 * 255).round()),
-              ),
-              onPressed: () async {
-                _pauseTimer();
-                await Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => SettingsScreen(
-                      onOpenGuide: _pauseTimer,
-                    ),
-                  ),
-                );
-                _resumeTimer();
-              },
-            ),
-          ),
-        ],
+        bottom: _lessonMode
+            ? PreferredSize(
+                preferredSize: const Size.fromHeight(24),
+                child: _LessonProgressBar(
+                  current: _sessionAnswered,
+                  total: widget.sessionLimit ?? 1,
+                ),
+              )
+            : null,
+        actions: const [],
       ),
       body: SafeArea(
         child: Center(
@@ -1413,4 +1417,184 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
       ],
     );
   }
-} 
+
+  int _computeStars(int correct, int total) {
+    if (total <= 0) return 0;
+    final pct = correct / total;
+    if (pct >= 0.9) return 3;
+    if (pct >= 0.7) return 2;
+    if (pct >= 0.5) return 1;
+    return 0;
+  }
+ 
+
+  Future<void> _completeLessonSession() async {
+    // Stop any timers
+    _timer?.cancel();
+
+    final lesson = widget.lesson!;
+    final total = widget.sessionLimit ?? _sessionAnswered;
+    final correct = _sessionCorrect;
+    final bestStreak = _sessionBestStreak;
+    final stars = _computeStars(correct, total);
+
+    // Persist lesson progress
+    final progress = Provider.of<LessonProgressProvider>(context, listen: false);
+    await progress.markCompleted(lesson: lesson, correct: correct, total: total);
+
+    // Show full-screen completion screen
+    final quizContext = context;
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => LessonCompleteScreen(
+          lesson: lesson,
+          stars: stars,
+          correct: correct,
+          total: total,
+          bestStreak: bestStreak,
+          onRetry: () {
+            // Pop completion screen, restart lesson session
+            Navigator.of(ctx).pop();
+            _initializeQuiz();
+          },
+          onExit: () {
+            // Pop completion screen and then the quiz to go back to lessons
+            Navigator.of(ctx).pop();
+            Navigator.of(quizContext).pop();
+          },
+        ),
+      ),
+    );
+  }
+}
+
+// Lesson session progress bar for QuizScreen lesson mode
+class _LessonProgressBar extends StatelessWidget {
+  final int current;
+  final int total;
+
+  const _LessonProgressBar({required this.current, required this.total});
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    final value = total > 0 ? (current / total).clamp(0.0, 1.0) : 0.0;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final maxW = constraints.maxWidth;
+
+          return Stack(
+            clipBehavior: Clip.none,
+            children: [
+              // Track
+              Container(
+                height: 10,
+                decoration: BoxDecoration(
+                  color: cs.surfaceContainerHighest,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+
+              // Animated fill
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 600),
+                curve: Curves.easeOutCubic,
+                width: maxW * value,
+                height: 10,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  gradient: LinearGradient(
+                    colors: [
+                      cs.primary,
+                      cs.primary.withOpacity(0.65),
+                    ],
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: cs.primary.withOpacity(0.35),
+                      blurRadius: 10,
+                      spreadRadius: 0.5,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Soft shimmer overlay on the filled part
+              Positioned.fill(
+                child: IgnorePointer(
+                  child: AnimatedOpacity(
+                    opacity: value == 0.0 ? 0.0 : 1.0,
+                    duration: const Duration(milliseconds: 300),
+                    child: FractionallySizedBox(
+                      widthFactor: value,
+                      alignment: Alignment.centerLeft,
+                      child: ShaderMask(
+                        shaderCallback: (rect) {
+                          return const LinearGradient(
+                            begin: Alignment(-1.0, 0.0),
+                            end: Alignment(1.0, 0.0),
+                            colors: [
+                              Colors.transparent,
+                              Colors.white54,
+                              Colors.transparent,
+                            ],
+                            stops: [0.0, 0.5, 1.0],
+                          ).createShader(rect);
+                        },
+                        blendMode: BlendMode.srcATop,
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 900),
+                          curve: Curves.easeInOut,
+                          width: maxW * value,
+                          height: 10,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: Colors.white.withOpacity(0.10),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              // Cap dot with glow
+              if (value > 0.0)
+                Positioned(
+                  left: (maxW * value) - 6,
+                  top: -2,
+                  child: AnimatedScale(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeOutBack,
+                    scale: 1.0,
+                    child: Container(
+                      width: 12,
+                      height: 12,
+                      decoration: BoxDecoration(
+                        color: cs.primary,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: cs.primary.withOpacity(0.6),
+                            blurRadius: 12,
+                            spreadRadius: 1,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}

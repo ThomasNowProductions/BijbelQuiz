@@ -492,4 +492,84 @@ class QuestionCacheService {
       ),
     };
   }
+
+  /// Returns a map of category -> frequency for the given language.
+  /// Frequencies are computed from metadata without loading full questions.
+  Future<Map<String, int>> getCategoryFrequencies(String language) async {
+    await initialize();
+    await _ensureMetadataLoaded(language);
+
+    final Map<String, int> counts = {};
+    final metadata = _questionMetadata[language] ?? const <Map<String, dynamic>>[];
+    for (int i = 0; i < metadata.length; i++) {
+      final item = metadata[i];
+      try {
+        final cats = (item['categories'] as List?)?.map((e) => e.toString()).toList() ?? const <String>[];
+        for (final c in cats) {
+          if (c.isEmpty) continue;
+          counts[c] = (counts[c] ?? 0) + 1;
+        }
+      } catch (e) {
+        // Skip malformed rows but continue
+        AppLogger.error('Error reading categories for metadata index $i', e);
+      }
+    }
+    return counts;
+  }
+
+  /// Returns all categories sorted by frequency (desc), then alphabetically.
+  Future<List<String>> getAllCategories(String language) async {
+    final counts = await getCategoryFrequencies(language);
+    final cats = counts.keys.toList();
+    cats.sort((a, b) {
+      final cmp = (counts[b] ?? 0).compareTo(counts[a] ?? 0);
+      if (cmp != 0) return cmp;
+      return a.toLowerCase().compareTo(b.toLowerCase());
+    });
+    return cats;
+  }
+
+  /// Loads questions that belong to a specific category.
+  /// This uses metadata to find matching indices and only loads those items.
+  Future<List<QuizQuestion>> getQuestionsByCategory(
+    String language,
+    String category, {
+    int startIndex = 0,
+    int? count,
+  }) async {
+    await initialize();
+    await _ensureMetadataLoaded(language);
+
+    final List<int> indices = [];
+    final metadata = _questionMetadata[language] ?? const <Map<String, dynamic>>[];
+    for (int i = 0; i < metadata.length; i++) {
+      try {
+        final cats = (metadata[i]['categories'] as List?)?.map((e) => e.toString()).toList() ?? const <String>[];
+        if (cats.contains(category)) {
+          indices.add(i);
+        }
+      } catch (e) {
+        AppLogger.error('Error processing metadata at $i for category filter', e);
+      }
+    }
+
+    if (indices.isEmpty) return const [];
+
+    // Apply slicing
+    int endExclusive;
+    if (count != null) {
+      endExclusive = (startIndex + count).clamp(0, indices.length);
+    } else {
+      endExclusive = indices.length;
+    }
+    final sliced = (startIndex < indices.length)
+        ? indices.sublist(startIndex, endExclusive)
+        : const <int>[];
+
+    if (sliced.isEmpty) return const [];
+
+    final loaded = await _loadQuestionsByIndices(language, sliced);
+    // Keep original order
+    return loaded;
+  }
 }
