@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
 import '../models/lesson.dart';
+import './quiz_screen.dart';
+import 'package:provider/provider.dart';
+import '../providers/settings_provider.dart';
+import '../services/lesson_service.dart';
 
 class LessonCompleteScreen extends StatefulWidget {
   final Lesson lesson;
@@ -28,20 +31,14 @@ class LessonCompleteScreen extends StatefulWidget {
 }
 
 class _LessonCompleteScreenState extends State<LessonCompleteScreen> with SingleTickerProviderStateMixin {
-  late final AnimationController _celebrate;
 
   @override
   void initState() {
     super.initState();
-    _celebrate = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1800),
-    )..repeat(period: const Duration(milliseconds: 2200));
   }
 
   @override
   void dispose() {
-    _celebrate.dispose();
     super.dispose();
   }
 
@@ -70,15 +67,7 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen> with Single
               ),
             ),
           ),
-          // Confetti overlay
-          IgnorePointer(
-            child: AnimatedBuilder(
-              animation: _celebrate,
-              builder: (context, _) {
-                return Stack(children: _buildConfetti(context, cs));
-              },
-            ),
-          ),
+          // Confetti removed
           SafeArea(
             child: Center(
               child: ConstrainedBox(
@@ -221,9 +210,9 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen> with Single
                         children: [
                           Expanded(
                             child: OutlinedButton.icon(
-                              onPressed: widget.onExit,
-                              icon: const Icon(Icons.list_alt_rounded),
-                              label: const Text('Terug naar lessen'),
+                              onPressed: widget.onRetry,
+                              icon: const Icon(Icons.refresh_rounded),
+                              label: const Text('Opnieuw'),
                               style: OutlinedButton.styleFrom(
                                 padding: const EdgeInsets.symmetric(vertical: 14),
                               ),
@@ -232,9 +221,9 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen> with Single
                           const SizedBox(width: 12),
                           Expanded(
                             child: ElevatedButton.icon(
-                              onPressed: widget.onRetry,
-                              icon: const Icon(Icons.refresh_rounded),
-                              label: const Text('Opnieuw'),
+                              onPressed: widget.stars > 0 ? _startNextQuiz : null,
+                              icon: const Icon(Icons.arrow_forward_rounded),
+                              label: const Text('Volgende quiz'),
                               style: ElevatedButton.styleFrom(
                                 padding: const EdgeInsets.symmetric(vertical: 14),
                               ),
@@ -253,41 +242,32 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen> with Single
     );
   }
 
-  List<Widget> _buildConfetti(BuildContext context, ColorScheme cs) {
-    final size = MediaQuery.of(context).size;
-    final width = size.width;
-    final height = size.height;
-    final t = _celebrate.value;
-    final colors = <Color>[
-      cs.primary.withOpacity(0.9),
-      const Color(0xFFF59E0B),
-      const Color(0xFF10B981),
-      const Color(0xFF6366F1),
-      const Color(0xFFEF4444),
-      const Color(0xFF06B6D4),
-    ];
-
-    final widgets = <Widget>[];
-    for (int i = 0; i < 18; i++) {
-      final phase = (t + i * 0.07) % 1.0;
-      final x = (math.sin((phase * 2 * math.pi) + i) * 0.4 + 0.5) * width;
-      final y = phase * height * 0.8 + (i % 3) * 24.0;
-      final color = colors[i % colors.length];
-      final iconSize = 12.0 + (i % 3) * 4.0;
-      widgets.add(Positioned(
-        left: x,
-        top: y,
-        child: Opacity(
-          opacity: 0.6 + 0.4 * (math.sin(phase * 2 * math.pi).abs()),
-          child: Transform.rotate(
-            angle: phase * 2 * math.pi,
-            child: Icon(Icons.auto_awesome, color: color, size: iconSize),
-          ),
+  Future<void> _startNextQuiz() async {
+    try {
+      final nextIndex = widget.lesson.index + 1;
+      final settings = Provider.of<SettingsProvider>(context, listen: false);
+      final service = LessonService();
+      final lessons = await service.generateLessons(
+        settings.language,
+        maxLessons: nextIndex + 1,
+        maxQuestionsPerLesson: widget.lesson.maxQuestions,
+      );
+      if (nextIndex < 0 || nextIndex >= lessons.length) return;
+      final nextLesson = lessons[nextIndex];
+      if (!mounted) return;
+      final nav = Navigator.of(context);
+      nav.pop();
+      await nav.push(
+        MaterialPageRoute(
+          builder: (_) => QuizScreen(lesson: nextLesson, sessionLimit: nextLesson.maxQuestions),
         ),
-      ));
+      );
+    } catch (_) {
+      // Silently ignore; button is disabled when not eligible.
     }
-    return widgets;
   }
+
+  // Confetti helper removed
 }
 
 class _StatCard extends StatelessWidget {
