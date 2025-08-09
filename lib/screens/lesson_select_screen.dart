@@ -204,16 +204,25 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                                 final stars = progress.bestStarsFor(lesson.id);
                                 final recommended = totalLessons > 0 && realIndex == continueIdx;
 
+                                final playable = unlocked && realIndex == continueIdx;
+
                                 return _LessonTile(
                                   lesson: lesson,
                                   index: realIndex,
                                   unlocked: unlocked,
+                                  playable: playable,
                                   stars: stars,
                                   recommended: unlocked && recommended,
                                   onTap: () async {
                                     if (!unlocked) {
                                       ScaffoldMessenger.of(context).showSnackBar(
                                         const SnackBar(content: Text('Les is nog vergrendeld')),
+                                      );
+                                      return;
+                                    }
+                                    if (!playable) {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(content: Text('Je kunt alleen de meest recente ontgrendelde les spelen')),
                                       );
                                       return;
                                     }
@@ -427,6 +436,7 @@ class _LessonTile extends StatelessWidget {
   final Lesson lesson;
   final int index;
   final bool unlocked;
+  final bool playable;
   final int stars;
   final bool recommended;
   final VoidCallback onTap;
@@ -435,6 +445,7 @@ class _LessonTile extends StatelessWidget {
     required this.lesson,
     required this.index,
     required this.unlocked,
+    required this.playable,
     required this.stars,
     required this.onTap,
     this.recommended = false,
@@ -481,9 +492,11 @@ class _LessonTile extends StatelessWidget {
     }
 
     return InkWell(
-      onTap: onTap,
+      onTap: playable ? onTap : null,
       borderRadius: BorderRadius.circular(18),
-      child: Ink(
+      child: Opacity(
+        opacity: unlocked && !playable ? 0.55 : 1.0,
+        child: Ink(
         decoration: BoxDecoration(
           gradient: unlocked ? gradient : null,
           color: unlocked ? null : cs.surfaceContainerHighest,
@@ -537,7 +550,7 @@ class _LessonTile extends StatelessWidget {
               ),
           ],
         ),
-      ),
+      )),
     );
   }
 

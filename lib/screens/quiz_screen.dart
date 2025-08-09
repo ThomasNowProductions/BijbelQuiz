@@ -235,6 +235,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
         curve: Curves.easeInOutQuad, // Smoother color transition
       ),
     );
+
+    // Attach timer listeners once; they read controller.duration dynamically
+    _timeAnimationController.addListener(_onTimeTick);
+    _timeAnimationController.addStatusListener(_onTimeStatus);
   }
 
   // Monitor performance by tracking frame times
@@ -258,7 +262,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
     
     // Remove status listeners and dispose animation controllers
     try {
-      _timeAnimationController.removeStatusListener((_) {});
+      _timeAnimationController.removeListener(_onTimeTick);
+      _timeAnimationController.removeStatusListener(_onTimeStatus);
       _timeAnimationController.stop();
       _timeAnimationController.dispose();
       
@@ -332,6 +337,42 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
     }
   }
 
+  // Live timer tick: update timeRemaining once per second using controller value
+  void _onTimeTick() {
+    if (!mounted) return;
+    final duration = _timeAnimationController.duration;
+    if (duration == null) return;
+
+    final elapsedMs = (_timeAnimationController.value * duration.inMilliseconds)
+        .clamp(0.0, duration.inMilliseconds.toDouble())
+        .toInt();
+    final remainingMs = duration.inMilliseconds - elapsedMs;
+    final remainingSeconds = (remainingMs / 1000).ceil();
+
+    if (remainingSeconds < _quizState.timeRemaining) {
+      setState(() {
+        _previousTime = _quizState.timeRemaining;
+        _quizState = _quizState.copyWith(timeRemaining: remainingSeconds);
+      });
+    }
+  }
+
+  // Handle completion to trigger haptics and dialog
+  void _onTimeStatus(AnimationStatus status) {
+    if (!mounted) return;
+    if (status == AnimationStatus.completed) {
+      final settings = Provider.of<SettingsProvider>(context, listen: false);
+      if (settings.hapticFeedback != 'disabled') {
+        if (settings.hapticFeedback == 'medium') {
+          HapticFeedback.heavyImpact();
+        } else {
+          HapticFeedback.mediumImpact();
+        }
+      }
+      _showTimeUpDialog();
+    }
+  }
+
   void _startTimer({bool reset = false}) {
     if (!mounted) return;
     
@@ -356,35 +397,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
     _timeAnimationController.duration = optimalTimerDuration;
     _timeAnimationController.reset();
     
-    // Update the time remaining based on the animation value
-    _timeAnimationController.addStatusListener((status) {
-      if (!mounted) return;
-      
-      final elapsed = _timeAnimationController.value * optimalTimerDuration.inMilliseconds;
-      final remainingMs = optimalTimerDuration.inMilliseconds - elapsed;
-      final remainingSeconds = (remainingMs / 1000).ceil();
-      
-      setState(() {
-        if (remainingSeconds < _quizState.timeRemaining) {
-          _previousTime = _quizState.timeRemaining;
-          _quizState = _quizState.copyWith(timeRemaining: remainingSeconds);
-        }
-      });
-      
-      // Handle timer completion
-      if (status == AnimationStatus.completed) {
-        if (mounted) {
-          if (settings.hapticFeedback != 'disabled') {
-            if (settings.hapticFeedback == 'medium') {
-              HapticFeedback.heavyImpact();
-            } else {
-              HapticFeedback.mediumImpact();
-            }
-          }
-          _showTimeUpDialog();
-        }
-      }
-    });
+    // Listeners are attached once in _initializeAnimations; they read the current duration
     
     // Start the animation
     _timeAnimationController.forward();

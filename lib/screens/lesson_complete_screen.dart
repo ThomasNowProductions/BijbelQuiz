@@ -85,7 +85,8 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen> with Single
                 constraints: const BoxConstraints(maxWidth: 640),
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(20, 20, 20, 28),
-                  child: Column(
+                  child: SingleChildScrollView(
+                    child: Column(
                     children: [
                       const SizedBox(height: 8),
                       // Heading + Icon (animated)
@@ -213,7 +214,7 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen> with Single
                         ],
                       ),
 
-                      const Spacer(),
+                      const SizedBox(height: 16),
 
                       // Call-to-actions
                       Row(
@@ -242,7 +243,7 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen> with Single
                         ],
                       ),
                     ],
-                  ),
+                  )),
                 ),
               ),
             ),
