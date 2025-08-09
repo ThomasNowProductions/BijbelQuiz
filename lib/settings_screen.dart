@@ -11,6 +11,10 @@ import 'services/notification_service.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'screens/feature_test_screen.dart';
 import 'services/question_cache_service.dart';
+import 'services/activation_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'screens/activation_screen.dart';
+import 'screens/lesson_select_screen.dart';
 import 'widgets/quiz_skeleton.dart';
 
 /// The settings screen that allows users to customize app preferences
@@ -408,11 +412,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               colorScheme,
               isSmallScreen,
               isDesktop,
-              onPressed: () => _showResetScoreDialog(context, settings),
-              label: 'Score & voortgang resetten',
-              icon: Icons.refresh,
+              onPressed: () => _showResetAndLogoutDialog(context, settings),
+              label: 'Reset and logout',
+              icon: Icons.logout,
               isDestructive: true,
-              subtitle: 'Reset sterren en ontgrendelde lessen',
+              subtitle: 'Clear all data and deactivate app',
             ),
             _buildActionButton(
               context,
@@ -843,32 +847,57 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Future<void> _showResetScoreDialog(BuildContext context, SettingsProvider settings) async {
+  Future<void> _showResetAndLogoutDialog(BuildContext context, SettingsProvider settings) async {
     final gameStats = Provider.of<GameStatsProvider>(context, listen: false);
     final localContext = context;
     return showDialog(
       context: localContext,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Score en voortgang resetten'),
-          content: Text('Dit reset je score, sterren en ontgrendelde lessen. Deze actie kan niet ongedaan worden gemaakt.'),
+          title: const Text('Reset and logout'),
+          content: const Text('This will clear all scores, progress, cache, settings, and activation. The app will be deactivated and require a new activation code. This action cannot be undone.'),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text('Annuleren'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () async {
                 final nav = Navigator.of(context);
-                gameStats.resetStats();
-                await Provider.of<LessonProgressProvider>(context, listen: false).resetAll();
+                try {
+                  // Reset in-memory providers first
+                  await gameStats.resetStats();
+                  await Provider.of<LessonProgressProvider>(context, listen: false).resetAll();
+
+                  // Clear caches and notifications
+                  await QuestionCacheService().clearCache();
+                  await NotificationService().cancelAllNotifications();
+
+                  // Deactivate app and wipe all persisted data
+                  await ActivationService().clearActivation();
+                  final prefs = await SharedPreferences.getInstance();
+                  await prefs.clear();
+
+                  // Reload settings from cleared storage
+                  await Provider.of<SettingsProvider>(context, listen: false).reloadSettings();
+                } catch (_) {
+                  // ignore errors silently here; we'll proceed to restart flow
+                }
+
                 if (!context.mounted) return;
-                nav.pop();
+                nav.pop(); // Close dialog
+                // Route back to activation gate, wiping navigation stack
+                nav.pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (_) => ActivationGate(child: const LessonSelectScreen()),
+                  ),
+                  (route) => false,
+                );
               },
               style: TextButton.styleFrom(
                 foregroundColor: Theme.of(context).colorScheme.error,
               ),
-              child: Text('Resetten'),
+              child: const Text('Reset and logout'),
             ),
           ],
         );
