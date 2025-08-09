@@ -21,6 +21,8 @@ import 'screens/store_screen.dart';
 import 'providers/lesson_progress_provider.dart';
 import 'screens/lesson_select_screen.dart';
 import 'settings_screen.dart';
+import 'services/activation_service.dart';
+import 'screens/activation_screen.dart';
 
 
 
@@ -174,12 +176,14 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
         '/store': (context) => const StoreScreen(),
         '/settings': (context) => const SettingsScreen(),
       },
-      home: const LessonSelectScreen(),
+      home: ActivationGate(child: const LessonSelectScreen()),
     );
     
     // Show guide if needed after app is built
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final activated = await ActivationService().isActivated();
       if (!settings.isLoading &&
+          activated &&
           !settings.hasSeenGuide &&
           gameStats.navigatorKey.currentContext != null) {
         Navigator.of(gameStats.navigatorKey.currentContext!).push(

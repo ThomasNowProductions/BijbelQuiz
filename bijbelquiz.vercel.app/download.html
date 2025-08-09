@@ -19,14 +19,29 @@
     </div>
 
     <script>
-        // Get APK URL from URL parameters
+        // Activation gate + APK param handling
+        function isActivated() {
+            try { if (localStorage.getItem('bq_activation')) return true; } catch (e) {}
+            return document.cookie.split('; ').some(c => c.startsWith('bq_activation=1'));
+        }
+
         const urlParams = new URLSearchParams(window.location.search);
         const apkUrl = urlParams.get('apk');
-        
-        if (apkUrl) {
-            document.getElementById('downloadBtn').href = apkUrl;
-            document.getElementById('downloadBtn').setAttribute('target', '_blank');
-            document.getElementById('downloadBtn').setAttribute('rel', 'noopener');
+
+        // If not activated, redirect to verify screen and return here after success
+        if (!isActivated()) {
+            const redirectUrl = new URL('verify.html', location.href);
+            redirectUrl.searchParams.set('redirect', 'download.html');
+            if (apkUrl) redirectUrl.searchParams.set('apk', apkUrl);
+            location.replace(redirectUrl.toString());
+        } else {
+            // Configure download button when APK link is provided
+            if (apkUrl) {
+                const btn = document.getElementById('downloadBtn');
+                btn.href = apkUrl;
+                btn.setAttribute('target', '_blank');
+                btn.setAttribute('rel', 'noopener');
+            }
         }
     </script>
 </body>

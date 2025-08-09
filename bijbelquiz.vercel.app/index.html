@@ -19,11 +19,30 @@
         
         <div class="divider">of</div>
         
-        <a href="verify.html" class="btn secondary">Ik heb een activatiecode</a>
+        <a href="verify.html" class="btn secondary" id="codeBtn">Ik heb een activatiecode</a>
         
         <footer>
             &copy; 2025 BijbelQuiz
         </footer>
     </div>
+    <script>
+      // If already activated, turn the secondary button into a direct download button
+      function isActivated() {
+        try { if (localStorage.getItem('bq_activation')) return true; } catch (e) {}
+        return document.cookie.split('; ').some(c => c.startsWith('bq_activation=1'));
+      }
+      const codeBtn = document.getElementById('codeBtn');
+      if (codeBtn) {
+        if (isActivated()) {
+          codeBtn.href = 'download.html';
+          codeBtn.classList.remove('secondary');
+          codeBtn.classList.add('primary');
+          codeBtn.textContent = 'Ga naar download';
+        } else {
+          codeBtn.href = 'verify.html';
+          codeBtn.textContent = 'Ik heb een activatiecode';
+        }
+      }
+    </script>
 </body>
 </html>
