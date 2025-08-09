@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../services/activation_service.dart';
+import 'package:provider/provider.dart';
+import '../providers/settings_provider.dart';
+import './guide_screen.dart';
 
 /// Wrap your main screen with this gate to enforce activation before using the app.
 /// Example:
@@ -40,6 +43,18 @@ class _ActivationGateState extends State<ActivationGate> {
   void _onActivated() {
     setState(() {
       _activated = true;
+    });
+    // After activation, immediately show the guide on first run if not seen yet
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final settings = Provider.of<SettingsProvider>(context, listen: false);
+      if (!settings.hasSeenGuide) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => const GuideScreen(),
+          ),
+        );
+      }
     });
   }
 
