@@ -5,6 +5,7 @@ import '../providers/settings_provider.dart';
 import '../services/notification_service.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:url_launcher/url_launcher.dart';
 import '../services/logger.dart';
 import '../widgets/quiz_skeleton.dart';
 import '../widgets/top_snackbar.dart';
@@ -168,12 +169,18 @@ class GuidePage {
   final String description;
   final IconData icon;
   final bool isNotificationPage;
+  final bool isDonationPage;
+  final String? buttonText;
+  final IconData? buttonIcon;
 
   GuidePage({
     required this.title,
     required this.description,
     required this.icon,
     this.isNotificationPage = false,
+    this.isDonationPage = false,
+    this.buttonText,
+    this.buttonIcon,
   });
 }
 
@@ -212,6 +219,18 @@ List<GuidePage> buildGuidePages({required bool showNotificationPage}) {
     );
   }
 
+  // Add donation page
+  pages.add(
+    GuidePage(
+      title: 'Ondersteun Ons',
+      description: 'Vind je deze app nuttig? Overweeg dan een donatie om ons te helpen de app te onderhouden en te verbeteren. Elke bijdrage wordt gewaardeerd!',
+      icon: Icons.favorite,
+      buttonText: 'Doneer Nu',
+      buttonIcon: Icons.volunteer_activism,
+      isDonationPage: true,
+    ),
+  );
+
   return pages;
 }
 
@@ -228,11 +247,52 @@ class GuidePageView extends StatefulWidget {
   });
 
   @override
-  State<GuidePageView> createState() => GuidePageViewState();
+  State<GuidePageView> createState() => _GuidePageViewState();
 }
 
-class GuidePageViewState extends State<GuidePageView> {
+class _GuidePageViewState extends State<GuidePageView> {
   bool _isLoading = false;
+
+  Future<void> _handleDonation() async {
+    if (_isLoading) return;
+    
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final url = Uri.parse('https://backendbijbelquiz.vercel.app/donate');
+      if (await canLaunchUrl(url)) {
+        await launchUrl(
+          url,
+          mode: LaunchMode.externalApplication,
+        );
+      } else {
+        if (mounted) {
+          showTopSnackBar(
+            context,
+            'Kon de donatiepagina niet openen',
+            style: TopSnackBarStyle.error,
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        showTopSnackBar(
+          context,
+          'Er is een fout opgetreden bij het openen van de donatiepagina',
+          style: TopSnackBarStyle.error,
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
   bool _permissionGranted = true;
 
   @override
@@ -355,6 +415,19 @@ class GuidePageViewState extends State<GuidePageView> {
                           ),
                       textAlign: TextAlign.center,
                     ),
+                    if (widget.page.buttonText != null) ...[
+                      const SizedBox(height: 32),
+                      ElevatedButton.icon(
+                        icon: Icon(widget.page.buttonIcon ?? Icons.arrow_forward),
+                        label: Text(widget.page.buttonText!),
+                        onPressed: widget.page.isDonationPage
+                            ? _handleDonation
+                            : null,
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                        ),
+                      ),
+                    ],
                   ],
                 ),
               ),

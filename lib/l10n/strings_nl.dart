@@ -35,6 +35,11 @@ class AppStrings {
   static const String unlockAll = 'Alles ontgrendelen';
   static const String purchaseSuccessful = 'Aankoop voltooid!';
   
+  // Donation
+  static const String donate = 'Ondersteun ons';
+  static const String donateButton = 'Doneer nu';
+  static const String donateExplanation = 'Steun de ontwikkeling van deze app met een donatie. 40% van alle donaties wordt gedoneerd aan het goede doel';
+  
   // Guide
   static const String guide = 'Handleiding';
   static const String howToPlay = 'Hoe te spelen';
@@ -45,6 +50,7 @@ class AppStrings {
   static const String unknownError = 'Er is een fout opgetreden';
   static const String errorNoQuestions = 'Geen geldige vragen gevonden';
   static const String errorLoadQuestions = 'Fout bij het laden van de vragen';
+  static const String couldNotOpenDonationPage = 'Kon de donatiepagina niet openen';
   
   // Quiz metrics
   static const String streak = 'Reeks';
