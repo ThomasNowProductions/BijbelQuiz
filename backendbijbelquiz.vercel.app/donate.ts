@@ -16,6 +16,11 @@ app.get('/donate', (req: Request, res: Response) => {
 app.get('/donate-page', (req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, 'public', 'donate.html'));
 });
+// Keep compatibility with requests for the source file path
+app.get('/donate.ts', (req: Request, res: Response) => {
+    // Redirect legacy/incorrect requests to the working /donate route
+    res.redirect(301, '/donate');
+});
 
 // Start the server
 app.listen(PORT, () => {
