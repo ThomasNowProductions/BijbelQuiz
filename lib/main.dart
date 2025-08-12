@@ -24,6 +24,7 @@ import 'providers/lesson_progress_provider.dart';
 import 'screens/lesson_select_screen.dart';
 import 'settings_screen.dart';
 import 'services/activation_service.dart';
+import 'services/emergency_service.dart';
 import 'screens/activation_screen.dart';
 
 
@@ -68,6 +69,7 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
   PerformanceService? _performanceService;
   ConnectionService? _connectionService;
   QuestionCacheService? _questionCacheService;
+  EmergencyService? _emergencyService;
   bool _servicesInitialized = false;
 
   @override
@@ -85,6 +87,12 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
         connectionService.initialize(),
         questionCacheService.initialize(),
       ]);
+
+      // Initialize emergency service after the first frame is rendered
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _emergencyService = EmergencyService(context);
+        _emergencyService!.startPolling();
+      });
 
       // Expose services immediately so UI can build without waiting
       setState(() {
