@@ -57,6 +57,21 @@ linked_*.ds
 unlinked.ds
 unlinked_spec.ds
 
+# Node.js
+node_modules/
+.next/
+.next/cache/
+.next/standalone/
+.next/server/
+.next/trace
+.npm
+.eslintcache
+*.tsbuildinfo
+.next/types/**/*.ts
+
+# Next.js SWC binaries
+**/node_modules/@next/swc-*/**/*.node
+
 # Android related
 **/android/**/gradle-wrapper.jar
 .gradle/
