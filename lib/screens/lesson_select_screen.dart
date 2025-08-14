@@ -43,8 +43,6 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
             builder: (context) => const GuideScreen(),
           ),
         );
-        // Mark guide as seen after showing it
-        settings.markGuideAsSeen();
       }
     });
   }

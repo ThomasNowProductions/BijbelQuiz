@@ -1,24 +1,17 @@
 {
-  "name": "bijbelquiz-donate",
+  "name": "bijbelquiz-backend",
   "version": "1.0.0",
-  "description": "Donation page for BijbelQuiz",
-  "main": "dist/donate.js",
+  "description": "Backend for BijbelQuiz app",
+  "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/donate.js",
-    "dev": "ts-node src/donate.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vercel dev",
+    "start": "vercel dev --listen 3001"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "next": "^14.0.0"
   },
   "devDependencies": {
-    "@types/express": "^4.17.17",
-    "@types/node": "^20.4.8",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.1.6"
-  },
-  "engines": {
-    "node": ">=14.0.0"
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
   }
 }

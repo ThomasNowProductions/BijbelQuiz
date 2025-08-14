@@ -16,6 +16,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/lesson_select_screen.dart';
 import 'widgets/quiz_skeleton.dart';
 import 'l10n/strings_nl.dart' as strings;
+import 'services/update_service.dart';
+import 'widgets/update_dialog.dart';
 
 /// The settings screen that allows users to customize app preferences
 class SettingsScreen extends StatefulWidget {
@@ -940,6 +942,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   
                   // Explicitly set hasSeenGuide to false
                   await settings.resetGuideStatus();
+                  
+                  // Reset check for update status
+                  await settings.resetCheckForUpdateStatus();
                 } catch (_) {
                   // ignore errors silently here; we'll proceed to restart flow
                 }
@@ -1029,22 +1034,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void _checkForUpdate(BuildContext context) async {
     final localContext = context;
     try {
-      PackageInfo packageInfo = await PackageInfo.fromPlatform();
-      String version = packageInfo.version;
-      String platform = kIsWeb ? 'web' : Platform.operatingSystem.toLowerCase();
-
-      final Uri url = Uri.parse('https://bijbelquiz.vercel.app/update.php?version=$version&platform=$platform');
-
-      if (await canLaunchUrl(url)) {
-        await launchUrl(url);
-      } else {
-        throw 'Could not launch $url';
+      final updateService = UpdateService();
+      final updateInfo = await updateService.checkForUpdate();
+      
+      if (localContext.mounted) {
+        if (updateInfo != null) {
+          // Show update dialog
+          showDialog(
+            context: localContext,
+            builder: (BuildContext context) {
+              return UpdateDialog(updateInfo: updateInfo);
+            },
+          );
+        } else {
+          // No update available
+          showTopSnackBar(
+            localContext, 
+            'Je gebruikt de nieuwste versie van BijbelQuiz!', 
+            style: TopSnackBarStyle.success
+          );
+        }
       }
     } catch (e) {
       // Use a post-frame callback to ensure the context is still valid
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (localContext.mounted) {
-          showTopSnackBar(localContext, 'Kon niet controleren op updates. Probeer het later opnieuw.', style: TopSnackBarStyle.error);
+          showTopSnackBar(
+            localContext, 
+            'Kon niet controleren op updates. Probeer het later opnieuw.', 
+            style: TopSnackBarStyle.error
+          );
         }
       });
     }

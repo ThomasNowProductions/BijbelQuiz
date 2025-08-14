@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "donate.ts",
+      "src": "api/**/*.ts",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/(.*)",
-      "dest": "/donate.ts"
+      "src": "/api/(.*)",
+      "dest": "/api/$1.ts"
     }
   ]
 }

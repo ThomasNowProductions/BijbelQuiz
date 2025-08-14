@@ -138,4 +138,5 @@ class AppStrings {
   static const String purchaseConfirmation = 'Weet je zeker dat je dit thema wilt ontgrendelen voor';
   static const String purchaseSuccess = 'Thema succesvol ontgrendeld!';
   static const String purchaseError = 'Niet genoeg sterren om dit thema te ontgrendelen.';
+  static const String couldNotOpenDownloadPage = 'Kon de downloadpagina niet openen';
 }

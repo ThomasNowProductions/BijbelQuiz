@@ -12,6 +12,7 @@ class SettingsProvider extends ChangeNotifier {
   static const String _hapticFeedbackKey = 'haptic_feedback';
   static const String _notificationEnabledKey = 'notification_enabled';
   static const String _hasDonatedKey = 'has_donated';
+  static const String _hasCheckedForUpdateKey = 'has_checked_for_update';
   
   SharedPreferences? _prefs;
   String _language = 'nl';
@@ -22,6 +23,7 @@ class SettingsProvider extends ChangeNotifier {
   String _hapticFeedback = 'medium'; // 'disabled', 'soft', 'medium'
   bool _notificationEnabled = true;
   bool _hasDonated = false;
+  bool _hasCheckedForUpdate = false;
   bool _isLoading = true;
   String? _error;
   String? _selectedCustomThemeKey;
@@ -60,6 +62,7 @@ class SettingsProvider extends ChangeNotifier {
   /// Whether notifications are enabled
   bool get notificationEnabled => _notificationEnabled;
   bool get hasDonated => _hasDonated;
+  bool get hasCheckedForUpdate => _hasCheckedForUpdate;
 
   String? get selectedCustomThemeKey => _selectedCustomThemeKey;
   Set<String> get unlockedThemes => _unlockedThemes;
@@ -98,6 +101,7 @@ class SettingsProvider extends ChangeNotifier {
       _hapticFeedback = _prefs?.getString(_hapticFeedbackKey) ?? 'medium';
       _notificationEnabled = _prefs?.getBool(_notificationEnabledKey) ?? true;
       _hasDonated = _prefs?.getBool(_hasDonatedKey) ?? false;
+      _hasCheckedForUpdate = _prefs?.getBool(_hasCheckedForUpdateKey) ?? false;
       final unlocked = _prefs?.getStringList(_unlockedThemesKey);
       if (unlocked != null) {
         _unlockedThemes = unlocked.toSet();
@@ -157,6 +161,19 @@ class SettingsProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       _error = 'Failed to update donation status: ${e.toString()}';
+      notifyListeners();
+      rethrow;
+    }
+  }
+
+  /// Marks that we've checked for updates
+  Future<void> setHasCheckedForUpdate(bool checked) async {
+    try {
+      _hasCheckedForUpdate = checked;
+      await _prefs?.setBool(_hasCheckedForUpdateKey, checked);
+      notifyListeners();
+    } catch (e) {
+      _error = 'Failed to update check for update status: ${e.toString()}';
       notifyListeners();
       rethrow;
     }
@@ -224,6 +241,19 @@ class SettingsProvider extends ChangeNotifier {
   /// Reloads settings from persistent storage
   Future<void> reloadSettings() async {
     await _loadSettings();
+  }
+
+  /// Resets the check for update status so it can check again
+  Future<void> resetCheckForUpdateStatus() async {
+    try {
+      _hasCheckedForUpdate = false;
+      await _prefs?.setBool(_hasCheckedForUpdateKey, false);
+      notifyListeners();
+    } catch (e) {
+      _error = 'Failed to reset check for update status: ${e.toString()}';
+      notifyListeners();
+      rethrow;
+    }
   }
 
   Future<void> setNotificationEnabled(bool enabled) async {

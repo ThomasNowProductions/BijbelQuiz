@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Update - BijbelQuiz</title>
+    <link rel="stylesheet" href="theme.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="center-screen fade-in">
+    <div class="container card">
+        <i class="material-icons icon-large">system_update</i>
+        <h1>Update Beschikbaar</h1>
+        <p>Er is een nieuwe versie van BijbelQuiz beschikbaar!</p>
+        
+        <div id="loadingMessage">
+            <p>Versie-informatie laden...</p>
+        </div>
+        
+        <div id="updateInfo" style="display: none; width: 100%;">
+            <div class="update-details">
+                <p><strong>Platform:</strong> <span id="platformName">...</span></p>
+                <p><strong>Huidige versie:</strong> <span id="currentVersion">...</span></p>
+                <p><strong>Nieuwe versie:</strong> <span id="newVersion">...</span></p>
+            </div>
+            
+            <div class="release-notes">
+                <h2>Wat is er nieuw?</h2>
+                <div id="releaseNotes"></div>
+            </div>
+            
+            <div class="download-section">
+                <button id="downloadBtn" class="btn primary btn-large">
+                    <i class="material-icons" style="vertical-align: middle; margin-right: 8px;">download</i>
+                    Download Update
+                </button>
+                <p class="small-text">De download start automatisch na het klikken</p>
+            </div>
+        </div>
+        
+        <div id="errorMessage" class="error-message" style="display: none;">
+            <p>Fout bij het laden van update-informatie.</p>
+            <button id="retryBtn" class="btn secondary">Opnieuw proberen</button>
+        </div>
+        
+        <footer>
+            &copy; 2025 BijbelQuiz
+        </footer>
+    </div>
+
+    <script>
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const platform = urlParams.get('platform') || 'android';
+        const currentVersion = urlParams.get('current') || '0.0.0';
+        
+        // Determine API base URL (localhost for development, production otherwise)
+        const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        const apiBaseUrl = isLocalhost ? 'http://localhost:3001/api' : 'https://backendbijbelquiz.vercel.app/api';
+        
+        // Platform display names
+        const platformNames = {
+            'android': 'Android',
+            'ios': 'iOS',
+            'windows': 'Windows',
+            'macos': 'macOS',
+            'linux': 'Linux',
+            'web': 'Web'
+        };
+        
+        // Fetch version information
+        async function fetchVersionInfo() {
+            try {
+                // Show loading message
+                document.getElementById('loadingMessage').style.display = 'block';
+                document.getElementById('updateInfo').style.display = 'none';
+                document.getElementById('errorMessage').style.display = 'none';
+                
+                const response = await fetch(`${apiBaseUrl}/version?platform=${platform}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                // Update the page content
+                document.getElementById('platformName').textContent = platformNames[platform] || platform;
+                document.getElementById('currentVersion').textContent = currentVersion;
+                document.getElementById('newVersion').textContent = data.version;
+                document.getElementById('releaseNotes').innerHTML = data.releaseNotes.replace(/\n/g, '<br>');
+                
+                // Set up download button
+                document.getElementById('downloadBtn').onclick = () => {
+                    window.location.href = `${apiBaseUrl}${data.downloadEndpoint}`;
+                };
+                
+                // Hide loading message and show update info
+                document.getElementById('loadingMessage').style.display = 'none';
+                document.getElementById('updateInfo').style.display = 'block';
+            } catch (error) {
+                console.error('Error fetching version info:', error);
+                // Show error message
+                document.getElementById('loadingMessage').style.display = 'none';
+                document.getElementById('errorMessage').style.display = 'block';
+            }
+        }
+        
+        // Initialize
+        fetchVersionInfo();
+        
+        // Retry button
+        document.getElementById('retryBtn').addEventListener('click', fetchVersionInfo);
+        
+        // Auto-download if URL has auto param
+        const autoDownload = urlParams.get('auto') === 'true';
+        if (autoDownload) {
+            // Wait a bit for the page to load, then trigger download
+            setTimeout(() => {
+                document.getElementById('downloadBtn')?.click();
+            }, 1000);
+        }
+    </script>
+
+    <style>
+        .update-details {
+            text-align: left;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: var(--surface-highest);
+            border-radius: var(--radius-sm);
+        }
+        
+        .update-details p {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+        }
+        
+        .release-notes {
+            text-align: left;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: var(--surface-highest);
+            border-radius: var(--radius-sm);
+        }
+        
+        .release-notes h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--on-surface);
+        }
+        
+        .release-notes div {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: var(--text-secondary);
+        }
+        
+        .download-section {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .btn.btn-large {
+            padding: 1rem 2rem;
+            font-size: 1.25rem;
+            margin: 1rem 0;
+        }
+        
+        .small-text {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+        
+        .error-message {
+            text-align: center;
+            color: var(--error);
+        }
+        
+        .error-message p {
+            margin-bottom: 1rem;
+        }
+    </style>
+</body>
+</html>

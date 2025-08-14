@@ -19,30 +19,15 @@
     </div>
 
     <script>
-        // Activation gate + APK param handling
-        function isActivated() {
-            try { if (localStorage.getItem('bq_activation')) return true; } catch (e) {}
-            return document.cookie.split('; ').some(c => c.startsWith('bq_activation=1'));
-        }
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const apkUrl = urlParams.get('apk');
-
-        // If not activated, redirect to verify screen and return here after success
-        if (!isActivated()) {
-            const redirectUrl = new URL('verify.html', location.href);
-            redirectUrl.searchParams.set('redirect', 'download.html');
-            if (apkUrl) redirectUrl.searchParams.set('apk', apkUrl);
-            location.replace(redirectUrl.toString());
-        } else {
-            // Configure download button when APK link is provided
-            if (apkUrl) {
-                const btn = document.getElementById('downloadBtn');
-                btn.href = apkUrl;
-                btn.setAttribute('target', '_blank');
-                btn.setAttribute('rel', 'noopener');
-            }
-        }
+        // Determine API base URL (localhost for development, production otherwise)
+        const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        const apiBaseUrl = isLocalhost ? 'http://localhost:3001/api' : 'https://backendbijbelquiz.vercel.app/api';
+        
+        // Set the download button to use the backend API for Android downloads
+        const btn = document.getElementById('downloadBtn');
+        btn.href = `${apiBaseUrl}/download?platform=android`;
+        btn.setAttribute('target', '_blank');
+        btn.setAttribute('rel', 'noopener');
     </script>
 </body>
 </html>

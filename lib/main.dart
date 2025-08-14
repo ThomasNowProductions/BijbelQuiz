@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:io' show Platform;
 import 'package:provider/single_child_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:logging/logging.dart';
 import 'l10n/strings_nl.dart' as strings;
 
 import 'providers/game_stats_provider.dart';
@@ -23,6 +24,8 @@ import 'screens/store_screen.dart';
 import 'providers/lesson_progress_provider.dart';
 import 'screens/lesson_select_screen.dart';
 import 'settings_screen.dart';
+import 'services/update_service.dart';
+import 'widgets/update_dialog.dart';
 
 /// The main entry point of the BijbelQuiz application with performance optimizations.
 void main() async {
@@ -65,6 +68,7 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
   ConnectionService? _connectionService;
   QuestionCacheService? _questionCacheService;
   bool _servicesInitialized = false;
+  bool _hasShownGuide = false;
 
   @override
   void initState() {
@@ -111,7 +115,8 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
     super.didChangeDependencies();
     // Show guide on first run if not seen yet
     final settings = Provider.of<SettingsProvider>(context, listen: false);
-    if (!settings.isLoading && !settings.hasSeenGuide) {
+    if (!settings.isLoading && !settings.hasSeenGuide && !_hasShownGuide) {
+      _hasShownGuide = true;
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) {
           Navigator.of(context).push(
@@ -119,12 +124,12 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
               builder: (context) => const GuideScreen(),
             ),
           );
-          // Mark guide as seen after showing it
-          settings.markGuideAsSeen();
         }
       });
     }
   }
+  
+
 
   @override
   Widget build(BuildContext context) {
