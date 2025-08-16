@@ -151,7 +151,6 @@ class _FeatureTestScreenState extends State<FeatureTestScreen> {
       return;
     }
     _logAdd('Testing notification scheduling...');
-    final localContext = context;
     await NotificationService().init();
     await NotificationService().scheduleDailyMotivationNotifications();
     await Future.delayed(const Duration(milliseconds: 500));
@@ -215,7 +214,9 @@ class _FeatureTestScreenState extends State<FeatureTestScreen> {
     _logAdd('Dialog: Shown and closed.');
     // Show a snackbar
     if (!mounted) return;
-    showTopSnackBar(localContext, 'This is a test snackbar.');
+    if (localContext.mounted) {
+      showTopSnackBar(localContext, 'This is a test snackbar.');
+    }
     await Future.delayed(const Duration(milliseconds: 800));
     if (!mounted) return;
     _logAdd('Snackbar: Shown.');

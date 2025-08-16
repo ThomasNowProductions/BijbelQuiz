@@ -30,7 +30,6 @@ class QuestionCacheService {
   
   late SharedPreferences _prefs;
   bool _isInitialized = false;
-  bool _isLoading = false;
   
   // Track loading state per language
   final Map<String, Completer<void>> _loadingCompleters = {};
@@ -304,17 +303,7 @@ class QuestionCacheService {
     return '${language}_$index';
   }
   
-  /// Convert QuestionType to string
-  String _questionTypeToString(QuestionType type) {
-    switch (type) {
-      case QuestionType.mc:
-        return 'mc';
-      case QuestionType.fitb:
-        return 'fitb';
-      case QuestionType.tf:
-        return 'tf';
-    }
-  }
+  
 
   /// Get cached metadata for a language
   Future<List<Map<String, dynamic>>?> _getCachedMetadata(String language) async {
@@ -440,11 +429,10 @@ class QuestionCacheService {
       'lruList': <String, dynamic>{
         'size': _lruList.length,
       },
-      'loadedIndices': Map<String, int>.fromIterable(
-        _loadedQuestionIndices.keys,
-        key: (k) => k,
-        value: (k) => _loadedQuestionIndices[k]?.length ?? 0,
-      ),
+      'loadedIndices': {
+        for (final k in _loadedQuestionIndices.keys)
+          k: _loadedQuestionIndices[k]?.length ?? 0,
+      },
     };
   }
 

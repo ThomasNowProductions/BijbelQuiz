@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:collection/collection.dart';
 import 'logger.dart';
 
 /// A service for monitoring and optimizing app performance on low-end devices

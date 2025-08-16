@@ -158,11 +158,15 @@ class _GuideScreenState extends State<GuideScreen> {
       // }
       // Navigate back
       if (!mounted) return;
-      Navigator.of(localContext).pop();
+      if (localContext.mounted) {
+        Navigator.of(localContext).pop();
+      }
     } catch (e) {
       if (!mounted) return;
       final errorMessage = strings.AppStrings.unknownError;
-      showTopSnackBar(localContext, errorMessage, style: TopSnackBarStyle.error);
+      if (localContext.mounted) {
+        showTopSnackBar(localContext, errorMessage, style: TopSnackBarStyle.error);
+      }
     }
   }
 }
@@ -266,30 +270,39 @@ class _GuidePageViewState extends State<GuidePageView> {
       _isLoading = true;
     });
 
+    BuildContext? safeContext;
+    if (mounted) {
+      safeContext = context;
+    }
+
     try {
       final url = Uri.parse('https://backendbijbelquiz.vercel.app/donate.ts');
       if (await canLaunchUrl(url)) {
         // Mark as donated before launching the URL
-        final settings = Provider.of<SettingsProvider>(context, listen: false);
-        await settings.markAsDonated();
+        if (safeContext != null && safeContext.mounted) {
+          final settings = Provider.of<SettingsProvider>(safeContext, listen: false);
+          await settings.markAsDonated();
+        }
         
-        await launchUrl(
-          url,
-          mode: LaunchMode.externalApplication,
-        );
+        if (safeContext != null && safeContext.mounted) {
+          await launchUrl(
+            url,
+            mode: LaunchMode.externalApplication,
+          );
+        }
       } else {
-        if (mounted) {
+        if (safeContext != null && safeContext.mounted) {
           showTopSnackBar(
-            context,
+            safeContext,
             'Kon de donatiepagina niet openen',
             style: TopSnackBarStyle.error,
           );
         }
       }
     } catch (e) {
-      if (mounted) {
+      if (safeContext != null && safeContext.mounted) {
         showTopSnackBar(
-          context,
+          safeContext,
           'Er is een fout opgetreden bij het openen van de donatiepagina',
           style: TopSnackBarStyle.error,
         );

@@ -323,7 +323,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
 
   void _pauseTimer() {
     if (!_isTimerPaused) {
-      final localContext = context;
       _timeAnimationController.stop(); // Pause color animation
       _isTimerPaused = true;
     }
@@ -478,7 +477,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
           ),
           actions: [
             Builder(
-              builder: (context) => TextButton(
+              builder: (ctx) => TextButton(
                 onPressed: hasEnoughPoints ? () {
                   gameStats.spendPointsForRetry().then((success) {
                     if (success && mounted) {
@@ -495,8 +494,20 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
                     }
                   });
                 } : () {
-                  final RenderBox buttonBox = context.findRenderObject() as RenderBox;
-                  showInsufficientPointsTooltip(context, buttonBox);
+                  // Create a local function to handle the tooltip display
+                  void showTooltip() {
+                    if (ctx.mounted) {
+                      try {
+                        final RenderBox buttonBox = ctx.findRenderObject() as RenderBox;
+                        showInsufficientPointsTooltip(ctx, buttonBox);
+                      } catch (e) {
+                        // Ignore errors in finding render object
+                      }
+                    }
+                  }
+                  
+                  // Call the function immediately
+                  showTooltip();
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -554,7 +565,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
       },
     );
     
-    if (tooltipEntry != null) {
+    if (tooltipEntry != null && localContext.mounted) {
       Overlay.of(localContext).insert(tooltipEntry!);
     }
   }
@@ -1191,7 +1202,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.10), // subtle, small shadow
+                                color: Colors.black.withValues(alpha: 0.10), // subtle, small shadow
                                 blurRadius: 4,
                                 offset: Offset(0, 2),
                               ),
@@ -1305,7 +1316,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
                                       });
                                       
                                     } else {
-                                      showTopSnackBar(context, 'Niet genoeg sterren om over te slaan!', style: TopSnackBarStyle.warning);
+                                      if (mounted && context.mounted) {
+                                        showTopSnackBar(context, 'Niet genoeg sterren om over te slaan!', style: TopSnackBarStyle.warning);
+                                      }
                                     }
                                   }
                                 : null,
@@ -1486,6 +1499,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
 
     // Show full-screen completion screen
     final quizContext = context;
+    if (!mounted) return;
     await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => LessonCompleteScreen(
@@ -1552,14 +1566,14 @@ class _LessonProgressBar extends StatelessWidget {
                   gradient: LinearGradient(
                     colors: [
                       cs.primary,
-                      cs.primary.withOpacity(0.65),
+                      cs.primary.withValues(alpha: 0.65),
                     ],
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: cs.primary.withOpacity(0.35),
+                      color: cs.primary.withValues(alpha: 0.35),
                       blurRadius: 10,
                       spreadRadius: 0.5,
                       offset: const Offset(0, 2),
@@ -1598,7 +1612,7 @@ class _LessonProgressBar extends StatelessWidget {
                           height: 10,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
-                            color: Colors.white.withOpacity(0.10),
+                            color: Colors.white.withValues(alpha: 0.10),
                           ),
                         ),
                       ),
@@ -1624,7 +1638,7 @@ class _LessonProgressBar extends StatelessWidget {
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: cs.primary.withOpacity(0.6),
+                            color: cs.primary.withValues(alpha: 0.6),
                             blurRadius: 12,
                             spreadRadius: 1,
                           ),

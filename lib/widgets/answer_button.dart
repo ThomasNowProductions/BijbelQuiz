@@ -130,7 +130,7 @@ class _AnswerButtonState extends State<AnswerButton> with SingleTickerProviderSt
                   )
                 else
                   BoxShadow(
-                    color: widget.colorScheme.shadow.withOpacity(0.06),
+                    color: widget.colorScheme.shadow.withValues(alpha: 0.06),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                     spreadRadius: 0,

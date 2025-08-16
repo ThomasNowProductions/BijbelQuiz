@@ -6,16 +6,16 @@ class EmergencyMessageDialog extends StatelessWidget {
   final VoidCallback? onDismiss;
 
   const EmergencyMessageDialog({
-    Key? key,
+    super.key,
     required this.message,
     required this.isBlocking,
     this.onDismiss,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => !isBlocking,
+    return PopScope(
+      canPop: !isBlocking,
       child: AlertDialog(
         title: const Text('Belangrijke mededeling', 
             style: TextStyle(fontWeight: FontWeight.bold)),

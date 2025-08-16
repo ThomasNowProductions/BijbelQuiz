@@ -157,7 +157,7 @@ class _QuestionCardState extends State<QuestionCard> with SingleTickerProviderSt
                                   : MediaQuery.of(context).size.shortestSide < 360 ? 18 : 20,
                               ),
                               overflow: TextOverflow.visible,
-                              textScaleFactor: MediaQuery.of(context).textScaleFactor.clamp(0.8, 1.2), // Limit text scaling
+                              textScaler: TextScaler.linear(MediaQuery.of(context).textScaler.scale(1.0).clamp(0.8, 1.2)), // Limit text scaling
                               semanticsLabel: widget.question.question,
                             ),
                           ),
@@ -505,10 +505,6 @@ class _FitbAnimatedBlankRowState extends State<_FitbAnimatedBlankRow> with Singl
         : (widget.selectedAnswerIndex != null && widget.options[widget.selectedAnswerIndex!] == widget.question.correctAnswer)
             ? const Color(0xFF10B981)
             : const Color(0xFFEF4444);
-    final blankBorder = Border.all(
-      color: blankColor,
-      width: 3,
-    );
     final blankText = widget.selectedAnswerIndex == null
         ? '______'
         : widget.options[widget.selectedAnswerIndex!];
@@ -583,8 +579,8 @@ class _FitbAnimatedBlankRowState extends State<_FitbAnimatedBlankRow> with Singl
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
                 color: widget.selectedAnswerIndex != null 
-                    ? _colorAnimation.value?.withOpacity(0.1)
-                    : blankColor.withOpacity(0.1),
+                    ? _colorAnimation.value?.withValues(alpha: 0.1)
+                    : blankColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
                   color: widget.selectedAnswerIndex != null 
@@ -595,7 +591,7 @@ class _FitbAnimatedBlankRowState extends State<_FitbAnimatedBlankRow> with Singl
                 boxShadow: widget.selectedAnswerIndex != null
                     ? [
                         BoxShadow(
-                          color: (_colorAnimation.value ?? blankColor).withOpacity(0.3),
+                          color: (_colorAnimation.value ?? blankColor).withValues(alpha: 0.3),
                           blurRadius: 8,
                           spreadRadius: 0,
                           offset: const Offset(0, 2),

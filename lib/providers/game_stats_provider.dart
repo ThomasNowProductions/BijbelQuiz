@@ -150,7 +150,7 @@ class GameStatsProvider extends ChangeNotifier {
           // Add haptic feedback for bonus points
           final context = navigatorKey.currentContext;
           SettingsProvider? settings;
-          if (context != null) {
+          if (context != null && context.mounted) {
             settings = Provider.of<SettingsProvider>(context, listen: false);
           }
           if (settings != null && settings.hapticFeedback != 'disabled') {
@@ -164,7 +164,7 @@ class GameStatsProvider extends ChangeNotifier {
         }
         // Add haptic feedback for regular point
         final localContext = navigatorKey.currentContext;
-        final localSettings = (localContext != null)
+        final localSettings = (localContext != null && localContext.mounted)
             ? Provider.of<SettingsProvider>(localContext, listen: false)
             : null;
         final shouldHaptic = localSettings != null && localSettings.hapticFeedback != 'disabled';
@@ -297,7 +297,7 @@ class GameStatsProvider extends ChangeNotifier {
   Future<void> _playBeep() async {
     try {
       // Try to play a beep using the terminal bell
-      await Process.run('echo', ['-e', '\a']);
+      await Process.run('echo', ['-e', '\x07']);
       AppLogger.debug('Played beep sound');
     } catch (e) {
       AppLogger.error('Error playing beep', e);

@@ -307,7 +307,7 @@ class _HeaderActionButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: cs.outlineVariant),
         ),
-        child: Icon(icon, color: cs.onSurface.withOpacity(0.8), size: 20),
+        child: Icon(icon, color: cs.onSurface.withValues(alpha: 0.8), size: 20),
       ),
     );
   }
@@ -335,8 +335,8 @@ class _ProgressHeader extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            cs.primary.withOpacity(0.12),
-            cs.primary.withOpacity(0.04),
+            cs.primary.withValues(alpha: 0.12),
+            cs.primary.withValues(alpha: 0.04),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -442,27 +442,7 @@ class _ProgressHeader extends StatelessWidget {
     );
   }
 
-  void _confirmReset(BuildContext context) async {
-    final cs = Theme.of(context).colorScheme;
-    final ok = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Voortgang resetten?'),
-        content: const Text('Dit zet je sterren en ontgrendelingen terug naar de beginstand.'),
-        actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: const Text('Annuleren')),
-          ElevatedButton(
-            onPressed: () => Navigator.of(ctx).pop(true),
-            style: ElevatedButton.styleFrom(backgroundColor: cs.primary),
-            child: const Text('Reset'),
-          ),
-        ],
-      ),
-    );
-    if (ok == true && context.mounted) {
-      await Provider.of<LessonProgressProvider>(context, listen: false).resetAll();
-    }
-  }
+  
 }
 
 class _LessonTile extends StatelessWidget {
@@ -537,7 +517,7 @@ class _LessonTile extends StatelessWidget {
           border: Border.all(color: cs.outlineVariant),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.06),
+              color: Colors.black.withValues(alpha: 0.06),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
@@ -553,7 +533,7 @@ class _LessonTile extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
-                    color: (unlocked ? cs.surface : cs.surfaceContainerHigh).withOpacity(0.85),
+                    color: (unlocked ? cs.surface : cs.surfaceContainerHigh).withValues(alpha: 0.85),
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: cs.outlineVariant),
                   ),
@@ -566,7 +546,7 @@ class _LessonTile extends StatelessWidget {
                 child: Center(
                   child: CircleAvatar(
                     radius: 32,
-                    backgroundColor: cs.primary.withOpacity(0.15),
+                    backgroundColor: cs.primary.withValues(alpha: 0.15),
                     child: Icon(iconData, color: cs.primary, size: 36),
                   ),
                 ),
@@ -576,7 +556,7 @@ class _LessonTile extends StatelessWidget {
                 child: Center(
                   child: Icon(
                     Icons.lock_rounded,
-                    color: cs.onSurface.withOpacity(0.7),
+                    color: cs.onSurface.withValues(alpha: 0.7),
                     size: 40,
                   ),
                 ),
@@ -590,12 +570,12 @@ class _LessonTile extends StatelessWidget {
   LinearGradient _tileGradientForIndex(ColorScheme cs, int i) {
     // Soft playful alternating gradients
     final palettes = <List<Color>>[
-      [cs.primaryContainer.withOpacity(0.65), cs.primary.withOpacity(0.25)],
-      [const Color(0xFF10B981).withOpacity(0.55), const Color(0xFF34D399).withOpacity(0.25)],
-      [const Color(0xFF6366F1).withOpacity(0.55), const Color(0xFFA78BFA).withOpacity(0.28)],
-      [const Color(0xFFF59E0B).withOpacity(0.55), const Color(0xFFFCD34D).withOpacity(0.28)],
-      [const Color(0xFFEF4444).withOpacity(0.55), const Color(0xFFF87171).withOpacity(0.28)],
-      [const Color(0xFF06B6D4).withOpacity(0.55), const Color(0xFF67E8F9).withOpacity(0.28)],
+      [cs.primaryContainer.withValues(alpha: 0.65), cs.primary.withValues(alpha: 0.25)],
+      [const Color(0xFF10B981).withValues(alpha: 0.55), const Color(0xFF34D399).withValues(alpha: 0.25)],
+      [const Color(0xFF6366F1).withValues(alpha: 0.55), const Color(0xFFA78BFA).withValues(alpha: 0.28)],
+      [const Color(0xFFF59E0B).withValues(alpha: 0.55), const Color(0xFFFCD34D).withValues(alpha: 0.28)],
+      [const Color(0xFFEF4444).withValues(alpha: 0.55), const Color(0xFFF87171).withValues(alpha: 0.28)],
+      [const Color(0xFF06B6D4).withValues(alpha: 0.55), const Color(0xFF67E8F9).withValues(alpha: 0.28)],
     ];
     final colors = palettes[i % palettes.length];
     return LinearGradient(
@@ -662,75 +642,6 @@ class _LessonGridSkeleton extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class _EmptyState extends StatelessWidget {
-  final String title;
-  final String message;
-  final VoidCallback? primaryAction;
-  final String? primaryLabel;
-  final VoidCallback? secondaryAction;
-  final String? secondaryLabel;
-
-  const _EmptyState({
-    required this.title,
-    required this.message,
-    this.primaryAction,
-    this.primaryLabel,
-    this.secondaryAction,
-    this.secondaryLabel,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: cs.surfaceContainerHighest,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: cs.outlineVariant),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(title, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
-          const SizedBox(height: 6),
-          Text(message, style: Theme.of(context).textTheme.bodyMedium),
-          const SizedBox(height: 12),
-          Row(
-            children: [
-              if (primaryAction != null && primaryLabel != null)
-                Expanded(
-                  child: OutlinedButton(
-                    onPressed: primaryAction,
-                    style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: cs.outlineVariant),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                      minimumSize: const Size.fromHeight(44),
-                    ),
-                    child: Text(primaryLabel!),
-                  ),
-                ),
-              if (primaryAction != null && primaryLabel != null && secondaryAction != null && secondaryLabel != null)
-                const SizedBox(width: 8),
-              if (secondaryAction != null && secondaryLabel != null)
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: secondaryAction,
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(44),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                    ),
-                    child: Text(secondaryLabel!),
-                  ),
-                ),
-            ],
-          ),
-        ],
-      ),
     );
   }
 }

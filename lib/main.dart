@@ -6,16 +6,12 @@ import 'dart:async';
 import 'dart:io' show Platform;
 import 'package:provider/single_child_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:logging/logging.dart';
-import 'l10n/strings_nl.dart' as strings;
 
-import 'providers/game_stats_provider.dart';
 import 'providers/settings_provider.dart';
+import 'providers/game_stats_provider.dart';
 import 'screens/guide_screen.dart';
-import 'screens/quiz_screen.dart';
 import 'theme/app_theme.dart';
 import 'services/logger.dart';
-import 'widgets/quiz_skeleton.dart';
 import 'services/notification_service.dart';
 import 'services/performance_service.dart';
 import 'services/connection_service.dart';
@@ -24,8 +20,6 @@ import 'screens/store_screen.dart';
 import 'providers/lesson_progress_provider.dart';
 import 'screens/lesson_select_screen.dart';
 import 'settings_screen.dart';
-import 'services/update_service.dart';
-import 'widgets/update_dialog.dart';
 
 /// The main entry point of the BijbelQuiz application with performance optimizations.
 void main() async {
@@ -67,7 +61,6 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
   PerformanceService? _performanceService;
   ConnectionService? _connectionService;
   QuestionCacheService? _questionCacheService;
-  bool _servicesInitialized = false;
   bool _hasShownGuide = false;
 
   @override
@@ -91,7 +84,6 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
         _performanceService = performanceService;
         _connectionService = connectionService;
         _questionCacheService = questionCacheService;
-        _servicesInitialized = true;
       });
 
       // Continue with any post-init work when ready

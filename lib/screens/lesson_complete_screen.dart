@@ -33,15 +33,7 @@ class LessonCompleteScreen extends StatefulWidget {
 
 class _LessonCompleteScreenState extends State<LessonCompleteScreen> with SingleTickerProviderStateMixin {
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +51,8 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen> with Single
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  cs.primary.withOpacity(0.10),
-                  cs.primaryContainer.withOpacity(0.06),
+                  cs.primary.withValues(alpha: 0.10),
+                  cs.primaryContainer.withValues(alpha: 0.06),
                   cs.surface,
                 ],
                 begin: Alignment.topCenter,
@@ -88,12 +80,12 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen> with Single
                         child: Container(
                           padding: const EdgeInsets.all(18),
                           decoration: BoxDecoration(
-                            color: cs.primary.withOpacity(0.1),
+                            color: cs.primary.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(color: cs.outlineVariant),
                             boxShadow: [
                               BoxShadow(
-                                color: cs.primary.withOpacity(0.15),
+                                color: cs.primary.withValues(alpha: 0.15),
                                 blurRadius: 18,
                                 spreadRadius: 2,
                                 offset: const Offset(0, 6),
@@ -144,7 +136,7 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen> with Single
                             decoration: BoxDecoration(
                               gradient: RadialGradient(
                                 colors: [
-                                  cs.primary.withOpacity(0.18),
+                                  cs.primary.withValues(alpha: 0.18),
                                   Colors.transparent,
                                 ],
                               ),
@@ -156,7 +148,7 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen> with Single
                               final filled = i < widget.stars;
                               final delayMs = 150 * i;
                               return TweenAnimationBuilder<double>(
-                                key: ValueKey('star_${i}-${widget.stars}'),
+                                key: ValueKey('star_$i-${widget.stars}'),
                                 tween: Tween(begin: 0.0, end: 1.0),
                                 duration: Duration(milliseconds: 500 + delayMs),
                                 curve: Curves.easeOutBack,
@@ -306,7 +298,7 @@ class _StatCard extends StatelessWidget {
         border: Border.all(color: cs.outlineVariant),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withValues(alpha: 0.06),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -324,7 +316,7 @@ class _StatCard extends StatelessWidget {
           Text(
             label,
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: cs.onSurface.withOpacity(0.7),
+                  color: cs.onSurface.withValues(alpha: 0.7),
                 ),
           ),
         ],
@@ -358,7 +350,7 @@ class _AnimatedNumberCard extends StatelessWidget {
         border: Border.all(color: cs.outlineVariant),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withValues(alpha: 0.06),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -384,7 +376,7 @@ class _AnimatedNumberCard extends StatelessWidget {
           Text(
             label,
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: cs.onSurface.withOpacity(0.7),
+                  color: cs.onSurface.withValues(alpha: 0.7),
                 ),
           ),
         ],

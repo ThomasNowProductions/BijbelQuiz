@@ -1,14 +1,10 @@
 import '../models/lesson.dart';
-import '../services/question_cache_service.dart';
 import '../services/logger.dart';
 
 /// Builds Duolingo-like lessons not tied to categories.
 /// Lessons are generic, numbered, and each pulls a capped set of random questions.
 class LessonService {
-  final QuestionCacheService _questionCache;
-
-  LessonService({QuestionCacheService? questionCache})
-      : _questionCache = questionCache ?? QuestionCacheService();
+  LessonService();
 
   /// Generates a sequential list of generic lessons (Les 1, Les 2, ...).
   ///

@@ -59,7 +59,7 @@ class SoundService {
         
         _isInitialized = true;
         AppLogger.info('SoundService initialized (just_audio)');
-      } on MissingPluginException catch (e) {
+      } on MissingPluginException {
         // Handle missing plugin (e.g., when running on Linux/Windows)
         AppLogger.warning('Audio plugin not available on this platform. Running without sound.');
         _isInitialized = true; // Mark as initialized to prevent repeated attempts

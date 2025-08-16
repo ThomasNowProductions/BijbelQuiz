@@ -24,15 +24,15 @@ class QuizSkeleton extends StatelessWidget {
     final orig = colorScheme.surfaceContainerHighest;
     // Use Color.fromRGBO for better Android compatibility with alpha
     final baseColor = Color.fromRGBO(
-      (orig.red * 255).round(),
-      (orig.green * 255).round(),
-      (orig.blue * 255).round(),
+      ((orig.r * 255.0).round() & 0xff),
+      ((orig.g * 255.0).round() & 0xff),
+      ((orig.b * 255.0).round() & 0xff),
       0.3, // 30% opacity
     );
     final highlightColor = Color.fromRGBO(
-      (orig.red * 255).round(),
-      (orig.green * 255).round(),
-      (orig.blue * 255).round(),
+      ((orig.r * 255.0).round() & 0xff),
+      ((orig.g * 255.0).round() & 0xff),
+      ((orig.b * 255.0).round() & 0xff),
       0.6, // 60% opacity
     );
     // Use metricsCount from parameter

@@ -176,7 +176,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Text(
                     strings.AppStrings.donateExplanation,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: colorScheme.onSurface.withOpacity(0.8),
+                      color: colorScheme.onSurface.withValues(alpha: 0.8),
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -188,7 +188,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       await settings.markAsDonated();
                       
                       if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-                        if (mounted) {
+                        if (mounted && context.mounted) {
                           showTopSnackBar(
                             context,
                             strings.AppStrings.couldNotOpenDonationPage,
@@ -927,7 +927,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 try {
                   // Reset in-memory providers first
                   await gameStats.resetStats();
-                  await Provider.of<LessonProgressProvider>(context, listen: false).resetAll();
+                  if (context.mounted) {
+                    await Provider.of<LessonProgressProvider>(context, listen: false).resetAll();
+                  }
 
                   // Clear caches and notifications
                   await QuestionCacheService().clearCache();
@@ -1004,11 +1006,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
         await launchUrl(emailLaunchUri);
       } else {
         // Fallback: Show a dialog with the email address
-        _showBugReportDialog(localContext);
+        if (localContext.mounted) {
+          _showBugReportDialog(localContext);
+        }
       }
     } catch (e) {
       // If there's any error, show the fallback dialog
-      _showBugReportDialog(localContext);
+      if (localContext.mounted) {
+        _showBugReportDialog(localContext);
+      }
     }
   }
 

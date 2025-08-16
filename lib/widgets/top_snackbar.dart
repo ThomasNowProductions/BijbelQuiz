@@ -31,12 +31,11 @@ void showTopSnackBar(
       icon = Icons.warning_amber_rounded;
       break;
     case TopSnackBarStyle.error:
-      backgroundColor = cs.errorContainer.withOpacity(0.9);
+      backgroundColor = cs.errorContainer.withValues(alpha: 0.9);
       accentColor = cs.onErrorContainer;
       icon = Icons.error_outline_rounded;
       break;
     case TopSnackBarStyle.info:
-    default:
       backgroundColor = cs.surfaceContainerHigh;
       accentColor = cs.primary;
       icon = Icons.info_outline_rounded;
