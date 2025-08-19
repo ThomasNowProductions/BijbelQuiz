@@ -5,6 +5,8 @@ interface VersionInfo {
   version: string;
   releaseNotes: string;
   downloadEndpoint: string;
+  platform: string;
+  currentVersion?: string;
 }
 
 interface PlatformVersions {
@@ -110,8 +112,17 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         return;
       }
       
-      // Return version info for the requested platform
-      const versionData = testMode ? testVersions[platform as keyof PlatformVersions] : versions[platform as keyof PlatformVersions];
+      // Get version info for the requested platform
+      const baseVersionData = testMode ? testVersions[platform as keyof PlatformVersions] : versions[platform as keyof PlatformVersions];
+      
+      // Include platform and current version in response
+      const currentVersion = req.query.currentVersion as string || null;
+      const versionData = {
+        ...baseVersionData,
+        platform: platform,
+        currentVersion: currentVersion
+      };
+      
       res.status(200).json(versionData);
     } catch (error) {
       console.error('Error handling GET request:', error);

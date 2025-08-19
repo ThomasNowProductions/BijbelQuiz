@@ -13,6 +13,9 @@ class UpdateService {
   String get apiBaseUrl => _apiBaseUrl;
   String get localApiBaseUrl => _localApiBaseUrl;
   
+  // Unified download page URL
+  String get downloadPageUrl => 'https://bijbelquiz.vercel.app/download.html';
+  
   // Singleton pattern
   static final UpdateService _instance = UpdateService._internal();
   factory UpdateService() => _instance;
@@ -66,6 +69,16 @@ class UpdateService {
       // Silently fail - we don't want update checks to break the app
       return null;
     }
+  }
+  
+  /// Gets the URL for the unified download page
+  String getDownloadPageUrl({String? platform, String? currentVersion}) {
+    final params = <String, String>[];
+    if (platform != null) params.add('platform=$platform');
+    if (currentVersion != null) params.add('current=$currentVersion');
+    
+    final queryString = params.isEmpty ? '' : '?${params.join('&')}';
+    return 'https://bijbelquiz.vercel.app/download.html$queryString';
   }
   
   /// Gets the platform identifier

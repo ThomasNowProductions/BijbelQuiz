@@ -427,6 +427,69 @@ input:-webkit-autofill:active {
   color: var(--text-secondary);
 }
 
+/* Update details */
+.update-details {
+  text-align: left;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--outline);
+}
+
+.update-details p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}
+
+.update-details strong {
+  color: var(--on-surface);
+}
+
+/* Release notes */
+.release-notes {
+  text-align: left;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--outline);
+}
+
+.release-notes h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+  color: var(--on-surface);
+}
+
+.release-notes div {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+/* Download section */
+.download-section {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.small-text {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+
+/* Error message */
+.error-message {
+  text-align: center;
+  color: var(--error);
+}
+
+.error-message p {
+  margin-bottom: 1rem;
+}
+
 /* Components */
 .card {
   background: var(--surface-highest);

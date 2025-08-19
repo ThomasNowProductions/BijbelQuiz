@@ -4,30 +4,538 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Download BijbelQuiz</title>
-    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="https://bijbelquiz.vercel.app/theme.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body class="center-screen fade-in">
     <div class="container card">
-        <i class="material-icons icon-large">download</i>
-        <h1>Download BijbelQuiz</h1>
-        <p>Klik op de knop hieronder om de app te downloaden.</p>
-        <a href="#" id="downloadBtn" class="btn primary btn-large">Download Android App</a>
+        <i class="material-icons icon-large" id="pageIcon">download</i>
+        <h1 id="pageTitle">Download BijbelQuiz</h1>
+        <div id="pageContent">
+            <p id="pageDescription">Kies uw platform om de app te downloaden.</p>
+        </div>
+        
+        <div id="loadingMessage" style="display: none;">
+            <p>Versie-informatie laden...</p>
+        </div>
+        
+        <div id="errorMessage" class="error-message" style="display: none;">
+            <p>Fout bij het laden van update-informatie.</p>
+            <button id="retryBtn" class="btn secondary">Opnieuw proberen</button>
+        </div>
+        
+        <!-- Platform selection grid -->
+        <div id="platformGrid" class="platform-grid" style="display: none;">
+            <!-- Platforms will be dynamically inserted here -->
+        </div>
+        
+        <!-- Single download button (fallback for mobile view) -->
+        <div class="actions" id="singleDownloadActions">
+            <a href="#" id="primaryBtn" class="btn primary btn-large">Download Android App</a>
+            <button id="secondaryBtn" class="btn secondary" style="display: none;">Later</button>
+        </div>
+        
         <footer>
             &copy; 2025 BijbelQuiz
         </footer>
     </div>
 
     <script>
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const platform = urlParams.get('platform') || 'android';
+        const currentVersion = urlParams.get('current') || null;
+        const isUpdate = currentVersion !== null;
+        
         // Determine API base URL (localhost for development, production otherwise)
         const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
         const apiBaseUrl = isLocalhost ? 'http://localhost:3001/api' : 'https://backendbijbelquiz.vercel.app/api';
         
-        // Set the download button to use the backend API for Android downloads
-        const btn = document.getElementById('downloadBtn');
-        btn.href = `${apiBaseUrl}/download?platform=android`;
-        btn.setAttribute('target', '_blank');
-        btn.setAttribute('rel', 'noopener');
+        // Platform configuration
+        const platforms = {
+            'android': {
+                name: 'Android',
+                icon: 'android',
+                description: 'Android App',
+                downloadUrl: `${apiBaseUrl}/download?platform=android`
+            },
+            'ios': {
+                name: 'iOS',
+                icon: 'phone_iphone',
+                description: 'iOS App',
+                downloadUrl: `${apiBaseUrl}/download?platform=ios`
+            },
+            'windows': {
+                name: 'Windows',
+                icon: 'desktop_windows',
+                description: 'Desktop App',
+                downloadUrl: `${apiBaseUrl}/download?platform=windows`
+            },
+            'macos': {
+                name: 'macOS',
+                icon: 'laptop_mac',
+                description: 'Desktop App',
+                downloadUrl: `${apiBaseUrl}/download?platform=macos`
+            },
+            'linux': {
+                name: 'Linux',
+                icon: 'linux',
+                description: 'Desktop App',
+                downloadUrl: `${apiBaseUrl}/download?platform=linux`
+            },
+            'web': {
+                name: 'Web',
+                icon: 'public',
+                description: 'Web App',
+                downloadUrl: `${apiBaseUrl}/download?platform=web`
+            }
+        };
+        
+        // Initialize page based on context
+        if (isUpdate) {
+            // Update flow - keep original design
+            document.getElementById('pageIcon').textContent = 'system_update';
+            document.getElementById('pageTitle').textContent = 'Update Beschikbaar';
+            document.getElementById('pageDescription').textContent = 'Er is een nieuwe versie van BijbelQuiz beschikbaar!';
+            document.getElementById('primaryBtn').innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 8px;">download</i> Download Update';
+            document.getElementById('secondaryBtn').style.display = 'block';
+            document.getElementById('secondaryBtn').textContent = 'Later';
+            
+            // Fetch update information for the specific platform
+            fetchVersionInfo();
+        } else {
+            // Initial download flow - show all platforms
+            showAllPlatforms();
+        }
+        
+        // Show all platforms download interface
+        function showAllPlatforms() {
+            const platformGrid = document.getElementById('platformGrid');
+            const singleDownloadActions = document.getElementById('singleDownloadActions');
+            
+            // Create platform cards
+            Object.keys(platforms).forEach(platformKey => {
+                const platformInfo = platforms[platformKey];
+                const platformCard = document.createElement('div');
+                platformCard.className = 'platform-card';
+                platformCard.innerHTML = `
+                    <div class="platform-icon">
+                        <i class="material-icons">${platformInfo.icon}</i>
+                    </div>
+                    <div class="platform-info">
+                        <h3>${platformInfo.name}</h3>
+                        <p>${platformInfo.description}</p>
+                    </div>
+                    <div class="platform-actions">
+                        <a href="${platformInfo.downloadUrl}" class="btn primary" target="_blank" rel="noopener">
+                            <i class="material-icons" style="font-size: 18px; margin-right: 4px;">download</i>
+                            Download
+                        </a>
+                    </div>
+                `;
+                platformGrid.appendChild(platformCard);
+            });
+            
+            // Show platform grid, hide single download
+            platformGrid.style.display = 'grid';
+            singleDownloadActions.style.display = 'none';
+        }
+        
+        // Fetch version information for all platforms (update flow)
+        async function fetchAllVersionInfo() {
+            try {
+                // Show loading message
+                document.getElementById('pageContent').style.display = 'none';
+                document.getElementById('loadingMessage').style.display = 'block';
+                document.getElementById('errorMessage').style.display = 'none';
+                
+                // Fetch version info for all platforms
+                const versionPromises = Object.keys(platforms).map(async (platformKey) => {
+                    const response = await fetch(`${apiBaseUrl}/version?platform=${platformKey}&currentVersion=${currentVersion}&test=true`);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return { platform: platformKey, data: await response.json() };
+                });
+                
+                const versionResults = await Promise.all(versionPromises);
+                
+                // Create update information
+                const updateInfo = document.createElement('div');
+                updateInfo.className = 'update-details';
+                updateInfo.innerHTML = `
+                    <h2>Updates beschikbaar voor alle platforms</h2>
+                    <div class="version-grid">
+                        ${versionResults.map(result => {
+                            const { platform, data } = result;
+                            const platformInfo = platforms[platform];
+                            const hasUpdate = data.version !== currentVersion;
+                            
+                            return `
+                                <div class="version-item ${hasUpdate ? 'has-update' : 'up-to-date'}">
+                                    <div class="version-platform">
+                                        <i class="material-icons">${platformInfo.icon}</i>
+                                        <span>${platformInfo.name}</span>
+                                    </div>
+                                    <div class="version-info">
+                                        <span class="version-current">${currentVersion}</span>
+                                        <i class="material-icons" style="font-size: 16px; margin: 0 4px;">arrow_forward</i>
+                                        <span class="version-new">${data.version}</span>
+                                    </div>
+                                    ${hasUpdate ? `
+                                        <a href="${apiBaseUrl}${data.downloadEndpoint}" class="btn btn-small primary" target="_blank" rel="noopener">
+                                            Update
+                                        </a>
+                                    ` : `
+                                        <span class="status-badge up-to-date">Actueel</span>
+                                    `}
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+                
+                // Add release notes
+                const releaseNotes = document.createElement('div');
+                releaseNotes.className = 'release-notes';
+                releaseNotes.innerHTML = `
+                    <h2>Wat is er nieuw?</h2>
+                    <div>${versionResults[0].data.releaseNotes.replace(/\n/g, '<br>')}</div>
+                `;
+                
+                // Insert before the platform grid
+                const platformGrid = document.getElementById('platformGrid');
+                platformGrid.parentNode.insertBefore(updateInfo, platformGrid);
+                platformGrid.parentNode.insertBefore(releaseNotes, platformGrid);
+                
+                // Create platform cards with update info
+                Object.keys(platforms).forEach(platformKey => {
+                    const platformInfo = platforms[platformKey];
+                    const versionResult = versionResults.find(r => r.platform === platformKey);
+                    const hasUpdate = versionResult.data.version !== currentVersion;
+                    
+                    const platformCard = document.createElement('div');
+                    platformCard.className = 'platform-card';
+                    platformCard.innerHTML = `
+                        <div class="platform-icon ${hasUpdate ? 'has-update' : ''}">
+                            <i class="material-icons">${platformInfo.icon}</i>
+                            ${hasUpdate ? '<div class="update-badge"></div>' : ''}
+                        </div>
+                        <div class="platform-info">
+                            <h3>${platformInfo.name}</h3>
+                            <p>${platformInfo.description}</p>
+                            <div class="version-badge">
+                                ${hasUpdate ?
+                                    `<span class="update-available">Update ${versionResult.data.version}</span>` :
+                                    `<span class="current-version">Versie ${currentVersion}</span>`
+                                }
+                            </div>
+                        </div>
+                        <div class="platform-actions">
+                            <a href="${platformInfo.downloadUrl}" class="btn primary" target="_blank" rel="noopener">
+                                <i class="material-icons" style="font-size: 18px; margin-right: 4px;">${hasUpdate ? 'system_update' : 'download'}</i>
+                                ${hasUpdate ? 'Update' : 'Download'}
+                            </a>
+                        </div>
+                    `;
+                    platformGrid.appendChild(platformCard);
+                });
+                
+                // Show platform grid
+                platformGrid.style.display = 'grid';
+                document.getElementById('loadingMessage').style.display = 'none';
+                document.getElementById('pageContent').style.display = 'block';
+                
+            } catch (error) {
+                console.error('Error fetching version info:', error);
+                // Show error message
+                document.getElementById('loadingMessage').style.display = 'none';
+                document.getElementById('errorMessage').style.display = 'block';
+            }
+        }
+        
+        // Event listeners
+        document.getElementById('retryBtn').addEventListener('click', fetchAllVersionInfo);
+        
+        document.getElementById('secondaryBtn').addEventListener('click', function() {
+            if (isUpdate) {
+                // For updates, close the window or redirect to index
+                if (window.opener) {
+                    window.close();
+                } else {
+                    window.location.href = 'index.html';
+                }
+            } else {
+                // For initial downloads, go back to index
+                window.location.href = 'index.html';
+            }
+        });
     </script>
+    
+    <style>
+        .update-details {
+            text-align: left;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: var(--surface-highest);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--outline);
+        }
+        
+        .update-details h2 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--on-surface);
+        }
+        
+        .version-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .version-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem;
+            background: var(--surface);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--outline);
+        }
+        
+        .version-item.has-update {
+            border-color: var(--primary);
+            background: var(--surface-variant);
+        }
+        
+        .version-platform {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .version-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .version-current {
+            color: var(--text-secondary);
+        }
+        
+        .version-new {
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .status-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--radius-xs);
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status-badge.up-to-date {
+            background: var(--success-light);
+            color: var(--success);
+        }
+        
+        .release-notes {
+            text-align: left;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: var(--surface-highest);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--outline);
+        }
+        
+        .release-notes h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--on-surface);
+        }
+        
+        .release-notes div {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: var(--text-secondary);
+        }
+        
+        .btn.btn-large {
+            padding: 1rem 2rem;
+            font-size: 1.25rem;
+            margin-top: 20px;
+            display: inline-block;
+            width: auto;
+        }
+        
+        .btn.btn-large:hover {
+            transform: scale(1.05) translateY(-2px);
+        }
+        
+        .btn.btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .error-message {
+            text-align: center;
+            color: var(--error);
+        }
+        
+        .error-message p {
+            margin-bottom: 1rem;
+        }
+        
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            width: 100%;
+        }
+        
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .platform-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--surface);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--outline);
+            transition: all 0.3s ease;
+        }
+        
+        .platform-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
+        }
+        
+        .platform-icon {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--surface-highest);
+            border-radius: 50%;
+            border: 2px solid var(--outline);
+        }
+        
+        .platform-icon.has-update {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+        
+        .platform-icon i {
+            font-size: 32px;
+            color: var(--primary);
+        }
+        
+        .update-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 16px;
+            height: 16px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 2px solid var(--surface);
+        }
+        
+        .platform-info {
+            flex: 1;
+        }
+        
+        .platform-info h3 {
+            margin: 0 0 0.25rem 0;
+            font-size: 1.1rem;
+            color: var(--on-surface);
+        }
+        
+        .platform-info p {
+            margin: 0 0 0.5rem 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .version-badge {
+            margin-bottom: 0.5rem;
+        }
+        
+        .update-available {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            background: var(--primary-light);
+            color: var(--primary);
+            border-radius: var(--radius-xs);
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .current-version {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            background: var(--surface-variant);
+            color: var(--text-secondary);
+            border-radius: var(--radius-xs);
+            font-size: 0.8rem;
+        }
+        
+        .platform-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        @media (min-width: 600px) {
+            .actions {
+                flex-direction: row;
+                justify-content: center;
+            }
+            
+            .actions .btn {
+                width: auto;
+                min-width: 150px;
+            }
+            
+            .platform-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 2rem;
+            }
+            
+            .platform-card {
+                padding: 2rem;
+            }
+            
+            .platform-icon {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .platform-icon i {
+                font-size: 36px;
+            }
+        }
+        
+        @media (min-width: 900px) {
+            .platform-grid {
+                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            }
+        }
+    </style>
 </body>
 </html>
