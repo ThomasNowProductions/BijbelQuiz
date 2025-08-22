@@ -147,37 +147,10 @@ class GameStatsProvider extends ChangeNotifier {
           _longestStreak = _currentStreak;
           pointsToAdd += 5;
           _score += 5;
-          // Add haptic feedback for bonus points
-          final context = navigatorKey.currentContext;
-          SettingsProvider? settings;
-          if (context != null && context.mounted) {
-            settings = Provider.of<SettingsProvider>(context, listen: false);
-          }
-          if (settings != null && settings.hapticFeedback != 'disabled') {
-            if (settings.hapticFeedback == 'medium') {
-              HapticFeedback.mediumImpact();
-            } else {
-              HapticFeedback.lightImpact();
-            }
-          }
           await _prefs?.setInt(_longestStreakKey, _longestStreak);
         }
-        // Add haptic feedback for regular point
-        final localContext = navigatorKey.currentContext;
-        final localSettings = (localContext != null && localContext.mounted)
-            ? Provider.of<SettingsProvider>(localContext, listen: false)
-            : null;
-        final shouldHaptic = localSettings != null && localSettings.hapticFeedback != 'disabled';
-        final hapticType = shouldHaptic ? localSettings.hapticFeedback : null;
         // Play click sound for each point earned
         for (int i = 0; i < pointsToAdd; i++) {
-          if (shouldHaptic) {
-            if (hapticType == 'medium') {
-              HapticFeedback.selectionClick();
-            } else {
-              HapticFeedback.lightImpact();
-            }
-          }
           await _playClickSound();
           // Add a small delay between sounds
           if (i < pointsToAdd - 1) {

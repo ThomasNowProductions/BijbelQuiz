@@ -9,7 +9,6 @@ class SettingsProvider extends ChangeNotifier {
   static const String _slowModeKey = 'game_speed';
   static const String _hasSeenGuideKey = 'has_seen_guide';
   static const String _muteKey = 'mute';
-  static const String _hapticFeedbackKey = 'haptic_feedback';
   static const String _notificationEnabledKey = 'notification_enabled';
   static const String _hasDonatedKey = 'has_donated';
   static const String _hasCheckedForUpdateKey = 'has_checked_for_update';
@@ -20,7 +19,6 @@ class SettingsProvider extends ChangeNotifier {
   String _gameSpeed = 'medium'; // 'slow', 'medium', 'fast'
   bool _hasSeenGuide = false;
   bool _mute = false;
-  String _hapticFeedback = 'medium'; // 'disabled', 'soft', 'medium'
   bool _notificationEnabled = true;
   bool _hasDonated = false;
   bool _hasCheckedForUpdate = false;
@@ -53,9 +51,6 @@ class SettingsProvider extends ChangeNotifier {
   /// Whether sound effects are muted
   bool get mute => _mute;
 
-  /// The current haptic feedback setting
-  String get hapticFeedback => _hapticFeedback;
-  
   /// Whether settings are currently being loaded
   bool get isLoading => _isLoading;
   
@@ -109,7 +104,6 @@ class SettingsProvider extends ChangeNotifier {
       // Safely load boolean settings with type checking
       _hasSeenGuide = _getBoolSetting(_hasSeenGuideKey, defaultValue: false);
       _mute = _getBoolSetting(_muteKey, defaultValue: false);
-      _hapticFeedback = _prefs?.getString(_hapticFeedbackKey) ?? 'medium';
       _notificationEnabled = _getBoolSetting(_notificationEnabledKey, defaultValue: true);
       _hasDonated = _getBoolSetting(_hasDonatedKey, defaultValue: false);
       _hasCheckedForUpdate = _getBoolSetting(_hasCheckedForUpdateKey, defaultValue: false);
@@ -218,25 +212,6 @@ class SettingsProvider extends ChangeNotifier {
       rethrow;
     }
   }
-
-  /// Updates the haptic feedback setting
-  Future<void> setHapticFeedback(String level) async {
-    if (level != 'disabled' && level != 'soft' && level != 'medium') {
-      throw ArgumentError('Haptic feedback level must be "disabled", "soft", or "medium"');
-    }
-
-    try {
-      _hapticFeedback = level;
-      await _prefs?.setString(_hapticFeedbackKey, level);
-      notifyListeners();
-    } catch (e) {
-      _error = 'Failed to save haptic feedback setting: ${e.toString()}';
-      notifyListeners();
-      rethrow;
-    }
-  }
-
-
 
   /// Marks the guide as seen
   Future<void> markGuideAsSeen() async {

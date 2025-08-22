@@ -366,44 +366,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 activeColor: colorScheme.primary,
               ),
             ),
-            if (_hasHapticFeedback) ...[
-              const SizedBox(height: 24),
-              _buildSettingItem(
-                context,
-                settings,
-                colorScheme,
-                isSmallScreen,
-                isDesktop,
-                title: 'Trilfeedback',
-                subtitle: 'Trilfeedback bij het indrukken van knoppen',
-                icon: Icons.vibration,
-                child: DropdownButton<String>(
-                  value: settings.hapticFeedback,
-                  items: [
-                    DropdownMenuItem(
-                      value: 'disabled',
-                      child: Text('Uit'),
-                    ),
-                    DropdownMenuItem(
-                      value: 'soft',
-                      child: Text('Zacht'),
-                    ),
-                    DropdownMenuItem(
-                      value: 'medium',
-                      child: Text('Gemiddeld'),
-                    ),
-                  ],
-                  onChanged: (String? value) {
-                    if (value != null) settings.setHapticFeedback(value);
-                  },
-                  style: TextStyle(
-                    color: colorScheme.onSurface,
-                    fontSize: isSmallScreen ? 12 : 14,
-                  ),
-                  dropdownColor: colorScheme.surfaceContainerHighest,
-                ),
-              ),
-            ],
           ],
         ),
         const SizedBox(height: 24),
@@ -1079,10 +1041,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
-  bool get _hasHapticFeedback {
-    if (kIsWeb) return false;
-    return Platform.isAndroid || Platform.isIOS;
-  }
 }
 
 String _getThemeDropdownValue(SettingsProvider settings) {

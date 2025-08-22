@@ -130,13 +130,6 @@ class _FeatureTestScreenState extends State<FeatureTestScreen> {
     await Future.delayed(const Duration(milliseconds: 200));
     await settings.setMute(oldMute);
     _logAdd('Settings: Mute toggled.');
-    // Haptic
-    final oldHaptic = settings.hapticFeedback;
-    await settings.setHapticFeedback(oldHaptic == 'medium' ? 'soft' : 'medium');
-    await Future.delayed(const Duration(milliseconds: 200));
-    await settings.setHapticFeedback(oldHaptic);
-    _logAdd('Settings: Haptic toggled.');
-
     // Notifications
     final oldNotif = settings.notificationEnabled;
     await settings.setNotificationEnabled(!oldNotif);

@@ -17,7 +17,6 @@ import 'lesson_complete_screen.dart';
 import '../widgets/metric_item.dart';
 import '../widgets/question_card.dart';
 import '../widgets/biblical_reference_dialog.dart';
-import 'package:flutter/services.dart' show HapticFeedback;
 import 'dart:async';
 import '../services/logger.dart';
 import 'dart:math';
@@ -399,14 +398,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
   void _onTimeStatus(AnimationStatus status) {
     if (!mounted) return;
     if (status == AnimationStatus.completed) {
-      final settings = Provider.of<SettingsProvider>(context, listen: false);
-      if (settings.hapticFeedback != 'disabled') {
-        if (settings.hapticFeedback == 'medium') {
-          HapticFeedback.heavyImpact();
-        } else {
-          HapticFeedback.mediumImpact();
-        }
-      }
       _showTimeUpDialog();
     }
   }
@@ -853,15 +844,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
       final isCorrect = selectedAnswer == _quizState.question.correctAnswer;
       final settings = Provider.of<SettingsProvider>(context, listen: false);
 
-      // Add haptic feedback for answer selection
-      if (settings.hapticFeedback != 'disabled') {
-        if (settings.hapticFeedback == 'medium') {
-          HapticFeedback.mediumImpact();
-        } else {
-          HapticFeedback.lightImpact();
-        }
-      }
-
       // Handle the answer sequence
       _handleAnswerSequence(isCorrect);
     } else if (_quizState.question.type == QuestionType.tf) {
@@ -871,15 +853,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
       final correctIndex = (lcCorrect == 'waar' || lcCorrect == 'true' || lcCorrect == 'goed') ? 0 : 1;
       final isCorrect = selectedIndex == correctIndex;
       final settings = Provider.of<SettingsProvider>(context, listen: false);
-
-      // Add haptic feedback for answer selection
-      if (settings.hapticFeedback != 'disabled') {
-        if (settings.hapticFeedback == 'medium') {
-          HapticFeedback.mediumImpact();
-        } else {
-          HapticFeedback.lightImpact();
-        }
-      }
 
       // Handle the answer sequence
       _handleAnswerSequence(isCorrect);
@@ -947,14 +920,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
         // Ignore sound errors to prevent affecting visual feedback timing
         AppLogger.warning('Sound playback error (incorrect): $e');
       });
-      // Apply haptic feedback immediately for incorrect answers
-      if (settings.hapticFeedback != 'disabled') {
-        if (settings.hapticFeedback == 'medium') {
-          HapticFeedback.heavyImpact();
-        } else {
-          HapticFeedback.mediumImpact();
-        }
-      }
     }
 
     // Use platform-standardized feedback duration for consistent cross-platform experience
