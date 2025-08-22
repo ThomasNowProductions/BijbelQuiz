@@ -32,7 +32,14 @@
         <!-- Single download button (fallback for mobile view) -->
         <div class="actions" id="singleDownloadActions">
             <a href="#" id="primaryBtn" class="btn primary btn-large">Download Android App</a>
-            <button id="secondaryBtn" class="btn secondary" style="display: none;">Later</button>
+        </div>
+        
+        <div class="web-play-section" id="webPlaySection" style="display: none;">
+            <p>Of speel direct in uw browser:</p>
+            <a href="https://playbijbelquiz.vercel.app" class="btn secondary" target="_blank" rel="noopener">
+                <i class="material-icons" style="vertical-align: middle; margin-right: 8px;">play_arrow</i>
+                Speel op Web
+            </a>
         </div>
         
         <footer>
@@ -93,19 +100,18 @@
         
         // Initialize page based on context
         if (isUpdate) {
-            // Update flow - keep original design
+            // Update flow - show update for specific platform
             document.getElementById('pageIcon').textContent = 'system_update';
             document.getElementById('pageTitle').textContent = 'Update Beschikbaar';
             document.getElementById('pageDescription').textContent = 'Er is een nieuwe versie van BijbelQuiz beschikbaar!';
-            document.getElementById('primaryBtn').innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 8px;">download</i> Download Update';
-            document.getElementById('secondaryBtn').style.display = 'block';
-            document.getElementById('secondaryBtn').textContent = 'Later';
             
             // Fetch update information for the specific platform
-            fetchVersionInfo();
+            fetchVersionInfo(platform);
         } else {
             // Initial download flow - show all platforms
             showAllPlatforms();
+            // Show web play option
+            document.getElementById('webPlaySection').style.display = 'block';
         }
         
         // Show all platforms download interface
@@ -113,8 +119,9 @@
             const platformGrid = document.getElementById('platformGrid');
             const singleDownloadActions = document.getElementById('singleDownloadActions');
             
-            // Create platform cards
-            Object.keys(platforms).forEach(platformKey => {
+            // Create platform cards for main platforms (Android and Windows)
+            const mainPlatforms = ['android', 'windows'];
+            mainPlatforms.forEach(platformKey => {
                 const platformInfo = platforms[platformKey];
                 const platformCard = document.createElement('div');
                 platformCard.className = 'platform-card';
@@ -141,108 +148,41 @@
             singleDownloadActions.style.display = 'none';
         }
         
-        // Fetch version information for all platforms (update flow)
-        async function fetchAllVersionInfo() {
+        // Fetch version information for a specific platform (update flow)
+        async function fetchVersionInfo(platform) {
             try {
                 // Show loading message
                 document.getElementById('pageContent').style.display = 'none';
                 document.getElementById('loadingMessage').style.display = 'block';
                 document.getElementById('errorMessage').style.display = 'none';
                 
-                // Fetch version info for all platforms
-                const versionPromises = Object.keys(platforms).map(async (platformKey) => {
-                    const response = await fetch(`${apiBaseUrl}/version?platform=${platformKey}&currentVersion=${currentVersion}&test=true`);
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return { platform: platformKey, data: await response.json() };
-                });
+                // Fetch version info for the specific platform
+                const response = await fetch(`${apiBaseUrl}/version?platform=${platform}&currentVersion=${currentVersion}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
                 
-                const versionResults = await Promise.all(versionPromises);
+                // Check if update is actually available
+                const hasUpdate = data.version !== currentVersion;
                 
-                // Create update information
-                const updateInfo = document.createElement('div');
-                updateInfo.className = 'update-details';
-                updateInfo.innerHTML = `
-                    <h2>Updates beschikbaar voor alle platforms</h2>
-                    <div class="version-grid">
-                        ${versionResults.map(result => {
-                            const { platform, data } = result;
-                            const platformInfo = platforms[platform];
-                            const hasUpdate = data.version !== currentVersion;
-                            
-                            return `
-                                <div class="version-item ${hasUpdate ? 'has-update' : 'up-to-date'}">
-                                    <div class="version-platform">
-                                        <i class="material-icons">${platformInfo.icon}</i>
-                                        <span>${platformInfo.name}</span>
-                                    </div>
-                                    <div class="version-info">
-                                        <span class="version-current">${currentVersion}</span>
-                                        <i class="material-icons" style="font-size: 16px; margin: 0 4px;">arrow_forward</i>
-                                        <span class="version-new">${data.version}</span>
-                                    </div>
-                                    ${hasUpdate ? `
-                                        <a href="${apiBaseUrl}${data.downloadEndpoint}" class="btn btn-small primary" target="_blank" rel="noopener">
-                                            Update
-                                        </a>
-                                    ` : `
-                                        <span class="status-badge up-to-date">Actueel</span>
-                                    `}
-                                </div>
-                            `;
-                        }).join('')}
-                    </div>
-                `;
+                // Update UI based on whether an update is available
+                if (hasUpdate) {
+                    // Show update information
+                    document.getElementById('pageTitle').textContent = 'Update Beschikbaar';
+                    document.getElementById('pageDescription').textContent = `Er is een nieuwe versie van BijbelQuiz beschikbaar voor ${platforms[platform].name}!`;
+                    document.getElementById('primaryBtn').innerHTML = `<i class="material-icons" style="vertical-align: middle; margin-right: 8px;">system_update</i> Update naar ${data.version}`;
+                    document.getElementById('primaryBtn').href = `${apiBaseUrl}${data.downloadEndpoint}`;
+                } else {
+                    // No update available - show current version info
+                    document.getElementById('pageTitle').textContent = 'Geen Update Beschikbaar';
+                    document.getElementById('pageDescription').textContent = `U gebruikt al de nieuwste versie van BijbelQuiz voor ${platforms[platform].name}.`;
+                    document.getElementById('primaryBtn').innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 8px;">check</i> Huidige Versie';
+                    document.getElementById('primaryBtn').href = '#';
+                    document.getElementById('primaryBtn').style.pointerEvents = 'none';
+                }
                 
-                // Add release notes
-                const releaseNotes = document.createElement('div');
-                releaseNotes.className = 'release-notes';
-                releaseNotes.innerHTML = `
-                    <h2>Wat is er nieuw?</h2>
-                    <div>${versionResults[0].data.releaseNotes.replace(/\n/g, '<br>')}</div>
-                `;
-                
-                // Insert before the platform grid
-                const platformGrid = document.getElementById('platformGrid');
-                platformGrid.parentNode.insertBefore(updateInfo, platformGrid);
-                platformGrid.parentNode.insertBefore(releaseNotes, platformGrid);
-                
-                // Create platform cards with update info
-                Object.keys(platforms).forEach(platformKey => {
-                    const platformInfo = platforms[platformKey];
-                    const versionResult = versionResults.find(r => r.platform === platformKey);
-                    const hasUpdate = versionResult.data.version !== currentVersion;
-                    
-                    const platformCard = document.createElement('div');
-                    platformCard.className = 'platform-card';
-                    platformCard.innerHTML = `
-                        <div class="platform-icon ${hasUpdate ? 'has-update' : ''}">
-                            <i class="material-icons">${platformInfo.icon}</i>
-                            ${hasUpdate ? '<div class="update-badge"></div>' : ''}
-                        </div>
-                        <div class="platform-info">
-                            <h3>${platformInfo.name}</h3>
-                            <p>${platformInfo.description}</p>
-                            <div class="version-badge">
-                                ${hasUpdate ?
-                                    `<span class="update-available">Update ${versionResult.data.version}</span>` :
-                                    `<span class="current-version">Versie ${currentVersion}</span>`
-                                }
-                            </div>
-                        </div>
-                        <div class="platform-actions">
-                            <a href="${platformInfo.downloadUrl}" class="btn primary" target="_blank" rel="noopener">
-                                <i class="material-icons" style="font-size: 18px; margin-right: 4px;">${hasUpdate ? 'system_update' : 'download'}</i>
-                                ${hasUpdate ? 'Update' : 'Download'}
-                            </a>
-                        </div>
-                    `;
-                    platformGrid.appendChild(platformCard);
-                });
-                
-                // Show platform grid
-                platformGrid.style.display = 'grid';
+                // Hide loading, show content
                 document.getElementById('loadingMessage').style.display = 'none';
                 document.getElementById('pageContent').style.display = 'block';
                 
@@ -255,117 +195,12 @@
         }
         
         // Event listeners
-        document.getElementById('retryBtn').addEventListener('click', fetchAllVersionInfo);
-        
-        document.getElementById('secondaryBtn').addEventListener('click', function() {
-            if (isUpdate) {
-                // For updates, close the window or redirect to index
-                if (window.opener) {
-                    window.close();
-                } else {
-                    window.location.href = 'index.html';
-                }
-            } else {
-                // For initial downloads, go back to index
-                window.location.href = 'index.html';
-            }
+        document.getElementById('retryBtn').addEventListener('click', function() {
+            fetchVersionInfo(platform);
         });
     </script>
     
     <style>
-        .update-details {
-            text-align: left;
-            margin: 1.5rem 0;
-            padding: 1rem;
-            background: var(--surface-highest);
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--outline);
-        }
-        
-        .update-details h2 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            color: var(--on-surface);
-        }
-        
-        .version-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        
-        .version-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0.75rem;
-            background: var(--surface);
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--outline);
-        }
-        
-        .version-item.has-update {
-            border-color: var(--primary);
-            background: var(--surface-variant);
-        }
-        
-        .version-platform {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 500;
-        }
-        
-        .version-info {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-        }
-        
-        .version-current {
-            color: var(--text-secondary);
-        }
-        
-        .version-new {
-            color: var(--primary);
-            font-weight: 500;
-        }
-        
-        .status-badge {
-            padding: 0.25rem 0.5rem;
-            border-radius: var(--radius-xs);
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-        
-        .status-badge.up-to-date {
-            background: var(--success-light);
-            color: var(--success);
-        }
-        
-        .release-notes {
-            text-align: left;
-            margin: 1.5rem 0;
-            padding: 1rem;
-            background: var(--surface-highest);
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--outline);
-        }
-        
-        .release-notes h2 {
-            font-size: 1.2rem;
-            margin-bottom: 0.75rem;
-            color: var(--on-surface);
-        }
-        
-        .release-notes div {
-            font-size: 0.95rem;
-            line-height: 1.5;
-            color: var(--text-secondary);
-        }
-        
         .btn.btn-large {
             padding: 1rem 2rem;
             font-size: 1.25rem;
@@ -376,11 +211,6 @@
         
         .btn.btn-large:hover {
             transform: scale(1.05) translateY(-2px);
-        }
-        
-        .btn.btn-small {
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
         }
         
         .error-message {
@@ -435,25 +265,9 @@
             border: 2px solid var(--outline);
         }
         
-        .platform-icon.has-update {
-            border-color: var(--primary);
-            background: var(--primary-light);
-        }
-        
         .platform-icon i {
             font-size: 32px;
             color: var(--primary);
-        }
-        
-        .update-badge {
-            position: absolute;
-            top: -4px;
-            right: -4px;
-            width: 16px;
-            height: 16px;
-            background: var(--primary);
-            border-radius: 50%;
-            border: 2px solid var(--surface);
         }
         
         .platform-info {
@@ -472,33 +286,22 @@
             color: var(--text-secondary);
         }
         
-        .version-badge {
-            margin-bottom: 0.5rem;
-        }
-        
-        .update-available {
-            display: inline-block;
-            padding: 0.25rem 0.5rem;
-            background: var(--primary-light);
-            color: var(--primary);
-            border-radius: var(--radius-xs);
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-        
-        .current-version {
-            display: inline-block;
-            padding: 0.25rem 0.5rem;
-            background: var(--surface-variant);
-            color: var(--text-secondary);
-            border-radius: var(--radius-xs);
-            font-size: 0.8rem;
-        }
-        
         .platform-actions {
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
+        }
+        
+        .web-play-section {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--outline);
+        }
+        
+        .web-play-section p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
         }
         
         @media (min-width: 600px) {
