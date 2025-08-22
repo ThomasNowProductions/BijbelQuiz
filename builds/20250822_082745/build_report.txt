@@ -1,0 +1,24 @@
+BijbelQuiz Build Report
+======================
+
+Build Date: Fri Aug 22 08:30:54 AM CEST 2025
+Flutter Version: Flutter 3.32.8
+Build Directory: builds/20250822_082745
+
+Platform Builds:
+-rw-rw-r--  1 thomas thomas 45970004 Aug 22 08:30 bijbelquiz-android.aab
+-rw-rw-r--  1 thomas thomas 25429340 Aug 22 08:30 bijbelquiz-android.apk
+
+Build Commands Used:
+- flutter clean
+- flutter pub get
+- flutter test
+- flutter analyze
+- flutter build apk --release
+- flutter build appbundle --release
+- flutter build web --release
+- flutter build linux --release
+- flutter build windows --release
+- flutter build macos --release
+- flutter build ios --release (macOS only)
+
