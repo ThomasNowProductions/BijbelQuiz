@@ -1,16 +1,31 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-// Map of platforms to their file names
-const PLATFORM_FILES: Record<string, string> = {
-  android: 'bijbelquiz-android.apk',
-  ios: 'bijbelquiz-ios.ipa',
-  windows: 'bijbelquiz-windows.exe',
-  macos: 'bijbelquiz-macos.dmg',
-  linux: 'bijbelquiz-linux.AppImage',
-  web: 'bijbelquiz-web.zip'
-};
+// Map of platforms to their file names and content types
+const PLATFORM_FILES = {
+  android: {
+    filename: 'bijbelquiz-android.apk',
+    contentType: 'application/vnd.android.package-archive',
+    path: '/downloads/bijbelquiz-android.apk'
+  },
+  linux: {
+    filename: 'bijbelquiz-linux.AppImage',
+    contentType: 'application/octet-stream',
+    path: '/downloads/bijbelquiz-linux.AppImage'
+  },
+  // Add other platforms as needed
+} as const;
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+type Platform = keyof typeof PLATFORM_FILES;
+
+// Helper function to check if a string is a valid platform
+function isPlatform(value: string): value is Platform {
+  return value in PLATFORM_FILES;
+}
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   // Set CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
@@ -18,33 +33,37 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   
   // Handle OPTIONS method for CORS preflight
   if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
+    return res.status(200).end();
   }
 
-  // Handle GET requests
-  if (req.method === 'GET') {
-    try {
-      const platform = req.query.platform as string || 'android';
-      
-      // Validate platform
-      if (!PLATFORM_FILES.hasOwnProperty(platform)) {
-        res.status(400).json({ error: 'Invalid platform' });
-        return;
-      }
-      
-      // Get the file name for this platform
-      const fileName = PLATFORM_FILES[platform];
-      
-      // Redirect to the public URL for better performance and reliability
-      res.redirect(302, `/downloads/${fileName}`);
-    } catch (error) {
-      console.error('Error handling GET request:', error);
-      res.status(500).json({ error: 'Internal server error' });
-    }
-  } else {
-    // Return 405 Method Not Allowed for any other methods
+  // Only allow GET requests
+  if (req.method !== 'GET') {
     res.setHeader('Allow', ['GET', 'OPTIONS']);
-    res.status(405).json({ error: `Method ${req.method} Not Allowed` });
+    return res.status(405).json({ error: `Method ${req.method} Not Allowed` });
+  }
+
+  try {
+    const platform = (req.query.platform || 'android') as string;
+    
+    // Validate platform
+    if (!isPlatform(platform)) {
+      return res.status(400).json({ 
+        error: 'Invalid platform',
+        validPlatforms: Object.keys(PLATFORM_FILES)
+      });
+    }
+
+    const { filename, contentType, path } = PLATFORM_FILES[platform];
+    
+    // Redirect to the file in the public directory
+    // This will be served by Vercel's static file server
+    return res.redirect(307, path);
+    
+  } catch (error) {
+    console.error('Download error:', error);
+    return res.status(500).json({ 
+      error: 'Internal server error',
+      message: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
 }

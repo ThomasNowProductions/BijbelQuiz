@@ -22,6 +22,10 @@
     {
       "src": "/donate.html",
       "dest": "/donate-redirect.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/$1"
     }
   ]
 }
