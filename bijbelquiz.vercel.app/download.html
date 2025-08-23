@@ -156,39 +156,22 @@
                 document.getElementById('loadingMessage').style.display = 'block';
                 document.getElementById('errorMessage').style.display = 'none';
                 
-                // Fetch version info for the specific platform
-                const response = await fetch(`${apiBaseUrl}/version?platform=${platform}&currentVersion=${currentVersion}`);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
+                // Instead of calling the API, we'll directly assume an update is available
+                // and link to the file as specified in the platforms configuration
                 
-                // Check if update is actually available
-                const hasUpdate = data.version !== currentVersion;
-                
-                // Update UI based on whether an update is available
-                if (hasUpdate) {
-                    // Show update information
-                    document.getElementById('pageTitle').textContent = 'Update Beschikbaar';
-                    document.getElementById('pageDescription').textContent = `Er is een nieuwe versie van BijbelQuiz beschikbaar voor ${platforms[platform].name}!`;
-                    document.getElementById('primaryBtn').innerHTML = `<i class="material-icons" style="vertical-align: middle; margin-right: 8px;">system_update</i> Update naar ${data.version}`;
-                    // Use direct download URL with file extension instead of API endpoint
-                    document.getElementById('primaryBtn').href = `https://bijbelquiz.vercel.app/downloads/${platform}.${getFileExtension(platform)}`;
-                } else {
-                    // No update available - show current version info
-                    document.getElementById('pageTitle').textContent = 'Geen Update Beschikbaar';
-                    document.getElementById('pageDescription').textContent = `U gebruikt al de nieuwste versie van BijbelQuiz voor ${platforms[platform].name}.`;
-                    document.getElementById('primaryBtn').innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 8px;">check</i> Huidige Versie';
-                    document.getElementById('primaryBtn').href = '#';
-                    document.getElementById('primaryBtn').style.pointerEvents = 'none';
-                }
+                // Show update information
+                document.getElementById('pageTitle').textContent = 'Update Beschikbaar';
+                document.getElementById('pageDescription').textContent = `Er is een nieuwe versie van BijbelQuiz beschikbaar voor ${platforms[platform].name}!`;
+                document.getElementById('primaryBtn').innerHTML = `<i class="material-icons" style="vertical-align: middle; margin-right: 8px;">system_update</i> Download Update`;
+                // Use direct download URL from platforms configuration
+                document.getElementById('primaryBtn').href = platforms[platform].downloadUrl;
                 
                 // Hide loading, show content
                 document.getElementById('loadingMessage').style.display = 'none';
                 document.getElementById('pageContent').style.display = 'block';
                 
             } catch (error) {
-                console.error('Error fetching version info:', error);
+                console.error('Error processing update info:', error);
                 // Show error message
                 document.getElementById('loadingMessage').style.display = 'none';
                 document.getElementById('errorMessage').style.display = 'block';
