@@ -58,43 +58,43 @@
         const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
         const apiBaseUrl = isLocalhost ? 'http://localhost:3001/api' : 'https://backendbijbelquiz.vercel.app/api';
         
-        // Platform configuration
+        // Platform configuration - pointing directly to downloads directory with file extensions
         const platforms = {
             'android': {
                 name: 'Android',
                 icon: 'android',
                 description: 'Android App',
-                downloadUrl: `${apiBaseUrl}/download?platform=android`
+                downloadUrl: 'https://bijbelquiz.vercel.app/downloads/android.apk'
             },
             'ios': {
                 name: 'iOS',
                 icon: 'phone_iphone',
                 description: 'iOS App',
-                downloadUrl: `${apiBaseUrl}/download?platform=ios`
+                downloadUrl: 'https://bijbelquiz.vercel.app/downloads/ios.ipa'
             },
             'windows': {
                 name: 'Windows',
                 icon: 'desktop_windows',
                 description: 'Desktop App',
-                downloadUrl: `${apiBaseUrl}/download?platform=windows`
+                downloadUrl: 'https://bijbelquiz.vercel.app/downloads/windows.exe'
             },
             'macos': {
                 name: 'macOS',
                 icon: 'laptop_mac',
                 description: 'Desktop App',
-                downloadUrl: `${apiBaseUrl}/download?platform=macos`
+                downloadUrl: 'https://bijbelquiz.vercel.app/downloads/macos.dmg'
             },
             'linux': {
                 name: 'Linux',
                 icon: 'linux',
                 description: 'Desktop App',
-                downloadUrl: `${apiBaseUrl}/download?platform=linux`
+                downloadUrl: 'https://bijbelquiz.vercel.app/downloads/linux.AppImage'
             },
             'web': {
                 name: 'Web',
                 icon: 'public',
                 description: 'Web App',
-                downloadUrl: `${apiBaseUrl}/download?platform=web`
+                downloadUrl: 'https://bijbelquiz.vercel.app/downloads/web.zip'
             }
         };
         
@@ -172,7 +172,8 @@
                     document.getElementById('pageTitle').textContent = 'Update Beschikbaar';
                     document.getElementById('pageDescription').textContent = `Er is een nieuwe versie van BijbelQuiz beschikbaar voor ${platforms[platform].name}!`;
                     document.getElementById('primaryBtn').innerHTML = `<i class="material-icons" style="vertical-align: middle; margin-right: 8px;">system_update</i> Update naar ${data.version}`;
-                    document.getElementById('primaryBtn').href = `${apiBaseUrl}${data.downloadEndpoint}`;
+                    // Use direct download URL with file extension instead of API endpoint
+                    document.getElementById('primaryBtn').href = `https://bijbelquiz.vercel.app/downloads/${platform}.${getFileExtension(platform)}`;
                 } else {
                     // No update available - show current version info
                     document.getElementById('pageTitle').textContent = 'Geen Update Beschikbaar';
@@ -198,6 +199,19 @@
         document.getElementById('retryBtn').addEventListener('click', function() {
             fetchVersionInfo(platform);
         });
+        
+        // Helper function to get file extension based on platform
+        function getFileExtension(platform) {
+            const extensions = {
+                'android': 'apk',
+                'ios': 'ipa',
+                'windows': 'exe',
+                'macos': 'dmg',
+                'linux': 'AppImage',
+                'web': 'zip'
+            };
+            return extensions[platform] || '';
+        }
     </script>
     
     <style>
