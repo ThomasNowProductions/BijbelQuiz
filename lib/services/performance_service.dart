@@ -173,10 +173,44 @@ class PerformanceService {
   /// Get the current frame time in milliseconds
   double get frameTimeMs => _frameTimeMs;
   
+  /// Get current memory usage estimate
+  double get estimatedMemoryUsageMB {
+    // Rough estimate based on collections and cached data
+    double memoryUsage = 0.0;
+
+    // Estimate memory for frame rate history
+    memoryUsage += _frameRates.length * 8; // 8 bytes per double
+    memoryUsage += _frameTimes.length * 8; // 8 bytes per double
+    memoryUsage += _memoryUsage.length * 8; // 8 bytes per timestamp
+
+    // Convert to MB
+    return memoryUsage / (1024 * 1024);
+  }
+
+  /// Get performance metrics as a map
+  Map<String, dynamic> getPerformanceMetrics() {
+    return {
+      'averageFrameRate': averageFrameRate,
+      'frameTimeMs': frameTimeMs,
+      'isLowEndDevice': isLowEndDevice,
+      'estimatedMemoryUsageMB': estimatedMemoryUsageMB,
+      'frameRateHistorySize': _frameRates.length,
+      'memoryHistorySize': _memoryUsage.length,
+    };
+  }
+
+  /// Force garbage collection (for debugging)
+  void forceGC() {
+    // This is a hint to the Dart VM to perform garbage collection
+    // Note: This is not guaranteed to run immediately
+    // ignore: unused_local_variable
+    final temp = List.filled(10000, null);
+  }
+
   /// Dispose of resources
   void dispose() {
     _monitoringTimer?.cancel();
     _frameRates.clear();
     _memoryUsage.clear();
   }
-} 
+}

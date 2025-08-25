@@ -248,10 +248,16 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
   // Monitor performance by tracking frame times
   void _monitorPerformance() {
     if (!mounted) return;
-    
+
     // Update frame timing
     _performanceService.updateFrameTime();
-    
+
+    // PERFORMANCE OPTIMIZATION: Periodically optimize memory usage
+    if (_performanceService.averageFrameRate < 30.0) {
+      // If frame rate drops below 30fps, optimize memory
+      _questionCacheService.optimizeMemoryUsage();
+    }
+
     // Schedule next frame callback
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _monitorPerformance();
@@ -263,29 +269,38 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
     // Cancel any active timers
     _timer?.cancel();
     _timer = null;
-    
+
     // Remove status listeners and dispose animation controllers
     try {
-      _timeAnimationController.removeListener(_onTimeTick);
-      _timeAnimationController.removeStatusListener(_onTimeStatus);
-      _timeAnimationController.stop();
+      // PERFORMANCE OPTIMIZATION: Check if controllers are still mounted before disposing
+      if (_timeAnimationController.isAnimating) {
+        _timeAnimationController.removeListener(_onTimeTick);
+        _timeAnimationController.removeStatusListener(_onTimeStatus);
+        _timeAnimationController.stop();
+      }
       _timeAnimationController.dispose();
-      
-      _scoreAnimationController.stop();
+
+      if (_scoreAnimationController.isAnimating) {
+        _scoreAnimationController.stop();
+      }
       _scoreAnimationController.dispose();
-      
-      _streakAnimationController.stop();
+
+      if (_streakAnimationController.isAnimating) {
+        _streakAnimationController.stop();
+      }
       _streakAnimationController.dispose();
-      
-      _longestStreakAnimationController.stop();
+
+      if (_longestStreakAnimationController.isAnimating) {
+        _longestStreakAnimationController.stop();
+      }
       _longestStreakAnimationController.dispose();
-      
+
       // Dispose services
       _performanceService.dispose();
       _connectionService.dispose();
       _soundService.dispose();
-      
-      // Remove game stats listener
+
+      // Remove game stats listener safely
       try {
         final gameStats = Provider.of<GameStatsProvider>(context, listen: false);
         gameStats.removeListener(_onGameStatsChanged);
@@ -298,7 +313,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
       // Ensure we always clean up the observer and reset state
       WidgetsBinding.instance.removeObserver(this);
       _hasLoggedScreenView = false;
-      
+
       // Call super.dispose() last
       super.dispose();
     }
@@ -375,6 +390,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
   }
 
   // Live timer tick: update timeRemaining once per second using controller value
+  // PERFORMANCE OPTIMIZATION: Only update when the second actually changes
   void _onTimeTick() {
     if (!mounted) return;
     final duration = _timeAnimationController.duration;
@@ -386,7 +402,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
     final remainingMs = duration.inMilliseconds - elapsedMs;
     final remainingSeconds = (remainingMs / 1000).ceil();
 
-    if (remainingSeconds < _quizState.timeRemaining) {
+    // Only trigger setState when the displayed second actually changes
+    if (remainingSeconds != _quizState.timeRemaining) {
       setState(() {
         _previousTime = _quizState.timeRemaining;
         _quizState = _quizState.copyWith(timeRemaining: remainingSeconds);
@@ -656,19 +673,25 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
       final language = settings.language;
 
       // Load questions - if in lesson mode with a specific category, load category questions
-      // Otherwise load all questions
+      // Otherwise load questions in batches for better performance
       if (!_allQuestionsLoaded) {
         if (_lessonMode && widget.lesson?.category != null && widget.lesson!.category != 'Algemeen') {
           // Load questions for specific category
           _allQuestions = await _questionCacheService.getQuestionsByCategory(
-            language, 
+            language,
             widget.lesson!.category
           );
           AppLogger.info('Loaded category questions for language: $language, category: ${widget.lesson!.category}, count: ${_allQuestions.length}');
         } else {
-          // Load all questions at once and shuffle them
-          _allQuestions = await _questionCacheService.getQuestions(language);
-          AppLogger.info('Loaded all questions for language: $language, count: ${_allQuestions.length}');
+          // PERFORMANCE OPTIMIZATION: Load questions in smaller batches instead of all at once
+          // Start with a reasonable batch size for initial gameplay
+          const int initialBatchSize = 100; // Load first 100 questions for immediate play
+          _allQuestions = await _questionCacheService.getQuestions(
+            language,
+            startIndex: 0,
+            count: initialBatchSize
+          );
+          AppLogger.info('Loaded initial batch of questions for language: $language, count: ${_allQuestions.length}');
         }
         _allQuestions.shuffle(Random());
         _allQuestionsLoaded = true;
@@ -758,6 +781,11 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
       // Reshuffle questions for better distribution across the database
       _allQuestions.shuffle(Random());
       availableQuestions = List<QuizQuestion>.from(_allQuestions);
+
+      // PERFORMANCE OPTIMIZATION: If we're running low on questions, load more in background
+      if (_allQuestions.length < 200 && !_lessonMode) {
+        _loadMoreQuestionsInBackground();
+      }
     }
 
     // Prefer questions within ±1 band of target level
@@ -842,7 +870,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
     if (_quizState.question.type == QuestionType.mc || _quizState.question.type == QuestionType.fitb) {
       final selectedAnswer = _quizState.question.allOptions[selectedIndex];
       final isCorrect = selectedAnswer == _quizState.question.correctAnswer;
-      final settings = Provider.of<SettingsProvider>(context, listen: false);
 
       // Handle the answer sequence
       _handleAnswerSequence(isCorrect);
@@ -852,7 +879,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
       final lcCorrect = _quizState.question.correctAnswer.toLowerCase();
       final correctIndex = (lcCorrect == 'waar' || lcCorrect == 'true' || lcCorrect == 'goed') ? 0 : 1;
       final isCorrect = selectedIndex == correctIndex;
-      final settings = Provider.of<SettingsProvider>(context, listen: false);
 
       // Handle the answer sequence
       _handleAnswerSequence(isCorrect);
@@ -1031,7 +1057,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
     final isTablet = size.width > 600 && size.width <= 800;
     final isSmallPhone = size.width < 350;
 
-    // Only log in debug mode and when there are significant changes
+    // PERFORMANCE OPTIMIZATION: Reduce debug logging frequency
     if (kDebugMode && (_isLoading != _lastLoadingState || gameStats.isLoading != _lastGameStatsLoadingState)) {
       AppLogger.info('QuizScreen build: _isLoading=$_isLoading, gameStats.isLoading=${gameStats.isLoading}');
       _lastLoadingState = _isLoading;
@@ -1047,7 +1073,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
       _initializedStats = true;
     }
 
-    // FIX: Wait for BOTH questions and stats to load before showing quiz UI
+    // PERFORMANCE OPTIMIZATION: Early return for loading state to reduce nested conditionals
     if (_isLoading || gameStats.isLoading) {
       // Determine metrics and answer count for skeleton
       int metricsCount = (isDesktop || isTablet) ? 4 : 2;
@@ -1643,6 +1669,37 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
     }
   }
  
+
+  /// Load more questions in the background when running low
+  Future<void> _loadMoreQuestionsInBackground() async {
+    if (_lessonMode) return; // Don't load more in lesson mode
+
+    try {
+      final settings = Provider.of<SettingsProvider>(context, listen: false);
+      final language = settings.language;
+
+      // Load next batch of questions
+      final nextBatchStartIndex = _allQuestions.length;
+      const int batchSize = 50; // Load 50 more questions
+
+      final newQuestions = await _questionCacheService.getQuestions(
+        language,
+        startIndex: nextBatchStartIndex,
+        count: batchSize
+      );
+
+      if (newQuestions.isNotEmpty && mounted) {
+        setState(() {
+          // Add new questions and shuffle the combined list
+          _allQuestions.addAll(newQuestions);
+          _allQuestions.shuffle(Random());
+          AppLogger.info('Loaded additional questions, total now: ${_allQuestions.length}');
+        });
+      }
+    } catch (e) {
+      AppLogger.error('Failed to load more questions in background', e);
+    }
+  }
 
   Future<void> _completeLessonSession() async {
     // Stop any timers

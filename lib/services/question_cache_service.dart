@@ -384,43 +384,60 @@ class QuestionCacheService {
     }
   }
 
-  /// Get memory usage information
+  /// Get memory usage information with performance optimizations
   Map<String, dynamic> getMemoryUsage() {
-    // Calculate memory usage of cached questions
+    // PERFORMANCE OPTIMIZATION: Sample only a subset of questions for size calculation
     int questionCount = _memoryCache.length;
     int totalQuestionSize = 0;
-    
+
+    // Sample every 10th question to reduce calculation time
+    int sampleCount = 0;
     _memoryCache.forEach((key, question) {
-      try {
-        totalQuestionSize += question.question.length * 2; // UTF-16 chars
-        totalQuestionSize += question.correctAnswer.length * 2;
-        totalQuestionSize += question.incorrectAnswers.fold<int>(
-          0, (sum, ans) => sum + ans.length * 2);
-      } catch (e) {
-        AppLogger.error('Error calculating question size', e);
+      if (sampleCount % 10 == 0) { // Sample every 10th item
+        try {
+          totalQuestionSize += question.question.length * 2; // UTF-16 chars
+          totalQuestionSize += question.correctAnswer.length * 2;
+          totalQuestionSize += question.incorrectAnswers.fold<int>(
+            0, (sum, ans) => sum + ans.length * 2);
+        } catch (e) {
+          AppLogger.error('Error calculating question size', e);
+        }
       }
+      sampleCount++;
     });
-    
+
+    // Extrapolate total size based on sample
+    if (sampleCount > 10) {
+      totalQuestionSize = (totalQuestionSize * sampleCount) ~/ (sampleCount ~/ 10 + 1);
+    }
+
     // Calculate metadata size
     int metadataCount = 0;
     int totalMetadataSize = 0;
-    
+
     _questionMetadata.forEach((lang, metadata) {
       metadataCount += metadata.length;
-      for (final item in metadata) {
+      // Sample metadata size calculation for performance
+      for (int i = 0; i < metadata.length; i += 10) {
         try {
-          totalMetadataSize += json.encode(item).length;
+          totalMetadataSize += json.encode(metadata[i]).length;
         } catch (e) {
           AppLogger.error('Error calculating metadata size', e);
         }
       }
     });
-    
+
+    // Extrapolate metadata size
+    if (metadataCount > 10) {
+      totalMetadataSize = (totalMetadataSize * metadataCount) ~/ (metadataCount ~/ 10 + 1);
+    }
+
     return <String, dynamic>{
       'memoryCache': <String, dynamic>{
         'questionCount': questionCount,
         'totalSizeKB': (totalQuestionSize / 1024).toStringAsFixed(2),
         'maxSize': QuestionCacheConfig.maxMemoryCacheSize,
+        'cacheUtilizationPercent': ((questionCount / QuestionCacheConfig.maxMemoryCacheSize) * 100).toStringAsFixed(1),
       },
       'metadata': <String, dynamic>{
         'languageCount': _questionMetadata.length,
@@ -435,6 +452,22 @@ class QuestionCacheService {
           k: _loadedQuestionIndices[k]?.length ?? 0,
       },
     };
+  }
+
+  /// Clear memory cache if memory usage is too high
+  void optimizeMemoryUsage() {
+    final memoryInfo = getMemoryUsage();
+    final cacheUtilization = double.tryParse(memoryInfo['memoryCache']['cacheUtilizationPercent'] as String) ?? 0.0;
+
+    if (cacheUtilization > 90.0) {
+      // Clear 30% of the cache to free up memory
+      final itemsToRemove = (_memoryCache.length * 0.3).round();
+      for (int i = 0; i < itemsToRemove && _lruList.isNotEmpty; i++) {
+        final lruKey = _lruList.removeAt(0);
+        _memoryCache.remove(lruKey);
+      }
+      AppLogger.info('Optimized memory usage by clearing $itemsToRemove cached questions');
+    }
   }
 
   /// Returns a map of category -> frequency for the given language.
