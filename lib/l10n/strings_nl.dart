@@ -212,5 +212,56 @@ class AppStrings {
   
   // Errors
   static const String couldNotOpenEmail = 'Kon e-mailclient niet openen';
-  
+
+  // Quiz Screen
+  static const String skip = 'Skip';
+  static const String overslaan = 'Overslaan';
+  static const String notEnoughStarsForSkip = 'Niet genoeg sterren om over te slaan!';
+
+  // Settings Screen
+  static const String resetAndLogoutConfirmation = 'Dit verwijdert alle scores, voortgang, cache, instellingen en activatie. De app wordt gedeactiveerd en vereist een nieuwe activatiecode. Deze actie kan niet ongedaan worden gemaakt.';
+
+  // Guide Screen
+  static const String donationError = 'Er is een fout opgetreden bij het openen van de donatiepagina';
+  static const String notificationPermissionDenied = 'Meldingstoestemming geweigerd.';
+  static const String soundEffectsDescription = 'Schakel alle spelgeluiden in of uit';
+
+  // Store Screen
+  static const String doubleStarsActivated = 'Dubbele Sterren geactiveerd voor 5 vragen!';
+  static const String tripleStarsActivated = 'Driedubbele Sterren geactiveerd voor 5 vragen!';
+  static const String fiveTimesStarsActivated = '5x Sterren geactiveerd voor 5 vragen!';
+  static const String doubleStars60SecondsActivated = 'Dubbele Sterren geactiveerd voor 60 seconden!';
+  static const String powerupActivated = 'Power-up Geactiveerd!';
+  static const String backToQuiz = 'Naar de quiz';
+  static const String themeUnlocked = 'ontgrendeld!';
+
+  // Lesson Select Screen
+  static const String onlyLatestUnlockedLesson = 'Je kunt alleen de meest recente ontgrendelde les spelen';
+  static const String starsEarned = 'sterren verdiend';
+  static const String readyForNextChallenge = 'Klaar voor je volgende uitdaging?';
+  static const String continueLesson = 'Ga verder:';
+  static const String freePractice = 'Vrij oefenen (random)';
+  static const String lessonNumber = 'Les';
+
+  // Biblical Reference Dialog
+  static const String invalidBiblicalReference = 'Ongeldige bijbelverwijzing';
+  static const String errorLoadingBiblicalText = 'Fout bij het laden van de bijbeltekst';
+  static const String errorLoadingWithDetails = 'Fout bij het laden:';
+
+  // Settings Screen
+  static const String emailAddress = 'Email Address';
+
+  // Settings Provider Errors
+  static const String languageMustBeNl = 'Taal moet "nl" zijn (alleen Nederlands toegestaan)';
+  static const String failedToSaveTheme = 'Failed to save theme setting:';
+  static const String failedToSaveSlowMode = 'Failed to save slow mode setting:';
+  static const String failedToSaveGameSpeed = 'Failed to save game speed setting:';
+  static const String failedToUpdateDonationStatus = 'Failed to update donation status:';
+  static const String failedToUpdateCheckForUpdateStatus = 'Failed to update check for update status:';
+  static const String failedToSaveMuteSetting = 'Failed to save mute setting:';
+  static const String failedToSaveGuideStatus = 'Failed to save guide status:';
+  static const String failedToResetGuideStatus = 'Failed to reset guide status:';
+  static const String failedToResetCheckForUpdateStatus = 'Failed to reset check for update status:';
+  static const String failedToSaveNotificationSetting = 'Failed to save notification setting:';
+
 }

@@ -294,7 +294,7 @@ class _GuidePageViewState extends State<GuidePageView> {
         if (safeContext != null && safeContext.mounted) {
           showTopSnackBar(
             safeContext,
-            'Kon de donatiepagina niet openen',
+            strings.AppStrings.couldNotOpenDonationPage,
             style: TopSnackBarStyle.error,
           );
         }
@@ -343,7 +343,7 @@ class _GuidePageViewState extends State<GuidePageView> {
       _permissionGranted = granted;
     });
     if (!granted && mounted) {
-      showTopSnackBar(context, 'Meldingstoestemming geweigerd.', style: TopSnackBarStyle.warning);
+      showTopSnackBar(context, strings.AppStrings.notificationPermissionDenied, style: TopSnackBarStyle.warning);
     }
   }
 
@@ -383,8 +383,8 @@ class _GuidePageViewState extends State<GuidePageView> {
               ElevatedButton.icon(
                 icon: const Icon(Icons.notifications_active_outlined),
                 label: Text(_permissionGranted
-                    ? (settings.language == 'en' ? 'Notifications Enabled' : 'Meldingen Ingeschakeld')
-                    : (settings.language == 'en' ? 'Enable Notifications' : 'Meldingen Inschakelen')),
+                    ? strings.AppStrings.notificationsEnabled
+                    : strings.AppStrings.enableNotifications),
                 onPressed: _permissionGranted || _isLoading ? null : _requestPermission,
               ),
               if (_isLoading)
@@ -458,7 +458,7 @@ class _GuidePageViewState extends State<GuidePageView> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Spelsnelheid',
+                                      strings.AppStrings.gameSpeed,
                                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                             color: widget.colorScheme.onSurface,
                                             fontWeight: FontWeight.w600,
@@ -470,15 +470,15 @@ class _GuidePageViewState extends State<GuidePageView> {
                                       items: [
                                         DropdownMenuItem(
                                           value: 'slow',
-                                          child: Text('Langzaam'),
+                                          child: Text(strings.AppStrings.slow),
                                         ),
                                         DropdownMenuItem(
                                           value: 'medium',
-                                          child: Text('Gemiddeld'),
+                                          child: Text(strings.AppStrings.medium),
                                         ),
                                         DropdownMenuItem(
                                           value: 'fast',
-                                          child: Text('Snel'),
+                                          child: Text(strings.AppStrings.fast),
                                         ),
                                       ],
                                       onChanged: (String? value) {
@@ -514,7 +514,7 @@ class _GuidePageViewState extends State<GuidePageView> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            'Geluidseffecten',
+                                            strings.AppStrings.muteSoundEffects,
                                             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                                   color: widget.colorScheme.onSurface,
                                                   fontWeight: FontWeight.w600,
@@ -522,7 +522,7 @@ class _GuidePageViewState extends State<GuidePageView> {
                                           ),
                                           const SizedBox(height: 4),
                                           Text(
-                                            'Schakel alle spelgeluiden in of uit',
+                                            strings.AppStrings.soundEffectsDescription,
                                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                                   color: widget.colorScheme.onSurface.withValues(alpha: 0.7),
                                                 ),
@@ -680,7 +680,7 @@ class _GuideScreenTestHarnessState extends State<GuideScreenTestHarness> {
                   if (_currentPage > 0)
                     TextButton(
                       onPressed: goToPreviousPage,
-                      child: Text('Vorige'),
+                      child: Text(strings.AppStrings.previous),
                     )
                   else
                     const SizedBox(width: 80),
@@ -702,7 +702,7 @@ class _GuideScreenTestHarnessState extends State<GuideScreenTestHarness> {
                   ),
                   ElevatedButton(
                     onPressed: goToNextPage,
-                    child: Text(isLastPage ? 'Beginnen' : 'Volgende'),
+                    child: Text(isLastPage ? strings.AppStrings.getStarted : strings.AppStrings.next),
                   ),
                 ],
               ),

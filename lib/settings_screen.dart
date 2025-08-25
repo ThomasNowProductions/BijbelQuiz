@@ -834,12 +834,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
       context: localContext,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Resetten en uitloggen'),
-          content: const Text('Dit verwijdert alle scores, voortgang, cache, instellingen en activatie. De app wordt gedeactiveerd en vereist een nieuwe activatiecode. Deze actie kan niet ongedaan worden gemaakt.'),
+          title: Text(strings.AppStrings.resetAndLogout),
+          content: Text(strings.AppStrings.resetAndLogoutConfirmation),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Annuleren'),
+              child: Text(strings.AppStrings.cancel),
             ),
             TextButton(
               onPressed: () async {
@@ -886,7 +886,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               style: TextButton.styleFrom(
                 foregroundColor: Theme.of(context).colorScheme.error,
               ),
-              child: const Text('Resetten en uitloggen'),
+              child: Text(strings.AppStrings.resetAndLogout),
             ),
           ],
         );
@@ -927,12 +927,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
       context: localContext,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Email Address'),
+          title: Text(strings.AppStrings.emailAddress),
           content: const Text('thomasnowprod@proton.me'),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('OK'),
+              child: Text(strings.AppStrings.ok),
             ),
           ],
         );

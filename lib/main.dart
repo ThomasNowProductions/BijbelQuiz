@@ -21,6 +21,7 @@ import 'screens/store_screen.dart';
 import 'providers/lesson_progress_provider.dart';
 import 'screens/lesson_select_screen.dart';
 import 'settings_screen.dart';
+import 'l10n/strings_nl.dart' as strings;
 
 /// The main entry point of the BijbelQuiz application with performance optimizations.
 void main() async {
@@ -177,7 +178,7 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
         
         return MaterialApp(
           navigatorKey: EmergencyService.navigatorKey,
-          title: 'BijbelQuiz',
+          title: strings.AppStrings.appName,
           debugShowCheckedModeBanner: false,
           theme: lightTheme,
           darkTheme: darkTheme,

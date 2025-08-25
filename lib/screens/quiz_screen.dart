@@ -1121,7 +1121,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
                       ElevatedButton.icon(
                         onPressed: _initializeQuiz,
                         icon: const Icon(Icons.refresh_rounded),
-                        label: Text('Opnieuw proberen'),
+                        label: Text(strings.AppStrings.tryAgain),
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                         ),
@@ -1159,7 +1159,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
             ),
             const SizedBox(width: 12),
             Text(
-              'BijbelQuiz',
+              strings.AppStrings.appName,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w700,
                 color: colorScheme.onSurface.withAlpha((0.7 * 255).round()),
@@ -1245,7 +1245,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
                                     MetricItem(
                                       icon: Icons.star_rounded,
                                       value: gameStats.score.toString(),
-                                      label: 'Score',
+                                      label: strings.AppStrings.score,
                                       colorScheme: colorScheme,
                                       color: colorScheme.primary,
                                       animation: _scoreAnimation,
@@ -1345,7 +1345,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
                                       
                                     } else {
                                       if (mounted && context.mounted) {
-                                        showTopSnackBar(context, 'Niet genoeg sterren om over te slaan!', style: TopSnackBarStyle.warning);
+                                        showTopSnackBar(context, strings.AppStrings.notEnoughStarsForSkip, style: TopSnackBarStyle.warning);
                                       }
                                     }
                                   }
@@ -1357,7 +1357,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
-                                  settings.language == 'en' ? 'Skip' : 'Overslaan',
+                                  settings.language == 'en' ? strings.AppStrings.skip : strings.AppStrings.overslaan,
                                   style: TextStyle(
                                     color: textColor,
                                     fontSize: 16,
@@ -1400,7 +1400,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
                                     final parsed = _parseBiblicalReference(_quizState.question.biblicalReference!);
                                     if (parsed == null) {
                                       if (mounted && context.mounted) {
-                                        showTopSnackBar(context, 'Ongeldige bijbelverwijzing', style: TopSnackBarStyle.error);
+                                        showTopSnackBar(context, strings.AppStrings.invalidBiblicalReference, style: TopSnackBarStyle.error);
                                       }
                                       return;
                                     }
@@ -1522,7 +1522,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
           child: MetricItem(
             icon: Icons.star_rounded,
             value: gameStats.score.toString(),
-            label: 'Score',
+            label: strings.AppStrings.score,
             colorScheme: colorScheme,
             color: colorScheme.primary,
             animation: _scoreAnimation,
@@ -1540,7 +1540,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
           child: MetricItem(
             icon: Icons.local_fire_department_rounded,
             value: gameStats.currentStreak.toString(),
-            label: 'Reeks',
+            label: strings.AppStrings.streak,
             colorScheme: colorScheme,
             color: const Color(0xFFF59E0B),
             animation: _streakAnimation,
@@ -1557,7 +1557,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
           child: MetricItem(
             icon: Icons.emoji_events_rounded,
             value: gameStats.longestStreak.toString(),
-            label: 'Beste',
+            label: strings.AppStrings.best,
             colorScheme: colorScheme,
             color: const Color(0xFFF59E0B),
             animation: _longestStreakAnimation,
