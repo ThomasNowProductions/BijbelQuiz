@@ -249,19 +249,19 @@ class AppStrings {
   static const String errorLoadingWithDetails = 'Fout bij het laden:';
 
   // Settings Screen
-  static const String emailAddress = 'Email Address';
+  static const String emailAddress = 'E-mailadres';
 
   // Settings Provider Errors
   static const String languageMustBeNl = 'Taal moet "nl" zijn (alleen Nederlands toegestaan)';
-  static const String failedToSaveTheme = 'Failed to save theme setting:';
-  static const String failedToSaveSlowMode = 'Failed to save slow mode setting:';
-  static const String failedToSaveGameSpeed = 'Failed to save game speed setting:';
-  static const String failedToUpdateDonationStatus = 'Failed to update donation status:';
-  static const String failedToUpdateCheckForUpdateStatus = 'Failed to update check for update status:';
-  static const String failedToSaveMuteSetting = 'Failed to save mute setting:';
-  static const String failedToSaveGuideStatus = 'Failed to save guide status:';
-  static const String failedToResetGuideStatus = 'Failed to reset guide status:';
-  static const String failedToResetCheckForUpdateStatus = 'Failed to reset check for update status:';
-  static const String failedToSaveNotificationSetting = 'Failed to save notification setting:';
+  static const String failedToSaveTheme = 'Kon thema-instelling niet opslaan:';
+  static const String failedToSaveSlowMode = 'Kon langzame modus-instelling niet opslaan:';
+  static const String failedToSaveGameSpeed = 'Kon spelsnelheid-instelling niet opslaan:';
+  static const String failedToUpdateDonationStatus = 'Kon donatiestatus niet bijwerken:';
+  static const String failedToUpdateCheckForUpdateStatus = 'Kon update-controle status niet bijwerken:';
+  static const String failedToSaveMuteSetting = 'Kon demp-instelling niet opslaan:';
+  static const String failedToSaveGuideStatus = 'Kon gidsstatus niet opslaan:';
+  static const String failedToResetGuideStatus = 'Kon gidsstatus niet resetten:';
+  static const String failedToResetCheckForUpdateStatus = 'Kon update-controle status niet resetten:';
+  static const String failedToSaveNotificationSetting = 'Kon meldingsinstelling niet opslaan:';
 
 }
