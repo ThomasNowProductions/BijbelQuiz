@@ -95,6 +95,10 @@ To run tests:
 flutter test
 ```
 
+## Security
+
+See [SECURITY_DOCS.md](SECURITY_DOCS.md) for details on security measures implemented in this app.
+
 ## Asset Licenses
 
 See [ASSETS_LICENSES.md](ASSETS_LICENSES.md) for details on the licenses of fonts, images, and sounds used in this app.

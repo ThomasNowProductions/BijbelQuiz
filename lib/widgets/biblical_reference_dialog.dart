@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:io';
+import 'dart:async';
 import '../l10n/strings_nl.dart' as strings;
 
 class BiblicalReferenceDialog extends StatefulWidget {
@@ -16,11 +18,20 @@ class _BiblicalReferenceDialogState extends State<BiblicalReferenceDialog> {
   bool _isLoading = true;
   String _content = '';
   String _error = '';
+  
+  // Create a secure HTTP client with timeout and validation
+  final http.Client _client = http.Client();
 
   @override
   void initState() {
     super.initState();
     _loadBiblicalReference();
+  }
+  
+  @override
+  void dispose() {
+    _client.close();
+    super.dispose();
   }
 
   Future<void> _loadBiblicalReference() async {
@@ -36,6 +47,11 @@ class _BiblicalReferenceDialogState extends State<BiblicalReferenceDialog> {
       final startVerse = parsed['startVerse'];
       final endVerse = parsed['endVerse'];
 
+      // Validate book name to prevent injection attacks
+      if (!_isValidBookName(book)) {
+        throw Exception('Ongeldig boeknaam');
+      }
+
       String url;
       if (startVerse != null && endVerse != null) {
         // Multiple verses
@@ -48,28 +64,56 @@ class _BiblicalReferenceDialogState extends State<BiblicalReferenceDialog> {
         url = 'https://www.scriptura-api.com/api/chapter?book=$book&chapter=$chapter&version=statenvertaling';
       }
 
-      final response = await http.get(Uri.parse(url));
+      // Validate URL to ensure it's from our trusted domain
+      final uri = Uri.parse(url);
+      if (uri.host != 'www.scriptura-api.com') {
+        throw Exception('Ongeldige API URL');
+      }
+
+      // Make HTTP request with timeout
+      final response = await _client.get(uri).timeout(
+        const Duration(seconds: 10),
+        onTimeout: () {
+          throw Exception('Time-out bij het laden van de bijbeltekst');
+        },
+      );
       
       if (response.statusCode == 200) {
-        final data = json.decode(response.body);
+        // Validate content type
+        final contentType = response.headers['content-type'];
+        if (contentType == null || !contentType.startsWith('application/json')) {
+          throw Exception('Ongeldig antwoord van de server');
+        }
+        
+        // Parse and validate JSON response
+        final dynamic data = json.decode(response.body);
         String content = '';
         
         if (data is List) {
           // Multiple verses
           for (final verse in data) {
-            if (verse is Map<String, dynamic>) {
-              content += '${verse['verse']}. ${verse['text']}\n';
+            if (verse is Map<String, dynamic> && 
+                verse.containsKey('verse') && 
+                verse.containsKey('text')) {
+              // Sanitize text to prevent XSS
+              final sanitizedText = _sanitizeText(verse['text'].toString());
+              content += '${verse['verse']}. $sanitizedText\n';
             }
           }
         } else if (data is Map<String, dynamic>) {
           if (data.containsKey('text')) {
             // Single verse
-            content = '${data['verse']}. ${data['text']}';
+            final sanitizedText = _sanitizeText(data['text'].toString());
+            content = '${data['verse']}. $sanitizedText';
           } else if (data.containsKey('verses') && data['verses'] is List) {
             // Chapter with verses array
             for (final verse in data['verses']) {
-              if (verse is Map<String, dynamic>) {
-                content += '${verse['verse']}. ${verse['text']}\n';
+              if (verse is Map<String, dynamic> && 
+                  verse.containsKey('verse') && 
+                  verse.containsKey('text')) {
+                // Sanitize text to prevent XSS
+                final sanitizedText = _sanitizeText(verse['text'].toString());
+                content += '${verse['verse']}. $sanitizedText\n';
               }
             }
           }
@@ -81,8 +125,33 @@ class _BiblicalReferenceDialogState extends State<BiblicalReferenceDialog> {
             _isLoading = false;
           });
         }
+      } else if (response.statusCode == 429) {
+        throw Exception('Te veel verzoeken. Probeer het later opnieuw.');
       } else {
-        throw Exception('Fout bij het laden van de bijbeltekst');
+        throw Exception('Fout bij het laden van de bijbeltekst (status: ${response.statusCode})');
+      }
+    } on SocketException {
+      if (mounted) {
+        setState(() {
+          _error = 'Netwerkfout. Controleer uw internetverbinding.';
+          _isLoading = false;
+        });
+      }
+    } on Exception catch (e) {
+      if (e.toString().contains('Time-out')) {
+        if (mounted) {
+          setState(() {
+            _error = 'Time-out bij het laden van de bijbeltekst. Probeer het later opnieuw.';
+            _isLoading = false;
+          });
+        }
+      } else {
+        if (mounted) {
+          setState(() {
+            _error = 'Fout bij het laden: ${e.toString()}';
+            _isLoading = false;
+          });
+        }
       }
     } catch (e) {
       if (mounted) {
@@ -92,6 +161,41 @@ class _BiblicalReferenceDialogState extends State<BiblicalReferenceDialog> {
         });
       }
     }
+  }
+  
+  // Validate book name to prevent injection attacks
+  bool _isValidBookName(String book) {
+    final validBooks = {
+      // Old Testament
+      'Genesis', 'Exodus', 'Leviticus', 'Numeri', 'Deuteronomium',
+      'Jozua', 'Richteren', 'Ruth', '1 Samuel', '2 Samuel',
+      '1 Koningen', '2 Koningen', '1 Kronieken', '2 Kronieken',
+      'Ezra', 'Nehemia', 'Ester', 'Job', 'Psalmen', 'Spreuken',
+      'Prediker', 'Hooglied', 'Jesaja', 'Jeremia', 'Klaagliederen',
+      'Ezechiël', 'Daniël', 'Hosea', 'Joël', 'Amos', 'Obadja',
+      'Jona', 'Micha', 'Nahum', 'Habakuk', 'Zefanja', 'Haggai',
+      'Zacharia', 'Maleachi',
+      
+      // New Testament
+      'Matteüs', 'Marcus', 'Lukas', 'Johannes', 'Handelingen',
+      'Romeinen', '1 Korintiërs', '2 Korintiërs', 'Galaten',
+      'Efeziërs', 'Filippenzen', 'Kolossenzen', '1 Tessalonicenzen',
+      '2 Tessalonicenzen', '1 Timoteüs', '2 Timoteüs', 'Titus',
+      'Filemon', 'Hebreeën', 'Jakobus', '1 Petrus', '2 Petrus',
+      '1 Johannes', '2 Johannes', '3 Johannes', 'Judas', 'Openbaring'
+    };
+    
+    return validBooks.contains(book);
+  }
+  
+  // Simple text sanitization to prevent XSS
+  String _sanitizeText(String text) {
+    return text
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#x27;');
   }
 
   Map<String, dynamic>? _parseReference(String reference) {
