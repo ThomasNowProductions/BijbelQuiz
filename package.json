@@ -1,6 +1,0 @@
-{
-  "devDependencies": {
-    "@types/next": "^9.0.0",
-    "@types/node": "^24.2.1"
-  }
-}
