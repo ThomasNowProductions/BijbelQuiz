@@ -6838,5 +6838,95 @@
             "Akeldam"
         ],
         "biblicalReference": "Handelingen 1:19"
-    }
+    },{
+        "vraag": "Wie is de vader van Jozef, de man van Maria (Jezus moeder)?",
+        "juisteAntwoord": "Jakob",
+        "moeilijkheidsgraad": 4,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matthéüs 1:16",
+        "fouteAntwoorden": [
+          "Eliud",
+          "Mattan",
+          "Eleázar"
+        ]
+      },
+      {
+        "vraag": "Hoeveel dagen en nachten vastte Jezus in de woestijn?",
+        "juisteAntwoord": "40",
+        "moeilijkheidsgraad": 1,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matthéüs 4:2",
+        "fouteAntwoorden": [
+          "7",
+          "10",
+          "30"
+        ]
+      },
+      {
+        "vraag": "Jezus noemt zijn volgelingen 'het zout der aarde'. Wat zegt Jezus dat er gebeurt als het zout zijn kracht verliest?",
+        "juisteAntwoord": "Het wordt buitengeworpen en van de mensen vertreden",
+        "moeilijkheidsgraad": 2,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matthéüs 5:13",
+        "fouteAntwoorden": [
+          "Het is tot genezing",
+          "Het wordt gezuiverd",
+          "Het veranderd smakeloos"
+        ]
+      },
+      {
+        "vraag": "Wat is de eerste zaligspreking in de Bergrede?",
+        "juisteAntwoord": "Zalig zijn de armen van geest",
+        "moeilijkheidsgraad": 3,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matthéüs 5:3",
+        "fouteAntwoorden": [
+          "Zalig zijn die treuren",
+          "Zalig zijn de zachtmoedigen",
+          "Zalig zijn de barmhartigen"
+        ]
+      },
+      {
+        "vraag": "Wat doet Jezus eerst nadat hij van de berg is afgedaald?",
+        "juisteAntwoord": "Hij geneest een melaatse",
+        "moeilijkheidsgraad": 4,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matthéüs 8:1",
+        "fouteAntwoorden": [
+          "Hij onderwijst in de synagoge",
+          "Hij gaat opnieuw prediken",
+          "Hij roept een discipel"
+        ]
+      },
+      {
+        "vraag": "Welke discipel liep op het water naar Jezus toe?",
+        "juisteAntwoord": "Petrus",
+        "moeilijkheidsgraad": 1,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matthéüs  14: 28,29",
+        "fouteAntwoorden": [
+          "Johannes",
+          "Thomas",
+          "Judas"
+        ]
+      },
+      {
+        "vraag": "Wie vroeg aan Jezus of Hij hen zegt of Hij de Christus, de Zoon van God is?",
+        "juisteAntwoord": "Kájafas",
+        "moeilijkheidsgraad": 4,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matthéüs 26:63",
+        "fouteAntwoorden": [
+          "Judas",
+          "Pilatus",
+          "Herodes"
+        ]
+      }
 ]
