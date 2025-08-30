@@ -25,7 +25,7 @@ class EmergencyMessage {
 }
 
 class EmergencyService {
-  static const String _baseUrl = 'https://backendbijbelquiz.vercel.app/api';
+  static const String _baseUrl = 'https://bijbelquiz.app/api';
   static const String _endpoint = '/emergency';
   static const Duration _pollingInterval = Duration(minutes: 5);
   

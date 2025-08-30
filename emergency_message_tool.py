@@ -89,7 +89,7 @@ class EmergencyMessageApp:
         self.root.geometry("600x400")
         
         self.client = EmergencyMessageClient(
-            "https://backendbijbelquiz.vercel.app/api/emergency"
+            "https://bijbelquiz.app/api/emergency"
         )
         self.token = tk.StringVar()
         self.is_blocking = tk.BooleanVar(value=False)

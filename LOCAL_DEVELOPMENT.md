@@ -15,7 +15,7 @@ The backend APIs have been moved to a separate repository. For local development
    flutter run
    ```
 
-2. The app will use the production backend (`https://backendbijbelquiz.vercel.app`) by default in debug mode.
+2. The app will use the production backend (`https://bijbelquiz.app/api`) by default in debug mode.
 
 ## Testing Emergency Messaging
 

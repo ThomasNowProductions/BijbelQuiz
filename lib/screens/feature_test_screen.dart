@@ -180,7 +180,7 @@ class _FeatureTestScreenState extends State<FeatureTestScreen> {
       final info = await PackageInfo.fromPlatform();
       final version = info.version;
       final platform = kIsWeb ? 'web' : Platform.operatingSystem.toLowerCase();
-      final url = Uri.parse('https://bijbelquiz.vercel.app/update.php?version=$version&platform=$platform');
+      final url = Uri.parse('https://bijbelquiz.app/update.php?version=$version&platform=$platform');
       _logAdd('Update: Would check $url');
     } catch (e) {
       _logAdd('Update: Could not check for updates ($e)');
@@ -218,7 +218,7 @@ class _FeatureTestScreenState extends State<FeatureTestScreen> {
   Future<void> _testUrlLaunch() async {
     _logAdd('Testing URL launch...');
     try {
-      final url = Uri.parse('https://bijbelquiz.vercel.app/');
+      final url = Uri.parse('https://bijbelquiz.app/');
       // ignore: deprecated_member_use
       // Use canLaunchUrl and launchUrl if available
       // For test, just log the intent

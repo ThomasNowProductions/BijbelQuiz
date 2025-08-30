@@ -376,7 +376,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               isSmallScreen,
               isDesktop,
               onPressed: () async {
-                final Uri url = Uri.parse('https://bijbelquiz.vercel.app/donate.html');
+                final Uri url = Uri.parse('https://bijbelquiz.app/donate.html');
                 // Mark as donated before launching the URL
                 await settings.markAsDonated();
                 

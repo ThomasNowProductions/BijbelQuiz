@@ -1,7 +1,7 @@
 // Test script for emergency API
 const fetch = require('node-fetch');
 
-const API_URL = 'https://backendbijbelquiz.vercel.app/api/emergency';
+const API_URL = 'https://bijbelquiz.app/api/emergency';
 const ADMIN_TOKEN = process.env.ADMIN_TOKEN || 'your-admin-token-here';
 
 async function testEmergencyApi() {

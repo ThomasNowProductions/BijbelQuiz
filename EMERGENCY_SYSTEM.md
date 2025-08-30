@@ -8,7 +8,7 @@ The BijbelQuiz app includes an emergency message system that allows administrato
 
 ## How It Works
 
-The `EmergencyService` in the Flutter app polls the API endpoint `https://backendbijbelquiz.vercel.app/api/emergency` every 5 minutes. When an emergency message is detected, it displays a dialog to the user using the `EmergencyMessageDialog` widget.
+The `EmergencyService` in the Flutter app polls the API endpoint `https://bijbelquiz.app/api/emergency` every 5 minutes. When an emergency message is detected, it displays a dialog to the user using the `EmergencyMessageDialog` widget.
 
 ## Message Types
 
