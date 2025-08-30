@@ -6928,5 +6928,135 @@
           "Pilatus",
           "Herodes"
         ]
+      },
+      {
+        "vraag": "Wat gebeurde er toen Jezus werd gedoopt?",
+        "juisteAntwoord": "De hemelen werden geopend",
+        "moeilijkheidsgraad": 2,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matthéüs 3:16",
+        "fouteAntwoorden": [
+          "De aarde beefde",
+          "De zon verduisterde",
+          "Een engel verscheen"
+        ]
+      },
+      {
+        "vraag": "Wie is de eerst genoemde discipel die Jezus riep?",
+        "juisteAntwoord": "Petrus",
+        "moeilijkheidsgraad": 2,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matthéüs 4:18",
+        "fouteAntwoorden": [
+          "Johannes",
+          "Jakobus",
+          "Andreas"
+        ]
+      },
+      {
+        "vraag": "Wat zei Jezus toen hij op het water liep naar de discipelen toe?",
+        "juisteAntwoord": "Ik ben het, vreest niet",
+        "moeilijkheidsgraad": 3,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matthéüs 14:27",
+        "fouteAntwoorden": [
+          "Vreest niet, Ik ben het",
+          "Volg mij",
+          "Ik ben de Weg, vreest niet"
+        ]
+      },
+      {
+        "vraag": "Voor hoeveel zilveren penningen werd Jezus verraden?",
+        "juisteAntwoord": "30",
+        "moeilijkheidsgraad": 1,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matthéüs 26:15",
+        "fouteAntwoorden": [
+          "20",
+          "40",
+          "10"
+        ]
+      },
+      {
+        "vraag": "Wie vroeg aan Jezus: Zijt Gij de Koning der Joden?",
+        "juisteAntwoord": "Pilatus",
+        "moeilijkheidsgraad": 3,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matthéüs 27:11",
+        "fouteAntwoorden": [
+          "Kájafas",
+          "Herodes",
+          "De Hogepriester"
+        ]
+      },
+      {
+        "vraag": "Toen Jezus stierf gebeurden er een aantal dingen. Welke hoort er niet bij?",
+        "juisteAntwoord": "Het voorhangsel scheurde van boven tot beneden",
+        "moeilijkheidsgraad": 3,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matthéüs 27: 51, 52",
+        "fouteAntwoorden": [
+          "De aarde beefde",
+          "Het werd 3 uur lang donker",
+          "De steenrotsen scheurden"
+        ]
+      },
+      {
+        "vraag": "Wie zei: Heb toch niet te doen met dien Rechtvaardige; want ik heb veel geleden in den droom om Zijnentwil?",
+        "juisteAntwoord": "De vrouw van Pilatus",
+        "moeilijkheidsgraad": 4,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matthéüs 27:19",
+        "fouteAntwoorden": [
+          "De vrouw van Kájafas",
+          "De vrouw van Herodes",
+          "De vrouw Judas"
+        ]
+      },
+      {
+        "vraag": "Wie vond(en) het lege graf?",
+        "juisteAntwoord": "Maria Magdaléna en de de andere Maria",
+        "moeilijkheidsgraad": 2,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matthéüs 28:1",
+        "fouteAntwoorden": [
+          "Maria Magdaléna",
+          "Maria, de moeder van Jezus",
+          "Petrus en Johannes"
+        ]
+      },
+      {
+        "vraag": "Wat zei de engel als eerste tegen de vrouwen bij het graf?",
+        "juisteAntwoord": "Vreest gijlieden niet",
+        "moeilijkheidsgraad": 3,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matthéüs 28:5",
+        "fouteAntwoorden": [
+          "Hij is opgestaan",
+          "Hij is hier niet; want Hij is opgestaan",
+          "Gaat haastelijk heen"
+        ]
+      },
+      {
+        "vraag": "Wat gaf Jezus aan zijn discipelen na Zijn opstanding?",
+        "juisteAntwoord": "Een opdracht",
+        "moeilijkheidsgraad": 2,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matthéüs 28:19",
+        "fouteAntwoorden": [
+          "De Heilige Geest",
+          "Een zegen",
+          "Een belofte"
+        ]
       }
 ]
