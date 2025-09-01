@@ -533,6 +533,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
               label: strings.AppStrings.contactUs,
               icon: Icons.email,
             ),
+            _buildActionButton(
+              context,
+              settings,
+              colorScheme,
+              isSmallScreen,
+              isDesktop,
+              onPressed: () => _showSocialMediaDialog(context),
+              label: 'Volg op social media',
+              icon: Icons.share,
+            ),
           ],
         ),
         const SizedBox(height: 32),
@@ -1156,6 +1166,126 @@ class _SettingsScreenState extends State<SettingsScreen> {
         },
       );
     }
+  }
+
+  void _showSocialMediaDialog(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Volg ons op social media'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildSocialMediaButton(
+                context,
+                'Mastodon',
+                Icons.alternate_email,
+                AppUrls.mastodonUrl,
+                colorScheme,
+              ),
+              const SizedBox(height: 12),
+              _buildSocialMediaButton(
+                context,
+                'Kwebler',
+                Icons.public,
+                AppUrls.kweblerUrl,
+                colorScheme,
+              ),
+              const SizedBox(height: 12),
+              _buildSocialMediaButton(
+                context,
+                'Discord',
+                Icons.forum,
+                AppUrls.discordUrl,
+                colorScheme,
+              ),
+              const SizedBox(height: 12),
+              _buildSocialMediaButton(
+                context,
+                'Signal',
+                Icons.message,
+                AppUrls.signalUrl,
+                colorScheme,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(strings.AppStrings.close),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildSocialMediaButton(BuildContext context, String platform, IconData icon, String url, ColorScheme colorScheme) {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: colorScheme.shadow.withAlpha((0.04 * 255).round()),
+            blurRadius: 4,
+            offset: const Offset(0, 1),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () async {
+            final Uri uri = Uri.parse(url);
+            final mounted = context.mounted;
+            if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+              if (mounted) {
+                showTopSnackBar(context, 'Kon $platform niet openen', style: TopSnackBarStyle.error);
+              }
+            }
+          },
+          borderRadius: BorderRadius.circular(12),
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: colorScheme.primary.withAlpha((0.1 * 255).round()),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Icon(
+                    icon,
+                    size: 20,
+                    color: colorScheme.primary,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    platform,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: colorScheme.onSurface,
+                    ),
+                  ),
+                ),
+                Icon(
+                  Icons.open_in_new,
+                  size: 16,
+                  color: colorScheme.onSurface.withValues(alpha: (0.5 * 255)),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
 
