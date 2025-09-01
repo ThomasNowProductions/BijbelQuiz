@@ -10,7 +10,6 @@ import 'package:flutter/foundation.dart' show kIsWeb, kDebugMode;
 import 'services/notification_service.dart';
 import 'widgets/top_snackbar.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'screens/feature_test_screen.dart';
 import 'services/question_cache_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/lesson_select_screen.dart';
@@ -546,21 +545,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ],
         ),
         const SizedBox(height: 32),
-        if (kDebugMode)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 16.0),
-            child: ElevatedButton.icon(
-              icon: const Icon(Icons.bug_report),
-              label: Text(strings.AppStrings.testAllFeatures),
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const FeatureTestScreen(),
-                  ),
-                );
-              },
-            ),
-          ),
         Text(
           strings.AppStrings.copyright,
           style: TextStyle(
