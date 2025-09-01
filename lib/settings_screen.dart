@@ -15,6 +15,7 @@ import 'services/question_cache_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/lesson_select_screen.dart';
 import 'widgets/quiz_skeleton.dart';
+import 'constants/urls.dart';
 import 'l10n/strings_nl.dart' as strings;
 
 /// The settings screen that allows users to customize app preferences
@@ -43,6 +44,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (!await launchUrl(url)) {
       if (mounted) {
         showTopSnackBar(context, strings.AppStrings.couldNotOpenStatusPage, style: TopSnackBarStyle.error);
+      }
+    }
+  }
+
+  Future<void> _checkForUpdates(BuildContext context, SettingsProvider settings) async {
+    try {
+      final info = await PackageInfo.fromPlatform();
+      final version = info.version;
+      final platform = kIsWeb ? 'web' : Platform.operatingSystem.toLowerCase();
+      final url = Uri.parse('${AppUrls.updateUrl}?version=$version&platform=$platform');
+
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url, mode: LaunchMode.externalApplication);
+      } else {
+        if (mounted) {
+          showTopSnackBar(context, 'Kon update pagina niet openen', style: TopSnackBarStyle.error);
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        showTopSnackBar(context, 'Fout bij openen update pagina: ${e.toString()}', style: TopSnackBarStyle.error);
       }
     }
   }
@@ -321,6 +343,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 tooltip: strings.AppStrings.openStatusPage,
               ),
             ),
+            _buildSettingItem(
+              context,
+              settings,
+              colorScheme,
+              isSmallScreen,
+              isDesktop,
+              title: 'Controleer op updates',
+              subtitle: 'Zoek naar nieuwe app-versies',
+              icon: Icons.system_update,
+              child: IconButton(
+                icon: const Icon(Icons.refresh),
+                onPressed: () => _checkForUpdates(context, settings),
+                tooltip: 'Controleer op updates',
+              ),
+            ),
           ],
         ),
         const SizedBox(height: 24),
@@ -376,7 +413,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               isSmallScreen,
               isDesktop,
               onPressed: () async {
-                final Uri url = Uri.parse('https://bijbelquiz.app/donate.html');
+                final Uri url = Uri.parse(AppUrls.donateUrl);
                 // Mark as donated before launching the URL
                 await settings.markAsDonated();
                 

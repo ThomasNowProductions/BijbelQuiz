@@ -11,6 +11,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart';
 import '../services/sound_service.dart';
 import '../services/logger.dart';
+import '../constants/urls.dart';
 import '../widgets/top_snackbar.dart';
 
 class FeatureTestScreen extends StatefulWidget {
@@ -180,10 +181,10 @@ class _FeatureTestScreenState extends State<FeatureTestScreen> {
       final info = await PackageInfo.fromPlatform();
       final version = info.version;
       final platform = kIsWeb ? 'web' : Platform.operatingSystem.toLowerCase();
-      final url = Uri.parse('https://bijbelquiz.app/update.php?version=$version&platform=$platform');
-      _logAdd('Update: Would check $url');
+      final url = Uri.parse('${AppUrls.updateUrl}?version=$version&platform=$platform');
+      _logAdd('Update: Would open URL: $url');
     } catch (e) {
-      _logAdd('Update: Could not check for updates ($e)');
+      _logAdd('Update: Could not prepare update URL ($e)');
     }
   }
 
@@ -218,7 +219,7 @@ class _FeatureTestScreenState extends State<FeatureTestScreen> {
   Future<void> _testUrlLaunch() async {
     _logAdd('Testing URL launch...');
     try {
-      final url = Uri.parse('https://bijbelquiz.app/');
+      final url = Uri.parse(AppUrls.homepage);
       // ignore: deprecated_member_use
       // Use canLaunchUrl and launchUrl if available
       // For test, just log the intent

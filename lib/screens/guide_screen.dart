@@ -9,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../services/logger.dart';
 import '../widgets/quiz_skeleton.dart';
 import '../widgets/top_snackbar.dart';
+import '../constants/urls.dart';
 import '../l10n/strings_nl.dart' as strings;
 
 class GuideScreen extends StatefulWidget {
@@ -276,7 +277,7 @@ class _GuidePageViewState extends State<GuidePageView> {
     }
 
     try {
-      final url = Uri.parse('https://bijbelquiz.app/donate.html');
+      final url = Uri.parse(AppUrls.donateUrl);
       if (await canLaunchUrl(url)) {
         // Mark as donated before launching the URL
         if (safeContext != null && safeContext.mounted) {

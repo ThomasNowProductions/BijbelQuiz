@@ -272,7 +272,8 @@ class SettingsProvider extends ChangeNotifier {
       rethrow;
     }
   }
-  
+
+
   // Helper method to safely get a boolean setting with type checking
   bool _getBoolSetting(String key, {required bool defaultValue}) {
     try {
@@ -292,4 +293,4 @@ class SettingsProvider extends ChangeNotifier {
       return defaultValue;
     }
   }
-} 
+}

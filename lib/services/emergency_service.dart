@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:bijbelquiz/widgets/emergency_message_dialog.dart';
+import 'package:bijbelquiz/constants/urls.dart';
 
 class EmergencyMessage {
   final String message;
@@ -25,7 +26,7 @@ class EmergencyMessage {
 }
 
 class EmergencyService {
-  static const String _baseUrl = 'https://bijbelquiz.app/api';
+  static const String _baseUrl = AppUrls.baseDomainAPI;
   static const String _endpoint = '/emergency';
   static const Duration _pollingInterval = Duration(minutes: 5);
   
