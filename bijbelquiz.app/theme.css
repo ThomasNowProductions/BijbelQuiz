@@ -587,3 +587,16 @@ footer {
     font-size: 0.9375rem;
   }
 }
+
+/* Footer link */
+.footer-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
