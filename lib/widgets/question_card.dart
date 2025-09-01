@@ -36,7 +36,7 @@ class _QuestionCardState extends State<QuestionCard> with SingleTickerProviderSt
     super.initState();
     _fadeController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 250), // Optimized for better responsiveness
     );
     
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
@@ -445,7 +445,7 @@ class _FitbAnimatedBlankRowState extends State<_FitbAnimatedBlankRow> with Singl
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 250), // Optimized for better responsiveness
       vsync: this,
     );
     
@@ -563,7 +563,7 @@ class _FitbAnimatedBlankRowState extends State<_FitbAnimatedBlankRow> with Singl
       if (i < questionParts.length - 1) {
         children.add(
           AnimatedSwitcher(
-            duration: const Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 250), // Optimized for better responsiveness
             switchInCurve: Curves.easeOutBack,
             switchOutCurve: Curves.easeInBack,
             transitionBuilder: (Widget child, Animation<double> animation) {

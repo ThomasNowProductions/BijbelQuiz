@@ -17,6 +17,10 @@ import 'lesson_complete_screen.dart';
 import '../widgets/metric_item.dart';
 import '../widgets/question_card.dart';
 import '../widgets/biblical_reference_dialog.dart';
+import '../widgets/quiz_metrics_display.dart';
+import '../widgets/quiz_error_display.dart';
+import '../widgets/lesson_progress_bar.dart';
+import '../widgets/quiz_bottom_bar.dart';
 import 'dart:async';
 import '../services/logger.dart';
 import 'dart:math';
@@ -743,63 +747,92 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
     }
   }
 
-  // PQU: Progressive Question Up-selection algorithm
-  // Picks the next question based on the current normalized difficulty and the JSON difficulty levels [1..5]
+  /// PQU: Progressive Question Up-selection algorithm
+  /// This algorithm dynamically adjusts question difficulty based on player performance
+  /// to maintain an optimal challenge level and prevent boredom or frustration.
+  ///
+  /// The algorithm works by:
+  /// 1. Analyzing recent performance (correct/incorrect ratio)
+  /// 2. Adjusting target difficulty based on performance thresholds
+  /// 3. Applying dampening for long sessions to prevent extreme swings
+  /// 4. Mapping internal difficulty scale [0..2] to JSON levels [1..5]
+  /// 5. Selecting questions within ±1 difficulty level of target
+  /// 6. Filtering out recently used questions to prevent repetition
+  ///
+  /// @param currentDifficulty The current normalized difficulty [0..2]
+  /// @return The next question selected by the algorithm
   QuizQuestion _pquPickNextQuestion(double currentDifficulty) {
     final gameStats = Provider.of<GameStatsProvider>(context, listen: false);
     double targetDifficulty = currentDifficulty;
     final totalQuestions = gameStats.score + gameStats.incorrectAnswers;
 
+    // PHASE 1: Calculate target difficulty based on recent performance
     if (totalQuestions > 0) {
-      final correctRatio = totalQuestions > 0 ? gameStats.score / totalQuestions : 0.0;
-      // More responsive difficulty adjustment
+      final correctRatio = gameStats.score / totalQuestions;
+
+      // Performance-based difficulty adjustment
+      // High performance (>90% correct): Increase difficulty significantly
       if (correctRatio > 0.9) {
-        targetDifficulty += 0.05; // Increased from 0.02
-      } else if (correctRatio > 0.75) {
-        targetDifficulty += 0.03; // Increased from 0.01
-      } else if (correctRatio < 0.3) {
-        targetDifficulty -= 0.05; // Increased from 0.01
-      } else if (correctRatio < 0.5) {
-        targetDifficulty -= 0.03; // Increased from 0.01
+        targetDifficulty += 0.05;
       }
-      // Dampen shifts in long sessions but less aggressively
-      if (totalQuestions > 30) { // Reduced from 50
-        targetDifficulty = currentDifficulty + (targetDifficulty - currentDifficulty) * 0.7; // Increased from 0.5
+      // Good performance (75-90% correct): Increase difficulty moderately
+      else if (correctRatio > 0.75) {
+        targetDifficulty += 0.03;
+      }
+      // Poor performance (<30% correct): Decrease difficulty significantly
+      else if (correctRatio < 0.3) {
+        targetDifficulty -= 0.05;
+      }
+      // Below average performance (30-50% correct): Decrease difficulty moderately
+      else if (correctRatio < 0.5) {
+        targetDifficulty -= 0.03;
+      }
+
+      // PHASE 2: Apply dampening for long gaming sessions
+      // Prevents extreme difficulty swings after many questions
+      // Reduces the adjustment magnitude as session length increases
+      if (totalQuestions > 30) {
+        final adjustment = targetDifficulty - currentDifficulty;
+        targetDifficulty = currentDifficulty + (adjustment * 0.7);
       }
     }
 
-    // Clamp to [0,2] as normalized internal difficulty used by PQU
+    // PHASE 3: Constrain difficulty to valid range
+    // Internal difficulty scale: [0..2] maps to JSON levels [1..5]
     targetDifficulty = targetDifficulty.clamp(0.0, 2.0);
 
-    // Map normalized [0..2] to JSON difficulty levels [1..5]
+    // PHASE 4: Map internal difficulty to JSON difficulty levels
+    // Formula: level = 1 + (normalized_difficulty * 2)
+    // Examples: 0.0 -> 1, 1.0 -> 3, 2.0 -> 5
     final int targetLevel = (1 + (targetDifficulty * 2).round()).clamp(1, 5);
 
-    // Available questions not used in current pool
+    // PHASE 5: Select available questions (not used in current session)
     List<QuizQuestion> availableQuestions =
         _allQuestions.where((q) => !_usedQuestions.contains(q.question)).toList();
 
-    // If exhausted, reset pool and reshuffle for better distribution
+    // PHASE 6: Handle question pool exhaustion
+    // When all questions are used, reset and reshuffle for continued gameplay
     if (availableQuestions.isEmpty) {
-      AppLogger.info('All questions used, resetting question pool');
+      AppLogger.info('Question pool exhausted, resetting for continued play');
       _usedQuestions.clear();
-      _recentlyUsedQuestions.clear(); // Clear recent questions too
-      // Reshuffle questions for better distribution across the database
-      _allQuestions.shuffle(Random());
+      _recentlyUsedQuestions.clear();
+      _allQuestions.shuffle(Random()); // Randomize order for variety
       availableQuestions = List<QuizQuestion>.from(_allQuestions);
 
-      // PERFORMANCE OPTIMIZATION: If we're running low on questions, load more in background
+      // Load additional questions in background if running low (non-lesson mode only)
       if (_allQuestions.length < 200 && !_lessonMode) {
         _loadMoreQuestionsInBackground();
       }
     }
 
-    // Prefer questions within ±1 band of target level
+    // PHASE 7: Filter questions by difficulty (prefer close matches)
+    // First preference: questions within ±1 difficulty level of target
     List<QuizQuestion> eligibleQuestions = availableQuestions.where((q) {
       final int qLevel = int.tryParse(q.difficulty.toString()) ?? 3;
       return (qLevel - targetLevel).abs() <= 1;
     }).toList();
 
-    // If none, try exact level
+    // Second preference: exact difficulty level match
     if (eligibleQuestions.isEmpty) {
       eligibleQuestions = availableQuestions.where((q) {
         final int qLevel = int.tryParse(q.difficulty.toString()) ?? 3;
@@ -807,31 +840,31 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
       }).toList();
     }
 
-    // Fallback to any available
+    // Final fallback: any available question
     if (eligibleQuestions.isEmpty) {
       eligibleQuestions = availableQuestions;
     }
 
-    // Filter out recently used questions (more recent first)
-    List<QuizQuestion> filteredQuestions = eligibleQuestions.where((q) => 
+    // PHASE 8: Apply anti-repetition filter
+    // Prevent showing recently used questions to maintain engagement
+    List<QuizQuestion> filteredQuestions = eligibleQuestions.where((q) =>
         !_recentlyUsedQuestions.contains(q.question)).toList();
-    
-    // If all eligible questions are recent, use the full eligible list
+
+    // Emergency fallback: if all eligible questions are recent, clear recent list
     if (filteredQuestions.isEmpty && eligibleQuestions.isNotEmpty) {
       filteredQuestions = eligibleQuestions;
-      // Clear the recent list to prevent getting stuck
       _recentlyUsedQuestions.clear();
     }
 
-    // Random pick among eligible
+    // PHASE 9: Random selection from eligible questions
     final random = Random();
     final selectedQuestion = filteredQuestions[random.nextInt(filteredQuestions.length)];
 
-    // Mark as used
+    // PHASE 10: Update usage tracking
     _usedQuestions.add(selectedQuestion.question);
-    
-    // Add to recently used list (maintain limit)
     _recentlyUsedQuestions.add(selectedQuestion.question);
+
+    // Maintain recent questions list size limit (FIFO eviction)
     if (_recentlyUsedQuestions.length > _recentlyUsedLimit) {
       _recentlyUsedQuestions.removeAt(0);
     }
@@ -892,8 +925,24 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
     }
   }
 
-  // PQU: Progressive difficulty update function
-  // Computes the next normalized difficulty [0..2] based on performance, streak, and speed
+  /// PQU: Progressive Difficulty Update Function
+  /// Calculates the next difficulty level based on comprehensive performance metrics.
+  ///
+  /// This function considers multiple factors:
+  /// - Answer correctness (primary factor)
+  /// - Current streak length (reward/punish sustained performance)
+  /// - Time remaining when answered (speed bonus/malus)
+  /// - Overall session performance ratio (long-term adjustment)
+  /// - Random variation (prevents difficulty stagnation)
+  ///
+  /// @param currentDifficulty Current normalized difficulty [0..2]
+  /// @param isCorrect Whether the last answer was correct
+  /// @param streak Current consecutive correct answers streak
+  /// @param timeRemaining Seconds left when answer was given
+  /// @param totalQuestions Total questions answered in session
+  /// @param correctAnswers Number of correct answers in session
+  /// @param incorrectAnswers Number of incorrect answers in session
+  /// @return New normalized difficulty level [0..2]
   double _pquCalculateNextDifficulty({
     required double currentDifficulty,
     required bool isCorrect,
@@ -906,30 +955,51 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
     double targetDifficulty = currentDifficulty;
     final correctRatio = totalQuestions > 0 ? correctAnswers / totalQuestions : 0.5;
 
-    // More responsive base adjustment
+    // PHASE 1: Immediate performance-based adjustment
     if (isCorrect) {
-      targetDifficulty += 0.08; // Increased from 0.05
-      if (streak >= 3) targetDifficulty += 0.05 * (streak ~/ 3); // reward sustained streaks
-      if (timeRemaining > 10) targetDifficulty += 0.05; // Increased from 0.03
+      // Base reward for correct answer
+      targetDifficulty += 0.08;
+
+      // Streak bonus: reward sustained performance
+      // Every 3 consecutive correct answers adds extra difficulty
+      if (streak >= 3) {
+        targetDifficulty += 0.05 * (streak ~/ 3);
+      }
+
+      // Speed bonus: reward quick correct answers
+      if (timeRemaining > 10) {
+        targetDifficulty += 0.05;
+      }
     } else {
-      targetDifficulty -= 0.1; // Increased from 0.07
-      if (streak == 0) targetDifficulty -= 0.05; // Increased from 0.03
-      if (timeRemaining < 5) targetDifficulty -= 0.03; // Slow & wrong
+      // Penalty for incorrect answer
+      targetDifficulty -= 0.1;
+
+      // Extra penalty for breaking a streak
+      if (streak == 0) {
+        targetDifficulty -= 0.05;
+      }
+
+      // Extra penalty for slow incorrect answers
+      if (timeRemaining < 5) {
+        targetDifficulty -= 0.03;
+      }
     }
 
-    // More responsive long-term bias
+    // PHASE 2: Long-term performance bias
+    // Adjust based on overall session performance
     if (correctRatio > 0.85) {
-      targetDifficulty += 0.05; // Increased from 0.03
+      targetDifficulty += 0.05; // Consistently high performance
     } else if (correctRatio < 0.5) {
-      targetDifficulty -= 0.05; // Increased from 0.03
+      targetDifficulty -= 0.05; // Consistently low performance
     }
 
-    // Add some randomness to prevent getting stuck on the same difficulty level
-    // This helps ensure we sample questions across the difficulty spectrum
+    // PHASE 3: Anti-stagnation randomization
+    // Add small random variation to prevent getting stuck at same difficulty
+    // This ensures the algorithm explores different difficulty levels over time
     final random = Random();
-    targetDifficulty += (random.nextDouble() - 0.5) * 0.15; // Increased from 0.1
+    targetDifficulty += (random.nextDouble() - 0.5) * 0.15;
 
-    // Clamp to normalized domain
+    // PHASE 4: Constrain to valid difficulty range
     return targetDifficulty.clamp(0.0, 2.0);
   }
 
@@ -1101,69 +1171,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
     }
 
     if (_error != null) {
-      return Scaffold(
-        backgroundColor: colorScheme.surface,
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(32),
-                  decoration: BoxDecoration(
-                    color: colorScheme.surface,
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: colorScheme.outline.withAlpha((0.1 * 255).round()),
-                      width: 1,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: colorScheme.shadow.withAlpha((0.06 * 255).round()),
-                        blurRadius: 12,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: colorScheme.error.withAlpha((0.1 * 255).round()),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: Icon(
-                          Icons.error_outline_rounded,
-                          size: 48,
-                          color: colorScheme.error,
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      Text(
-                        _error!,
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color: colorScheme.error,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 24),
-                      ElevatedButton.icon(
-                        onPressed: _initializeQuiz,
-                        icon: const Icon(Icons.refresh_rounded),
-                        label: Text(strings.AppStrings.tryAgain),
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+      return QuizErrorDisplay(
+        error: _error!,
+        onRetry: _initializeQuiz,
       );
     }
 
@@ -1201,7 +1211,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
         bottom: _lessonMode
             ? PreferredSize(
                 preferredSize: const Size.fromHeight(24),
-                child: _LessonProgressBar(
+                child: LessonProgressBar(
                   current: _sessionAnswered,
                   total: widget.sessionLimit ?? 1,
                 ),
@@ -1209,7 +1219,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
             : null,
         actions: const [],
       ),
-      bottomNavigationBar: _QuizBottomBar(
+      bottomNavigationBar: QuizBottomBar(
         quizState: _quizState,
         gameStats: gameStats,
         settings: settings,
@@ -1236,108 +1246,19 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       // Compact metrics row above the question
-                      AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 350),
-                        switchInCurve: Curves.easeIn,
-                        switchOutCurve: Curves.easeOut,
-                        transitionBuilder: (child, animation) => FadeTransition(
-                          opacity: animation,
-                          child: child,
-                        ),
-                        child: Container(
-                          key: ValueKey<String>(
-                            isDesktop
-                              ? 'desktop_metrics'
-                              : isTablet
-                                ? 'tablet_metrics'
-                                : isSmallPhone
-                                  ? 'smallPhone_metrics'
-                                  : MediaQuery.of(context).size.width < 320
-                                    ? 'verySmallPhone_metrics'
-                                    : 'mobile_metrics',
-                          ),
-                          padding: EdgeInsets.symmetric(
-                            horizontal: isDesktop ? 16 : 12,
-                            vertical: isDesktop ? 12 : 10,
-                          ),
-                          decoration: BoxDecoration(
-                            color: colorScheme.surface,
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(
-                              color: colorScheme.outline.withAlpha((0.1 * 255).round()),
-                              width: 1,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.10), // subtle, small shadow
-                                blurRadius: 4,
-                                offset: Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          child: isDesktop || isTablet
-                              ? Wrap(
-                                  alignment: WrapAlignment.center,
-                                  spacing: 16,
-                                  runSpacing: 12,
-                                  children: [
-                                    MetricItem(
-                                      icon: Icons.star_rounded,
-                                      value: gameStats.score.toString(),
-                                      label: strings.AppStrings.score,
-                                      colorScheme: colorScheme,
-                                      color: colorScheme.primary,
-                                      animation: _scoreAnimation,
-                                      previousValue: _previousScore,
-                                      onAnimationComplete: () {
-                                        _previousScore = gameStats.score;
-                                      },
-                                      isSmallPhone: false,
-                                      highlight: gameStats.isPowerupActive,
-                                    ),
-                                    MetricItem(
-                                      icon: Icons.local_fire_department_rounded,
-                                      value: gameStats.currentStreak.toString(),
-                                      label: strings.AppStrings.streak,
-                                      colorScheme: colorScheme,
-                                      color: const Color(0xFFF59E0B),
-                                      animation: _streakAnimation,
-                                      previousValue: _previousStreak,
-                                      onAnimationComplete: () {
-                                        _previousStreak = gameStats.currentStreak;
-                                      },
-                                      isSmallPhone: false,
-                                    ),
-                                    MetricItem(
-                                      icon: Icons.emoji_events_rounded,
-                                      value: gameStats.longestStreak.toString(),
-                                      label: strings.AppStrings.best,
-                                      colorScheme: colorScheme,
-                                      color: const Color(0xFFF59E0B),
-                                      animation: _longestStreakAnimation,
-                                      previousValue: _previousLongestStreak,
-                                      onAnimationComplete: () {
-                                        _previousLongestStreak = gameStats.longestStreak;
-                                      },
-                                      isSmallPhone: false,
-                                    ),
-                                    MetricItem(
-                                      icon: Icons.timer_rounded,
-                                      value: _quizState.timeRemaining.toString(),
-                                      label: strings.AppStrings.time,
-                                      colorScheme: colorScheme,
-                                      color: _timeColorAnimation.value ?? const Color(0xFF10B981),
-                                      animation: _timeAnimation,
-                                      previousValue: _previousTime,
-                                      onAnimationComplete: () {
-                                        _previousTime = _quizState.timeRemaining;
-                                      },
-                                      isSmallPhone: false,
-                                    ),
-                                  ],
-                                )
-                              : _buildMobileMetricsRow(colorScheme, gameStats, isSmallPhone),
-                        ),
+                      QuizMetricsDisplay(
+                        scoreAnimation: _scoreAnimation,
+                        streakAnimation: _streakAnimation,
+                        longestStreakAnimation: _longestStreakAnimation,
+                        timeAnimation: _timeAnimation,
+                        timeColorAnimation: _timeColorAnimation,
+                        previousScore: _previousScore,
+                        previousStreak: _previousStreak,
+                        previousLongestStreak: _previousLongestStreak,
+                        previousTime: _previousTime,
+                        isDesktop: isDesktop,
+                        isTablet: isTablet,
+                        isSmallPhone: isSmallPhone,
                       ),
                       SizedBox(height: isDesktop ? 24 : 20),
                       // Question card below metrics
@@ -1361,114 +1282,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
     );
   }
 
-  Widget _buildMobileMetricsRow(ColorScheme colorScheme, GameStatsProvider gameStats, bool isSmallPhone) {
-    final size = MediaQuery.of(context).size;
-    double width = size.width;
-
-    // If the screen is extremely small, show a not supported message
-    if (width < 260) {
-      return Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            'Schermgrootte niet ondersteund',
-            style: TextStyle(
-              color: colorScheme.error,
-              fontWeight: FontWeight.bold,
-              fontSize: 14,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ),
-      );
-    }
-
-    // Determine scale factor based on width
-    double scale;
-    if (width < 320) {
-      scale = 0.7;
-    } else if (width < 380) {
-      scale = 0.8;
-    } else if (width < 440) {
-      scale = 0.9;
-    } else {
-      scale = 1.0;
-    }
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Expanded(
-          child: MetricItem(
-            icon: Icons.star_rounded,
-            value: gameStats.score.toString(),
-            label: strings.AppStrings.score,
-            colorScheme: colorScheme,
-            color: colorScheme.primary,
-            animation: _scoreAnimation,
-            previousValue: _previousScore,
-            onAnimationComplete: () {
-              _previousScore = gameStats.score;
-            },
-            isSmallPhone: false,
-            highlight: gameStats.isPowerupActive,
-            scale: scale,
-          ),
-        ),
-        SizedBox(width: 8),
-        Expanded(
-          child: MetricItem(
-            icon: Icons.local_fire_department_rounded,
-            value: gameStats.currentStreak.toString(),
-            label: strings.AppStrings.streak,
-            colorScheme: colorScheme,
-            color: const Color(0xFFF59E0B),
-            animation: _streakAnimation,
-            previousValue: _previousStreak,
-            onAnimationComplete: () {
-              _previousStreak = gameStats.currentStreak;
-            },
-            isSmallPhone: false,
-            scale: scale,
-          ),
-        ),
-        SizedBox(width: 8),
-        Expanded(
-          child: MetricItem(
-            icon: Icons.emoji_events_rounded,
-            value: gameStats.longestStreak.toString(),
-            label: strings.AppStrings.best,
-            colorScheme: colorScheme,
-            color: const Color(0xFFF59E0B),
-            animation: _longestStreakAnimation,
-            previousValue: _previousLongestStreak,
-            onAnimationComplete: () {
-              _previousLongestStreak = gameStats.longestStreak;
-            },
-            isSmallPhone: false,
-            scale: scale,
-          ),
-        ),
-        SizedBox(width: 8),
-        Expanded(
-          child: MetricItem(
-            icon: Icons.timer_rounded,
-            value: _quizState.timeRemaining.toString(),
-            label: 'Tijd',
-            colorScheme: colorScheme,
-            color: _timeColorAnimation.value ?? const Color(0xFF10B981),
-            animation: _timeAnimation,
-            previousValue: _previousTime,
-            onAnimationComplete: () {
-              _previousTime = _quizState.timeRemaining;
-            },
-            isSmallPhone: false,
-            scale: scale,
-          ),
-        ),
-      ],
-    );
-  }
 
   Map<String, dynamic>? _parseBiblicalReference(String reference) {
     try {
@@ -1677,284 +1490,3 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
   }
 }
 
-// Bottom bar widget for quiz actions
-class _QuizBottomBar extends StatelessWidget {
-  final QuizState quizState;
-  final GameStatsProvider gameStats;
-  final SettingsProvider settings;
-  final VoidCallback onSkipPressed;
-  final VoidCallback onUnlockPressed;
-  final bool isDesktop;
-
-  const _QuizBottomBar({
-    required this.quizState,
-    required this.gameStats,
-    required this.settings,
-    required this.onSkipPressed,
-    required this.onUnlockPressed,
-    required this.isDesktop,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final canSkip = gameStats.score >= 35 && !quizState.isAnswering && !quizState.isTransitioning;
-    final hasBiblicalReference = quizState.question.biblicalReference != null &&
-                               quizState.question.biblicalReference!.isNotEmpty;
-    final canUnlock = gameStats.score >= 10 &&
-                     !quizState.isAnswering &&
-                     !quizState.isTransitioning &&
-                     hasBiblicalReference;
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        color: colorScheme.surface,
-        border: Border(
-          top: BorderSide(
-            color: colorScheme.outline.withAlpha((0.1 * 255).round()),
-            width: 1,
-          ),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withAlpha((0.05 * 255).round()),
-            blurRadius: 8,
-            offset: const Offset(0, -2),
-          ),
-        ],
-      ),
-      child: SafeArea(
-        top: false,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            // Skip button
-            _buildActionButton(
-              context: context,
-              icon: Icons.skip_next_rounded,
-              label: settings.language == 'en' ? strings.AppStrings.skip : strings.AppStrings.overslaan,
-              cost: 35,
-              canUse: canSkip,
-              onPressed: onSkipPressed,
-              isDesktop: isDesktop,
-            ),
-
-            // Unlock biblical reference button
-            if (hasBiblicalReference)
-              _buildActionButton(
-                context: context,
-                icon: Icons.book_rounded,
-                label: strings.AppStrings.unlockBiblicalReference,
-                cost: 10,
-                canUse: canUnlock,
-                onPressed: onUnlockPressed,
-                isDesktop: isDesktop,
-              ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildActionButton({
-    required BuildContext context,
-    required IconData icon,
-    required String label,
-    required int cost,
-    required bool canUse,
-    required VoidCallback onPressed,
-    required bool isDesktop,
-  }) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textColor = canUse ? colorScheme.primary : Colors.grey;
-
-    return Container(
-      constraints: BoxConstraints(
-        minWidth: isDesktop ? 140 : 100,
-        maxWidth: isDesktop ? 220 : 140,
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: canUse ? onPressed : null,
-          borderRadius: BorderRadius.circular(12),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  icon,
-                  size: isDesktop ? 20 : 18,
-                  color: textColor,
-                ),
-                const SizedBox(width: 4),
-                Icon(
-                  Icons.star_rounded,
-                  size: isDesktop ? 16 : 14,
-                  color: textColor,
-                ),
-                const SizedBox(width: 2),
-                Text(
-                  cost.toString(),
-                  style: TextStyle(
-                    color: textColor,
-                    fontSize: isDesktop ? 14 : 12,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                if (isDesktop) ...[
-                  const SizedBox(width: 4),
-                  Expanded(
-                    child: Text(
-                      label,
-                      style: TextStyle(
-                        color: textColor,
-                        fontSize: 11,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-// Lesson session progress bar for QuizScreen lesson mode
-class _LessonProgressBar extends StatelessWidget {
-  final int current;
-  final int total;
-
-  const _LessonProgressBar({required this.current, required this.total});
-
-  @override
-  Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
-    final value = total > 0 ? (current / total).clamp(0.0, 1.0) : 0.0;
-
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final maxW = constraints.maxWidth;
-
-          return Stack(
-            clipBehavior: Clip.none,
-            children: [
-              // Track
-              Container(
-                height: 10,
-                decoration: BoxDecoration(
-                  color: cs.surfaceContainerHighest,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-
-              // Animated fill
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 600),
-                curve: Curves.easeOutCubic,
-                width: maxW * value,
-                height: 10,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  gradient: LinearGradient(
-                    colors: [
-                      cs.primary,
-                      cs.primary.withValues(alpha: 0.65),
-                    ],
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: cs.primary.withValues(alpha: 0.35),
-                      blurRadius: 10,
-                      spreadRadius: 0.5,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-              ),
-
-              // Soft shimmer overlay on the filled part
-              Positioned.fill(
-                child: IgnorePointer(
-                  child: AnimatedOpacity(
-                    opacity: value == 0.0 ? 0.0 : 1.0,
-                    duration: const Duration(milliseconds: 300),
-                    child: FractionallySizedBox(
-                      widthFactor: value,
-                      alignment: Alignment.centerLeft,
-                      child: ShaderMask(
-                        shaderCallback: (rect) {
-                          return const LinearGradient(
-                            begin: Alignment(-1.0, 0.0),
-                            end: Alignment(1.0, 0.0),
-                            colors: [
-                              Colors.transparent,
-                              Colors.white54,
-                              Colors.transparent,
-                            ],
-                            stops: [0.0, 0.5, 1.0],
-                          ).createShader(rect);
-                        },
-                        blendMode: BlendMode.srcATop,
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 900),
-                          curve: Curves.easeInOut,
-                          width: maxW * value,
-                          height: 10,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: Colors.white.withValues(alpha: 0.10),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-
-              // Cap dot with glow
-              if (value > 0.0)
-                Positioned(
-                  left: (maxW * value) - 6,
-                  top: -2,
-                  child: AnimatedScale(
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeOutBack,
-                    scale: 1.0,
-                    child: Container(
-                      width: 12,
-                      height: 12,
-                      decoration: BoxDecoration(
-                        color: cs.primary,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: cs.primary.withValues(alpha: 0.6),
-                            blurRadius: 12,
-                            spreadRadius: 1,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-            ],
-          );
-        },
-      ),
-    );
-  }
-}

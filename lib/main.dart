@@ -118,8 +118,42 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
     super.didChangeDependencies();
     // Guide showing logic moved to LessonSelectScreen for better control
   }
-  
 
+  /// Helper method to determine app themes based on settings
+  ThemeData _getLightTheme(SettingsProvider settings) {
+    if (settings.selectedCustomThemeKey != null) {
+      switch (settings.selectedCustomThemeKey) {
+        case 'oled':
+          return oledTheme;
+        case 'green':
+          return greenTheme;
+        case 'orange':
+          return orangeTheme;
+        default:
+          return appLightTheme;
+      }
+    } else {
+      return appLightTheme;
+    }
+  }
+
+  /// Helper method to determine dark theme based on settings
+  ThemeData _getDarkTheme(SettingsProvider settings) {
+    if (settings.selectedCustomThemeKey != null) {
+      switch (settings.selectedCustomThemeKey) {
+        case 'oled':
+          return oledTheme;
+        case 'green':
+          return greenTheme;
+        case 'orange':
+          return orangeTheme;
+        default:
+          return appDarkTheme;
+      }
+    } else {
+      return appDarkTheme;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -134,40 +168,17 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
     // Build the main app widget
     final app = Consumer<SettingsProvider>(
       builder: (context, settings, _) {
-        // Determine which theme to use based on settings
-        final ThemeData lightTheme;
-        final ThemeData darkTheme;
-        
-        if (settings.selectedCustomThemeKey != null) {
-          switch (settings.selectedCustomThemeKey) {
-            case 'oled':
-              lightTheme = oledTheme;
-              darkTheme = oledTheme;
-              break;
-            case 'green':
-              lightTheme = greenTheme;
-              darkTheme = greenTheme;
-              break;
-            case 'orange':
-              lightTheme = orangeTheme;
-              darkTheme = orangeTheme;
-              break;
-            default:
-              lightTheme = appLightTheme;
-              darkTheme = appDarkTheme;
-          }
-        } else {
-          lightTheme = appLightTheme;
-          darkTheme = appDarkTheme;
-        }
-        
+        // Get themes based on settings
+        final lightTheme = _getLightTheme(settings);
+        final darkTheme = _getDarkTheme(settings);
+
         return MaterialApp(
           navigatorKey: EmergencyService.navigatorKey,
           title: strings.AppStrings.appName,
           debugShowCheckedModeBanner: false,
           theme: lightTheme,
           darkTheme: darkTheme,
-          themeMode: settings.selectedCustomThemeKey != null 
+          themeMode: settings.selectedCustomThemeKey != null
               ? ThemeMode.light  // Custom themes are always applied as light theme
               : settings.themeMode,  // Use system preference when no custom theme
           localizationsDelegates: const [

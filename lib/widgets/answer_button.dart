@@ -39,7 +39,7 @@ class _AnswerButtonState extends State<AnswerButton> with SingleTickerProviderSt
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: const Duration(milliseconds: 150),
+      duration: const Duration(milliseconds: 120), // Optimized for better responsiveness
       vsync: this,
     );
     _scaleAnimation = Tween<double>(begin: 1.0, end: 0.98).animate(
@@ -116,7 +116,7 @@ class _AnswerButtonState extends State<AnswerButton> with SingleTickerProviderSt
         return Transform.scale(
           scale: _scaleAnimation.value,
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 250),
+            duration: const Duration(milliseconds: 200), // Optimized for better responsiveness
             curve: Curves.easeInOut,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),

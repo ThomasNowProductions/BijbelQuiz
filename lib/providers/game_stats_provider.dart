@@ -201,12 +201,13 @@ class GameStatsProvider extends ChangeNotifier {
   Future<void> _playClickSound() async {
     try {
       final context = navigatorKey.currentContext;
-      if (context != null) {
-        final settings = Provider.of<SettingsProvider>(context, listen: false);
-        if (settings.mute) return;
-        await _playSystemSound('assets/sounds/click.mp3');
-        AppLogger.debug('Played click sound');
-      }
+      if (context == null) return;
+
+      final settings = Provider.of<SettingsProvider>(context, listen: false);
+      if (settings.mute) return;
+
+      await _playSystemSound('assets/sounds/click.mp3');
+      AppLogger.debug('Played click sound');
     } catch (e) {
       AppLogger.error('Error playing click sound', e);
     }
@@ -219,49 +220,51 @@ class GameStatsProvider extends ChangeNotifier {
       return;
     }
 
-    try {
-      final isMp3 = assetPath.toLowerCase().endsWith('.mp3');
-      // For MP3, use mpg123 or ffplay only
-      final players = isMp3
-          ? [
-              {'name': 'mpg123', 'args': ['-q', assetPath]},
-              {'name': 'ffplay', 'args': ['-nodisp', '-autoexit', '-loglevel', 'error', assetPath]},
-            ]
-          : [
-              // For WAV/PCM, you could add aplay/paplay here if you add WAV assets
-            ];
-      bool played = false;
-      for (final player in players) {
-        try {
-          final result = await Process.run('which', [player['name'] as String]);
-          if (result.exitCode == 0) {
-            AppLogger.info('Trying to play sound with: ${player['name']} ${player['args']}');
-            final soundResult = await Process.run(
-              player['name'] as String,
-              player['args'] as List<String>,
-            ).timeout(const Duration(seconds: 2));
-            if (soundResult.exitCode == 0) {
-              AppLogger.info('Sound played successfully with: ${player['name']}');
-              played = true;
-              break;
-            } else {
-              AppLogger.error('Player ${player['name']} failed: exit code ${soundResult.exitCode}, stderr: ${soundResult.stderr}');
-            }
-          } else {
-            AppLogger.debug('Player not found: ${player['name']}');
-          }
-        } catch (e) {
-          AppLogger.error('Exception trying player ${player['name']}', e);
-          continue; // Try next player
-        }
+    // Define available audio players with their configurations
+    final audioPlayers = [
+      _AudioPlayerConfig('mpg123', ['-q', assetPath]),
+      _AudioPlayerConfig('ffplay', ['-nodisp', '-autoexit', '-loglevel', 'error', assetPath]),
+    ];
+
+    // Try each player in order
+    for (final player in audioPlayers) {
+      if (await _tryPlayWithPlayer(player)) {
+        return; // Success, stop trying other players
       }
-      if (!played) {
-        AppLogger.warning('No suitable player found or all failed for sound: $assetPath');
-        await _playBeep();
+    }
+
+    // All players failed, use fallback
+    AppLogger.warning('No suitable audio player found for: $assetPath');
+    await _playBeep();
+  }
+
+  /// Attempts to play sound with a specific audio player
+  Future<bool> _tryPlayWithPlayer(_AudioPlayerConfig player) async {
+    try {
+      // Check if the player is available
+      final whichResult = await Process.run('which', [player.command]);
+      if (whichResult.exitCode != 0) {
+        AppLogger.debug('Audio player not found: ${player.command}');
+        return false;
+      }
+
+      // Try to play the sound
+      AppLogger.info('Attempting to play sound with: ${player.command}');
+      final playResult = await Process.run(
+        player.command,
+        player.args,
+      ).timeout(const Duration(seconds: 2));
+
+      if (playResult.exitCode == 0) {
+        AppLogger.info('Sound played successfully with: ${player.command}');
+        return true;
+      } else {
+        AppLogger.warning('Player ${player.command} failed: ${playResult.stderr}');
+        return false;
       }
     } catch (e) {
-      AppLogger.error('Error playing system sound', e);
-      await _playBeep();
+      AppLogger.error('Exception with player ${player.command}', e);
+      return false;
     }
   }
 
@@ -358,4 +361,12 @@ class Powerup {
       byQuestions: byQuestions ?? this.byQuestions,
     );
   }
-} 
+}
+
+/// Configuration for an audio player
+class _AudioPlayerConfig {
+  final String command;
+  final List<String> args;
+
+  _AudioPlayerConfig(this.command, this.args);
+}

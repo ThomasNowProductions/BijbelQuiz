@@ -75,6 +75,21 @@ class SettingsProvider extends ChangeNotifier {
     }
   }
 
+  /// Helper method to safely save settings with error handling
+  Future<void> _saveSetting({
+    required Future<void> Function() action,
+    required String errorMessage,
+  }) async {
+    try {
+      await action();
+      notifyListeners();
+    } catch (e) {
+      _error = '$errorMessage: ${e.toString()}';
+      notifyListeners();
+      rethrow;
+    }
+  }
+
   Future<void> setCustomTheme(String? key) async {
     _selectedCustomThemeKey = key;
     await _prefs?.setString(_customThemeKey, key ?? '');
@@ -133,112 +148,96 @@ class SettingsProvider extends ChangeNotifier {
 
   /// Updates the theme mode setting
   Future<void> setThemeMode(ThemeMode mode) async {
-    try {
-      _themeMode = mode;
-      await _prefs?.setInt(_themeModeKey, mode.index);
-      notifyListeners();
-    } catch (e) {
-      _error = 'Failed to save theme setting: ${e.toString()}';
-      notifyListeners();
-      rethrow;
-    }
+    await _saveSetting(
+      action: () async {
+        _themeMode = mode;
+        await _prefs?.setInt(_themeModeKey, mode.index);
+      },
+      errorMessage: 'Failed to save theme setting',
+    );
   }
 
   /// Updates the slow mode setting (backward compatibility)
   Future<void> setSlowMode(bool enabled) async {
-    try {
-      _gameSpeed = enabled ? 'slow' : 'medium';
-      await _prefs?.setString(_slowModeKey, _gameSpeed);
-      notifyListeners();
-    } catch (e) {
-      _error = 'Failed to save slow mode setting: ${e.toString()}';
-      notifyListeners();
-      rethrow;
-    }
+    await _saveSetting(
+      action: () async {
+        _gameSpeed = enabled ? 'slow' : 'medium';
+        await _prefs?.setString(_slowModeKey, _gameSpeed);
+      },
+      errorMessage: 'Failed to save slow mode setting',
+    );
   }
-  
+
   /// Updates the game speed setting
   Future<void> setGameSpeed(String speed) async {
     if (speed != 'slow' && speed != 'medium' && speed != 'fast') {
       throw ArgumentError('Game speed must be "slow", "medium", or "fast"');
     }
 
-    try {
-      _gameSpeed = speed;
-      await _prefs?.setString(_slowModeKey, speed);
-      notifyListeners();
-    } catch (e) {
-      _error = 'Failed to save game speed setting: ${e.toString()}';
-      notifyListeners();
-      rethrow;
-    }
+    await _saveSetting(
+      action: () async {
+        _gameSpeed = speed;
+        await _prefs?.setString(_slowModeKey, speed);
+      },
+      errorMessage: 'Failed to save game speed setting',
+    );
   }
 
   /// Updates the mute setting
+  Future<void> setMute(bool enabled) async {
+    await _saveSetting(
+      action: () async {
+        _mute = enabled;
+        await _prefs?.setBool(_muteKey, enabled);
+      },
+      errorMessage: 'Failed to save mute setting',
+    );
+  }
+
   /// Marks that the user has made a donation
   Future<void> markAsDonated() async {
-    try {
-      _hasDonated = true;
-      await _prefs?.setBool(_hasDonatedKey, true);
-      notifyListeners();
-    } catch (e) {
-      _error = 'Failed to update donation status: ${e.toString()}';
-      notifyListeners();
-      rethrow;
-    }
+    await _saveSetting(
+      action: () async {
+        _hasDonated = true;
+        await _prefs?.setBool(_hasDonatedKey, true);
+      },
+      errorMessage: 'Failed to update donation status',
+    );
   }
 
   /// Marks that we've checked for updates
   Future<void> setHasCheckedForUpdate(bool checked) async {
-    try {
-      _hasCheckedForUpdate = checked;
-      await _prefs?.setBool(_hasCheckedForUpdateKey, checked);
-      notifyListeners();
-    } catch (e) {
-      _error = 'Failed to update check for update status: ${e.toString()}';
-      notifyListeners();
-      rethrow;
-    }
-  }
-
-  Future<void> setMute(bool enabled) async {
-    try {
-      _mute = enabled;
-      await _prefs?.setBool(_muteKey, enabled);
-      notifyListeners();
-    } catch (e) {
-      _error = 'Failed to save mute setting: ${e.toString()}';
-      notifyListeners();
-      rethrow;
-    }
+    await _saveSetting(
+      action: () async {
+        _hasCheckedForUpdate = checked;
+        await _prefs?.setBool(_hasCheckedForUpdateKey, checked);
+      },
+      errorMessage: 'Failed to update check for update status',
+    );
   }
 
   /// Marks the guide as seen
   Future<void> markGuideAsSeen() async {
-    try {
-      _prefs ??= await SharedPreferences.getInstance(); // Ensure _prefs is initialized
-      _hasSeenGuide = true;
-      await _prefs!.setBool(_hasSeenGuideKey, true);
-      notifyListeners();
-    } catch (e) {
-      _error = 'Failed to save guide status: ${e.toString()}';
-      notifyListeners();
-      rethrow;
-    }
+    await _saveSetting(
+      action: () async {
+        _prefs ??= await SharedPreferences.getInstance(); // Ensure _prefs is initialized
+        _hasSeenGuide = true;
+        await _prefs!.setBool(_hasSeenGuideKey, true);
+      },
+      errorMessage: 'Failed to save guide status',
+    );
   }
 
   /// Resets the guide status so it can be shown again
   Future<void> resetGuideStatus() async {
-    try {
-      _prefs ??= await SharedPreferences.getInstance(); // Ensure _prefs is initialized
-      _hasSeenGuide = false;
-      await _prefs!.setBool(_hasSeenGuideKey, false);
-      notifyListeners();
-    } catch (e) {
-      _error = 'Failed to reset guide status: ${e.toString()}';
-      notifyListeners();
-      rethrow;
-    }
+    await _saveSetting(
+      action: () async {
+        _prefs ??= await SharedPreferences.getInstance(); // Ensure _prefs is initialized
+        _hasSeenGuide = false;
+        await _prefs!.setBool(_hasSeenGuideKey, false);
+      },
+      errorMessage: 'Failed to reset guide status',
+    );
   }
 
 
@@ -250,27 +249,23 @@ class SettingsProvider extends ChangeNotifier {
 
   /// Resets the check for update status so it can check again
   Future<void> resetCheckForUpdateStatus() async {
-    try {
-      _hasCheckedForUpdate = false;
-      await _prefs?.setBool(_hasCheckedForUpdateKey, false);
-      notifyListeners();
-    } catch (e) {
-      _error = 'Failed to reset check for update status: ${e.toString()}';
-      notifyListeners();
-      rethrow;
-    }
+    await _saveSetting(
+      action: () async {
+        _hasCheckedForUpdate = false;
+        await _prefs?.setBool(_hasCheckedForUpdateKey, false);
+      },
+      errorMessage: 'Failed to reset check for update status',
+    );
   }
 
   Future<void> setNotificationEnabled(bool enabled) async {
-    try {
-      _notificationEnabled = enabled;
-      await _prefs?.setBool(_notificationEnabledKey, enabled);
-      notifyListeners();
-    } catch (e) {
-      _error = 'Failed to save notification setting: ${e.toString()}';
-      notifyListeners();
-      rethrow;
-    }
+    await _saveSetting(
+      action: () async {
+        _notificationEnabled = enabled;
+        await _prefs?.setBool(_notificationEnabledKey, enabled);
+      },
+      errorMessage: 'Failed to save notification setting',
+    );
   }
 
 

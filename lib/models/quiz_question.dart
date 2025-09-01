@@ -3,6 +3,8 @@
 enum QuestionType { mc, fitb, tf }
 
 QuestionType _parseQuestionType(String? type) {
+  if (type == null) return QuestionType.mc;
+
   switch (type) {
     case 'mc':
       return QuestionType.mc;
@@ -13,6 +15,36 @@ QuestionType _parseQuestionType(String? type) {
     default:
       return QuestionType.mc; // fallback for now
   }
+}
+
+/// Parses incorrect answers from JSON data
+List<String> _parseIncorrectAnswers(dynamic rawIncorrect, QuestionType type, String correctAnswer) {
+  if (rawIncorrect is List && rawIncorrect.isNotEmpty) {
+    return rawIncorrect.map((e) => e.toString()).toList();
+  }
+
+  // For true/false questions without provided incorrect answers, generate sensible opposites
+  if (type == QuestionType.tf) {
+    final lc = correctAnswer.toLowerCase();
+    if (lc == 'true' || lc == 'waar') {
+      return ['Niet waar'];
+    } else if (lc == 'false' || lc == 'niet waar') {
+      return ['Waar'];
+    } else {
+      // Fallback assumes Dutch labeling in dataset
+      return ['Niet waar'];
+    }
+  }
+
+  return [];
+}
+
+/// Parses categories from JSON data
+List<String> _parseCategories(dynamic rawCategories) {
+  if (rawCategories is List) {
+    return rawCategories.map((e) => e.toString()).toList();
+  }
+  return [];
 }
 
 String _questionTypeToString(QuestionType type) {
@@ -70,45 +102,11 @@ class QuizQuestion {
   /// This factory is used to parse question data from a JSON source.
   /// The JSON keys 'vraag', 'juisteAntwoord', 'fouteAntwoorden', 'moeilijkheidsgraad', and 'type' are used to populate the question's properties.
   factory QuizQuestion.fromJson(Map<String, dynamic> json) {
-    final type = _parseQuestionType(json['type']?.toString() ?? 'mc');
+    final type = _parseQuestionType(json['type']?.toString());
     final correctAnswer = json['juisteAntwoord']?.toString() ?? '';
-    List<String> incorrectAnswers;
-
-    final rawIncorrect = json['fouteAntwoorden'];
-    if (type == QuestionType.tf) {
-      // Use provided incorrect answers when present, otherwise generate a sensible opposite
-      if (rawIncorrect is List && rawIncorrect.isNotEmpty) {
-        incorrectAnswers = rawIncorrect.map((e) => e.toString()).toList();
-      } else {
-        final lc = correctAnswer.toLowerCase();
-        if (lc == 'true' || lc == 'waar') {
-          incorrectAnswers = ['Niet waar'];
-        } else if (lc == 'false' || lc == 'niet waar') {
-          incorrectAnswers = ['Waar'];
-        } else {
-          // Fallback assumes Dutch labeling in dataset
-          incorrectAnswers = ['Niet waar'];
-        }
-      }
-    } else {
-      if (rawIncorrect is List) {
-        incorrectAnswers = rawIncorrect.map((e) => e.toString()).toList();
-      } else {
-        incorrectAnswers = [];
-      }
-    }
-
-    // Parse categories
-    List<String> categories = [];
-    final rawCategories = json['categories'];
-    if (rawCategories is List) {
-      categories = rawCategories.map((e) => e.toString()).toList();
-    }
-
-    // Parse biblical reference
-    final biblicalReference = json['biblicalReference'] is String 
-        ? json['biblicalReference'] as String 
-        : null;
+    final incorrectAnswers = _parseIncorrectAnswers(json['fouteAntwoorden'], type, correctAnswer);
+    final categories = _parseCategories(json['categories']);
+    final biblicalReference = json['biblicalReference'] as String?;
 
     return QuizQuestion(
       question: json['vraag']?.toString() ?? '',
