@@ -108,90 +108,100 @@ class _QuestionCardState extends State<QuestionCard> with SingleTickerProviderSt
           child: Column(
             children: [
               // Enhanced question card with professional design
-              Container(
-                decoration: BoxDecoration(
-                  color: colorScheme.surface,
-                  borderRadius: BorderRadius.circular(24),
-                  border: Border.all(
-                    color: colorScheme.outline.withAlpha((0.1 * 255).round()),
-                    width: 1,
+              Semantics(
+                label: 'Multiple choice question',
+                hint: 'Select the correct answer from the options below',
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: colorScheme.surface,
+                    borderRadius: BorderRadius.circular(24),
+                    border: Border.all(
+                      color: colorScheme.outline.withAlpha((0.1 * 255).round()),
+                      width: 1,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: colorScheme.shadow.withAlpha((0.08 * 255).round()),
+                        blurRadius: 24,
+                        offset: const Offset(0, 8),
+                        spreadRadius: 0,
+                      ),
+                      BoxShadow(
+                        color: colorScheme.shadow.withAlpha((0.04 * 255).round()),
+                        blurRadius: 48,
+                        offset: const Offset(0, 16),
+                        spreadRadius: 0,
+                      ),
+                    ],
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: colorScheme.shadow.withAlpha((0.08 * 255).round()),
-                      blurRadius: 24,
-                      offset: const Offset(0, 8),
-                      spreadRadius: 0,
-                    ),
-                    BoxShadow(
-                      color: colorScheme.shadow.withAlpha((0.04 * 255).round()),
-                      blurRadius: 48,
-                      offset: const Offset(0, 16),
-                      spreadRadius: 0,
-                    ),
-                  ],
-                ),
-                child: Padding(
-                  padding: EdgeInsets.all(isDesktop ? 28.0 : 28.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      // Responsive question text with better overflow handling
-                      ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxHeight: MediaQuery.of(context).size.height * 0.3, // Limit height to 30% of screen
-                        ),
-                        child: SingleChildScrollView(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                            child: Text(
-                              widget.question.question,
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                fontWeight: FontWeight.w600,
-                                color: colorScheme.onSurface,
-                                height: 1.4,
-                                letterSpacing: -0.1,
-                                fontSize: isDesktop 
-                                  ? 24 
-                                  : MediaQuery.of(context).size.shortestSide < 360 ? 18 : 20,
+                  child: Padding(
+                    padding: EdgeInsets.all(isDesktop ? 28.0 : 28.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        // Responsive question text with better overflow handling
+                        ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxHeight: MediaQuery.of(context).size.height * 0.3, // Limit height to 30% of screen
+                          ),
+                          child: SingleChildScrollView(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                              child: Text(
+                                widget.question.question,
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: colorScheme.onSurface,
+                                  height: 1.4,
+                                  letterSpacing: -0.1,
+                                  fontSize: isDesktop
+                                    ? 24
+                                    : MediaQuery.of(context).size.shortestSide < 360 ? 18 : 20,
+                                ),
+                                overflow: TextOverflow.visible,
+                                textScaler: TextScaler.linear(MediaQuery.of(context).textScaler.scale(1.0).clamp(0.8, 1.2)), // Limit text scaling
+                                semanticsLabel: widget.question.question,
                               ),
-                              overflow: TextOverflow.visible,
-                              textScaler: TextScaler.linear(MediaQuery.of(context).textScaler.scale(1.0).clamp(0.8, 1.2)), // Limit text scaling
-                              semanticsLabel: widget.question.question,
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: isDesktop ? 36 : 32),
-                      // Answer options with improved spacing
-                      ...List.generate(
-                        options.length,
-                        (index) {
-                          AnswerFeedback feedback = AnswerFeedback.none;
-                          if (widget.selectedAnswerIndex != null) {
-                            if (index == widget.selectedAnswerIndex && index == correctIndex) {
-                              feedback = AnswerFeedback.correct;
-                            } else if (index == widget.selectedAnswerIndex && index != correctIndex) {
-                              feedback = AnswerFeedback.incorrect;
-                            } else if (index == correctIndex) {
-                              feedback = AnswerFeedback.revealedCorrect;
-                            }
-                          }
-                          return Padding(
-                            padding: EdgeInsets.only(bottom: isDesktop ? 14.0 : 12.0),
-                            child: AnswerButton(
-                              onPressed: widget.isAnswering || widget.selectedAnswerIndex != null ? null : () => widget.onAnswerSelected(index),
-                              feedback: feedback,
-                              label: options[index],
-                              colorScheme: colorScheme,
-                              letter: String.fromCharCode(65 + index),
-                              isDisabled: widget.isAnswering || widget.selectedAnswerIndex != null,
+                        SizedBox(height: isDesktop ? 36 : 32),
+                        // Answer options with improved spacing
+                        Semantics(
+                          label: 'Answer options',
+                          hint: 'Choose one of the ${options.length} options',
+                          child: Column(
+                            children: List.generate(
+                              options.length,
+                              (index) {
+                                AnswerFeedback feedback = AnswerFeedback.none;
+                                if (widget.selectedAnswerIndex != null) {
+                                  if (index == widget.selectedAnswerIndex && index == correctIndex) {
+                                    feedback = AnswerFeedback.correct;
+                                  } else if (index == widget.selectedAnswerIndex && index != correctIndex) {
+                                    feedback = AnswerFeedback.incorrect;
+                                  } else if (index == correctIndex) {
+                                    feedback = AnswerFeedback.revealedCorrect;
+                                  }
+                                }
+                                return Padding(
+                                  padding: EdgeInsets.only(bottom: isDesktop ? 14.0 : 12.0),
+                                  child: AnswerButton(
+                                    onPressed: widget.isAnswering || widget.selectedAnswerIndex != null ? null : () => widget.onAnswerSelected(index),
+                                    feedback: feedback,
+                                    label: options[index],
+                                    colorScheme: colorScheme,
+                                    letter: String.fromCharCode(65 + index),
+                                    isDisabled: widget.isAnswering || widget.selectedAnswerIndex != null,
+                                  ),
+                                );
+                              },
                             ),
-                          );
-                        },
-                      ),
-                    ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -206,76 +216,86 @@ class _QuestionCardState extends State<QuestionCard> with SingleTickerProviderSt
           margin: EdgeInsets.symmetric(horizontal: isDesktop ? 20 : 16),
           child: Column(
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: colorScheme.surface,
-                  borderRadius: BorderRadius.circular(24),
-                  border: Border.all(
-                    color: colorScheme.outline.withAlpha((0.1 * 255).round()),
-                    width: 1,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: colorScheme.shadow.withAlpha((0.08 * 255).round()),
-                      blurRadius: 24,
-                      offset: const Offset(0, 8),
-                      spreadRadius: 0,
+              Semantics(
+                label: 'Fill in the blank question',
+                hint: 'Select the word that completes the sentence',
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: colorScheme.surface,
+                    borderRadius: BorderRadius.circular(24),
+                    border: Border.all(
+                      color: colorScheme.outline.withAlpha((0.1 * 255).round()),
+                      width: 1,
                     ),
-                    BoxShadow(
-                      color: colorScheme.shadow.withAlpha((0.04 * 255).round()),
-                      blurRadius: 48,
-                      offset: const Offset(0, 16),
-                      spreadRadius: 0,
-                    ),
-                  ],
-                ),
-                child: Padding(
-                  padding: EdgeInsets.all(isDesktop ? 28.0 : 28.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      // Animated blank in question (like MC question text)
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: isDesktop ? 12 : 8),
-                        child: _FitbAnimatedBlankRow(
-                          question: widget.question,
-                          options: options,
-                          selectedAnswerIndex: widget.selectedAnswerIndex,
-                          isAnswering: widget.isAnswering,
-                          onAnswerSelected: widget.onAnswerSelected,
-                          colorScheme: colorScheme,
-                          isDesktop: isDesktop,
-                        ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: colorScheme.shadow.withAlpha((0.08 * 255).round()),
+                        blurRadius: 24,
+                        offset: const Offset(0, 8),
+                        spreadRadius: 0,
                       ),
-                      SizedBox(height: isDesktop ? 36 : 32),
-                      // Answer options with improved spacing (like MC)
-                      ...List.generate(
-                        options.length,
-                        (index) {
-                          AnswerFeedback feedback = AnswerFeedback.none;
-                          if (widget.selectedAnswerIndex != null) {
-                            if (index == widget.selectedAnswerIndex && index == correctIndex) {
-                              feedback = AnswerFeedback.correct;
-                            } else if (index == widget.selectedAnswerIndex && index != correctIndex) {
-                              feedback = AnswerFeedback.incorrect;
-                            } else if (index == correctIndex) {
-                              feedback = AnswerFeedback.revealedCorrect;
-                            }
-                          }
-                          return Padding(
-                            padding: EdgeInsets.only(bottom: isDesktop ? 14.0 : 12.0),
-                            child: AnswerButton(
-                              onPressed: widget.isAnswering || widget.selectedAnswerIndex != null ? null : () => widget.onAnswerSelected(index),
-                              feedback: feedback,
-                              label: options[index],
-                              colorScheme: colorScheme,
-                              letter: null,
-                              isDisabled: widget.isAnswering || widget.selectedAnswerIndex != null,
-                            ),
-                          );
-                        },
+                      BoxShadow(
+                        color: colorScheme.shadow.withAlpha((0.04 * 255).round()),
+                        blurRadius: 48,
+                        offset: const Offset(0, 16),
+                        spreadRadius: 0,
                       ),
                     ],
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(isDesktop ? 28.0 : 28.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        // Animated blank in question (like MC question text)
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: isDesktop ? 12 : 8),
+                          child: _FitbAnimatedBlankRow(
+                            question: widget.question,
+                            options: options,
+                            selectedAnswerIndex: widget.selectedAnswerIndex,
+                            isAnswering: widget.isAnswering,
+                            onAnswerSelected: widget.onAnswerSelected,
+                            colorScheme: colorScheme,
+                            isDesktop: isDesktop,
+                          ),
+                        ),
+                        SizedBox(height: isDesktop ? 36 : 32),
+                        // Answer options with improved spacing (like MC)
+                        Semantics(
+                          label: 'Answer options',
+                          hint: 'Choose the correct word to fill in the blank',
+                          child: Column(
+                            children: List.generate(
+                              options.length,
+                              (index) {
+                                AnswerFeedback feedback = AnswerFeedback.none;
+                                if (widget.selectedAnswerIndex != null) {
+                                  if (index == widget.selectedAnswerIndex && index == correctIndex) {
+                                    feedback = AnswerFeedback.correct;
+                                  } else if (index == widget.selectedAnswerIndex && index != correctIndex) {
+                                    feedback = AnswerFeedback.incorrect;
+                                  } else if (index == correctIndex) {
+                                    feedback = AnswerFeedback.revealedCorrect;
+                                  }
+                                }
+                                return Padding(
+                                  padding: EdgeInsets.only(bottom: isDesktop ? 14.0 : 12.0),
+                                  child: AnswerButton(
+                                    onPressed: widget.isAnswering || widget.selectedAnswerIndex != null ? null : () => widget.onAnswerSelected(index),
+                                    feedback: feedback,
+                                    label: options[index],
+                                    colorScheme: colorScheme,
+                                    letter: null,
+                                    isDisabled: widget.isAnswering || widget.selectedAnswerIndex != null,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -295,80 +315,88 @@ class _QuestionCardState extends State<QuestionCard> with SingleTickerProviderSt
           margin: EdgeInsets.symmetric(horizontal: isDesktop ? 20 : 16),
           child: Column(
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: colorScheme.surface,
-                  borderRadius: BorderRadius.circular(24),
-                  border: Border.all(
-                    color: colorScheme.outline.withAlpha((0.1 * 255).round()),
-                    width: 1,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: colorScheme.shadow.withAlpha((0.08 * 255).round()),
-                      blurRadius: 24,
-                      offset: const Offset(0, 8),
-                      spreadRadius: 0,
+              Semantics(
+                label: 'True or False question',
+                hint: 'Select whether the statement is true or false',
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: colorScheme.surface,
+                    borderRadius: BorderRadius.circular(24),
+                    border: Border.all(
+                      color: colorScheme.outline.withAlpha((0.1 * 255).round()),
+                      width: 1,
                     ),
-                    BoxShadow(
-                      color: colorScheme.shadow.withAlpha((0.04 * 255).round()),
-                      blurRadius: 48,
-                      offset: const Offset(0, 16),
-                      spreadRadius: 0,
-                    ),
-                  ],
-                ),
-                child: Padding(
-                  padding: EdgeInsets.all(isDesktop ? 28.0 : 28.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: isDesktop ? 12 : 8),
-                        child: Text(
-                          widget.question.question,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: colorScheme.onSurface,
-                            height: 1.5,
-                            letterSpacing: -0.2,
-                            fontSize: getResponsiveFontSize(context, 28),
-                          ),
-                          semanticsLabel: widget.question.question,
-                        ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: colorScheme.shadow.withAlpha((0.08 * 255).round()),
+                        blurRadius: 24,
+                        offset: const Offset(0, 8),
+                        spreadRadius: 0,
                       ),
-                      SizedBox(height: isDesktop ? 48 : 36),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(2, (index) {
-                          AnswerFeedback feedback = AnswerFeedback.none;
-                          if (widget.selectedAnswerIndex != null) {
-                            if (index == widget.selectedAnswerIndex && index == correctIndex) {
-                              feedback = AnswerFeedback.correct;
-                            } else if (index == widget.selectedAnswerIndex && index != correctIndex) {
-                              feedback = AnswerFeedback.incorrect;
-                            } else if (index == correctIndex) {
-                              feedback = AnswerFeedback.revealedCorrect;
-                            }
-                          }
-                          return Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 8.0),
-                              child: AnswerButton(
-                                onPressed: widget.isAnswering || widget.selectedAnswerIndex != null ? null : () => widget.onAnswerSelected(index),
-                                feedback: feedback,
-                                label: tfOptions[index],
-                                colorScheme: colorScheme,
-                                letter: null,
-                                isLarge: true,
-                                isDisabled: widget.isAnswering || widget.selectedAnswerIndex != null,
-                              ),
-                            ),
-                          );
-                        }),
+                      BoxShadow(
+                        color: colorScheme.shadow.withAlpha((0.04 * 255).round()),
+                        blurRadius: 48,
+                        offset: const Offset(0, 16),
+                        spreadRadius: 0,
                       ),
                     ],
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(isDesktop ? 28.0 : 28.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: isDesktop ? 12 : 8),
+                          child: Text(
+                            widget.question.question,
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: colorScheme.onSurface,
+                              height: 1.5,
+                              letterSpacing: -0.2,
+                              fontSize: getResponsiveFontSize(context, 28),
+                            ),
+                            semanticsLabel: widget.question.question,
+                          ),
+                        ),
+                        SizedBox(height: isDesktop ? 48 : 36),
+                        Semantics(
+                          label: 'Answer options',
+                          hint: 'Choose True or False',
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: List.generate(2, (index) {
+                              AnswerFeedback feedback = AnswerFeedback.none;
+                              if (widget.selectedAnswerIndex != null) {
+                                if (index == widget.selectedAnswerIndex && index == correctIndex) {
+                                  feedback = AnswerFeedback.correct;
+                                } else if (index == widget.selectedAnswerIndex && index != correctIndex) {
+                                  feedback = AnswerFeedback.incorrect;
+                                } else if (index == correctIndex) {
+                                  feedback = AnswerFeedback.revealedCorrect;
+                                }
+                              }
+                              return Expanded(
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                                  child: AnswerButton(
+                                    onPressed: widget.isAnswering || widget.selectedAnswerIndex != null ? null : () => widget.onAnswerSelected(index),
+                                    feedback: feedback,
+                                    label: tfOptions[index],
+                                    colorScheme: colorScheme,
+                                    letter: null,
+                                    isLarge: true,
+                                    isDisabled: widget.isAnswering || widget.selectedAnswerIndex != null,
+                                  ),
+                                ),
+                              );
+                            }),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

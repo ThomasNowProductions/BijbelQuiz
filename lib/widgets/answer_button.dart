@@ -110,6 +110,21 @@ class _AnswerButtonState extends State<AnswerButton> with SingleTickerProviderSt
     final double iconSize = widget.isLarge ? (isDesktop ? 48 : 36) : getResponsiveFontSize(context, 16);
     final double indicatorSize = widget.isLarge ? (isDesktop ? 56 : 48) : (isDesktop ? 40 : 36);
 
+    // Build semantic label based on feedback state
+    String semanticLabel = widget.label;
+    if (widget.feedback == AnswerFeedback.correct) {
+      semanticLabel = 'Correct answer: ${widget.label}';
+    } else if (widget.feedback == AnswerFeedback.incorrect) {
+      semanticLabel = 'Incorrect answer: ${widget.label}';
+    } else if (widget.feedback == AnswerFeedback.revealedCorrect) {
+      semanticLabel = 'Correct answer revealed: ${widget.label}';
+    }
+
+    // Add letter prefix if available
+    if (widget.letter != null) {
+      semanticLabel = '${widget.letter}. $semanticLabel';
+    }
+
     return AnimatedBuilder(
       animation: _animationController,
       builder: (context, child) {
@@ -137,107 +152,120 @@ class _AnswerButtonState extends State<AnswerButton> with SingleTickerProviderSt
                   ),
               ],
             ),
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                onTap: widget.isDisabled ? null : widget.onPressed,
-                onTapDown: widget.isDisabled ? null : _onTapDown,
-                onTapUp: widget.isDisabled ? null : _onTapUp,
-                onTapCancel: widget.isDisabled ? null : _onTapCancel,
-                borderRadius: BorderRadius.circular(16),
-                child: Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: isDesktop ? 24 : 20,
-                    vertical: verticalPadding,
-                  ),
-                  decoration: BoxDecoration(
-                    color: _backgroundColor,
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: _borderColor,
-                      width: 1.5,
+            child: Semantics(
+              label: semanticLabel,
+              hint: widget.isDisabled
+                  ? 'Answer button disabled'
+                  : widget.feedback == AnswerFeedback.none
+                      ? 'Tap to select this answer'
+                      : null,
+              button: true,
+              enabled: !widget.isDisabled,
+              selected: widget.feedback == AnswerFeedback.correct || widget.feedback == AnswerFeedback.revealedCorrect,
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: widget.isDisabled ? null : widget.onPressed,
+                  onTapDown: widget.isDisabled ? null : _onTapDown,
+                  onTapUp: widget.isDisabled ? null : _onTapUp,
+                  onTapCancel: widget.isDisabled ? null : _onTapCancel,
+                  borderRadius: BorderRadius.circular(16),
+                  focusColor: widget.colorScheme.primary.withAlpha((0.1 * 255).round()),
+                  child: Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: isDesktop ? 24 : 20,
+                      vertical: verticalPadding,
                     ),
-                  ),
-                  child: Row(
-                    children: [
-                      if (widget.letter != null)
-                        Container(
-                          width: indicatorSize,
-                          height: indicatorSize,
-                          decoration: BoxDecoration(
-                            color: widget.feedback == AnswerFeedback.none
-                                ? widget.colorScheme.primary.withAlpha((0.1 * 255).round())
-                                : Colors.white.withAlpha((0.2 * 255).round()),
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
+                    decoration: BoxDecoration(
+                      color: _backgroundColor,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: _borderColor,
+                        width: 1.5,
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        if (widget.letter != null)
+                          Container(
+                            width: indicatorSize,
+                            height: indicatorSize,
+                            decoration: BoxDecoration(
                               color: widget.feedback == AnswerFeedback.none
-                                  ? widget.colorScheme.primary.withAlpha((0.2 * 255).round())
-                                  : Colors.white.withAlpha((0.3 * 255).round()),
-                              width: 1,
+                                  ? widget.colorScheme.primary.withAlpha((0.1 * 255).round())
+                                  : Colors.white.withAlpha((0.2 * 255).round()),
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: widget.feedback == AnswerFeedback.none
+                                    ? widget.colorScheme.primary.withAlpha((0.2 * 255).round())
+                                    : Colors.white.withAlpha((0.3 * 255).round()),
+                                width: 1,
+                              ),
                             ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              widget.letter!,
-                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                fontWeight: FontWeight.w700,
-                                color: _iconColor,
-                                fontSize: getResponsiveFontSize(context, 16),
+                            child: Center(
+                              child: Text(
+                                widget.letter!,
+                                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  color: _iconColor,
+                                  fontSize: getResponsiveFontSize(context, 16),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      if (widget.letter != null)
-                        SizedBox(width: isDesktop ? 18 : 16),
-                      Expanded(
-                        child: Text(
-                          widget.label,
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.w500,
-                            color: _textColor,
-                            height: 1.4,
-                            letterSpacing: 0.1,
-                            fontSize: fontSize,
-                          ),
-                          semanticsLabel: widget.label,
-                        ),
-                      ),
-                      if (widget.feedback == AnswerFeedback.correct || widget.feedback == AnswerFeedback.revealedCorrect)
-                        Container(
-                          padding: const EdgeInsets.all(4),
-                          decoration: BoxDecoration(
-                            color: widget.feedback == AnswerFeedback.correct 
-                                ? Colors.white.withAlpha((0.2 * 255).round())
-                                : widget.colorScheme.primary.withAlpha((0.1 * 255).round()),
-                            borderRadius: BorderRadius.circular(8),
-                            border: widget.feedback == AnswerFeedback.revealedCorrect
-                                ? Border.all(
-                                    color: widget.colorScheme.primary.withAlpha((0.3 * 255).round()),
-                                    width: 1,
-                                  )
-                                : null,
-                          ),
-                          child: Icon(
-                            Icons.check_rounded,
-                            color: widget.feedback == AnswerFeedback.correct ? Colors.white : widget.colorScheme.primary,
-                            size: iconSize,
+                        if (widget.letter != null)
+                          SizedBox(width: isDesktop ? 18 : 16),
+                        Expanded(
+                          child: Text(
+                            widget.label,
+                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.w500,
+                              color: _textColor,
+                              height: 1.4,
+                              letterSpacing: 0.1,
+                              fontSize: fontSize,
+                            ),
                           ),
                         ),
-                      if (widget.feedback == AnswerFeedback.incorrect)
-                        Container(
-                          padding: const EdgeInsets.all(4),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withAlpha((0.2 * 255).round()),
-                            borderRadius: BorderRadius.circular(8),
+                        if (widget.feedback == AnswerFeedback.correct || widget.feedback == AnswerFeedback.revealedCorrect)
+                          Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              color: widget.feedback == AnswerFeedback.correct
+                                  ? Colors.white.withAlpha((0.2 * 255).round())
+                                  : widget.colorScheme.primary.withAlpha((0.1 * 255).round()),
+                              borderRadius: BorderRadius.circular(8),
+                              border: widget.feedback == AnswerFeedback.revealedCorrect
+                                  ? Border.all(
+                                      color: widget.colorScheme.primary.withAlpha((0.3 * 255).round()),
+                                      width: 1,
+                                    )
+                                  : null,
+                            ),
+                            child: Icon(
+                              Icons.check_rounded,
+                              color: widget.feedback == AnswerFeedback.correct ? Colors.white : widget.colorScheme.primary,
+                              size: iconSize,
+                              semanticLabel: 'Correct answer',
+                            ),
                           ),
-                          child: Icon(
-                            Icons.close_rounded,
-                            color: Colors.white,
-                            size: iconSize,
+                        if (widget.feedback == AnswerFeedback.incorrect)
+                          Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withAlpha((0.2 * 255).round()),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Icon(
+                              Icons.close_rounded,
+                              color: Colors.white,
+                              size: iconSize,
+                              semanticLabel: 'Incorrect answer',
+                            ),
                           ),
-                        ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

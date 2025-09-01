@@ -192,20 +192,28 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
           ),
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4.0),
-            child: _HeaderActionButton(
-              icon: Icons.settings_rounded,
-              label: 'Instellingen',
-              onTap: () => Navigator.of(context).pushNamed('/settings'),
+          Semantics(
+            label: 'App settings',
+            hint: 'Open application settings',
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+              child: _HeaderActionButton(
+                icon: Icons.settings_rounded,
+                label: 'Instellingen',
+                onTap: () => Navigator.of(context).pushNamed('/settings'),
+              ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: _HeaderActionButton(
-              icon: Icons.store_rounded,
-              label: 'Winkel',
-              onTap: () => Navigator.of(context).pushNamed('/store'),
+          Semantics(
+            label: 'Store',
+            hint: 'Open the store to purchase items',
+            child: Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: _HeaderActionButton(
+                icon: Icons.store_rounded,
+                label: 'Winkel',
+                onTap: () => Navigator.of(context).pushNamed('/store'),
+              ),
             ),
           ),
         ],
@@ -362,19 +370,25 @@ class _HeaderActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    return InkWell(
-      borderRadius: BorderRadius.circular(12),
-      onTap: onTap,
-      child: Container(
-        width: 40,
-        height: 40,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: cs.surfaceContainerHighest,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: cs.outlineVariant),
+    return Semantics(
+      label: label,
+      hint: 'Tap to open $label',
+      button: true,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap: onTap,
+        focusColor: cs.primary.withAlpha((0.1 * 255).round()),
+        child: Container(
+          width: 40,
+          height: 40,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: cs.surfaceContainerHighest,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: cs.outlineVariant),
+          ),
+          child: Icon(icon, color: cs.onSurface.withValues(alpha: 0.8), size: 20, semanticLabel: label),
         ),
-        child: Icon(icon, color: cs.onSurface.withValues(alpha: 0.8), size: 20),
       ),
     );
   }
@@ -397,85 +411,126 @@ class _ProgressHeader extends StatelessWidget {
 
     final totalStars = lessons.fold<int>(0, (sum, l) => sum + progress.bestStarsFor(l.id));
 
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            cs.primary.withValues(alpha: 0.12),
-            cs.primary.withValues(alpha: 0.04),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+    return Semantics(
+      label: 'Progress overview',
+      hint: 'Shows your current progress through lessons and earned stars',
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              cs.primary.withValues(alpha: 0.12),
+              cs.primary.withValues(alpha: 0.04),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: cs.outlineVariant),
         ),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: cs.outlineVariant),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Jouw voortgang', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              Expanded(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: LinearProgressIndicator(
-                    minHeight: 10,
-                    value: percent,
-                    backgroundColor: cs.surfaceContainerHighest,
-                    valueColor: AlwaysStoppedAnimation<Color>(cs.primary),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Text('$unlocked/$total', style: Theme.of(context).textTheme.labelLarge),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              Icon(Icons.star_rounded, color: cs.primary),
-              const SizedBox(width: 4),
-              Text('$totalStars sterren verdiend', style: Theme.of(context).textTheme.bodyMedium),
-            ],
-          ),
-          const SizedBox(height: 12),
-          // CTA zone to incentivize starting a game
-          if (continueLesson != null) ...[
-            Text(
-              'Klaar voor je volgende uitdaging?',
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w800),
-            ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Jouw voortgang', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
             const SizedBox(height: 8),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                ElevatedButton.icon(
-                  onPressed: () async {
-                    await Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => QuizScreen(
-                          lesson: continueLesson,
-                          sessionLimit: continueLesson!.maxQuestions,
-                        ),
+            Semantics(
+              label: 'Lesson completion progress',
+              hint: '$unlocked out of $total lessons completed',
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: LinearProgressIndicator(
+                        minHeight: 10,
+                        value: percent,
+                        backgroundColor: cs.surfaceContainerHighest,
+                        valueColor: AlwaysStoppedAnimation<Color>(cs.primary),
                       ),
-                    );
-                    // Ask parent to refresh/extend lessons after returning
-                    onAfterQuizReturn?.call();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: cs.primary,
-                    foregroundColor: cs.onPrimary,
-                    minimumSize: const Size.fromHeight(48),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                    ),
                   ),
-                  icon: const Icon(Icons.play_arrow_rounded),
-                  label: Text('Ga verder: ${continueLesson!.title}'),
-                ),
-                const SizedBox(height: 8),
-                OutlinedButton.icon(
+                  const SizedBox(width: 12),
+                  Text('$unlocked/$total', style: Theme.of(context).textTheme.labelLarge),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
+            Semantics(
+              label: 'Stars earned',
+              hint: 'You have earned $totalStars stars',
+              child: Row(
+                children: [
+                  Icon(Icons.star_rounded, color: cs.primary, semanticLabel: 'Star'),
+                  const SizedBox(width: 4),
+                  Text('$totalStars sterren verdiend', style: Theme.of(context).textTheme.bodyMedium),
+                ],
+              ),
+            ),
+            const SizedBox(height: 12),
+            // CTA zone to incentivize starting a game
+            if (continueLesson != null) ...[
+              Text(
+                'Klaar voor je volgende uitdaging?',
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w800),
+              ),
+              const SizedBox(height: 8),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Semantics(
+                    label: 'Continue with lesson: ${continueLesson!.title}',
+                    hint: 'Start the next recommended lesson in your progress',
+                    button: true,
+                    child: ElevatedButton.icon(
+                      onPressed: () async {
+                        await Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => QuizScreen(
+                              lesson: continueLesson,
+                              sessionLimit: continueLesson!.maxQuestions,
+                            ),
+                          ),
+                        );
+                        // Ask parent to refresh/extend lessons after returning
+                        onAfterQuizReturn?.call();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: cs.primary,
+                        foregroundColor: cs.onPrimary,
+                        minimumSize: const Size.fromHeight(48),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                      ),
+                      icon: const Icon(Icons.play_arrow_rounded, semanticLabel: 'Play'),
+                      label: Text('Ga verder: ${continueLesson!.title}'),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Semantics(
+                    label: 'Practice mode',
+                    hint: 'Start a random practice quiz without affecting progress',
+                    button: true,
+                    child: OutlinedButton.icon(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (_) => const QuizScreen()));
+                      },
+                      style: OutlinedButton.styleFrom(
+                        minimumSize: const Size.fromHeight(44),
+                        side: BorderSide(color: cs.outlineVariant),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      ),
+                      icon: const Icon(Icons.flash_on_rounded, semanticLabel: 'Lightning bolt'),
+                      label: const Text('Vrij oefenen (random)'),
+                    ),
+                  ),
+                ],
+              ),
+            ] else ...[
+              // Fallback CTA when there are no lessons (shouldn't normally happen)
+              Semantics(
+                label: 'Practice mode',
+                hint: 'Start a random practice quiz',
+                button: true,
+                child: OutlinedButton.icon(
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(builder: (_) => const QuizScreen()));
                   },
@@ -484,27 +539,13 @@ class _ProgressHeader extends StatelessWidget {
                     side: BorderSide(color: cs.outlineVariant),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
-                  icon: const Icon(Icons.flash_on_rounded),
+                  icon: const Icon(Icons.flash_on_rounded, semanticLabel: 'Lightning bolt'),
                   label: const Text('Vrij oefenen (random)'),
                 ),
-              ],
-            ),
-          ] else ...[
-            // Fallback CTA when there are no lessons (shouldn't normally happen)
-            OutlinedButton.icon(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (_) => const QuizScreen()));
-              },
-              style: OutlinedButton.styleFrom(
-                minimumSize: const Size.fromHeight(44),
-                side: BorderSide(color: cs.outlineVariant),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               ),
-              icon: const Icon(Icons.flash_on_rounded),
-              label: const Text('Vrij oefenen (random)'),
-            ),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
@@ -536,66 +577,98 @@ class _LessonTile extends StatelessWidget {
     final cs = Theme.of(context).colorScheme;
     final gradient = _tileGradientForIndex(cs, index);
 
-    return InkWell(
-      onTap: playable ? onTap : null,
-      borderRadius: BorderRadius.circular(18),
-      child: Opacity(
-        opacity: unlocked && !playable ? 0.55 : 1.0,
-        child: Ink(
-        decoration: BoxDecoration(
-          gradient: unlocked ? gradient : null,
-          color: unlocked ? null : cs.surfaceContainerHighest,
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: cs.outlineVariant),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.06),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Stack(
-          children: [
-            // top-left badge (only for unlocked lessons)
-            if (unlocked)
-              Positioned(
-                top: 12,
-                left: 12,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: (unlocked ? cs.surface : cs.surfaceContainerHigh).withValues(alpha: 0.85),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: cs.outlineVariant),
-                  ),
-                  child: Text('Les ${lesson.index + 1}', style: Theme.of(context).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w700)),
-                ),
+    // Build semantic label based on lesson state
+    String semanticLabel = 'Lesson ${lesson.index + 1}: ${lesson.title}';
+    String hint = '';
+
+    if (!unlocked) {
+      semanticLabel = '$semanticLabel (locked)';
+      hint = 'This lesson is locked. Complete previous lessons to unlock it.';
+    } else if (!playable) {
+      semanticLabel = '$semanticLabel (unlocked but not playable)';
+      hint = 'This lesson is unlocked but you can only play the most recent unlocked lesson.';
+    } else {
+      hint = 'Tap to start this lesson';
+    }
+
+    if (recommended) {
+      semanticLabel = 'Recommended: $semanticLabel';
+    }
+
+    return Semantics(
+      label: semanticLabel,
+      hint: hint,
+      button: playable,
+      enabled: playable,
+      selected: recommended,
+      child: InkWell(
+        onTap: playable ? onTap : null,
+        borderRadius: BorderRadius.circular(18),
+        focusColor: playable ? cs.primary.withAlpha((0.1 * 255).round()) : null,
+        child: Opacity(
+          opacity: unlocked && !playable ? 0.55 : 1.0,
+          child: Ink(
+          decoration: BoxDecoration(
+            gradient: unlocked ? gradient : null,
+            color: unlocked ? null : cs.surfaceContainerHighest,
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(color: cs.outlineVariant),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.06),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
               ),
-            // content (only for unlocked lessons) or lock-only for locked ones
-            if (unlocked)
-              Positioned.fill(
-                child: Center(
-                  child: CircleAvatar(
-                    radius: 32,
-                    backgroundColor: cs.primary.withValues(alpha: 0.15),
-                    child: Icon(Icons.menu_book, color: cs.primary, size: 36),
+            ],
+          ),
+          child: Stack(
+            children: [
+              // top-left badge (only for unlocked lessons)
+              if (unlocked)
+                Positioned(
+                  top: 12,
+                  left: 12,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: (unlocked ? cs.surface : cs.surfaceContainerHigh).withValues(alpha: 0.85),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: cs.outlineVariant),
+                    ),
+                    child: Text('Les ${lesson.index + 1}', style: Theme.of(context).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w700)),
                   ),
                 ),
-              )
-            else
-              Positioned.fill(
-                child: Center(
-                  child: Icon(
-                    Icons.lock_rounded,
-                    color: cs.onSurface.withValues(alpha: 0.7),
-                    size: 40,
+              // content (only for unlocked lessons) or lock-only for locked ones
+              if (unlocked)
+                Positioned.fill(
+                  child: Center(
+                    child: CircleAvatar(
+                      radius: 32,
+                      backgroundColor: cs.primary.withValues(alpha: 0.15),
+                      child: Icon(
+                        Icons.menu_book,
+                        color: cs.primary,
+                        size: 36,
+                        semanticLabel: 'Book icon representing lesson content',
+                      ),
+                    ),
+                  ),
+                )
+              else
+                Positioned.fill(
+                  child: Center(
+                    child: Icon(
+                      Icons.lock_rounded,
+                      color: cs.onSurface.withValues(alpha: 0.7),
+                      size: 40,
+                      semanticLabel: 'Locked lesson',
+                    ),
                   ),
                 ),
-              ),
-          ],
-        ),
-      )),
+            ],
+          ),
+        )),
+      ),
     );
   }
 
