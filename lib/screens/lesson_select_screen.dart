@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'dart:math';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../models/lesson.dart';
 import '../providers/lesson_progress_provider.dart';
@@ -24,6 +26,8 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
   String? _error;
   List<Lesson> _lessons = const [];
   bool _guideCheckCompleted = false; // Prevent multiple guide checks
+  bool _showPromoCard = false;
+  bool _isDonationPromo = true; // true for donation, false for follow
   // Search and filters removed for simplified UI
 
   @override
@@ -111,9 +115,23 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
       if (mounted) {
         setState(() {
           _loading = false;
+          // Show promo card occasionally (10% chance)
+          _showPromoCard = Random().nextInt(10) == 0;
+          _isDonationPromo = Random().nextBool();
         });
       }
     }
+  }
+
+  Future<void> _launchUrl(String url) async {
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    }
+  }
+
+  void _openDonationPage() {
+    _launchUrl('https://bijbelquiz.vercel.app/donate.html');
   }
 
 
@@ -219,6 +237,29 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                       onRefresh: _loadLessons,
                       child: CustomScrollView(
                         slivers: [
+                          // Promo card (if shown)
+                          if (_showPromoCard)
+                            SliverToBoxAdapter(
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                                child: _PromoCard(
+                                  isDonation: _isDonationPromo,
+                                  onDismiss: () {
+                                    setState(() {
+                                      _showPromoCard = false;
+                                    });
+                                  },
+                                  onAction: (url) {
+                                    if (_isDonationPromo) {
+                                      _openDonationPage();
+                                    } else {
+                                      _launchUrl(url);
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+
                           // Hero progress + CTA section
                           SliverToBoxAdapter(
                             child: Padding(
@@ -591,13 +632,13 @@ class _LessonGridSkeleton extends StatelessWidget {
             ? 240
             : screenWidth >= 1000
                 ? 220
-                : screenWidth >= 840
+            : screenWidth >= 840
                     ? 210
-                    : screenWidth >= 600
+                : screenWidth >= 600
                         ? 200
-                        : screenWidth >= 400
+                    : screenWidth >= 400
                             ? 170
-                            : 160;
+                        : 160;
     final double gridAspect = screenWidth >= 1000
         ? 1.12
         : screenWidth >= 600
@@ -632,6 +673,158 @@ class _LessonGridSkeleton extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class _PromoCard extends StatelessWidget {
+  final bool isDonation;
+  final VoidCallback onDismiss;
+  final Function(String) onAction;
+
+  const _PromoCard({
+    required this.isDonation,
+    required this.onDismiss,
+    required this.onAction,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: isDonation
+              ? [cs.primary.withValues(alpha: 0.14), cs.primary.withValues(alpha: 0.06)]
+              : [cs.secondary.withValues(alpha: 0.14), cs.secondary.withValues(alpha: 0.06)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: cs.outlineVariant.withValues(alpha: 0.8),
+          width: 1.5,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: cs.shadow.withValues(alpha: 0.08),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                isDonation ? Icons.favorite_rounded : Icons.group_add_rounded,
+                color: cs.onSurface.withValues(alpha: 0.7),
+                size: 20,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  isDonation ? strings.AppStrings.donate : strings.AppStrings.followUs,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w800,
+                        color: cs.onSurface,
+                      ),
+                ),
+              ),
+              IconButton(
+                onPressed: onDismiss,
+                icon: Icon(Icons.close, color: cs.onSurface.withValues(alpha: 0.6)),
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            isDonation ? strings.AppStrings.donateExplanation : strings.AppStrings.followUsMessage,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          const SizedBox(height: 12),
+          if (isDonation) ...[
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: () => onAction(''),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: cs.primary,
+                      foregroundColor: cs.onPrimary,
+                      minimumSize: const Size.fromHeight(44),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    ),
+                    icon: const Icon(Icons.favorite_rounded),
+                    label: Text(strings.AppStrings.donateButton),
+                  ),
+                ),
+              ],
+            ),
+          ] else ...[
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                _SocialButton(
+                  label: strings.AppStrings.followMastodon,
+                  icon: Icons.alternate_email,
+                  onPressed: () => onAction(strings.AppStrings.mastodonUrl),
+                ),
+                _SocialButton(
+                  label: strings.AppStrings.followKwebler,
+                  icon: Icons.group,
+                  onPressed: () => onAction(strings.AppStrings.kweblerUrl),
+                ),
+                _SocialButton(
+                  label: strings.AppStrings.followSignal,
+                  icon: Icons.message,
+                  onPressed: () => onAction(strings.AppStrings.signalUrl),
+                ),
+                _SocialButton(
+                  label: strings.AppStrings.followDiscord,
+                  icon: Icons.discord,
+                  onPressed: () => onAction(strings.AppStrings.discordUrl),
+                ),
+              ],
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _SocialButton extends StatelessWidget {
+  final String label;
+  final IconData icon;
+  final VoidCallback onPressed;
+
+  const _SocialButton({
+    required this.label,
+    required this.icon,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+
+    return OutlinedButton.icon(
+      onPressed: onPressed,
+      style: OutlinedButton.styleFrom(
+        side: BorderSide(color: cs.outlineVariant),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      ),
+      icon: Icon(icon, size: 16),
+      label: Text(label, style: Theme.of(context).textTheme.labelMedium),
     );
   }
 }

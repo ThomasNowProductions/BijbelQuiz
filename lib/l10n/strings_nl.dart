@@ -217,6 +217,18 @@ class AppStrings {
   // Errors
   static const String couldNotOpenEmail = 'Kon e-mailclient niet openen';
 
+  // Popups
+  static const String followUs = 'Volg ons';
+  static const String followUsMessage = 'Volg ons op Mastodon, Kwebler, Signal en Discord voor updates en community!';
+  static const String followMastodon = 'Volg Mastodon';
+  static const String followKwebler = 'Volg Kwebler';
+  static const String followSignal = 'Volg Signal';
+  static const String followDiscord = 'Volg Discord';
+  static const String mastodonUrl = 'https://mastodon.social/@bijbelquiz';
+  static const String kweblerUrl = 'https://kwebler.com/bijbelquiz';
+  static const String signalUrl = 'https://signal.group/bijbelquiz';
+  static const String discordUrl = 'https://discord.gg/bijbelquiz';
+
   // Quiz Screen
   static const String skip = 'Skip';
   static const String overslaan = 'Overslaan';
