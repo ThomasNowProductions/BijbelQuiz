@@ -1,6 +1,3 @@
-/// Centralized configuration file for easy app customization
-/// Change these values to rebrand the app for different clients
-
 class AppConfig {
   // App Identity
   static const String appName = 'BijbelQuiz';

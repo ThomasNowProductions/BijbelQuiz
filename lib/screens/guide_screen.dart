@@ -351,7 +351,6 @@ class _GuidePageViewState extends State<GuidePageView> {
   @override
   Widget build(BuildContext context) {
     if (widget.page.isNotificationPage) {
-      final settings = Provider.of<SettingsProvider>(context);
       return Padding(
         padding: const EdgeInsets.all(24.0),
         child: Center(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../models/quiz_question.dart';
-import '../models/quiz_state.dart';
 import 'question_card.dart';
 
 /// A widget that displays the question and handles answer selection

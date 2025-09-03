@@ -3,22 +3,6 @@
 ## Overview
 This document outlines comprehensive improvements for the BijbelQuiz Flutter application based on a thorough code analysis. The suggestions are organized by priority with implementation timelines.
 
-## 🚨 HIGH PRIORITY - Code Quality & Bugs
-
-### Code Quality
-- **Remove unused imports**: Clean up 5 unused imports
-  - `lib/widgets/question_widget.dart:3` - `../models/quiz_state.dart`
-  - `lib/widgets/quiz_metrics_display.dart:4,5` - `../providers/settings_provider.dart`, `../models/quiz_state.dart`
-  - `test/game_stats_provider_test.dart:1,6,8` - Flutter, Provider, SettingsProvider imports
-- **Fix string interpolation**: Use proper interpolation in `lib/constants/urls.dart`
-  - Lines 15, 18, 19: Replace string concatenation with interpolation
-- **Remove dangling doc comments**: Fix incomplete documentation
-  - `lib/config/app_config.dart:1`
-  - `lib/constants/urls.dart:1`
-- **Fix other linting issues**:
-  - Remove unused local variable in `lib/screens/guide_screen.dart:354`
-  - Remove unnecessary cast in `lib/providers/lesson_progress_provider.dart:142`
-  - Remove unused shown name `kDebugMode` in `lib/settings_screen.dart:9`
 
 ## 🔧 MEDIUM PRIORITY - Architecture & Performance
 

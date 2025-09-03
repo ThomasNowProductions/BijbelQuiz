@@ -1,6 +1,3 @@
-/// URL constants for the BijbelQuiz app
-/// Central location for all URLs to make updates easier
-
 import '../config/app_config.dart';
 
 class AppUrls {
@@ -12,11 +9,11 @@ class AppUrls {
   static final String homepage = baseDomain;
 
   // API endpoints
-  static final String emergencyApi = baseDomainAPI + '/emergency.ts';
+  static final String emergencyApi = '${baseDomainAPI}/emergency.ts';
 
   // App-specific URLs
-  static final String donateUrl = baseDomain + '/donate.html';
-  static final String updateUrl = baseDomain + '/download.html';
+  static final String donateUrl = '${baseDomain}/donate.html';
+  static final String updateUrl = '${baseDomain}/download.html';
 
   // Social media URLs
   static String get mastodonUrl => AppConfig.mastodonUrl;

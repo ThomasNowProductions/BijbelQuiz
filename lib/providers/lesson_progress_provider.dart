@@ -139,7 +139,7 @@ class LessonProgressProvider extends ChangeNotifier {
     _bestStarsByLesson.clear();
     final bestStars = Map<String, int>.from(data['bestStarsByLesson'] ?? {});
     bestStars.forEach((k, v) {
-      _bestStarsByLesson[k] = (v as int).clamp(0, 3);
+      _bestStarsByLesson[k] = v.clamp(0, 3);
     });
 
     await _persist();

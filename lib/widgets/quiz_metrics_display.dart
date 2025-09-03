@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/game_stats_provider.dart';
-import '../providers/settings_provider.dart';
-import '../models/quiz_state.dart';
 import '../l10n/strings_nl.dart' as strings;
 import 'metric_item.dart';
 

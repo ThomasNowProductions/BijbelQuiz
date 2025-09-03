@@ -6,7 +6,7 @@ import 'providers/lesson_progress_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'screens/guide_screen.dart';
 import 'dart:io' show Platform;
-import 'package:flutter/foundation.dart' show kIsWeb, kDebugMode;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'services/notification_service.dart';
 import 'widgets/top_snackbar.dart';
 import 'package:package_info_plus/package_info_plus.dart';
