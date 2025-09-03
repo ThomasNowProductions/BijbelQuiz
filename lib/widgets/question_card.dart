@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../models/quiz_question.dart';
 import '../theme/app_theme.dart';
+import '../utils/responsive_utils.dart';
+import '../widgets/common_widgets.dart';
 import 'answer_button.dart';
 
 class QuestionCard extends StatefulWidget {
@@ -76,8 +78,7 @@ class _QuestionCardState extends State<QuestionCard> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final size = MediaQuery.of(context).size;
-    final isDesktop = size.width > 800;
+    final isDesktop = context.isDesktop;
     
     Widget content = _buildQuestionContent(context, colorScheme, isDesktop);
     
@@ -312,7 +313,7 @@ class _QuestionCardState extends State<QuestionCard> with SingleTickerProviderSt
         final lcCorrect = widget.question.correctAnswer.toLowerCase();
         final correctIndex = (lcCorrect == 'waar' || lcCorrect == 'true' || lcCorrect == 'goed') ? 0 : 1;
         content = Container(
-          margin: EdgeInsets.symmetric(horizontal: isDesktop ? 20 : 16),
+          margin: EdgeInsets.symmetric(horizontal: context.responsiveHorizontalPadding(isDesktop ? 20 : 16)),
           child: Column(
             children: [
               Semantics(
@@ -342,7 +343,7 @@ class _QuestionCardState extends State<QuestionCard> with SingleTickerProviderSt
                     ],
                   ),
                   child: Padding(
-                    padding: EdgeInsets.all(isDesktop ? 28.0 : 28.0),
+                    padding: EdgeInsets.all(context.responsiveHorizontalPadding(isDesktop ? 28.0 : 28.0)),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [

@@ -19,6 +19,8 @@ import '../widgets/quiz_bottom_bar.dart';
 import '../widgets/question_widget.dart';
 import '../widgets/metrics_widget.dart';
 import '../widgets/app_bar_widget.dart';
+import '../utils/responsive_utils.dart';
+import '../widgets/common_widgets.dart';
 import 'dart:async';
 import '../services/logger.dart';
 import 'dart:math';
@@ -665,9 +667,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
 
     final settings = Provider.of<SettingsProvider>(context);
     final gameStats = Provider.of<GameStatsProvider>(context);
-    final isDesktop = size.width > 800;
-    final isTablet = size.width > 600 && size.width <= 800;
-    final isSmallPhone = size.width < 350;
+    final isDesktop = context.isDesktop;
+    final isTablet = context.isTablet;
+    final isSmallPhone = context.isSmallPhone;
 
     // PERFORMANCE OPTIMIZATION: Reduce debug logging frequency
     if (kDebugMode && (_isLoading != _lastLoadingState || gameStats.isLoading != _lastGameStatsLoadingState)) {
@@ -738,8 +740,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
             ),
             child: Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: isDesktop ? 32 : (isTablet ? 24 : 16),
-                vertical: 20,
+                horizontal: context.responsiveHorizontalPadding(isDesktop ? 32 : (isTablet ? 24 : 16)),
+                vertical: context.responsiveVerticalPadding(20),
               ),
               child: Center(
                 child: SingleChildScrollView(
@@ -763,7 +765,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
                         isTablet: isTablet,
                         isSmallPhone: isSmallPhone,
                       ),
-                      SizedBox(height: isDesktop ? 24 : 20),
+                      ResponsiveSizedBox(height: isDesktop ? 24 : 20),
                       // Question card below metrics
                       QuestionWidget(
                         question: _quizState.question,

@@ -6,10 +6,6 @@ This document outlines comprehensive improvements for the BijbelQuiz Flutter app
 ## 🔧 MEDIUM PRIORITY - Architecture & Performance
 
 ### Refactoring
-- **Extract helper methods**:
-  - Move responsive grid calculations to `lib/utils/responsive_utils.dart`
-  - Create `lib/utils/theme_utils.dart` for theme switching logic
-  - Extract common widget patterns to reusable components
 - **Simplify complex logic**:
   - Refactor repetitive theme switching in `main.dart`
   - Simplify the 4 concurrent animation controllers in QuizScreen

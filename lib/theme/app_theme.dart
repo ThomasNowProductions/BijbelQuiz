@@ -1,44 +1,13 @@
 import 'package:flutter/material.dart';
 import '../config/app_config.dart';
+import '../utils/responsive_utils.dart';
 
-// Helper function to get responsive text scaling
-double getResponsiveFontSize(BuildContext context, double baseSize) {
-  final size = MediaQuery.of(context).size;
-  final isDesktop = size.width > 800;
-  final isTablet = size.width > 600 && size.width <= 800;
-  final isSmallPhone = size.width < 350;
-  
-  if (isDesktop) {
-    // More conservative scaling for desktop - only increase by 10-15% instead of 25-50%
-    return baseSize * 1.1;
-  } else if (isTablet) {
-    return baseSize * 1.05;
-  } else if (isSmallPhone) {
-    return baseSize * 0.85;
-  }
-  return baseSize;
-}
+// Re-export responsive utilities for backward compatibility
+double getResponsiveFontSize(BuildContext context, double baseSize) =>
+    ResponsiveUtils.getResponsiveFontSize(context, baseSize);
 
-// Helper function to get responsive padding
-EdgeInsets getResponsivePadding(BuildContext context, EdgeInsets basePadding) {
-  final size = MediaQuery.of(context).size;
-  final isDesktop = size.width > 800;
-  final isTablet = size.width > 600 && size.width <= 800;
-  
-  if (isDesktop) {
-    // More conservative padding scaling for desktop
-    return EdgeInsets.symmetric(
-      horizontal: basePadding.horizontal * 1.2,
-      vertical: basePadding.vertical * 1.1,
-    );
-  } else if (isTablet) {
-    return EdgeInsets.symmetric(
-      horizontal: basePadding.horizontal * 1.1,
-      vertical: basePadding.vertical * 1.05,
-    );
-  }
-  return basePadding;
-}
+EdgeInsets getResponsivePadding(BuildContext context, EdgeInsets basePadding) =>
+    ResponsiveUtils.getResponsivePadding(context, basePadding);
 
 final ThemeData appLightTheme = ThemeData(
   colorScheme: ColorScheme.fromSeed(

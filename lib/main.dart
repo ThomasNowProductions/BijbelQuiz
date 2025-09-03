@@ -10,6 +10,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'providers/settings_provider.dart';
 import 'providers/game_stats_provider.dart';
 import 'theme/app_theme.dart';
+import 'utils/theme_utils.dart';
 import 'services/logger.dart';
 import 'services/notification_service.dart';
 import 'services/performance_service.dart';
@@ -119,41 +120,6 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
     // Guide showing logic moved to LessonSelectScreen for better control
   }
 
-  /// Helper method to determine app themes based on settings
-  ThemeData _getLightTheme(SettingsProvider settings) {
-    if (settings.selectedCustomThemeKey != null) {
-      switch (settings.selectedCustomThemeKey) {
-        case 'oled':
-          return oledTheme;
-        case 'green':
-          return greenTheme;
-        case 'orange':
-          return orangeTheme;
-        default:
-          return appLightTheme;
-      }
-    } else {
-      return appLightTheme;
-    }
-  }
-
-  /// Helper method to determine dark theme based on settings
-  ThemeData _getDarkTheme(SettingsProvider settings) {
-    if (settings.selectedCustomThemeKey != null) {
-      switch (settings.selectedCustomThemeKey) {
-        case 'oled':
-          return oledTheme;
-        case 'green':
-          return greenTheme;
-        case 'orange':
-          return orangeTheme;
-        default:
-          return appDarkTheme;
-      }
-    } else {
-      return appDarkTheme;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -169,8 +135,8 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
     final app = Consumer<SettingsProvider>(
       builder: (context, settings, _) {
         // Get themes based on settings
-        final lightTheme = _getLightTheme(settings);
-        final darkTheme = _getDarkTheme(settings);
+        final lightTheme = ThemeUtils.getLightTheme(settings);
+        final darkTheme = ThemeUtils.getDarkTheme(settings);
 
         return MaterialApp(
           navigatorKey: EmergencyService.navigatorKey,
@@ -178,9 +144,7 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
           debugShowCheckedModeBanner: false,
           theme: lightTheme,
           darkTheme: darkTheme,
-          themeMode: settings.selectedCustomThemeKey != null
-              ? ThemeMode.light  // Custom themes are always applied as light theme
-              : settings.themeMode,  // Use system preference when no custom theme
+          themeMode: ThemeUtils.getThemeMode(settings),
           localizationsDelegates: const [
             // Remove StringsDelegate as it's not defined in strings_nl.dart
             GlobalMaterialLocalizations.delegate,
