@@ -5,12 +5,14 @@ BijbelQuiz is a Flutter-based mobile application designed for Bible quizzes, fea
 ## Project Structure
 
 ### Root Directory
+
 - `.gitignore`: Git ignore rules
 - `app/`: Main Flutter application
 - `docs/`: Documentation files
 - `websites/`: Web applications and services
 
 ### app/ Directory
+
 The core Flutter application with the following structure:
 
 - `android/`: Android-specific configuration and code
@@ -39,10 +41,13 @@ The core Flutter application with the following structure:
 - `test/`: Unit tests
 
 ### docs/ Directory
+
 Documentation for the project.
 
 ### websites/ Directory
+
 Web applications:
+
 - `backend.bijbelquiz.app/`: Backend API and services
   - `api/`: API endpoints
   - `question-editor/`: Question editing interface
@@ -54,7 +59,7 @@ Web applications:
 
 ## Getting Started
 
-1. Ensure Flutter is installed: https://flutter.dev/docs/get-started/install
+1. Ensure Flutter is installed: [Flutter Installation](https://flutter.dev/docs/get-started/install)
 2. Clone the repository
 3. Navigate to `app/` directory
 4. Run `flutter pub get` to install dependencies
