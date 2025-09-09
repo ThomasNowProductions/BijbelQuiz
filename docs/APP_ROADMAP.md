@@ -8,26 +8,16 @@ To develop and continuously improve the BijbelQuiz application, providing an eng
 
 ### 1. Core Quiz Functionality
 
-- **Question Management:** Robust system for adding, editing, and categorizing quiz questions.
-- **Quiz Flow:** Smooth user experience from question presentation to answer submission and feedback.
-- **Scoring & Progress:** Accurate tracking of user scores and progress through quizzes/lessons.
-
-### 2. Content Expansion
-
-- **New Question Sets:** Continuously add new and diverse quiz questions.
-- **Lesson Integration:** Develop and integrate structured lessons alongside quizzes.
 - **Multimedia Support:** Explore adding images, audio, or video to questions/lessons.
 
-### 3. Performance & Stability
+### 2. Performance & Stability
 
 - **Bug Fixing:** Address critical bugs and performance bottlenecks.
 - **Optimization:** Improve app responsiveness and reduce load times.
 - **Cross-Platform Compatibility:** Ensure smooth operation across supported platforms (Android, iOS, Web, Desktop).
 
-### 4. User Experience (UX) & UI Refinements
+### 3. User Experience (UX) & UI Refinements
 
-- **Intuitive Navigation:** Enhance ease of use and app navigation.
-- **Visual Polish:** Improve overall aesthetic appeal and consistency.
 - **Accessibility:** Ensure the app is usable by a wide range of users.
 
 ## Phase 2: Social & Engagement Features
