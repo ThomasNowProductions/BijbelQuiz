@@ -43,11 +43,5 @@
         }
       ]
     }
-  ],
-  "rewrites": [
-    {
-      "source": "/r/:path*",
-      "destination": "/r/redirect.html"
-    }
   ]
 }
