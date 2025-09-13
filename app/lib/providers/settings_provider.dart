@@ -116,6 +116,15 @@ class SettingsProvider extends ChangeNotifier {
       if (oldSlowMode) {
         await _prefs?.setString(_slowModeKey, 'slow');
       }
+      
+      // Load new string-based game speed setting if it exists
+      final storedGameSpeed = _prefs?.getString(_slowModeKey);
+      if (storedGameSpeed != null && storedGameSpeed.isNotEmpty) {
+        // Validate the game speed value
+        if (storedGameSpeed == 'slow' || storedGameSpeed == 'medium' || storedGameSpeed == 'fast') {
+          _gameSpeed = storedGameSpeed;
+        }
+      }
       // Safely load boolean settings with type checking
       _hasSeenGuide = _getBoolSetting(_hasSeenGuideKey, defaultValue: false);
       _mute = _getBoolSetting(_muteKey, defaultValue: false);

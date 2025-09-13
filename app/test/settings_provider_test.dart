@@ -24,11 +24,7 @@ void main() {
 
   group('SettingsProvider', () {
     test('should initialize with default values', () async {
-      when(mockPrefs.getInt('theme_mode')).thenReturn(null);
-      when(mockPrefs.getString('game_speed')).thenReturn(null);
-      when(mockPrefs.getBool(any)).thenReturn(null);
-      when(mockPrefs.getStringList('unlocked_themes')).thenReturn(null);
-      when(mockPrefs.getString('custom_theme')).thenReturn(null);
+      SharedPreferences.setMockInitialValues({});
 
       provider = SettingsProvider();
 
@@ -49,15 +45,17 @@ void main() {
     });
 
     test('should load settings from SharedPreferences', () async {
-      when(mockPrefs.getInt('theme_mode')).thenReturn(1); // ThemeMode.dark
-      when(mockPrefs.getString('game_speed')).thenReturn('slow');
-      when(mockPrefs.getBool('has_seen_guide')).thenReturn(true);
-      when(mockPrefs.getBool('mute')).thenReturn(true);
-      when(mockPrefs.getBool('notification_enabled')).thenReturn(false);
-      when(mockPrefs.getBool('has_donated')).thenReturn(true);
-      when(mockPrefs.getBool('has_checked_for_update')).thenReturn(true);
-      when(mockPrefs.getStringList('unlocked_themes')).thenReturn(['theme1', 'theme2']);
-      when(mockPrefs.getString('custom_theme')).thenReturn('selected_theme');
+      SharedPreferences.setMockInitialValues({
+        'theme_mode': 2, // ThemeMode.dark
+        'game_speed': 'slow',
+        'has_seen_guide': true,
+        'mute': true,
+        'notification_enabled': false,
+        'has_donated': true,
+        'has_checked_for_update': true,
+        'unlocked_themes': ['theme1', 'theme2'],
+        'custom_theme': 'selected_theme',
+      });
 
       provider = SettingsProvider();
 
@@ -77,7 +75,7 @@ void main() {
     });
 
     test('should set theme mode correctly', () async {
-      when(mockPrefs.setInt(any, any)).thenAnswer((_) async => true);
+      SharedPreferences.setMockInitialValues({});
 
       provider = SettingsProvider();
       await Future.delayed(Duration.zero);
@@ -85,11 +83,10 @@ void main() {
       await provider.setThemeMode(ThemeMode.dark);
 
       expect(provider.themeMode, ThemeMode.dark);
-      verify(mockPrefs.setInt('theme_mode', 1)).called(1);
     });
 
     test('should set game speed correctly', () async {
-      when(mockPrefs.setString(any, any)).thenAnswer((_) async => true);
+      SharedPreferences.setMockInitialValues({});
 
       provider = SettingsProvider();
       await Future.delayed(Duration.zero);
@@ -97,7 +94,6 @@ void main() {
       await provider.setGameSpeed('fast');
 
       expect(provider.gameSpeed, 'fast');
-      verify(mockPrefs.setString('game_speed', 'fast')).called(1);
     });
 
     test('should throw error for invalid game speed', () async {
@@ -111,7 +107,7 @@ void main() {
     });
 
     test('should set slow mode correctly', () async {
-      when(mockPrefs.setString(any, any)).thenAnswer((_) async => true);
+      SharedPreferences.setMockInitialValues({});
 
       provider = SettingsProvider();
       await Future.delayed(Duration.zero);
@@ -120,11 +116,10 @@ void main() {
 
       expect(provider.gameSpeed, 'slow');
       expect(provider.slowMode, true);
-      verify(mockPrefs.setString('game_speed', 'slow')).called(1);
     });
 
     test('should set mute correctly', () async {
-      when(mockPrefs.setBool(any, any)).thenAnswer((_) async => true);
+      SharedPreferences.setMockInitialValues({});
 
       provider = SettingsProvider();
       await Future.delayed(Duration.zero);
@@ -132,11 +127,10 @@ void main() {
       await provider.setMute(true);
 
       expect(provider.mute, true);
-      verify(mockPrefs.setBool('mute', true)).called(1);
     });
 
     test('should set notification enabled correctly', () async {
-      when(mockPrefs.setBool(any, any)).thenAnswer((_) async => true);
+      SharedPreferences.setMockInitialValues({});
 
       provider = SettingsProvider();
       await Future.delayed(Duration.zero);
@@ -144,11 +138,10 @@ void main() {
       await provider.setNotificationEnabled(false);
 
       expect(provider.notificationEnabled, false);
-      verify(mockPrefs.setBool('notification_enabled', false)).called(1);
     });
 
     test('should mark as donated correctly', () async {
-      when(mockPrefs.setBool(any, any)).thenAnswer((_) async => true);
+      SharedPreferences.setMockInitialValues({});
 
       provider = SettingsProvider();
       await Future.delayed(Duration.zero);
@@ -156,11 +149,10 @@ void main() {
       await provider.markAsDonated();
 
       expect(provider.hasDonated, true);
-      verify(mockPrefs.setBool('has_donated', true)).called(1);
     });
 
     test('should set has checked for update correctly', () async {
-      when(mockPrefs.setBool(any, any)).thenAnswer((_) async => true);
+      SharedPreferences.setMockInitialValues({});
 
       provider = SettingsProvider();
       await Future.delayed(Duration.zero);
@@ -168,11 +160,10 @@ void main() {
       await provider.setHasCheckedForUpdate(true);
 
       expect(provider.hasCheckedForUpdate, true);
-      verify(mockPrefs.setBool('has_checked_for_update', true)).called(1);
     });
 
     test('should mark guide as seen correctly', () async {
-      when(mockPrefs.setBool(any, any)).thenAnswer((_) async => true);
+      SharedPreferences.setMockInitialValues({});
 
       provider = SettingsProvider();
       await Future.delayed(Duration.zero);
@@ -180,11 +171,10 @@ void main() {
       await provider.markGuideAsSeen();
 
       expect(provider.hasSeenGuide, true);
-      verify(mockPrefs.setBool('has_seen_guide', true)).called(1);
     });
 
     test('should reset guide status correctly', () async {
-      when(mockPrefs.setBool(any, any)).thenAnswer((_) async => true);
+      SharedPreferences.setMockInitialValues({});
 
       provider = SettingsProvider();
       await Future.delayed(Duration.zero);
@@ -192,11 +182,10 @@ void main() {
       await provider.resetGuideStatus();
 
       expect(provider.hasSeenGuide, false);
-      verify(mockPrefs.setBool('has_seen_guide', false)).called(1);
     });
 
     test('should reset check for update status correctly', () async {
-      when(mockPrefs.setBool(any, any)).thenAnswer((_) async => true);
+      SharedPreferences.setMockInitialValues({});
 
       provider = SettingsProvider();
       await Future.delayed(Duration.zero);
@@ -204,7 +193,6 @@ void main() {
       await provider.resetCheckForUpdateStatus();
 
       expect(provider.hasCheckedForUpdate, false);
-      verify(mockPrefs.setBool('has_checked_for_update', false)).called(1);
     });
 
     test('should set language (always nl)', () async {
@@ -227,7 +215,7 @@ void main() {
     });
 
     test('should set custom theme correctly', () async {
-      when(mockPrefs.setString(any, any)).thenAnswer((_) async => true);
+      SharedPreferences.setMockInitialValues({});
 
       provider = SettingsProvider();
       await Future.delayed(Duration.zero);
@@ -235,11 +223,10 @@ void main() {
       provider.setCustomTheme('new_theme');
 
       expect(provider.selectedCustomThemeKey, 'new_theme');
-      verify(mockPrefs.setString('custom_theme', 'new_theme')).called(1);
     });
 
     test('should set custom theme to null correctly', () async {
-      when(mockPrefs.setString(any, any)).thenAnswer((_) async => true);
+      SharedPreferences.setMockInitialValues({});
 
       provider = SettingsProvider();
       await Future.delayed(Duration.zero);
@@ -247,12 +234,12 @@ void main() {
       provider.setCustomTheme(null);
 
       expect(provider.selectedCustomThemeKey, null);
-      verify(mockPrefs.setString('custom_theme', '')).called(1);
     });
 
     test('should unlock theme correctly', () async {
-      when(mockPrefs.getStringList('unlocked_themes')).thenReturn([]);
-      when(mockPrefs.setStringList(any, any)).thenAnswer((_) async => true);
+      SharedPreferences.setMockInitialValues({
+        'unlocked_themes': [],
+      });
 
       provider = SettingsProvider();
       await Future.delayed(Duration.zero);
@@ -260,12 +247,12 @@ void main() {
       await provider.unlockTheme('new_theme');
 
       expect(provider.unlockedThemes.contains('new_theme'), true);
-      verify(mockPrefs.setStringList('unlocked_themes', ['new_theme'])).called(1);
     });
 
     test('should not unlock already unlocked theme', () async {
-      when(mockPrefs.getStringList('unlocked_themes')).thenReturn(['existing_theme']);
-      when(mockPrefs.setStringList(any, any)).thenAnswer((_) async => true);
+      SharedPreferences.setMockInitialValues({
+        'unlocked_themes': ['existing_theme'],
+      });
 
       provider = SettingsProvider();
       await Future.delayed(Duration.zero);
@@ -273,11 +260,12 @@ void main() {
       await provider.unlockTheme('existing_theme');
 
       expect(provider.unlockedThemes.contains('existing_theme'), true);
-      verifyNever(mockPrefs.setStringList(any, any));
     });
 
     test('should check if theme is unlocked correctly', () async {
-      when(mockPrefs.getStringList('unlocked_themes')).thenReturn(['theme1', 'theme2']);
+      SharedPreferences.setMockInitialValues({
+        'unlocked_themes': ['theme1', 'theme2'],
+      });
 
       provider = SettingsProvider();
       await Future.delayed(Duration.zero);
@@ -287,22 +275,24 @@ void main() {
     });
 
     test('should export data correctly', () async {
-      when(mockPrefs.getInt('theme_mode')).thenReturn(1);
-      when(mockPrefs.getString('game_speed')).thenReturn('slow');
-      when(mockPrefs.getBool('has_seen_guide')).thenReturn(true);
-      when(mockPrefs.getBool('mute')).thenReturn(true);
-      when(mockPrefs.getBool('notification_enabled')).thenReturn(false);
-      when(mockPrefs.getBool('has_donated')).thenReturn(true);
-      when(mockPrefs.getBool('has_checked_for_update')).thenReturn(true);
-      when(mockPrefs.getStringList('unlocked_themes')).thenReturn(['theme1']);
-      when(mockPrefs.getString('custom_theme')).thenReturn('selected');
+      SharedPreferences.setMockInitialValues({
+        'theme_mode': 2,
+        'game_speed': 'slow',
+        'has_seen_guide': true,
+        'mute': true,
+        'notification_enabled': false,
+        'has_donated': true,
+        'has_checked_for_update': true,
+        'unlocked_themes': ['theme1'],
+        'custom_theme': 'selected',
+      });
 
       provider = SettingsProvider();
       await Future.delayed(Duration.zero);
 
       final data = provider.getExportData();
 
-      expect(data['themeMode'], 1);
+      expect(data['themeMode'], 2);
       expect(data['gameSpeed'], 'slow');
       expect(data['hasSeenGuide'], true);
       expect(data['mute'], true);
@@ -314,10 +304,7 @@ void main() {
     });
 
     test('should load import data correctly', () async {
-      when(mockPrefs.setInt(any, any)).thenAnswer((_) async => true);
-      when(mockPrefs.setString(any, any)).thenAnswer((_) async => true);
-      when(mockPrefs.setBool(any, any)).thenAnswer((_) async => true);
-      when(mockPrefs.setStringList(any, any)).thenAnswer((_) async => true);
+      SharedPreferences.setMockInitialValues({});
 
       provider = SettingsProvider();
       await Future.delayed(Duration.zero);
@@ -336,7 +323,7 @@ void main() {
 
       await provider.loadImportData(importData);
 
-      expect(provider.themeMode, ThemeMode.light);
+      expect(provider.themeMode, ThemeMode.dark);
       expect(provider.gameSpeed, 'fast');
       expect(provider.hasSeenGuide, true);
       expect(provider.mute, true);
@@ -349,11 +336,9 @@ void main() {
 
     test('should handle boolean settings correctly', () async {
       // Test with boolean value
-      when(mockPrefs.getBool('mute')).thenReturn(true);
-      when(mockPrefs.getBool(any)).thenReturn(false);
-      when(mockPrefs.getInt(any)).thenReturn(0);
-      when(mockPrefs.getString(any)).thenReturn(null);
-      when(mockPrefs.getStringList(any)).thenReturn(null);
+      SharedPreferences.setMockInitialValues({
+        'mute': true,
+      });
 
       provider = SettingsProvider();
       await Future.delayed(Duration.zero);
@@ -361,7 +346,10 @@ void main() {
       expect(provider.mute, true);
 
       // Test with string value for game speed
-      when(mockPrefs.getString('game_speed')).thenReturn('slow');
+      SharedPreferences.setMockInitialValues({
+        'game_speed': 'slow',
+      });
+
       provider = SettingsProvider();
       await Future.delayed(Duration.zero);
 

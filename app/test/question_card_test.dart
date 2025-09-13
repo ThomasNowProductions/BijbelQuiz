@@ -109,8 +109,8 @@ void main() {
         ),
       );
 
-      // Check question text is displayed (without the blank)
-      expect(find.text('Complete the verse: "In the beginning'), findsOneWidget);
+      // Check question text is displayed (split into parts)
+      expect(find.text('Complete the verse: "In the beginning '), findsOneWidget);
 
       // Check blank indicator is present
       expect(find.text('______'), findsOneWidget);
@@ -125,6 +125,10 @@ void main() {
     });
 
     testWidgets('should call onAnswerSelected when answer button is tapped', (WidgetTester tester) async {
+      // Set up desktop size
+      tester.view.physicalSize = const Size(1200, 800);
+      tester.view.devicePixelRatio = 1.0;
+
       int? selectedIndex;
       await tester.pumpWidget(
         MaterialApp(
@@ -141,14 +145,31 @@ void main() {
         ),
       );
 
-      // Tap the first answer button
-      await tester.tap(find.text('4'));
+      // Find the first answer button and tap at a safe location within it
+      final buttons = find.byType(AnswerButton);
+      expect(buttons, findsNWidgets(4));
+      
+      // Try to tap at a specific point within the button bounds
+      final button = buttons.at(0);
+      final center = tester.getCenter(button);
+      
+      // Check if the center is within bounds, if not adjust it
+      final renderTreeSize = tester.binding.renderView.size;
+      final safeX = center.dx.clamp(10.0, renderTreeSize.width - 10.0);
+      final safeY = center.dy.clamp(10.0, renderTreeSize.height - 10.0);
+      final safePoint = Offset(safeX, safeY);
+      
+      await tester.tapAt(safePoint);
       await tester.pump();
 
       expect(selectedIndex, 0);
     });
 
     testWidgets('should not call onAnswerSelected when isAnswering is true', (WidgetTester tester) async {
+      // Set up desktop size
+      tester.view.physicalSize = const Size(1200, 800);
+      tester.view.devicePixelRatio = 1.0;
+
       int? selectedIndex;
       await tester.pumpWidget(
         MaterialApp(
@@ -165,14 +186,31 @@ void main() {
         ),
       );
 
-      // Try to tap an answer button
-      await tester.tap(find.text('4'));
+      // Find the first answer button and tap at a safe location within it
+      final buttons = find.byType(AnswerButton);
+      expect(buttons, findsNWidgets(4));
+      
+      // Try to tap at a specific point within the button bounds
+      final button = buttons.at(0);
+      final center = tester.getCenter(button);
+      
+      // Check if the center is within bounds, if not adjust it
+      final renderTreeSize = tester.binding.renderView.size;
+      final safeX = center.dx.clamp(10.0, renderTreeSize.width - 10.0);
+      final safeY = center.dy.clamp(10.0, renderTreeSize.height - 10.0);
+      final safePoint = Offset(safeX, safeY);
+      
+      await tester.tapAt(safePoint);
       await tester.pump();
 
       expect(selectedIndex, isNull);
     });
 
     testWidgets('should not call onAnswerSelected when selectedAnswerIndex is not null', (WidgetTester tester) async {
+      // Set up desktop size
+      tester.view.physicalSize = const Size(1200, 800);
+      tester.view.devicePixelRatio = 1.0;
+
       int? selectedIndex;
       await tester.pumpWidget(
         MaterialApp(
@@ -189,8 +227,21 @@ void main() {
         ),
       );
 
-      // Try to tap an answer button
-      await tester.tap(find.text('4'));
+      // Find the first answer button and tap at a safe location within it
+      final buttons = find.byType(AnswerButton);
+      expect(buttons, findsNWidgets(4));
+      
+      // Try to tap at a specific point within the button bounds
+      final button = buttons.at(0);
+      final center = tester.getCenter(button);
+      
+      // Check if the center is within bounds, if not adjust it
+      final renderTreeSize = tester.binding.renderView.size;
+      final safeX = center.dx.clamp(10.0, renderTreeSize.width - 10.0);
+      final safeY = center.dy.clamp(10.0, renderTreeSize.height - 10.0);
+      final safePoint = Offset(safeX, safeY);
+      
+      await tester.tapAt(safePoint);
       await tester.pump();
 
       expect(selectedIndex, isNull);
@@ -439,8 +490,8 @@ void main() {
         ),
       );
 
-      // Check question text is displayed (without the blank)
-      expect(find.text('Complete the verse: "In the beginning'), findsOneWidget);
+      // Check question text is displayed (split into parts)
+      expect(find.text('Complete the verse: "In the beginning '), findsOneWidget);
 
       // Check blank indicator is present
       expect(find.text('______'), findsOneWidget);
