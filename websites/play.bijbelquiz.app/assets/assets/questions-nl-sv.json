@@ -3519,7 +3519,7 @@
         "biblicalReference": "Jakobus 5:14-15"
     },
     {
-        "vraag": "Goed schiep de hemel en aarde in zeven dagen",
+        "vraag": "God schiep de hemel en aarde in zeven dagen",
         "juisteAntwoord": "Niet waar",
         "moeilijkheidsgraad": 1,
         "type": "tf",
@@ -3662,7 +3662,7 @@
         "biblicalReference": "Jozua 24"
     },
     {
-        "vraag": "Het boek richteren eindigt met de woorden: \"In die dagen was er geen koning in Isra\u00ebl, een iegelijk deed wat recht was in zijn ogen",
+        "vraag": "Het boek richteren eindigt met de woorden: \"In die dagen was er geen koning in Isra\u00ebl, een iegelijk deed wat recht was in zijn ogen\"",
         "juisteAntwoord": "Waar",
         "moeilijkheidsgraad": 4,
         "type": "tf",
@@ -6838,5 +6838,538 @@
             "Akeldam"
         ],
         "biblicalReference": "Handelingen 1:19"
+    },
+    {
+        "vraag": "Wie is de vader van Jozef, de man van Maria (Jezus moeder)?",
+        "juisteAntwoord": "Jakob",
+        "moeilijkheidsgraad": 4,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matth\u00e9\u00fcs 1:16",
+        "fouteAntwoorden": [
+            "Eliud",
+            "Mattan",
+            "Ele\u00e1zar"
+        ]
+    },
+    {
+        "vraag": "Hoeveel dagen en nachten vastte Jezus in de woestijn?",
+        "juisteAntwoord": "40",
+        "moeilijkheidsgraad": 1,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matth\u00e9\u00fcs 4:2",
+        "fouteAntwoorden": [
+            "7",
+            "10",
+            "30"
+        ]
+    },
+    {
+        "vraag": "Jezus noemt zijn volgelingen 'het zout der aarde'. Wat zegt Jezus dat er gebeurt als het zout zijn kracht verliest?",
+        "juisteAntwoord": "Het wordt buitengeworpen en van de mensen vertreden",
+        "moeilijkheidsgraad": 2,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matth\u00e9\u00fcs 5:13",
+        "fouteAntwoorden": [
+            "Het is tot genezing",
+            "Het wordt gezuiverd",
+            "Het veranderd smakeloos"
+        ]
+    },
+    {
+        "vraag": "Wat is de eerste zaligspreking in de Bergrede?",
+        "juisteAntwoord": "Zalig zijn de armen van geest",
+        "moeilijkheidsgraad": 3,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matth\u00e9\u00fcs 5:3",
+        "fouteAntwoorden": [
+            "Zalig zijn die treuren",
+            "Zalig zijn de zachtmoedigen",
+            "Zalig zijn de barmhartigen"
+        ]
+    },
+    {
+        "vraag": "Wat doet Jezus eerst nadat hij van de berg is afgedaald?",
+        "juisteAntwoord": "Hij geneest een melaatse",
+        "moeilijkheidsgraad": 4,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matth\u00e9\u00fcs 8:1",
+        "fouteAntwoorden": [
+            "Hij onderwijst in de synagoge",
+            "Hij gaat opnieuw prediken",
+            "Hij roept een discipel"
+        ]
+    },
+    {
+        "vraag": "Welke discipel liep op het water naar Jezus toe?",
+        "juisteAntwoord": "Petrus",
+        "moeilijkheidsgraad": 1,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matth\u00e9\u00fcs  14: 28,29",
+        "fouteAntwoorden": [
+            "Johannes",
+            "Thomas",
+            "Judas"
+        ]
+    },
+    {
+        "vraag": "Wie vroeg aan Jezus of Hij hen zegt of Hij de Christus, de Zoon van God is?",
+        "juisteAntwoord": "K\u00e1jafas",
+        "moeilijkheidsgraad": 4,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matth\u00e9\u00fcs 26:63",
+        "fouteAntwoorden": [
+            "Judas",
+            "Pilatus",
+            "Herodes"
+        ]
+    },
+    {
+        "vraag": "Wat gebeurde er toen Jezus werd gedoopt?",
+        "juisteAntwoord": "De hemelen werden geopend",
+        "moeilijkheidsgraad": 2,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matth\u00e9\u00fcs 3:16",
+        "fouteAntwoorden": [
+            "De aarde beefde",
+            "De zon verduisterde",
+            "Een engel verscheen"
+        ]
+    },
+    {
+        "vraag": "Wie is de eerst genoemde discipel die Jezus riep?",
+        "juisteAntwoord": "Petrus",
+        "moeilijkheidsgraad": 2,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matth\u00e9\u00fcs 4:18",
+        "fouteAntwoorden": [
+            "Johannes",
+            "Jakobus",
+            "Andreas"
+        ]
+    },
+    {
+        "vraag": "Wat zei Jezus toen hij op het water liep naar de discipelen toe?",
+        "juisteAntwoord": "Ik ben het, vreest niet",
+        "moeilijkheidsgraad": 3,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matth\u00e9\u00fcs 14:27",
+        "fouteAntwoorden": [
+            "Vreest niet, Ik ben het",
+            "Volg mij",
+            "Ik ben de Weg, vreest niet"
+        ]
+    },
+    {
+        "vraag": "Voor hoeveel zilveren penningen werd Jezus verraden?",
+        "juisteAntwoord": "30",
+        "moeilijkheidsgraad": 1,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matth\u00e9\u00fcs 26:15",
+        "fouteAntwoorden": [
+            "20",
+            "40",
+            "10"
+        ]
+    },
+    {
+        "vraag": "Wie vroeg aan Jezus: Zijt Gij de Koning der Joden?",
+        "juisteAntwoord": "Pilatus",
+        "moeilijkheidsgraad": 3,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matth\u00e9\u00fcs 27:11",
+        "fouteAntwoorden": [
+            "K\u00e1jafas",
+            "Herodes",
+            "De Hogepriester"
+        ]
+    },
+    {
+        "vraag": "Toen Jezus stierf gebeurden er een aantal dingen. Welke hoort er niet bij?",
+        "juisteAntwoord": "Het voorhangsel scheurde van boven tot beneden",
+        "moeilijkheidsgraad": 3,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matth\u00e9\u00fcs 27: 51, 52",
+        "fouteAntwoorden": [
+            "De aarde beefde",
+            "Het werd 3 uur lang donker",
+            "De steenrotsen scheurden"
+        ]
+    },
+    {
+        "vraag": "Wie zei: Heb toch niet te doen met dien Rechtvaardige; want ik heb veel geleden in den droom om Zijnentwil?",
+        "juisteAntwoord": "De vrouw van Pilatus",
+        "moeilijkheidsgraad": 4,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matth\u00e9\u00fcs 27:19",
+        "fouteAntwoorden": [
+            "De vrouw van K\u00e1jafas",
+            "De vrouw van Herodes",
+            "De vrouw Judas"
+        ]
+    },
+    {
+        "vraag": "Wie vond(en) het lege graf?",
+        "juisteAntwoord": "Maria Magdal\u00e9na en de de andere Maria",
+        "moeilijkheidsgraad": 2,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matth\u00e9\u00fcs 28:1",
+        "fouteAntwoorden": [
+            "Maria Magdal\u00e9na",
+            "Maria, de moeder van Jezus",
+            "Petrus en Johannes"
+        ]
+    },
+    {
+        "vraag": "Wat zei de engel als eerste tegen de vrouwen bij het graf?",
+        "juisteAntwoord": "Vreest gijlieden niet",
+        "moeilijkheidsgraad": 3,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matth\u00e9\u00fcs 28:5",
+        "fouteAntwoorden": [
+            "Hij is opgestaan",
+            "Hij is hier niet; want Hij is opgestaan",
+            "Gaat haastelijk heen"
+        ]
+    },
+    {
+        "vraag": "Wat gaf Jezus aan zijn discipelen na Zijn opstanding?",
+        "juisteAntwoord": "Een opdracht",
+        "moeilijkheidsgraad": 2,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matth\u00e9\u00fcs 28:19",
+        "fouteAntwoorden": [
+            "De Heilige Geest",
+            "Een zegen",
+            "Een belofte"
+        ]
+    },
+    {
+        "vraag": "Wie was de vierde zoon van Jakob?",
+        "juisteAntwoord": "Juda",
+        "moeilijkheidsgraad": 2,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Genesis 29:35",
+        "fouteAntwoorden": [
+            "Levi",
+            "Dan",
+            "Naftali"
+        ]
+    },
+    {
+        "vraag": "Wat was de kleur van het tweede paard in Openbaring?",
+        "juisteAntwoord": "Rood",
+        "moeilijkheidsgraad": 4,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Openbaring 6:4",
+        "fouteAntwoorden": [
+            "Wit",
+            "Zwart",
+            "Vaal"
+        ]
+    },
+    {
+        "vraag": "Welke discipel was er niet bij op berg der verheerlijking?",
+        "juisteAntwoord": "Andr\u00e9as",
+        "moeilijkheidsgraad": 1,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Lukas 9:28",
+        "fouteAntwoorden": [
+            "Petrus",
+            "Johannes",
+            "Jakobus"
+        ]
+    },
+    {
+        "vraag": "Hoeveel mensen gingen er in de ark van Noach?",
+        "juisteAntwoord": "8",
+        "moeilijkheidsgraad": 1,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Genesis 8:16",
+        "fouteAntwoorden": [
+            "6",
+            "4",
+            "10"
+        ]
+    },
+    {
+        "vraag": "Wie was geen zoon van Noach?",
+        "juisteAntwoord": "Gomer",
+        "moeilijkheidsgraad": 1,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Genesis 9:18",
+        "fouteAntwoorden": [
+            "Sem",
+            "Cham",
+            "Jafeth"
+        ]
+    },
+    {
+        "vraag": "Van wie was Dan een zoon?",
+        "juisteAntwoord": "Bilha",
+        "moeilijkheidsgraad": 4,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Genesis 30:5",
+        "fouteAntwoorden": [
+            "Rachel",
+            "Lea",
+            "Zilpa"
+        ]
+    },
+    {
+        "vraag": "Wie was de vierde dochter van Zel\u00e1fead?",
+        "juisteAntwoord": "Milka",
+        "moeilijkheidsgraad": 4,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Numeri 27:1",
+        "fouteAntwoorden": [
+            "Noa",
+            "Hogla",
+            "Tirza"
+        ]
+    },
+    {
+        "vraag": "Wie nam het op voor Job?",
+        "juisteAntwoord": "Elihu",
+        "moeilijkheidsgraad": 3,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Job 32:2",
+        "fouteAntwoorden": [
+            "Bildad",
+            "Zofar",
+            "Elifaz"
+        ]
+    },
+    {
+        "vraag": "Welke koning viel door een tralie in zijn opperzaal?",
+        "juisteAntwoord": "Ah\u00e1zia",
+        "moeilijkheidsgraad": 4,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "2 Koningen 1:2",
+        "fouteAntwoorden": [
+            "Joram",
+            "Az\u00e1ria",
+            "Joas"
+        ]
+    },
+    {
+        "vraag": "Wie was de moeder van Absalom?",
+        "juisteAntwoord": "M\u00e1\u00e4cha",
+        "moeilijkheidsgraad": 4,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "2 Samu\u00ebl 3:3",
+        "fouteAntwoorden": [
+            "Haggith",
+            "Ahin\u00f3am",
+            "Ab\u00edga\u00efl"
+        ]
+    },
+    {
+        "vraag": "Wat was de zevende plaag in Egypte?",
+        "juisteAntwoord": "Hagel en vuur",
+        "moeilijkheidsgraad": 1,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "\u00c9xodus 9:24",
+        "fouteAntwoorden": [
+            "Kikvorsen",
+            "Veepest",
+            "Luizen"
+        ]
+    },
+    {
+        "vraag": "Wie was de hofmeester van koning Hizk\u00eda?",
+        "juisteAntwoord": "Eljakim",
+        "moeilijkheidsgraad": 3,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Jesaja 36:3",
+        "fouteAntwoorden": [
+            "Hilk\u00eda",
+            "Sebna",
+            "Joah"
+        ]
+    },
+    {
+        "vraag": "Hoeveel zonen had G\u00eddeon?",
+        "juisteAntwoord": "70",
+        "moeilijkheidsgraad": 3,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Richteren 8:30",
+        "fouteAntwoorden": [
+            "30",
+            "50",
+            "60"
+        ]
+    },
+    {
+        "vraag": "Welke richter was linkshandig?",
+        "juisteAntwoord": "Ehud",
+        "moeilijkheidsgraad": 3,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Richteren 3:15",
+        "fouteAntwoorden": [
+            "Jeftha",
+            "Samgar",
+            "Othni\u00ebl"
+        ]
+    },
+    {
+        "vraag": "Waar moest de kandelaar van gemaakt worden?",
+        "juisteAntwoord": "Goud",
+        "moeilijkheidsgraad": 1,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "\u00c9xodus 25:31",
+        "fouteAntwoorden": [
+            "Zilver",
+            "Koper",
+            "IJzer"
+        ]
+    },
+    {
+        "vraag": "Wie was de derde zoon van A\u00e4ron?",
+        "juisteAntwoord": "Ele\u00e1zar",
+        "moeilijkheidsgraad": 5,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "\u00c9xodus 6:22",
+        "fouteAntwoorden": [
+            "Nadab",
+            "Ab\u00edhu",
+            "Ithamar"
+        ]
+    },
+    {
+        "vraag": "Welke gemeente had een geopende deur? Johannes schreef er een brief aan.",
+        "juisteAntwoord": "Filad\u00e9lfia",
+        "moeilijkheidsgraad": 4,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Openbaring 3:7",
+        "fouteAntwoorden": [
+            "Sardis",
+            "Smyrna",
+            "\u00c9feze"
+        ]
+    },
+    {
+        "vraag": "Wie was geen vrouw van Ezau?",
+        "juisteAntwoord": "Zilpa",
+        "moeilijkheidsgraad": 3,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Genesis 36: 2,3",
+        "fouteAntwoorden": [
+            "Ada",
+            "Aholib\u00e1ma",
+            "Basmath"
+        ]
+    },
+    {
+        "vraag": "Wie was de vierde zoon van Abraham en Ket\u00fbra?",
+        "juisteAntwoord": "Midian",
+        "moeilijkheidsgraad": 5,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Genesis 25:2",
+        "fouteAntwoorden": [
+            "Jisbak",
+            "Medan",
+            "Zimran"
+        ]
+    },
+    {
+        "vraag": "Wie wilde Jozef uit de kuil halen?",
+        "juisteAntwoord": "Ruben",
+        "moeilijkheidsgraad": 2,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Genesis 37:29",
+        "fouteAntwoorden": [
+            "Simeon",
+            "Juda",
+            "Zebulon"
+        ]
+    },
+    {
+        "vraag": "Wie stond borg voor Benjamin toen ze bij Jozef waren?",
+        "juisteAntwoord": "Juda",
+        "moeilijkheidsgraad": 1,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Genesis 43: 8,9",
+        "fouteAntwoorden": [
+            "Simeon",
+            "Ruben",
+            "Naftali"
+        ]
+    },
+    {
+        "vraag": "Welke zoon van Jakob zal aan de haven der zee\u00ebn wonen?",
+        "juisteAntwoord": "Zebulon",
+        "moeilijkheidsgraad": 4,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Genesis 49:13",
+        "fouteAntwoorden": [
+            "Ruben",
+            "Gad",
+            "Aser"
+        ]
+    },
+    {
+        "vraag": "Welke profeet voorspelde een zware sprinkhanenplaag?",
+        "juisteAntwoord": "Jo\u00ebl",
+        "moeilijkheidsgraad": 4,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": null,
+        "fouteAntwoorden": [
+            "Hos\u00e9a",
+            "Micha",
+            "Nahum"
+        ]
+    },
+    {
+        "vraag": "Wie was de vader van Abram?",
+        "juisteAntwoord": "Terah",
+        "moeilijkheidsgraad": 2,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Genesis 11:26",
+        "fouteAntwoorden": [
+            "Haran",
+            "Nahor",
+            "Serug"
+        ]
     }
 ]

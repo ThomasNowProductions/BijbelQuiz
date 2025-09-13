@@ -1107,7 +1107,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     return;
                   }
 
+                  // Store context reference before async operations
+                  final safeContext = context;
+                  
                   try {
+                    
                     // Decode and verify
                     final decoded = utf8.decode(base64.decode(importString));
                     final importData = json.decode(decoded) as Map<String, dynamic>;
@@ -1118,7 +1122,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     // Verify hash
                     final computedHash = sha256.convert(utf8.encode(jsonString)).toString();
                     if (computedHash != hash) {
-                      showTopSnackBar(context, strings.AppStrings.invalidOrTamperedData, style: TopSnackBarStyle.error);
+                      if (!safeContext.mounted) return;
+                      showTopSnackBar(safeContext, strings.AppStrings.invalidOrTamperedData, style: TopSnackBarStyle.error);
                       return;
                     }
 
@@ -1126,9 +1131,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     final data = json.decode(jsonString) as Map<String, dynamic>;
 
                     // Load data into providers
-                    final gameStats = Provider.of<GameStatsProvider>(context, listen: false);
-                    final lessonProgress = Provider.of<LessonProgressProvider>(context, listen: false);
-                    final settings = Provider.of<SettingsProvider>(context, listen: false);
+                    final gameStats = Provider.of<GameStatsProvider>(safeContext, listen: false);
+                    final lessonProgress = Provider.of<LessonProgressProvider>(safeContext, listen: false);
+                    final settings = Provider.of<SettingsProvider>(safeContext, listen: false);
 
                     // Load game stats
                     final gameStatsData = data['gameStats'] as Map<String, dynamic>;
@@ -1142,15 +1147,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     final settingsData = data['settings'] as Map<String, dynamic>;
                     await settings.loadImportData(settingsData);
 
+                    // Use a global key or other mechanism to avoid context issues
                     WidgetsBinding.instance.addPostFrameCallback((_) {
-                      if (context.mounted) {
-                        Navigator.of(context).pop();
-                        showTopSnackBar(context, strings.AppStrings.statsImportedSuccessfully, style: TopSnackBarStyle.success);
+                      if (safeContext.mounted) {
+                        Navigator.of(safeContext).pop();
+                        if (safeContext.mounted) {
+                          showTopSnackBar(safeContext, strings.AppStrings.statsImportedSuccessfully, style: TopSnackBarStyle.success);
+                        }
                       }
                     });
                   } catch (e) {
                     if (!mounted) return;
-                    showTopSnackBar(context, '${strings.AppStrings.failedToImportStats} $e', style: TopSnackBarStyle.error);
+                    showTopSnackBar(safeContext, '${strings.AppStrings.failedToImportStats} $e', style: TopSnackBarStyle.error);
                   }
                 },
                 child: const Text('Import'),

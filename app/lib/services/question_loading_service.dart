@@ -87,12 +87,8 @@ class QuestionLoadingService {
       if (questions.length < 200 && mounted) { // Keep at least 200 questions loaded
         Future.delayed(const Duration(seconds: 2), () {
           if (mounted) {
-            loadMoreQuestionsAdvanced(
-              context: context,
-              questions: questions,
-              setState: setState,
-              mounted: mounted,
-            );
+            // Skip recursive call to avoid context issues across async gaps
+            // The loading service should be called from the widget when needed
           }
         });
       }

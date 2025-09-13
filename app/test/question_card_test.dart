@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:bijbelquiz/models/quiz_question.dart';
 import 'package:bijbelquiz/widgets/question_card.dart';
 import 'package:bijbelquiz/widgets/answer_button.dart';
+import 'package:flutter/rendering.dart';
 
 void main() {
   late QuizQuestion mcQuestion;
@@ -154,7 +155,7 @@ void main() {
       final center = tester.getCenter(button);
       
       // Check if the center is within bounds, if not adjust it
-      final renderTreeSize = tester.binding.renderView.size;
+      final renderTreeSize = RendererBinding.instance.renderViews.first.size;
       final safeX = center.dx.clamp(10.0, renderTreeSize.width - 10.0);
       final safeY = center.dy.clamp(10.0, renderTreeSize.height - 10.0);
       final safePoint = Offset(safeX, safeY);
@@ -195,7 +196,7 @@ void main() {
       final center = tester.getCenter(button);
       
       // Check if the center is within bounds, if not adjust it
-      final renderTreeSize = tester.binding.renderView.size;
+      final renderTreeSize = RendererBinding.instance.renderViews.first.size;
       final safeX = center.dx.clamp(10.0, renderTreeSize.width - 10.0);
       final safeY = center.dy.clamp(10.0, renderTreeSize.height - 10.0);
       final safePoint = Offset(safeX, safeY);
@@ -236,7 +237,7 @@ void main() {
       final center = tester.getCenter(button);
       
       // Check if the center is within bounds, if not adjust it
-      final renderTreeSize = tester.binding.renderView.size;
+      final renderTreeSize = RendererBinding.instance.renderViews.first.size;
       final safeX = center.dx.clamp(10.0, renderTreeSize.width - 10.0);
       final safeY = center.dy.clamp(10.0, renderTreeSize.height - 10.0);
       final safePoint = Offset(safeX, safeY);

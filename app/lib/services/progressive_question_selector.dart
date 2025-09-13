@@ -16,9 +16,9 @@ class ProgressiveQuestionSelector {
   final List<String> _recentlyUsedQuestions = [];
   static const int _recentlyUsedLimit = 50;
 
-  // All loaded questions
-  List<QuizQuestion> _allQuestions = [];
-  bool _allQuestionsLoaded = false;
+  // All loaded questions - made public instead of using getters/setters
+  List<QuizQuestion> allQuestions = [];
+  bool allQuestionsLoaded = false;
 
   // State management for background loading
   bool _mounted = true;
@@ -36,17 +36,6 @@ class ProgressiveQuestionSelector {
   /// Set mounted state for background operations
   void setMounted(bool mounted) {
     _mounted = mounted;
-  }
-
-  // Getters and setters for state management
-  List<QuizQuestion> get allQuestions => _allQuestions;
-  set allQuestions(List<QuizQuestion> questions) {
-    _allQuestions = questions;
-  }
-
-  bool get allQuestionsLoaded => _allQuestionsLoaded;
-  set allQuestionsLoaded(bool loaded) {
-    _allQuestionsLoaded = loaded;
   }
 
   Set<String> get usedQuestions => _usedQuestions;
@@ -113,21 +102,21 @@ class ProgressiveQuestionSelector {
 
     // PHASE 5: Select available questions (not used in current session)
     List<QuizQuestion> availableQuestions =
-        _allQuestions.where((q) => !_usedQuestions.contains(q.question)).toList();
+        allQuestions.where((q) => !_usedQuestions.contains(q.question)).toList();
 
     // PHASE 6: Handle question pool exhaustion
     // When all questions are used, reset and reshuffle for continued gameplay
     if (availableQuestions.isEmpty) {
       _usedQuestions.clear();
       _recentlyUsedQuestions.clear();
-      _allQuestions.shuffle(Random()); // Randomize order for variety
-      availableQuestions = List<QuizQuestion>.from(_allQuestions);
+      allQuestions.shuffle(Random()); // Randomize order for variety
+      availableQuestions = List<QuizQuestion>.from(allQuestions);
 
       // Load additional questions in background if running low
       if (_setState != null) {
         _questionLoadingService.loadMoreQuestionsAdvanced(
           context: context,
-          questions: _allQuestions,
+          questions: allQuestions,
           setState: _setState!,
           mounted: _mounted,
         );
@@ -265,14 +254,14 @@ class ProgressiveQuestionSelector {
   void resetQuestionPool() {
     _usedQuestions.clear();
     _recentlyUsedQuestions.clear();
-    _allQuestionsLoaded = false;
-    _allQuestions.clear();
+    allQuestionsLoaded = false;
+    allQuestions.clear();
   }
 
   /// Reset for new game session
   void resetForNewGame() {
     _usedQuestions.clear();
     _recentlyUsedQuestions.clear();
-    _allQuestions.shuffle(Random());
+    allQuestions.shuffle(Random());
   }
 }

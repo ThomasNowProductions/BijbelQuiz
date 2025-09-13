@@ -42,7 +42,7 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen> with Single
 
     return PopScope(
       canPop: false,
-      onPopInvoked: (didPop) {
+      onPopInvokedWithResult: (didPop, result) {
         if (!didPop) {
           Navigator.of(context).popUntil((route) => route.isFirst);
         }

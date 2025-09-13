@@ -63,7 +63,7 @@ class PlatformFeedbackService {
   }
   
   /// Allows changing the base visual feedback duration globally (e.g. for
-  /// tests).  The supplied [duration] should be positive.
+  /// tests).  The supplied [normalDuration] should be positive.
   /// Override the feedback durations at runtime, e.g. in tests.
   /// If [slowDuration] is omitted, it defaults to double the normal duration.
   void setFeedbackDurations({required Duration normalDuration, Duration? slowDuration}) {

@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:bijbelquiz/providers/settings_provider.dart';
 
 // Generate mocks
 @GenerateMocks([SharedPreferences])
-import 'settings_provider_test.mocks.dart';
 
 void main() {
-  late MockSharedPreferences mockPrefs;
   late SettingsProvider provider;
 
   setUp(() {
-    mockPrefs = MockSharedPreferences();
     SharedPreferences.setMockInitialValues({});
   });
 
