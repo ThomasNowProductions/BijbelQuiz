@@ -522,13 +522,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               isSmallScreen,
               isDesktop,
               onPressed: () async {
-                final Uri emailLaunchUri = Uri(
-                  scheme: 'mailto',
-                  path: AppUrls.contactEmail,
-                );
-                if (await canLaunchUrl(emailLaunchUri)) {
-                  await launchUrl(emailLaunchUri);
-                } else {
+                final Uri url = Uri.parse(AppUrls.contactEmailUrl);
+                if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
                   if (context.mounted) {
                     showTopSnackBar(context, strings.AppStrings.emailNotAvailable, style: TopSnackBarStyle.error);
                   }

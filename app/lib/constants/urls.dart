@@ -19,8 +19,10 @@ class AppUrls {
   static String get mastodonUrl => '$baseDomain/r/mastodon';
   static String get kweblerUrl => '$baseDomain/r/kwebler';
   static String get discordUrl => '$baseDomain/r/discord';
-  static String get signalUrl => '$baseDomain/r/signal';
+  static String get signalUrl => '$baseDomain/r/signal-group';
+  static String get signalContactUrl => '$baseDomain/r/signal-contact';
 
   // Contact
   static String get contactEmail => AppConfig.contactEmail;
+  static String get contactEmailUrl => '$baseDomain/r/email.html';
 }
