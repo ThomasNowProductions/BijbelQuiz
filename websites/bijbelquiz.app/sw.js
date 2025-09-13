@@ -2,15 +2,7 @@
 
 const CACHE_NAME = 'bijbelquiz-redirects-v1';
 const urlsToCache = [
-  '/r/redirect.html',
-  '/r/discord.html',
-  '/r/donate.html',
-  '/r/email.html',
-  '/r/index.html',
-  '/r/kwebler.html',
-  '/r/mastodon.html',
-  '/r/signal-contact.html',
-  '/r/signal-group.html'
+  '/redirect.html'
 ];
 
 // Install event - cache all redirect pages
