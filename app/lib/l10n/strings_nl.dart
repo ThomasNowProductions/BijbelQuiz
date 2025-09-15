@@ -230,6 +230,11 @@ class AppStrings {
   static final String kweblerUrl = AppUrls.kweblerUrl;
   static final String signalUrl = AppUrls.signalUrl;
   static final String discordUrl = AppUrls.discordUrl;
+  
+  // Satisfaction Survey
+  static const String satisfactionSurvey = 'Help ons te verbeteren';
+  static const String satisfactionSurveyMessage = 'Neem een paar minuten om ons te helpen de app te verbeteren. Uw feedback is belangrijk!';
+  static const String satisfactionSurveyButton = 'Vul enquête in';
 
   // Quiz Screen
   static const String skip = 'Skip';

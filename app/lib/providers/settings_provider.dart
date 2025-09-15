@@ -12,6 +12,12 @@ class SettingsProvider extends ChangeNotifier {
   static const String _notificationEnabledKey = 'notification_enabled';
   static const String _hasDonatedKey = 'has_donated';
   static const String _hasCheckedForUpdateKey = 'has_checked_for_update';
+  static const String _lastDonationPopupKey = 'last_donation_popup';
+  static const String _lastFollowPopupKey = 'last_follow_popup';
+  static const String _lastSatisfactionPopupKey = 'last_satisfaction_popup';
+  static const String _hasClickedDonationLinkKey = 'has_clicked_donation_link';
+  static const String _hasClickedFollowLinkKey = 'has_clicked_follow_link';
+  static const String _hasClickedSatisfactionLinkKey = 'has_clicked_satisfaction_link';
   
   SharedPreferences? _prefs;
   String _language = 'nl';
@@ -22,6 +28,12 @@ class SettingsProvider extends ChangeNotifier {
   bool _notificationEnabled = true;
   bool _hasDonated = false;
   bool _hasCheckedForUpdate = false;
+  DateTime? _lastDonationPopup;
+  DateTime? _lastFollowPopup;
+  DateTime? _lastSatisfactionPopup;
+  bool _hasClickedDonationLink = false;
+  bool _hasClickedFollowLink = false;
+  bool _hasClickedSatisfactionLink = false;
   bool _isLoading = true;
   String? _error;
   String? _selectedCustomThemeKey;
@@ -61,6 +73,12 @@ class SettingsProvider extends ChangeNotifier {
   bool get notificationEnabled => _notificationEnabled;
   bool get hasDonated => _hasDonated;
   bool get hasCheckedForUpdate => _hasCheckedForUpdate;
+  DateTime? get lastDonationPopup => _lastDonationPopup;
+  DateTime? get lastFollowPopup => _lastFollowPopup;
+  DateTime? get lastSatisfactionPopup => _lastSatisfactionPopup;
+  bool get hasClickedDonationLink => _hasClickedDonationLink;
+  bool get hasClickedFollowLink => _hasClickedFollowLink;
+  bool get hasClickedSatisfactionLink => _hasClickedSatisfactionLink;
 
   String? get selectedCustomThemeKey => _selectedCustomThemeKey;
   Set<String> get unlockedThemes => _unlockedThemes;
@@ -131,6 +149,20 @@ class SettingsProvider extends ChangeNotifier {
       _notificationEnabled = _getBoolSetting(_notificationEnabledKey, defaultValue: true);
       _hasDonated = _getBoolSetting(_hasDonatedKey, defaultValue: false);
       _hasCheckedForUpdate = _getBoolSetting(_hasCheckedForUpdateKey, defaultValue: false);
+      
+      // Load popup tracking data
+      final lastDonationPopupMs = _prefs?.getInt(_lastDonationPopupKey);
+      _lastDonationPopup = lastDonationPopupMs != null ? DateTime.fromMillisecondsSinceEpoch(lastDonationPopupMs) : null;
+      
+      final lastFollowPopupMs = _prefs?.getInt(_lastFollowPopupKey);
+      _lastFollowPopup = lastFollowPopupMs != null ? DateTime.fromMillisecondsSinceEpoch(lastFollowPopupMs) : null;
+      
+      final lastSatisfactionPopupMs = _prefs?.getInt(_lastSatisfactionPopupKey);
+      _lastSatisfactionPopup = lastSatisfactionPopupMs != null ? DateTime.fromMillisecondsSinceEpoch(lastSatisfactionPopupMs) : null;
+      
+      _hasClickedDonationLink = _getBoolSetting(_hasClickedDonationLinkKey, defaultValue: false);
+      _hasClickedFollowLink = _getBoolSetting(_hasClickedFollowLinkKey, defaultValue: false);
+      _hasClickedSatisfactionLink = _getBoolSetting(_hasClickedSatisfactionLinkKey, defaultValue: false);
       final unlocked = _prefs?.getStringList(_unlockedThemesKey);
       if (unlocked != null) {
         _unlockedThemes = unlocked.toSet();
@@ -267,6 +299,72 @@ class SettingsProvider extends ChangeNotifier {
     );
   }
 
+  /// Updates the last donation popup timestamp
+  Future<void> updateLastDonationPopup() async {
+    await _saveSetting(
+      action: () async {
+        _lastDonationPopup = DateTime.now();
+        await _prefs?.setInt(_lastDonationPopupKey, _lastDonationPopup!.millisecondsSinceEpoch);
+      },
+      errorMessage: 'Failed to update donation popup timestamp',
+    );
+  }
+
+  /// Updates the last follow popup timestamp
+  Future<void> updateLastFollowPopup() async {
+    await _saveSetting(
+      action: () async {
+        _lastFollowPopup = DateTime.now();
+        await _prefs?.setInt(_lastFollowPopupKey, _lastFollowPopup!.millisecondsSinceEpoch);
+      },
+      errorMessage: 'Failed to update follow popup timestamp',
+    );
+  }
+
+  /// Updates the last satisfaction popup timestamp
+  Future<void> updateLastSatisfactionPopup() async {
+    await _saveSetting(
+      action: () async {
+        _lastSatisfactionPopup = DateTime.now();
+        await _prefs?.setInt(_lastSatisfactionPopupKey, _lastSatisfactionPopup!.millisecondsSinceEpoch);
+      },
+      errorMessage: 'Failed to update satisfaction popup timestamp',
+    );
+  }
+
+  /// Marks that the user has clicked the donation link
+  Future<void> markDonationLinkAsClicked() async {
+    await _saveSetting(
+      action: () async {
+        _hasClickedDonationLink = true;
+        await _prefs?.setBool(_hasClickedDonationLinkKey, true);
+      },
+      errorMessage: 'Failed to update donation link status',
+    );
+  }
+
+  /// Marks that the user has clicked a follow link
+  Future<void> markFollowLinkAsClicked() async {
+    await _saveSetting(
+      action: () async {
+        _hasClickedFollowLink = true;
+        await _prefs?.setBool(_hasClickedFollowLinkKey, true);
+      },
+      errorMessage: 'Failed to update follow link status',
+    );
+  }
+
+  /// Marks that the user has clicked the satisfaction survey link
+  Future<void> markSatisfactionLinkAsClicked() async {
+    await _saveSetting(
+      action: () async {
+        _hasClickedSatisfactionLink = true;
+        await _prefs?.setBool(_hasClickedSatisfactionLinkKey, true);
+      },
+      errorMessage: 'Failed to update satisfaction link status',
+    );
+  }
+
   Future<void> setNotificationEnabled(bool enabled) async {
     await _saveSetting(
       action: () async {
@@ -310,6 +408,12 @@ class SettingsProvider extends ChangeNotifier {
       'hasCheckedForUpdate': _hasCheckedForUpdate,
       'selectedCustomThemeKey': _selectedCustomThemeKey,
       'unlockedThemes': _unlockedThemes.toList(),
+      'lastDonationPopup': _lastDonationPopup?.millisecondsSinceEpoch,
+      'lastFollowPopup': _lastFollowPopup?.millisecondsSinceEpoch,
+      'lastSatisfactionPopup': _lastSatisfactionPopup?.millisecondsSinceEpoch,
+      'hasClickedDonationLink': _hasClickedDonationLink,
+      'hasClickedFollowLink': _hasClickedFollowLink,
+      'hasClickedSatisfactionLink': _hasClickedSatisfactionLink,
     };
   }
 
@@ -324,6 +428,20 @@ class SettingsProvider extends ChangeNotifier {
     _hasCheckedForUpdate = data['hasCheckedForUpdate'] ?? false;
     _selectedCustomThemeKey = data['selectedCustomThemeKey'];
     _unlockedThemes = Set<String>.from(data['unlockedThemes'] ?? []);
+    
+    // Load popup tracking data
+    final lastDonationPopupMs = data['lastDonationPopup'];
+    _lastDonationPopup = lastDonationPopupMs != null ? DateTime.fromMillisecondsSinceEpoch(lastDonationPopupMs) : null;
+    
+    final lastFollowPopupMs = data['lastFollowPopup'];
+    _lastFollowPopup = lastFollowPopupMs != null ? DateTime.fromMillisecondsSinceEpoch(lastFollowPopupMs) : null;
+    
+    final lastSatisfactionPopupMs = data['lastSatisfactionPopup'];
+    _lastSatisfactionPopup = lastSatisfactionPopupMs != null ? DateTime.fromMillisecondsSinceEpoch(lastSatisfactionPopupMs) : null;
+    
+    _hasClickedDonationLink = data['hasClickedDonationLink'] ?? false;
+    _hasClickedFollowLink = data['hasClickedFollowLink'] ?? false;
+    _hasClickedSatisfactionLink = data['hasClickedSatisfactionLink'] ?? false;
 
     await _prefs?.setInt(_themeModeKey, _themeMode.index);
     await _prefs?.setString(_slowModeKey, _gameSpeed);
@@ -334,6 +452,21 @@ class SettingsProvider extends ChangeNotifier {
     await _prefs?.setBool(_hasCheckedForUpdateKey, _hasCheckedForUpdate);
     await _prefs?.setString(_customThemeKey, _selectedCustomThemeKey ?? '');
     await _prefs?.setStringList(_unlockedThemesKey, _unlockedThemes.toList());
+    
+    // Save popup tracking data
+    if (_lastDonationPopup != null) {
+      await _prefs?.setInt(_lastDonationPopupKey, _lastDonationPopup!.millisecondsSinceEpoch);
+    }
+    if (_lastFollowPopup != null) {
+      await _prefs?.setInt(_lastFollowPopupKey, _lastFollowPopup!.millisecondsSinceEpoch);
+    }
+    if (_lastSatisfactionPopup != null) {
+      await _prefs?.setInt(_lastSatisfactionPopupKey, _lastSatisfactionPopup!.millisecondsSinceEpoch);
+    }
+    await _prefs?.setBool(_hasClickedDonationLinkKey, _hasClickedDonationLink);
+    await _prefs?.setBool(_hasClickedFollowLinkKey, _hasClickedFollowLink);
+    await _prefs?.setBool(_hasClickedSatisfactionLinkKey, _hasClickedSatisfactionLink);
+    
     notifyListeners();
   }
 }

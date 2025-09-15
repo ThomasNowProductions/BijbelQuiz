@@ -14,6 +14,7 @@ class AppUrls {
   // App-specific URLs
   static final String donateUrl = '$baseDomain/donate';
   static final String updateUrl = '$baseDomain/download.html';
+  static final String satisfactionSurveyUrl = '$baseDomain/tevredenheidsrapport';
 
   // Social media URLs (redirect through our own domain)
   static String get mastodonUrl => '$baseDomain/mastodon';

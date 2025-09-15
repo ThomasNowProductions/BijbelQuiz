@@ -29,6 +29,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
   bool _guideCheckCompleted = false; // Prevent multiple guide checks
   bool _showPromoCard = false;
   bool _isDonationPromo = true; // true for donation, false for follow
+  bool _isSatisfactionPromo = false; // true for satisfaction survey
   // Search and filters removed for simplified UI
 
   @override
@@ -78,6 +79,8 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
   }
 
   Future<void> _loadLessons() async {
+    final progress = Provider.of<LessonProgressProvider>(context, listen: false);
+    final settings = Provider.of<SettingsProvider>(context, listen: false);
     try {
       setState(() {
         _loading = true;
@@ -85,9 +88,6 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
       });
 
       // Read current progress to size the visible track dynamically.
-      final progress = Provider.of<LessonProgressProvider>(context, listen: false);
-      final settings = Provider.of<SettingsProvider>(context, listen: false);
-
       // Always show at least (unlockedCount + buffer) lessons, with a floor.
       const int buffer = 12;
       const int minVisible = 36;
@@ -116,12 +116,66 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
       if (mounted) {
         setState(() {
           _loading = false;
-          // Show promo card occasionally (10% chance)
-          _showPromoCard = Random().nextInt(10) == 0;
-          _isDonationPromo = Random().nextBool();
+          // Show promo card occasionally (20% chance) with new logic for different popup types
+          _showPromoCard = _shouldShowPromoCard(settings);
+          if (_showPromoCard) {
+            // Determine which type of promo to show
+            final rand = Random().nextDouble();
+            if (rand < 0.33) {
+              _isDonationPromo = true;
+              _isSatisfactionPromo = false;
+            } else if (rand < 0.66) {
+              _isDonationPromo = false;
+              _isSatisfactionPromo = false;
+            } else {
+              _isDonationPromo = false;
+              _isSatisfactionPromo = true;
+            }
+          }
         });
       }
     }
+  }
+
+  /// Determines whether to show a promo card based on probability and user interaction history
+  bool _shouldShowPromoCard(SettingsProvider settings) {
+    // 20% chance to show a popup
+    if (Random().nextInt(5) != 0) {
+      return false;
+    }
+
+    // Check if user has clicked links recently - if so, don't show until next month
+    final now = DateTime.now();
+    
+    // For donation popup
+    if (settings.hasClickedDonationLink && settings.lastDonationPopup != null) {
+      final lastPopup = settings.lastDonationPopup!;
+      final nextAllowed = DateTime(lastPopup.year, lastPopup.month + 1, 1); // First of next month
+      if (now.isBefore(nextAllowed)) {
+        // Don't show donation popup
+      }
+    }
+    
+    // For follow popup
+    if (settings.hasClickedFollowLink && settings.lastFollowPopup != null) {
+      final lastPopup = settings.lastFollowPopup!;
+      final nextAllowed = DateTime(lastPopup.year, lastPopup.month + 1, 1); // First of next month
+      if (now.isBefore(nextAllowed)) {
+        // Don't show follow popup
+      }
+    }
+    
+    // For satisfaction popup
+    if (settings.hasClickedSatisfactionLink && settings.lastSatisfactionPopup != null) {
+      final lastPopup = settings.lastSatisfactionPopup!;
+      final nextAllowed = DateTime(lastPopup.year, lastPopup.month + 1, 1); // First of next month
+      if (now.isBefore(nextAllowed)) {
+        // Don't show satisfaction popup
+      }
+    }
+    
+    // If we get here, we can show a popup
+    return true;
   }
 
   Future<void> _launchUrl(String url) async {
@@ -131,7 +185,9 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
     }
   }
 
-  void _openDonationPage() {
+  Future<void> _openDonationPage() async {
+    final settings = Provider.of<SettingsProvider>(context, listen: false);
+    await settings.markDonationLinkAsClicked();
     _launchUrl(AppUrls.donateUrl);
   }
 
@@ -253,15 +309,26 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
                                 child: _PromoCard(
                                   isDonation: _isDonationPromo,
+                                  isSatisfaction: _isSatisfactionPromo,
                                   onDismiss: () {
                                     setState(() {
                                       _showPromoCard = false;
                                     });
                                   },
-                                  onAction: (url) {
+                                  onAction: (url) async {
+                                    final settings = Provider.of<SettingsProvider>(context, listen: false);
+                                    
                                     if (_isDonationPromo) {
+                                      await settings.markDonationLinkAsClicked();
+                                      await settings.updateLastDonationPopup();
                                       _openDonationPage();
+                                    } else if (_isSatisfactionPromo) {
+                                      await settings.markSatisfactionLinkAsClicked();
+                                      await settings.updateLastSatisfactionPopup();
+                                      _launchUrl(AppUrls.satisfactionSurveyUrl);
                                     } else {
+                                      await settings.markFollowLinkAsClicked();
+                                      await settings.updateLastFollowPopup();
                                       _launchUrl(url);
                                     }
                                   },
@@ -753,11 +820,13 @@ class _LessonGridSkeleton extends StatelessWidget {
 
 class _PromoCard extends StatelessWidget {
   final bool isDonation;
+  final bool isSatisfaction;
   final VoidCallback onDismiss;
   final Function(String) onAction;
 
   const _PromoCard({
     required this.isDonation,
+    required this.isSatisfaction,
     required this.onDismiss,
     required this.onAction,
   });
@@ -766,13 +835,21 @@ class _PromoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
 
+    // Determine colors based on promo type
+    List<Color> gradientColors;
+    if (isDonation) {
+      gradientColors = [cs.primary.withValues(alpha: 0.14), cs.primary.withValues(alpha: 0.06)];
+    } else if (isSatisfaction) {
+      gradientColors = [cs.primary.withValues(alpha: 0.14), cs.primary.withValues(alpha: 0.06)];
+    } else {
+      gradientColors = [cs.primary.withValues(alpha: 0.14), cs.primary.withValues(alpha: 0.06)];
+    }
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: isDonation
-              ? [cs.primary.withValues(alpha: 0.14), cs.primary.withValues(alpha: 0.06)]
-              : [cs.secondary.withValues(alpha: 0.14), cs.secondary.withValues(alpha: 0.06)],
+          colors: gradientColors,
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -795,14 +872,22 @@ class _PromoCard extends StatelessWidget {
           Row(
             children: [
               Icon(
-                isDonation ? Icons.favorite_rounded : Icons.group_add_rounded,
+                isDonation 
+                  ? Icons.favorite_rounded 
+                  : isSatisfaction 
+                    ? Icons.feedback_rounded 
+                    : Icons.group_add_rounded,
                 color: cs.onSurface.withValues(alpha: 0.7),
                 size: 20,
               ),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  isDonation ? strings.AppStrings.donate : strings.AppStrings.followUs,
+                  isDonation 
+                    ? strings.AppStrings.donate 
+                    : isSatisfaction 
+                      ? strings.AppStrings.satisfactionSurvey 
+                      : strings.AppStrings.followUs,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w800,
                         color: cs.onSurface,
@@ -819,7 +904,11 @@ class _PromoCard extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            isDonation ? strings.AppStrings.donateExplanation : strings.AppStrings.followUsMessage,
+            isDonation 
+              ? strings.AppStrings.donateExplanation 
+              : isSatisfaction 
+                ? strings.AppStrings.satisfactionSurveyMessage 
+                : strings.AppStrings.followUsMessage,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 12),
@@ -837,6 +926,24 @@ class _PromoCard extends StatelessWidget {
                     ),
                     icon: const Icon(Icons.favorite_rounded),
                     label: Text(strings.AppStrings.donateButton),
+                  ),
+                ),
+              ],
+            ),
+          ] else if (isSatisfaction) ...[
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: () => onAction(''),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: cs.primary,
+                      foregroundColor: cs.onPrimary,
+                      minimumSize: const Size.fromHeight(44),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    ),
+                    icon: const Icon(Icons.feedback_rounded),
+                    label: Text(strings.AppStrings.satisfactionSurveyButton),
                   ),
                 ),
               ],
