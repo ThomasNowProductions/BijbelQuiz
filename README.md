@@ -73,3 +73,9 @@ Web applications:
 - Sound effects
 - Offline support
 - Cross-platform (Android, iOS, Web, Desktop)
+
+## Git repositories
+
+- [Codeberg](https://codeberg.org/ThomasNowProductions/BijbelQuiz) (primary)
+- [GitHub](https://github.com/ThomasNowProductions/BijbelQuiz) (secondary)
+- [GitLab](https://gitlab.com/ThomasNow/bijbelquiz) (tertiary)
