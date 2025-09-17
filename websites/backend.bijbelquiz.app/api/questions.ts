@@ -22,8 +22,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   // Handle GET requests
   if (req.method === 'GET') {
     try {
-      // Get the questions file path
-      const questionsPath = path.join(process.cwd(), '..', 'app', 'assets', 'questions-nl-sv.json');
+      // Get the questions file path (using the file in the same directory)
+      const questionsPath = path.join(__dirname, 'questions-nl-sv.json');
       
       console.log(`[${new Date().toISOString()}] Attempting to read questions from: ${questionsPath}`);
       
