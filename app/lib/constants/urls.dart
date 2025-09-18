@@ -40,6 +40,7 @@ class AppUrls {
   static String get discordUrl => '$baseDomain/discord';
   static String get signalUrl => '$baseDomain/signal-group';
   static String get signalContactUrl => '$baseDomain/signal-contact';
+  static String get pixelfedUrl => '$baseDomain/pixelfed';
 
   // Contact
   static String get contactEmail => AppConfig.contactEmail;

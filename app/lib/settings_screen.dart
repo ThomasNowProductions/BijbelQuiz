@@ -1266,6 +1266,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: 12),
               _buildSocialMediaButton(
                 context,
+                'Pixelfed',
+                Icons.camera_alt,
+                AppUrls.pixelfedUrl,
+                colorScheme,
+              ),
+              const SizedBox(height: 12),
+              _buildSocialMediaButton(
+                context,
                 'Kwebler',
                 Icons.public,
                 AppUrls.kweblerUrl,

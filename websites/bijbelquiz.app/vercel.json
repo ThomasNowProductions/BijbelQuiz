@@ -25,6 +25,10 @@
       "destination": "https://toot.community/@BijbelQuiz"
     },
     {
+      "source": "/pixelfed",
+      "destination": "https://pixelfed.social/@bijbelquiz"
+    },
+    {
       "source": "/signal-contact",
       "destination": "https://signal.me/#eu/Rpr6fijw3iLLP8smdhgesdKIFuFc4H0D8svTZLPbKTBVaTwB3AJEWKcivAERvuzj"
     },

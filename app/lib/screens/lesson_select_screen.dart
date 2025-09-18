@@ -1164,31 +1164,36 @@ class _PromoCard extends StatelessWidget {
             ),
           ] else ...[
             Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                _SocialButton(
-                  label: strings.AppStrings.followMastodon,
-                  icon: Icons.alternate_email,
-                  onPressed: () => onAction(strings.AppStrings.mastodonUrl),
-                ),
-                _SocialButton(
-                  label: strings.AppStrings.followKwebler,
-                  icon: Icons.group,
-                  onPressed: () => onAction(strings.AppStrings.kweblerUrl),
-                ),
-                _SocialButton(
-                  label: strings.AppStrings.followSignal,
-                  icon: Icons.message,
-                  onPressed: () => onAction(strings.AppStrings.signalUrl),
-                ),
-                _SocialButton(
-                  label: strings.AppStrings.followDiscord,
-                  icon: Icons.discord,
-                  onPressed: () => onAction(strings.AppStrings.discordUrl),
-                ),
-              ],
-            ),
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  _SocialButton(
+                    label: strings.AppStrings.followMastodon,
+                    icon: Icons.alternate_email,
+                    onPressed: () => onAction(strings.AppStrings.mastodonUrl),
+                  ),
+                  _SocialButton(
+                    label: strings.AppStrings.followPixelfed,
+                    icon: Icons.camera_alt,
+                    onPressed: () => onAction(AppUrls.pixelfedUrl),
+                  ),
+                  _SocialButton(
+                    label: strings.AppStrings.followKwebler,
+                    icon: Icons.group,
+                    onPressed: () => onAction(strings.AppStrings.kweblerUrl),
+                  ),
+                  _SocialButton(
+                    label: strings.AppStrings.followSignal,
+                    icon: Icons.message,
+                    onPressed: () => onAction(strings.AppStrings.signalUrl),
+                  ),
+                  _SocialButton(
+                    label: strings.AppStrings.followDiscord,
+                    icon: Icons.discord,
+                    onPressed: () => onAction(strings.AppStrings.discordUrl),
+                  ),
+                ],
+              ),
           ],
         ],
       ),

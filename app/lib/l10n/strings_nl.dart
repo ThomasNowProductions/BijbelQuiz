@@ -221,12 +221,14 @@ class AppStrings {
 
   // Popups
   static const String followUs = 'Volg ons';
-  static const String followUsMessage = 'Volg ons op Mastodon, Kwebler, Signal en Discord voor updates en community!';
+  static const String followUsMessage = 'Volg ons op Mastodon, Pixelfed, Kwebler, Signal en Discord voor updates en community!';
   static const String followMastodon = 'Volg Mastodon';
+  static const String followPixelfed = 'Volg Pixelfed';
   static const String followKwebler = 'Volg Kwebler';
   static const String followSignal = 'Volg Signal';
   static const String followDiscord = 'Volg Discord';
   static final String mastodonUrl = AppUrls.mastodonUrl;
+  static final String pixelfedUrl = AppUrls.pixelfedUrl;
   static final String kweblerUrl = AppUrls.kweblerUrl;
   static final String signalUrl = AppUrls.signalUrl;
   static final String discordUrl = AppUrls.discordUrl;
