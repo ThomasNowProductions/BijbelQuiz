@@ -9,7 +9,10 @@
     "build": "tsc"
   },
   "dependencies": {
-    "next": "latest"
+    "@modelcontextprotocol/sdk": "^1.18.1",
+    "express": "^5.1.0",
+    "next": "latest",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@types/node": "latest",

@@ -2,6 +2,9 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
+const { mcpServer } = require('./mcp-server');
+const { StreamableHTTPServerTransport } = require('@modelcontextprotocol/sdk/server/streamableHttp.js');
+const { isInitializeRequest } = require('@modelcontextprotocol/sdk/types.js');
 
 // In-memory storage for the emergency message
 let emergencyMessage = null;
@@ -89,8 +92,30 @@ const testVersions = {
   }
 };
 
-// Create a simple server to serve the API endpoints
-const server = http.createServer((req, res) => {
+// Map to store transports by session ID
+const transports = new Map();
+
+// Create HTTP server
+const server = http.createServer(async (req, res) => {
+  // Parse request body for POST requests
+  if (req.method === 'POST') {
+    let body = '';
+    req.on('data', chunk => {
+      body += chunk.toString();
+    });
+    
+    await new Promise(resolve => {
+      req.on('end', () => {
+        try {
+          req.body = JSON.parse(body);
+        } catch (e) {
+          req.body = {};
+        }
+        resolve();
+      });
+    });
+  }
+
   const parsedUrl = url.parse(req.url, true);
   const pathname = parsedUrl.pathname;
   const method = req.method;
@@ -98,13 +123,78 @@ const server = http.createServer((req, res) => {
   // Set CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, Mcp-Session-Id');
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
   
   // Handle OPTIONS method for CORS preflight
   if (method === 'OPTIONS') {
     res.writeHead(200);
     res.end();
+    return;
+  }
+
+  // Handle MCP protocol requests
+  if (pathname === '/mcp') {
+    // Check for existing session ID
+    const sessionId = req.headers['mcp-session-id'];
+    let transport;
+
+    if (sessionId && transports.has(sessionId)) {
+      // Reuse existing transport
+      transport = transports.get(sessionId);
+    } else if (!sessionId && isInitializeRequest(req.body)) {
+      // New initialization request
+      console.log('Creating new transport for initialization request');
+      transport = new StreamableHTTPServerTransport({
+        onsessioninitialized: (newSessionId) => {
+          console.log('Session initialized with ID:', newSessionId);
+          transports.set(newSessionId, transport);
+          // Set the session ID in the response headers
+          res.setHeader('Mcp-Session-Id', newSessionId);
+        },
+        enableDnsRebindingProtection: false, // Disabled for local development
+      });
+
+      // Clean up transport when closed
+      transport.onclose = () => {
+        if (transport.sessionId) {
+          transports.delete(transport.sessionId);
+        }
+      };
+
+      // Connect to the MCP server
+      await mcpServer.connect(transport);
+    } else {
+      // Invalid request
+      res.writeHead(400);
+      res.end(JSON.stringify({
+        jsonrpc: '2.0',
+        error: {
+          code: -32000,
+          message: 'Bad Request: No valid session ID provided',
+        },
+        id: null,
+      }));
+      return;
+    }
+
+    // Handle the request
+    try {
+      await transport.handleRequest(req, res, req.body);
+    } catch (error) {
+      console.error('Error handling MCP request:', error);
+      if (!res.headersSent) {
+        res.writeHead(500);
+        res.end(JSON.stringify({
+          jsonrpc: '2.0',
+          error: {
+            code: -32603,
+            message: 'Internal server error',
+          },
+          id: null,
+        }));
+      }
+    }
     return;
   }
 
