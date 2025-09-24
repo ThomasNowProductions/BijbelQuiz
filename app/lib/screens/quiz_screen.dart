@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import '../models/quiz_state.dart';
+import '../models/quiz_question.dart';
 import '../services/sound_service.dart';
 import '../services/question_cache_service.dart';
 import '../services/performance_service.dart';
@@ -499,15 +500,16 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
           );
           AppLogger.info('Loaded category questions for language: $language, category: ${widget.lesson!.category}, count: ${_questionSelector.allQuestions.length}');
         } else {
-          // PERFORMANCE OPTIMIZATION: Load questions in smaller batches instead of all at once
-          // Start with a reasonable batch size for initial gameplay
-          const int initialBatchSize = 100; // Load first 100 questions for immediate play
+          // Load ALL questions for this language up-front to guarantee
+          // no duplicates are served within a session. If the device/network
+          // allows, this ensures the full question pool is available and we
+          // never have to repeat before exhausting the entire DB.
           _questionSelector.allQuestions = await _questionCacheService.getQuestions(
             language,
             startIndex: 0,
-            count: initialBatchSize
+            // Passing no count loads all remaining questions from the cache/service
           );
-          AppLogger.info('Loaded initial batch of questions for language: $language, count: ${_questionSelector.allQuestions.length}');
+          AppLogger.info('Loaded full set of questions for language: $language, count: ${_questionSelector.allQuestions.length}');
         }
         _questionSelector.allQuestions.shuffle(Random());
         _questionSelector.allQuestionsLoaded = true;
@@ -523,7 +525,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
       );
 
       if (!mounted) return;
-      final firstQuestion = _questionSelector.pickNextQuestion(0.0, context);
+      // Select the first question; the selector ensures no duplicates and handles
+      // exhaustion by widening scope and then resetting when necessary.
+      final QuizQuestion firstQuestion = _questionSelector.pickNextQuestion(0.0, context);
       _quizState = QuizState(
         question: firstQuestion,
         timeRemaining: optimalTimerDuration.inSeconds,
@@ -627,8 +631,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
       incorrectAnswers: gameStats.incorrectAnswers,
       context: context,
     );
+    // Compute next question; selector enforces uniqueness and auto-resets as needed
+    final QuizQuestion nextQuestion = _questionSelector.pickNextQuestion(calculatedNewDifficulty, context);
     setState(() {
-      final nextQuestion = _questionSelector.pickNextQuestion(calculatedNewDifficulty, context);
       final optimalTimerDuration = _performanceService.getOptimalTimerDuration(
         Duration(seconds: settings.slowMode ? 35 : 20)
       );

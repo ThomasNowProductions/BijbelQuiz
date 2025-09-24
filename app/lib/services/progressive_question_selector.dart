@@ -7,6 +7,14 @@ import '../providers/settings_provider.dart';
 import '../services/question_cache_service.dart';
 import '../services/question_loading_service.dart';
 
+/// Thrown when there are no more unique questions available in the current session
+class NoMoreUniqueQuestionsException implements Exception {
+  final String message;
+  NoMoreUniqueQuestionsException([this.message = 'No more unique questions available in this session.']);
+  @override
+  String toString() => 'NoMoreUniqueQuestionsException: $message';
+}
+
 /// Manages the Progressive Question Up-selection (PQU) algorithm
 /// for dynamic difficulty adjustment and question selection
 /// 
@@ -45,6 +53,8 @@ class ProgressiveQuestionSelector {
 
   Set<String> get usedQuestions => _usedQuestions;
   List<String> get recentlyUsedQuestions => _recentlyUsedQuestions;
+
+  
 
     /// PQU: Progressive Question Up-selection algorithm
   /// This algorithm dynamically adjusts question difficulty based on player performance
@@ -128,17 +138,12 @@ class ProgressiveQuestionSelector {
     List<QuizQuestion> availableQuestions =
         allQuestions.where((q) => !_usedQuestions.contains(q.question)).toList();
 
-    // PHASE 7: Handle question pool exhaustion
-    // When all questions are used, reset and reshuffle for continued gameplay
+    // PHASE 7: Handle question pool exhaustion (3-phase strategy)
+    // 1) Use unique questions filtered by level (handled below in PHASE 8)
+    // 2) If level-filter yields none, widen to any remaining unique questions (PHASE 8 fallbacks)
+    // 3) If no unique questions remain in entire DB, reset used tracking and start over
     if (availableQuestions.isEmpty) {
-      // Instead of clearing _usedQuestions and _recentlyUsedQuestions,
-      // we will just reshuffle allQuestions and repopulate availableQuestions.
-      // This ensures that questions are eventually repeated, but only after
-      // all questions have been seen at least once in the current session.
-      allQuestions.shuffle(Random()); // Randomize order for variety
-      availableQuestions = List<QuizQuestion>.from(allQuestions);
-
-      // Load additional questions in background if running low
+      // Try to load more in background first
       if (_setState != null) {
         _questionLoadingService.loadMoreQuestionsAdvanced(
           context: context,
@@ -146,6 +151,15 @@ class ProgressiveQuestionSelector {
           setState: _setState!,
           mounted: _mounted,
         );
+      }
+      // Recompute after background load attempt
+      availableQuestions = allQuestions.where((q) => !_usedQuestions.contains(q.question)).toList();
+      if (availableQuestions.isEmpty) {
+        // Phase 3: all unique questions exhausted -> reset session usage and start over
+        _usedQuestions.clear();
+        _recentlyUsedQuestions.clear();
+        allQuestions.shuffle(Random());
+        availableQuestions = List<QuizQuestion>.from(allQuestions);
       }
     }
 
@@ -172,7 +186,7 @@ class ProgressiveQuestionSelector {
       }).toList();
     }
 
-    // Final fallback: any available question
+    // Final fallback: if still empty, keep the entire remaining unique pool
     if (eligibleQuestions.isEmpty) {
       eligibleQuestions = availableQuestions;
     }
