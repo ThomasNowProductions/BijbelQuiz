@@ -13,6 +13,7 @@ import '../screens/guide_screen.dart';
 import '../widgets/top_snackbar.dart';
 import '../l10n/strings_nl.dart' as strings;
 import '../constants/urls.dart';
+import '../providers/game_stats_provider.dart';
 
 class LessonSelectScreen extends StatefulWidget {
   const LessonSelectScreen({super.key});
@@ -602,15 +603,17 @@ class _ProgressHeaderState extends State<_ProgressHeader>
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final progress = Provider.of<LessonProgressProvider>(context, listen: true);
+    final gameStats = Provider.of<GameStatsProvider>(context, listen: true);
     final total = widget.lessons.length;
     final unlocked = progress.unlockedCount.clamp(0, total == 0 ? 1 : total);
     final percent = total > 0 ? unlocked / total : 0.0;
 
-    final totalStars = widget.lessons.fold<int>(0, (sum, l) => sum + progress.bestStarsFor(l.id));
+    // Total points from GameStatsProvider
+    final totalPoints = gameStats.score;
 
     return Semantics(
       label: 'Progress overview',
-      hint: 'Shows your current progress through lessons and earned stars',
+      hint: 'Shows your current progress through lessons and earned points',
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
@@ -658,13 +661,13 @@ class _ProgressHeaderState extends State<_ProgressHeader>
             ),
             const SizedBox(height: 10),
             Semantics(
-              label: 'Stars earned',
-              hint: 'You have earned $totalStars stars',
+              label: 'Points earned',
+              hint: 'You have earned $totalPoints points',
               child: Row(
                 children: [
-                  Icon(Icons.star_rounded, color: cs.primary, semanticLabel: 'Star'),
+                  Icon(Icons.bolt_rounded, color: cs.primary, semanticLabel: 'Points'),
                   const SizedBox(width: 4),
-                  Text('$totalStars sterren verdiend', style: Theme.of(context).textTheme.bodyMedium),
+                  Text('$totalPoints punten verdiend', style: Theme.of(context).textTheme.bodyMedium),
                 ],
               ),
             ),

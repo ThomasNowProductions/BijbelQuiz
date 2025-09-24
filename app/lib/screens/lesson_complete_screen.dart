@@ -1,5 +1,6 @@
 import 'package:bijbelquiz/services/analytics_service.dart';
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
 import '../models/lesson.dart';
 import './quiz_screen.dart';
@@ -150,50 +151,8 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen> with Single
                           ),
 
                           const SizedBox(height: 24),
-                          // Animated Stars row (celebration)
-                          Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              // Soft glow
-                              Container(
-                                width: 160,
-                                height: 60,
-                                decoration: BoxDecoration(
-                                  gradient: RadialGradient(
-                                    colors: [
-                                      cs.primary.withValues(alpha: 0.18),
-                                      Colors.transparent,
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: List.generate(3, (i) {
-                                  final filled = i < widget.stars;
-                                  final delayMs = 150 * i;
-                                  return TweenAnimationBuilder<double>(
-                                    key: ValueKey('star_$i-${widget.stars}'),
-                                    tween: Tween(begin: 0.0, end: 1.0),
-                                    duration: Duration(milliseconds: 500 + delayMs),
-                                    curve: Curves.easeOutBack,
-                                    builder: (context, value, child) => Transform.scale(
-                                      scale: value.clamp(0.0, 1.0),
-                                      child: Opacity(opacity: value.clamp(0.0, 1.0), child: child),
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.only(right: i == 2 ? 0 : 12),
-                                      child: Icon(
-                                        Icons.star_rounded,
-                                        size: 48,
-                                        color: filled ? cs.primary : cs.outlineVariant,
-                                      ),
-                                    ),
-                                  );
-                                }),
-                              ),
-                            ],
-                          ),
+                          // Speedometer (total score)
+                          _Speedometer(percentage: pctValue.clamp(0.0, 100.0)),
 
                           const SizedBox(height: 28),
                           // Stats cards
@@ -306,6 +265,125 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen> with Single
   }
 
   // Confetti helper removed
+}
+
+class _Speedometer extends StatelessWidget {
+  final double percentage; // 0..100
+
+  const _Speedometer({required this.percentage});
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    return Semantics(
+      label: 'Eindscore',
+      hint: 'Jouw totaalscore in percentage op een snelheidsmeter',
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TweenAnimationBuilder<double>(
+            tween: Tween<double>(begin: 0, end: percentage),
+            duration: const Duration(milliseconds: 900),
+            curve: Curves.easeOutCubic,
+            builder: (context, value, _) {
+              return SizedBox(
+                width: 220,
+                height: 120,
+                child: CustomPaint(
+                  painter: _SpeedometerPainter(
+                    cs: cs,
+                    percent: value.clamp(0.0, 100.0),
+                  ),
+                ),
+              );
+            },
+          ),
+          const SizedBox(height: 8),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Center(
+              child: Text(
+                '${percentage.round()}%',
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SpeedometerPainter extends CustomPainter {
+  final ColorScheme cs;
+  final double percent; // 0..100
+
+  _SpeedometerPainter({required this.cs, required this.percent});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = Offset(size.width / 2, size.height);
+    final radius = math.min(size.width / 2, size.height) - 8;
+
+    // Background arc
+    final bgPaint = Paint()
+      ..color = cs.outlineVariant
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 12
+      ..strokeCap = StrokeCap.round;
+
+    final fgPaint = Paint()
+      ..shader = LinearGradient(
+        colors: [cs.primary, cs.primary.withValues(alpha: 0.6)],
+      ).createShader(Rect.fromCircle(center: center, radius: radius))
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 12
+      ..strokeCap = StrokeCap.round;
+
+    final rect = Rect.fromCircle(center: center, radius: radius);
+    const startAngle = math.pi; // 180 deg (left)
+    const sweepAngleTotal = -math.pi; // sweep counter-clockwise along the top semicircle to 0 deg (right)
+
+    // Draw arcs (flip vertically to ensure the wheel is oriented correctly)
+    canvas.save();
+    canvas.translate(center.dx, center.dy);
+    canvas.scale(1, -1);
+    canvas.translate(-center.dx, -center.dy);
+
+    // Draw background full semi-circle
+    canvas.drawArc(rect, startAngle, sweepAngleTotal, false, bgPaint);
+
+    // Draw foreground arc up to current percent
+    final sweep = sweepAngleTotal * (percent / 100.0);
+    canvas.drawArc(rect, startAngle, sweep, false, fgPaint);
+    canvas.restore();
+
+    // Draw needle
+    final needleAngle = startAngle + sweep;
+    final needleLength = radius - 2;
+    final needleStart = center;
+    final needleEnd = Offset(
+      needleStart.dx + needleLength * math.cos(needleAngle),
+      needleStart.dy - needleLength * math.sin(needleAngle),
+    );
+
+    final needlePaint = Paint()
+      ..color = cs.primary
+      ..strokeWidth = 3
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round;
+
+    canvas.drawLine(needleStart, needleEnd, needlePaint);
+
+    // Hub
+    final hubPaint = Paint()..color = cs.primary;
+    canvas.drawCircle(center, 4, hubPaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant _SpeedometerPainter oldDelegate) {
+    return oldDelegate.percent != percent || oldDelegate.cs != cs;
+  }
 }
 
 class _StatCard extends StatelessWidget {
