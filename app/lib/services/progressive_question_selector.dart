@@ -50,7 +50,7 @@ class ProgressiveQuestionSelector {
   /// 2. Adjusting target difficulty based on performance thresholds
   /// 3. Applying dampening for long sessions to prevent extreme swings
   /// 4. Mapping internal difficulty scale [0..2] to JSON levels [1..5]
-  /// 5. Selecting questions within ±1 difficulty level of target
+  /// 5. Selecting questions from level 1 up to the target difficulty level (cumulative selection)
   /// 6. Filtering out recently used questions to prevent repetition
   ///
   /// @param currentDifficulty The current normalized difficulty [0..2]
@@ -97,7 +97,7 @@ class ProgressiveQuestionSelector {
 
     // PHASE 4: Map internal difficulty to JSON difficulty levels
     // Formula: level = 1 + (normalized_difficulty * 2)
-    // Examples: 0.0 -> 1, 1.0 -> 3, 2.0 -> 5
+    // Examples: 0.0 -> 1, 0.5 -> 2, 1.0 -> 3, 1.5 -> 4, 2.0 -> 5
     final int targetLevel = (1 + (targetDifficulty * 2).round()).clamp(1, 5);
 
     // PHASE 5: Select available questions (not used in current session)
@@ -125,18 +125,22 @@ class ProgressiveQuestionSelector {
       }
     }
 
-    // PHASE 7: Filter questions by difficulty (prefer close matches)
-    // First preference: questions within ±1 difficulty level of target
+    // PHASE 7: Filter questions by difficulty (cumulative level selection)
+    // Users get questions from level 1 up to their current target level (inclusive)
+    // For example: if user is at level 3, they get questions from levels 1, 2, and 3
+    // This ensures that users always see easier questions as they progress
     List<QuizQuestion> eligibleQuestions = availableQuestions.where((q) {
       final int qLevel = int.tryParse(q.difficulty.toString()) ?? 3;
-      return (qLevel - targetLevel).abs() <= 1;
+      return qLevel <= targetLevel;
     }).toList();
 
-    // Second preference: exact difficulty level match
+    // Fallback: if no questions available at or below target level, 
+    // use questions at the next possible level(s)
     if (eligibleQuestions.isEmpty) {
+      // Find questions at any level higher than target as a temporary fallback
       eligibleQuestions = availableQuestions.where((q) {
         final int qLevel = int.tryParse(q.difficulty.toString()) ?? 3;
-        return qLevel == targetLevel;
+        return qLevel > targetLevel;
       }).toList();
     }
 
