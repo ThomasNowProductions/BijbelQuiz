@@ -315,6 +315,9 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                     return RefreshIndicator(
                       onRefresh: _loadLessons,
                       child: CustomScrollView(
+                        // Increase cache extent to prebuild upcoming sliver children
+                        // for smoother, jank-free scrolling at the cost of some memory.
+                        cacheExtent: 800,
                         slivers: [
                           // Promo card (if shown)
                           if (_showPromoCard)
@@ -453,6 +456,11 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                                         );
                                       },
                                       childCount: filteredIndices.length,
+                                      // Performance: disable keep-alives and semantic indexes for grid items.
+                                      // The grid lazily builds children and does not need to keep offscreen items alive.
+                                      addAutomaticKeepAlives: false,
+                                      addSemanticIndexes: false,
+                                      addRepaintBoundaries: true,
                                     ),
                                   ),
                                 );
@@ -775,7 +783,9 @@ class _LessonTileState extends State<_LessonTile>
         curve: Curves.easeInOut,
       ),
     );
-    _shadowAnimation = Tween<double>(begin: 0.06, end: 0.12).animate(
+    // Start with no shadow and animate in only while pressed to reduce
+    // offscreen/idle raster cost during scrolling.
+    _shadowAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _animationController,
         curve: Curves.easeInOut,
@@ -845,9 +855,11 @@ class _LessonTileState extends State<_LessonTile>
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: _shadowAnimation.value),
-                    blurRadius: 16,
-                    offset: const Offset(0, 6),
+                    // Shadow intensity scaled by animation progress; when idle
+                    // (value=0) this results in no shadow.
+                    color: Colors.black.withValues(alpha: 0.12 * _shadowAnimation.value),
+                    blurRadius: 16 * _shadowAnimation.value,
+                    offset: Offset(0, 6 * _shadowAnimation.value),
                   ),
                 ],
               ),

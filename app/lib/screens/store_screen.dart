@@ -7,6 +7,7 @@ import '../providers/settings_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/top_snackbar.dart';
 import '../l10n/strings_nl.dart' as strings;
+import '../screens/quiz_screen.dart';
 
 class StoreScreen extends StatefulWidget {
   const StoreScreen({super.key});
@@ -395,8 +396,12 @@ class _StoreScreenState extends State<StoreScreen> {
                         TextButton(
                           onPressed: () {
                             Navigator.of(context).pop();
-                            // Navigate back to quiz screen
-                            Navigator.of(localContext).pop();
+                            // Start free play (random practice) regardless of how Store is shown
+                            Navigator.of(localContext).push(
+                              MaterialPageRoute(
+                                builder: (_) => const QuizScreen(),
+                              ),
+                            );
                           },
                           child: Text('Naar de quiz', style: TextStyle(color: colorScheme.primary)),
                         ),
