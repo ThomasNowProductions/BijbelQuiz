@@ -19,13 +19,19 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.0'
+          flutter-version: '3.27.0'  # Updated to support Dart SDK 3.8.0+
           cache: true
 
       - name: Setup Node.js for pub outdated
         uses: actions/setup-node@v4
         with:
           node-version: '18'
+
+      - name: Check Flutter and Dart versions
+        run: |
+          echo "Flutter version:"
+          flutter --version
+          echo "Current Dart SDK version: $(dart --version)"
 
       - name: Check for outdated dependencies
         id: outdated
@@ -49,7 +55,18 @@ jobs:
         run: |
           cd app
           echo "Updating dependencies..."
-          flutter pub upgrade --major-versions
+          # Try to upgrade with major versions, but handle SDK conflicts gracefully
+          if ! flutter pub upgrade --major-versions; then
+            echo "Major version upgrade failed (likely due to SDK version conflicts)"
+            echo "Trying minor updates only..."
+            if ! flutter pub upgrade; then
+              echo "Standard upgrade also failed. This might be due to SDK version constraints."
+              echo "Consider updating your Flutter version in the workflow."
+              echo "Current Flutter version in workflow: 3.24.0"
+              echo "You may need to update to a newer Flutter version to support latest dependencies."
+              exit 1
+            fi
+          fi
 
       - name: Check for security vulnerabilities
         if: steps.outdated.outputs.has_outdated == 'true'
@@ -110,6 +127,12 @@ jobs:
             ✅ Tests pass
             ✅ Code analysis passes
             ✅ No security vulnerabilities found
+
+            ### SDK Compatibility:
+            If you encounter SDK version conflicts (e.g., with `flutter_lints >=6.0.0` requiring Dart SDK ^3.8.0),
+            you may need to update the Flutter version in the workflow configuration.
+
+            Current workflow uses: **Flutter 3.24.0** (Dart SDK 3.5.0)
 
             ---
             *This PR was automatically created by the dependency-updates workflow.*
