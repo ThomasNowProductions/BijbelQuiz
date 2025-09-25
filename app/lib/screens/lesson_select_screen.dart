@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'dart:math';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:bijbelquiz/services/analytics_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/lesson.dart';
 import '../providers/lesson_progress_provider.dart';
@@ -34,11 +35,17 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
   bool _isDifficultyPromo = false; // true for difficulty feedback
   // Search and filters removed for simplified UI
 
+  // Daily usage streak tracking (persisted locally)
+  static const String _activeDaysKey = 'daily_active_days_v1';
+  Set<String> _activeDays = {};
+  int _streakDays = 0;
+
   @override
   void initState() {
     super.initState();
     Provider.of<AnalyticsService>(context, listen: false).screen(context, 'LessonSelectScreen');
     _loadLessons();
+    _loadAndMarkStreak();
 
     // Check if we need to show the guide screen (only once)
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -79,6 +86,80 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
         _checkAndShowGuide();
       });
     }
+  }
+
+  // --- Daily streak helpers ---
+  String _fmtDate(DateTime d) {
+    // yyyy-MM-dd
+    return '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+  }
+
+  bool _isSunday(DateTime d) => d.weekday == DateTime.sunday;
+
+  Future<void> _loadAndMarkStreak() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final list = prefs.getStringList(_activeDaysKey) ?? <String>[];
+      _activeDays = list.toSet();
+
+      // Mark today as used (opening the app counts as using BijbelQuiz)
+      final today = DateTime.now();
+      final todayStr = _fmtDate(DateTime(today.year, today.month, today.day));
+      if (!_activeDays.contains(todayStr)) {
+        _activeDays.add(todayStr);
+        await prefs.setStringList(_activeDaysKey, _activeDays.toList());
+      }
+
+      _recomputeStreak();
+    } catch (_) {
+      // Ignore streak errors silently
+    }
+    if (mounted) setState(() {});
+  }
+
+  void _recomputeStreak() {
+    int streak = 0;
+    DateTime now = DateTime.now();
+    DateTime cursor = DateTime(now.year, now.month, now.day);
+    while (true) {
+      if (_isSunday(cursor)) {
+        // Sunday is a free day, does not break or add to streak
+        cursor = cursor.subtract(const Duration(days: 1));
+        continue;
+      }
+      final dayStr = _fmtDate(cursor);
+      if (_activeDays.contains(dayStr)) {
+        streak += 1;
+        cursor = cursor.subtract(const Duration(days: 1));
+      } else {
+        break;
+      }
+    }
+    _streakDays = streak;
+  }
+
+  List<_DayIndicator> _getFiveDayWindow() {
+    final List<_DayIndicator> out = [];
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    for (int offset = -2; offset <= 2; offset++) {
+      final day = today.add(Duration(days: offset));
+      final isFuture = day.isAfter(today);
+      final dayStr = _fmtDate(day);
+      _DayState state;
+      if (isFuture) {
+        state = _DayState.future;
+      } else if (_isSunday(day)) {
+        // Sunday streak freeze only applies to non-future days
+        state = _DayState.freeze;
+      } else if (_activeDays.contains(dayStr)) {
+        state = _DayState.success;
+      } else {
+        state = _DayState.fail;
+      }
+      out.add(_DayIndicator(date: day, state: state));
+    }
+    return out;
   }
 
   Future<void> _loadLessons() async {
@@ -390,6 +471,8 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                                   _ProgressHeader(
                                     lessons: _lessons,
                                     continueLesson: continueLesson,
+                                    streakDays: _streakDays,
+                                    dayWindow: _getFiveDayWindow(),
                                     onAfterQuizReturn: _loadLessons,
                                   ),
                                   const SizedBox(height: 8),
@@ -473,6 +556,45 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                 ),
     );
   }
+}
+
+Widget _buildDayCircle(BuildContext context, _DayIndicator indicator, {bool isCenter = false}) {
+  final cs = Theme.of(context).colorScheme;
+  Color fill;
+  Color border = cs.outlineVariant;
+  switch (indicator.state) {
+    case _DayState.success:
+      fill = cs.primary;
+      border = cs.primary;
+      break;
+    case _DayState.fail:
+      fill = Colors.redAccent;
+      border = Colors.redAccent;
+      break;
+    case _DayState.freeze:
+      fill = cs.surfaceContainerHighest;
+      border = cs.outline;
+      break;
+    case _DayState.future:
+      fill = Colors.transparent;
+      border = cs.outlineVariant;
+      break;
+  }
+
+  return Container(
+    width: 22,
+    height: 22,
+    decoration: BoxDecoration(
+      color: fill,
+      shape: BoxShape.circle,
+      border: Border.all(color: border, width: isCenter ? 3.0 : 1.8),
+      boxShadow: isCenter && indicator.state != _DayState.future
+          ? [
+              BoxShadow(color: border.withValues(alpha: 0.35), blurRadius: 8, spreadRadius: 0, offset: const Offset(0, 2)),
+            ]
+          : null,
+    ),
+  );
 }
 
 class _HeaderActionButton extends StatefulWidget {
@@ -567,12 +689,23 @@ class _HeaderActionButtonState extends State<_HeaderActionButton>
   }
 }
 
+// Daily streak indicator model and states
+enum _DayState { success, fail, freeze, future }
+
+class _DayIndicator {
+  final DateTime date;
+  final _DayState state;
+  const _DayIndicator({required this.date, required this.state});
+}
+
 class _ProgressHeader extends StatefulWidget {
   final List<Lesson> lessons;
   final Lesson? continueLesson;
   final VoidCallback? onAfterQuizReturn;
+  final int streakDays;
+  final List<_DayIndicator> dayWindow;
 
-  const _ProgressHeader({required this.lessons, this.continueLesson, this.onAfterQuizReturn});
+  const _ProgressHeader({required this.lessons, this.continueLesson, this.onAfterQuizReturn, this.streakDays = 0, this.dayWindow = const []});
 
   @override
   State<_ProgressHeader> createState() => _ProgressHeaderState();
@@ -663,6 +796,38 @@ class _ProgressHeaderState extends State<_ProgressHeader>
               ),
             ),
             const SizedBox(height: 10),
+            // Streak message and 5-day indicators in a separate card
+            if (widget.dayWindow.isNotEmpty) ...[
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: cs.surface,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: cs.outlineVariant),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Je gebruikt BijbelQuiz al ${widget.streakDays} dagen op rij.',
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w700),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        for (int i = 0; i < widget.dayWindow.length; i++)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                            child: _buildDayCircle(context, widget.dayWindow[i], isCenter: i == 2),
+                          ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
             
             const SizedBox(height: 12),
             // CTA zone to incentivize starting a game
