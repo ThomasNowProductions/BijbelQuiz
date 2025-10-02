@@ -220,6 +220,9 @@ class AppStrings {
   static const String social = 'Sociaal';
   static const String comingSoon = 'Binnenkort beschikbaar!';
   static const String socialComingSoonMessage = 'De sociale functies van BijbelQuiz zijn binnenkort beschikbaar. Blijf op de hoogte voor updates!';
+
+  // Bible Bot
+  static const String bibleBot = 'Bijbel Bot';
   
   // Errors
   static const String couldNotOpenEmail = 'Kon e-mailclient niet openen';

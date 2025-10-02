@@ -143,6 +143,12 @@ class GeminiService {
   /// Returns true if the service is ready to use, false otherwise
   bool get isReady => _initialized && _apiKey.isNotEmpty;
 
+  /// Gets the API key for external access (used by BibleBotService)
+  String get apiKey => _apiKey;
+
+  /// Gets the HTTP client for external access (used by BibleBotService)
+  http.Client get httpClient => _httpClient;
+
   /// Initializes the Gemini service by loading the API key from environment variables
   Future<void> initialize() async {
     try {

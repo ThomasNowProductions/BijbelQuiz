@@ -11,6 +11,7 @@ import 'package:logging/logging.dart' show Level;
 
 import 'providers/settings_provider.dart';
 import 'providers/game_stats_provider.dart';
+import 'providers/bible_chat_provider.dart';
 import 'utils/theme_utils.dart';
 import 'services/logger.dart';
 import 'services/notification_service.dart';
@@ -62,6 +63,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => SettingsProvider()),
         ChangeNotifierProvider.value(value: gameStatsProvider),
         ChangeNotifierProvider(create: (_) => LessonProgressProvider()),
+        ChangeNotifierProvider(create: (_) => BibleChatProvider()),
         Provider.value(value: analyticsService),
       ],
       child: BijbelQuizApp(),
