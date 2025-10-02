@@ -18,15 +18,15 @@ void main() async {
     print('Successfully loaded .env from: $envPath');
 
     // Verify the API key was loaded
-    final apiKey = dotenv.env['GEMINI_API_KEY'];
+    final apiKey = dotenv.env['AI_API_KEY'];
     if (apiKey != null && apiKey.isNotEmpty) {
-      print('GEMINI_API_KEY loaded successfully');
+      print('AI_API_KEY loaded successfully');
     } else {
-      print('Warning: GEMINI_API_KEY not found in .env file');
+      print('Warning: AI_API_KEY not found in .env file');
     }
   } catch (e) {
     print('Could not load .env file: $e');
-    print('Please ensure .env file exists in the current directory with GEMINI_API_KEY');
+    print('Please ensure .env file exists in the current directory with AI_API_KEY');
   }
 
   runApp(const BijbelBotApp());

@@ -1,15 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/services.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:google_generative_ai/google_generative_ai.dart';
 import 'logger.dart';
 
-/// Configuration for Gemini API service
-class GeminiConfig {
-  static const String baseUrl = 'https://generativelanguage.googleapis.com/v1beta';
+/// Stream callback function type for real-time updates
+typedef StreamCallback = void Function(String chunk);
+
+/// Configuration for AI API service
+class AiConfig {
+  static const String baseUrl = 'https://openrouter.ai/api/v1';
   static const Duration requestTimeout = Duration(seconds: 30);
   static const int maxRetries = 3;
   static const Duration retryDelay = Duration(seconds: 1);
@@ -46,28 +46,28 @@ class BibleReference {
   }
 }
 
-/// Model class for Gemini API error responses
-class GeminiError implements Exception {
+/// Model class for AI API error responses
+class AiError implements Exception {
   final String message;
   final int? statusCode;
   final String? errorCode;
 
-  const GeminiError({
+  const AiError({
     required this.message,
     this.statusCode,
     this.errorCode,
   });
 
   @override
-  String toString() => 'GeminiError: $message${statusCode != null ? ' (Status: $statusCode)' : ''}';
+  String toString() => 'AiError: $message${statusCode != null ? ' (Status: $statusCode)' : ''}';
 }
 
-/// A service that provides an interface to the Gemini API for Bible Q&A.
+/// A service that provides an interface to the AI API for Bible Q&A.
 /// This is a standalone version specifically for the BijbelBot app.
-class GeminiService {
-  static GeminiService? _instance;
+class AiService {
+  static AiService? _instance;
   late final String _apiKey;
-  late final GenerativeModel _model;
+  late final http.Client _httpClient;
   bool _initialized = false;
 
   // Rate limiting
@@ -75,11 +75,13 @@ class GeminiService {
   static const Duration _minRequestInterval = Duration(seconds: 1);
 
   /// Private constructor for singleton pattern
-  GeminiService._internal();
+  AiService._internal() {
+    _httpClient = http.Client();
+  }
 
   /// Gets the singleton instance of the service
-  static GeminiService get instance {
-    _instance ??= GeminiService._internal();
+  static AiService get instance {
+    _instance ??= AiService._internal();
     return _instance!;
   }
 
@@ -92,52 +94,45 @@ class GeminiService {
   /// Gets the API key for external access
   String get apiKey => _apiKey;
 
-  /// Initializes the Gemini service by loading the API key from environment variables
+  /// Initializes the AI service by loading the API key from environment variables
   Future<void> initialize() async {
     try {
-      AppLogger.info('Initializing Gemini API service for BijbelBot...');
+      AppLogger.info('Initializing AI API service for BijbelBot...');
 
       // Try to get API key from already loaded dotenv
-      String? apiKey = dotenv.env['GEMINI_API_KEY'];
+      String? apiKey = dotenv.env['AI_API_KEY'];
 
       // If .env didn't work, try system environment variables
       if (apiKey == null || apiKey.isEmpty) {
-        apiKey = const String.fromEnvironment('GEMINI_API_KEY');
+        apiKey = const String.fromEnvironment('AI_API_KEY');
       }
 
       // If still no API key, try to load .env file directly
       if (apiKey.isEmpty) {
         try {
           await dotenv.load(fileName: '.env');
-          apiKey = dotenv.env['GEMINI_API_KEY'];
+          apiKey = dotenv.env['AI_API_KEY'];
         } catch (e) {
-          AppLogger.warning('Could not load .env file in Gemini service: $e');
+          AppLogger.warning('Could not load .env file in AI service: $e');
         }
       }
 
       if (apiKey == null || apiKey.isEmpty) {
-        throw const GeminiError(
-          message: 'GEMINI_API_KEY not found. Please add GEMINI_API_KEY=your_api_key_here to the .env file in the bijbelbot directory.',
+        throw const AiError(
+          message: 'AI_API_KEY not found. Please add AI_API_KEY=your_api_key_here to the .env file in the bijbelbot directory.',
         );
       }
 
       // Validate API key format (basic check)
       if (apiKey.length < 20) {
-        AppLogger.warning('GEMINI_API_KEY appears to be too short - please verify it is correct');
+        AppLogger.warning('AI_API_KEY appears to be too short - please verify it is correct');
       }
 
       _apiKey = apiKey;
-
-      // Initialize the Gemini model
-      _model = GenerativeModel(
-        model: 'gemini-2.0-flash-exp',
-        apiKey: _apiKey,
-      );
-
       _initialized = true;
-      AppLogger.info('Gemini API service initialized successfully for BijbelBot');
+      AppLogger.info('AI API service initialized successfully for BijbelBot');
     } catch (e) {
-      AppLogger.error('Failed to initialize Gemini API service', e);
+      AppLogger.error('Failed to initialize AI API service', e);
       _initialized = false;
       rethrow;
     }
@@ -150,18 +145,18 @@ class GeminiService {
     }
   }
 
-  /// Answers a Bible-related question using Gemini AI
+  /// Answers a Bible-related question using AI
   Future<BibleQAResponse> askBibleQuestion(String question) async {
     if (question.trim().isEmpty) {
-      throw const GeminiError(message: 'Question cannot be empty');
+      throw const AiError(message: 'Question cannot be empty');
     }
 
     // Ensure service is initialized
     await _ensureInitialized();
 
     if (!_initialized || _apiKey.isEmpty) {
-      throw const GeminiError(
-        message: 'Gemini API service is not properly configured. Please check your GEMINI_API_KEY in the .env file.',
+      throw const AiError(
+        message: 'AI API service is not properly configured. Please check your AI_API_KEY in the .env file.',
       );
     }
 
@@ -170,18 +165,51 @@ class GeminiService {
     AppLogger.info('Asking Bible question: $question');
 
     try {
-      final prompt = _buildBiblePrompt(question);
-      final response = await _model.generateContent([Content.text(prompt)]);
+      final response = await _makeApiRequest(question);
 
-      if (response.text == null || response.text!.isEmpty) {
-        throw const GeminiError(message: 'Empty response from Gemini API');
+      if (response.statusCode == 200) {
+        final bibleResponse = await _parseApiResponse(response.body);
+        AppLogger.info('Successfully received Bible answer');
+        return bibleResponse;
+      } else {
+        throw await _handleErrorResponse(response);
       }
-
-      final bibleResponse = _parseBibleResponse(response.text!);
-      AppLogger.info('Successfully received Bible answer');
-      return bibleResponse;
     } catch (e) {
       AppLogger.error('Failed to get Bible answer', e);
+      rethrow;
+    }
+  }
+
+  /// Answers a Bible-related question using AI with streaming support
+  Stream<String> askBibleQuestionStream(String question, {StreamCallback? onChunk}) async* {
+    if (question.trim().isEmpty) {
+      throw const AiError(message: 'Question cannot be empty');
+    }
+
+    // Ensure service is initialized
+    await _ensureInitialized();
+
+    if (!_initialized || _apiKey.isEmpty) {
+      throw const AiError(
+        message: 'AI API service is not properly configured. Please check your AI_API_KEY in the .env file.',
+      );
+    }
+
+    await _ensureRateLimit();
+
+    AppLogger.info('Asking Bible question with streaming: $question');
+
+    try {
+      final request = await _makeStreamingApiRequestStream(question);
+
+      await for (final chunk in request) {
+        yield chunk;
+        if (onChunk != null) {
+          onChunk(chunk);
+        }
+      }
+    } catch (e) {
+      AppLogger.error('Failed to get streaming Bible answer', e);
       rethrow;
     }
   }
@@ -197,6 +225,110 @@ class GeminiService {
       }
     }
     _lastRequestTime = DateTime.now();
+  }
+
+  /// Makes the HTTP request to the OpenRouter API
+  Future<http.Response> _makeApiRequest(String question) async {
+    final url = Uri.parse('${AiConfig.baseUrl}/chat/completions');
+
+    final prompt = _buildBiblePrompt(question);
+    final requestBody = json.encode({
+      'model': 'x-ai/grok-4-fast:free',
+      'messages': [
+        {
+          'role': 'user',
+          'content': prompt
+        }
+      ]
+    });
+
+    AppLogger.info('Making request to AI API');
+
+    for (int attempt = 1; attempt <= AiConfig.maxRetries; attempt++) {
+      try {
+        final response = await _httpClient
+            .post(
+              url,
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer $_apiKey'
+              },
+              body: requestBody,
+            )
+            .timeout(AiConfig.requestTimeout);
+
+        if (response.statusCode == 200) {
+          return response;
+        } else if (response.statusCode == 429 && attempt < AiConfig.maxRetries) {
+          // Rate limited, wait and retry
+          final delay = AiConfig.retryDelay * attempt;
+          AppLogger.warning('Rate limited, retrying in ${delay.inSeconds}s (attempt $attempt)');
+          await Future.delayed(delay);
+          continue;
+        } else {
+          return response;
+        }
+      } catch (e) {
+        if (attempt == AiConfig.maxRetries) {
+          throw AiError(
+            message: 'Network request failed after $attempt attempts: $e',
+          );
+        }
+        AppLogger.warning('Request attempt $attempt failed: $e');
+        await Future.delayed(AiConfig.retryDelay * attempt);
+      }
+    }
+
+    throw const AiError(message: 'All retry attempts exhausted');
+  }
+
+  /// Parses the OpenRouter API response to extract Bible answer and references
+  Future<BibleQAResponse> _parseApiResponse(String responseBody) async {
+    try {
+      final Map<String, dynamic> response = json.decode(responseBody);
+
+      // Extract the generated text from AI API's response
+      final choices = response['choices'] as List<dynamic>?;
+      if (choices == null || choices.isEmpty) {
+        throw const AiError(message: 'No response choices received');
+      }
+
+      final message = choices[0]['message'] as Map<String, dynamic>?;
+      final generatedText = message?['content'] as String?;
+      if (generatedText == null || generatedText.trim().isEmpty) {
+        throw const AiError(message: 'Empty response text');
+      }
+
+      final bibleResponse = _parseBibleResponse(generatedText);
+      return bibleResponse;
+    } catch (e) {
+      if (e is AiError) rethrow;
+
+      AppLogger.error('Failed to parse API response, using raw response: $e');
+      return BibleQAResponse(
+        answer: responseBody,
+        references: [],
+      );
+    }
+  }
+
+  /// Handles error responses from the AI API
+  Future<AiError> _handleErrorResponse(http.Response response) async {
+    try {
+      final Map<String, dynamic> errorBody = json.decode(response.body);
+      final error = errorBody['error'] as Map<String, dynamic>?;
+
+      return AiError(
+        message: error?['message'] as String? ?? 'Unknown API error',
+        statusCode: response.statusCode,
+        errorCode: error?['code'] as String?,
+      );
+    } catch (e) {
+      return AiError(
+        message: 'HTTP ${response.statusCode}: ${response.body}',
+        statusCode: response.statusCode,
+      );
+    }
   }
 
   /// Builds a structured prompt for Bible Q&A
@@ -320,9 +452,56 @@ Explanation: [Additional context if needed]
     return references;
   }
 
+  /// Makes a streaming HTTP request to the AI API
+  Future<Stream<String>> _makeStreamingApiRequestStream(String question) async {
+    final url = Uri.parse('${AiConfig.baseUrl}/chat/completions');
+
+    final prompt = _buildBiblePrompt(question);
+    final requestBody = json.encode({
+      'model': 'x-ai/grok-4-fast:free',
+      'messages': [
+        {
+          'role': 'user',
+          'content': prompt
+        }
+      ],
+      'stream': true
+    });
+
+    AppLogger.info('Making streaming request to AI API');
+
+    final request = await _httpClient.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $_apiKey'
+      },
+      body: requestBody,
+    );
+
+    return Stream.fromIterable(
+      request.body
+          .toString()
+          .split('\n')
+          .where((line) => line.trim().isNotEmpty && line.startsWith('data: '))
+          .map((line) => line.substring(6)) // Remove 'data: ' prefix
+          .where((data) => data != '[DONE]')
+          .map((data) {
+        try {
+          final jsonData = json.decode(data);
+          return jsonData['choices']?[0]['delta']?['content'] as String? ?? '';
+        } catch (e) {
+          return '';
+        }
+      })
+          .where((content) => content.isNotEmpty)
+    );
+  }
+
   /// Disposes of resources used by the service
   void dispose() {
+    _httpClient.close();
     _instance = null;
-    AppLogger.info('Gemini service disposed');
+    AppLogger.info('AI service disposed');
   }
 }

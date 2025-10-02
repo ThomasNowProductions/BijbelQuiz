@@ -23,8 +23,8 @@ class BibleBotService {
     try {
       AppLogger.info('Initializing BibleBot service...');
 
-      // Initialize Gemini service
-      await GeminiService.instance.initialize();
+      // Initialize AI service
+      await AiService.instance.initialize();
 
       _isInitialized = true;
       AppLogger.info('BibleBot service initialized successfully');
@@ -43,8 +43,8 @@ class BibleBotService {
     try {
       AppLogger.info('Asking Bible question: $question');
 
-      // Use Gemini service to get Bible answer
-      final response = await GeminiService.instance.askBibleQuestion(question);
+      // Use AI service to get Bible answer
+      final response = await AiService.instance.askBibleQuestion(question);
 
       return response;
     } catch (e) {

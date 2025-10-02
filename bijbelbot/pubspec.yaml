@@ -53,7 +53,10 @@ dependencies:
   # Environment variables
   flutter_dotenv: ^5.1.0
 
-  # Google Gemini AI
+  # HTTP client for API calls
+  http: ^1.2.1
+
+  # Google Gemini AI (kept for compatibility)
   google_generative_ai: ^0.4.3
 
 dev_dependencies:
