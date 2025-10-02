@@ -38,7 +38,13 @@ class AnalyticsService {
     final settings = Provider.of<SettingsProvider>(context, listen: false);
 
     // Check if analytics are enabled via feature flag
-    final featureFlags = FeatureFlagsService();
+    FeatureFlagsService? featureFlags;
+    try {
+      featureFlags = Provider.of<FeatureFlagsService>(context, listen: false);
+    } catch (e) {
+      // Feature flags service not available in provider yet, create new instance
+      featureFlags = FeatureFlagsService();
+    }
     final analyticsEnabled = await featureFlags.areAnalyticsEnabled();
     if (!analyticsEnabled) {
       AppLogger.info('Analytics disabled via feature flag, skipping screen tracking for: $screenName');
@@ -67,7 +73,13 @@ class AnalyticsService {
     final settings = Provider.of<SettingsProvider>(context, listen: false);
 
     // Check if analytics are enabled via feature flag
-    final featureFlags = FeatureFlagsService();
+    FeatureFlagsService? featureFlags;
+    try {
+      featureFlags = Provider.of<FeatureFlagsService>(context, listen: false);
+    } catch (e) {
+      // Feature flags service not available in provider yet, create new instance
+      featureFlags = FeatureFlagsService();
+    }
     final analyticsEnabled = await featureFlags.areAnalyticsEnabled();
     if (!analyticsEnabled) {
       AppLogger.info('Analytics disabled via feature flag, skipping event tracking for: $eventName');

@@ -22,7 +22,13 @@ class _SocialScreenState extends State<SocialScreen> {
   }
 
   Future<void> _checkSocialFeaturesEnabled() async {
-    final featureFlags = FeatureFlagsService();
+    FeatureFlagsService? featureFlags;
+    try {
+      featureFlags = Provider.of<FeatureFlagsService>(context, listen: false);
+    } catch (e) {
+      // Feature flags service not available in provider yet, create new instance
+      featureFlags = FeatureFlagsService();
+    }
     final enabled = await featureFlags.areSocialFeaturesEnabled();
     setState(() {
       _socialFeaturesEnabled = enabled;

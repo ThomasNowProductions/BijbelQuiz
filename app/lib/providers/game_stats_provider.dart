@@ -309,6 +309,20 @@ class GameStatsProvider extends ChangeNotifier {
     }
   }
 
+  /// Adds stars to the score (e.g., for refunds). Returns true if successful.
+  Future<bool> addStars(int amount) async {
+    try {
+      _score += amount;
+      await _prefs?.setInt(_scoreKey, _score);
+      notifyListeners();
+      return true;
+    } catch (e) {
+      _error = 'Failed to add stars: ${e.toString()}';
+      notifyListeners();
+      return false;
+    }
+  }
+
   /// Gets all game stats data for export
   Map<String, dynamic> getExportData() {
     return {

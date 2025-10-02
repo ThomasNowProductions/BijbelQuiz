@@ -19,6 +19,7 @@ import 'services/connection_service.dart';
 import 'services/question_cache_service.dart';
 import 'services/emergency_service.dart';
 import 'services/gemini_service.dart';
+import 'services/feature_flags_service.dart';
 import 'screens/store_screen.dart';
 import 'providers/lesson_progress_provider.dart';
 import 'screens/lesson_select_screen.dart';
@@ -84,6 +85,7 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
   QuestionCacheService? _questionCacheService;
   EmergencyService? _emergencyService;
   GeminiService? _geminiService;
+  FeatureFlagsService? _featureFlagsService;
 
   // Add mounted getter for older Flutter versions
   @override
@@ -102,6 +104,7 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
       final connectionService = ConnectionService();
       final questionCacheService = QuestionCacheService();
       final emergencyService = EmergencyService();
+      final featureFlagsService = FeatureFlagsService();
 
       // Initialize Gemini service (with error handling for missing API key)
       AppLogger.info('Initializing Gemini service...');
@@ -112,12 +115,21 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
         return null;
       });
 
+      // Initialize feature flags service
+      AppLogger.info('Initializing feature flags service...');
+      final featureFlagsInitFuture = featureFlagsService.initialize().catchError((e) {
+        AppLogger.warning('Feature flags service initialization failed: $e');
+        // Don't fail the entire app if feature flags fail
+        return null;
+      });
+
       // Kick off initialization in background
       AppLogger.info('Starting parallel service initialization...');
       final initFuture = Future.wait([
         performanceService.initialize(),
         connectionService.initialize(),
         questionCacheService.initialize(),
+        featureFlagsInitFuture,
         geminiInitFuture,
       ]);
 
@@ -129,6 +141,7 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
         _questionCacheService = questionCacheService;
         _emergencyService = emergencyService;
         _geminiService = geminiService;
+        _featureFlagsService = featureFlagsService;
       });
 
       // Continue with any post-init work when ready
@@ -202,6 +215,7 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
       if (_questionCacheService != null) Provider.value(value: _questionCacheService!),
       if (_emergencyService != null) Provider.value(value: _emergencyService!),
       if (_geminiService != null) Provider.value(value: _geminiService!),
+      if (_featureFlagsService != null) Provider.value(value: _featureFlagsService!),
     ];
   }
 
