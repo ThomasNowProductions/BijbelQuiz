@@ -1,5 +1,6 @@
 class BibleBookMapper {
   // Mapping of Dutch book names to their corresponding numbers for online-bijbel.nl API
+  // Using normalized names (without special characters) as keys for API compatibility
   static const Map<String, int> _bookNameToNumber = {
     // Old Testament
     'Genesis': 1,
@@ -27,10 +28,10 @@ class BibleBookMapper {
     'Jesaja': 23,
     'Jeremia': 24,
     'Klaagliederen': 25,
-    'Ezechiël': 26,
-    'Daniël': 27,
+    'Ezechiel': 26,
+    'Daniel': 27,
     'Hosea': 28,
-    'Joël': 29,
+    'Joel': 29,
     'Amos': 30,
     'Obadja': 31,
     'Jona': 32,
@@ -43,25 +44,25 @@ class BibleBookMapper {
     'Maleachi': 39,
 
     // New Testament
-    'Matteüs': 40,
+    'Matteus': 40,
     'Marcus': 41,
     'Lukas': 42,
     'Johannes': 43,
     'Handelingen': 44,
     'Romeinen': 45,
-    '1 Korintiërs': 46,
-    '2 Korintiërs': 47,
+    '1 Korintiers': 46,
+    '2 Korintiers': 47,
     'Galaten': 48,
-    'Efeziërs': 49,
+    'Efeziers': 49,
     'Filippenzen': 50,
     'Kolossenzen': 51,
     '1 Tessalonicenzen': 52,
     '2 Tessalonicenzen': 53,
-    '1 Timoteüs': 54,
-    '2 Timoteüs': 55,
+    '1 Timoteus': 54,
+    '2 Timoteus': 55,
     'Titus': 56,
     'Filemon': 57,
-    'Hebreeën': 58,
+    'Hebreeen': 58,
     'Jakobus': 59,
     '1 Petrus': 60,
     '2 Petrus': 61,
@@ -74,15 +75,40 @@ class BibleBookMapper {
 
   /// Convert Dutch book name to book number for online-bijbel.nl API
   static int? getBookNumber(String bookName) {
-    return _bookNameToNumber[bookName.trim()];
+    final normalizedName = _normalizeBookName(bookName.trim());
+    return _bookNameToNumber[normalizedName];
   }
 
   /// Check if a book name is valid
   static bool isValidBookName(String bookName) {
-    return _bookNameToNumber.containsKey(bookName.trim());
+    final normalizedName = _normalizeBookName(bookName.trim());
+    return _bookNameToNumber.containsKey(normalizedName);
   }
 
-  /// Get all valid book names
+  /// Normalize Dutch book names by removing special characters for API compatibility
+  static String _normalizeBookName(String bookName) {
+    return bookName
+        // Convert special characters to ASCII equivalents
+        .replaceAll('ë', 'e')
+        .replaceAll('ï', 'i')
+        .replaceAll('é', 'e')
+        .replaceAll('è', 'e')
+        .replaceAll('ê', 'e')
+        .replaceAll('â', 'a')
+        .replaceAll('ô', 'o')
+        .replaceAll('û', 'u')
+        .replaceAll('î', 'i')
+        .replaceAll('ä', 'a')
+        .replaceAll('ö', 'o')
+        .replaceAll('ü', 'u')
+        .replaceAll('ÿ', 'y')
+        .replaceAll('ç', 'c')
+        // Remove any remaining special characters
+        .replaceAll(RegExp(r'[^\w\s]'), '')
+        .trim();
+  }
+
+  /// Get all valid book names (normalized for API)
   static List<String> getAllBookNames() {
     return _bookNameToNumber.keys.toList();
   }
@@ -93,5 +119,21 @@ class BibleBookMapper {
         .where((entry) => entry.value == bookNumber)
         .map((entry) => entry.key)
         .firstOrNull;
+  }
+
+  /// Get the original book name (with special characters) from a normalized name
+  static String? getOriginalBookName(String normalizedName) {
+    // Create reverse mapping for common special character conversions
+    const reverseMapping = {
+      'Ezechiel': 'Ezechiël',
+      'Daniel': 'Daniël',
+      'Joel': 'Joël',
+      '1 Korintiers': '1 Korintiërs',
+      '2 Korintiers': '2 Korintiërs',
+      'Efeziers': 'Efeziërs',
+      'Hebreeen': 'Hebreeën',
+    };
+
+    return reverseMapping[normalizedName] ?? normalizedName;
   }
 }

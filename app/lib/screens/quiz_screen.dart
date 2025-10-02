@@ -920,7 +920,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
     final settings = Provider.of<SettingsProvider>(context, listen: false);
     final isDev = kDebugMode;
 
-    final success = isDev ? true : await gameStats.spendStars(35);
+    final success = await gameStats.spendStars(isDev ? 0 : 35);
     if (success) {
       _timerManager.timeAnimationController.stop();
       setState(() {
@@ -970,7 +970,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
     }
 
     // Spend 10 stars for unlocking the biblical reference (free in debug mode)
-    final success = isDev ? true : await gameStats.spendStars(10);
+    final success = await gameStats.spendStars(isDev ? 0 : 10);
     if (success) {
       // Pause the timer
       if (mounted) {
