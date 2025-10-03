@@ -287,6 +287,7 @@ class AppStrings {
   static const String invalidBiblicalReference = 'Ongeldige bijbelverwijzing';
   static const String errorLoadingBiblicalText = 'Fout bij het laden van de bijbeltekst';
   static const String errorLoadingWithDetails = 'Fout bij het laden:';
+  static const String resumeToGame = 'Hervat spel';
 
   // Settings Screen
   static const String emailAddress = 'E-mailadres';
