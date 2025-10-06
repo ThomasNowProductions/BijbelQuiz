@@ -1,49 +1,67 @@
-External API Risk Assessment - Summary
-Overall Risk: MEDIUM - Good security foundation but external AI dependencies need attention.
+# API Inventory for BijbelQuiz Project
 
-APIs Identified (7 total):
-Google Gemini AI - MEDIUM risk
+## MCP Protocol Endpoint (`/mcp`)
 
-Theme generation for BijbelQuiz app
-✅ Good reliability, ⚠️ User data sent to Google
-OpenRouter AI - HIGH risk
+**VULNERABLE:** Session management issues, DNS rebinding protection disabled
 
-Bible chat for BijbelBot app
-❌ Sensitive religious content sent externally
-❌ No data retention guarantees
-Online Bible API - LOW risk
+**IMPROVE:** Implement persistent session storage, add request size limits, enable proper error handling
 
-Primary Bible content source
-✅ Public content only, ✅ Has fallback
-PostHog Analytics - MEDIUM risk
+## Questions API (`/api/questions`)
 
-User behavior tracking
-⚠️ Tracks usage patterns, ✅ User opt-out available
-Custom Backend API - LOW risk
+**VULNERABLE:** No authentication, public access to quiz database
 
-Self-hosted questions API
-✅ Full control, ✅ Local caching fallback
-Bible API (fallback) - LOW risk
+**IMPROVE:** Add API key authentication, implement rate limiting, add content integrity validation
 
-Backup Bible content
-✅ Public content only
-Stripe Payments - LOW risk
+## Version Information API (`/api/version`)
 
-Payment processing (configured only)
-✅ Industry standard security
-Key Risks:
-Privacy: OpenRouter AI receives sensitive religious conversations
-Reliability: Third-party Bible API could fail without warning
-Data: External AI services may log/process user content
-Immediate Actions Required:
-Review OpenRouter AI necessity - Consider local alternative
-Add privacy warnings for AI features
-Monitor API availability regularly
-Implement API health checks
-Risk Mitigation Status:
-✅ HTTPS encryption on all APIs
-✅ API key management proper
-✅ Fallback mechanisms for Bible content
-❌ No monitoring for external API health
-❌ Privacy review needed for AI services
-Recommendation: Reduce external AI dependencies or implement local processing to lower overall risk to LOW.
+**VULNERABLE:** Information disclosure, no input sanitization
+
+**IMPROVE:** Add basic authentication, implement response caching, validate platform parameters
+
+## Download Redirect API (`/api/download`)
+
+**VULNERABLE:** Open redirect potential, deprecated endpoint
+
+**IMPROVE:** Implement allowlist for redirect destinations, add parameter validation, plan migration
+
+## Emergency Message System (`/api/emergency`)
+
+**CRITICAL:** Weak bearer token auth, in-memory storage, no rate limiting
+
+**IMPROVE:** Implement JWT authentication, add persistent storage, comprehensive input validation
+
+## Question Editor Interface (`/question-editor/*`)
+
+**VULNERABLE:** Public access to development interface, path traversal risks
+
+**IMPROVE:** Add authentication, implement file upload validation, add audit logging
+
+## Root Application Interface (`/`)
+
+**NOT VULNERABLE:** Simple static file serving, no dynamic content
+
+**IMPROVE:** Add security headers, implement proper caching, add performance monitoring
+
+## Google Gemini AI API (external)
+
+**VULNERABLE:** API key management, prompt injection risks
+
+**IMPROVE:** Implement secure key storage, add prompt filtering, add usage monitoring
+
+## Online Bible API (external)
+
+**VULNERABLE:** No authentication, search query exposure
+
+**IMPROVE:** Add input sanitization, implement content filtering, add privacy controls
+
+## PostHog Analytics API (external)
+
+**NOT VULNERABLE:** Good privacy controls, user consent required
+
+**IMPROVE:** Regular compliance audits, add data retention monitoring
+
+## Social Media Redirect URLs (external)
+
+**NOT VULNERABLE:** Simple HTTPS redirects, no user input
+
+**IMPROVE:** Add redirect tracking, monitor target platform availability
