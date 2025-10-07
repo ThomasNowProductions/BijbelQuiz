@@ -1,0 +1,32 @@
+{
+  "name": "bijbelquiz-mcp",
+  "version": "1.0.0",
+  "description": "MCP server voor het spelen van BijbelQuiz - haalt BijbelQuiz app inhoud op om te helpen bij het spelen",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc --watch & node --watch dist/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "bijbelquiz",
+    "bijbel-quiz",
+    "spelassistent",
+    "bijbel",
+    "quiz",
+    "spel",
+    "nederlands"
+  ],
+  "author": "BijbelQuiz Team",
+  "license": "MIT"
+}
