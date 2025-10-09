@@ -39,6 +39,8 @@
   --breakpoint-mobile: 480px;
   --breakpoint-tablet: 768px;
   --breakpoint-desktop: 1024px;
+  --breakpoint-wide: 1200px;
+  --breakpoint-ultra-wide: 1440px;
   
   /* Spacing */
   --space-xxs: 0.25rem;
@@ -107,6 +109,22 @@ body {
   margin: 0 auto;
 }
 
+/* Mobile-first responsive center-screen */
+@media (max-width: 479px) {
+  .center-screen {
+    padding: var(--space-md);
+    min-height: calc(100vh - 2rem);
+    justify-content: flex-start;
+    padding-top: 2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .center-screen {
+    padding: var(--space-xl);
+  }
+}
+
 .container {
   width: 100%;
   max-width: 100%;
@@ -114,17 +132,36 @@ body {
   margin: 0 auto;
 }
 
-/* Responsive container */
+/* Responsive container - Mobile first approach */
 @media (min-width: 480px) {
   .container {
-    max-width: 440px;
+    max-width: 460px;
     padding: 0 var(--space-lg);
   }
 }
 
 @media (min-width: 768px) {
   .container {
-    max-width: 600px;
+    max-width: 680px;
+    padding: 0 var(--space-xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 800px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1000px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .container {
+    max-width: 1200px;
   }
 }
 
@@ -165,16 +202,45 @@ p {
   line-height: 1.6;
 }
 
-/* Responsive typography */
+/* Responsive typography - Mobile optimized */
+@media (max-width: 479px) {
+  .icon-large {
+    font-size: 3.5rem;
+    margin-bottom: var(--space-md);
+  }
+
+  h1 {
+    font-size: 1.75rem;
+    margin-bottom: var(--space-md);
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: 1.375rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: var(--space-lg);
+  }
+
+  .hero-description {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+}
+
 @media (min-width: 480px) {
   .icon-large {
     font-size: 5rem;
   }
-  
+
   h1 {
     margin-bottom: var(--space-lg);
   }
-  
+
   p {
     font-size: 1.1rem;
   }
@@ -185,11 +251,11 @@ p {
     font-size: 6rem;
     margin-bottom: var(--space-xl);
   }
-  
+
   h1 {
     margin-bottom: var(--space-xl);
   }
-  
+
   p {
     font-size: 1.125rem;
     margin-bottom: var(--space-xxl);
@@ -252,21 +318,47 @@ p {
   outline: none;
 }
 
-/* Button size adjustments for mobile */
+/* Enhanced mobile button styles */
 @media (max-width: 479px) {
   .btn {
-    padding: 0.75rem 1rem;
-    font-size: 0.95rem;
+    padding: 1rem 1.25rem;
+    font-size: 1rem;
+    min-height: 48px;
+    margin-bottom: 1rem;
+  }
+
+  .btn.btn-large {
+    padding: 1.125rem 1.5rem;
+    font-size: 1.125rem;
+    min-width: 200px;
   }
 }
 
 /* Larger touch targets for mobile */
 @media (pointer: coarse) {
   .btn {
-    min-height: 48px;
+    min-height: 52px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    padding: 1rem 1.25rem;
+  }
+
+  .btn.btn-large {
+    min-height: 56px;
+    padding: 1.25rem 2rem;
+  }
+}
+
+/* Enhanced mobile interactions */
+@media (max-width: 767px) {
+  .btn {
+    -webkit-tap-highlight-color: rgba(37, 99, 235, 0.1);
+    touch-action: manipulation;
+  }
+
+  .btn:active {
+    transform: translateY(1px);
   }
 }
 
@@ -301,17 +393,34 @@ p {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Responsive card padding */
+/* Responsive card padding - Mobile optimized */
 @media (max-width: 479px) {
   .card {
     padding: var(--space-lg);
     border-radius: var(--radius-md);
+    margin: 0;
+    max-width: 100%;
+    box-shadow: 0 5px 15px -10px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@media (min-width: 480px) {
+  .card {
+    padding: var(--space-xl);
   }
 }
 
 @media (min-width: 768px) {
   .card {
     padding: var(--space-xxl);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@media (min-width: 1024px) {
+  .card {
+    padding: 3rem;
   }
 }
 
@@ -332,7 +441,7 @@ footer {
 }
 
 .btn.btn-large:hover {
-  transform: scale(1.05) translateY(-2px);
+  transform: translateY(-2px);
 }
 
 /* Smaller button modifier */
@@ -598,6 +707,20 @@ input:-webkit-autofill:active {
 @media (min-width: 600px) {
   .features-grid {
     grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xxl);
+  }
+}
+
+@media (min-width: 1200px) {
+  .features-grid {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
@@ -710,20 +833,21 @@ input:-webkit-autofill:active {
   text-align: center;
   margin-top: var(--space-xl);
   padding: var(--space-xl);
-  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #1d4ed8 100%);
+  background: var(--surface);
   border-radius: var(--radius-lg);
-  color: white;
-  box-shadow: 0 10px 30px rgba(30, 58, 138, 0.3);
+  color: var(--on-surface);
+  box-shadow: none;
+  border: 1px solid var(--outline);
 }
 
 .cta-section-hero h2 {
-  color: white;
+  color: var(--on-surface);
   margin-bottom: var(--space-md);
   font-size: 1.5rem;
 }
 
 .cta-section-hero p {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--text-secondary);
   margin-bottom: var(--space-xl);
   font-size: 1rem;
 }
@@ -739,6 +863,28 @@ input:-webkit-autofill:active {
 
   .cta-section-hero p {
     font-size: 1.1rem;
+  }
+}
+
+/* Enhanced mobile hero section */
+@media (max-width: 479px) {
+  .hero-section {
+    margin-bottom: 2rem;
+  }
+
+  .cta-section-hero {
+    padding: var(--space-lg);
+    margin-top: var(--space-lg);
+  }
+
+  .cta-section-hero h2 {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .cta-section-hero p {
+    font-size: 0.95rem;
+    margin-bottom: var(--space-lg);
   }
 }
 
@@ -764,6 +910,17 @@ input:-webkit-autofill:active {
   .cta-buttons {
     flex-direction: row;
     justify-content: center;
+    gap: var(--space-lg);
+  }
+}
+
+@media (min-width: 768px) {
+  .cta-buttons {
+    gap: var(--space-xl);
+  }
+
+  .cta-section-hero {
+    margin-top: var(--space-xxl);
   }
 }
 
@@ -791,6 +948,20 @@ input:-webkit-autofill:active {
     flex-direction: column;
     gap: var(--space-lg);
     text-align: center;
+    padding: var(--space-lg);
+  }
+}
+
+@media (min-width: 768px) {
+  .stats-section {
+    padding: var(--space-xl) 0;
+    gap: var(--space-xxl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .stats-section {
+    padding: var(--space-xxl) 0;
   }
 }
 
