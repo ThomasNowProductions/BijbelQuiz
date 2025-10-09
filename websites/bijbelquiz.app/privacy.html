@@ -11,17 +11,19 @@
     <div class="container card">
         <i class="material-icons icon-large">privacy_tip</i>
         <h1>Privacybeleid</h1>
-        <p>Laatst bijgewerkt: 8 oktober 2025</p>
+        <p>Laatst bijgewerkt: 9 oktober 2025</p>
 
         <div class="privacy-content">
             <div style="background: #f8fafc; border: 1px solid #64748b; border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem; color: #1e293b;" class="summary-box">
                 <h3 style="margin-top: 0; color: #2563eb;">📋 Beknopte samenvatting</h3>
                 <p style="margin-bottom: 0.5rem;"><strong>Wat we verzamelen:</strong></p>
                 <ul style="margin: 0.5rem 0;">
-                    <li>Gebruiksgegevens voor app-verbetering (alleen als analytics aanstaat)</li>
+                    <li>Anonieme gebruiksgegevens via PostHog (alleen als analytics aanstaat)</li>
                     <li>Apparaatinformatie (model, OS versie) voor technische analyse</li>
-                    <li>Tekstbeschrijvingen voor AI-kleurthema's (alleen naar Google AI verzonden)</li>
-                    <li>Quizvoortgang en instellingen (alleen lokaal opgeslagen)</li>
+                    <li>Tekstbeschrijvingen voor AI-kleurthema's (naar Google Gemini AI verzonden)</li>
+                    <li>Quizvoortgang, scores en prestaties (lokaal opgeslagen)</li>
+                    <li>Persoonlijke voorkeuren en aangepaste thema's (lokaal opgeslagen)</li>
+                    <li>Functiegebruik en navigatiepatronen voor app-verbetering</li>
                 </ul>
                 <p style="margin-bottom: 0.5rem;"><strong>Wat we NIET verzamelen:</strong></p>
                 <ul style="margin: 0.5rem 0;">
@@ -39,14 +41,16 @@
             <p>We verzamelen de volgende soorten informatie:</p>
 
             <h3>2.1 Analytische gegevens</h3>
-            <p>We gebruiken PostHog om uitgebreide gebruiksgegevens te verzamelen voor het verbeteren van de app. Dit omvat:</p>
+            <p>We gebruiken PostHog om anonieme gebruiksgegevens te verzamelen voor het verbeteren van de app. Dit omvat:</p>
             <ul>
                 <li><strong>App-gebruik:</strong> App-lanceringen, schermweergaven, functiegebruik, en navigatiepatronen</li>
                 <li><strong>Quiz-interacties:</strong> Quiz-start, vraagbeantwoording, scores, voortgang, en spelgedrag</li>
                 <li><strong>Prestaties:</strong> Laadtijden, crashes, fouten, en technische evenementen</li>
                 <li><strong>Gebruikersbetrokkenheid:</strong> Tijd besteed in app, functieontdekking, en gebruikersstromen</li>
                 <li><strong>Inhoud-interacties:</strong> Zoekopdrachten, leeractiviteiten, prestaties, en feedback</li>
-                <li><strong>Technische gegevens:</strong> Verbindingsstatus, caching-gebeurtenissen, en apparaatinformatie</li>
+                <li><strong>Technische gegevens:</strong> Verbindingsstatus, caching-gebeurtenissen, apparaatinformatie, en platform-specifieke metrics</li>
+                <li><strong>Sessiegegevens:</strong> App-levenscyclus events, achtergrond/voorgrond gedrag</li>
+                <li><strong>Functiegebruik:</strong> Welke features worden gebruikt, hoe vaak, en in welke volgorde</li>
             </ul>
 
             <h3>2.2 Apparaatinformatie</h3>
@@ -98,9 +102,9 @@
             <h2>4. Gegevens delen en derden</h2>
             <p>We delen uw gegevens alleen zoals beschreven in dit beleid:</p>
             <ul>
-                <li><strong>PostHog:</strong> Geanonimiseerde analytische gegevens worden gedeeld met PostHog voor verwerkingsdoeleinden. PostHog verwerkt deze gegevens in de Verenigde Staten. Hoewel PostHog privacybescherming biedt, kan de verwerking plaatsvinden buiten de EU/EER.</li>
-                <li><strong>Google Gemini AI:</strong> Tekstbeschrijvingen voor kleurenthema-generatie worden verzonden naar Google's Gemini AI API. Deze gegevens worden verwerkt volgens Google's privacybeleid en kunnen worden opgeslagen op Google's servers wereldwijd.</li>
-                <li><strong>Geen andere derden:</strong> We delen geen persoonlijke gegevens met andere derde partijen voor commerciële doeleinden.</li>
+                <li><strong>PostHog:</strong> Geanonimiseerde analytische gegevens worden gedeeld met PostHog voor verwerkingsdoeleinden. PostHog verwerkt deze gegevens in de Verenigde Staten en EU. PostHog is GDPR-compliant en biedt adequate privacybescherming. Gegevens worden gebruikt voor app-analyse, prestatiemonitoring en functieverbetering.</li>
+                <li><strong>Google Gemini AI:</strong> Tekstbeschrijvingen voor kleurenthema-generatie worden verzonden naar Google's Gemini AI API. Deze gegevens worden verwerkt volgens Google's privacybeleid en kunnen worden opgeslagen op Google's servers wereldwijd. Google is Privacy Shield-gecertificeerd en biedt GDPR-compliance.</li>
+                <li><strong>Geen andere derden:</strong> We delen geen persoonlijke gegevens met andere derde partijen voor commerciële doeleinden. Alle gegevensverwerking gebeurt in het kader van app-functionaliteit en verbetering.</li>
             </ul>
 
             <h2>5. Gegevensbeveiliging</h2>
@@ -120,9 +124,24 @@
                 <li><strong>Meldingen:</strong> U kunt meldingsrechten intrekken via de apparaatinstellingen</li>
                 <li><strong>Gegevenswissing:</strong> U kunt de app verwijderen om alle lokaal opgeslagen gegevens te wissen</li>
                 <li><strong>Export/Import:</strong> Uw quizgegevens kunnen worden geëxporteerd of geïmporteerd voor back-up doeleinden</li>
+                <li><strong>Instellingen reset:</strong> U kunt alle persoonlijke instellingen en voortgang resetten via de app-instellingen</li>
+                <li><strong>Cache wissen:</strong> U kunt tijdelijke bestanden en cache wissen voor privacy</li>
             </ul>
 
-            <h2>7. Bewaartermijnen</h2>
+            <h2>7. GDPR Compliance</h2>
+            <p>BijbelQuiz respecteert uw privacyrechten onder de Algemene Verordening Gegevensbescherming (GDPR):</p>
+            <ul>
+                <li><strong>Recht op informatie:</strong> Dit privacybeleid informeert u over alle gegevensverwerkingsactiviteiten</li>
+                <li><strong>Recht op toegang:</strong> U kunt informatie opvragen over verzamelde gegevens (contacteer ons via e-mail)</li>
+                <li><strong>Recht op rectificatie:</strong> Eventuele onjuiste gegevens kunnen worden gecorrigeerd</li>
+                <li><strong>Recht op wissen:</strong> U kunt verzoeken om verwijdering van verzamelde gegevens</li>
+                <li><strong>Recht op beperking:</strong> U kunt de verwerking van uw gegevens beperken</li>
+                <li><strong>Recht op overdraagbaarheid:</strong> U kunt uw gegevens in een gestructureerd formaat ontvangen</li>
+                <li><strong>Recht van bezwaar:</strong> U kunt bezwaar maken tegen gegevensverwerking, met name analytics</li>
+                <li><strong>Geautomatiseerde besluitvorming:</strong> Er vindt geen geautomatiseerde besluitvorming plaats die rechtsgevolgen heeft</li>
+            </ul>
+
+            <h2>8. Bewaartermijnen</h2>
             <p>We bewaren gegevens voor de volgende periodes:</p>
             <ul>
                 <li><strong>Lokale gegevens:</strong> Blijven op uw apparaat totdat u de app verwijdert of de gegevens wist</li>
@@ -130,21 +149,22 @@
                 <li><strong>AI-gegevens:</strong> Google's Gemini AI verwerkt en bewaart gegevens volgens hun eigen privacybeleid. Wij hebben geen controle over hoe lang Google deze gegevens bewaart.</li>
             </ul>
 
-            <h2>8. Kinderen en privacy</h2>
+            <h2>9. Kinderen en privacy</h2>
             <p>Onze app is geschikt voor alle leeftijden, maar we raden aan dat kinderen onder de 13 jaar de app alleen gebruiken onder toezicht van een ouder of voogd. We verzamelen niet bewust persoonlijke informatie van kinderen jonger dan 13 jaar.</p>
 
-            <h2>9. Wijzigingen in dit beleid</h2>
+            <h2>10. Wijzigingen in dit beleid</h2>
             <p>We kunnen dit privacybeleid van tijd tot tijd bijwerken. Wijzigingen worden gepubliceerd op deze pagina met de bijgewerkte "Laatst bijgewerkt" datum. Bij significante wijzigingen zullen we gebruikers informeren via de app of e-mail.</p>
 
-            <h2>10. Contact</h2>
+            <h2>11. Contact</h2>
             <p>Als u vragen heeft over dit privacybeleid of onze gegevensverwerkingspraktijken, kunt u contact met ons opnemen:</p>
             <ul>
                 <li><strong>E-mail:</strong> <a href="mailto:thomasnowprod@proton.me">thomasnowprod@proton.me</a></li>
                 <li><strong>Onderwerp:</strong> Vermeld "Privacybeleid" in het onderwerp</li>
                 <li><strong>Reactietijd:</strong> We streven ernaar binnen 30 dagen te reageren</li>
+                <li><strong>GDPR-verzoeken:</strong> Voor privacyrechten verzoeken, vermeld "GDPR Verzoek" in het onderwerp</li>
             </ul>
 
-            <h2>11. Toepasselijk recht</h2>
+            <h2>12. Toepasselijk recht</h2>
             <p>Dit privacybeleid valt onder Nederlands recht. Eventuele geschillen worden voorgelegd aan de bevoegde rechter in Nederland.</p>
 
             <div style="background: #f0f9ff; border: 1px solid #0ea5e9; border-radius: 8px; padding: 1.5rem; margin-top: 2rem; color: #0c4a6e;" class="highlight-box">
