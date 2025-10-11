@@ -21,10 +21,10 @@ This document outlines the security measures implemented in the BijbelQuiz appli
 ## Data Storage Security
 
 ### Secure Storage
-- Sensitive data is stored using `flutter_secure_storage` which uses platform-specific secure storage:
-  - Android: Keystore system
-  - iOS: Keychain services
-  - Other platforms: Encrypted storage
+- Sensitive data is stored using platform-specific secure storage mechanisms:
+  - Android: Keystore system (via platform channels)
+  - iOS: Keychain services (via platform channels)
+  - Other platforms: Encrypted storage where available
 
 ### SharedPreferences Security
 - Non-sensitive user preferences are stored using `shared_preferences`

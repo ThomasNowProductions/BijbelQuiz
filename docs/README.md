@@ -1,5 +1,7 @@
 # BijbelQuiz
 
+**Version 1.1.2+3**
+
 [![Flutter](https://img.shields.io/badge/Flutter-3.0+-02569B?logo=flutter)](https://flutter.dev)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
@@ -45,8 +47,9 @@ BijbelQuiz is a cross-platform Bible quiz app designed to test and improve your 
 
 ### Prerequisites
 
-- **Flutter**: Version 3.0 or higher
-- **Dart**: Version 2.19 or higher
+- **Flutter**: Version 3.2.3 or higher (current: 3.35.4)
+- **Dart**: Version 2.19 or higher (current: 3.9.2)
+- **Flutter SDK**: >=3.2.3 <4.0.0 (current: 3.35.4)
 - **Android Studio** (for Android development)
 - **Xcode** (for iOS development, macOS only)
 

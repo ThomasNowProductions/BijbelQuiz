@@ -12,14 +12,13 @@ The BijbelQuiz app follows a service-oriented architecture with modular services
 
 **Location:** `bijbelquiz/lib/services/quiz_sound_service.dart`
 
-**Purpose:** Centralized sound management for quiz-related audio feedback with mute support.
+**Purpose:** Simple sound management for quiz-related audio feedback with mute support.
 
 **Key Features:**
 
 - Plays correct/incorrect answer sounds
-- Respects user mute settings
-- Handles sound playback errors gracefully
-- Integrates with SettingsProvider for mute state
+- Respects user mute settings from SettingsProvider
+- Basic error handling for sound playback failures
 
 **Usage:**
 
@@ -125,29 +124,71 @@ await questionLoadingService.loadMoreQuestionsAdvanced(
 
 **Location:** `bijbelquiz/lib/services/progressive_question_selector.dart`
 
-**Purpose:** Intelligent question selection algorithm that adapts difficulty based on user performance.
+**Purpose:** Advanced 11-phase Progressive Question Up-selection (PQU) algorithm for dynamic difficulty adjustment.
 
 **Key Features:**
 
-- Dynamic difficulty adjustment based on performance metrics
-- Progressive Question Up-selection (PQU) algorithm
-- Anti-repetition mechanisms to avoid showing recent questions
-- Performance tracking and analysis
-- Adaptive batching for optimal performance
+- **11-Phase Selection Algorithm**: Comprehensive question selection with multiple optimization phases
+- **Multi-Factor Performance Analysis**: Considers correctness, streaks, timing, and session history
+- **Dynamic Difficulty Adjustment**: Sophisticated adaptation based on user performance thresholds
+- **User Preference Integration**: Incorporates explicit difficulty feedback ("too easy/hard/good")
+- **Anti-Stagnation Mechanisms**: Randomization to prevent difficulty plateaus
+- **Advanced Anti-Repetition**: 50-question recent history tracking with FIFO management
+- **Question Pool Management**: Multi-tier exhaustion handling with background loading integration
+- **Session Management**: Comprehensive state tracking and reset capabilities
+- **Performance Optimization**: Efficient filtering and memory management for large question pools
+
+**Usage:**
+
+```dart
+final selector = ProgressiveQuestionSelector(questionCacheService: questionCacheService);
+
+// Set up state callbacks for background operations
+selector.setStateCallback((setState) => setState(() {}));
+selector.setMounted(mounted);
+
+// Pick next question with current difficulty
+final nextQuestion = selector.pickNextQuestion(currentDifficulty, context);
+
+// Calculate next difficulty based on performance
+final newDifficulty = selector.calculateNextDifficulty(
+  currentDifficulty: currentDifficulty,
+  isCorrect: true,
+  streak: 5,
+  timeRemaining: 15,
+  totalQuestions: 20,
+  correctAnswers: 18,
+  incorrectAnswers: 2,
+  context: context,
+);
+
+// Record answer result for tracking
+selector.recordAnswerResult(questionText, isCorrect);
+
+// Reset for new game
+selector.resetForNewGame();
+```
 
 ### AnalyticsService
 
 **Location:** `bijbelquiz/lib/services/analytics_service.dart`
 
-**Purpose:** Analytics and telemetry service for tracking user interactions and app performance.
+**Purpose:** Comprehensive analytics and telemetry service with 15+ specialized tracking methods.
 
 **Key Features:**
 
-- Event tracking with user consent management
-- Integration with PostHog analytics platform
-- Screen view tracking
-- User preference respecting (opt-in/out)
-- Performance impact monitoring
+- **Core Methods**: `init()`, `getObserver()`, `screen()`, `capture()` with user consent management
+- **App Lifecycle Tracking**: `trackAppLaunch()`, `trackSessionEvent()` with device/platform info
+- **User Engagement**: `trackUserEngagement()`, `trackUserFlow()`, `trackConversionFunnel()`
+- **Performance Monitoring**: `trackPerformance()`, `trackTimeBasedEvent()` with timing metrics
+- **Quiz Analytics**: `trackQuizEvent()`, `trackQuestionInteraction()`, `trackLearningProgress()`
+- **Achievement System**: `trackAchievement()`, `trackScoringEvent()` with point tracking
+- **Behavioral Analysis**: `trackUserBehavior()`, `trackContentInteraction()`, `trackSearchEvent()`
+- **Technical Tracking**: `trackTechnicalEvent()`, `trackError()` with comprehensive context
+- **Business Metrics**: `trackBusinessMetric()` for KPIs and conversion tracking
+- **Accessibility**: `trackAccessibilityEvent()` for inclusive design analytics
+- **Feedback System**: `trackFeedback()`, `trackPreferenceChange()` for user insights
+- **PostHog Integration**: Full analytics platform integration with user preference management
 
 ### FeatureFlagsService
 

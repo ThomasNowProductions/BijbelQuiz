@@ -1,23 +1,67 @@
 # Analytics Documentation
 
-This document explains the analytics setup in the BijbelQuiz application, which uses PostHog for event tracking and product analytics.
+This document explains the comprehensive analytics setup in the BijbelQuiz application, which uses PostHog for event tracking and product analytics.
 
 ## Overview
 
 We use the `posthog_flutter` package to send events to PostHog. This allows us to understand how users interact with the app, identify areas for improvement, and make data-driven decisions.
 
-Users can opt out of analytics collection through a setting in the app's settings screen.
+Users can opt out of analytics collection through a setting in the app's settings screen. All analytics methods respect this preference.
 
 ## AnalyticsService
 
-The `AnalyticsService` is a wrapper around the `posthog_flutter` package that provides a simple interface for tracking events. It is located in `bijbelquiz/lib/services/analytics_service.dart`.
+The `AnalyticsService` is a comprehensive wrapper around the `posthog_flutter` package that provides extensive event tracking capabilities. It is located in `bijbelquiz/lib/services/analytics_service.dart`.
 
-### Methods
+### Core Methods
 
--   `init()`: Initializes the PostHog SDK. This should be called once when the app starts.
--   `getObserver()`: Returns a `PosthogObserver` that can be used to automatically track screen views.
--   `screen(BuildContext context, String screenName)`: Tracks a screen view. Respects the user's analytics preference setting.
--   `capture(BuildContext context, String eventName, {Map<String, Object>? properties})`: Tracks an event. Respects the user's analytics preference setting.
+-   `init()`: Initializes the PostHog SDK with configuration and API keys
+-   `getObserver()`: Returns a `PosthogObserver` for automatic screen view tracking
+-   `screen(BuildContext context, String screenName)`: Tracks screen views with user preference checks
+-   `capture(BuildContext context, String eventName, {Map<String, Object>? properties})`: Tracks custom events with optional properties
+
+### Comprehensive Event Tracking Methods
+
+#### App Lifecycle Tracking
+-   `trackAppLaunch(BuildContext context)`: Tracks app launches with device and version information
+-   `trackSessionEvent(BuildContext context, String event)`: Tracks session start/end events
+
+#### User Engagement Tracking
+-   `trackUserEngagement(BuildContext context, String action)`: Tracks user interactions and engagement
+-   `trackUserFlow(BuildContext context, String flow, String step)`: Tracks user journey flows
+-   `trackConversionFunnel(BuildContext context, String funnel, String step, bool success)`: Tracks conversion events
+
+#### Performance Monitoring
+-   `trackPerformance(BuildContext context, String metric, Duration duration)`: Tracks performance metrics and timing
+-   `trackTimeBasedEvent(BuildContext context, String event, Duration duration)`: Tracks time-based user behaviors
+
+#### Quiz Gameplay Analytics
+-   `trackQuizEvent(BuildContext context, String event)`: Tracks quiz-specific events
+-   `trackQuestionInteraction(BuildContext context, String interaction, String questionType)`: Tracks question-level interactions
+-   `trackLearningProgress(BuildContext context, String activity, String progress)`: Tracks learning and progress events
+
+#### Scoring and Achievement Tracking
+-   `trackScoringEvent(BuildContext context, String event, int points)`: Tracks scoring events
+-   `trackAchievement(BuildContext context, String achievement, String milestone)`: Tracks achievements and milestones
+
+#### User Behavior Analytics
+-   `trackUserBehavior(BuildContext context, String behavior, String category)`: Tracks behavioral patterns
+-   `trackContentInteraction(BuildContext context, String contentType, String interaction, String contentId)`: Tracks content engagement
+-   `trackSearchEvent(BuildContext context, String searchType, String query, int resultsCount)`: Tracks search behavior
+
+#### Technical Event Tracking
+-   `trackTechnicalEvent(BuildContext context, String event, String status)`: Tracks technical events and errors
+-   `trackError(BuildContext context, String errorType, String errorMessage)`: Tracks errors with context
+-   `trackFeatureUsage(BuildContext context, String feature, String action)`: Tracks feature usage patterns
+
+#### Business Metrics
+-   `trackBusinessMetric(BuildContext context, String metric, double value)`: Tracks business KPIs
+
+#### Accessibility Tracking
+-   `trackAccessibilityEvent(BuildContext context, String event, String element)`: Tracks accessibility feature usage
+
+#### Feedback and Preferences
+-   `trackFeedback(BuildContext context, String feedbackType, String feedbackValue)`: Tracks user feedback
+-   `trackPreferenceChange(BuildContext context, String preference, String value)`: Tracks settings changes
 
 ## Tracked Events
 
@@ -95,13 +139,81 @@ The following is a list of all the events that are currently being tracked in th
 
 ## How to Add New Tracking Events
 
-To add a new tracking event, you can use the `AnalyticsService`.
+To add a new tracking event, you can use the `AnalyticsService` with any of its comprehensive tracking methods.
+
+### Basic Event Tracking
 
 1.  Get an instance of the `AnalyticsService` using `Provider.of<AnalyticsService>(context, listen: false)`.
-2.  Call the `capture` method with the event name and any properties.
+2.  Call the appropriate tracking method based on the type of event.
+
+### Usage Examples
 
 ```dart
-Provider.of<AnalyticsService>(context, listen: false).capture(context, 'my_event', properties: {'my_property': 'my_value'});
+final analytics = Provider.of<AnalyticsService>(context, listen: false);
+
+// Basic event tracking
+await analytics.capture(context, 'custom_event', properties: {'custom_property': 'value'});
+
+// App lifecycle tracking
+await analytics.trackAppLaunch(context);
+
+// User engagement tracking
+await analytics.trackUserEngagement(context, 'button_clicked');
+
+// Performance tracking
+await analytics.trackPerformance(context, 'question_load_time', Duration(milliseconds: 500));
+
+// Quiz gameplay tracking
+await analytics.trackQuizEvent(context, 'quiz_started');
+
+// Question interaction tracking
+await analytics.trackQuestionInteraction(context, 'answer_selected', 'multiple_choice');
+
+// Learning progress tracking
+await analytics.trackLearningProgress(context, 'lesson_completed', 'beginner');
+
+// Achievement tracking
+await analytics.trackAchievement(context, 'streak_milestone', '10_correct_answers');
+
+// Error tracking
+await analytics.trackError(context, 'network_error', 'Failed to load questions');
+
+// Feature usage tracking
+await analytics.trackFeatureUsage(context, 'power_up', 'used');
+
+// Business metric tracking
+await analytics.trackBusinessMetric(context, 'retention_rate', 0.85);
+
+// Accessibility tracking
+await analytics.trackAccessibilityEvent(context, 'screen_reader_used', 'question_text');
+
+// Feedback tracking
+await analytics.trackFeedback(context, 'rating', '5_stars');
+
+// Preference change tracking
+await analytics.trackPreferenceChange(context, 'theme', 'dark');
 ```
 
-Note that both the `screen` and `capture` methods now require a `BuildContext` parameter to check the user's analytics preference setting.
+### Event Categories
+
+The service provides specialized methods for different types of events:
+
+- **App Lifecycle**: Launch, session, and background/foreground events
+- **User Engagement**: Interactions, flows, and conversion funnels
+- **Performance**: Timing, metrics, and technical performance
+- **Quiz Gameplay**: Question interactions, scoring, and progress
+- **Learning**: Progress tracking, achievements, and milestones
+- **Technical**: Errors, connectivity, and system events
+- **Business**: KPIs, retention, and conversion metrics
+- **Accessibility**: Screen reader and accessibility feature usage
+- **Feedback**: Ratings, reviews, and user preferences
+
+### Best Practices
+
+1. **Always use appropriate method**: Choose the specific tracking method that matches your event type for better categorization and analysis
+2. **Include relevant context**: Provide meaningful properties that help analyze user behavior
+3. **Respect user preferences**: All methods automatically check analytics settings
+4. **Use consistent naming**: Follow the established naming conventions for events and properties
+5. **Track errors**: Use `trackError()` for comprehensive error reporting with context
+
+Note that all tracking methods require a `BuildContext` parameter to check the user's analytics preference setting and will automatically skip tracking if analytics are disabled.

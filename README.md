@@ -24,13 +24,13 @@ The core Flutter application with the following structure:
   - `config/`: Application configuration
   - `constants/`: Constant values and URLs
   - `l10n/`: Localization strings
-  - `models/`: Data models (Lesson, QuizQuestion, QuizState)
+  - `models/`: Data models (Lesson, QuizQuestion, QuizState, etc.)
   - `providers/`: State management providers
   - `screens/`: UI screens (Quiz, Lesson Select, etc.)
-  - `services/`: Business logic services (Sound, Notifications, etc.)
+  - `services/`: Business logic services (Sound, Notifications, Analytics, etc.)
   - `theme/`: Application theming
   - `utils/`: Utility functions
-  - `widgets/`: Reusable UI widgets
+  - `widgets/`: Reusable UI widgets (AnswerButton, QuestionCard, etc.)
 - `assets/`: Static assets
   - `categories.json`: Quiz categories
   - `questions-nl-sv.json`: Questions in Dutch
