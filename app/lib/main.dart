@@ -11,6 +11,7 @@ import 'package:logging/logging.dart' show Level;
 
 import 'providers/settings_provider.dart';
 import 'providers/game_stats_provider.dart';
+import 'providers/user_provider.dart';
 import 'utils/theme_utils.dart';
 import 'services/logger.dart';
 import 'services/notification_service.dart';
@@ -51,7 +52,9 @@ void main() async {
   }
   
   final gameStatsProvider = GameStatsProvider();
+  final userProvider = UserProvider();
   AppLogger.info('Game stats provider initialized');
+  AppLogger.info('User provider initialized');
 
   AppLogger.info('Starting Flutter app with providers...');
   final appStartTime = DateTime.now();
@@ -61,6 +64,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => SettingsProvider()),
         ChangeNotifierProvider.value(value: gameStatsProvider),
         ChangeNotifierProvider(create: (_) => LessonProgressProvider()),
+        ChangeNotifierProvider.value(value: userProvider),
         Provider.value(value: analyticsService),
       ],
       child: BijbelQuizApp(),
@@ -162,6 +166,11 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
       AppLogger.info('Waiting for service initialization to complete...');
       await initFuture;
       AppLogger.info('All services initialized successfully');
+
+      // Initialize user provider
+      AppLogger.info('Initializing user provider...');
+      await userProvider.initialize();
+      AppLogger.info('User provider initialized successfully');
 
 
       AppLogger.info('Initializing notification service for platform: ${Platform.operatingSystem}');

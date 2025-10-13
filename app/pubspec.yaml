@@ -66,6 +66,12 @@ dependencies:
   audio_session: ^0.2.2
   posthog_flutter: ^5.0.0
   flutter_dotenv: ^5.1.0
+  
+  # User account sync and social features
+  supabase_flutter: ^2.0.0
+  dio: ^5.4.0
+  uuid: ^4.2.1
+  web_socket_channel: ^2.4.0
 
 dev_dependencies:
   flutter_test:
