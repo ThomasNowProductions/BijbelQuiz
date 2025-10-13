@@ -65,7 +65,7 @@ class QuizBottomBar extends StatelessWidget {
               _buildActionButton(
                 context: context,
                 icon: Icons.skip_next_rounded,
-                label: settings.language == 'en' ? strings.AppStrings.skip : strings.AppStrings.overslaan,
+                label: settings.effectiveLanguage == 'en' ? strings.AppStrings.skip : strings.AppStrings.overslaan,
                 cost: 35,
                 canUse: canSkip,
                 onPressed: onSkipPressed,

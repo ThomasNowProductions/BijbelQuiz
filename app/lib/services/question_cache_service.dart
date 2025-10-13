@@ -46,6 +46,17 @@ class QuestionCacheService {
   
   // LRU cache implementation
 
+  /// Get the asset path for the given language
+  String _getAssetPathForLanguage(String language) {
+    switch (language) {
+      case 'en':
+        return 'assets/questions-en.json';
+      case 'nl':
+      default:
+        return 'assets/questions-nl-sv.json';
+    }
+  }
+
   /// Initialize the cache service
   Future<void> initialize() async {
     if (_isInitialized) return;
@@ -195,7 +206,8 @@ class QuestionCacheService {
       }
       
       // If no cache, load from assets
-      final String response = await rootBundle.loadString('assets/questions-nl-sv.json');
+      final String assetPath = _getAssetPathForLanguage(language);
+      final String response = await rootBundle.loadString(assetPath);
       final List<dynamic> data = json.decode(response);
       
       if (data.isEmpty) {
@@ -261,7 +273,8 @@ class QuestionCacheService {
       }
       
       // Load the full questions from assets
-      final String response = await rootBundle.loadString('assets/questions-nl-sv.json');
+      final String assetPath = _getAssetPathForLanguage(language);
+      final String response = await rootBundle.loadString(assetPath);
       final List<dynamic> data = json.decode(response) as List;
       
       if (data.isEmpty) {

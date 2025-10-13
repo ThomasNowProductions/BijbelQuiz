@@ -22,7 +22,7 @@ class QuestionLoadingService {
 
     try {
       final settings = Provider.of<SettingsProvider>(context, listen: false);
-      final language = settings.language;
+      final language = settings.effectiveLanguage;
 
       // Load next batch of questions
       final nextBatchStartIndex = questions.length;

@@ -140,5 +140,138 @@
             "Genesis"
         ],
         "biblicalReference": "Genesis 7:12"
+    },
+    {
+        "vraag": "What was the name of the garden where Adam and Eve lived?",
+        "juisteAntwoord": "Garden of Eden",
+        "fouteAntwoorden": [
+            "Garden of Gethsemane",
+            "Garden of Paradise",
+            "Garden of Heaven"
+        ],
+        "moeilijkheidsgraad": 1,
+        "type": "mc",
+        "categories": [
+            "Genesis"
+        ],
+        "biblicalReference": "Genesis 2:8"
+    },
+    {
+        "vraag": "Who was thrown into the lions' den?",
+        "juisteAntwoord": "Daniel",
+        "fouteAntwoorden": [
+            "David",
+            "Moses",
+            "Joseph"
+        ],
+        "moeilijkheidsgraad": 2,
+        "type": "mc",
+        "categories": [
+            "Daniel"
+        ],
+        "biblicalReference": "Daniel 6:16"
+    },
+    {
+        "vraag": "What did Jesus turn water into at the wedding in Cana?",
+        "juisteAntwoord": "Wine",
+        "fouteAntwoorden": [
+            "Oil",
+            "Milk",
+            "Honey"
+        ],
+        "moeilijkheidsgraad": 2,
+        "type": "mc",
+        "categories": [
+            "John"
+        ],
+        "biblicalReference": "John 2:1-11"
+    },
+    {
+        "vraag": "How many disciples did Jesus have?",
+        "juisteAntwoord": "12",
+        "fouteAntwoorden": [
+            "10",
+            "11",
+            "13"
+        ],
+        "moeilijkheidsgraad": 1,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matthew 10:1-4"
+    },
+    {
+        "vraag": "What was the name of the sea that Jesus walked on?",
+        "juisteAntwoord": "Sea of Galilee",
+        "fouteAntwoorden": [
+            "Red Sea",
+            "Dead Sea",
+            "Mediterranean Sea"
+        ],
+        "moeilijkheidsgraad": 2,
+        "type": "mc",
+        "categories": [
+            "Matthew"
+        ],
+        "biblicalReference": "Matthew 14:25"
+    },
+    {
+        "vraag": "Who was the first king of Israel?",
+        "juisteAntwoord": "Saul",
+        "fouteAntwoorden": [
+            "David",
+            "Solomon",
+            "Samuel"
+        ],
+        "moeilijkheidsgraad": 2,
+        "type": "mc",
+        "categories": [
+            "1 Samuel"
+        ],
+        "biblicalReference": "1 Samuel 10:1"
+    },
+    {
+        "vraag": "What did God create on the first day?",
+        "juisteAntwoord": "Light",
+        "fouteAntwoorden": [
+            "Heaven and earth",
+            "Sun and moon",
+            "Plants"
+        ],
+        "moeilijkheidsgraad": 1,
+        "type": "mc",
+        "categories": [
+            "Genesis"
+        ],
+        "biblicalReference": "Genesis 1:3-5"
+    },
+    {
+        "vraag": "Who built the ark?",
+        "juisteAntwoord": "Noah",
+        "fouteAntwoorden": [
+            "Moses",
+            "Abraham",
+            "David"
+        ],
+        "moeilijkheidsgraad": 1,
+        "type": "mc",
+        "categories": [
+            "Genesis"
+        ],
+        "biblicalReference": "Genesis 6:14"
+    },
+    {
+        "vraag": "What is the last book of the New Testament?",
+        "juisteAntwoord": "Revelation",
+        "fouteAntwoorden": [
+            "Jude",
+            "3 John",
+            "Acts"
+        ],
+        "moeilijkheidsgraad": 2,
+        "type": "mc",
+        "categories": [
+            "Revelation"
+        ],
+        "biblicalReference": "Revelation 1:1"
     }
 ]

@@ -6,7 +6,7 @@ import '../screens/lesson_select_screen.dart';
 import '../screens/store_screen.dart';
 import '../screens/social_screen.dart';
 import '../settings_screen.dart';
-import '../l10n/strings_nl.dart' as strings;
+import '../l10n/app_localizations.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -17,6 +17,9 @@ class MainNavigationScreen extends StatefulWidget {
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _currentIndex = 0;
+  
+  // Helper method to get localized strings
+  dynamic get strings => AppLocalizations.of(context).strings;
 
   List<Widget> _getScreens() {
     return [

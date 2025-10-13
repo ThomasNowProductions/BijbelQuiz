@@ -28,7 +28,7 @@ import 'dart:async';
 import 'dart:math';
 import '../widgets/quiz_skeleton.dart';
 import '../widgets/top_snackbar.dart';
-import '../l10n/strings_nl.dart' as strings;
+import '../l10n/app_localizations.dart';
 import '../services/logger.dart';
 
 // New extracted services
@@ -54,6 +54,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
   bool _isLoading = true;
   String? _error;
   String? _lastLanguage;
+  
+  // Helper method to get localized strings
+  dynamic get strings => AppLocalizations.of(context).strings;
   
 
   // Lesson session mode (cap session to N questions with completion screen)
@@ -473,7 +476,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
   void didChangeDependencies() {
     super.didChangeDependencies();
     final settings = Provider.of<SettingsProvider>(context, listen: false);
-    final language = settings.language;
+    final language = settings.effectiveLanguage;
     
     // Telemetry logging
     void tryLogScreenView() {
@@ -525,7 +528,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
       });
 
       final settings = Provider.of<SettingsProvider>(context, listen: false);
-      final language = settings.language;
+      final language = settings.effectiveLanguage;
 
 
       // Load questions - if in lesson mode with a specific category, load category questions
@@ -904,7 +907,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
                         isAnswering: _quizState.isAnswering,
                         isTransitioning: _quizState.isTransitioning,
                         onAnswerSelected: _handleAnswer,
-                        language: settings.language,
+                        language: settings.effectiveLanguage,
                         performanceService: _performanceService,
                       ),
                       const SizedBox(height: 16),
