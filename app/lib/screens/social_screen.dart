@@ -134,7 +134,7 @@ class _SocialScreenState extends State<SocialScreen> {
         ),
         SizedBox(height: isDesktop ? 32 : 24),
         Text(
-          'Join the Community',
+          strings.AppStrings.joinCommunity,
           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
             fontWeight: FontWeight.w700,
             color: colorScheme.onSurface,
@@ -143,7 +143,7 @@ class _SocialScreenState extends State<SocialScreen> {
         ),
         SizedBox(height: isDesktop ? 16 : 12),
         Text(
-          'Create an account to sync your progress, follow other players, and compete on leaderboards!',
+          strings.AppStrings.connectWithPlayers,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
             color: colorScheme.onSurface.withAlpha((0.7 * 255).round()),
             fontWeight: FontWeight.w500,
@@ -160,7 +160,7 @@ class _SocialScreenState extends State<SocialScreen> {
             );
           },
           icon: const Icon(Icons.login_rounded),
-          label: const Text('Sign In / Sign Up'),
+          label: Text('${strings.AppStrings.signIn} / ${strings.AppStrings.signUp}'),
           style: ElevatedButton.styleFrom(
             backgroundColor: colorScheme.primary,
             foregroundColor: colorScheme.onPrimary,
@@ -288,44 +288,44 @@ class _SocialScreenState extends State<SocialScreen> {
       childAspectRatio: isDesktop ? 1.2 : 1.0,
       children: [
         _buildFeatureCard(
-          'Leaderboard',
+          strings.AppStrings.leaderboard,
           Icons.leaderboard_rounded,
-          'View top players',
+          strings.AppStrings.searchForPlayers,
           colorScheme,
           () => _showLeaderboard(),
         ),
         _buildFeatureCard(
-          'Find Friends',
+          strings.AppStrings.findFriends,
           Icons.search_rounded,
-          'Search for players',
+          strings.AppStrings.searchForPlayers,
           colorScheme,
           () => _showUserSearch(),
         ),
         _buildFeatureCard(
-          'Following',
+          strings.AppStrings.following,
           Icons.people_rounded,
-          '${userProvider.following.length} following',
+          '${userProvider.following.length} ${strings.AppStrings.following.toLowerCase()}',
           colorScheme,
           () => _showFollowing(),
         ),
         _buildFeatureCard(
-          'Followers',
+          strings.AppStrings.followers,
           Icons.group_rounded,
-          '${userProvider.followers.length} followers',
+          '${userProvider.followers.length} ${strings.AppStrings.followers.toLowerCase()}',
           colorScheme,
           () => _showFollowers(),
         ),
         _buildFeatureCard(
-          'Store',
+          strings.AppStrings.store,
           Icons.store_rounded,
-          'Buy powerups & themes',
+          strings.AppStrings.buyPowerupsThemes,
           colorScheme,
           () => _showStore(),
         ),
         _buildFeatureCard(
-          'Settings',
+          strings.AppStrings.settings,
           Icons.settings_rounded,
-          'Account settings',
+          strings.AppStrings.accountSettings,
           colorScheme,
           () => _showAccountSettings(),
         ),
@@ -387,7 +387,7 @@ class _SocialScreenState extends State<SocialScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Activity Feed',
+          strings.AppStrings.activityFeed,
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.w700,
             color: colorScheme.onSurface,
@@ -410,14 +410,14 @@ class _SocialScreenState extends State<SocialScreen> {
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  'No activity yet',
+                  strings.AppStrings.noActivityYet,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     color: colorScheme.onSurface.withAlpha((0.7 * 255).round()),
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Follow other players to see their activity here',
+                  strings.AppStrings.followOtherPlayers,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: colorScheme.onSurface.withAlpha((0.5 * 255).round()),
                   ),
@@ -471,55 +471,55 @@ class _SocialScreenState extends State<SocialScreen> {
     final difference = now.difference(timestamp);
     
     if (difference.inDays > 0) {
-      return '${difference.inDays}d ago';
+      return '${difference.inDays} ${strings.AppStrings.daysAgo}';
     } else if (difference.inHours > 0) {
-      return '${difference.inHours}h ago';
+      return '${difference.inHours} ${strings.AppStrings.hoursAgo}';
     } else if (difference.inMinutes > 0) {
-      return '${difference.inMinutes}m ago';
+      return '${difference.inMinutes} ${strings.AppStrings.minutesAgo}';
     } else {
-      return 'Just now';
+      return strings.AppStrings.justNow;
     }
   }
 
   void _showLeaderboard() {
     // TODO: Implement leaderboard
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Leaderboard coming soon!')),
+      SnackBar(content: Text(strings.AppStrings.comingSoonFeature)),
     );
   }
 
   void _showUserSearch() {
     // TODO: Implement user search
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('User search coming soon!')),
+      SnackBar(content: Text(strings.AppStrings.comingSoonFeature)),
     );
   }
 
   void _showFollowing() {
     // TODO: Implement following list
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Following list coming soon!')),
+      SnackBar(content: Text(strings.AppStrings.comingSoonFeature)),
     );
   }
 
   void _showFollowers() {
     // TODO: Implement followers list
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Followers list coming soon!')),
+      SnackBar(content: Text(strings.AppStrings.comingSoonFeature)),
     );
   }
 
   void _showStore() {
     // TODO: Implement store
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Store coming soon!')),
+      SnackBar(content: Text(strings.AppStrings.comingSoonFeature)),
     );
   }
 
   void _showAccountSettings() {
     // TODO: Implement account settings
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Account settings coming soon!')),
+      SnackBar(content: Text(strings.AppStrings.comingSoonFeature)),
     );
   }
 

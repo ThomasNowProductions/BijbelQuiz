@@ -5,28 +5,111 @@ const { v4: uuidv4 } = require('uuid');
 
 const router = express.Router();
 
-// Validation schemas
+// Enhanced validation schemas with security measures
 const signupSchema = Joi.object({
-  email: Joi.string().email().required(),
-  password: Joi.string().min(8).required(),
-  username: Joi.string().alphanum().min(3).max(30).required(),
-  displayName: Joi.string().min(1).max(100).required()
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .max(254)
+    .required()
+    .messages({
+      'string.email': 'Please provide a valid email address',
+      'string.max': 'Email address is too long',
+      'any.required': 'Email is required'
+    }),
+  password: Joi.string()
+    .min(8)
+    .max(128)
+    .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/)
+    .required()
+    .messages({
+      'string.min': 'Password must be at least 8 characters long',
+      'string.max': 'Password is too long',
+      'string.pattern.base': 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character',
+      'any.required': 'Password is required'
+    }),
+  username: Joi.string()
+    .alphanum()
+    .min(3)
+    .max(30)
+    .required()
+    .messages({
+      'string.alphanum': 'Username can only contain letters and numbers',
+      'string.min': 'Username must be at least 3 characters long',
+      'string.max': 'Username is too long',
+      'any.required': 'Username is required'
+    }),
+  displayName: Joi.string()
+    .min(1)
+    .max(100)
+    .pattern(/^[a-zA-Z0-9\s\-_.,!?]+$/)
+    .required()
+    .messages({
+      'string.min': 'Display name is required',
+      'string.max': 'Display name is too long',
+      'string.pattern.base': 'Display name contains invalid characters',
+      'any.required': 'Display name is required'
+    })
 });
 
 const loginSchema = Joi.object({
-  email: Joi.string().email().required(),
-  password: Joi.string().required()
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .max(254)
+    .required()
+    .messages({
+      'string.email': 'Please provide a valid email address',
+      'any.required': 'Email is required'
+    }),
+  password: Joi.string()
+    .min(1)
+    .max(128)
+    .required()
+    .messages({
+      'any.required': 'Password is required'
+    })
 });
 
 const usernameLoginSchema = Joi.object({
-  username: Joi.string().alphanum().min(3).max(30).required(),
-  password: Joi.string().required()
+  username: Joi.string()
+    .alphanum()
+    .min(3)
+    .max(30)
+    .required()
+    .messages({
+      'string.alphanum': 'Username can only contain letters and numbers',
+      'any.required': 'Username is required'
+    }),
+  password: Joi.string()
+    .min(1)
+    .max(128)
+    .required()
+    .messages({
+      'any.required': 'Password is required'
+    })
 });
+
+// Input sanitization function
+const sanitizeInput = (input) => {
+  if (typeof input !== 'string') return input;
+  return input
+    .trim()
+    .replace(/[<>]/g, '') // Remove potential HTML tags
+    .replace(/javascript:/gi, '') // Remove javascript: protocol
+    .replace(/on\w+=/gi, ''); // Remove event handlers
+};
 
 // Sign up endpoint
 router.post('/signup', async (req, res) => {
   try {
-    const { error, value } = signupSchema.validate(req.body);
+    // Sanitize input before validation
+    const sanitizedBody = {
+      email: sanitizeInput(req.body.email),
+      password: req.body.password, // Don't sanitize password
+      username: sanitizeInput(req.body.username),
+      displayName: sanitizeInput(req.body.displayName)
+    };
+
+    const { error, value } = signupSchema.validate(sanitizedBody);
     if (error) {
       return res.status(400).json({ error: error.details[0].message });
     }

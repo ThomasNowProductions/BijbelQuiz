@@ -66,7 +66,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
             ),
             const SizedBox(width: 12),
             Text(
-              'Account',
+              strings.AppStrings.account,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w700,
                 color: colorScheme.onSurface.withAlpha((0.7 * 255).round()),
@@ -81,8 +81,8 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
         bottom: TabBar(
           controller: _tabController,
           tabs: const [
-            Tab(text: 'Sign In'),
-            Tab(text: 'Sign Up'),
+            Tab(text: strings.AppStrings.signIn),
+            Tab(text: strings.AppStrings.signUp),
           ],
           labelColor: colorScheme.primary,
           unselectedLabelColor: colorScheme.onSurface.withAlpha((0.6 * 255).round()),
@@ -126,22 +126,22 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
               color: colorScheme.primary,
             ),
             SizedBox(height: isDesktop ? 32 : 24),
-            Text(
-              'Welcome Back',
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.w700,
-                color: colorScheme.onSurface,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: isDesktop ? 16 : 12),
-            Text(
-              'Sign in to sync your progress and connect with other players',
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: colorScheme.onSurface.withAlpha((0.7 * 255).round()),
-              ),
-              textAlign: TextAlign.center,
-            ),
+        Text(
+          strings.AppStrings.welcomeBack,
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+            fontWeight: FontWeight.w700,
+            color: colorScheme.onSurface,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        SizedBox(height: isDesktop ? 16 : 12),
+        Text(
+          strings.AppStrings.signInDescription,
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            color: colorScheme.onSurface.withAlpha((0.7 * 255).round()),
+          ),
+          textAlign: TextAlign.center,
+        ),
             SizedBox(height: isDesktop ? 32 : 24),
             _buildEmailField(colorScheme),
             const SizedBox(height: 16),
@@ -176,22 +176,22 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
               color: colorScheme.primary,
             ),
             SizedBox(height: isDesktop ? 32 : 24),
-            Text(
-              'Create Account',
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.w700,
-                color: colorScheme.onSurface,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: isDesktop ? 16 : 12),
-            Text(
-              'Join the community and start your Bible quiz journey',
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: colorScheme.onSurface.withAlpha((0.7 * 255).round()),
-              ),
-              textAlign: TextAlign.center,
-            ),
+        Text(
+          strings.AppStrings.createAccount,
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+            fontWeight: FontWeight.w700,
+            color: colorScheme.onSurface,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        SizedBox(height: isDesktop ? 16 : 12),
+        Text(
+          strings.AppStrings.signUpDescription,
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            color: colorScheme.onSurface.withAlpha((0.7 * 255).round()),
+          ),
+          textAlign: TextAlign.center,
+        ),
             SizedBox(height: isDesktop ? 32 : 24),
             _buildDisplayNameField(colorScheme),
             const SizedBox(height: 16),
@@ -214,8 +214,8 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
     return TextFormField(
       controller: _displayNameController,
       decoration: InputDecoration(
-        labelText: 'Display Name',
-        hintText: 'Enter your display name',
+        labelText: strings.AppStrings.displayName,
+        hintText: strings.AppStrings.displayNameHint,
         prefixIcon: const Icon(Icons.person_outline_rounded),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -223,10 +223,10 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please enter your display name';
+          return strings.AppStrings.pleaseEnterDisplayName;
         }
         if (value.length < 2) {
-          return 'Display name must be at least 2 characters';
+          return strings.AppStrings.displayNameTooShort;
         }
         return null;
       },
@@ -237,8 +237,8 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
     return TextFormField(
       controller: _usernameController,
       decoration: InputDecoration(
-        labelText: 'Username',
-        hintText: 'Choose a unique username',
+        labelText: strings.AppStrings.username,
+        hintText: strings.AppStrings.usernameHint,
         prefixIcon: const Icon(Icons.alternate_email_rounded),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -246,13 +246,13 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please enter a username';
+          return strings.AppStrings.pleaseEnterUsername;
         }
         if (value.length < 3) {
-          return 'Username must be at least 3 characters';
+          return strings.AppStrings.usernameTooShort;
         }
         if (!RegExp(r'^[a-zA-Z0-9_]+$').hasMatch(value)) {
-          return 'Username can only contain letters, numbers, and underscores';
+          return strings.AppStrings.usernameInvalidChars;
         }
         return null;
       },
@@ -264,8 +264,8 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
-        labelText: 'Email',
-        hintText: 'Enter your email address',
+        labelText: strings.AppStrings.email,
+        hintText: strings.AppStrings.emailHint,
         prefixIcon: const Icon(Icons.email_outlined),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -273,10 +273,10 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please enter your email';
+          return strings.AppStrings.pleaseEnterEmail;
         }
         if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-          return 'Please enter a valid email address';
+          return strings.AppStrings.pleaseEnterValidEmail;
         }
         return null;
       },
@@ -286,14 +286,14 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
   Widget _buildPasswordField(ColorScheme colorScheme, {required bool isPassword, String? label}) {
     final controller = isPassword ? _passwordController : _confirmPasswordController;
     final isVisible = isPassword ? _isPasswordVisible : _isConfirmPasswordVisible;
-    final labelText = label ?? 'Password';
+    final labelText = label ?? strings.AppStrings.password;
 
     return TextFormField(
       controller: controller,
       obscureText: !isVisible,
       decoration: InputDecoration(
         labelText: labelText,
-        hintText: 'Enter your password',
+        hintText: strings.AppStrings.passwordHint,
         prefixIcon: const Icon(Icons.lock_outline_rounded),
         suffixIcon: IconButton(
           icon: Icon(isVisible ? Icons.visibility_off : Icons.visibility),
@@ -313,13 +313,13 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please enter your password';
+          return strings.AppStrings.pleaseEnterPassword;
         }
         if (value.length < 6) {
-          return 'Password must be at least 6 characters';
+          return strings.AppStrings.passwordTooShort;
         }
         if (!isPassword && value != _passwordController.text) {
-          return 'Passwords do not match';
+          return strings.AppStrings.passwordsDoNotMatch;
         }
         return null;
       },
@@ -348,8 +348,8 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                   ),
                 )
-              : const Text(
-                  'Sign In',
+                : const Text(
+                  strings.AppStrings.signIn,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -382,8 +382,8 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                   ),
                 )
-              : const Text(
-                  'Create Account',
+                : const Text(
+                  strings.AppStrings.createAccount,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -406,7 +406,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
         ),
       ),
       child: const Text(
-        'Sign In with Username',
+        strings.AppStrings.signInWithUsername,
         style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w600,
@@ -426,7 +426,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
-            'OR',
+            strings.AppStrings.or,
             style: TextStyle(
               color: colorScheme.onSurface.withAlpha((0.6 * 255).round()),
               fontWeight: FontWeight.w500,
@@ -506,22 +506,22 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
     return showDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Sign In with Username'),
+        title: Text(strings.AppStrings.signInWithUsername),
         content: TextField(
           controller: usernameController,
-          decoration: const InputDecoration(
-            labelText: 'Username',
-            hintText: 'Enter your username',
+          decoration: InputDecoration(
+            labelText: strings.AppStrings.username,
+            hintText: strings.AppStrings.enterUsername,
           ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+            child: Text(strings.AppStrings.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(usernameController.text.trim()),
-            child: const Text('Sign In'),
+            child: Text(strings.AppStrings.signIn),
           ),
         ],
       ),
@@ -532,12 +532,12 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Error'),
+        title: Text(strings.AppStrings.error),
         content: Text(message),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('OK'),
+            child: Text(strings.AppStrings.ok),
           ),
         ],
       ),

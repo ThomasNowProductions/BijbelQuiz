@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import '../models/follow.dart';
 import '../models/user.dart';
+import '../models/user_stats.dart';
 import '../services/logger.dart';
 
 /// Service for social features like following, followers, and feeds

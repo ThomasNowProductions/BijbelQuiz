@@ -220,6 +220,157 @@ class AppStrings {
   static const String social = 'Sociaal';
   static const String comingSoon = 'Binnenkort beschikbaar!';
   static const String socialComingSoonMessage = 'De sociale functies van BijbelQuiz zijn binnenkort beschikbaar. Blijf op de hoogte voor updates!';
+  
+  // Authentication
+  static const String account = 'Account';
+  static const String signIn = 'Inloggen';
+  static const String signUp = 'Registreren';
+  static const String signInWithUsername = 'Inloggen met gebruikersnaam';
+  static const String createAccount = 'Account aanmaken';
+  static const String welcomeBack = 'Welkom terug';
+  static const String joinCommunity = 'Word lid van de community';
+  static const String signInDescription = 'Log in om je voortgang te synchroniseren en contact te maken met andere spelers';
+  static const String signUpDescription = 'Word lid van de community en begin je Bijbelquiz-reis';
+  static const String displayName = 'Weergavenaam';
+  static const String displayNameHint = 'Voer je weergavenaam in';
+  static const String username = 'Gebruikersnaam';
+  static const String usernameHint = 'Kies een unieke gebruikersnaam';
+  static const String email = 'E-mail';
+  static const String emailHint = 'Voer je e-mailadres in';
+  static const String password = 'Wachtwoord';
+  static const String passwordHint = 'Voer je wachtwoord in';
+  static const String confirmPassword = 'Wachtwoord bevestigen';
+  static const String confirmPasswordHint = 'Bevestig je wachtwoord';
+  static const String or = 'OF';
+  static const String signInWithEmail = 'Inloggen met e-mail';
+  static const String signInWithEmailPassword = 'Inloggen met e-mail en wachtwoord';
+  static const String signInWithUsernamePassword = 'Inloggen met gebruikersnaam en wachtwoord';
+  static const String signOut = 'Uitloggen';
+  static const String profile = 'Profiel';
+  static const String editProfile = 'Profiel bewerken';
+  static const String save = 'Opslaan';
+  static const String cancel = 'Annuleren';
+  
+  // Social Features
+  static const String socialFeatures = 'Sociale functies';
+  static const String connectWithPlayers = 'Maak contact met andere BijbelQuiz-spelers, deel prestaties en strijd op ranglijsten!';
+  static const String userProfile = 'Gebruikersprofiel';
+  static const String following = 'Volgend';
+  static const String followers = 'Volgers';
+  static const String leaderboard = 'Ranglijst';
+  static const String findFriends = 'Vrienden zoeken';
+  static const String searchForPlayers = 'Zoek naar spelers';
+  static const String activityFeed = 'Activiteitenfeed';
+  static const String noActivityYet = 'Nog geen activiteit';
+  static const String followOtherPlayers = 'Volg andere spelers om hun activiteit hier te zien';
+  static const String follow = 'Volgen';
+  static const String unfollow = 'Ontvolgen';
+  static const String followUser = 'Gebruiker volgen';
+  static const String unfollowUser = 'Gebruiker ontvolgen';
+  static const String userNotFound = 'Gebruiker niet gevonden';
+  static const String alreadyFollowing = 'Je volgt deze gebruiker al';
+  static const String cannotFollowSelf = 'Je kunt jezelf niet volgen';
+  static const String followSuccess = 'Gebruiker succesvol gevolgd';
+  static const String unfollowSuccess = 'Gebruiker succesvol ontvolgd';
+  static const String followError = 'Kon gebruiker niet volgen';
+  static const String unfollowError = 'Kon gebruiker niet ontvolgen';
+  static const String searchUsers = 'Gebruikers zoeken';
+  static const String searchHint = 'Zoek naar gebruikers...';
+  static const String noUsersFound = 'Geen gebruikers gevonden';
+  static const String userProfileNotFound = 'Gebruikersprofiel niet gevonden';
+  static const String socialStats = 'Sociale statistieken';
+  static const String gameStats = 'Spelstatistieken';
+  static const String joinedAt = 'Lid sinds';
+  static const String lastSeen = 'Laatst gezien';
+  static const String now = 'Nu';
+  static const String minutesAgo = 'minuten geleden';
+  static const String hoursAgo = 'uur geleden';
+  static const String daysAgo = 'dagen geleden';
+  static const String justNow = 'Zojuist';
+  
+  // Store & Purchases
+  static const String store = 'Winkel';
+  static const String buyPowerupsThemes = 'Koop power-ups & thema\'s';
+  static const String accountSettings = 'Accountinstellingen';
+  static const String purchases = 'Aankopen';
+  static const String purchaseHistory = 'Aankoopgeschiedenis';
+  static const String availableItems = 'Beschikbare items';
+  static const String powerups = 'Power-ups';
+  static const String themes = 'Thema\'s';
+  static const String features = 'Functies';
+  static const String premium = 'Premium';
+  static const String buy = 'Kopen';
+  static const String owned = 'In bezit';
+  static const String expired = 'Verlopen';
+  static const String purchaseSuccess = 'Aankoop succesvol!';
+  static const String purchaseError = 'Aankoop mislukt';
+  static const String insufficientPoints = 'Onvoldoende punten';
+  static const String itemAlreadyPurchased = 'Item al gekocht';
+  static const String refund = 'Terugbetaling';
+  static const String refundSuccess = 'Terugbetaling succesvol';
+  static const String refundError = 'Terugbetaling mislukt';
+  static const String refundPeriodExpired = 'Terugbetalingsperiode verlopen';
+  
+  // Validation Messages
+  static const String pleaseEnterDisplayName = 'Voer je weergavenaam in';
+  static const String displayNameTooShort = 'Weergavenaam moet minstens 2 tekens zijn';
+  static const String pleaseEnterUsername = 'Voer een gebruikersnaam in';
+  static const String usernameTooShort = 'Gebruikersnaam moet minstens 3 tekens zijn';
+  static const String usernameTooLong = 'Gebruikersnaam is te lang';
+  static const String usernameInvalidChars = 'Gebruikersnaam mag alleen letters, cijfers en underscores bevatten';
+  static const String pleaseEnterEmail = 'Voer je e-mail in';
+  static const String pleaseEnterValidEmail = 'Voer een geldig e-mailadres in';
+  static const String pleaseEnterPassword = 'Voer je wachtwoord in';
+  static const String passwordTooShort = 'Wachtwoord moet minstens 6 tekens zijn';
+  static const String passwordTooLong = 'Wachtwoord is te lang';
+  static const String passwordRequirements = 'Wachtwoord moet minstens één hoofdletter, één kleine letter, één cijfer en één speciaal teken bevatten';
+  static const String passwordsDoNotMatch = 'Wachtwoorden komen niet overeen';
+  static const String displayNameTooLong = 'Weergavenaam is te lang';
+  static const String displayNameInvalidChars = 'Weergavenaam bevat ongeldige tekens';
+  static const String emailTooLong = 'E-mailadres is te lang';
+  
+  // Error Messages
+  static const String signInFailed = 'Inloggen mislukt';
+  static const String signUpFailed = 'Registratie mislukt';
+  static const String profileUpdateFailed = 'Profiel bijwerken mislukt';
+  static const String usernameAlreadyTaken = 'Gebruikersnaam al in gebruik';
+  static const String emailAlreadyRegistered = 'E-mailadres al geregistreerd';
+  static const String invalidCredentials = 'Ongeldige inloggegevens';
+  static const String accountNotFound = 'Account niet gevonden';
+  static const String unexpectedError = 'Er is een onverwachte fout opgetreden. Probeer het opnieuw.';
+  static const String networkError = 'Netwerkfout. Controleer je internetverbinding.';
+  static const String serverError = 'Serverfout. Probeer het later opnieuw.';
+  static const String authenticationRequired = 'Authenticatie vereist';
+  static const String sessionExpired = 'Sessie verlopen. Log opnieuw in.';
+  static const String accessDenied = 'Toegang geweigerd';
+  static const String featureNotAvailable = 'Functie niet beschikbaar';
+  static const String tryAgainLater = 'Probeer het later opnieuw';
+  
+  // Success Messages
+  static const String signInSuccess = 'Succesvol ingelogd';
+  static const String signUpSuccess = 'Account succesvol aangemaakt';
+  static const String profileUpdated = 'Profiel bijgewerkt';
+  static const String dataSynced = 'Gegevens gesynchroniseerd';
+  static const String changesSaved = 'Wijzigingen opgeslagen';
+  
+  // Loading States
+  static const String signingIn = 'Inloggen...';
+  static const String signingUp = 'Registreren...';
+  static const String updatingProfile = 'Profiel bijwerken...';
+  static const String syncingData = 'Gegevens synchroniseren...';
+  static const String loading = 'Laden...';
+  static const String saving = 'Opslaan...';
+  static const String processing = 'Verwerken...';
+  
+  // Placeholders
+  static const String enterUsername = 'Voer gebruikersnaam in';
+  static const String enterDisplayName = 'Voer weergavenaam in';
+  static const String enterEmail = 'Voer e-mail in';
+  static const String enterPassword = 'Voer wachtwoord in';
+  static const String searchPlaceholder = 'Zoeken...';
+  static const String noResultsFound = 'Geen resultaten gevonden';
+  static const String noDataAvailable = 'Geen gegevens beschikbaar';
+  static const String comingSoonFeature = 'Functie komt binnenkort beschikbaar!';
 
   // Bible Bot
   static const String bibleBot = 'Bijbel Bot';
