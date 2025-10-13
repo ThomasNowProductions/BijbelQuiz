@@ -6,7 +6,9 @@ import '../screens/lesson_select_screen.dart';
 import '../screens/store_screen.dart';
 import '../screens/social_screen.dart';
 import '../settings_screen.dart';
-import '../l10n/app_localizations.dart';
+import '../l10n/language_helper.dart';
+import 'package:provider/provider.dart';
+import '../providers/settings_provider.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -18,8 +20,6 @@ class MainNavigationScreen extends StatefulWidget {
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _currentIndex = 0;
   
-  // Helper method to get localized strings
-  dynamic get strings => AppLocalizations.of(context).strings;
 
   List<Widget> _getScreens() {
     return [
@@ -52,6 +52,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final settings = Provider.of<SettingsProvider>(context);
+    final strings = LanguageHelper.getStrings(settings.effectiveLanguage);
     final colorScheme = Theme.of(context).colorScheme;
     final screens = _getScreens();
 
@@ -68,22 +70,22 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           NavigationDestination(
             icon: const Icon(Icons.menu_book_outlined),
             selectedIcon: const Icon(Icons.menu_book),
-            label: strings.AppStrings.lessons,
+            label: strings.lessons,
           ),
           NavigationDestination(
             icon: const Icon(Icons.store_outlined),
             selectedIcon: const Icon(Icons.store),
-            label: strings.AppStrings.store,
+            label: strings.store,
           ),
           NavigationDestination(
             icon: const Icon(Icons.groups_outlined),
             selectedIcon: const Icon(Icons.groups),
-            label: strings.AppStrings.social,
+            label: strings.social,
           ),
           NavigationDestination(
             icon: const Icon(Icons.settings_outlined),
             selectedIcon: const Icon(Icons.settings),
-            label: strings.AppStrings.settings,
+            label: strings.settings,
           ),
         ],
       ),

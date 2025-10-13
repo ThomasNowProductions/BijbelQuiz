@@ -28,7 +28,7 @@ import 'dart:async';
 import 'dart:math';
 import '../widgets/quiz_skeleton.dart';
 import '../widgets/top_snackbar.dart';
-import '../l10n/app_localizations.dart';
+import '../l10n/strings_nl.dart' as strings;
 import '../services/logger.dart';
 
 // New extracted services
@@ -55,8 +55,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
   String? _error;
   String? _lastLanguage;
   
-  // Helper method to get localized strings
-  dynamic get strings => AppLocalizations.of(context).strings;
   
 
   // Lesson session mode (cap session to N questions with completion screen)
