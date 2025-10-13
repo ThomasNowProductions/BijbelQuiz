@@ -22,6 +22,10 @@ import 'services/feature_flags_service.dart';
 import 'screens/store_screen.dart';
 import 'providers/lesson_progress_provider.dart';
 import 'screens/main_navigation_screen.dart';
+import 'services/auth_service.dart';
+import 'services/settings_service.dart';
+import 'services/social_service.dart';
+import 'services/sync_service.dart';
 import 'settings_screen.dart';
 import 'l10n/strings_nl.dart' as strings;
 
@@ -59,9 +63,28 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => SettingsProvider()),
-        ChangeNotifierProvider.value(value: gameStatsProvider),
-        ChangeNotifierProvider(create: (_) => LessonProgressProvider()),
         Provider.value(value: analyticsService),
+        ChangeNotifierProvider(create: (_) => AuthService()),
+        ChangeNotifierProxyProvider<AuthService, SyncService>(
+          create: (context) => SyncService(context.read<AuthService>()),
+          update: (context, auth, previous) => SyncService(auth),
+        ),
+        ChangeNotifierProxyProvider<SyncService, LessonProgressProvider>(
+          create: (context) => LessonProgressProvider(syncService: context.read<SyncService>()),
+          update: (context, sync, previous) => LessonProgressProvider(syncService: sync),
+        ),
+        ChangeNotifierProxyProvider<SyncService, GameStatsProvider>(
+          create: (context) => GameStatsProvider(syncService: context.read<SyncService>()),
+          update: (context, sync, previous) => GameStatsProvider(syncService: sync),
+        ),
+        ChangeNotifierProxyProvider<AuthService, SocialService>(
+          create: (context) => SocialService(context.read<AuthService>()),
+          update: (context, auth, previous) => SocialService(auth),
+        ),
+        ChangeNotifierProxyProvider<AuthService, SettingsService>(
+          create: (context) => SettingsService(context.read<AuthService>()),
+          update: (context, auth, previous) => SettingsService(auth),
+        ),
       ],
       child: BijbelQuizApp(),
     ),

@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/lesson.dart';
 import '../services/logger.dart';
+import '../services/sync_service.dart';
 
 /// Tracks per-lesson unlock state and best stars earned.
 /// Simple linear progression: lesson at index 0 starts unlocked; completing a lesson unlocks the next.
@@ -15,6 +16,7 @@ class LessonProgressProvider extends ChangeNotifier {
   SharedPreferences? _prefs;
   bool _isLoading = true;
   String? _error;
+  final SyncService? _syncService;
 
   /// Number of lessons unlocked from the start (sequential from index 0)
   int _unlockedCount = 1;
@@ -26,7 +28,7 @@ class LessonProgressProvider extends ChangeNotifier {
   String? get error => _error;
   int get unlockedCount => _unlockedCount;
 
-  LessonProgressProvider() {
+  LessonProgressProvider({SyncService? syncService}) : _syncService = syncService {
     _load();
   }
 
@@ -92,6 +94,8 @@ class LessonProgressProvider extends ChangeNotifier {
 
     await _persist();
     notifyListeners();
+
+    _syncService?.syncProgress(getExportData());
   }
 
   /// Ensures at least [count] lessons are unlocked (used when lesson list shorter/longer changes).
@@ -109,6 +113,8 @@ class LessonProgressProvider extends ChangeNotifier {
     _bestStarsByLesson.clear();
     await _persist();
     notifyListeners();
+
+    _syncService?.syncProgress(getExportData());
   }
 
   /// Stars rubric
@@ -144,5 +150,7 @@ class LessonProgressProvider extends ChangeNotifier {
 
     await _persist();
     notifyListeners();
+
+    _syncService?.syncProgress(getExportData());
   }
 }

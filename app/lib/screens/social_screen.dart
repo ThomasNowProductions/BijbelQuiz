@@ -1,8 +1,13 @@
 import 'package:bijbelquiz/services/analytics_service.dart';
+import 'package:bijbelquiz/services/auth_service.dart';
 import 'package:bijbelquiz/services/feature_flags_service.dart';
+import 'package:bijbelquiz/services/social_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../l10n/strings_nl.dart' as strings;
+import 'auth/login_screen.dart';
+import 'auth/signup_screen.dart';
+import 'social_settings_screen.dart';
 
 class SocialScreen extends StatefulWidget {
   const SocialScreen({super.key});
@@ -13,6 +18,10 @@ class SocialScreen extends StatefulWidget {
 
 class _SocialScreenState extends State<SocialScreen> {
   bool _socialFeaturesEnabled = false;
+  bool _showLogin = true;
+
+  final TextEditingController _searchController = TextEditingController();
+  List<String> _searchResults = [];
 
   @override
   void initState() {
@@ -47,12 +56,31 @@ class _SocialScreenState extends State<SocialScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
     final colorScheme = Theme.of(context).colorScheme;
 
     // Responsive design
     final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 800;
     final isTablet = size.width > 600 && size.width <= 800;
+
+    if (!authService.isAuthenticated) {
+      return _showLogin
+          ? LoginScreen(
+              onSwitchToSignup: () {
+                setState(() {
+                  _showLogin = false;
+                });
+              },
+            )
+          : SignupScreen(
+              onSwitchToLogin: () {
+                setState(() {
+                  _showLogin = true;
+                });
+              },
+            );
+    }
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
@@ -86,6 +114,19 @@ class _SocialScreenState extends State<SocialScreen> {
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SocialSettingsScreen(),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: SafeArea(
         child: Center(
@@ -110,41 +151,42 @@ class _SocialScreenState extends State<SocialScreen> {
   }
 
   Widget _buildSocialFeaturesContent(ColorScheme colorScheme, bool isDesktop, bool isTablet) {
+    final socialService = Provider.of<SocialService>(context, listen: false);
+
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(
-          Icons.groups_rounded,
-          size: isDesktop ? 120 : (isTablet ? 100 : 80),
-          color: colorScheme.primary,
-        ),
-        SizedBox(height: isDesktop ? 32 : 24),
-        Text(
-          'Social Features',
-          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-            fontWeight: FontWeight.w700,
-            color: colorScheme.onSurface,
+        TextField(
+          controller: _searchController,
+          decoration: InputDecoration(
+            labelText: 'Search for users',
+            suffixIcon: IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: () async {
+                final results = await socialService.searchUsers(_searchController.text);
+                setState(() {
+                  _searchResults = results;
+                });
+              },
+            ),
           ),
-          textAlign: TextAlign.center,
         ),
-        SizedBox(height: isDesktop ? 16 : 12),
-        Text(
-          'Connect with other Bible Quiz users, share achievements, and compete on leaderboards!',
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            color: colorScheme.onSurface.withAlpha((0.7 * 255).round()),
-            fontWeight: FontWeight.w500,
+        const SizedBox(height: 20),
+        Expanded(
+          child: ListView.builder(
+            itemCount: _searchResults.length,
+            itemBuilder: (context, index) {
+              final user = _searchResults[index];
+              return ListTile(
+                title: Text(user),
+                trailing: ElevatedButton(
+                  onPressed: () {
+                    // TODO: Implement follow/unfollow logic
+                  },
+                  child: const Text('Follow'),
+                ),
+              );
+            },
           ),
-          textAlign: TextAlign.center,
-        ),
-        SizedBox(height: isDesktop ? 32 : 24),
-        // Placeholder for actual social features
-        Text(
-          'Social features coming soon...',
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            color: colorScheme.onSurface.withAlpha((0.5 * 255).round()),
-            fontStyle: FontStyle.italic,
-          ),
-          textAlign: TextAlign.center,
         ),
       ],
     );

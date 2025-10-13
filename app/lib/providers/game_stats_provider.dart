@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:provider/provider.dart';
 import './settings_provider.dart';
 import '../services/logger.dart';
+import '../services/sync_service.dart';
 
 /// Manages the app's game statistics including score and streaks
 class GameStatsProvider extends ChangeNotifier {
@@ -21,6 +22,7 @@ class GameStatsProvider extends ChangeNotifier {
   String? _error;
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   void Function(String message)? onError;
+  final SyncService? _syncService;
 
   Powerup? _activePowerup;
   DateTime? _powerupActivatedAt;
@@ -77,7 +79,7 @@ class GameStatsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  GameStatsProvider() {
+  GameStatsProvider({SyncService? syncService}) : _syncService = syncService {
     _loadStats();
   }
 
@@ -166,6 +168,7 @@ class GameStatsProvider extends ChangeNotifier {
       await _prefs?.setInt(_scoreKey, _score);
       await _prefs?.setInt(_currentStreakKey, _currentStreak);
       notifyListeners();
+      _syncService?.syncProgress(getExportData());
     } catch (e) {
       _error = 'Failed to save game stats: ${e.toString()}';
       notifyListeners();
@@ -187,6 +190,7 @@ class GameStatsProvider extends ChangeNotifier {
       await _prefs?.setInt(_longestStreakKey, _longestStreak);
       await _prefs?.setInt(_incorrectAnswersKey, _incorrectAnswers);
       notifyListeners();
+      _syncService?.syncProgress(getExportData());
       AppLogger.info('Game stats reset');
     } catch (e) {
       _error = 'Failed to reset game stats: ${e.toString()}';
@@ -287,6 +291,7 @@ class GameStatsProvider extends ChangeNotifier {
         _score -= 50;
         await _prefs?.setInt(_scoreKey, _score);
         notifyListeners();
+        _syncService?.syncProgress(getExportData());
         return true;
       }
       return false;
@@ -303,6 +308,7 @@ class GameStatsProvider extends ChangeNotifier {
       _score -= amount;
       await _prefs?.setInt(_scoreKey, _score);
       notifyListeners();
+      _syncService?.syncProgress(getExportData());
       return true;
     } else {
       return false;
@@ -315,6 +321,7 @@ class GameStatsProvider extends ChangeNotifier {
       _score += amount;
       await _prefs?.setInt(_scoreKey, _score);
       notifyListeners();
+      _syncService?.syncProgress(getExportData());
       return true;
     } catch (e) {
       _error = 'Failed to add stars: ${e.toString()}';
@@ -345,6 +352,7 @@ class GameStatsProvider extends ChangeNotifier {
     await _prefs?.setInt(_longestStreakKey, _longestStreak);
     await _prefs?.setInt(_incorrectAnswersKey, _incorrectAnswers);
     notifyListeners();
+    _syncService?.syncProgress(getExportData());
   }
 }
 
