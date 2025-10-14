@@ -6,7 +6,7 @@ import '../screens/lesson_select_screen.dart';
 import '../screens/store_screen.dart';
 import '../screens/social_screen.dart';
 import '../settings_screen.dart';
-import '../l10n/strings_nl.dart' as strings;
+import '../l10n/app_localizations.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -51,6 +51,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final screens = _getScreens();
+    final strings = AppLocalizations.of(context)!.strings;
 
     return Scaffold(
       body: screens[_currentIndex],
@@ -65,22 +66,22 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           NavigationDestination(
             icon: const Icon(Icons.menu_book_outlined),
             selectedIcon: const Icon(Icons.menu_book),
-            label: strings.AppStrings.lessons,
+            label: strings.lessons,
           ),
           NavigationDestination(
             icon: const Icon(Icons.store_outlined),
             selectedIcon: const Icon(Icons.store),
-            label: strings.AppStrings.store,
+            label: strings.store,
           ),
           NavigationDestination(
             icon: const Icon(Icons.groups_outlined),
             selectedIcon: const Icon(Icons.groups),
-            label: strings.AppStrings.social,
+            label: strings.social,
           ),
           NavigationDestination(
             icon: const Icon(Icons.settings_outlined),
             selectedIcon: const Icon(Icons.settings),
-            label: strings.AppStrings.settings,
+            label: strings.settings,
           ),
         ],
       ),

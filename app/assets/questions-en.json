@@ -1,0 +1,708 @@
+[
+    {
+        "question": "How many books does the New Testament have?",
+        "correctAnswer": "27",
+        "incorrectAnswers": [
+            "26",
+            "66",
+            "39"
+        ],
+        "difficulty": 3,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": null
+    },
+    {
+        "question": "What did Hannah name her child?",
+        "correctAnswer": "Samuel",
+        "incorrectAnswers": [
+            "Saul",
+            "Samson",
+            "Gideon"
+        ],
+        "difficulty": 1,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "1 Samuel 1:20"
+    },
+    {
+        "question": "Who was responsible for the infanticide in Bethlehem, shortly after the birth of Jesus?",
+        "correctAnswer": "Herod",
+        "incorrectAnswers": [
+            "Pilate",
+            "The High Priest",
+            "Quirinius"
+        ],
+        "difficulty": 1,
+        "type": "mc",
+        "categories": [
+            "Matthew"
+        ],
+        "biblicalReference": "Matthew 1"
+    },
+    {
+        "question": "Jesus healed Peter's mother-in-law. What was wrong with her?",
+        "correctAnswer": "Fever",
+        "incorrectAnswers": [
+            "Paralysis",
+            "Blind in one eye",
+            "Hemorrhages"
+        ],
+        "difficulty": 4,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Mark 1"
+    },
+    {
+        "question": "What promise do the meek receive from the Lord Jesus in the Beatitudes?",
+        "correctAnswer": "They will inherit the earth",
+        "incorrectAnswers": [
+            "Theirs is the Kingdom of Heaven",
+            "They will be called children of God",
+            "They will see God"
+        ],
+        "difficulty": 3,
+        "type": "mc",
+        "categories": [
+            "Matthew"
+        ],
+        "biblicalReference": "Matthew 5:5"
+    },
+    {
+        "question": "What promise follows the beatitude 'blessed are the pure in heart'?",
+        "correctAnswer": "they will see God",
+        "incorrectAnswers": [
+            "Theirs is the Kingdom of Heaven",
+            "They will be called children of God",
+            "They will inherit the earth"
+        ],
+        "difficulty": 3,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Matthew 5:8"
+    },
+    {
+        "question": "Which prophet was not allowed to marry by the Lord?",
+        "correctAnswer": "Jeremiah",
+        "incorrectAnswers": [
+            "Isaiah",
+            "Ezekiel",
+            "Hosea"
+        ],
+        "difficulty": 5,
+        "type": "mc",
+        "categories": [
+            "Jeremiah"
+        ],
+        "biblicalReference": "Jeremiah 16:2"
+    },
+    {
+        "question": "Which prophet was commanded to marry by the Lord?",
+        "correctAnswer": "Hosea",
+        "incorrectAnswers": [
+            "Isaiah",
+            "Jeremiah",
+            "Ezekiel"
+        ],
+        "difficulty": 5,
+        "type": "mc",
+        "categories": [
+            "Hosea"
+        ],
+        "biblicalReference": "Hosea 1:2"
+    },
+    {
+        "question": "Which prophet and his children were a symbol for Israel?",
+        "correctAnswer": "Isaiah",
+        "incorrectAnswers": [
+            "Jeremiah",
+            "Ezekiel",
+            "Hosea"
+        ],
+        "difficulty": 5,
+        "type": "mc",
+        "categories": [
+            "Isaiah"
+        ],
+        "biblicalReference": null
+    },
+    {
+        "question": "Which prophet lost his wife during his time as a prophet?",
+        "correctAnswer": "Ezekiel",
+        "incorrectAnswers": [
+            "Isaiah",
+            "Jeremiah",
+            "Hosea"
+        ],
+        "difficulty": 5,
+        "type": "mc",
+        "categories": [
+            "Ezekiel"
+        ],
+        "biblicalReference": "Ezekiel 24:16-24"
+    },
+    {
+        "question": "On the 1st day God created...",
+        "correctAnswer": "the light",
+        "incorrectAnswers": [
+            "man",
+            "the plants",
+            "the fish"
+        ],
+        "difficulty": 1,
+        "type": "fitb",
+        "categories": [
+            "Genesis"
+        ],
+        "biblicalReference": "Genesis 1:4"
+    },
+    {
+        "question": "On the 2nd day there was a separation between...",
+        "correctAnswer": "sea and sky",
+        "incorrectAnswers": [
+            "sea and land",
+            "light and darkness",
+            "light and land"
+        ],
+        "difficulty": 1,
+        "type": "fitb",
+        "categories": [
+            "Genesis"
+        ],
+        "biblicalReference": "Genesis 1:6-8"
+    },
+    {
+        "question": "God rested on the...",
+        "correctAnswer": "7th day",
+        "incorrectAnswers": [
+            "1st day",
+            "5th day",
+            "6th day"
+        ],
+        "difficulty": 1,
+        "type": "fitb",
+        "categories": [
+            "Genesis"
+        ],
+        "biblicalReference": "Genesis 2:2"
+    },
+    {
+        "question": "Where was the tree of knowledge of good and evil?",
+        "correctAnswer": "In the Garden of Eden",
+        "incorrectAnswers": [
+            "In the Garden of Aden",
+            "Just outside the Garden of Eden",
+            "In Shinar"
+        ],
+        "difficulty": 1,
+        "type": "mc",
+        "categories": [
+            "Genesis"
+        ],
+        "biblicalReference": "Genesis 2 and 3"
+    },
+    {
+        "question": "Who was murdered by Cain?",
+        "correctAnswer": "Abel",
+        "incorrectAnswers": [
+            "His mother",
+            "His father",
+            "Esau"
+        ],
+        "difficulty": 1,
+        "type": "mc",
+        "categories": [
+            "Genesis"
+        ],
+        "biblicalReference": null
+    },
+    {
+        "question": "How old was Methuselah when he died?",
+        "correctAnswer": "969",
+        "incorrectAnswers": [
+            "996",
+            "966",
+            "669"
+        ],
+        "difficulty": 1,
+        "type": "mc",
+        "categories": [
+            "Genesis"
+        ],
+        "biblicalReference": "Genesis 5:27"
+    },
+    {
+        "question": "How long was Noah and his family in the ark?",
+        "correctAnswer": "Over a year",
+        "incorrectAnswers": [
+            "40 days",
+            "7 months",
+            "1.5 years"
+        ],
+        "difficulty": 3,
+        "type": "mc",
+        "categories": [
+            "Genesis"
+        ],
+        "biblicalReference": "Genesis 8"
+    },
+    {
+        "question": "The top of the Tower of Babel was to reach...",
+        "correctAnswer": "to heaven",
+        "incorrectAnswers": [
+            "the clouds",
+            "a great height",
+            "an invisible height"
+        ],
+        "difficulty": 1,
+        "type": "fitb",
+        "categories": [
+            "Genesis"
+        ],
+        "biblicalReference": "Genesis 11:4"
+    },
+    {
+        "question": "What does the word 'Babel' mean?",
+        "correctAnswer": "Confusion",
+        "incorrectAnswers": [
+            "Great city",
+            "Great tower",
+            "Corruption"
+        ],
+        "difficulty": 3,
+        "type": "mc",
+        "categories": [
+            "Genesis"
+        ],
+        "biblicalReference": "Genesis 11"
+    },
+    {
+        "question": "Where was Abram born?",
+        "correctAnswer": "Ur of the Chaldeans",
+        "incorrectAnswers": [
+            "Canaan",
+            "Egypt",
+            "Shinar"
+        ],
+        "difficulty": 1,
+        "type": "mc",
+        "categories": [
+            "Genesis"
+        ],
+        "biblicalReference": "Genesis 11:26"
+    },
+    {
+        "question": "What was the name of Abram's father?",
+        "correctAnswer": "Terah",
+        "incorrectAnswers": [
+            "Lot",
+            "Isaac",
+            "Noah"
+        ],
+        "difficulty": 3,
+        "type": "mc",
+        "categories": [
+            "Genesis"
+        ],
+        "biblicalReference": "Genesis 11:26"
+    },
+    {
+        "question": "Why did Abram go to Canaan?",
+        "correctAnswer": "God asked him to",
+        "incorrectAnswers": [
+            "There was plenty of work there",
+            "His family already lived there",
+            "There was enough to eat there"
+        ],
+        "difficulty": 1,
+        "type": "mc",
+        "categories": [
+            "Genesis"
+        ],
+        "biblicalReference": "Genesis 12"
+    },
+    {
+        "question": "Who was Abram's wife?",
+        "correctAnswer": "Sarai",
+        "incorrectAnswers": [
+            "Rebekah",
+            "Rachel",
+            "Zilpah"
+        ],
+        "difficulty": 1,
+        "type": "mc",
+        "categories": [
+            "Genesis"
+        ],
+        "biblicalReference": "Genesis 11"
+    },
+    {
+        "question": "Why did Abram and Sarai go to Egypt?",
+        "correctAnswer": "There was a famine in Canaan",
+        "incorrectAnswers": [
+            "There was a lot of money to be made there",
+            "They were visiting family",
+            "It was a command from the Lord"
+        ],
+        "difficulty": 1,
+        "type": "mc",
+        "categories": [
+            "Genesis"
+        ],
+        "biblicalReference": "Genesis 12:10"
+    },
+    {
+        "question": "Abram and Lot return to Canaan. Where does Lot go to live?",
+        "correctAnswer": "In the Jordan Valley",
+        "incorrectAnswers": [
+            "On the coast",
+            "In the mountains",
+            "In Sodom"
+        ],
+        "difficulty": 3,
+        "type": "mc",
+        "categories": [
+            "Genesis"
+        ],
+        "biblicalReference": "Genesis 19"
+    },
+    {
+        "question": "Sarai remains barren. Who becomes Abram's second wife?",
+        "correctAnswer": "Hagar",
+        "incorrectAnswers": [
+            "Rachel",
+            "Zilpah",
+            "Bilhah"
+        ],
+        "difficulty": 1,
+        "type": "mc",
+        "categories": [
+            "Genesis"
+        ],
+        "biblicalReference": "Genesis 16:3"
+    },
+    {
+        "question": "Abram and Hagar have a son, his name is...",
+        "correctAnswer": "Ishmael",
+        "incorrectAnswers": [
+            "Lot",
+            "Isaac",
+            "Jacob"
+        ],
+        "difficulty": 1,
+        "type": "fitb",
+        "categories": [
+            "Genesis"
+        ],
+        "biblicalReference": "Genesis 16:11"
+    },
+    {
+        "question": "What did Lot's wife do?",
+        "correctAnswer": "She looked back as she left Sodom",
+        "incorrectAnswers": [
+            "She warned her husband Lot",
+            "She stayed in Sodom",
+            "She did what God asked of her"
+        ],
+        "difficulty": 1,
+        "type": "mc",
+        "categories": [
+            "Genesis"
+        ],
+        "biblicalReference": "Genesis 19:26"
+    },
+    {
+        "question": "Abraham and Sarah finally have a son. How old is Abraham then?",
+        "correctAnswer": "100",
+        "incorrectAnswers": [
+            "80",
+            "90",
+            "120"
+        ],
+        "difficulty": 3,
+        "type": "mc",
+        "categories": [
+            "Genesis"
+        ],
+        "biblicalReference": "Genesis 21:5"
+    },
+    {
+        "question": "Where must Abraham sacrifice Isaac?",
+        "correctAnswer": "On Mount Moriah",
+        "incorrectAnswers": [
+            "On Mount Sinai",
+            "On Mount Carmel",
+            "On Mount Horeb"
+        ],
+        "difficulty": 3,
+        "type": "mc",
+        "categories": [
+            "Genesis"
+        ],
+        "biblicalReference": "Genesis 22:2"
+    },
+    {
+        "question": "Who does Isaac marry?",
+        "correctAnswer": "Rebekah",
+        "incorrectAnswers": [
+            "Rachel",
+            "Bilhah",
+            "Sarah"
+        ],
+        "difficulty": 1,
+        "type": "mc",
+        "categories": [
+            "Genesis"
+        ],
+        "biblicalReference": "Genesis 24:67"
+    },
+    {
+        "question": "Who succeeds Moses?",
+        "correctAnswer": "Joshua",
+        "incorrectAnswers": [
+            "Aaron",
+            "Caleb",
+            "Elijah"
+        ],
+        "difficulty": 1,
+        "type": "mc",
+        "categories": [
+            "Joshua"
+        ],
+        "biblicalReference": "Joshua 1:1"
+    },
+    {
+        "question": "Where did Moses strike the rock?",
+        "correctAnswer": "at Meribah",
+        "incorrectAnswers": [
+            "at Edom",
+            "at Marah",
+            "at Elim"
+        ],
+        "difficulty": 3,
+        "type": "mc",
+        "categories": [
+            "Exodus"
+        ],
+        "biblicalReference": "Exodus 17:7"
+    },
+    {
+        "question": "After ... a large part of Canaan is conquered",
+        "correctAnswer": "7 years",
+        "incorrectAnswers": [
+            "4 years",
+            "6 years",
+            "9 years"
+        ],
+        "difficulty": 5,
+        "type": "fitb",
+        "categories": [
+            "Joshua"
+        ],
+        "biblicalReference": "Joshua"
+    },
+    {
+        "question": "After the death of Joshua...",
+        "correctAnswer": "there is no longer a leader",
+        "incorrectAnswers": [
+            "his son succeeds him",
+            "Judah succeeds him",
+            "Eleazar succeeds him"
+        ],
+        "difficulty": 3,
+        "type": "fitb",
+        "categories": [
+            "Joshua"
+        ],
+        "biblicalReference": "Joshua 24"
+    },
+    {
+        "question": "What was Israel's first task after the death of Joshua?",
+        "correctAnswer": "To fight against the remaining Canaanites",
+        "incorrectAnswers": [
+            "To find a new leader",
+            "The people were given a period of rest",
+            "To find water sources"
+        ],
+        "difficulty": 3,
+        "type": "mc",
+        "categories": [
+            "Judges"
+        ],
+        "biblicalReference": "Judges 1:1"
+    },
+    {
+        "question": "A long period after the death of Joshua, there comes...",
+        "correctAnswer": "a judge",
+        "incorrectAnswers": [
+            "a king",
+            "an emperor",
+            "a prophet"
+        ],
+        "difficulty": 3,
+        "type": "fitb",
+        "categories": [
+            "Judges"
+        ],
+        "biblicalReference": "Judges 3:9"
+    },
+    {
+        "question": "Who was the first judge?",
+        "correctAnswer": "Othniel",
+        "incorrectAnswers": [
+            "Ehud",
+            "Shamgar",
+            "Barak"
+        ],
+        "difficulty": 2,
+        "type": "mc",
+        "categories": [
+            "Genesis"
+        ],
+        "biblicalReference": "Judges 3:9"
+    },
+    {
+        "question": "Under the leadership of the first judge...",
+        "correctAnswer": "they began to serve God again",
+        "incorrectAnswers": [
+            "they began to serve the idols again",
+            "the enemy is driven away",
+            "the people become rebellious again"
+        ],
+        "difficulty": 3,
+        "type": "fitb",
+        "categories": [
+            "Judges"
+        ],
+        "biblicalReference": "Judges 3:9, 10"
+    },
+    {
+        "question": "Who are the most famous judges?",
+        "correctAnswer": "Gideon, Samson and Samuel",
+        "incorrectAnswers": [
+            "Saul, David and Solomon",
+            "Jephthah, Deborah and Barak",
+            "Othniel, Ehud and Shamgar"
+        ],
+        "difficulty": 1,
+        "type": "mc",
+        "categories": [
+            "Judges"
+        ],
+        "biblicalReference": "Judges"
+    },
+    {
+        "question": "With how many men does Gideon drive away a large army of the Midianites?",
+        "correctAnswer": "300 men",
+        "incorrectAnswers": [
+            "1000 men",
+            "100 men",
+            "500 men"
+        ],
+        "difficulty": 3,
+        "type": "mc",
+        "categories": [
+            "Judges"
+        ],
+        "biblicalReference": "Judges 7:6"
+    },
+    {
+        "question": "Who was the last judge?",
+        "correctAnswer": "Samuel",
+        "incorrectAnswers": [
+            "Eli",
+            "Samson",
+            "Jephthah"
+        ],
+        "difficulty": 1,
+        "type": "mc",
+        "categories": [
+            "Judges"
+        ],
+        "biblicalReference": "1 Samuel"
+    },
+    {
+        "question": "Which answer does not belong? Samson is not allowed to...",
+        "correctAnswer": "marry",
+        "incorrectAnswers": [
+            "drink wine or beer",
+            "cut his hair",
+            "touch a dead person"
+        ],
+        "difficulty": 1,
+        "type": "fitb",
+        "categories": [
+            "Judges"
+        ],
+        "biblicalReference": "Judges 13"
+    },
+    {
+        "question": "Deborah defeated the...",
+        "correctAnswer": "Canaanites",
+        "incorrectAnswers": [
+            "Midianites",
+            "Ammonites",
+            "Philistines"
+        ],
+        "difficulty": 5,
+        "type": "fitb",
+        "categories": [
+            "Judges"
+        ],
+        "biblicalReference": "Judges 4"
+    },
+    {
+        "question": "Several judges are called heroes of faith in the letter to the Hebrews. Which judge is not mentioned in it?",
+        "correctAnswer": "Deborah",
+        "incorrectAnswers": [
+            "Gideon",
+            "Samson",
+            "Samuel"
+        ],
+        "difficulty": 3,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "Hebrews 11"
+    },
+    {
+        "question": "Who leads the people after Samuel?",
+        "correctAnswer": "King Saul",
+        "incorrectAnswers": [
+            "King David",
+            "High Priest Eli",
+            "Judge Samson"
+        ],
+        "difficulty": 1,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "1 Samuel 10:1"
+    },
+    {
+        "question": "Who is the first king of Israel?",
+        "correctAnswer": "Saul",
+        "incorrectAnswers": [
+            "David",
+            "Solomon",
+            "Herod"
+        ],
+        "difficulty": 1,
+        "type": "mc",
+        "categories": [],
+        "biblicalReference": "1 Samuel 10:1"
+    },
+    {
+        "question": "Saul is... by Samuel",
+        "correctAnswer": "anointed",
+        "incorrectAnswers": [
+            "crowned",
+            "initiated",
+            "baptized"
+        ],
+        "difficulty": 1,
+        "type": "fitb",
+        "categories": [
+            "1 Samuel"
+        ],
+        "biblicalReference": "1 Samuel 10:1"
+    }
+]

@@ -11,7 +11,7 @@ import '../services/logger.dart';
 import '../widgets/quiz_skeleton.dart';
 import '../widgets/top_snackbar.dart';
 import '../constants/urls.dart';
-import '../l10n/strings_nl.dart' as strings;
+import '../l10n/app_localizations.dart';
 
 class GuideScreen extends StatefulWidget {
   const GuideScreen({super.key});
@@ -63,6 +63,7 @@ class _GuideScreenState extends State<GuideScreen> {
     final colorScheme = Theme.of(context).colorScheme;
     final pages = _pages; // Get the current pages
     final isLastPage = _currentPage == pages.length - 1;
+    final strings = AppLocalizations.of(context)!.strings;
     // Log screen view for analytics
 
 
@@ -110,7 +111,7 @@ class _GuideScreenState extends State<GuideScreen> {
                           curve: Curves.easeInOut,
                         );
                       },
-                      child: Text(strings.AppStrings.previous),
+                      child: Text(strings.previous),
                     )
                   else
                     const SizedBox(width: 80),
@@ -142,7 +143,7 @@ class _GuideScreenState extends State<GuideScreen> {
                       }
                     },
                     child: Text(
-                      isLastPage ? strings.AppStrings.getStarted : strings.AppStrings.next,
+                      isLastPage ? strings.getStarted : strings.next,
                     ),
                   ),
                 ],
@@ -156,6 +157,7 @@ class _GuideScreenState extends State<GuideScreen> {
 
   Future<void> _handleGuideCompletion(BuildContext context) async {
     final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+    final strings = AppLocalizations.of(context)!.strings;
 
     // Track guide completion feature usage
     analyticsService.trackFeatureCompletion(context, AnalyticsService.FEATURE_ONBOARDING);
@@ -179,7 +181,7 @@ class _GuideScreenState extends State<GuideScreen> {
       }
     } catch (e) {
       if (!mounted) return;
-      final errorMessage = strings.AppStrings.unknownError;
+      final errorMessage = strings.unknownError;
       if (localContext.mounted) {
         showTopSnackBar(localContext, errorMessage, style: TopSnackBarStyle.error);
       }
@@ -208,25 +210,26 @@ class GuidePage {
 }
 
 List<GuidePage> buildGuidePages({required bool showNotificationPage, required BuildContext context}) {
+  final strings = AppLocalizations.of(context)!.strings;
   final pages = <GuidePage>[
     GuidePage(
-      title: strings.AppStrings.welcomeTitle,
-      description: strings.AppStrings.welcomeDescription,
+      title: strings.welcomeTitle,
+      description: strings.welcomeDescription,
       icon: Icons.church,
     ),
     GuidePage(
-      title: strings.AppStrings.howToPlayTitle,
-      description: strings.AppStrings.howToPlayDescription,
+      title: strings.howToPlayTitle,
+      description: strings.howToPlayDescription,
       icon: Icons.quiz,
     ),
     GuidePage(
-      title: strings.AppStrings.trackProgressTitle,
-      description: strings.AppStrings.trackProgressDescription,
+      title: strings.trackProgressTitle,
+      description: strings.trackProgressDescription,
       icon: Icons.insights,
     ),
     GuidePage(
-      title: strings.AppStrings.customizeExperienceTitle,
-      description: strings.AppStrings.customizeExperienceDescription,
+      title: strings.customizeExperienceTitle,
+      description: strings.customizeExperienceDescription,
       icon: Icons.settings,
     ),
   ];
@@ -234,8 +237,8 @@ List<GuidePage> buildGuidePages({required bool showNotificationPage, required Bu
   if (showNotificationPage) {
     pages.add(
       GuidePage(
-        title: strings.AppStrings.notificationsTitle,
-        description: strings.AppStrings.notificationsDescription,
+        title: strings.notificationsTitle,
+        description: strings.notificationsDescription,
         icon: Icons.notifications_active_outlined,
         isNotificationPage: true,
       ),
@@ -247,10 +250,10 @@ List<GuidePage> buildGuidePages({required bool showNotificationPage, required Bu
   if (!settings.hasDonated) {
     pages.add(
       GuidePage(
-        title: strings.AppStrings.supportUsTitle,
-        description: strings.AppStrings.supportUsDescription,
+        title: strings.supportUsTitle,
+        description: strings.supportUsDescription,
         icon: Icons.favorite,
-        buttonText: strings.AppStrings.donateNow,
+        buttonText: strings.donateNow,
         buttonIcon: Icons.volunteer_activism,
         isDonationPage: true,
       ),
@@ -280,6 +283,7 @@ class _GuidePageViewState extends State<GuidePageView> {
   bool _isLoading = false;
 
   Future<void> _handleDonation() async {
+    final strings = AppLocalizations.of(context)!.strings;
     Provider.of<AnalyticsService>(context, listen: false).capture(context, 'guide_donation_button_clicked');
     if (_isLoading) return;
     
@@ -311,7 +315,7 @@ class _GuidePageViewState extends State<GuidePageView> {
         if (safeContext != null && safeContext.mounted) {
           showTopSnackBar(
             safeContext,
-            strings.AppStrings.couldNotOpenDonationPage,
+            strings.couldNotOpenDonationPage,
             style: TopSnackBarStyle.error,
           );
         }
@@ -336,7 +340,8 @@ class _GuidePageViewState extends State<GuidePageView> {
   bool _permissionGranted = true;
 
   bool _isWelcomePage() {
-    return widget.page.title == strings.AppStrings.welcomeTitle && widget.page.icon == Icons.church;
+    final strings = AppLocalizations.of(context)!.strings;
+    return widget.page.title == strings.welcomeTitle && widget.page.icon == Icons.church;
   }
 
   Widget _buildTermsAgreementText() {
@@ -422,6 +427,7 @@ class _GuidePageViewState extends State<GuidePageView> {
   }
 
   Future<void> _requestPermission() async {
+    final strings = AppLocalizations.of(context)!.strings;
     Provider.of<AnalyticsService>(context, listen: false).capture(context, 'guide_notification_permission_requested');
     setState(() { _isLoading = true; });
     final granted = await NotificationService.requestNotificationPermission();
@@ -430,12 +436,13 @@ class _GuidePageViewState extends State<GuidePageView> {
       _permissionGranted = granted;
     });
     if (!granted && mounted) {
-      showTopSnackBar(context, strings.AppStrings.notificationPermissionDenied, style: TopSnackBarStyle.warning);
+      showTopSnackBar(context, strings.notificationPermissionDenied, style: TopSnackBarStyle.warning);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final strings = AppLocalizations.of(context)!.strings;
     if (widget.page.isNotificationPage) {
       return Padding(
         padding: const EdgeInsets.all(24.0),
@@ -469,8 +476,8 @@ class _GuidePageViewState extends State<GuidePageView> {
               ElevatedButton.icon(
                 icon: const Icon(Icons.notifications_active_outlined),
                 label: Text(_permissionGranted
-                    ? strings.AppStrings.notificationsEnabled
-                    : strings.AppStrings.enableNotifications),
+                    ? strings.notificationsEnabled
+                    : strings.enableNotifications),
                 onPressed: _permissionGranted || _isLoading ? null : _requestPermission,
               ),
               if (_isLoading)
@@ -544,7 +551,7 @@ class _GuidePageViewState extends State<GuidePageView> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      strings.AppStrings.gameSpeed,
+                                      strings.gameSpeed,
                                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                             color: widget.colorScheme.onSurface,
                                             fontWeight: FontWeight.w600,
@@ -556,15 +563,15 @@ class _GuidePageViewState extends State<GuidePageView> {
                                       items: [
                                         DropdownMenuItem(
                                           value: 'slow',
-                                          child: Text(strings.AppStrings.slow),
+                                          child: Text(strings.slow),
                                         ),
                                         DropdownMenuItem(
                                           value: 'medium',
-                                          child: Text(strings.AppStrings.medium),
+                                          child: Text(strings.medium),
                                         ),
                                         DropdownMenuItem(
                                           value: 'fast',
-                                          child: Text(strings.AppStrings.fast),
+                                          child: Text(strings.fast),
                                         ),
                                       ],
                                       onChanged: (String? value) {
@@ -600,7 +607,7 @@ class _GuidePageViewState extends State<GuidePageView> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            strings.AppStrings.muteSoundEffects,
+                                            strings.muteSoundEffects,
                                             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                                   color: widget.colorScheme.onSurface,
                                                   fontWeight: FontWeight.w600,
@@ -608,7 +615,7 @@ class _GuidePageViewState extends State<GuidePageView> {
                                           ),
                                           const SizedBox(height: 4),
                                           Text(
-                                            strings.AppStrings.soundEffectsDescription,
+                                            strings.soundEffectsDescription,
                                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                                   color: widget.colorScheme.onSurface.withValues(alpha: 0.7),
                                                 ),
@@ -733,6 +740,7 @@ class _GuideScreenTestHarnessState extends State<GuideScreenTestHarness> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final isLastPage = _currentPage == _pages.length - 1;
+    final strings = AppLocalizations.of(context)!.strings;
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -772,7 +780,7 @@ class _GuideScreenTestHarnessState extends State<GuideScreenTestHarness> {
                   if (_currentPage > 0)
                     TextButton(
                       onPressed: goToPreviousPage,
-                      child: Text(strings.AppStrings.previous),
+                      child: Text(strings.previous),
                     )
                   else
                     const SizedBox(width: 80),
@@ -794,7 +802,7 @@ class _GuideScreenTestHarnessState extends State<GuideScreenTestHarness> {
                   ),
                   ElevatedButton(
                     onPressed: goToNextPage,
-                    child: Text(isLastPage ? strings.AppStrings.getStarted : strings.AppStrings.next),
+                    child: Text(isLastPage ? strings.getStarted : strings.next),
                   ),
                 ],
               ),
@@ -804,4 +812,4 @@ class _GuideScreenTestHarnessState extends State<GuideScreenTestHarness> {
       ),
     );
   }
-} 
+}

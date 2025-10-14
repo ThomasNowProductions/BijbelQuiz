@@ -7,7 +7,7 @@ import './quiz_screen.dart';
 import 'package:provider/provider.dart';
 import '../providers/settings_provider.dart';
 import '../services/lesson_service.dart';
-import '../l10n/strings_nl.dart' as strings;
+import '../l10n/app_localizations.dart';
 
 class LessonCompleteScreen extends StatefulWidget {
   final Lesson lesson;
@@ -40,6 +40,7 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen> with Single
   @override
   Widget build(BuildContext context) {
     final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+    final strings = AppLocalizations.of(context)!.strings;
 
     analyticsService.screen(context, 'LessonCompleteScreen');
 
@@ -128,7 +129,7 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen> with Single
                                   Icon(Icons.emoji_events_rounded, color: cs.primary, size: 36),
                                   const SizedBox(width: 12),
                                   Text(
-                                    strings.AppStrings.lessonComplete,
+                                    strings.lessonComplete,
                                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                                       fontWeight: FontWeight.w800,
                                     ),
@@ -167,18 +168,18 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen> with Single
                             children: [
                               _AnimatedNumberCard(
                                 icon: Icons.check_circle_rounded,
-                                label: strings.AppStrings.correct,
+                                label: strings.correct,
                                 target: widget.correct,
                               ),
                               _AnimatedNumberCard(
                                 icon: Icons.percent_rounded,
-                                label: strings.AppStrings.percentage,
+                                label: strings.percentage,
                                 target: pctValue.round(),
                                 suffix: '%',
                               ),
                               _StatCard(
                                 icon: Icons.local_fire_department_rounded,
-                                label: strings.AppStrings.bestStreak,
+                                label: strings.bestStreak,
                                 value: '${widget.bestStreak}',
                               ),
                             ],
@@ -206,7 +207,7 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen> with Single
                                     children: [
                                       const Icon(Icons.refresh_rounded, size: 20),
                                       const SizedBox(width: 8),
-                                      const Text(strings.AppStrings.retryLesson),
+                                      Text(strings.retryLesson),
                                     ],
                                   ),
                                 ),
@@ -227,7 +228,7 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen> with Single
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const Text(strings.AppStrings.nextLesson),
+                                      Text(strings.nextLesson),
                                       const SizedBox(width: 8),
                                       const Icon(Icons.arrow_forward_rounded, size: 20),
                                     ],
@@ -255,7 +256,7 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen> with Single
       final settings = Provider.of<SettingsProvider>(context, listen: false);
       final service = LessonService();
       final lessons = await service.generateLessons(
-        settings.language,
+        settings.language ?? Localizations.localeOf(context).languageCode,
         maxLessons: nextIndex + 1,
         maxQuestionsPerLesson: widget.lesson.maxQuestions,
       );

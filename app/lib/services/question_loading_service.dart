@@ -22,7 +22,7 @@ class QuestionLoadingService {
 
     try {
       final settings = Provider.of<SettingsProvider>(context, listen: false);
-      final language = settings.language;
+      final language = settings.language ?? Localizations.localeOf(context).languageCode;
 
       // Load next batch of questions
       final nextBatchStartIndex = questions.length;
@@ -55,7 +55,7 @@ class QuestionLoadingService {
     required bool mounted,
   }) async {
     final settings = Provider.of<SettingsProvider>(context, listen: false);
-    final language = settings.language;
+    final language = settings.language ?? Localizations.localeOf(context).languageCode;
 
     try {
       // First, load predictive candidates if available

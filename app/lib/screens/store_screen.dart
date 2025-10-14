@@ -6,7 +6,7 @@ import '../providers/game_stats_provider.dart';
 import '../providers/settings_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/top_snackbar.dart';
-import '../l10n/strings_nl.dart' as strings;
+import '../l10n/app_localizations.dart';
 import '../screens/quiz_screen.dart';
 import '../services/logger.dart';
 import '../services/gemini_service.dart';
@@ -46,6 +46,7 @@ class _StoreScreenState extends State<StoreScreen> {
     final settings = Provider.of<SettingsProvider>(context);
     final unlocked = settings.unlockedThemes;
     final isDev = kDebugMode;
+    final strings = AppLocalizations.of(context)!.strings;
 
     
     // Responsive design
@@ -73,7 +74,7 @@ class _StoreScreenState extends State<StoreScreen> {
             ),
             const SizedBox(width: 12),
             Text(
-              strings.AppStrings.store,
+              strings.store,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w700,
                 color: colorScheme.onSurface.withAlpha((0.7 * 255).round()),
@@ -142,7 +143,7 @@ class _StoreScreenState extends State<StoreScreen> {
                         ),
                         SizedBox(height: isDesktop ? 12 : 8),
                         Text(
-                          strings.AppStrings.availableStars,
+                          strings.availableStars,
                           style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             color: colorScheme.onSurface.withAlpha((0.7 * 255).round()),
                             fontWeight: FontWeight.w500,
@@ -157,7 +158,7 @@ class _StoreScreenState extends State<StoreScreen> {
                   // Power-ups section
                   _buildSectionHeader(
                     context,
-                    strings.AppStrings.powerUps,
+                    strings.powerUps,
                     Icons.flash_on_rounded,
                     colorScheme.primary,
                     isDesktop,
@@ -167,8 +168,8 @@ class _StoreScreenState extends State<StoreScreen> {
                   
                   _buildPowerupCard(
                     context,
-                    title: strings.AppStrings.doubleStars5Questions,
-                    description: strings.AppStrings.doubleStars5QuestionsDesc,
+                    title: strings.doubleStars5Questions,
+                    description: strings.doubleStars5QuestionsDesc,
                     icon: Icons.flash_on_rounded,
                     iconColor: colorScheme.primary,
                     cost: 100,
@@ -177,7 +178,7 @@ class _StoreScreenState extends State<StoreScreen> {
                     isDesktop: isDesktop,
                     onPurchase: () {
                       gameStats.activatePowerup(multiplier: 2, questions: 5);
-                      return 'Dubbele Sterren geactiveerd voor 5 vragen!';
+                      return strings.doubleStarsActivated;
                     },
                   ),
                   
@@ -185,8 +186,8 @@ class _StoreScreenState extends State<StoreScreen> {
                   
                   _buildPowerupCard(
                     context,
-                    title: strings.AppStrings.tripleStars5Questions,
-                    description: strings.AppStrings.tripleStars5QuestionsDesc,
+                    title: strings.tripleStars5Questions,
+                    description: strings.tripleStars5QuestionsDesc,
                     icon: Icons.flash_on_rounded,
                     iconColor: Colors.deepOrange,
                     cost: 180,
@@ -195,7 +196,7 @@ class _StoreScreenState extends State<StoreScreen> {
                     isDesktop: isDesktop,
                     onPurchase: () {
                       gameStats.activatePowerup(multiplier: 3, questions: 5);
-                      return 'Driedubbele Sterren geactiveerd voor 5 vragen!';
+                      return strings.tripleStarsActivated;
                     },
                   ),
                   
@@ -203,8 +204,8 @@ class _StoreScreenState extends State<StoreScreen> {
                   
                   _buildPowerupCard(
                     context,
-                    title: strings.AppStrings.fiveTimesStars5Questions,
-                    description: strings.AppStrings.fiveTimesStars5QuestionsDesc,
+                    title: strings.fiveTimesStars5Questions,
+                    description: strings.fiveTimesStars5QuestionsDesc,
                     icon: Icons.flash_on_rounded,
                     iconColor: Colors.redAccent,
                     cost: 350,
@@ -213,7 +214,7 @@ class _StoreScreenState extends State<StoreScreen> {
                     isDesktop: isDesktop,
                     onPurchase: () {
                       gameStats.activatePowerup(multiplier: 5, questions: 5);
-                      return '5x Sterren geactiveerd voor 5 vragen!';
+                      return strings.fiveTimesStarsActivated;
                     },
                   ),
                   
@@ -221,8 +222,8 @@ class _StoreScreenState extends State<StoreScreen> {
                   
                   _buildPowerupCard(
                     context,
-                    title: strings.AppStrings.doubleStars60Seconds,
-                    description: strings.AppStrings.doubleStars60SecondsDesc,
+                    title: strings.doubleStars60Seconds,
+                    description: strings.doubleStars60SecondsDesc,
                     icon: Icons.timer_rounded,
                     iconColor: Colors.orangeAccent,
                     cost: 120,
@@ -231,7 +232,7 @@ class _StoreScreenState extends State<StoreScreen> {
                     isDesktop: isDesktop,
                     onPurchase: () {
                       gameStats.activatePowerup(multiplier: 2, time: Duration(seconds: 60));
-                      return 'Dubbele Sterren geactiveerd voor 60 seconden!';
+                      return strings.doubleStars60SecondsActivated;
                     },
                   ),
                   
@@ -240,7 +241,7 @@ class _StoreScreenState extends State<StoreScreen> {
                   // Themes section
                   _buildSectionHeader(
                     context,
-                    strings.AppStrings.themes,
+                    strings.themes,
                     Icons.palette_rounded,
                     colorScheme.secondary,
                     isDesktop,
@@ -250,8 +251,8 @@ class _StoreScreenState extends State<StoreScreen> {
                   
                   _buildThemeCard(
                     context,
-                    title: strings.AppStrings.oledThemeName,
-                    description: strings.AppStrings.oledThemeDesc,
+                    title: strings.oledThemeName,
+                    description: strings.oledThemeDesc,
                     icon: Icons.nights_stay_rounded,
                     iconColor: Colors.black,
                     cost: 150,
@@ -267,8 +268,8 @@ class _StoreScreenState extends State<StoreScreen> {
                   
                   _buildThemeCard(
                     context,
-                    title: strings.AppStrings.greenThemeName,
-                    description: strings.AppStrings.greenThemeDesc,
+                    title: strings.greenThemeName,
+                    description: strings.greenThemeDesc,
                     icon: Icons.eco_rounded,
                     iconColor: Colors.green[700]!,
                     cost: 120,
@@ -284,8 +285,8 @@ class _StoreScreenState extends State<StoreScreen> {
                   
                   _buildThemeCard(
                     context,
-                    title: strings.AppStrings.orangeThemeName,
-                    description: strings.AppStrings.orangeThemeDesc,
+                    title: strings.orangeThemeName,
+                    description: strings.orangeThemeDesc,
                     icon: Icons.circle_rounded,
                     iconColor: Colors.orange[700]!,
                     cost: 120,
@@ -301,8 +302,8 @@ class _StoreScreenState extends State<StoreScreen> {
 
                   _buildAIThemeCard(
                     context,
-                    title: strings.AppStrings.aiThemeGenerator,
-                    description: strings.AppStrings.aiThemeGeneratorDescription,
+                    title: strings.aiThemeGenerator,
+                    description: strings.aiThemeGeneratorDescription,
                     icon: Icons.smart_toy_rounded,
                     iconColor: Colors.purple,
                     cost: 200,
@@ -363,6 +364,7 @@ class _StoreScreenState extends State<StoreScreen> {
     required String Function() onPurchase,
   }) {
     final colorScheme = Theme.of(context).colorScheme;
+    final strings = AppLocalizations.of(context)!.strings;
     
     return Container(
       width: double.infinity,
@@ -426,7 +428,7 @@ class _StoreScreenState extends State<StoreScreen> {
                             const SizedBox(width: 12),
                             Expanded(
                               child: Text(
-                                'Power-up Geactiveerd!',
+                                strings.powerupActivated,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 2,
                               ),
@@ -446,7 +448,7 @@ class _StoreScreenState extends State<StoreScreen> {
                               ),
                             );
                           },
-                          child: Text('Naar de quiz', style: TextStyle(color: colorScheme.primary)),
+                          child: Text(strings.backToQuiz, style: TextStyle(color: colorScheme.primary)),
                         ),
                       ],
                     );
@@ -454,7 +456,7 @@ class _StoreScreenState extends State<StoreScreen> {
                 );
               }
             } else {
-              showTopSnackBar(localContext, 'Niet genoeg sterren!', style: TopSnackBarStyle.error);
+              showTopSnackBar(localContext, strings.notEnoughStars, style: TopSnackBarStyle.error);
             }
           },
           child: Padding(
@@ -519,7 +521,7 @@ class _StoreScreenState extends State<StoreScreen> {
                       ),
                       SizedBox(width: isDesktop ? 6 : 4),
                       Text(
-                        isDev ? 'Gratis' : '$cost',
+                        isDev ? strings.free : '$cost',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.w600,
                           color: colorScheme.primary,
@@ -552,6 +554,7 @@ class _StoreScreenState extends State<StoreScreen> {
   }) {
     final colorScheme = Theme.of(context).colorScheme;
     final isUnlocked = unlocked.contains(themeKey);
+    final strings = AppLocalizations.of(context)!.strings;
     
     return Container(
       width: double.infinity,
@@ -600,11 +603,11 @@ class _StoreScreenState extends State<StoreScreen> {
               if (success) {
                 await localSettings.unlockTheme(themeKey);
                 if (!localContext.mounted) return;
-                final message = '$title ontgrendeld!';
+                final message = '$title ${strings.themeUnlocked}';
                 showTopSnackBar(localContext, message, style: TopSnackBarStyle.success);
               }
             } else {
-              showTopSnackBar(localContext, 'Niet genoeg sterren!', style: TopSnackBarStyle.error);
+              showTopSnackBar(localContext, strings.notEnoughStars, style: TopSnackBarStyle.error);
             }
           },
           child: Padding(
@@ -682,7 +685,7 @@ class _StoreScreenState extends State<StoreScreen> {
                             ),
                             SizedBox(width: isDesktop ? 6 : 4),
                             Text(
-                              isDev ? 'Gratis' : '$cost',
+                              isDev ? strings.free : '$cost',
                               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                                 fontWeight: FontWeight.w600,
                                 color: colorScheme.primary,
@@ -711,6 +714,7 @@ class _StoreScreenState extends State<StoreScreen> {
     required bool isDesktop,
   }) {
     final colorScheme = Theme.of(context).colorScheme;
+    final strings = AppLocalizations.of(context)!.strings;
 
     return Container(
       width: double.infinity,
@@ -748,7 +752,7 @@ class _StoreScreenState extends State<StoreScreen> {
             if (canAfford) {
               await _showAIThemeDialog(localContext, localGameStats, cost, isDev);
             } else {
-              showTopSnackBar(localContext, 'Niet genoeg sterren!', style: TopSnackBarStyle.error);
+              showTopSnackBar(localContext, strings.notEnoughStars, style: TopSnackBarStyle.error);
             }
           },
           child: Padding(
@@ -813,7 +817,7 @@ class _StoreScreenState extends State<StoreScreen> {
                       ),
                       SizedBox(width: isDesktop ? 6 : 4),
                       Text(
-                        isDev ? 'Gratis' : '$cost',
+                        isDev ? strings.free : '$cost',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.w600,
                           color: colorScheme.primary,
@@ -833,6 +837,7 @@ class _StoreScreenState extends State<StoreScreen> {
   Future<void> _showAIThemeDialog(BuildContext context, GameStatsProvider gameStats, int cost, bool isDev) async {
     final colorScheme = Theme.of(context).colorScheme;
     final TextEditingController themeController = TextEditingController();
+    final strings = AppLocalizations.of(context)!.strings;
 
     return showDialog(
       context: context,
@@ -850,7 +855,7 @@ class _StoreScreenState extends State<StoreScreen> {
                   Icon(Icons.smart_toy_rounded, color: Colors.purple, size: 24),
                   const SizedBox(width: 12),
                   Text(
-                    'AI Thema Generator',
+                    strings.aiThemeGenerator,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
@@ -918,7 +923,7 @@ class _StoreScreenState extends State<StoreScreen> {
                         Navigator.of(context).pop();
                       },
                       child: Text(
-                        'Annuleren',
+                        strings.cancel,
                         style: TextStyle(color: colorScheme.error),
                       ),
                     ),
@@ -929,7 +934,7 @@ class _StoreScreenState extends State<StoreScreen> {
                         Navigator.of(context).pop();
                       },
                       child: Text(
-                        'Annuleren',
+                        strings.cancel,
                         style: TextStyle(color: colorScheme.onSurface.withAlpha((0.7 * 255).round())),
                       ),
                     ),
@@ -1112,6 +1117,7 @@ class _StoreScreenState extends State<StoreScreen> {
 
   Future<void> _showThemePreviewDialog(BuildContext context, AITheme theme) async {
     final colorScheme = Theme.of(context).colorScheme;
+    final strings = AppLocalizations.of(context)!.strings;
 
     return showDialog(
       context: context,
@@ -1168,7 +1174,7 @@ class _StoreScreenState extends State<StoreScreen> {
                 Navigator.of(context).pop();
               },
               child: Text(
-                'Sluiten',
+                strings.close,
                 style: TextStyle(color: colorScheme.onSurface.withAlpha((0.7 * 255).round())),
               ),
             ),

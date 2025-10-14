@@ -28,7 +28,7 @@ import 'dart:async';
 import 'dart:math';
 import '../widgets/quiz_skeleton.dart';
 import '../widgets/top_snackbar.dart';
-import '../l10n/strings_nl.dart' as strings;
+import '../l10n/app_localizations.dart';
 import '../services/logger.dart';
 
 // New extracted services
@@ -296,6 +296,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
 
 
   Future<void> _showTimeUpDialog() async {
+    final strings = AppLocalizations.of(context)!.strings;
     Provider.of<AnalyticsService>(context, listen: false).capture(context, 'show_time_up_dialog');
     final localContext = context;
     if (ModalRoute.of(localContext)?.isCurrent != true) return;
@@ -325,7 +326,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
-                strings.AppStrings.notEnoughPoints,
+                strings.notEnoughPoints,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 14,
@@ -352,14 +353,14 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
       builder: (BuildContext dialogContext) {
         return AlertDialog(
           title: Text(
-            strings.AppStrings.timeUp,
+            strings.timeUp,
             style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
           ),
           content: Text(
-            strings.AppStrings.timeUpMessage,
+            strings.timeUpMessage,
             style: const TextStyle(fontSize: 16),
           ),
           actions: [
@@ -415,7 +416,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      strings.AppStrings.retry,
+                      strings.retry,
                       style: TextStyle(
                         color: hasEnoughPoints
                           ? Theme.of(localContext).colorScheme.primary
@@ -452,7 +453,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
                 _handleNextQuestion(false, _quizState.currentDifficulty);
               },
               child: Text(
-                strings.AppStrings.next,
+                strings.next,
                 style: TextStyle(
                   color: Theme.of(localContext).colorScheme.primary,
                   fontSize: 16,
@@ -489,10 +490,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
     // Reset question pool if language changed
     if (_lastLanguage != null && _lastLanguage != language) {
       final analytics = Provider.of<AnalyticsService>(context, listen: false);
-      analytics.capture(context, 'language_changed', properties: {'from': _lastLanguage!, 'to': language});
+      analytics.capture(context, 'language_changed', properties: {'from': _lastLanguage!, 'to': language ?? 'system'});
       analytics.trackFeatureSuccess(context, AnalyticsService.FEATURE_LANGUAGE_SETTINGS, additionalProperties: {
         'from_language': _lastLanguage!,
-        'to_language': language,
+        'to_language': language ?? 'system',
       });
       AppLogger.info('Language changed from $_lastLanguage to $language, resetting question pool');
       _resetQuestionPool();
@@ -517,6 +518,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
   Future<void> _initializeQuiz() async {
     final initStartTime = DateTime.now();
     final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+    final strings = AppLocalizations.of(context)!.strings;
 
     try {
       setState(() {
@@ -525,7 +527,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
       });
 
       final settings = Provider.of<SettingsProvider>(context, listen: false);
-      final language = settings.language;
+      final language = settings.language ?? Localizations.localeOf(context).languageCode;
 
 
       // Load questions - if in lesson mode with a specific category, load category questions
@@ -555,7 +557,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
       }
 
       if (_questionSelector.allQuestions.isEmpty) {
-        throw Exception(strings.AppStrings.errorNoQuestions);
+        throw Exception(strings.errorNoQuestions);
       }
 
       // Initialize quiz state with PQU (Progressive Question Up-selection)
@@ -608,7 +610,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
     } catch (e) {
       if (!mounted) return;
       setState(() {
-        _error = '${strings.AppStrings.errorLoadQuestions}: ${e.toString()}';
+        _error = '${strings.errorLoadQuestions}: ${e.toString()}';
       });
 
       // Track quiz loading errors
@@ -772,6 +774,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
 
   @override
   Widget build(BuildContext context) {
+    final strings = AppLocalizations.of(context)!.strings;
     final colorScheme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     double width = size.width;
@@ -783,7 +786,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              strings.AppStrings.screenSizeNotSupported,
+              strings.screenSizeNotSupported,
               style: TextStyle(
                 color: colorScheme.error,
                 fontWeight: FontWeight.bold,
@@ -904,7 +907,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
                         isAnswering: _quizState.isAnswering,
                         isTransitioning: _quizState.isTransitioning,
                         onAnswerSelected: _handleAnswer,
-                        language: settings.language,
+                        language: settings.language ?? Localizations.localeOf(context).languageCode,
                         performanceService: _performanceService,
                       ),
                       const SizedBox(height: 16),
@@ -1023,6 +1026,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
 
   // Callback methods for bottom bar buttons
   Future<void> _handleSkip() async {
+    final strings = AppLocalizations.of(context)!.strings;
     final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
     final question = _quizState.question;
 
@@ -1054,7 +1058,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
         // Record that the current question was not answered correctly (since it was skipped)
         _questionSelector.recordAnswerResult(_quizState.question.question, false);
         final nextQuestion = _questionSelector.pickNextQuestion(newDifficulty, context);
-        final optimalTimerDuration = _performanceService.getOptimalTimerDuration(
+        final optimalTimerDuration = _performanceService.getOptimalAnimationDuration(
           Duration(seconds: settings.slowMode ? 35 : 20)
         );
         _quizState = QuizState(
@@ -1067,12 +1071,13 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
       });
     } else {
       if (mounted) {
-        showTopSnackBar(context, strings.AppStrings.notEnoughStarsForSkip, style: TopSnackBarStyle.warning);
+        showTopSnackBar(context, strings.notEnoughStarsForSkip, style: TopSnackBarStyle.warning);
       }
     }
   }
 
   Future<void> _handleUnlockBiblicalReference() async {
+    final strings = AppLocalizations.of(context)!.strings;
     final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
     final question = _quizState.question;
 
@@ -1093,7 +1098,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
     final parsed = _parseBiblicalReference(_quizState.question.biblicalReference!);
     if (parsed == null) {
       if (mounted) {
-        showTopSnackBar(localContext, strings.AppStrings.invalidBiblicalReference, style: TopSnackBarStyle.error);
+        showTopSnackBar(localContext, strings.invalidBiblicalReference, style: TopSnackBarStyle.error);
       }
       return;
     }
@@ -1128,10 +1133,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
       // Not enough stars
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) {
-          showTopSnackBar(localContext, strings.AppStrings.notEnoughStars, style: TopSnackBarStyle.warning);
+          showTopSnackBar(localContext, strings.notEnoughStars, style: TopSnackBarStyle.warning);
         }
       });
     }
   }
 }
-

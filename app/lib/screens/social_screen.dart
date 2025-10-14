@@ -2,7 +2,7 @@ import 'package:bijbelquiz/services/analytics_service.dart';
 import 'package:bijbelquiz/services/feature_flags_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../l10n/strings_nl.dart' as strings;
+import '../l10n/app_localizations.dart';
 
 class SocialScreen extends StatefulWidget {
   const SocialScreen({super.key});
@@ -48,6 +48,7 @@ class _SocialScreenState extends State<SocialScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final strings = AppLocalizations.of(context)!.strings;
 
     // Responsive design
     final size = MediaQuery.of(context).size;
@@ -74,7 +75,7 @@ class _SocialScreenState extends State<SocialScreen> {
             ),
             const SizedBox(width: 12),
             Text(
-              strings.AppStrings.social,
+              strings.social,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w700,
                 color: colorScheme.onSurface.withAlpha((0.7 * 255).round()),
@@ -151,6 +152,7 @@ class _SocialScreenState extends State<SocialScreen> {
   }
 
   Widget _buildComingSoonContent(ColorScheme colorScheme, bool isDesktop, bool isTablet) {
+    final strings = AppLocalizations.of(context)!.strings;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -161,7 +163,7 @@ class _SocialScreenState extends State<SocialScreen> {
         ),
         SizedBox(height: isDesktop ? 32 : 24),
         Text(
-          strings.AppStrings.comingSoon,
+          strings.comingSoon,
           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
             fontWeight: FontWeight.w700,
             color: colorScheme.onSurface.withAlpha((0.7 * 255).round()),
@@ -170,7 +172,7 @@ class _SocialScreenState extends State<SocialScreen> {
         ),
         SizedBox(height: isDesktop ? 16 : 12),
         Text(
-          strings.AppStrings.socialComingSoonMessage,
+          strings.socialComingSoonMessage,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
             color: colorScheme.onSurface.withAlpha((0.5 * 255).round()),
             fontWeight: FontWeight.w500,

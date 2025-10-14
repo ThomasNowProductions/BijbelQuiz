@@ -5,6 +5,7 @@ import '../models/ai_theme.dart';
 
 /// Manages the app's settings including language and theme preferences
 class SettingsProvider extends ChangeNotifier {
+  static const String _languageKey = 'language';
   static const String _themeModeKey = 'theme_mode';
   static const String _customThemeKey = 'custom_theme';
   static const String _unlockedThemesKey = 'unlocked_themes';
@@ -27,7 +28,7 @@ class SettingsProvider extends ChangeNotifier {
   static const String _aiThemesKey = 'ai_themes';
 
   SharedPreferences? _prefs;
-  String _language = 'nl';
+  String? _language;
   ThemeMode _themeMode = ThemeMode.system;
   String _gameSpeed = 'medium'; // 'slow', 'medium', 'fast'
   bool _hasSeenGuide = false;
@@ -50,7 +51,7 @@ class SettingsProvider extends ChangeNotifier {
   String? _selectedCustomThemeKey;
   Set<String> _unlockedThemes = {};
   final Map<String, AITheme> _aiThemes = {};
-  
+
 
 
   SettingsProvider() {
@@ -59,14 +60,14 @@ class SettingsProvider extends ChangeNotifier {
   }
 
   /// De huidige taalinstelling (altijd 'nl')
-  String get language => _language;
-  
+  String? get language => _language;
+
   /// The current theme mode setting
   ThemeMode get themeMode => _themeMode;
-  
+
   /// The current game speed setting
   String get gameSpeed => _gameSpeed;
-  
+
   /// Whether slow mode is enabled (backward compatibility)
   bool get slowMode => _gameSpeed == 'slow';
 
@@ -78,7 +79,7 @@ class SettingsProvider extends ChangeNotifier {
 
   /// Whether settings are currently being loaded
   bool get isLoading => _isLoading;
-  
+
   /// Any error that occurred while loading settings
   String? get error => _error;
 
@@ -95,7 +96,7 @@ class SettingsProvider extends ChangeNotifier {
   bool get hasClickedFollowLink => _hasClickedFollowLink;
   bool get hasClickedSatisfactionLink => _hasClickedSatisfactionLink;
   bool get hasClickedDifficultyLink => _hasClickedDifficultyLink;
-  
+
   /// Whether analytics are enabled
   bool get analyticsEnabled => _analyticsEnabled;
 
@@ -274,19 +275,19 @@ class SettingsProvider extends ChangeNotifier {
 
       _prefs = await SharedPreferences.getInstance();
       AppLogger.info('SharedPreferences instance obtained');
-      // Altijd Nederlands forceren
-      _language = 'nl';
+
+      _language = _prefs?.getString(_languageKey);
       final themeModeIndex = _prefs?.getInt(_themeModeKey) ?? 0;
       _themeMode = ThemeMode.values[themeModeIndex];
       // Load old boolean slow mode setting for backward compatibility
       final oldSlowMode = _getBoolSetting(_slowModeKey, defaultValue: false);
       _gameSpeed = oldSlowMode ? 'slow' : 'medium';
-      
+
       // Migrate to new string-based setting if needed
       if (oldSlowMode) {
         await _prefs?.setString(_slowModeKey, 'slow');
       }
-      
+
       // Load new string-based game speed setting if it exists
       final storedGameSpeed = _prefs?.getString(_slowModeKey);
       if (storedGameSpeed != null && storedGameSpeed.isNotEmpty) {
@@ -302,22 +303,22 @@ class SettingsProvider extends ChangeNotifier {
       _hasDonated = _getBoolSetting(_hasDonatedKey, defaultValue: false);
       _hasCheckedForUpdate = _getBoolSetting(_hasCheckedForUpdateKey, defaultValue: false);
       _analyticsEnabled = _getBoolSetting(_analyticsEnabledKey, defaultValue: true); // Default to true
-      
+
       // Load popup tracking data
       final lastDonationPopupMs = _prefs?.getInt(_lastDonationPopupKey);
       _lastDonationPopup = lastDonationPopupMs != null ? DateTime.fromMillisecondsSinceEpoch(lastDonationPopupMs) : null;
-      
+
       final lastFollowPopupMs = _prefs?.getInt(_lastFollowPopupKey);
       _lastFollowPopup = lastFollowPopupMs != null ? DateTime.fromMillisecondsSinceEpoch(lastFollowPopupMs) : null;
-      
+
       final lastSatisfactionPopupMs = _prefs?.getInt(_lastSatisfactionPopupKey);
       _lastSatisfactionPopup = lastSatisfactionPopupMs != null ? DateTime.fromMillisecondsSinceEpoch(lastSatisfactionPopupMs) : null;
-      
+
       final lastDifficultyPopupMs = _prefs?.getInt(_lastDifficultyPopupKey);
       _lastDifficultyPopup = lastDifficultyPopupMs != null ? DateTime.fromMillisecondsSinceEpoch(lastDifficultyPopupMs) : null;
-      
+
       _difficultyPreference = _prefs?.getString(_difficultyPreferenceKey);
-      
+
       _hasClickedDonationLink = _getBoolSetting(_hasClickedDonationLinkKey, defaultValue: false);
       _hasClickedFollowLink = _getBoolSetting(_hasClickedFollowLinkKey, defaultValue: false);
       _hasClickedSatisfactionLink = _getBoolSetting(_hasClickedSatisfactionLinkKey, defaultValue: false);
@@ -335,18 +336,24 @@ class SettingsProvider extends ChangeNotifier {
       await _loadAIThemes();
     } finally {
       _isLoading = false;
-      AppLogger.info('Settings loaded successfully - Theme: $_themeMode, GameSpeed: $_gameSpeed, Mute: $_mute, Analytics: $_analyticsEnabled');
+      AppLogger.info('Settings loaded successfully - Language: $_language, Theme: $_themeMode, GameSpeed: $_gameSpeed, Mute: $_mute, Analytics: $_analyticsEnabled');
       notifyListeners();
     }
   }
 
-  /// Update de taalinstelling (alleen 'nl' toegestaan)
-  Future<void> setLanguage(String language) async {
-    if (language != 'nl') {
-      throw ArgumentError('Taal moet "nl" zijn (alleen Nederlands toegestaan)');
-    }
-    // Geen effect, altijd Nederlands
-    notifyListeners();
+  /// Update de taalinstelling
+  Future<void> setLanguage(String? language) async {
+    await _saveSetting(
+      action: () async {
+        _language = language;
+        if (language != null) {
+          await _prefs?.setString(_languageKey, language);
+        } else {
+          await _prefs?.remove(_languageKey);
+        }
+      },
+      errorMessage: 'Failed to save language setting',
+    );
   }
 
   /// Updates the theme mode setting
@@ -616,6 +623,7 @@ class SettingsProvider extends ChangeNotifier {
   /// Gets all settings data for export
   Map<String, dynamic> getExportData() {
     return {
+      'language': _language,
       'themeMode': _themeMode.index,
       'gameSpeed': _gameSpeed,
       'hasSeenGuide': _hasSeenGuide,
@@ -641,6 +649,7 @@ class SettingsProvider extends ChangeNotifier {
 
   /// Loads settings data from import
   Future<void> loadImportData(Map<String, dynamic> data) async {
+    _language = data['language'];
     _themeMode = ThemeMode.values[data['themeMode'] ?? 0];
     _gameSpeed = data['gameSpeed'] ?? 'medium';
     _hasSeenGuide = data['hasSeenGuide'] ?? false;
@@ -651,17 +660,17 @@ class SettingsProvider extends ChangeNotifier {
     _analyticsEnabled = data['analyticsEnabled'] ?? true;
     _selectedCustomThemeKey = data['selectedCustomThemeKey'];
     _unlockedThemes = Set<String>.from(data['unlockedThemes'] ?? []);
-    
+
     // Load popup tracking data
     final lastDonationPopupMs = data['lastDonationPopup'];
     _lastDonationPopup = lastDonationPopupMs != null ? DateTime.fromMillisecondsSinceEpoch(lastDonationPopupMs) : null;
-    
+
     final lastFollowPopupMs = data['lastFollowPopup'];
     _lastFollowPopup = lastFollowPopupMs != null ? DateTime.fromMillisecondsSinceEpoch(lastFollowPopupMs) : null;
-    
+
     final lastSatisfactionPopupMs = data['lastSatisfactionPopup'];
     _lastSatisfactionPopup = lastSatisfactionPopupMs != null ? DateTime.fromMillisecondsSinceEpoch(lastSatisfactionPopupMs) : null;
-    
+
     _hasClickedDonationLink = data['hasClickedDonationLink'] ?? false;
     _hasClickedFollowLink = data['hasClickedFollowLink'] ?? false;
     _hasClickedSatisfactionLink = data['hasClickedSatisfactionLink'] ?? false;
@@ -694,6 +703,11 @@ class SettingsProvider extends ChangeNotifier {
       }
     }
 
+    if (_language != null) {
+      await _prefs?.setString(_languageKey, _language!);
+    } else {
+      await _prefs?.remove(_languageKey);
+    }
     await _prefs?.setInt(_themeModeKey, _themeMode.index);
     await _prefs?.setString(_slowModeKey, _gameSpeed);
     await _prefs?.setBool(_hasSeenGuideKey, _hasSeenGuide);
@@ -704,7 +718,7 @@ class SettingsProvider extends ChangeNotifier {
     await _prefs?.setBool(_analyticsEnabledKey, _analyticsEnabled);
     await _prefs?.setString(_customThemeKey, _selectedCustomThemeKey ?? '');
     await _prefs?.setStringList(_unlockedThemesKey, _unlockedThemes.toList());
-    
+
     // Save popup tracking data
     if (_lastDonationPopup != null) {
       await _prefs?.setInt(_lastDonationPopupKey, _lastDonationPopup!.millisecondsSinceEpoch);
@@ -722,12 +736,12 @@ class SettingsProvider extends ChangeNotifier {
     if (_difficultyPreference != null) {
       await _prefs?.setString(_difficultyPreferenceKey, _difficultyPreference!);
     }
-    
+
     // Save difficulty popup tracking data
     if (_lastDifficultyPopup != null) {
       await _prefs?.setInt(_lastDifficultyPopupKey, _lastDifficultyPopup!.millisecondsSinceEpoch);
     }
-    
+
     notifyListeners();
   }
 }

@@ -195,7 +195,7 @@ class QuestionCacheService {
       }
       
       // If no cache, load from assets
-      final String response = await rootBundle.loadString('assets/questions-nl-sv.json');
+      final String response = await rootBundle.loadString('assets/questions-$language.json');
       final List<dynamic> data = json.decode(response);
       
       if (data.isEmpty) {
@@ -207,7 +207,7 @@ class QuestionCacheService {
         try {
           return {
             'id': json['id'] ?? '',
-            'difficulty': json['moeilijkheidsgraad']?.toString() ?? '',
+            'difficulty': json['difficulty']?.toString() ?? '',
             'categories': (json['categories'] as List<dynamic>?)?.cast<String>() ?? [],
             'type': json['type']?.toString() ?? 'mc',
             'biblicalReference': json['biblicalReference'] is String ? json['biblicalReference'] as String : null,
@@ -261,7 +261,7 @@ class QuestionCacheService {
       }
       
       // Load the full questions from assets
-      final String response = await rootBundle.loadString('assets/questions-nl-sv.json');
+      final String response = await rootBundle.loadString('assets/questions-$language.json');
       final List<dynamic> data = json.decode(response) as List;
       
       if (data.isEmpty) {
@@ -359,10 +359,10 @@ class QuestionCacheService {
         if (question is Map<String, dynamic>) {
           return {
             'id': question['id'],
-            'vraag': question['vraag'],
-            'juisteAntwoord': question['juisteAntwoord'],
-            'fouteAntwoorden': question['fouteAntwoorden'],
-            'moeilijkheidsgraad': question['moeilijkheidsgraad'],
+            'question': question['question'],
+            'correctAnswer': question['correctAnswer'],
+            'incorrectAnswers': question['incorrectAnswers'],
+            'difficulty': question['difficulty'],
             'type': question['type'],
             'categories': question['categories'],
             'biblicalReference': question['biblicalReference'],
@@ -697,9 +697,8 @@ class QuestionCacheService {
     final Map<String, int> counts = {};
     final metadata = _questionMetadata[language] ?? const <Map<String, dynamic>>[];
     for (int i = 0; i < metadata.length; i++) {
-      final item = metadata[i];
       try {
-        final cats = (item['categories'] as List?)?.map((e) => e.toString()).toList() ?? const <String>[];
+        final cats = (metadata[i]['categories'] as List?)?.map((e) => e.toString()).toList() ?? const <String>[];
         for (final c in cats) {
           if (c.isEmpty) continue;
           counts[c] = (counts[c] ?? 0) + 1;

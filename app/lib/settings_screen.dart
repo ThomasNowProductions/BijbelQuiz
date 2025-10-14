@@ -10,13 +10,13 @@ import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'services/notification_service.dart';
 import 'widgets/top_snackbar.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+import 'package:package_info_plus/package_info.dart';
 import 'services/question_cache_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/lesson_select_screen.dart';
 import 'widgets/quiz_skeleton.dart';
 import 'constants/urls.dart';
-import 'l10n/strings_nl.dart' as strings;
+import 'l10n/app_localizations.dart';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'services/logger.dart';
@@ -50,11 +50,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _openStatusPage() async {
+    final strings = AppLocalizations.of(context)!.strings;
     Provider.of<AnalyticsService>(context, listen: false).capture(context, 'open_status_page');
     final Uri url = Uri.parse(AppUrls.statusPageUrl);
     if (!await launchUrl(url)) {
       if (mounted) {
-        showTopSnackBar(context, strings.AppStrings.couldNotOpenStatusPage, style: TopSnackBarStyle.error);
+        showTopSnackBar(context, strings.couldNotOpenStatusPage, style: TopSnackBarStyle.error);
       }
     }
   }
@@ -93,8 +94,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final isDesktop = size.width > 800;
     final isTablet = size.width > 600 && size.width <= 800;
     final isSmallScreen = size.width < 360;
+    final strings = AppLocalizations.of(context)!.strings;
 
-    
     return Scaffold(
       backgroundColor: colorScheme.surface,
       appBar: AppBar(
@@ -115,7 +116,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             const SizedBox(width: 12),
             Text(
-              strings.AppStrings.settings,
+              strings.settings,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w700,
                 color: colorScheme.onSurface,
@@ -151,6 +152,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Widget _buildContent(BuildContext context, SettingsProvider settings, ColorScheme colorScheme, bool isSmallScreen, bool isDesktop) {
+    final strings = AppLocalizations.of(context)!.strings;
     if (settings.isLoading) {
       final size = MediaQuery.of(context).size;
       final isDesktop = size.width > 800;
@@ -174,7 +176,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ElevatedButton.icon(
               onPressed: () { settings.reloadSettings(); },
               icon: const Icon(Icons.refresh),
-              label: Text(strings.AppStrings.retry),
+              label: Text(strings.retry),
             ),
           ],
         ),
@@ -189,7 +191,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           colorScheme,
           isSmallScreen,
           isDesktop,
-          title: strings.AppStrings.display,
+          title: strings.display,
           children: [
             _buildSettingItem(
               context,
@@ -197,8 +199,43 @@ class _SettingsScreenState extends State<SettingsScreen> {
               colorScheme,
               isSmallScreen,
               isDesktop,
-              title: strings.AppStrings.theme,
-              subtitle: strings.AppStrings.chooseTheme,
+              title: strings.language,
+              subtitle: strings.chooseLanguage,
+              icon: Icons.language,
+              child: DropdownButton<String?>(
+                value: settings.language,
+                items: [
+                  DropdownMenuItem(
+                    value: null,
+                    child: Text(strings.systemDefault),
+                  ),
+                  DropdownMenuItem(
+                    value: 'nl',
+                    child: Text(strings.dutch),
+                  ),
+                  DropdownMenuItem(
+                    value: 'en',
+                    child: Text(strings.english),
+                  ),
+                ],
+                onChanged: (String? value) {
+                  settings.setLanguage(value);
+                },
+                style: TextStyle(
+                  color: colorScheme.onSurface,
+                  fontSize: isSmallScreen ? 12 : 14,
+                ),
+                dropdownColor: colorScheme.surfaceContainerHighest,
+              ),
+            ),
+            _buildSettingItem(
+              context,
+              settings,
+              colorScheme,
+              isSmallScreen,
+              isDesktop,
+              title: strings.theme,
+              subtitle: strings.chooseTheme,
               icon: Icons.palette,
               child: (() {
                 // Compute available values
@@ -219,37 +256,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   items: [
                     DropdownMenuItem(
                       value: ThemeMode.light.name,
-                      child: Text(strings.AppStrings.lightTheme),
+                      child: Text(strings.lightTheme),
                     ),
                     DropdownMenuItem(
                       value: ThemeMode.system.name,
-                      child: Text(strings.AppStrings.systemTheme),
+                      child: Text(strings.systemTheme),
                     ),
                     DropdownMenuItem(
                       value: ThemeMode.dark.name,
-                      child: Text(strings.AppStrings.darkTheme),
+                      child: Text(strings.darkTheme),
                     ),
                     if (settings.unlockedThemes.contains('oled'))
                       DropdownMenuItem(
                         value: 'oled',
-                        child: Text(strings.AppStrings.oledTheme),
+                        child: Text(strings.oledTheme),
                       ),
                     if (settings.unlockedThemes.contains('green'))
                       DropdownMenuItem(
                         value: 'green',
-                        child: Text(strings.AppStrings.greenTheme),
+                        child: Text(strings.greenTheme),
                       ),
                     if (settings.unlockedThemes.contains('orange'))
                       DropdownMenuItem(
                         value: 'orange',
-                        child: Text(strings.AppStrings.orangeTheme),
+                        child: Text(strings.orangeTheme),
                       ),
                     // Add AI themes
                     ...settings.getAIThemeIds().map((themeId) {
                       final aiTheme = settings.getAITheme(themeId);
                       return DropdownMenuItem(
                         value: themeId,
-                        child: Text(aiTheme?.name ?? strings.AppStrings.aiThemeFallback),
+                        child: Text(aiTheme?.name ?? strings.aiThemeFallback),
                       );
                     }),
                   ],
@@ -304,7 +341,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           colorScheme,
           isSmallScreen,
           isDesktop,
-          title: strings.AppStrings.gameSettings,
+          title: strings.gameSettings,
           children: [
             _buildSettingItem(
               context,
@@ -312,23 +349,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
               colorScheme,
               isSmallScreen,
               isDesktop,
-              title: strings.AppStrings.gameSpeed,
-              subtitle: strings.AppStrings.chooseGameSpeed,
+              title: strings.gameSpeed,
+              subtitle: strings.chooseGameSpeed,
               icon: Icons.speed,
               child: DropdownButton<String>(
                 value: settings.gameSpeed,
                 items: [
                   DropdownMenuItem(
                     value: 'slow',
-                    child: Text(strings.AppStrings.slow),
+                    child: Text(strings.slow),
                   ),
                   DropdownMenuItem(
                     value: 'medium',
-                    child: Text(strings.AppStrings.medium),
+                    child: Text(strings.medium),
                   ),
                   DropdownMenuItem(
                     value: 'fast',
-                    child: Text(strings.AppStrings.fast),
+                    child: Text(strings.fast),
                   ),
                 ],
                 onChanged: (String? value) {
@@ -357,8 +394,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               colorScheme,
               isSmallScreen,
               isDesktop,
-              title: strings.AppStrings.muteSoundEffects,
-              subtitle: strings.AppStrings.muteSoundEffectsDesc,
+              title: strings.muteSoundEffects,
+              subtitle: strings.muteSoundEffectsDesc,
               icon: Icons.volume_off,
               child: Switch(
                 value: settings.mute,
@@ -385,7 +422,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           colorScheme,
           isSmallScreen,
           isDesktop,
-          title: strings.AppStrings.about,
+          title: strings.about,
           children: [
             _buildSettingItem(
               context,
@@ -393,13 +430,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
               colorScheme,
               isSmallScreen,
               isDesktop,
-              title: strings.AppStrings.serverStatus,
-              subtitle: strings.AppStrings.checkServiceStatus,
+              title: strings.serverStatus,
+              subtitle: strings.checkServiceStatus,
               icon: Icons.cloud_done_outlined,
               child: IconButton(
                 icon: const Icon(Icons.open_in_new),
                 onPressed: _openStatusPage,
-                tooltip: strings.AppStrings.openStatusPage,
+                tooltip: strings.openStatusPage,
               ),
             ),
             _buildSettingItem(
@@ -408,13 +445,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
               colorScheme,
               isSmallScreen,
               isDesktop,
-              title: strings.AppStrings.checkForUpdates,
-              subtitle: strings.AppStrings.checkForUpdatesDescription,
+              title: strings.checkForUpdates,
+              subtitle: strings.checkForUpdatesDescription,
               icon: Icons.system_update,
               child: IconButton(
                 icon: const Icon(Icons.refresh),
                 onPressed: () => _checkForUpdates(context, settings),
-                tooltip: strings.AppStrings.checkForUpdatesTooltip,
+                tooltip: strings.checkForUpdatesTooltip,
               ),
             ),
             _buildSettingItem(
@@ -423,8 +460,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               colorScheme,
               isSmallScreen,
               isDesktop,
-              title: strings.AppStrings.privacyPolicy,
-              subtitle: strings.AppStrings.privacyPolicyDescription,
+              title: strings.privacyPolicy,
+              subtitle: strings.privacyPolicyDescription,
               icon: Icons.privacy_tip,
               child: IconButton(
                 icon: const Icon(Icons.open_in_new),
@@ -432,11 +469,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   final Uri url = Uri.parse(AppUrls.privacyUrl);
                   if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
                     if (mounted) {
-                      showTopSnackBar(context, strings.AppStrings.couldNotOpenPrivacyPolicy, style: TopSnackBarStyle.error);
+                      showTopSnackBar(context, strings.couldNotOpenPrivacyPolicy, style: TopSnackBarStyle.error);
                     }
                   }
                 },
-                tooltip: strings.AppStrings.openPrivacyPolicyTooltip,
+                tooltip: strings.openPrivacyPolicyTooltip,
               ),
             ),
           ],
@@ -448,7 +485,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           colorScheme,
           isSmallScreen,
           isDesktop,
-          title: strings.AppStrings.privacyAndAnalytics,
+          title: strings.privacyAndAnalytics,
           children: [
             _buildSettingItem(
               context,
@@ -456,8 +493,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               colorScheme,
               isSmallScreen,
               isDesktop,
-              title: strings.AppStrings.analytics,
-              subtitle: strings.AppStrings.analyticsDescription,
+              title: strings.analytics,
+              subtitle: strings.analyticsDescription,
               icon: Icons.analytics,
               child: Switch(
                 value: settings.analyticsEnabled,
@@ -499,7 +536,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             colorScheme,
             isSmallScreen,
             isDesktop,
-            title: strings.AppStrings.notifications,
+            title: strings.notifications,
             children: [
               _buildSettingItem(
                 context,
@@ -507,8 +544,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 colorScheme,
                 isSmallScreen,
                 isDesktop,
-                title: strings.AppStrings.motivationNotifications,
-                subtitle: strings.AppStrings.motivationNotificationsDesc,
+                title: strings.motivationNotifications,
+                subtitle: strings.motivationNotificationsDesc,
                 icon: Icons.notifications,
                 child: Switch(
                   value: settings.notificationEnabled,
@@ -543,7 +580,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           colorScheme,
           isSmallScreen,
           isDesktop,
-          title: strings.AppStrings.actions,
+          title: strings.actions,
           children: [
             _buildActionButton(
               context,
@@ -567,15 +604,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   if (mounted && context.mounted) {
                     showTopSnackBar(
                       context,
-                      strings.AppStrings.couldNotOpenDonationPage,
+                      strings.couldNotOpenDonationPage,
                       style: TopSnackBarStyle.error,
                     );
                   }
                 }
               },
-              label: strings.AppStrings.donateButton,
+              label: strings.donateButton,
               icon: Icons.favorite,
-              subtitle: strings.AppStrings.supportUsTitle,
+              subtitle: strings.supportUsTitle,
             ),
             _buildActionButton(
               context,
@@ -587,10 +624,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Provider.of<AnalyticsService>(context, listen: false).capture(context, 'show_reset_and_logout_dialog');
                 _showResetAndLogoutDialog(context, settings);
               },
-              label: strings.AppStrings.resetAndLogout,
+              label: strings.resetAndLogout,
               icon: Icons.logout,
               isDestructive: true,
-              subtitle: strings.AppStrings.resetAndLogoutDesc,
+              subtitle: strings.resetAndLogoutDesc,
             ),
             _buildActionButton(
               context,
@@ -608,7 +645,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 );
               },
-              label: strings.AppStrings.showIntroduction,
+              label: strings.showIntroduction,
               icon: Icons.help_outline,
             ),
             _buildActionButton(
@@ -621,7 +658,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Provider.of<AnalyticsService>(context, listen: false).capture(context, 'report_issue');
                 _launchBugReportEmail(context);
               },
-              label: strings.AppStrings.reportIssue,
+              label: strings.reportIssue,
               icon: Icons.bug_report,
             ),
             _buildActionButton(
@@ -634,8 +671,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Provider.of<AnalyticsService>(context, listen: false).capture(context, 'export_stats');
                 _exportStats(context);
               },
-              label: strings.AppStrings.exportStats,
-              subtitle: strings.AppStrings.exportStatsDesc,
+              label: strings.exportStats,
+              subtitle: strings.exportStatsDesc,
               icon: Icons.download,
             ),
             _buildActionButton(
@@ -648,8 +685,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Provider.of<AnalyticsService>(context, listen: false).capture(context, 'import_stats');
                 _importStats(context);
               },
-              label: strings.AppStrings.importStats,
-              subtitle: strings.AppStrings.importStatsDesc,
+              label: strings.importStats,
+              subtitle: strings.importStatsDesc,
               icon: Icons.upload,
             ),
             _buildActionButton(
@@ -662,10 +699,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Provider.of<AnalyticsService>(context, listen: false).capture(context, 'clear_question_cache');
                 await QuestionCacheService().clearCache();
                 if (context.mounted) {
-                  showTopSnackBar(context, strings.AppStrings.cacheCleared, style: TopSnackBarStyle.success);
+                  showTopSnackBar(context, strings.cacheCleared, style: TopSnackBarStyle.success);
                 }
               },
-              label: strings.AppStrings.clearQuestionCache,
+              label: strings.clearQuestionCache,
               icon: Icons.delete_sweep,
               isDestructive: true,
             ),
@@ -680,11 +717,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 final Uri url = Uri.parse(AppUrls.contactEmailUrl);
                 if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
                   if (context.mounted) {
-                    showTopSnackBar(context, strings.AppStrings.emailNotAvailable, style: TopSnackBarStyle.error);
+                    showTopSnackBar(context, strings.emailNotAvailable, style: TopSnackBarStyle.error);
                   }
                 }
               },
-              label: strings.AppStrings.contactUs,
+              label: strings.contactUs,
               icon: Icons.email,
             ),
             _buildActionButton(
@@ -697,14 +734,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Provider.of<AnalyticsService>(context, listen: false).capture(context, 'show_social_media_dialog');
                 _showSocialMediaDialog(context);
               },
-              label: strings.AppStrings.followOnSocialMedia,
+              label: strings.followOnSocialMedia,
               icon: Icons.share,
             ),
           ],
         ),
         const SizedBox(height: 32),
         Text(
-          strings.AppStrings.copyright,
+          strings.copyright,
           style: TextStyle(
             fontSize: isSmallScreen ? 12 : 14,
             color: colorScheme.onSurface.withValues(alpha: (0.7 * 255)),
@@ -716,7 +753,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           builder: (context, snapshot) {
             final version = snapshot.data?.version ?? '';
             return Text(
-              '${strings.AppStrings.version} $version',
+              '${strings.version} $version',
               style: TextStyle(
                 fontSize: isSmallScreen ? 12 : 14,
                 color: colorScheme.onSurface.withValues(alpha: (0.7 * 255)),
@@ -1041,18 +1078,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Future<void> _showResetAndLogoutDialog(BuildContext context, SettingsProvider settings) async {
+    final strings = AppLocalizations.of(context)!.strings;
     final gameStats = Provider.of<GameStatsProvider>(context, listen: false);
     final localContext = context;
     return showDialog(
       context: localContext,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(strings.AppStrings.resetAndLogout),
-          content: Text(strings.AppStrings.resetAndLogoutConfirmation),
+          title: Text(strings.resetAndLogout),
+          content: Text(strings.resetAndLogoutConfirmation),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text(strings.AppStrings.cancel),
+              child: Text(strings.cancel),
             ),
             TextButton(
               onPressed: () async {
@@ -1110,7 +1148,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               style: TextButton.styleFrom(
                 foregroundColor: Theme.of(context).colorScheme.error,
               ),
-              child: Text(strings.AppStrings.resetAndLogout),
+              child: Text(strings.resetAndLogout),
             ),
           ],
         );
@@ -1146,17 +1184,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _showBugReportDialog(BuildContext context) {
+    final strings = AppLocalizations.of(context)!.strings;
     final localContext = context;
     showDialog(
       context: localContext,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(strings.AppStrings.emailAddress),
+          title: Text(strings.emailAddress),
           content: Text(AppUrls.contactEmail),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text(strings.AppStrings.ok),
+              child: Text(strings.ok),
             ),
           ],
         );
@@ -1165,6 +1204,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Future<void> _exportStats(BuildContext context) async {
+    final strings = AppLocalizations.of(context)!.strings;
     try {
       final gameStats = Provider.of<GameStatsProvider>(context, listen: false);
       final lessonProgress = Provider.of<LessonProgressProvider>(context, listen: false);
@@ -1198,11 +1238,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text(strings.AppStrings.exportStatsTitle),
+              title: Text(strings.exportStatsTitle),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(strings.AppStrings.exportStatsMessage),
+                  Text(strings.exportStatsMessage),
                   const SizedBox(height: 16),
                   Container(
                     padding: const EdgeInsets.all(8),
@@ -1220,7 +1260,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text(strings.AppStrings.close),
+                  child: Text(strings.close),
                 ),
               ],
             );
@@ -1229,12 +1269,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
       }
     } catch (e) {
       if (context.mounted) {
-        showTopSnackBar(context, '${strings.AppStrings.failedToExportStats} $e', style: TopSnackBarStyle.error);
+        showTopSnackBar(context, '${strings.failedToExportStats} $e', style: TopSnackBarStyle.error);
       }
     }
   }
 
   Future<void> _importStats(BuildContext context) async {
+    final strings = AppLocalizations.of(context)!.strings;
     final controller = TextEditingController();
 
     if (context.mounted) {
@@ -1242,18 +1283,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text(strings.AppStrings.importStatsTitle),
+            title: Text(strings.importStatsTitle),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(strings.AppStrings.importStatsMessage),
+                Text(strings.importStatsMessage),
                 const SizedBox(height: 16),
                 TextField(
                   controller: controller,
                   maxLines: 3,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
-                    hintText: strings.AppStrings.importStatsHint,
+                    hintText: strings.importStatsHint,
                   ),
                 ),
               ],
@@ -1261,13 +1302,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: Text(strings.AppStrings.cancel),
+                child: Text(strings.cancel),
               ),
               TextButton(
                 onPressed: () async {
                   final importString = controller.text.trim();
                   if (importString.isEmpty) {
-                    showTopSnackBar(context, strings.AppStrings.pleaseEnterValidString, style: TopSnackBarStyle.error);
+                    showTopSnackBar(context, strings.pleaseEnterValidString, style: TopSnackBarStyle.error);
                     return;
                   }
 
@@ -1287,7 +1328,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     final computedHash = sha256.convert(utf8.encode(jsonString)).toString();
                     if (computedHash != hash) {
                       if (!safeContext.mounted) return;
-                      showTopSnackBar(safeContext, strings.AppStrings.invalidOrTamperedData, style: TopSnackBarStyle.error);
+                      showTopSnackBar(safeContext, strings.invalidOrTamperedData, style: TopSnackBarStyle.error);
                       return;
                     }
 
@@ -1316,13 +1357,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       if (safeContext.mounted) {
                         Navigator.of(safeContext).pop();
                         if (safeContext.mounted) {
-                          showTopSnackBar(safeContext, strings.AppStrings.statsImportedSuccessfully, style: TopSnackBarStyle.success);
+                          showTopSnackBar(safeContext, strings.statsImportedSuccessfully, style: TopSnackBarStyle.success);
                         }
                       }
                     });
                   } catch (e) {
                     if (!mounted) return;
-                    showTopSnackBar(safeContext, '${strings.AppStrings.failedToImportStats} $e', style: TopSnackBarStyle.error);
+                    showTopSnackBar(safeContext, '${strings.failedToImportStats} $e', style: TopSnackBarStyle.error);
                   }
                 },
                 child: const Text('Import'),
@@ -1335,18 +1376,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _showSocialMediaDialog(BuildContext context) {
+    final strings = AppLocalizations.of(context)!.strings;
     final colorScheme = Theme.of(context).colorScheme;
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(strings.AppStrings.followUsOnSocialMedia),
+          title: Text(strings.followUsOnSocialMedia),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               _buildSocialMediaButton(
                 context,
-                strings.AppStrings.mastodon,
+                strings.mastodon,
                 Icons.alternate_email,
                 AppUrls.mastodonUrl,
                 colorScheme,
@@ -1354,7 +1396,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: 12),
               _buildSocialMediaButton(
                 context,
-                strings.AppStrings.pixelfed,
+                strings.pixelfed,
                 Icons.camera_alt,
                 AppUrls.pixelfedUrl,
                 colorScheme,
@@ -1362,7 +1404,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: 12),
               _buildSocialMediaButton(
                 context,
-                strings.AppStrings.kwebler,
+                strings.kwebler,
                 Icons.public,
                 AppUrls.kweblerUrl,
                 colorScheme,
@@ -1370,7 +1412,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: 12),
               _buildSocialMediaButton(
                 context,
-                strings.AppStrings.discord,
+                strings.discord,
                 Icons.forum,
                 AppUrls.discordUrl,
                 colorScheme,
@@ -1378,7 +1420,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: 12),
               _buildSocialMediaButton(
                 context,
-                strings.AppStrings.signal,
+                strings.signal,
                 Icons.message,
                 AppUrls.signalUrl,
                 colorScheme,
@@ -1386,7 +1428,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: 12),
               _buildSocialMediaButton(
                 context,
-                strings.AppStrings.bluesky,
+                strings.bluesky,
                 Icons.cloud,
                 AppUrls.blueskyUrl,
                 colorScheme,
@@ -1396,7 +1438,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text(strings.AppStrings.close),
+              child: Text(strings.close),
             ),
           ],
         );
@@ -1405,6 +1447,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Widget _buildSocialMediaButton(BuildContext context, String platform, IconData icon, String url, ColorScheme colorScheme) {
+    final strings = AppLocalizations.of(context)!.strings;
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -1429,7 +1472,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 if (context.mounted) {
-                  showTopSnackBar(context, strings.AppStrings.couldNotOpenPlatform.replaceAll('{platform}', platform), style: TopSnackBarStyle.error);
+                  showTopSnackBar(context, strings.couldNotOpenPlatform.replaceAll('{platform}', platform), style: TopSnackBarStyle.error);
                 }
               });
             }

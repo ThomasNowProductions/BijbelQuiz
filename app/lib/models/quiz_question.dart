@@ -100,19 +100,19 @@ class QuizQuestion {
   /// Creates a [QuizQuestion] from a JSON map.
   ///
   /// This factory is used to parse question data from a JSON source.
-  /// The JSON keys 'vraag', 'juisteAntwoord', 'fouteAntwoorden', 'moeilijkheidsgraad', and 'type' are used to populate the question's properties.
+  /// The JSON keys 'question', 'correctAnswer', 'incorrectAnswers', 'difficulty', and 'type' are used to populate the question's properties.
   factory QuizQuestion.fromJson(Map<String, dynamic> json) {
     final type = _parseQuestionType(json['type']?.toString());
-    final correctAnswer = json['juisteAntwoord']?.toString() ?? '';
-    final incorrectAnswers = _parseIncorrectAnswers(json['fouteAntwoorden'], type, correctAnswer);
+    final correctAnswer = json['correctAnswer']?.toString() ?? '';
+    final incorrectAnswers = _parseIncorrectAnswers(json['incorrectAnswers'], type, correctAnswer);
     final categories = _parseCategories(json['categories']);
     final biblicalReference = json['biblicalReference'] as String?;
 
     return QuizQuestion(
-      question: json['vraag']?.toString() ?? '',
+      question: json['question']?.toString() ?? '',
       correctAnswer: correctAnswer,
       incorrectAnswers: incorrectAnswers,
-      difficulty: json['moeilijkheidsgraad']?.toString() ?? '',
+      difficulty: json['difficulty']?.toString() ?? '',
       type: type,
       categories: categories,
       biblicalReference: biblicalReference,
@@ -124,10 +124,10 @@ class QuizQuestion {
   /// This method is used for caching questions to persistent storage.
   Map<String, dynamic> toJson() {
     return {
-      'vraag': question,
-      'juisteAntwoord': correctAnswer,
-      'fouteAntwoorden': incorrectAnswers,
-      'moeilijkheidsgraad': difficulty,
+      'question': question,
+      'correctAnswer': correctAnswer,
+      'incorrectAnswers': incorrectAnswers,
+      'difficulty': difficulty,
       'type': _questionTypeToString(type),
       'categories': categories,
       'biblicalReference': biblicalReference,
@@ -150,4 +150,4 @@ class QuizQuestion {
 
   /// Returns the primary category (first category) or empty string if none
   String get category => categories.isNotEmpty ? categories.first : '';
-} 
+}

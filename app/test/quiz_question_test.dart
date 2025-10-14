@@ -38,10 +38,10 @@ void main() {
 
     test('should parse from JSON - multiple choice', () {
       final json = {
-        'vraag': 'What is 2+2?',
-        'juisteAntwoord': '4',
-        'fouteAntwoorden': ['3', '5', '6'],
-        'moeilijkheidsgraad': 'easy',
+        'question': 'What is 2+2?',
+        'correctAnswer': '4',
+        'incorrectAnswers': ['3', '5', '6'],
+        'difficulty': 'easy',
         'type': 'mc',
         'categories': ['Math', 'Basic'],
         'biblicalReference': 'Genesis 1:1',
@@ -60,10 +60,10 @@ void main() {
 
     test('should parse from JSON - fill in the blank', () {
       final json = {
-        'vraag': 'Complete the verse: "In the beginning ___"',
-        'juisteAntwoord': 'God created',
-        'fouteAntwoorden': ['was the word', 'there was light'],
-        'moeilijkheidsgraad': 'medium',
+        'question': 'Complete the verse: "In the beginning ___"',
+        'correctAnswer': 'God created',
+        'incorrectAnswers': ['was the word', 'there was light'],
+        'difficulty': 'medium',
         'type': 'fitb',
       };
 
@@ -75,10 +75,10 @@ void main() {
 
     test('should parse from JSON - true/false with provided incorrect answers', () {
       final json = {
-        'vraag': 'Is God real?',
-        'juisteAntwoord': 'Waar',
-        'fouteAntwoorden': ['Niet waar'],
-        'moeilijkheidsgraad': 'easy',
+        'question': 'Is God real?',
+        'correctAnswer': 'Waar',
+        'incorrectAnswers': ['Niet waar'],
+        'difficulty': 'easy',
         'type': 'tf',
       };
 
@@ -90,9 +90,9 @@ void main() {
 
     test('should generate incorrect answers for true/false when not provided - Waar', () {
       final json = {
-        'vraag': 'Is Jesus the Son of God?',
-        'juisteAntwoord': 'Waar',
-        'moeilijkheidsgraad': 'easy',
+        'question': 'Is Jesus the Son of God?',
+        'correctAnswer': 'Waar',
+        'difficulty': 'easy',
         'type': 'tf',
       };
 
@@ -103,9 +103,9 @@ void main() {
 
     test('should generate incorrect answers for true/false when not provided - Niet waar', () {
       final json = {
-        'vraag': 'Is the Bible fiction?',
-        'juisteAntwoord': 'Niet waar',
-        'moeilijkheidsgraad': 'easy',
+        'question': 'Is the Bible fiction?',
+        'correctAnswer': 'Niet waar',
+        'difficulty': 'easy',
         'type': 'tf',
       };
 
@@ -116,9 +116,9 @@ void main() {
 
     test('should generate incorrect answers for true/false when not provided - True', () {
       final json = {
-        'vraag': 'God exists?',
-        'juisteAntwoord': 'True',
-        'moeilijkheidsgraad': 'easy',
+        'question': 'God exists?',
+        'correctAnswer': 'True',
+        'difficulty': 'easy',
         'type': 'tf',
       };
 
@@ -129,9 +129,9 @@ void main() {
 
     test('should generate incorrect answers for true/false when not provided - False', () {
       final json = {
-        'vraag': 'Is sin good?',
-        'juisteAntwoord': 'False',
-        'moeilijkheidsgraad': 'easy',
+        'question': 'Is sin good?',
+        'correctAnswer': 'False',
+        'difficulty': 'easy',
         'type': 'tf',
       };
 
@@ -165,10 +165,10 @@ void main() {
 
       final json = question.toJson();
 
-      expect(json['vraag'], 'Test question?');
-      expect(json['juisteAntwoord'], 'Yes');
-      expect(json['fouteAntwoorden'], ['No', 'Maybe']);
-      expect(json['moeilijkheidsgraad'], 'easy');
+      expect(json['question'], 'Test question?');
+      expect(json['correctAnswer'], 'Yes');
+      expect(json['incorrectAnswers'], ['No', 'Maybe']);
+      expect(json['difficulty'], 'easy');
       expect(json['type'], 'mc');
       expect(json['categories'], ['Test Category']);
       expect(json['biblicalReference'], 'Test 1:1');
@@ -279,7 +279,7 @@ void main() {
   group('Incorrect answers parsing', () {
     test('should parse list of incorrect answers from JSON', () {
       final json = {
-        'fouteAntwoorden': ['Wrong1', 'Wrong2', 'Wrong3'],
+        'incorrectAnswers': ['Wrong1', 'Wrong2', 'Wrong3'],
         'type': 'mc'
       };
       final question = QuizQuestion.fromJson(json);
@@ -288,7 +288,7 @@ void main() {
 
     test('should handle empty incorrect answers list', () {
       final json = {
-        'fouteAntwoorden': [],
+        'incorrectAnswers': [],
         'type': 'mc'
       };
       final question = QuizQuestion.fromJson(json);
@@ -297,7 +297,7 @@ void main() {
 
     test('should handle non-list incorrect answers', () {
       final json = {
-        'fouteAntwoorden': 'not a list',
+        'incorrectAnswers': 'not a list',
         'type': 'mc'
       };
       final question = QuizQuestion.fromJson(json);
@@ -306,7 +306,7 @@ void main() {
 
     test('should generate opposites for TF - Waar', () {
       final json = {
-        'juisteAntwoord': 'Waar',
+        'correctAnswer': 'Waar',
         'type': 'tf'
       };
       final question = QuizQuestion.fromJson(json);
@@ -315,7 +315,7 @@ void main() {
 
     test('should generate opposites for TF - Niet waar', () {
       final json = {
-        'juisteAntwoord': 'Niet waar',
+        'correctAnswer': 'Niet waar',
         'type': 'tf'
       };
       final question = QuizQuestion.fromJson(json);
@@ -324,7 +324,7 @@ void main() {
 
     test('should generate opposites for TF - True', () {
       final json = {
-        'juisteAntwoord': 'True',
+        'correctAnswer': 'True',
         'type': 'tf'
       };
       final question = QuizQuestion.fromJson(json);
@@ -333,7 +333,7 @@ void main() {
 
     test('should generate opposites for TF - False', () {
       final json = {
-        'juisteAntwoord': 'False',
+        'correctAnswer': 'False',
         'type': 'tf'
       };
       final question = QuizQuestion.fromJson(json);
@@ -342,7 +342,7 @@ void main() {
 
     test('should fallback for unknown TF answer', () {
       final json = {
-        'juisteAntwoord': 'Unknown',
+        'correctAnswer': 'Unknown',
         'type': 'tf'
       };
       final question = QuizQuestion.fromJson(json);

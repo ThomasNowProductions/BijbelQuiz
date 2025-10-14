@@ -26,6 +26,9 @@ class AppStrings {
   static const String sound = 'Geluid';
   static const String notifications = 'Meldingen';
   static const String language = 'Taal';
+  static const String chooseLanguage = 'Kies je taal';
+  static const String dutch = 'Nederlands';
+  static const String english = 'Engels';
   static const String theme = 'Thema';
   static const String darkMode = 'Donkere modus';
   static const String lightMode = 'Lichte modus';

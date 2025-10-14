@@ -12,7 +12,7 @@ import '../services/lesson_service.dart';
 import '../screens/quiz_screen.dart';
 import '../screens/guide_screen.dart';
 import '../widgets/top_snackbar.dart';
-import '../l10n/strings_nl.dart' as strings;
+import '../l10n/app_localizations.dart';
 import '../constants/urls.dart';
 import '../widgets/progress_header.dart';
 import '../widgets/lesson_tile.dart';
@@ -178,6 +178,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
   }
 
   Future<void> _loadLessons() async {
+    final strings = AppLocalizations.of(context)!.strings;
     Provider.of<AnalyticsService>(context, listen: false).capture(context, 'load_lessons');
     final progress = Provider.of<LessonProgressProvider>(context, listen: false);
     final settings = Provider.of<SettingsProvider>(context, listen: false);
@@ -211,7 +212,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
       if (!mounted) return;
       Provider.of<AnalyticsService>(context, listen: false).capture(context, 'load_lessons_error', properties: {'error': e.toString()});
       setState(() {
-        _error = strings.AppStrings.couldNotLoadLessons;
+        _error = strings.couldNotLoadLessons;
       });
     } finally {
       if (mounted) {
@@ -331,6 +332,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
   Widget build(BuildContext context) {
     final progress = Provider.of<LessonProgressProvider>(context);
     final colorScheme = Theme.of(context).colorScheme;
+    final strings = AppLocalizations.of(context)!.strings;
 
     // Responsive: adapt grid by max tile width instead of fixed column count
     final screenWidth = MediaQuery.sizeOf(context).width;
@@ -376,7 +378,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
         title: Padding(
           padding: const EdgeInsets.only(left: 12.0),
           child: Text(
-            'Lessen',
+            strings.lessons,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.w800,
                 ),
@@ -395,7 +397,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                       const SizedBox(height: 12),
                       ElevatedButton(
                         onPressed: _loadLessons,
-                        child: const Text('Opnieuw proberen'),
+                        child: Text(strings.tryAgain),
                       ),
                     ],
                   ),
@@ -543,12 +545,12 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                                           onTap: () async {
                                             if (!unlocked) {
                                               Provider.of<AnalyticsService>(context, listen: false).capture(context, 'tap_locked_lesson', properties: {'lesson_id': lesson.id});
-                                              showTopSnackBar(context, 'Les is nog vergrendeld', style: TopSnackBarStyle.warning);
+                                              showTopSnackBar(context, strings.locked, style: TopSnackBarStyle.warning);
                                               return;
                                             }
                                             if (!playable) {
                                               Provider.of<AnalyticsService>(context, listen: false).capture(context, 'tap_unplayable_lesson', properties: {'lesson_id': lesson.id});
-                                              showTopSnackBar(context, 'Je kunt alleen de meest recente ontgrendelde les spelen', style: TopSnackBarStyle.info);
+                                              showTopSnackBar(context, strings.onlyLatestUnlockedLesson, style: TopSnackBarStyle.info);
                                               return;
                                             }
 

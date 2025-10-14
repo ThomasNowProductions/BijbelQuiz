@@ -23,7 +23,7 @@ void main() {
       // Wait for initialization
       await Future.delayed(Duration.zero);
 
-      expect(provider.language, 'nl');
+      expect(provider.language, null);
       expect(provider.themeMode, ThemeMode.system);
       expect(provider.gameSpeed, 'medium');
       expect(provider.slowMode, false);
@@ -38,6 +38,7 @@ void main() {
 
     test('should load settings from SharedPreferences', () async {
       SharedPreferences.setMockInitialValues({
+        'language': 'en',
         'theme_mode': 2, // ThemeMode.dark
         'game_speed': 'slow',
         'has_seen_guide': true,
@@ -54,6 +55,7 @@ void main() {
       // Wait for initialization
       await Future.delayed(Duration.zero);
 
+      expect(provider.language, 'en');
       expect(provider.themeMode, ThemeMode.dark);
       expect(provider.gameSpeed, 'slow');
       expect(provider.slowMode, true);
@@ -187,23 +189,21 @@ void main() {
       expect(provider.hasCheckedForUpdate, false);
     });
 
-    test('should set language (always nl)', () async {
+    test('should set language', () async {
       provider = SettingsProvider();
       await Future.delayed(Duration.zero);
 
       await provider.setLanguage('nl');
 
       expect(provider.language, 'nl');
-    });
 
-    test('should throw error for non-nl language', () async {
-      provider = SettingsProvider();
-      await Future.delayed(Duration.zero);
+      await provider.setLanguage('en');
 
-      expect(
-        () => provider.setLanguage('en'),
-        throwsA(isA<ArgumentError>()),
-      );
+      expect(provider.language, 'en');
+
+      await provider.setLanguage(null);
+
+      expect(provider.language, null);
     });
 
     test('should set custom theme correctly', () async {
@@ -268,6 +268,7 @@ void main() {
 
     test('should export data correctly', () async {
       SharedPreferences.setMockInitialValues({
+        'language': 'en',
         'theme_mode': 2,
         'game_speed': 'slow',
         'has_seen_guide': true,
@@ -284,6 +285,7 @@ void main() {
 
       final data = provider.getExportData();
 
+      expect(data['language'], 'en');
       expect(data['themeMode'], 2);
       expect(data['gameSpeed'], 'slow');
       expect(data['hasSeenGuide'], true);
@@ -302,6 +304,7 @@ void main() {
       await Future.delayed(Duration.zero);
 
       final importData = {
+        'language': 'en',
         'themeMode': 2,
         'gameSpeed': 'fast',
         'hasSeenGuide': true,
@@ -315,6 +318,7 @@ void main() {
 
       await provider.loadImportData(importData);
 
+      expect(provider.language, 'en');
       expect(provider.themeMode, ThemeMode.dark);
       expect(provider.gameSpeed, 'fast');
       expect(provider.hasSeenGuide, true);
