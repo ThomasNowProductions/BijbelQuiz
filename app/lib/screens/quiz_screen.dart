@@ -489,10 +489,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
     // Reset question pool if language changed
     if (_lastLanguage != null && _lastLanguage != language) {
       final analytics = Provider.of<AnalyticsService>(context, listen: false);
-      analytics.capture(context, 'language_changed', properties: {'from': _lastLanguage!, 'to': language});
+      analytics.capture(context, 'language_changed', properties: {'from': _lastLanguage!, 'to': language ?? 'system'});
       analytics.trackFeatureSuccess(context, AnalyticsService.FEATURE_LANGUAGE_SETTINGS, additionalProperties: {
         'from_language': _lastLanguage!,
-        'to_language': language,
+        'to_language': language ?? 'system',
       });
       AppLogger.info('Language changed from $_lastLanguage to $language, resetting question pool');
       _resetQuestionPool();
@@ -525,7 +525,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
       });
 
       final settings = Provider.of<SettingsProvider>(context, listen: false);
-      final language = settings.language;
+      final language = settings.language ?? 'en';
 
 
       // Load questions - if in lesson mode with a specific category, load category questions
@@ -904,7 +904,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
                         isAnswering: _quizState.isAnswering,
                         isTransitioning: _quizState.isTransitioning,
                         onAnswerSelected: _handleAnswer,
-                        language: settings.language,
+                        language: settings.language ?? 'en',
                         performanceService: _performanceService,
                       ),
                       const SizedBox(height: 16),

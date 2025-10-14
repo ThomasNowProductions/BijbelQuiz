@@ -23,7 +23,7 @@ void main() {
       // Wait for initialization
       await Future.delayed(Duration.zero);
 
-      expect(provider.language, 'nl');
+      expect(provider.language, null);
       expect(provider.themeMode, ThemeMode.system);
       expect(provider.gameSpeed, 'medium');
       expect(provider.slowMode, false);
@@ -196,15 +196,6 @@ void main() {
       expect(provider.language, 'nl');
     });
 
-    test('should throw error for non-nl language', () async {
-      provider = SettingsProvider();
-      await Future.delayed(Duration.zero);
-
-      expect(
-        () => provider.setLanguage('en'),
-        throwsA(isA<ArgumentError>()),
-      );
-    });
 
     test('should set custom theme correctly', () async {
       SharedPreferences.setMockInitialValues({});

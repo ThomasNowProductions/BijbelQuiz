@@ -23,7 +23,7 @@ import 'screens/store_screen.dart';
 import 'providers/lesson_progress_provider.dart';
 import 'screens/main_navigation_screen.dart';
 import 'settings_screen.dart';
-import 'l10n/strings_nl.dart' as strings;
+import 'l10n/app_localizations.dart';
 
 final analyticsService = AnalyticsService();
 
@@ -195,20 +195,22 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
   Widget _buildMaterialApp(SettingsProvider settings) {
     return MaterialApp(
       navigatorObservers: [analyticsService.getObserver()],
-      title: strings.AppStrings.appName,
+      title: "BijbelQuiz",
       debugShowCheckedModeBanner: false,
       theme: ThemeUtils.getLightTheme(settings),
       darkTheme: ThemeUtils.getDarkTheme(settings),
       themeMode: ThemeUtils.getThemeMode(settings),
       localizationsDelegates: const [
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [
+        Locale('en', ''), // English
         Locale('nl', ''), // Dutch
       ],
-      locale: const Locale('nl', ''), // Force Dutch locale
+      locale: settings.language == null ? null : Locale(settings.language!, ''),
       routes: {
         '/store': (context) => const StoreScreen(),
         '/settings': (context) => const SettingsScreen(),

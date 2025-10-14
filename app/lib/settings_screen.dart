@@ -16,7 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/lesson_select_screen.dart';
 import 'widgets/quiz_skeleton.dart';
 import 'constants/urls.dart';
-import 'l10n/strings_nl.dart' as strings;
+import 'l10n/app_localizations.dart';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'services/logger.dart';
@@ -87,6 +87,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final strings = AppLocalizations.of(context)!.strings;
     final settings = Provider.of<SettingsProvider>(context);
     final colorScheme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
@@ -295,6 +296,54 @@ class _SettingsScreenState extends State<SettingsScreen> {
               })(),
             ),
 
+          ],
+        ),
+        const SizedBox(height: 24),
+        _buildSettingsGroup(
+          context,
+          settings,
+          colorScheme,
+          isSmallScreen,
+          isDesktop,
+          title: strings.AppStrings.language,
+          children: [
+            _buildSettingItem(
+              context,
+              settings,
+              colorScheme,
+              isSmallScreen,
+              isDesktop,
+              title: strings.AppStrings.language,
+              subtitle: strings.AppStrings.language,
+              icon: Icons.language,
+              child: DropdownButton<String>(
+                value: settings.language ?? 'system',
+                items: const [
+                  DropdownMenuItem(
+                    value: 'system',
+                    child: Text("System"),
+                  ),
+                  DropdownMenuItem(
+                    value: 'nl',
+                    child: Text("Nederlands"),
+                  ),
+                  DropdownMenuItem(
+                    value: 'en',
+                    child: Text("English"),
+                  ),
+                ],
+                onChanged: (String? value) {
+                  if (value != null) {
+                    settings.setLanguage(value == 'system' ? null : value);
+                  }
+                },
+                style: TextStyle(
+                  color: colorScheme.onSurface,
+                  fontSize: isSmallScreen ? 12 : 14,
+                ),
+                dropdownColor: colorScheme.surfaceContainerHighest,
+              ),
+            ),
           ],
         ),
         const SizedBox(height: 24),

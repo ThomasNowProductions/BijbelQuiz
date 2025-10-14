@@ -6,6 +6,7 @@ import '../models/ai_theme.dart';
 /// Manages the app's settings including language and theme preferences
 class SettingsProvider extends ChangeNotifier {
   static const String _themeModeKey = 'theme_mode';
+  static const String _languageKey = 'language';
   static const String _customThemeKey = 'custom_theme';
   static const String _unlockedThemesKey = 'unlocked_themes';
   static const String _slowModeKey = 'game_speed';
@@ -27,7 +28,7 @@ class SettingsProvider extends ChangeNotifier {
   static const String _aiThemesKey = 'ai_themes';
 
   SharedPreferences? _prefs;
-  String _language = 'nl';
+  String? _language;
   ThemeMode _themeMode = ThemeMode.system;
   String _gameSpeed = 'medium'; // 'slow', 'medium', 'fast'
   bool _hasSeenGuide = false;
@@ -58,8 +59,8 @@ class SettingsProvider extends ChangeNotifier {
     _loadSettings();
   }
 
-  /// De huidige taalinstelling (altijd 'nl')
-  String get language => _language;
+  /// The current language setting
+  String? get language => _language;
   
   /// The current theme mode setting
   ThemeMode get themeMode => _themeMode;
@@ -274,8 +275,7 @@ class SettingsProvider extends ChangeNotifier {
 
       _prefs = await SharedPreferences.getInstance();
       AppLogger.info('SharedPreferences instance obtained');
-      // Altijd Nederlands forceren
-      _language = 'nl';
+      _language = _prefs?.getString(_languageKey);
       final themeModeIndex = _prefs?.getInt(_themeModeKey) ?? 0;
       _themeMode = ThemeMode.values[themeModeIndex];
       // Load old boolean slow mode setting for backward compatibility
@@ -340,13 +340,19 @@ class SettingsProvider extends ChangeNotifier {
     }
   }
 
-  /// Update de taalinstelling (alleen 'nl' toegestaan)
-  Future<void> setLanguage(String language) async {
-    if (language != 'nl') {
-      throw ArgumentError('Taal moet "nl" zijn (alleen Nederlands toegestaan)');
-    }
-    // Geen effect, altijd Nederlands
-    notifyListeners();
+  /// Updates the language setting
+  Future<void> setLanguage(String? language) async {
+    await _saveSetting(
+      action: () async {
+        _language = language;
+        if (language != null) {
+          await _prefs?.setString(_languageKey, language);
+        } else {
+          await _prefs?.remove(_languageKey);
+        }
+      },
+      errorMessage: 'Failed to save language setting',
+    );
   }
 
   /// Updates the theme mode setting

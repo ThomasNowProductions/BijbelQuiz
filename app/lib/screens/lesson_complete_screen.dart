@@ -255,7 +255,7 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen> with Single
       final settings = Provider.of<SettingsProvider>(context, listen: false);
       final service = LessonService();
       final lessons = await service.generateLessons(
-        settings.language,
+        settings.language ?? 'en',
         maxLessons: nextIndex + 1,
         maxQuestionsPerLesson: widget.lesson.maxQuestions,
       );
