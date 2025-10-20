@@ -1,0 +1,83 @@
+{
+  "redirects": [
+    {
+      "source": "/discord",
+      "destination": "https://discord.gg/ADbhWr4UnK"
+    },
+    {
+      "source": "/donate",
+      "destination": "https://tikkie.me/pay/c29aqofncpo5dk3qk20e"
+    },
+    {
+      "source": "/donate.html",
+      "destination": "https://bijbelquiz.app/donate"
+    },
+    {
+      "source": "/email",
+      "destination": "mailto:thomasnowprod@proton.me"
+    },
+    {
+      "source": "/kwebler",
+      "destination": "https://kwebler.com/profiel/BijbelQuiz"
+    },
+    {
+      "source": "/mastodon",
+      "destination": "https://toot.community/@BijbelQuiz"
+    },
+    {
+      "source": "/bluesky",
+      "destination": "https://bsky.app/profile/bijbelquiz.app"
+    },
+    {
+      "source": "/pixelfed",
+      "destination": "https://pixelfed.social/@bijbelquiz"
+    },
+    {
+      "source": "/signal-contact",
+      "destination": "https://signal.me/#eu/Rpr6fijw3iLLP8smdhgesdKIFuFc4H0D8svTZLPbKTBVaTwB3AJEWKcivAERvuzj"
+    },
+    {
+      "source": "/signal.html",
+      "destination": "https://bijbelquiz.app/signal-contact"
+    },
+    {
+      "source": "/signal-group",
+      "destination": "https://signal.group/#CjQKILlX0njMt_UqlaFrlk_ePLdUkNel9p4w_CHvgkKbAoHYEhCZIoaUq_8G36p1w-Xpq1xq"
+    },
+    {
+      "source": "/tevredenheidsrapport",
+      "destination": "https://app.formbricks.com/s/cmfkd5nqm1o14y501fqgufvpv"
+    },
+    {
+      "source": "/download",
+      "destination": "https://bijbelquiz.app/download.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "https://bijbelquiz.app/privacy.html"
+    },
+    {
+      "source": "/algemene-voorwaarden",
+      "destination": "https://bijbelquiz.app/algemene-voorwaarden.html"
+    },
+    {
+      "source": "/status",
+      "destination": "https://bijbelquiz.instatus.com/"
+    },
+    {
+      "source": "/nooki",
+      "destination": "https://nooki.me/c/BijbelQuiz"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ]
+}
