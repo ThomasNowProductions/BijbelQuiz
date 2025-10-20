@@ -281,6 +281,15 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
         }
       } catch (e) {
         AppLogger.error('Error managing API server lifecycle: $e');
+        // Show user-friendly error message
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('API Error: ${e.toString()}'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
       }
     });
   }
