@@ -71,6 +71,18 @@
     {
       "source": "/links",
       "destination": "https://bijbelquiz.app/links.html"
+    },
+    {
+      "source": "/i/:id",
+      "destination": "https://bijbelquiz.app/invite.html"
+    },
+    {
+      "source": "/i",
+      "destination": "https://bijbelquiz.app/invite.html"
+    },
+    {
+      "source": "/wachtlijst",
+      "destination": "https://app.formbricks.com/s/cmdwy2s6adbojvr01nk4j3lvbp"
     }
   ],
   "headers": [

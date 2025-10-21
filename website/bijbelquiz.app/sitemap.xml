@@ -41,4 +41,11 @@
     <priority>0.3</priority>
   </url>
 
+  <url>
+    <loc>https://bijbelquiz.app/invite.html</loc>
+    <lastmod>2025-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
 </urlset>

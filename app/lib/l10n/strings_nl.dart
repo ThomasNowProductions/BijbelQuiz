@@ -350,6 +350,8 @@ class AppStrings {
   static const String bluesky = 'Bluesky';
   static const String nooki = 'Nooki';
   static const String couldNotOpenPlatform = 'Kon {platform} niet openen';
+  static const String shareAppWithFriends = 'Deel app met vrienden';
+  static const String shareYourStats = 'Deel je statistieken';
 
   // Settings Provider Errors
   static const String languageMustBeNl = 'Taal moet "nl" zijn (alleen Nederlands toegestaan)';

@@ -22,6 +22,10 @@ import 'l10n/strings_nl.dart' as strings;
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'services/logger.dart';
+import 'package:share_plus/share_plus.dart';
+import 'dart:io';
+import 'dart:ui' as ui;
+import 'package:path_provider/path_provider.dart';
 
 /// The settings screen that allows users to customize app preferences
 class SettingsScreen extends StatefulWidget {
@@ -837,6 +841,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
               label: strings.AppStrings.followOnSocialMedia,
               icon: Icons.share,
             ),
+            _buildActionButton(
+              context,
+              settings,
+              colorScheme,
+              isSmallScreen,
+              isDesktop,
+              onPressed: () => _shareApp(context),
+              label: strings.AppStrings.shareAppWithFriends,
+              icon: Icons.ios_share,
+            ),
+            _buildActionButton(
+              context,
+              settings,
+              colorScheme,
+              isSmallScreen,
+              isDesktop,
+              onPressed: () => _shareStatsImage(context),
+              label: strings.AppStrings.shareYourStats,
+              icon: Icons.bar_chart,
+            ),
           ],
         ),
         const SizedBox(height: 32),
@@ -1547,6 +1571,142 @@ class _SettingsScreenState extends State<SettingsScreen> {
         );
       },
     );
+  }
+
+  Future<void> _shareApp(BuildContext context) async {
+    final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+    analyticsService.capture(context, 'share_app');
+    
+    final String inviteUrl = 'https://bijbelquiz.app/i';
+    
+    try {
+      await Clipboard.setData(ClipboardData(text: inviteUrl));
+      if (context.mounted) {
+        showTopSnackBar(
+          context,
+          'Uitnodigingslink gekopieerd naar klembord!',
+          style: TopSnackBarStyle.success,
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        showTopSnackBar(
+          context,
+          'Kon link niet kopiëren: ${e.toString()}',
+          style: TopSnackBarStyle.error,
+        );
+      }
+    }
+  }
+
+  Future<void> _shareStatsImage(BuildContext context) async {
+    final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+    analyticsService.capture(context, 'share_stats_image');
+    
+    try {
+      // Get stats from provider
+      final gameStats = Provider.of<GameStatsProvider>(context, listen: false);
+      
+      // Create stats text to display
+      final statsText = 'BijbelQuiz Statistieken\n\n'
+          'Punten: ${gameStats.score}\n'
+          'Langerende reeks: ${gameStats.currentStreak}\n'
+          'Langste reeks: ${gameStats.longestStreak}\n'
+          'Verkeerde antwoorden: ${gameStats.incorrectAnswers}';
+      
+      // Create the image
+      final Uint8List imageBytes = await _createStatsImage(statsText);
+      
+      // Save the image to a temporary file
+      final directory = await getTemporaryDirectory();
+      final file = File('${directory.path}/bijbelquiz_stats.png');
+      await file.writeAsBytes(imageBytes);
+      
+      // Share the image
+      await Share.shareXFiles(
+        [XFile(file.path)],
+        text: 'Mijn BijbelQuiz statistieken! Test ook jouw bijbelkennis met de BijbelQuiz app.',
+      );
+      
+      // Clean up temporary file
+      await file.delete();
+    } catch (e) {
+      if (context.mounted) {
+        showTopSnackBar(
+          context,
+          'Kon statistieken niet delen: ${e.toString()}',
+          style: TopSnackBarStyle.error,
+        );
+      }
+    }
+  }
+
+  Future<Uint8List> _createStatsImage(String statsText) async {
+    final ui.PictureRecorder recorder = ui.PictureRecorder();
+    final Canvas canvas = Canvas(recorder);
+    
+    // Define image dimensions
+    const double width = 400.0;
+    const double height = 250.0;
+    
+    // Paint for background
+    final Paint backgroundPaint = Paint()
+      ..color = const Color(0xFFFAFAFA); // Light gray background
+    
+    // Draw background
+    canvas.drawRect(const Rect.fromLTWH(0, 0, width, height), backgroundPaint);
+    
+    // Paint for text
+    final Paint textPaint = Paint()
+      ..color = const Color(0xFF0F172A); // Dark text
+    
+    // Create text painter
+    final TextSpan span = TextSpan(
+      text: statsText,
+      style: const TextStyle(
+        color: Color(0xFF0F172A),
+        fontSize: 18,
+        fontWeight: FontWeight.w600,
+        fontFamily: 'Quicksand',
+      ),
+    );
+    
+    final TextPainter textPainter = TextPainter(
+      text: span,
+      textAlign: TextAlign.center,
+      textDirection: TextDirection.ltr,
+    );
+    
+    textPainter.layout(
+      minWidth: 0,
+      maxWidth: width - 40, // Add padding
+    );
+    
+    // Draw text in the center
+    final Offset offset = Offset(
+      (width - textPainter.width) / 2,
+      (height - textPainter.height) / 2,
+    );
+    
+    textPainter.paint(canvas, offset);
+    
+    // Draw a border
+    final Paint borderPaint = Paint()
+      ..color = const Color(0xFF2563EB) // Primary blue
+      ..strokeWidth = 3
+      ..style = PaintingStyle.stroke;
+    
+    canvas.drawRect(
+      Rect.fromLTWH(5, 5, width - 10, height - 10),
+      borderPaint,
+    );
+    
+    // Get the image from the canvas
+    final ui.Picture picture = recorder.endRecording();
+    final ui.Image image = await picture.toImage(width.toInt(), height.toInt());
+    final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    
+    return byteData!.buffer.asUint8List();
   }
 
   void _showApiKeyDialog(BuildContext context, SettingsProvider settings) {
