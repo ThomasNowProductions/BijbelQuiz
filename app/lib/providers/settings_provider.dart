@@ -57,7 +57,7 @@ class SettingsProvider extends ChangeNotifier {
   // API settings
   bool _apiEnabled = false;
   String _apiKey = '';
-  int _apiPort = 8080;
+  int _apiPort = 7777;
   
 
 
@@ -342,7 +342,7 @@ class SettingsProvider extends ChangeNotifier {
       // Load API settings
       _apiEnabled = _getBoolSetting(_apiEnabledKey, defaultValue: false);
       _apiKey = _prefs?.getString(_apiKeyKey) ?? '';
-      _apiPort = _prefs?.getInt(_apiPortKey) ?? 8080;
+      _apiPort = _prefs?.getInt(_apiPortKey) ?? 7777;
 
       final unlocked = _prefs?.getStringList(_unlockedThemesKey);
       if (unlocked != null) {
@@ -742,7 +742,7 @@ class SettingsProvider extends ChangeNotifier {
     // Load API settings
     _apiEnabled = data['apiEnabled'] ?? false;
     _apiKey = data['apiKey'] ?? '';
-    _apiPort = data['apiPort'] ?? 8080;
+    _apiPort = data['apiPort'] ?? 7777;
 
     final lastDifficultyPopupMs = data['lastDifficultyPopup'];
     _lastDifficultyPopup = lastDifficultyPopupMs != null ? DateTime.fromMillisecondsSinceEpoch(lastDifficultyPopupMs) : null;

@@ -6,7 +6,7 @@ The BijbelQuiz app includes a local HTTP API server that allows external applica
 
 ## Features
 
-- **Local Network Access**: Runs on a configurable local port (default: 8080)
+- **Local Network Access**: Runs on a configurable local port (default: 7777)
 - **Secure Authentication**: API key-based authentication via Bearer token or X-API-Key header
 - **RESTful Endpoints**: Standard HTTP methods for data access with versioning support
 - **JSON Responses**: Structured data format for easy integration
@@ -25,7 +25,7 @@ The BijbelQuiz app includes a local HTTP API server that allows external applica
 2. Go to **Settings** → **Local API**
 3. Toggle **"Enable Local API"** to ON
 4. Click **"Generate Key"** to create an API key
-5. Optionally change the **API Port** (default: 8080)
+5. Optionally change the **API Port** (default: 7777)
 
 ### 2. API Key Management
 
@@ -36,8 +36,8 @@ The BijbelQuiz app includes a local HTTP API server that allows external applica
 ### 3. Network Access
 
 The API server binds to `0.0.0.0` (all network interfaces), making it accessible from:
-- Local machine: `http://localhost:8080`
-- Local network: `http://[device-ip]:8080`
+- Local machine: `http://localhost:7777`
+- Local network: `http://[device-ip]:7777`
 - External tools: Use your device's IP address
 
 ## Authentication
@@ -49,13 +49,13 @@ All API endpoints (except `/health`) require authentication using your API key.
 #### 1. Bearer Token (Recommended)
 ```bash
 curl -H "Authorization: Bearer your-api-key" \
-     http://localhost:8080/questions
+     http://localhost:7777/questions
 ```
 
 #### 2. API Key Header
 ```bash
 curl -H "X-API-Key: your-api-key" \
-     http://localhost:8080/questions
+     http://localhost:7777/questions
 ```
 
 ### Error Response (Invalid/Missing Key)
@@ -73,7 +73,7 @@ The BijbelQuiz API uses versioning to ensure backward compatibility and allow fo
 
 ### Base URL
 ```
-http://localhost:8080/v1
+http://localhost:7777/v1
 ```
 
 All API endpoints are prefixed with the version number (`/v1`). This allows for future API versions to be introduced without breaking existing integrations.
@@ -96,7 +96,7 @@ Check if the API server is running and healthy.
 
 **Usage:**
 ```bash
-curl http://localhost:8080/v1/health
+curl http://localhost:7777/v1/health
 ```
 
 ### 2. Get Questions
@@ -137,15 +137,15 @@ Retrieve quiz questions with optional filtering.
 ```bash
 # Get 10 random questions
 curl -H "X-API-Key: your-api-key" \
-     http://localhost:8080/v1/questions?limit=10
+     http://localhost:7777/v1/questions?limit=10
 
 # Get questions from Genesis category
 curl -H "X-API-Key: your-api-key" \
-     http://localhost:8080/v1/questions?category=Genesis&limit=5
+     http://localhost:7777/v1/questions?category=Genesis&limit=5
 
 # Get hard difficulty questions
 curl -H "X-API-Key: your-api-key" \
-     http://localhost:8080/v1/questions?difficulty=4&limit=20
+     http://localhost:7777/v1/questions?difficulty=4&limit=20
 ```
 
 ### 3. Get Questions by Category
@@ -166,11 +166,11 @@ Get questions from a specific category.
 ```bash
 # Get questions from Psalms
 curl -H "X-API-Key: your-api-key" \
-     http://localhost:8080/v1/questions/Psalmen?limit=15
+     http://localhost:7777/v1/questions/Psalmen?limit=15
 
 # Get easy questions from Proverbs
 curl -H "X-API-Key: your-api-key" \
-     http://localhost:8080/v1/questions/Spreuken?difficulty=2
+     http://localhost:7777/v1/questions/Spreuken?difficulty=2
 ```
 
 ### 4. Get User Progress
@@ -197,7 +197,7 @@ Retrieve user's lesson progress and unlock status.
 **Usage:**
 ```bash
 curl -H "X-API-Key: your-api-key" \
-     http://localhost:8080/v1/progress
+     http://localhost:7777/v1/progress
 ```
 
 ### 5. Get Game Statistics
@@ -220,7 +220,7 @@ Retrieve current game statistics and performance metrics.
 **Usage:**
 ```bash
 curl -H "X-API-Key: your-api-key" \
-     http://localhost:8080/v1/stats
+     http://localhost:7777/v1/stats
 ```
 
 ### 6. Get App Settings
@@ -244,7 +244,7 @@ Retrieve current app settings and preferences.
 **Usage:**
 ```bash
 curl -H "X-API-Key: your-api-key" \
-     http://localhost:8080/v1/settings
+     http://localhost:7777/v1/settings
 ```
 
 ## Response Formats
@@ -335,7 +335,7 @@ Rate limiting information is included in response headers:
 import requests
 
 API_KEY = "your-api-key-here"
-BASE_URL = "http://localhost:8080/v1"
+BASE_URL = "http://localhost:7777/v1"
 
 def get_questions(category=None, limit=10):
     headers = {"X-API-Key": API_KEY}
@@ -360,7 +360,7 @@ for q in questions['questions']:
 ### JavaScript/Node.js Example
 ```javascript
 const API_KEY = "your-api-key-here";
-const BASE_URL = "http://localhost:8080/v1";
+const BASE_URL = "http://localhost:7777/v1";
 
 async function getQuestions(category = null, limit = 10) {
     const headers = {
@@ -397,27 +397,27 @@ getQuestions("Psalmen", 10)
 ### Command Line Examples
 ```bash
 # Health check
-curl http://localhost:8080/v1/health
+curl http://localhost:7777/v1/health
 
 # Get 5 random questions
 curl -H "X-API-Key: your-api-key" \
-     http://localhost:8080/v1/questions?limit=5
+     http://localhost:7777/v1/questions?limit=5
 
 # Get questions from Matthew with Bearer token
 curl -H "Authorization: Bearer your-api-key" \
-     http://localhost:8080/v1/questions?category=Matteüs&limit=10
+     http://localhost:7777/v1/questions?category=Matteüs&limit=10
 
 # Get user progress
 curl -H "X-API-Key: your-api-key" \
-     http://localhost:8080/v1/progress
+     http://localhost:7777/v1/progress
 
 # Get game statistics
 curl -H "X-API-Key: your-api-key" \
-     http://localhost:8080/v1/stats
+     http://localhost:7777/v1/stats
 
 # Get settings
 curl -H "X-API-Key: your-api-key" \
-     http://localhost:8080/v1/settings
+     http://localhost:7777/v1/settings
 ```
 
 ## Troubleshooting
@@ -426,9 +426,9 @@ curl -H "X-API-Key: your-api-key" \
 
 1. **Connection Refused**
     - Ensure the API is enabled in BijbelQuiz settings
-    - Check that the port (default: 8080) is not blocked by firewall
+    - Check that the port (default: 7777) is not blocked by firewall
     - Verify the app is running and not in background
-    - Try the new versioned URL: `http://localhost:8080/v1/health`
+    - Try the new versioned URL: `http://localhost:7777/v1/health`
 
 2. **Authentication Failed**
     - Ensure you're using the correct API key
@@ -450,8 +450,8 @@ curl -H "X-API-Key: your-api-key" \
 
 5. **Port Already in Use**
     - Change the API port in BijbelQuiz settings
-    - Check what process is using the port: `netstat -tulpn | grep :8080`
-    - On Windows: `netstat -ano | findstr :8080`
+    - Check what process is using the port: `netstat -tulpn | grep :7777`
+    - On Windows: `netstat -ano | findstr :7777`
 
 6. **Request Too Large (413 Error)**
     - Reduce request payload size (limit is 1MB)
