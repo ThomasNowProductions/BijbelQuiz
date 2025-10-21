@@ -1,10 +1,5 @@
-  ____  _  _ _          _  ___        _     
- | __ )(_)(_) |__   ___| |/ _ \ _   _(_)____
- |  _ \| || | '_ \ / _ \ | | | | | | | |_  /
- | |_) | || | |_) |  __/ | |_| | |_| | |/ / 
- |____/|_|/ |_.__/ \___|_|\__\_\\__,_|_/___|
-        |__/                                
-        
+# BijbelQuiz
+
 BijbelQuiz is a Flutter-based mobile application designed for Bible quizzes, featuring interactive lessons, questions, and progress tracking.
 
 ## Project Structure
