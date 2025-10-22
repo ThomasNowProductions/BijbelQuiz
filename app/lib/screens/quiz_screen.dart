@@ -1038,7 +1038,15 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
     final settings = Provider.of<SettingsProvider>(context, listen: false);
     final isDev = kDebugMode;
 
-    final success = await gameStats.spendStars(isDev ? 0 : 35);
+    final success = isDev ? true : await gameStats.spendStarsWithTransaction(
+      amount: 35,
+      reason: 'Vraag overslaan',
+      metadata: {
+        'question_category': question.category,
+        'question_difficulty': question.difficulty,
+        'time_remaining': _quizState.timeRemaining,
+      },
+    );
     if (success) {
       _timerManager.timeAnimationController.stop();
       setState(() {
@@ -1099,7 +1107,16 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
     }
 
     // Spend 10 stars for unlocking the biblical reference (free in debug mode)
-    final success = await gameStats.spendStars(isDev ? 0 : 10);
+    final success = isDev ? true : await gameStats.spendStarsWithTransaction(
+      amount: 10,
+      reason: 'Bijbelse referentie ontgrendelen',
+      metadata: {
+        'question_category': question.category,
+        'question_difficulty': question.difficulty,
+        'biblical_reference': question.biblicalReference ?? 'none',
+        'time_remaining': _quizState.timeRemaining,
+      },
+    );
     if (success) {
       // Pause the timer
       if (mounted) {

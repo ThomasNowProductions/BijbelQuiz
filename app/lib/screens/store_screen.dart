@@ -402,7 +402,13 @@ class _StoreScreenState extends State<StoreScreen> {
             final canAfford = isDev || localGameStats.score >= cost;
             if (canAfford) {
               AppLogger.info('Sufficient stars available for power-up: $title');
-              final success = isDev ? true : await localGameStats.spendStars(cost);
+              final success = isDev ? true : await localGameStats.spendStarsWithTransaction(
+                amount: cost,
+                reason: 'Thema aankoop: $title',
+                metadata: {
+                  'theme_name': title,
+                },
+              );
               if (success) {
 
                 final message = onPurchase();
@@ -596,7 +602,15 @@ class _StoreScreenState extends State<StoreScreen> {
             }
             if (canAfford) {
               AppLogger.info('Sufficient stars available for theme: $themeKey');
-              final success = isDev ? true : await localGameStats.spendStars(cost);
+              final success = isDev ? true : await localGameStats.spendStarsWithTransaction(
+                amount: cost,
+                reason: 'Power-up aankoop: $title',
+                metadata: {
+                  'powerup_type': title,
+                  'duration_questions': title.contains('vragen') ? 5 : null,
+                  'duration_seconds': title.contains('seconden') ? 60 : null,
+                },
+              );
               if (success) {
                 await localSettings.unlockTheme(themeKey);
                 if (!localContext.mounted) return;
@@ -979,7 +993,14 @@ class _StoreScreenState extends State<StoreScreen> {
     );
 
     // Spend stars first
-    final success = isDev ? true : await gameStats.spendStars(cost);
+    final success = isDev ? true : await gameStats.spendStarsWithTransaction(
+      amount: cost,
+      reason: 'AI thema generatie',
+      metadata: {
+        'description': description,
+        'feature': 'ai_theme_generator',
+      },
+    );
     if (!success) {
       showTopSnackBar(context, 'Niet genoeg sterren!', style: TopSnackBarStyle.error);
       return;
@@ -1006,7 +1027,14 @@ class _StoreScreenState extends State<StoreScreen> {
          showTopSnackBar(context, 'AI thema generatie is momenteel uitgeschakeld.', style: TopSnackBarStyle.error);
          // Refund stars since feature is disabled
          if (!isDev) {
-           await gameStats.spendStars(cost);
+           await gameStats.addStarsWithTransaction(
+             amount: cost,
+             reason: 'Terugbetaling AI thema (uitgeschakeld)',
+             metadata: {
+               'original_transaction': 'ai_theme_generation',
+               'reason': 'feature_disabled',
+             },
+           );
          }
          return;
        }
@@ -1083,7 +1111,14 @@ class _StoreScreenState extends State<StoreScreen> {
 
         // Refund stars on error
         if (!isDev) {
-          await gameStats.addStars(cost);
+          await gameStats.addStarsWithTransaction(
+            amount: cost,
+            reason: 'Terugbetaling AI thema (fout)',
+            metadata: {
+              'original_transaction': 'ai_theme_generation',
+              'error': e.toString(),
+            },
+          );
         }
       }
     } finally {
