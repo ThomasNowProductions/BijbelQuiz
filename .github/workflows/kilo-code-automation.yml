@@ -1,0 +1,88 @@
+name: Kilo Code Automation
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  kilo-code:
+    if: startsWith(github.event.comment.body, '/kilo')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install Kilo Code CLI
+      run: npm install -g @kilocode/cli
+
+    - name: Configure Kilo Code
+      run: |
+        mkdir -p ~/.config/kilocode
+        echo '{"kilocodeToken": "${{ secrets.KILOCODE_TOKEN }}", "autoApproval": {"enabled": true, "read": {"enabled": true}, "write": {"enabled": true}, "execute": {"enabled": true, "allowed": ["git", "npm", "flutter"]}, "browser": {"enabled": false}, "mcp": {"enabled": true}, "mode": {"enabled": true}, "subtasks": {"enabled": true}, "question": {"enabled": false}, "retry": {"enabled": true}, "todo": {"enabled": true}}}' > ~/.config/kilocode/config.json
+
+    - name: Extract prompt from comment
+      id: extract
+      run: |
+        comment="${{ github.event.comment.body }}"
+        prompt="${comment#/kilo }"
+        echo "prompt=$prompt" >> $GITHUB_OUTPUT
+
+    - name: Run Kilo Code in autonomous mode
+      run: |
+        kilocode --auto "${{ steps.extract.outputs.prompt }}" --workspace . --timeout 600
+
+    - name: Check for changes
+      id: changes
+      run: |
+        if git diff --quiet; then
+          echo "No changes detected"
+          echo "has_changes=false" >> $GITHUB_OUTPUT
+        else
+          echo "Changes detected"
+          echo "has_changes=true" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Commit and push changes
+      if: steps.changes.outputs.has_changes == 'true'
+      run: |
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "GitHub Action"
+        git add .
+        git commit -m "Automated changes from Kilo Code: ${{ steps.extract.outputs.prompt }}"
+        # Create or update branch
+        branch_name="kilo-code-feature-${{ github.event.issue.number }}"
+        git checkout -b $branch_name || git checkout $branch_name
+        git push origin $branch_name --force
+
+    - name: Create or update Pull Request
+      if: steps.changes.outputs.has_changes == 'true'
+      run: |
+        branch_name="kilo-code-feature-${{ github.event.issue.number }}"
+        if gh pr view $branch_name --json number > /dev/null 2>&1; then
+          echo "PR already exists, updating..."
+          gh pr edit $branch_name --body "Updated by Kilo Code automation. Original prompt: ${{ steps.extract.outputs.prompt }}"
+        else
+          echo "Creating new PR..."
+          gh pr create --title "Automated Implementation: ${{ steps.extract.outputs.prompt }}" --body "This PR was automatically created by Kilo Code CLI based on the prompt: ${{ steps.extract.outputs.prompt }}" --head $branch_name --base main --label "automated"
+        fi
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Comment on issue if no changes
+      if: steps.changes.outputs.has_changes == 'false'
+      run: |
+        gh issue comment ${{ github.event.issue.number }} --body "No changes were made by Kilo Code for the prompt: ${{ steps.extract.outputs.prompt }}"
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
