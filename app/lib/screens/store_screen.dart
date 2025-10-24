@@ -10,7 +10,6 @@ import '../l10n/strings_nl.dart' as strings;
 import '../screens/quiz_screen.dart';
 import '../services/logger.dart';
 import '../services/gemini_service.dart';
-import '../services/feature_flags_service.dart';
 import '../models/ai_theme.dart';
 
 // Extension for capitalizing strings
@@ -1013,31 +1012,7 @@ class _StoreScreenState extends State<StoreScreen> {
     });
 
     try {
-       // Check if Gemini color generation is enabled
-       FeatureFlagsService? featureFlags;
-       try {
-         featureFlags = Provider.of<FeatureFlagsService>(context, listen: false);
-       } catch (e) {
-         // Feature flags service not available in provider yet, create new instance
-         featureFlags = FeatureFlagsService();
-       }
-       final isGeminiEnabled = await featureFlags.isGeminiColorGenerationEnabled();
-
-       if (!isGeminiEnabled) {
-         showTopSnackBar(context, 'AI thema generatie is momenteel uitgeschakeld.', style: TopSnackBarStyle.error);
-         // Refund stars since feature is disabled
-         if (!isDev) {
-           await gameStats.addStarsWithTransaction(
-             amount: cost,
-             reason: 'Terugbetaling AI thema (uitgeschakeld)',
-             metadata: {
-               'original_transaction': 'ai_theme_generation',
-               'reason': 'feature_disabled',
-             },
-           );
-         }
-         return;
-       }
+       // AI theme generation enabled since feature flags removed
 
        // Update status
        setState(() {

@@ -18,7 +18,6 @@ import 'services/performance_service.dart';
 import 'services/connection_service.dart';
 import 'services/question_cache_service.dart';
 import 'services/gemini_service.dart';
-import 'services/feature_flags_service.dart';
 import 'services/api_service.dart';
 import 'services/star_transaction_service.dart';
 import 'screens/store_screen.dart';
@@ -98,7 +97,7 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
   ConnectionService? _connectionService;
   QuestionCacheService? _questionCacheService;
   GeminiService? _geminiService;
-  FeatureFlagsService? _featureFlagsService;
+  // FeatureFlagsService removed
   ApiService? _apiService;
   StarTransactionService? _starTransactionService;
 
@@ -121,7 +120,7 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
       final performanceService = PerformanceService();
       final connectionService = ConnectionService();
       final questionCacheService = QuestionCacheService();
-      final featureFlagsService = FeatureFlagsService();
+      // FeatureFlagsService removed
       final apiService = ApiService();
 
       // Initialize StarTransactionService with required providers
@@ -138,13 +137,7 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
         return null;
       });
 
-      // Initialize feature flags service
-      AppLogger.info('Initializing feature flags service...');
-      final featureFlagsInitFuture = featureFlagsService.initialize().catchError((e) {
-        AppLogger.warning('Feature flags service initialization failed: $e');
-        // Don't fail the entire app if feature flags fail
-        return null;
-      });
+      // Feature flags service removed
 
       // Set up connection status tracking
       connectionService.setConnectionStatusCallback((isConnected, connectionType) {
@@ -171,7 +164,7 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
         performanceService.initialize(),
         connectionService.initialize(),
         questionCacheService.initialize(),
-        featureFlagsInitFuture,
+        // featureFlagsInitFuture removed
         starTransactionInitFuture,
       ]);
 
@@ -182,7 +175,7 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
         _connectionService = connectionService;
         _questionCacheService = questionCacheService;
         _geminiService = geminiService;
-        _featureFlagsService = featureFlagsService;
+        // _featureFlagsService removed
         _apiService = apiService;
         _starTransactionService = starTransactionService;
       });
@@ -253,7 +246,7 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
       if (_connectionService != null) Provider.value(value: _connectionService!),
       if (_questionCacheService != null) Provider.value(value: _questionCacheService!),
       if (_geminiService != null) Provider.value(value: _geminiService!),
-      if (_featureFlagsService != null) Provider.value(value: _featureFlagsService!),
+      // if (_featureFlagsService != null) removed
       if (_apiService != null) Provider.value(value: _apiService!),
       if (_starTransactionService != null) Provider.value(value: _starTransactionService!),
     ];

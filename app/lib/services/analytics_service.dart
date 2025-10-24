@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -17,6 +18,12 @@ class AnalyticsService {
   ///
   /// This should be called once when the app starts.
   Future<void> init() async {
+    // Skip initialization in debug mode
+    if (kDebugMode) {
+      AppLogger.info('Skipping PostHog initialization in debug mode');
+      return;
+    }
+
     AppLogger.info('Initializing PostHog analytics SDK...');
     try {
       final config = PostHogConfig(
@@ -46,6 +53,13 @@ class AnalyticsService {
       AppLogger.info('Analytics disabled in settings, skipping screen tracking for: $screenName');
       return;
     }
+
+    // Skip tracking in debug mode
+    if (kDebugMode) {
+      AppLogger.info('Skipping screen tracking in debug mode: $screenName');
+      return;
+    }
+
     AppLogger.info('Tracking screen view: $screenName');
     try {
       await Posthog().screen(screenName: screenName);
@@ -67,6 +81,13 @@ class AnalyticsService {
       AppLogger.info('Analytics disabled in settings, skipping event tracking for: $eventName');
       return;
     }
+
+    // Skip tracking in debug mode
+    if (kDebugMode) {
+      AppLogger.info('Skipping event tracking in debug mode: $eventName');
+      return;
+    }
+
     AppLogger.info('Tracking event: $eventName${properties != null ? ' with properties: $properties' : ''}');
     try {
       await Posthog().capture(eventName: eventName, properties: properties);

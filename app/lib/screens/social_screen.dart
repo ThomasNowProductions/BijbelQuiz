@@ -1,5 +1,4 @@
 import 'package:bijbelquiz/services/analytics_service.dart';
-import 'package:bijbelquiz/services/feature_flags_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../l10n/strings_nl.dart' as strings;
@@ -24,26 +23,10 @@ class _SocialScreenState extends State<SocialScreen> {
     // Track social screen access and feature availability
     analyticsService.trackFeatureUsage(context, 'social_features', 'screen_accessed');
 
-    _checkSocialFeaturesEnabled();
+    // Social features enabled since feature flags removed
+    _socialFeaturesEnabled = true;
   }
 
-  Future<void> _checkSocialFeaturesEnabled() async {
-    FeatureFlagsService? featureFlags;
-    try {
-      featureFlags = Provider.of<FeatureFlagsService>(context, listen: false);
-    } catch (e) {
-      // Feature flags service not available in provider yet, create new instance
-      featureFlags = FeatureFlagsService();
-    }
-    final enabled = await featureFlags.areSocialFeaturesEnabled();
-    setState(() {
-      _socialFeaturesEnabled = enabled;
-    });
-
-    // Track social features availability
-    final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
-    analyticsService.trackFeatureUsage(context, 'social_features', enabled ? 'available' : 'unavailable');
-  }
 
   @override
   Widget build(BuildContext context) {
