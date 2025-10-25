@@ -1,4 +1,5 @@
 import java.util.Properties
+import org.gradle.api.GradleException
 
 // Load signing key properties
 def keyProperties = new Properties()
@@ -27,8 +28,6 @@ android {
         applicationId "com.thomasnowproductions.bijbelquiz"
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion 36
-        versionCode 1
-        versionName "1.0.0"
         multiDexEnabled true
 
         manifestPlaceholders = [
