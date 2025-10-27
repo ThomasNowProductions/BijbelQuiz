@@ -86,7 +86,7 @@
     },
     {
       "source": "/playstore",
-      "destination": "https://play.google.com/apps/internaltest/4701600259565279707"
+      "destination": "https://play.google.com/store/apps/details?id=app.bijbelquiz.play"
     }
   ],
   "headers": [
