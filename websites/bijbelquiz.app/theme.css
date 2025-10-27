@@ -444,7 +444,7 @@ p {
 
 /* Footer */
 footer {
-  margin-top: 4rem;
+  margin-top: 0;
   font-size: 0.9rem;
   color: var(--text-secondary);
 }
@@ -1114,14 +1114,13 @@ footer p {
 
 /* Footer */
 footer {
-  margin-top: var(--space-xxl);
+  margin-top: 0;
   color: var(--text-secondary);
   font-size: 0.875rem;
   text-align: center;
   padding: var(--space-md) 0;
   width: 100%;
   border-top: 1px solid var(--outline);
-  margin-top: 4rem;
 }
 
 .footer-links {
@@ -1163,7 +1162,8 @@ footer {
 .hero-container {
   padding: 2rem 1rem;
   max-width: 1400px;
-  margin-bottom: 4rem;
+  margin-bottom: 0;
+  flex: 1;
 }
 
 @media (min-width: 768px) {
