@@ -444,7 +444,7 @@ p {
 
 /* Footer */
 footer {
-  margin-top: 2rem;
+  margin-top: 4rem;
   font-size: 0.9rem;
   color: var(--text-secondary);
 }
@@ -1121,7 +1121,7 @@ footer {
   padding: var(--space-md) 0;
   width: 100%;
   border-top: 1px solid var(--outline);
-  margin-top: auto;
+  margin-top: 4rem;
 }
 
 .footer-links {
@@ -1163,6 +1163,7 @@ footer {
 .hero-container {
   padding: 2rem 1rem;
   max-width: 1400px;
+  margin-bottom: 4rem;
 }
 
 @media (min-width: 768px) {
@@ -1363,8 +1364,8 @@ footer {
   }
 
   .phone-mockup {
-    width: 240px;
-    height: 420px;
+    width: 280px;
+    height: 480px;
   }
 
   .cta-buttons {
