@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import './settings_provider.dart';
 import '../services/logger.dart';
 import '../services/star_transaction_service.dart';
+import '../services/sync_service.dart';
 
 /// Manages the app's game statistics including score and streaks
 class GameStatsProvider extends ChangeNotifier {
@@ -22,6 +23,7 @@ class GameStatsProvider extends ChangeNotifier {
   String? _error;
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   void Function(String message)? onError;
+  late SyncService syncService;
 
   Powerup? _activePowerup;
   DateTime? _powerupActivatedAt;
@@ -79,7 +81,13 @@ class GameStatsProvider extends ChangeNotifier {
   }
 
   GameStatsProvider() {
+    syncService = SyncService();
+    _initializeSyncService();
     _loadStats();
+  }
+
+  Future<void> _initializeSyncService() async {
+    await syncService.initialize();
   }
 
   /// The current game score
@@ -167,6 +175,11 @@ class GameStatsProvider extends ChangeNotifier {
       await _prefs?.setInt(_scoreKey, _score);
       await _prefs?.setInt(_currentStreakKey, _currentStreak);
       notifyListeners();
+
+      // Sync data if in a room
+      if (syncService.isInRoom) {
+        await syncService.syncData('game_stats', getExportData());
+      }
     } catch (e) {
       _error = 'Failed to save game stats: ${e.toString()}';
       notifyListeners();
@@ -406,6 +419,23 @@ class GameStatsProvider extends ChangeNotifier {
     await _prefs?.setInt(_longestStreakKey, _longestStreak);
     await _prefs?.setInt(_incorrectAnswersKey, _incorrectAnswers);
     notifyListeners();
+  }
+
+  /// Joins a sync room
+  Future<bool> joinSyncRoom(String code) async {
+    return await syncService.joinRoom(code);
+  }
+
+  /// Leaves the sync room
+  Future<void> leaveSyncRoom() async {
+    await syncService.leaveRoom();
+  }
+
+  /// Sets up sync listener
+  void setupSyncListener() {
+    syncService.addListener('game_stats', (data) {
+      loadImportData(data);
+    });
   }
 }
 

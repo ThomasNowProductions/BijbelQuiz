@@ -8,6 +8,7 @@ import 'dart:io' show Platform;
 import 'package:provider/single_child_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:logging/logging.dart' show Level;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'providers/settings_provider.dart';
 import 'providers/game_stats_provider.dart';
@@ -24,7 +25,9 @@ import 'screens/store_screen.dart';
 import 'providers/lesson_progress_provider.dart';
 import 'screens/main_navigation_screen.dart';
 import 'settings_screen.dart';
+import 'screens/sync_screen.dart';
 import 'l10n/strings_nl.dart' as strings;
+import 'config/supabase_config.dart';
 
 final analyticsService = AnalyticsService();
 
@@ -42,6 +45,16 @@ void main() async {
   AppLogger.info('Initializing analytics service...');
   await analyticsService.init();
   AppLogger.info('Analytics service initialized successfully');
+
+  // Load environment variables
+  AppLogger.info('Loading environment variables...');
+  await dotenv.load(fileName: "assets/.env");
+  AppLogger.info('Environment variables loaded successfully');
+
+  // Initialize Supabase
+  AppLogger.info('Initializing Supabase...');
+  await SupabaseConfig.initialize();
+  AppLogger.info('Supabase initialized successfully');
   
   // Set preferred screen orientations. On web, this helps maintain a consistent layout.
   if (kIsWeb) {
@@ -234,6 +247,7 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
       routes: {
         '/store': (context) => const StoreScreen(),
         '/settings': (context) => const SettingsScreen(),
+        '/sync': (context) => const SyncScreen(),
       },
       home: const MainNavigationScreen(),
     );

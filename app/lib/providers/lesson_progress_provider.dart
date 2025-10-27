@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/lesson.dart';
 import '../services/logger.dart';
+import '../services/sync_service.dart';
 
 /// Tracks per-lesson unlock state and best stars earned.
 /// Simple linear progression: lesson at index 0 starts unlocked; completing a lesson unlocks the next.
@@ -21,13 +22,20 @@ class LessonProgressProvider extends ChangeNotifier {
 
   /// Map: lessonId -> bestStars (0..3)
   final Map<String, int> _bestStarsByLesson = {};
+  late SyncService syncService;
 
   bool get isLoading => _isLoading;
   String? get error => _error;
   int get unlockedCount => _unlockedCount;
 
   LessonProgressProvider() {
+    syncService = SyncService();
+    _initializeSyncService();
     _load();
+  }
+
+  Future<void> _initializeSyncService() async {
+    await syncService.initialize();
   }
 
   Future<void> _load() async {
@@ -92,6 +100,11 @@ class LessonProgressProvider extends ChangeNotifier {
 
     await _persist();
     notifyListeners();
+
+    // Sync data if in a room
+    if (syncService.isInRoom) {
+      await syncService.syncData('lesson_progress', getExportData());
+    }
   }
 
   /// Ensures at least [count] lessons are unlocked (used when lesson list shorter/longer changes).
@@ -100,6 +113,23 @@ class LessonProgressProvider extends ChangeNotifier {
       _unlockedCount = count;
       await _persist();
       notifyListeners();
+    }
+  
+    /// Joins a sync room
+    Future<bool> joinSyncRoom(String code) async {
+      return await syncService.joinRoom(code);
+    }
+  
+    /// Leaves the sync room
+    Future<void> leaveSyncRoom() async {
+      await syncService.leaveRoom();
+    }
+  
+    /// Sets up sync listener
+    void setupSyncListener() {
+      syncService.addListener('lesson_progress', (data) {
+        loadImportData(data);
+      });
     }
   }
 

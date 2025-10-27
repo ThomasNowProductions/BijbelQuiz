@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../services/logger.dart';
 import '../models/ai_theme.dart';
+import '../services/sync_service.dart';
 
 /// Manages the app's settings including language and theme preferences
 class SettingsProvider extends ChangeNotifier {
@@ -58,12 +59,19 @@ class SettingsProvider extends ChangeNotifier {
   bool _apiEnabled = false;
   String _apiKey = '';
   int _apiPort = 7777;
-  
+  late SyncService syncService;
+
 
 
   SettingsProvider() {
+    syncService = SyncService();
+    _initializeSyncService();
     AppLogger.info('SettingsProvider initializing...');
     // Settings will be loaded later
+  }
+
+  Future<void> _initializeSyncService() async {
+    await syncService.initialize();
   }
 
   /// De huidige taalinstelling (altijd 'nl')
@@ -380,6 +388,11 @@ class SettingsProvider extends ChangeNotifier {
         _themeMode = mode;
         await _prefs?.setInt(_themeModeKey, mode.index);
         AppLogger.info('Theme mode saved successfully: $mode');
+
+        // Sync data if in a room
+        if (syncService.isInRoom) {
+          await syncService.syncData('settings', getExportData());
+        }
       },
       errorMessage: 'Failed to save theme setting',
     );
@@ -813,7 +826,24 @@ class SettingsProvider extends ChangeNotifier {
     if (_lastDifficultyPopup != null) {
       await _prefs?.setInt(_lastDifficultyPopupKey, _lastDifficultyPopup!.millisecondsSinceEpoch);
     }
-    
+
     notifyListeners();
+  }
+
+  /// Joins a sync room
+  Future<bool> joinSyncRoom(String code) async {
+    return await syncService.joinRoom(code);
+  }
+
+  /// Leaves the sync room
+  Future<void> leaveSyncRoom() async {
+    await syncService.leaveRoom();
+  }
+
+  /// Sets up sync listener
+  void setupSyncListener() {
+    syncService.addListener('settings', (data) {
+      loadImportData(data);
+    });
   }
 }

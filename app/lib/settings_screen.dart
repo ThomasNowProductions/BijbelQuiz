@@ -23,6 +23,7 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'services/logger.dart';
 import 'package:archive/archive.dart';
+import 'screens/sync_screen.dart';
 
 /// The settings screen that allows users to customize app preferences
 class SettingsScreen extends StatefulWidget {
@@ -858,6 +859,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
               label: strings.AppStrings.shareYourStats,
               subtitle: strings.AppStrings.copyStatsLinkToClipboard,
               icon: Icons.bar_chart,
+            ),
+            _buildActionButton(
+              context,
+              settings,
+              colorScheme,
+              isSmallScreen,
+              isDesktop,
+              onPressed: () {
+                Provider.of<AnalyticsService>(context, listen: false).capture(context, 'open_sync_screen');
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const SyncScreen(),
+                  ),
+                );
+              },
+              label: 'Multi-Device Sync',
+              subtitle: 'Sync data between devices using a code',
+              icon: Icons.sync,
             ),
           ],
         ),
