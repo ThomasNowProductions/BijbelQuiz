@@ -1361,23 +1361,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text(strings.AppStrings.exportStatsTitle),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(strings.AppStrings.exportStatsMessage),
-                  const SizedBox(height: 16),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                      borderRadius: BorderRadius.circular(8),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(strings.AppStrings.exportStatsMessage),
+                    const SizedBox(height: 16),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: SelectableText(
+                        exportString,
+                        style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
+                      ),
                     ),
-                    child: SelectableText(
-                      exportString,
-                      style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               actions: [
                 TextButton(
