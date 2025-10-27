@@ -22,6 +22,7 @@ import 'l10n/strings_nl.dart' as strings;
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'services/logger.dart';
+import 'package:archive/archive.dart';
 
 /// The settings screen that allows users to customize app preferences
 class SettingsScreen extends StatefulWidget {
@@ -74,14 +75,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
       } else {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (mounted) {
-            showTopSnackBar(context, 'Kon update pagina niet openen', style: TopSnackBarStyle.error);
+            showTopSnackBar(context, strings.AppStrings.couldNotOpenUpdatePage, style: TopSnackBarStyle.error);
           }
         });
       }
     } catch (e) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) {
-          showTopSnackBar(context, 'Fout bij openen update pagina: ${e.toString()}', style: TopSnackBarStyle.error);
+          showTopSnackBar(context, '${strings.AppStrings.errorOpeningUpdatePage}${e.toString()}', style: TopSnackBarStyle.error);
         }
       });
     }
@@ -855,7 +856,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               isDesktop,
               onPressed: () => _shareStats(context),
               label: strings.AppStrings.shareYourStats,
-              subtitle: 'Kopieer je statistieken link naar het klembord',
+              subtitle: strings.AppStrings.copyStatsLinkToClipboard,
               icon: Icons.bar_chart,
             ),
           ],
@@ -1281,7 +1282,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       scheme: 'mailto',
       path: AppUrls.contactEmail,
       queryParameters: {
-        'subject': 'BijbelQuiz error report',
+        'subject': '${strings.AppStrings.appName} error report',
       },
     );
     final localContext = context;
@@ -1339,13 +1340,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
       // Serialize to JSON
       final jsonString = json.encode(data);
 
-      // Create hash for tamper-proofing
-      final hash = sha256.convert(utf8.encode(jsonString)).toString();
+      // Create hash for tamper-proofing (based on original JSON) - use SHA-1 for shorter hash
+      final hash = sha1.convert(utf8.encode(jsonString)).toString();
 
-      // Combine hash and data
+      // Compress the JSON string
+      final compressedBytes = GZipEncoder().encode(utf8.encode(jsonString));
+
+      // Combine hash and compressed data (no version field to save space)
       final exportData = {
         'hash': hash,
-        'data': jsonString,
+        'data': base64Url.encode(compressedBytes!),
       };
 
       final exportString = base64.encode(utf8.encode(json.encode(exportData)));
@@ -1439,14 +1443,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     final importData = json.decode(decoded) as Map<String, dynamic>;
 
                     final hash = importData['hash'] as String;
-                    final jsonString = importData['data'] as String;
+                    final dataString = importData['data'] as String;
+                    String jsonString;
 
-                    // Verify hash
-                    final computedHash = sha256.convert(utf8.encode(jsonString)).toString();
-                    if (computedHash != hash) {
-                      if (!safeContext.mounted) return;
-                      showTopSnackBar(safeContext, strings.AppStrings.invalidOrTamperedData, style: TopSnackBarStyle.error);
-                      return;
+                    // Detect format based on hash length: SHA-1 (40 chars) for new, SHA-256 (64 chars) for old
+                    if (hash.length == 40) {
+                      // New compressed format with SHA-1
+                      try {
+                        final compressedData = base64Url.decode(dataString);
+                        jsonString = utf8.decode(GZipDecoder().decodeBytes(compressedData));
+                        // Verify with SHA-1
+                        final computedHash = sha1.convert(utf8.encode(jsonString)).toString();
+                        if (computedHash != hash) {
+                          if (!safeContext.mounted) return;
+                          showTopSnackBar(safeContext, strings.AppStrings.invalidOrTamperedData, style: TopSnackBarStyle.error);
+                          return;
+                        }
+                      } catch (e) {
+                        if (!safeContext.mounted) return;
+                        showTopSnackBar(safeContext, strings.AppStrings.invalidOrTamperedData, style: TopSnackBarStyle.error);
+                        return;
+                      }
+                    } else {
+                      // Old uncompressed format with SHA-256
+                      jsonString = dataString;
+                      // Verify with SHA-256
+                      final computedHash = sha256.convert(utf8.encode(jsonString)).toString();
+                      if (computedHash != hash) {
+                        if (!safeContext.mounted) return;
+                        showTopSnackBar(safeContext, strings.AppStrings.invalidOrTamperedData, style: TopSnackBarStyle.error);
+                        return;
+                      }
                     }
 
                     // Parse data
@@ -1483,7 +1510,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     showTopSnackBar(safeContext, '${strings.AppStrings.failedToImportStats} $e', style: TopSnackBarStyle.error);
                   }
                 },
-                child: const Text('Import'),
+                child: Text(strings.AppStrings.importButton),
               ),
             ],
           );
@@ -1581,7 +1608,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       if (context.mounted) {
         showTopSnackBar(
           context,
-          'Uitnodigingslink gekopieerd naar klembord!',
+          strings.AppStrings.inviteLinkCopied,
           style: TopSnackBarStyle.success,
         );
       }
@@ -1589,7 +1616,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       if (context.mounted) {
         showTopSnackBar(
           context,
-          'Kon link niet kopiëren: ${e.toString()}',
+          '${strings.AppStrings.errorCopyingLink}${e.toString()}',
           style: TopSnackBarStyle.error,
         );
       }
@@ -1627,7 +1654,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       if (context.mounted) {
         showTopSnackBar(
           context,
-          'Statistieken link gekopieerd naar klembord!',
+          strings.AppStrings.statsLinkCopied,
           style: TopSnackBarStyle.success,
         );
       }
@@ -1636,7 +1663,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       if (context.mounted) {
         showTopSnackBar(
           context,
-          'Kon link niet kopiëren: ${e.toString()}',
+          '${strings.AppStrings.errorCopyingLink}${e.toString()}',
           style: TopSnackBarStyle.error,
         );
       }

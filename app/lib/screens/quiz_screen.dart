@@ -1029,8 +1029,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
   Future<void> _handleFlag() async {
     final question = _quizState.question;
     final questionId = question.id;
-    final subject = 'BijbelQuiz vraag is incorrect';
-    final body = 'Er is een probleem met vraag $questionId in de BijbelQuiz app.';
+    final subject = '${strings.AppStrings.appName} vraag is incorrect';
+    final body = 'Er is een probleem met vraag $questionId in de ${strings.AppStrings.appName} app.';
     final email = AppUrls.contactEmail;
     final url = 'mailto:$email?subject=${Uri.encodeComponent(subject)}&body=${Uri.encodeComponent(body)}';
 
@@ -1039,7 +1039,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
     } else {
       // Handle error, perhaps show a snackbar
       if (mounted) {
-        showTopSnackBar(context, 'Could not open email client', style: TopSnackBarStyle.error);
+        showTopSnackBar(context, strings.AppStrings.couldNotOpenEmail, style: TopSnackBarStyle.error);
       }
     }
   }

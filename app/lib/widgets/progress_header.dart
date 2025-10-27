@@ -5,6 +5,7 @@ import '../models/lesson.dart';
 import '../providers/lesson_progress_provider.dart';
 import '../screens/quiz_screen.dart';
 import '../services/analytics_service.dart';
+import '../l10n/strings_nl.dart' as strings;
 
 enum DayState { success, fail, freeze, future }
 
@@ -83,7 +84,7 @@ class _ProgressHeaderState extends State<ProgressHeader>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Jouw voortgang', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
+            Text(strings.AppStrings.yourProgress, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
             const SizedBox(height: 8),
             Semantics(
               label: 'Lesson completion progress',
@@ -144,14 +145,14 @@ class _ProgressHeaderState extends State<ProgressHeader>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Dagelijkse streak',
+                                strings.AppStrings.dailyStreak,
                                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                       fontWeight: FontWeight.w700,
                                       color: cs.primary,
                                     ),
                               ),
                               Text(
-                                'Je gebruikt BijbelQuiz al ${widget.streakDays} dagen op rij',
+                                'Je gebruikt ${strings.AppStrings.appName} al ${widget.streakDays} dagen op rij',
                                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                       fontWeight: FontWeight.w500,
                                       color: cs.onSurfaceVariant,
@@ -253,7 +254,7 @@ class _ProgressHeaderState extends State<ProgressHeader>
                         );
                         widget.onAfterQuizReturn?.call();
                       },
-                      label: 'Ga verder: ${widget.continueLesson!.title}',
+                      label: '${strings.AppStrings.continueWith}: ${widget.continueLesson!.title}',
                       icon: Icons.play_arrow_rounded,
                       color: cs.primary,
                       textColor: cs.onPrimary,
@@ -269,7 +270,7 @@ class _ProgressHeaderState extends State<ProgressHeader>
                         Provider.of<AnalyticsService>(context, listen: false).capture(context, 'start_practice_quiz');
                         Navigator.of(context).push(MaterialPageRoute(builder: (_) => const QuizScreen()));
                       },
-                      label: 'Vrij oefenen (random)',
+                      label: strings.AppStrings.freePractice,
                       icon: Icons.flash_on_rounded,
                       color: Colors.transparent,
                       textColor: cs.primary,
@@ -287,7 +288,7 @@ class _ProgressHeaderState extends State<ProgressHeader>
                           Provider.of<AnalyticsService>(context, listen: false).capture(context, 'start_multiplayer_quiz');
                           widget.onMultiplayerPressed!();
                         },
-                        label: 'Multiplayer Quiz',
+                        label: strings.AppStrings.multiplayerQuiz,
                         icon: Icons.people,
                         color: Colors.transparent,
                         textColor: cs.primary,
@@ -306,7 +307,7 @@ class _ProgressHeaderState extends State<ProgressHeader>
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(builder: (_) => const QuizScreen()));
                   },
-                  label: 'Vrij oefenen (random)',
+                  label: strings.AppStrings.freePractice,
                   icon: Icons.flash_on_rounded,
                   color: Colors.transparent,
                   textColor: cs.primary,
@@ -324,7 +325,7 @@ class _ProgressHeaderState extends State<ProgressHeader>
                       Provider.of<AnalyticsService>(context, listen: false).capture(context, 'start_multiplayer_quiz');
                       widget.onMultiplayerPressed!();
                     },
-                    label: 'Multiplayer Quiz',
+                    label: strings.AppStrings.multiplayerQuiz,
                     icon: Icons.people,
                     color: Colors.transparent,
                     textColor: cs.primary,

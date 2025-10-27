@@ -3,6 +3,7 @@ import 'package:bijbelquiz/constants/urls.dart';
 class AppStrings {
   // Common
   static const String appName = 'BijbelQuiz';
+  static const String appDescription = 'Test je Bijbelkennis';
   static const String loading = 'Laden...';
   static const String error = 'Fout';
   static const String back = 'Terug';
@@ -62,6 +63,10 @@ class AppStrings {
   static const String best = 'Beste';
   static const String time = 'Tijd';
   static const String screenSizeNotSupported = 'Schermgrootte niet ondersteund';
+  static const String yourProgress = 'Jouw voortgang';
+  static const String dailyStreak = 'Dagelijkse reeks';
+  static const String continueWith = 'Ga verder';
+  static const String multiplayerQuiz = 'Multiplayer Quiz';
   
   // Time up dialog
   static const String timeUp = 'Tijd is om!';
@@ -226,6 +231,17 @@ class AppStrings {
   
   // Errors
   static const String couldNotOpenEmail = 'Kon e-mailclient niet openen';
+  static const String couldNotOpenUpdatePage = 'Kon update pagina niet openen';
+  static const String errorOpeningUpdatePage = 'Fout bij openen update pagina: ';
+  static const String couldNotCopyLink = 'Kon link niet kopiëren';
+  static const String errorCopyingLink = 'Kon link niet kopiëren: ';
+  static const String inviteLinkCopied = 'Uitnodigingslink gekopieerd naar klembord!';
+  static const String statsLinkCopied = 'Statistieken link gekopieerd naar klembord!';
+  static const String copyStatsLinkToClipboard = 'Kopieer je statistieken link naar het klembord';
+  static const String importButton = 'Importeren';
+  static const String couldNotScheduleAnyNotifications = 'Kon geen enkele melding plannen. Controleer de toestemmingen voor meldingen in de app-instellingen.';
+  static const String couldNotScheduleSomeNotificationsTemplate = 'Kon slechts {successCount} van de {total} meldingen plannen.';
+  static const String couldNotScheduleNotificationsError = 'Kon meldingen niet plannen: ';
 
   // Popups
   static const String followUs = 'Volg ons';

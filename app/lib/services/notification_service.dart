@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:math';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'logger.dart';
+import 'package:bijbelquiz/l10n/strings_nl.dart' as strings;
 
 /// A service to handle local notifications for the application.
 ///
@@ -239,13 +240,13 @@ class NotificationService {
       }
       AppLogger.info('Successfully scheduled $successCount out of ${times.length} notifications');
       if (successCount == 0 && times.isNotEmpty) {
-        onError?.call('Kon geen enkele melding plannen. Controleer de toestemmingen voor meldingen in de app-instellingen.');
+        onError?.call(strings.AppStrings.couldNotScheduleAnyNotifications);
       } else if (successCount < times.length) {
-        onError?.call('Kon slechts $successCount van de ${times.length} meldingen plannen.');
+        onError?.call(strings.AppStrings.couldNotScheduleSomeNotificationsTemplate.replaceAll('{successCount}', successCount.toString()).replaceAll('{total}', times.length.toString()));
       }
     } catch (e) {
       AppLogger.error('Error scheduling notifications: $e');
-      onError?.call('Kon meldingen niet plannen: ${e.toString()}');
+      onError?.call('${strings.AppStrings.couldNotScheduleNotificationsError}${e.toString()}');
     }
   }
 
