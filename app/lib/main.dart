@@ -38,7 +38,7 @@ void main() async {
   AppLogger.info('BijbelQuiz app starting up...');
 
   // Initialize logging
-  AppLogger.init(level: Level.ALL);
+  AppLogger.init(level: Level.INFO);
   AppLogger.info('Logger initialized successfully');
 
   // Initialize analytics

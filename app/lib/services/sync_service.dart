@@ -56,7 +56,7 @@ class SyncService {
       _currentRoomId = code;
       await _saveRoomId(code);
       _startListening();
-      AppLogger.info('Joined sync room: $code');
+      AppLogger.debug('Joined sync room: $code');
       return true;
     } catch (e) {
       AppLogger.error('Failed to join sync room: $code', e);
@@ -86,7 +86,7 @@ class SyncService {
       _stopListening();
       _currentRoomId = null;
       await _clearRoomId();
-      AppLogger.info('Left sync room');
+      AppLogger.debug('Left sync room');
     } catch (e) {
       AppLogger.error('Failed to leave sync room', e);
     }
@@ -108,7 +108,7 @@ class SyncService {
         },
         'updated_at': DateTime.now().toIso8601String(),
       }).eq('room_id', _currentRoomId!);
-      AppLogger.info('Synced data for key: $key');
+      AppLogger.debug('Synced data for key: $key');
     } catch (e) {
       AppLogger.error('Failed to sync data for key: $key', e);
     }
