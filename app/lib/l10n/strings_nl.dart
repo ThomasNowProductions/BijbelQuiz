@@ -426,4 +426,9 @@ class AppStrings {
   static const String multiDeviceSyncButton = 'Multi-Apparaat Sync';
   static const String syncDataDescription = 'Sync data tussen apparaten met behulp van een code';
   
+  // Sync Screen Additional Strings
+  static const String syncDescription = 'Verbind met een ander apparaat om je voortgang en statistieken te synchroniseren.';
+  static const String createSyncRoom = 'Maak een nieuwe sync-ruimte';
+  static const String createSyncDescription = 'Start een nieuwe sync-ruimte en deel de code met anderen om verbinding te maken.';
+  
 }
