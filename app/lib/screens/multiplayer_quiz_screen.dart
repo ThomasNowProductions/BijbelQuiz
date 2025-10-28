@@ -647,7 +647,12 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
     final isWinner = winner == 'player1' && isPlayer1 || winner == 'player2' && !isPlayer1;
     final isTie = winner == 'tie';
 
-    return Container(
+    // Check if we're on a mobile device
+    bool isMobile = !kIsWeb && (defaultTargetPlatform == TargetPlatform.android || 
+                                defaultTargetPlatform == TargetPlatform.iOS);
+
+    // Wrap Player 2 area with rotation on mobile devices
+    Widget playerContent = Container(
       color: _showResults ? (isWinner ? colorScheme.primary : colorScheme.surface) : colorScheme.surface,
       child: Column(
         children: [
@@ -670,7 +675,7 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
                         language: settings.language,
                         performanceService: _performanceService,
                         isCompact: true,
-                        customLetters: isPlayer1 ? ['A', 'S', 'D', 'F'] : ['H', 'J', 'K', 'L'],
+                        customLetters: isMobile ? ['A', 'B', 'C', 'D'] : (isPlayer1 ? ['A', 'S', 'D', 'F'] : ['H', 'J', 'K', 'L']),
                       ),
               ),
             ),
@@ -678,6 +683,16 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
         ],
       ),
     );
+
+    // Apply rotation for Player 2 on mobile devices
+    if (isMobile && !isPlayer1) {
+      playerContent = Transform.rotate(
+        angle: 3.14159, // 180 degrees in radians
+        child: playerContent,
+      );
+    }
+
+    return playerContent;
   }
 
 
