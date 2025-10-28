@@ -6,6 +6,7 @@ import 'providers/game_stats_provider.dart';
 import 'providers/lesson_progress_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'screens/guide_screen.dart';
+import 'screens/sync_screen.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'services/notification_service.dart';
@@ -859,8 +860,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               subtitle: strings.AppStrings.copyStatsLinkToClipboard,
               icon: Icons.bar_chart,
             ),
-            // Temporarily disabled sync feature
-            /*
             _buildActionButton(
               context,
               settings,
@@ -871,7 +870,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Provider.of<AnalyticsService>(context, listen: false).capture(context, 'open_sync_screen');
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const SyncScreen(),
+                    builder: (context) => SyncScreen(),
                   ),
                 );
               },
@@ -879,7 +878,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               subtitle: 'Sync data between devices using a code',
               icon: Icons.sync,
             ),
-            */
           ],
         ),
         const SizedBox(height: 32),
