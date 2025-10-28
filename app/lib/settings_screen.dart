@@ -845,9 +845,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
               colorScheme,
               isSmallScreen,
               isDesktop,
-              onPressed: () => _shareApp(context),
-              label: strings.AppStrings.shareAppWithFriends,
-              icon: Icons.ios_share,
+              onPressed: () => _showInviteDialog(context),
+              label: strings.AppStrings.inviteFriend,
+              icon: Icons.person_add,
             ),
             _buildActionButton(
               context,
@@ -1469,6 +1469,82 @@ class _SettingsScreenState extends State<SettingsScreen> {
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
               child: Text(strings.AppStrings.close),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _showInviteDialog(BuildContext context) async {
+    final TextEditingController yourNameController = TextEditingController();
+    final TextEditingController friendNameController = TextEditingController();
+
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(strings.AppStrings.customizeInvite),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: yourNameController,
+                decoration: InputDecoration(
+                  labelText: strings.AppStrings.enterYourName,
+                  border: const OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: friendNameController,
+                decoration: InputDecoration(
+                  labelText: strings.AppStrings.enterFriendName,
+                  border: const OutlineInputBorder(),
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(strings.AppStrings.cancel),
+            ),
+            TextButton(
+              onPressed: () async {
+                final yourName = yourNameController.text.trim();
+                final friendName = friendNameController.text.trim();
+                
+                // Construct a personalized invite URL with query parameters
+                String inviteUrl = 'https://bijbelquiz.app/invite.html';
+                
+                // Add query parameters for personalization if names were provided
+                final Map<String, String> queryParams = {};
+                if (yourName.isNotEmpty) {
+                  queryParams['yourName'] = yourName;
+                }
+                if (friendName.isNotEmpty) {
+                  queryParams['friendName'] = friendName;
+                }
+                
+                if (queryParams.isNotEmpty) {
+                  inviteUrl = Uri.parse(inviteUrl).replace(queryParameters: queryParams).toString();
+                }
+
+                // Copy the personalized link to clipboard
+                await Clipboard.setData(ClipboardData(text: inviteUrl));
+                
+                if (context.mounted) {
+                  showTopSnackBar(
+                    context,
+                    strings.AppStrings.inviteLinkCopied,
+                    style: TopSnackBarStyle.success,
+                  );
+                }
+                
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text(strings.AppStrings.sendInvite),
             ),
           ],
         );

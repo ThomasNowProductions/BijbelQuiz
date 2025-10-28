@@ -368,6 +368,12 @@ class AppStrings {
   static const String couldNotOpenPlatform = 'Kon {platform} niet openen';
   static const String shareAppWithFriends = 'Deel app met vrienden';
   static const String shareYourStats = 'Deel je statistieken';
+  static const String inviteFriend = 'Nodig een vriend uit';
+  static const String enterYourName = 'Voer je naam in';
+  static const String enterFriendName = 'Voer de naam van je vriend in';
+  static const String inviteMessage = 'Nodig je vriend uit voor de BijbelQuiz!';
+  static const String customizeInvite = 'Personaliseer je uitnodiging';
+  static const String sendInvite = 'Verzend uitnodiging';
 
   // Settings Provider Errors
   static const String languageMustBeNl = 'Taal moet "nl" zijn (alleen Nederlands toegestaan)';

@@ -66,8 +66,8 @@
 <body class="center-screen fade-in">
     <div class="container card">
         <i class="material-icons icon-large">person_add</i>
-        <h1>Je bent uitgenodigd voor BijbelQuiz!</h1>
-        <p>Een vriend heeft je uitgenodigd om deel te nemen aan BijbelQuiz, de interactieve bijbelkennis quiz app. Meld je aan voor onze wachtlijst!</p>
+        <h1 id="main-title">Je bent uitgenodigd voor BijbelQuiz!</h1>
+        <p id="main-description">Een vriend heeft je uitgenodigd om deel te nemen aan BijbelQuiz, de interactieve bijbelkennis quiz app. Meld je aan voor onze wachtlijst!</p>
 
         <div class="actions" style="display: flex; flex-direction: column; gap: 1rem; width: 100%;">
             <a href="https://bijbelquiz.app/wachtlijst" class="btn primary btn-large">
@@ -85,5 +85,37 @@
             &copy; 2025 BijbelQuiz
         </footer>
     </div>
+    
+    <script>
+        // Script to personalize the invitation based on query parameters
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const yourName = urlParams.get('yourName');
+            const friendName = urlParams.get('friendName');
+            
+            if (yourName || friendName) {
+                let titleText = '';
+                let descriptionText = '';
+                
+                if (friendName && yourName) {
+                    titleText = `${friendName}, je bent uitgenodigd voor BijbelQuiz!`;
+                    descriptionText = `${yourName} heeft je uitgenodigd om deel te nemen aan BijbelQuiz, de interactieve bijbelkennis quiz app. Meld je aan voor onze wachtlijst!`;
+                } else if (friendName) {
+                    titleText = `${friendName}, je bent uitgenodigd voor BijbelQuiz!`;
+                    descriptionText = `Een vriend heeft je uitgenodigd om deel te nemen aan BijbelQuiz, de interactieve bijbelkennis quiz app. Meld je aan voor onze wachtlijst!`;
+                } else if (yourName) {
+                    titleText = `Je bent uitgenodigd voor BijbelQuiz!`;
+                    descriptionText = `${yourName} heeft je uitgenodigd om deel te nemen aan BijbelQuiz, de interactieve bijbelkennis quiz app. Meld je aan voor onze wachtlijst!`;
+                }
+                
+                if (titleText) {
+                    document.getElementById('main-title').textContent = titleText;
+                }
+                if (descriptionText) {
+                    document.getElementById('main-description').textContent = descriptionText;
+                }
+            }
+        });
+    </script>
 </body>
 </html>
