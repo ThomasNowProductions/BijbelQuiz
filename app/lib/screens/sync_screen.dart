@@ -5,6 +5,7 @@ import '../providers/game_stats_provider.dart';
 import '../providers/lesson_progress_provider.dart';
 import '../providers/settings_provider.dart';
 import '../services/logger.dart';
+import '../l10n/strings_nl.dart';
 
 class SyncScreen extends StatefulWidget {
   const SyncScreen({super.key});
@@ -37,7 +38,7 @@ class _SyncScreenState extends State<SyncScreen> {
     final code = _codeController.text.trim();
     if (code.isEmpty) {
       setState(() {
-        _error = 'Please enter a sync code';
+        _error = AppStrings.pleaseEnterSyncCode;
       });
       return;
     }
@@ -62,12 +63,12 @@ class _SyncScreenState extends State<SyncScreen> {
         Navigator.of(context).pop(true); // Return success
       } else {
         setState(() {
-          _error = 'Failed to join sync room. Please check the code and try again.';
+          _error = AppStrings.failedToJoinSyncRoom;
         });
       }
     } catch (e) {
       setState(() {
-        _error = 'Error: ${e.toString()}';
+        _error = '${AppStrings.errorGeneric}${e.toString()}';
       });
       AppLogger.error('Error joining sync room', e);
     } finally {
@@ -94,7 +95,7 @@ class _SyncScreenState extends State<SyncScreen> {
       Navigator.of(context).pop(false); // Return left
     } catch (e) {
       setState(() {
-        _error = 'Error leaving sync room: ${e.toString()}';
+        _error = '${AppStrings.errorLeavingSyncRoom}${e.toString()}';
       });
       AppLogger.error('Error leaving sync room', e);
     } finally {
@@ -134,12 +135,12 @@ class _SyncScreenState extends State<SyncScreen> {
         Navigator.of(context).pop(true); // Return success
       } else {
         setState(() {
-          _error = 'Failed to start sync room. Please try again.';
+          _error = AppStrings.failedToStartSyncRoom;
         });
       }
     } catch (e) {
       setState(() {
-        _error = 'Error: ${e.toString()}';
+        _error = '${AppStrings.errorGeneric}${e.toString()}';
       });
       AppLogger.error('Error starting sync room', e);
     } finally {
@@ -156,7 +157,7 @@ class _SyncScreenState extends State<SyncScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Multi-Device Sync'),
+        title: Text(AppStrings.multiDeviceSync),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -177,14 +178,14 @@ class _SyncScreenState extends State<SyncScreen> {
               Column(
                 children: [
                   Text(
-                    'Enter a sync code to connect with another device. Both devices must use the same code.',
+                    AppStrings.enterSyncCode,
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 16),
                   TextField(
                     controller: _codeController,
                     decoration: InputDecoration(
-                      labelText: 'Sync Code',
+                      labelText: AppStrings.syncCode,
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -193,11 +194,11 @@ class _SyncScreenState extends State<SyncScreen> {
                     onPressed: _isLoading ? null : _joinRoom,
                     child: _isLoading
                         ? CircularProgressIndicator()
-                        : Text('Join Sync Room'),
+                        : Text(AppStrings.joinSyncRoom),
                   ),
                   SizedBox(height: 16),
                   Text(
-                    'Or',
+                    AppStrings.or,
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 16),
@@ -205,7 +206,7 @@ class _SyncScreenState extends State<SyncScreen> {
                     onPressed: _isLoading ? null : _startRoom,
                     child: _isLoading
                         ? CircularProgressIndicator()
-                        : Text('Start Sync Room'),
+                        : Text(AppStrings.startSyncRoom),
                   ),
                 ],
               )
@@ -213,7 +214,7 @@ class _SyncScreenState extends State<SyncScreen> {
               Column(
                 children: [
                   Text(
-                    'You are currently synced. Data will be shared between devices in real-time.',
+                    AppStrings.currentlySynced,
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 16),
@@ -227,12 +228,12 @@ class _SyncScreenState extends State<SyncScreen> {
                     child: Column(
                       children: [
                         Text(
-                          'Your Sync ID:',
+                          AppStrings.yourSyncId,
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         SizedBox(height: 8),
                         Text(
-                          gameStatsProvider.syncService.currentRoomId ?? 'Unknown',
+                          gameStatsProvider.syncService.currentRoomId ?? AppStrings.unknownError,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -241,7 +242,7 @@ class _SyncScreenState extends State<SyncScreen> {
                         ),
                         SizedBox(height: 8),
                         Text(
-                          'Share this ID with other devices to join.',
+                          AppStrings.shareSyncId,
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 12),
                         ),
@@ -253,7 +254,7 @@ class _SyncScreenState extends State<SyncScreen> {
                     onPressed: _isLoading ? null : _leaveRoom,
                     child: _isLoading
                         ? CircularProgressIndicator()
-                        : Text('Leave Sync Room'),
+                        : Text(AppStrings.leaveSyncRoom),
                   ),
                 ],
               ),

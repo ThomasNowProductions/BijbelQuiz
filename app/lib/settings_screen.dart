@@ -874,8 +874,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 );
               },
-              label: 'Multi-Device Sync',
-              subtitle: 'Sync data between devices using a code',
+              label: strings.AppStrings.multiDeviceSyncButton,
+              subtitle: strings.AppStrings.syncDataDescription,
               icon: Icons.sync,
             ),
           ],

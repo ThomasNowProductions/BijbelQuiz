@@ -397,4 +397,27 @@ class AppStrings {
   static const String copyCode = 'Code kopiëren';
   static const String codeCopied = 'Code gekopieerd naar klembord';
   
+  // Sync Screen
+  static const String multiDeviceSync = 'Multi-Apparaat Sync';
+  static const String enterSyncCode = 'Voer een sync code in om verbinding te maken met een ander apparaat. Beide apparaten moeten dezelfde code gebruiken.';
+  static const String syncCode = 'Sync Code';
+  static const String joinSyncRoom = 'Sync Ruimte Toetreden';
+  static const String or = 'Of';
+  static const String startSyncRoom = 'Sync Ruimte Starten';
+  static const String currentlySynced = 'Je bent momenteel gesynced. Gegevens worden in realtime gedeeld tussen apparaten.';
+  static const String yourSyncId = 'Jouw Sync ID:';
+  static const String shareSyncId = 'Deel deze ID met andere apparaten om toe te treden.';
+  static const String leaveSyncRoom = 'Sync Ruimte Verlaten';
+  
+  // Sync Error Messages
+  static const String pleaseEnterSyncCode = 'Voer een sync code in';
+  static const String failedToJoinSyncRoom = 'Kon niet toetreden tot sync ruimte. Controleer de code en probeer opnieuw.';
+  static const String errorGeneric = 'Fout: ';
+  static const String errorLeavingSyncRoom = 'Fout bij verlaten sync ruimte: ';
+  static const String failedToStartSyncRoom = 'Kon sync ruimte niet starten. Probeer opnieuw.';
+  
+  // Settings Screen Sync Button
+  static const String multiDeviceSyncButton = 'Multi-Apparaat Sync';
+  static const String syncDataDescription = 'Sync data tussen apparaten met behulp van een code';
+  
 }
