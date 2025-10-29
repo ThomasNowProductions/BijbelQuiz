@@ -248,6 +248,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         value: 'orange',
                         child: Text(strings.AppStrings.orangeTheme),
                       ),
+                    DropdownMenuItem(
+                      value: 'grey',
+                      child: Text('Donkergrijs'),
+                    ),
                     // Add AI themes
                     ...settings.getAIThemeIds().map((themeId) {
                       final aiTheme = settings.getAITheme(themeId);

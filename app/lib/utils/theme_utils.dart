@@ -22,9 +22,17 @@ class ThemeUtils {
 
   /// Gets the appropriate theme mode based on settings
   static ThemeMode getThemeMode(SettingsProvider settings) {
+    // Check if the selected custom theme is a dark theme
     if (settings.selectedCustomThemeKey != null) {
-      // Custom themes are always applied as light theme
-      return ThemeMode.light;
+      switch (settings.selectedCustomThemeKey) {
+        case 'grey':
+          // For dark themes, we need to return ThemeMode.dark to ensure proper UI behavior
+          // This ensures that widgets that change based on theme mode behave correctly
+          return ThemeMode.dark;
+        default:
+          // Other custom themes remain as light theme
+          return ThemeMode.light;
+      }
     }
     // Use system preference when no custom theme
     return settings.themeMode;
@@ -46,6 +54,8 @@ class ThemeUtils {
         return greenTheme;
       case 'orange':
         return orangeTheme;
+      case 'grey':
+        return greyTheme;
       default:
         return appLightTheme;
     }
@@ -59,6 +69,7 @@ class ThemeUtils {
       'oled': oledTheme,
       'green': greenTheme,
       'orange': orangeTheme,
+      'grey': greyTheme,
     };
 
     // Add AI themes if settings provider is available
@@ -79,6 +90,7 @@ class ThemeUtils {
       'oled': 'OLED',
       'green': 'Groen',
       'orange': 'Oranje',
+      'grey': 'Donkergrijs',
     };
 
     // Add AI theme display names if settings provider is available
@@ -94,7 +106,7 @@ class ThemeUtils {
   /// Checks if a theme is unlocked for the user
   static bool isThemeUnlocked(String themeKey, SettingsProvider settings) {
     // Default themes are always unlocked
-    if (themeKey == 'light' || themeKey == 'dark') {
+    if (themeKey == 'light' || themeKey == 'dark' || themeKey == 'grey') {
       return true;
     }
     // AI themes are always unlocked (they're user-created)

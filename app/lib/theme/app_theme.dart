@@ -601,3 +601,128 @@ final ThemeData orangeTheme = ThemeData(
   ),
   scaffoldBackgroundColor: const Color(0xFFFAFAFA),
 ); 
+
+final ThemeData greyTheme = ThemeData(
+  brightness: Brightness.dark,
+  colorScheme: ColorScheme.fromSeed(
+    seedColor: const Color(0xFF4B5563),
+    brightness: Brightness.dark,
+  ).copyWith(
+    primary: const Color(0xFF4B5563),
+    secondary: const Color(0xFF374151),
+    tertiary: const Color(0xFF6B7280),
+    surface: const Color(0xFF1F2937),
+    surfaceContainerHighest: const Color(0xFF374151),
+    onSurface: const Color(0xFFF9FAFB),
+    outline: const Color(0xFF4B5563),
+    outlineVariant: const Color(0xFF374151),
+    shadow: const Color(0xFF111827),
+  ),
+  useMaterial3: true,
+  textTheme: ThemeData.dark().textTheme.apply(
+    fontFamily: 'Quicksand',
+    bodyColor: const Color(0xFFF9FAFB),
+    displayColor: const Color(0xFFF9FAFB),
+  ).copyWith(
+    headlineLarge: const TextStyle(
+      fontSize: 32,
+      fontWeight: FontWeight.w700,
+      letterSpacing: -0.5,
+      color: Color(0xFFF9FAFB),
+    ),
+    headlineMedium: const TextStyle(
+      fontSize: 28,
+      fontWeight: FontWeight.w600,
+      letterSpacing: -0.3,
+      color: Color(0xFFF9FAFB),
+    ),
+    headlineSmall: const TextStyle(
+      fontSize: 24,
+      fontWeight: FontWeight.w600,
+      letterSpacing: -0.2,
+      color: Color(0xFFF9FAFB),
+    ),
+    titleLarge: const TextStyle(
+      fontSize: 22,
+      fontWeight: FontWeight.w600,
+      letterSpacing: -0.1,
+      color: Color(0xFFF9FAFB),
+    ),
+    titleMedium: const TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 0,
+      color: Color(0xFFF9FAFB),
+    ),
+    titleSmall: const TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 0.1,
+      color: Color(0xFFF9FAFB),
+    ),
+    bodyLarge: const TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0.1,
+      color: Color(0xFFFFFFFF), // Fully opaque white
+    ),
+    bodyMedium: const TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0.1,
+      color: Color(0xE6FFFFFF), // 0.9 opacity white for slightly less emphasis
+    ),
+    labelLarge: const TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 0.5,
+      color: Color(0xFFF9FAFB),
+    ),
+  ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      elevation: 2,
+      backgroundColor: const Color(0xFF4B5563),
+      foregroundColor: Colors.white,
+      textStyle: const TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        letterSpacing: 0.1,
+      ),
+    ),
+  ),
+  cardTheme: CardThemeData(
+    elevation: 2,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20),
+    ),
+    clipBehavior: Clip.antiAlias,
+    color: const Color(0xFF374151), // Using the same as surfaceContainerHighest for consistency
+    surfaceTintColor: Colors.transparent,
+  ),
+  appBarTheme: const AppBarTheme(
+    centerTitle: true,
+    elevation: 0,
+    scrolledUnderElevation: 0,
+    backgroundColor: Color(0xFF1F2937),
+    foregroundColor: Color(0xFFF9FAFB),
+    surfaceTintColor: Colors.transparent,
+    titleTextStyle: TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.w600,
+      color: Color(0xFFF9FAFB),
+      letterSpacing: -0.1,
+    ),
+  ),
+  pageTransitionsTheme: const PageTransitionsTheme(
+    builders: {
+      TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+      TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+    },
+  ),
+  scaffoldBackgroundColor: const Color(0xFF111827),
+);
