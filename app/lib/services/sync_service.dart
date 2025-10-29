@@ -23,6 +23,11 @@ class SyncService {
   /// Joins a sync room using the provided code
   Future<bool> joinRoom(String code) async {
     try {
+      // If already in a room, leave it first to prevent duplicate subscriptions
+      if (_currentRoomId != null) {
+        await leaveRoom();
+      }
+
       // Generate a unique device ID if not exists
       final deviceId = await _getOrCreateDeviceId();
 
@@ -83,8 +88,9 @@ class SyncService {
           .update({'devices': devices})
           .eq('room_id', _currentRoomId!);
 
-      _stopListening();
+      // Clear current room ID before stopping listening to prevent re-subscription attempts
       _currentRoomId = null;
+      _stopListening();
       await _clearRoomId();
       AppLogger.debug('Left sync room');
     } catch (e) {
@@ -128,6 +134,9 @@ class SyncService {
   void _startListening() {
     if (_currentRoomId == null) return;
 
+    // Unsubscribe from any existing channel to prevent duplicates
+    _stopListening();
+
     _channel = _client
         .channel('sync_room_$_currentRoomId')
         .onPostgresChanges(
@@ -145,8 +154,10 @@ class SyncService {
 
   /// Stops listening for updates
   void _stopListening() {
-    _channel?.unsubscribe();
-    _channel = null;
+    if (_channel != null) {
+      _channel!.unsubscribe();
+      _channel = null;
+    }
   }
 
   /// Notifies all listeners of data changes
