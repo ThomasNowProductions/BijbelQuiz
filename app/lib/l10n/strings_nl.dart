@@ -443,4 +443,24 @@ class AppStrings {
   static const String removeDeviceConfirmation = 'Weet je zeker dat je dit apparaat wilt verwijderen uit de sync-ruimte? Dit apparaat zal niet langer toegang hebben tot de gedeelde data.';
   static const String remove = 'Verwijderen';
   
+  // User ID Screen (rebranded from sync)
+  static const String userId = 'Gebruikers ID';
+  static const String enterUserId = 'Voer een gebruikers ID in om verbinding te maken met een ander apparaat';
+  static const String userIdCode = 'Gebruikers ID';
+  static const String connectToUser = 'Verbinden met Gebruiker';
+  static const String createUserId = 'Maak een nieuw gebruikers ID';
+  static const String createUserIdDescription = 'Start een nieuw gebruikers ID en deel de code met anderen om verbinding te maken.';
+  static const String currentlyConnectedToUser = 'Je bent momenteel verbonden met een gebruikers ID. Gegevens worden gedeeld tussen apparaten.';
+  static const String yourUserId = 'Jouw Gebruikers ID:';
+  static const String shareUserId = 'Deel dit ID met andere apparaten om verbinding te maken.';
+  static const String leaveUserId = 'Verlaat Gebruikers ID';
+  static const String userIdDescription = 'Verbind met een ander apparaat met een gebruikers ID om je voortgang en statistieken te delen.';
+  static const String pleaseEnterUserId = 'Voer een gebruikers ID in';
+  static const String failedToConnectToUser = 'Kon niet verbinden met gebruikers ID. Controleer het ID en probeer opnieuw.';
+  static const String failedToCreateUserId = 'Kon gebruikers ID niet maken. Probeer opnieuw.';
+  static const String userIdButton = 'Gebruikers ID';
+  static const String userIdDescriptionSetting = 'Maak of verbind met een gebruikers ID om je voortgang te synchroniseren';
+  static const String createUserIdButton = 'Maak Gebruikers ID';
+  static const String of = 'Of';
+  
 }

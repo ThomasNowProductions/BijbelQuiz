@@ -5,7 +5,7 @@ import '../providers/game_stats_provider.dart';
 import '../providers/lesson_progress_provider.dart';
 import '../providers/settings_provider.dart';
 import '../services/logger.dart';
-import '../l10n/strings_nl.dart';
+import '../l10n/strings_nl.dart' as strings;
 
 class SyncScreen extends StatefulWidget {
   const SyncScreen({super.key});
@@ -55,16 +55,16 @@ class _SyncScreenState extends State<SyncScreen> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(AppStrings.removeDevice),
-        content: Text(AppStrings.removeDeviceConfirmation),
+        title: Text(strings.AppStrings.removeDevice),
+        content: Text(strings.AppStrings.removeDeviceConfirmation),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: Text(AppStrings.cancel),
+            child: Text(strings.AppStrings.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: Text(AppStrings.remove),
+            child: Text(strings.AppStrings.remove),
             style: TextButton.styleFrom(
               foregroundColor: Theme.of(context).colorScheme.error,
             ),
@@ -162,7 +162,7 @@ class _SyncScreenState extends State<SyncScreen> {
     final code = _codeController.text.trim();
     if (code.isEmpty) {
       setState(() {
-        _error = AppStrings.pleaseEnterSyncCode;
+        _error = strings.AppStrings.pleaseEnterUserId;
       });
       return;
     }
@@ -187,12 +187,12 @@ class _SyncScreenState extends State<SyncScreen> {
         Navigator.of(context).pop(true); // Return success
       } else {
         setState(() {
-          _error = AppStrings.failedToJoinSyncRoom;
+          _error = strings.AppStrings.failedToConnectToUser;
         });
       }
     } catch (e) {
       setState(() {
-        _error = '${AppStrings.errorGeneric}${e.toString()}';
+        _error = '${strings.AppStrings.errorGeneric}${e.toString()}';
       });
       AppLogger.error('Error joining sync room', e);
     } finally {
@@ -219,7 +219,7 @@ class _SyncScreenState extends State<SyncScreen> {
       Navigator.of(context).pop(false); // Return left
     } catch (e) {
       setState(() {
-        _error = '${AppStrings.errorLeavingSyncRoom}${e.toString()}';
+        _error = '${strings.AppStrings.errorLeavingSyncRoom}${e.toString()}';
       });
       AppLogger.error('Error leaving sync room', e);
     } finally {
@@ -259,12 +259,12 @@ class _SyncScreenState extends State<SyncScreen> {
         Navigator.of(context).pop(true); // Return success
       } else {
         setState(() {
-          _error = AppStrings.failedToStartSyncRoom;
+          _error = strings.AppStrings.failedToCreateUserId;
         });
       }
     } catch (e) {
       setState(() {
-        _error = '${AppStrings.errorGeneric}${e.toString()}';
+        _error = '${strings.AppStrings.errorGeneric}${e.toString()}';
       });
       AppLogger.error('Error starting sync room', e);
     } finally {
@@ -283,7 +283,7 @@ class _SyncScreenState extends State<SyncScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppStrings.multiDeviceSync),
+        title: Text(strings.AppStrings.userId),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -304,7 +304,7 @@ class _SyncScreenState extends State<SyncScreen> {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      AppStrings.multiDeviceSync,
+                      strings.AppStrings.userId,
                       style: theme.textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -313,8 +313,8 @@ class _SyncScreenState extends State<SyncScreen> {
                     const SizedBox(height: 8),
                     Text(
                       isInRoom 
-                        ? AppStrings.currentlySynced 
-                        : AppStrings.syncDescription,
+                        ? strings.AppStrings.currentlyConnectedToUser 
+                        : strings.AppStrings.userIdDescription,
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: colorScheme.onSurface.withOpacity(0.7),
                       ),
@@ -373,7 +373,7 @@ class _SyncScreenState extends State<SyncScreen> {
                     children: [
                       // Join section
                       Text(
-                        AppStrings.enterSyncCode,
+                        strings.AppStrings.enterUserId,
                         style: theme.textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -383,9 +383,9 @@ class _SyncScreenState extends State<SyncScreen> {
                       TextField(
                         controller: _codeController,
                         decoration: InputDecoration(
-                          labelText: AppStrings.syncCode,
+                          labelText: strings.AppStrings.userIdCode,
                           hintText: 'ABC123',
-                          prefixIcon: const Icon(Icons.key_rounded),
+                          prefixIcon: const Icon(Icons.person_rounded),
                           filled: true,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
@@ -429,7 +429,7 @@ class _SyncScreenState extends State<SyncScreen> {
                                   ),
                                 )
                               : Text(
-                                  AppStrings.joinSyncRoom,
+                                  strings.AppStrings.connectToUser,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
@@ -451,7 +451,7 @@ class _SyncScreenState extends State<SyncScreen> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: Text(
-                              AppStrings.or,
+                              strings.AppStrings.of,
                               style: theme.textTheme.bodyMedium?.copyWith(
                                 fontWeight: FontWeight.w500,
                               ),
@@ -469,7 +469,7 @@ class _SyncScreenState extends State<SyncScreen> {
                       
                       // Create section
                       Text(
-                        AppStrings.createSyncRoom,
+                        strings.AppStrings.createUserId,
                         style: theme.textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -477,7 +477,7 @@ class _SyncScreenState extends State<SyncScreen> {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        AppStrings.createSyncDescription,
+                        strings.AppStrings.createUserIdDescription,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           color: colorScheme.onSurface.withOpacity(0.7),
                         ),
@@ -505,7 +505,7 @@ class _SyncScreenState extends State<SyncScreen> {
                                   ),
                                 )
                               : Text(
-                                  AppStrings.startSyncRoom,
+                                  strings.AppStrings.createUserIdButton,
                                   style: TextStyle(
                                     color: colorScheme.primary,
                                     fontWeight: FontWeight.bold,
@@ -549,7 +549,7 @@ class _SyncScreenState extends State<SyncScreen> {
                             ),
                             const SizedBox(height: 16),
                             Text(
-                              AppStrings.yourSyncId,
+                              strings.AppStrings.yourUserId,
                               style: theme.textTheme.titleMedium?.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -565,7 +565,7 @@ class _SyncScreenState extends State<SyncScreen> {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Text(
-                                gameStatsProvider.syncService.currentRoomId ?? AppStrings.unknownError,
+                                gameStatsProvider.syncService.currentRoomId ?? strings.AppStrings.unknownError,
                                 style: theme.textTheme.headlineSmall?.copyWith(
                                   fontWeight: FontWeight.bold,
                                   letterSpacing: 2,
@@ -575,7 +575,7 @@ class _SyncScreenState extends State<SyncScreen> {
                             ),
                             const SizedBox(height: 12),
                             Text(
-                              AppStrings.shareSyncId,
+                              strings.AppStrings.shareUserId,
                               textAlign: TextAlign.center,
                               style: theme.textTheme.bodyMedium?.copyWith(
                                 color: colorScheme.onSurface.withOpacity(0.7),
@@ -603,7 +603,7 @@ class _SyncScreenState extends State<SyncScreen> {
                                 ),
                                 const SizedBox(width: 8),
                                 Text(
-                                  AppStrings.connectedDevices,
+                                  strings.AppStrings.connectedDevices,
                                   style: theme.textTheme.titleMedium?.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -641,7 +641,7 @@ class _SyncScreenState extends State<SyncScreen> {
                                             ),
                                             title: Text(
                                               isCurrentDevice 
-                                                  ? '${AppStrings.thisDevice} ($device)' 
+                                                  ? '${strings.AppStrings.thisDevice} ($device)' 
                                                   : device,
                                               style: TextStyle(
                                                 fontWeight: isCurrentDevice 
@@ -667,7 +667,7 @@ class _SyncScreenState extends State<SyncScreen> {
                                     : Container(
                                         padding: const EdgeInsets.all(12),
                                         child: Text(
-                                          AppStrings.noDevicesConnected,
+                                          strings.AppStrings.noDevicesConnected,
                                           style: theme.textTheme.bodyMedium?.copyWith(
                                             color: colorScheme.onSurfaceVariant,
                                           ),
@@ -708,7 +708,7 @@ class _SyncScreenState extends State<SyncScreen> {
                                     ),
                                     const SizedBox(width: 8),
                                     Text(
-                                      AppStrings.leaveSyncRoom,
+                                      strings.AppStrings.leaveUserId,
                                       style: TextStyle(
                                         color: colorScheme.error,
                                         fontWeight: FontWeight.bold,

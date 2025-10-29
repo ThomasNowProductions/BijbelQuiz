@@ -247,7 +247,7 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
       routes: {
         '/store': (context) => const StoreScreen(),
         '/settings': (context) => const SettingsScreen(),
-        '/sync': (context) => const SyncScreen(),
+        '/userId': (context) => const SyncScreen(),
       },
       home: const MainNavigationScreen(),
     );

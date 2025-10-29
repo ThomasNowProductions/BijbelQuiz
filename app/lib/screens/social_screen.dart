@@ -121,7 +121,7 @@ class _SocialScreenState extends State<SocialScreen> {
           textAlign: TextAlign.center,
         ),
         SizedBox(height: isDesktop ? 32 : 24),
-        // Sync functionality
+        // User ID functionality
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
@@ -158,7 +158,7 @@ class _SocialScreenState extends State<SocialScreen> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Icon(
-                        Icons.sync,
+                        Icons.person_add,
                         size: 20,
                         color: colorScheme.primary,
                       ),
@@ -169,7 +169,7 @@ class _SocialScreenState extends State<SocialScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            strings.AppStrings.multiDeviceSyncButton,
+                            strings.AppStrings.userIdButton,
                             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.w600,
                               color: colorScheme.onSurface,
@@ -177,7 +177,7 @@ class _SocialScreenState extends State<SocialScreen> {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            strings.AppStrings.syncDataDescription,
+                            strings.AppStrings.userIdDescriptionSetting,
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               color: colorScheme.onSurface.withValues(alpha: 0.7),
                             ),
