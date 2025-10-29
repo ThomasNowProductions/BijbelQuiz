@@ -7,7 +7,7 @@ import 'providers/lesson_progress_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'screens/guide_screen.dart';
 import 'dart:io' show Platform;
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/foundation.dart' show kIsWeb, kDebugMode;
 import 'services/notification_service.dart';
 import 'services/api_service.dart';
 import 'widgets/top_snackbar.dart';
@@ -23,6 +23,8 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'services/logger.dart';
 import 'package:archive/archive.dart';
+import 'utils/bijbelquiz_gen_utils.dart';
+import 'screens/bijbelquiz_gen_screen.dart';
 
 /// The settings screen that allows users to customize app preferences
 class SettingsScreen extends StatefulWidget {
@@ -959,6 +961,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
               label: strings.AppStrings.shareYourStats,
               subtitle: strings.AppStrings.copyStatsLinkToClipboard,
               icon: Icons.bar_chart,
+            ),
+            // Show BijbelQuiz Gen replay button only during gen period or in debug mode
+            if (BijbelQuizGenPeriod.isGenPeriod() || kDebugMode)
+            _buildActionButton(
+              context,
+              settings,
+              colorScheme,
+              isSmallScreen,
+              isDesktop,
+              onPressed: () {
+                Provider.of<AnalyticsService>(context, listen: false).capture(context, 'replay_bijbelquiz_gen');
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const BijbelQuizGenScreen(),
+                  ),
+                );
+              },
+              label: strings.AppStrings.bijbelquizGenTitle,
+              subtitle: strings.AppStrings.bijbelquizGenSubtitle + '${BijbelQuizGenPeriod.getStatsYear()}',
+              icon: Icons.auto_awesome,
             ),
 
           ],

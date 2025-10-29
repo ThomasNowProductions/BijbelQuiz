@@ -21,6 +21,9 @@ import 'services/question_cache_service.dart';
 import 'services/gemini_service.dart';
 import 'services/api_service.dart';
 import 'services/star_transaction_service.dart';
+import 'services/time_tracking_service.dart';
+import 'utils/bijbelquiz_gen_utils.dart';
+import 'screens/bijbelquiz_gen_screen.dart';
 import 'screens/store_screen.dart';
 import 'providers/lesson_progress_provider.dart';
 import 'screens/main_navigation_screen.dart';
@@ -113,6 +116,7 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
   // FeatureFlagsService removed
   ApiService? _apiService;
   StarTransactionService? _starTransactionService;
+  TimeTrackingService _timeTrackingService = TimeTrackingService.instance;
 
   // Add mounted getter for older Flutter versions
   @override
@@ -126,6 +130,16 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
 
     // Track app lifecycle for session management
     _trackAppLifecycle();
+
+    // Initialize time tracking service
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _timeTrackingService.initialize();
+      
+      // If there was an ongoing session (app crashed/force closed), end it
+      if (_timeTrackingService.hasOngoingSession()) {
+        _timeTrackingService.endSession();
+      }
+    });
 
     // Defer service initialization; don't block first render
     WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -268,6 +282,27 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
 
   @override
   Widget build(BuildContext context) {
+    // Start time tracking when the app widget is built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!_timeTrackingService.hasOngoingSession()) {
+        _timeTrackingService.startSession();
+      }
+      
+      // Check if we're in the BijbelQuiz Gen period and redirect if needed
+      if (BijbelQuizGenPeriod.isGenPeriod()) {
+        // Small delay to ensure context is ready
+        Future.delayed(const Duration(milliseconds: 500), () {
+          if (mounted) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => const BijbelQuizGenScreen(),
+              ),
+            );
+          }
+        });
+      }
+    });
+
     return Consumer<SettingsProvider>(
       builder: (context, settings, _) {
         // Handle API server lifecycle based on settings
@@ -329,7 +364,7 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
 
   /// Track app lifecycle events for session management
   void _trackAppLifecycle() {
-    AppLifecycleObserver(analyticsService).observe();
+    AppLifecycleObserver(analyticsService, _timeTrackingService).observe();
   }
 
   @override
@@ -346,6 +381,7 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
 
     _questionCacheService?.dispose();
     _connectionService?.dispose();
+    _timeTrackingService.dispose();
     AppLogger.info('BijbelQuizApp disposed successfully');
     super.dispose();
   }
@@ -354,9 +390,10 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
 /// Observer class to track app lifecycle events
 class AppLifecycleObserver {
   final AnalyticsService _analyticsService;
+  final TimeTrackingService _timeTrackingService;
   DateTime? _lastPausedTime;
 
-  AppLifecycleObserver(this._analyticsService);
+  AppLifecycleObserver(this._analyticsService, this._timeTrackingService);
 
   void observe() {
     WidgetsBinding.instance.addObserver(_AppLifecycleObserver(this));
@@ -374,16 +411,22 @@ class _AppLifecycleObserver extends WidgetsBindingObserver {
     switch (state) {
       case AppLifecycleState.resumed:
         AppLogger.info('App lifecycle: resumed');
+        // Start a new session when app is resumed
+        _parent._timeTrackingService.startSession();
         break;
       case AppLifecycleState.paused:
         _parent._lastPausedTime = DateTime.now();
         AppLogger.info('App lifecycle: paused');
+        // End the current session when app is paused
+        _parent._timeTrackingService.endSession();
         break;
       case AppLifecycleState.inactive:
         AppLogger.info('App lifecycle: inactive');
         break;
       case AppLifecycleState.detached:
         AppLogger.info('App lifecycle: detached');
+        // End session when app is detached
+        _parent._timeTrackingService.endSession();
         break;
       case AppLifecycleState.hidden:
         AppLogger.info('App lifecycle: hidden');

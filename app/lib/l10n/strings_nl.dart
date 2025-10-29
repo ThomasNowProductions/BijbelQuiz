@@ -469,4 +469,27 @@ class AppStrings {
   static const String tapToCopyUserId = 'Tik om BQID te kopiëren';
   static const String userIdCopiedToClipboard = 'BQID gekopieerd naar klembord';
   
+  // BijbelQuiz Gen (Year in Review) Strings
+  static const String bijbelquizGenTitle = 'BijbelQuiz Gen';
+  static const String bijbelquizGenSubtitle = 'Jouw jaar in ';
+  static const String bijbelquizGenWelcomeText = 'Bekijk je prestaties van vandaag en deel jouw BijbelQuiz-jaar!';
+  static const String questionsAnswered = 'Vragen beantwoord';
+  static const String bijbelquizGenQuestionsSubtitle = 'Je hebt hopelijk veel nieuwe dingen geleerd.';
+  static const String mistakesMade = 'Fouten gemaakt';
+  static const String bijbelquizGenMistakesSubtitle = 'Elke fout is een kans om te leren en groeien in je Bijbelkennis!';
+  static const String timeSpent = 'Tijd besteed';
+  static const String bijbelquizGenTimeSubtitle = 'Je hebt tijd genomen om je Bijbelkennis te verdiepen!';
+  static const String bijbelquizGenBestStreak = 'Beste reeks';
+  static const String bijbelquizGenStreakSubtitle = 'Je langste reeks toont je consistentie en toewijding!';
+  static const String yearInReview = 'Jouw jaar in review';
+  static const String bijbelquizGenYearReviewSubtitle = 'Een overzicht van je BijbelQuiz prestaties in het afgelopen jaar!';
+  static const String hours = 'uren';
+  static const String correctAnswers = 'Correcte antwoorden';
+  static const String accuracy = 'Nauwkeurigheid';
+  static const String currentStreak = 'Huidige reeks';
+  static const String thankYouForUsingBijbelQuiz = 'Bedankt voor het gebruik van BijbelQuiz!';
+  static const String bijbelquizGenThankYouText = 'We hopen dat onze app het afgelopen jaar tot Zegen mocht zijn.';
+  static const String bijbelquizGenDonateButton = 'Doneer aan ons om je voortgezette steun te tonen voor onze ontwikkeling, zodat we de app blijven kunnen verbeteren en dat je volgend jaar weer kan terugkijken op een leerzaam jaar.';
+  static const String done = 'Klaar';
+  static const String bijbelquizGenSkip = 'Overslaan';
 }
