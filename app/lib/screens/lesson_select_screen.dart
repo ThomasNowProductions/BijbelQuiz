@@ -355,6 +355,88 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                 return Container(
                   height: 120, // Fixed height for list items
                   margin: const EdgeInsets.only(bottom: 8.0),
+                  child: RepaintBoundary(
+                    child: LessonTile(
+                      lesson: lesson,
+                      index: realIndex,
+                      unlocked: unlocked,
+                      playable: playable,
+                      stars: stars,
+                      recommended: unlocked && recommended,
+                      onTap: () async {
+                        if (!unlocked) {
+                          Provider.of<AnalyticsService>(context, listen: false).capture(context, 'tap_locked_lesson', properties: {'lesson_id': lesson.id});
+                          showTopSnackBar(context, 'Les is nog vergrendeld', style: TopSnackBarStyle.warning);
+                          return;
+                        }
+                        if (!playable) {
+                          Provider.of<AnalyticsService>(context, listen: false).capture(context, 'tap_unplayable_lesson', properties: {'lesson_id': lesson.id});
+                          showTopSnackBar(context, 'Je kunt alleen de meest recente ontgrendelde les spelen', style: TopSnackBarStyle.info);
+                          return;
+                        }
+
+                        // Track lesson selection
+                        final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+
+                        // Track lesson system usage
+                        analyticsService.trackFeatureSuccess(context, AnalyticsService.FEATURE_LESSON_SYSTEM, additionalProperties: {
+                          'lesson_id': lesson.id,
+                          'lesson_category': lesson.category,
+                          'lesson_unlocked': unlocked,
+                        });
+
+                        // Track streak feature if this contributes to streak
+                        if (_streakDays > 0) {
+                          analyticsService.trackFeatureUsage(context, AnalyticsService.FEATURE_STREAK_TRACKING, AnalyticsService.ACTION_USED, additionalProperties: {
+                            'current_streak': _streakDays,
+                          });
+                        }
+
+                        Provider.of<AnalyticsService>(context, listen: false).capture(context, 'tap_lesson', properties: {'lesson_id': lesson.id});
+                        await Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => QuizScreen(lesson: lesson, sessionLimit: lesson.maxQuestions),
+                          ),
+                        );
+                        // After returning from the quiz, refresh streak data and reload lessons if needed.
+                        if (!mounted) return;
+                        await _refreshStreakData();
+                        await _loadLessons();
+                      },
+                    ),
+                  ),
+                );
+              },
+              childCount: filteredIndices.length,
+              // Performance: disable keep-alives and semantic indexes for list items.
+              addAutomaticKeepAlives: false,
+              addSemanticIndexes: false,
+              addRepaintBoundaries: true,
+            ),
+          ),
+        );
+      case SettingsProvider.layoutCompactGrid:
+        // Compact grid layout with smaller tiles
+        return SliverPadding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+          sliver: SliverGrid(
+            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: tileMaxExtent * 0.8, // 80% of normal size
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+              childAspectRatio: gridAspect * 0.9, // Slightly more square
+            ),
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                final realIndex = filteredIndices[index];
+                final lesson = _lessons[realIndex];
+                final unlocked = progress.isLessonUnlocked(realIndex);
+                final stars = progress.bestStarsFor(lesson.id);
+                final recommended = totalLessons > 0 && realIndex == continueIdx;
+
+                final playable = unlocked && realIndex == continueIdx;
+
+                return RepaintBoundary(
                   child: LessonTile(
                     lesson: lesson,
                     index: realIndex,
@@ -406,84 +488,6 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                 );
               },
               childCount: filteredIndices.length,
-              // Performance: disable keep-alives and semantic indexes for list items.
-              addAutomaticKeepAlives: false,
-              addSemanticIndexes: false,
-              addRepaintBoundaries: true,
-            ),
-          ),
-        );
-      case SettingsProvider.layoutCompactGrid:
-        // Compact grid layout with smaller tiles
-        return SliverPadding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-          sliver: SliverGrid(
-            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: tileMaxExtent * 0.8, // 80% of normal size
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-              childAspectRatio: gridAspect * 0.9, // Slightly more square
-            ),
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                final realIndex = filteredIndices[index];
-                final lesson = _lessons[realIndex];
-                final unlocked = progress.isLessonUnlocked(realIndex);
-                final stars = progress.bestStarsFor(lesson.id);
-                final recommended = totalLessons > 0 && realIndex == continueIdx;
-
-                final playable = unlocked && realIndex == continueIdx;
-
-                return LessonTile(
-                  lesson: lesson,
-                  index: realIndex,
-                  unlocked: unlocked,
-                  playable: playable,
-                  stars: stars,
-                  recommended: unlocked && recommended,
-                  onTap: () async {
-                    if (!unlocked) {
-                      Provider.of<AnalyticsService>(context, listen: false).capture(context, 'tap_locked_lesson', properties: {'lesson_id': lesson.id});
-                      showTopSnackBar(context, 'Les is nog vergrendeld', style: TopSnackBarStyle.warning);
-                      return;
-                    }
-                    if (!playable) {
-                      Provider.of<AnalyticsService>(context, listen: false).capture(context, 'tap_unplayable_lesson', properties: {'lesson_id': lesson.id});
-                      showTopSnackBar(context, 'Je kunt alleen de meest recente ontgrendelde les spelen', style: TopSnackBarStyle.info);
-                      return;
-                    }
-
-                    // Track lesson selection
-                    final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
-
-                    // Track lesson system usage
-                    analyticsService.trackFeatureSuccess(context, AnalyticsService.FEATURE_LESSON_SYSTEM, additionalProperties: {
-                      'lesson_id': lesson.id,
-                      'lesson_category': lesson.category,
-                      'lesson_unlocked': unlocked,
-                    });
-
-                    // Track streak feature if this contributes to streak
-                    if (_streakDays > 0) {
-                      analyticsService.trackFeatureUsage(context, AnalyticsService.FEATURE_STREAK_TRACKING, AnalyticsService.ACTION_USED, additionalProperties: {
-                        'current_streak': _streakDays,
-                      });
-                    }
-
-                    Provider.of<AnalyticsService>(context, listen: false).capture(context, 'tap_lesson', properties: {'lesson_id': lesson.id});
-                    await Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => QuizScreen(lesson: lesson, sessionLimit: lesson.maxQuestions),
-                      ),
-                    );
-                    // After returning from the quiz, refresh streak data and reload lessons if needed.
-                    if (!mounted) return;
-                    await _refreshStreakData();
-                    await _loadLessons();
-                  },
-                );
-              },
-              childCount: filteredIndices.length,
               // Performance: disable keep-alives and semantic indexes for grid items.
               // The grid lazily builds children and does not need to keep offscreen items alive.
               addAutomaticKeepAlives: false,
@@ -514,53 +518,55 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
 
                 final playable = unlocked && realIndex == continueIdx;
 
-                return LessonTile(
-                  lesson: lesson,
-                  index: realIndex,
-                  unlocked: unlocked,
-                  playable: playable,
-                  stars: stars,
-                  recommended: unlocked && recommended,
-                  onTap: () async {
-                    if (!unlocked) {
-                      Provider.of<AnalyticsService>(context, listen: false).capture(context, 'tap_locked_lesson', properties: {'lesson_id': lesson.id});
-                      showTopSnackBar(context, 'Les is nog vergrendeld', style: TopSnackBarStyle.warning);
-                      return;
-                    }
-                    if (!playable) {
-                      Provider.of<AnalyticsService>(context, listen: false).capture(context, 'tap_unplayable_lesson', properties: {'lesson_id': lesson.id});
-                      showTopSnackBar(context, 'Je kunt alleen de meest recente ontgrendelde les spelen', style: TopSnackBarStyle.info);
-                      return;
-                    }
+                return RepaintBoundary(
+                  child: LessonTile(
+                    lesson: lesson,
+                    index: realIndex,
+                    unlocked: unlocked,
+                    playable: playable,
+                    stars: stars,
+                    recommended: unlocked && recommended,
+                    onTap: () async {
+                      if (!unlocked) {
+                        Provider.of<AnalyticsService>(context, listen: false).capture(context, 'tap_locked_lesson', properties: {'lesson_id': lesson.id});
+                        showTopSnackBar(context, 'Les is nog vergrendeld', style: TopSnackBarStyle.warning);
+                        return;
+                      }
+                      if (!playable) {
+                        Provider.of<AnalyticsService>(context, listen: false).capture(context, 'tap_unplayable_lesson', properties: {'lesson_id': lesson.id});
+                        showTopSnackBar(context, 'Je kunt alleen de meest recente ontgrendelde les spelen', style: TopSnackBarStyle.info);
+                        return;
+                      }
 
-                    // Track lesson selection
-                    final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+                      // Track lesson selection
+                      final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
 
-                    // Track lesson system usage
-                    analyticsService.trackFeatureSuccess(context, AnalyticsService.FEATURE_LESSON_SYSTEM, additionalProperties: {
-                      'lesson_id': lesson.id,
-                      'lesson_category': lesson.category,
-                      'lesson_unlocked': unlocked,
-                    });
-
-                    // Track streak feature if this contributes to streak
-                    if (_streakDays > 0) {
-                      analyticsService.trackFeatureUsage(context, AnalyticsService.FEATURE_STREAK_TRACKING, AnalyticsService.ACTION_USED, additionalProperties: {
-                        'current_streak': _streakDays,
+                      // Track lesson system usage
+                      analyticsService.trackFeatureSuccess(context, AnalyticsService.FEATURE_LESSON_SYSTEM, additionalProperties: {
+                        'lesson_id': lesson.id,
+                        'lesson_category': lesson.category,
+                        'lesson_unlocked': unlocked,
                       });
-                    }
 
-                    Provider.of<AnalyticsService>(context, listen: false).capture(context, 'tap_lesson', properties: {'lesson_id': lesson.id});
-                    await Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => QuizScreen(lesson: lesson, sessionLimit: lesson.maxQuestions),
-                      ),
-                    );
-                    // After returning from the quiz, refresh streak data and reload lessons if needed.
-                    if (!mounted) return;
-                    await _refreshStreakData();
-                    await _loadLessons();
-                  },
+                      // Track streak feature if this contributes to streak
+                      if (_streakDays > 0) {
+                        analyticsService.trackFeatureUsage(context, AnalyticsService.FEATURE_STREAK_TRACKING, AnalyticsService.ACTION_USED, additionalProperties: {
+                          'current_streak': _streakDays,
+                        });
+                      }
+
+                      Provider.of<AnalyticsService>(context, listen: false).capture(context, 'tap_lesson', properties: {'lesson_id': lesson.id});
+                      await Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => QuizScreen(lesson: lesson, sessionLimit: lesson.maxQuestions),
+                        ),
+                      );
+                      // After returning from the quiz, refresh streak data and reload lessons if needed.
+                      if (!mounted) return;
+                      await _refreshStreakData();
+                      await _loadLessons();
+                    },
+                  ),
                 );
               },
               childCount: filteredIndices.length,
@@ -674,68 +680,70 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                             SliverToBoxAdapter(
                               child: Padding(
                                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-                                child: PromoCard(
-                                  isDonation: _isDonationPromo,
-                                  isSatisfaction: _isSatisfactionPromo,
-                                  isDifficulty: _isDifficultyPromo,
-                                  onDismiss: () {
-                                    final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
-                                    analyticsService.capture(context, 'dismiss_promo_card');
-                                    analyticsService.trackFeatureDismissal(context, AnalyticsService.FEATURE_PROMO_CARDS, additionalProperties: {
-                                      'promo_type': _isDonationPromo ? 'donation' : (_isSatisfactionPromo ? 'satisfaction' : 'difficulty'),
-                                    });
-                                    setState(() {
-                                      _showPromoCard = false;
-                                    });
-                                  },
-                                  onAction: (url) async {
-                                    final settings = Provider.of<SettingsProvider>(context, listen: false);
-                                    
-                                    if (_isDonationPromo) {
+                                child: RepaintBoundary(
+                                  child: PromoCard(
+                                    isDonation: _isDonationPromo,
+                                    isSatisfaction: _isSatisfactionPromo,
+                                    isDifficulty: _isDifficultyPromo,
+                                    onDismiss: () {
                                       final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
-                                      analyticsService.capture(context, 'tap_donation_promo');
-                                      analyticsService.trackFeatureSuccess(context, AnalyticsService.FEATURE_DONATION_SYSTEM);
-                                      await settings.markDonationLinkAsClicked();
-                                      await settings.updateLastDonationPopup();
-                                      _openDonationPage();
-                                    } else if (_isSatisfactionPromo) {
-                                      final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
-                                      analyticsService.capture(context, 'tap_satisfaction_promo');
-                                      analyticsService.trackFeatureSuccess(context, AnalyticsService.FEATURE_SATISFACTION_SURVEYS);
-                                      await settings.markSatisfactionLinkAsClicked();
-                                      await settings.updateLastSatisfactionPopup();
-                                      _launchUrl(AppUrls.satisfactionSurveyUrl);
-                                    } else if (_isDifficultyPromo) {
-                                      // Handle difficulty feedback
-                                      final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
-                                      analyticsService.capture(context, 'tap_difficulty_feedback', properties: {'feedback': url});
-                                      analyticsService.trackFeatureSuccess(context, AnalyticsService.FEATURE_DIFFICULTY_FEEDBACK, additionalProperties: {'feedback_type': url});
-                                      await settings.markDifficultyLinkAsClicked();
-                                      await settings.updateLastDifficultyPopup();
-                                      
-                                      // Handle the different feedback options
-                                      if (url == 'too_hard') {
-                                        // User feels questions are too hard
-                                        await _adjustDifficulty('too_hard');
-                                      } else if (url == 'too_easy') {
-                                        // User feels questions are too easy
-                                        await _adjustDifficulty('too_easy');
-                                      } else if (url == 'good') {
-                                        // User feels questions are just right
-                                        await _adjustDifficulty('good');
-                                      }
-                                      
-                                      // Hide the promo after action
+                                      analyticsService.capture(context, 'dismiss_promo_card');
+                                      analyticsService.trackFeatureDismissal(context, AnalyticsService.FEATURE_PROMO_CARDS, additionalProperties: {
+                                        'promo_type': _isDonationPromo ? 'donation' : (_isSatisfactionPromo ? 'satisfaction' : 'difficulty'),
+                                      });
                                       setState(() {
                                         _showPromoCard = false;
                                       });
-                                    } else {
-                                      Provider.of<AnalyticsService>(context, listen: false).capture(context, 'tap_follow_promo', properties: {'url': url});
-                                      await settings.markFollowLinkAsClicked();
-                                      await settings.updateLastFollowPopup();
-                                      _launchUrl(url);
-                                    }
-                                  },
+                                    },
+                                    onAction: (url) async {
+                                      final settings = Provider.of<SettingsProvider>(context, listen: false);
+                                      
+                                      if (_isDonationPromo) {
+                                        final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+                                        analyticsService.capture(context, 'tap_donation_promo');
+                                        analyticsService.trackFeatureSuccess(context, AnalyticsService.FEATURE_DONATION_SYSTEM);
+                                        await settings.markDonationLinkAsClicked();
+                                        await settings.updateLastDonationPopup();
+                                        _openDonationPage();
+                                      } else if (_isSatisfactionPromo) {
+                                        final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+                                        analyticsService.capture(context, 'tap_satisfaction_promo');
+                                        analyticsService.trackFeatureSuccess(context, AnalyticsService.FEATURE_SATISFACTION_SURVEYS);
+                                        await settings.markSatisfactionLinkAsClicked();
+                                        await settings.updateLastSatisfactionPopup();
+                                        _launchUrl(AppUrls.satisfactionSurveyUrl);
+                                      } else if (_isDifficultyPromo) {
+                                        // Handle difficulty feedback
+                                        final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+                                        analyticsService.capture(context, 'tap_difficulty_feedback', properties: {'feedback': url});
+                                        analyticsService.trackFeatureSuccess(context, AnalyticsService.FEATURE_DIFFICULTY_FEEDBACK, additionalProperties: {'feedback_type': url});
+                                        await settings.markDifficultyLinkAsClicked();
+                                        await settings.updateLastDifficultyPopup();
+                                        
+                                        // Handle the different feedback options
+                                        if (url == 'too_hard') {
+                                          // User feels questions are too hard
+                                          await _adjustDifficulty('too_hard');
+                                        } else if (url == 'too_easy') {
+                                          // User feels questions are too easy
+                                          await _adjustDifficulty('too_easy');
+                                        } else if (url == 'good') {
+                                          // User feels questions are just right
+                                          await _adjustDifficulty('good');
+                                        }
+                                        
+                                        // Hide the promo after action
+                                        setState(() {
+                                          _showPromoCard = false;
+                                        });
+                                      } else {
+                                        Provider.of<AnalyticsService>(context, listen: false).capture(context, 'tap_follow_promo', properties: {'url': url});
+                                        await settings.markFollowLinkAsClicked();
+                                        await settings.updateLastFollowPopup();
+                                        _launchUrl(url);
+                                      }
+                                    },
+                                  ),
                                 ),
                               ),
                             ),
@@ -747,21 +755,23 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  ProgressHeader(
-                                    lessons: _lessons,
-                                    continueLesson: continueLesson,
-                                    streakDays: _streakDays,
-                                    dayWindow: _getFiveDayWindow(),
-                                    onAfterQuizReturn: _refreshStreakData,
-                                    onMultiplayerPressed: () {
-                                      final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
-                                      analyticsService.capture(context, 'multiplayer_button_tapped');
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (_) => const MultiplayerGameSetupScreen(),
-                                        ),
-                                      );
-                                    },
+                                  RepaintBoundary(
+                                    child: ProgressHeader(
+                                      lessons: _lessons,
+                                      continueLesson: continueLesson,
+                                      streakDays: _streakDays,
+                                      dayWindow: _getFiveDayWindow(),
+                                      onAfterQuizReturn: _refreshStreakData,
+                                      onMultiplayerPressed: () {
+                                        final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+                                        analyticsService.capture(context, 'multiplayer_button_tapped');
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (_) => const MultiplayerGameSetupScreen(),
+                                          ),
+                                        );
+                                      },
+                                    ),
                                   ),
                                   const SizedBox(height: 8),
                                 ],
