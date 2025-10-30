@@ -17,6 +17,7 @@ class SyncService {
 
   /// Initializes the service, including loading saved room
   Future<void> initialize() async {
+    await _loadSavedDeviceId();
     await _loadSavedRoomId();
   }
 
@@ -172,9 +173,21 @@ class SyncService {
 
   /// Gets or creates a unique device ID
   Future<String> _getOrCreateDeviceId() async {
-    // For simplicity, use a UUID or device info
-    // In a real app, you might use device_info_plus or similar
-    return 'device_${DateTime.now().millisecondsSinceEpoch}';
+    if (_currentDeviceId != null) {
+      return _currentDeviceId!;
+    }
+
+    final prefs = await SharedPreferences.getInstance();
+    String? deviceId = prefs.getString('device_id');
+    
+    if (deviceId == null) {
+      // Generate a new unique device ID if one doesn't exist
+      deviceId = 'device_${DateTime.now().millisecondsSinceEpoch}';
+      await prefs.setString('device_id', deviceId);
+    }
+
+    _currentDeviceId = deviceId;
+    return deviceId;
   }
 
   /// Gets current room data
@@ -286,6 +299,16 @@ class SyncService {
       await prefs.remove('sync_room_id');
     } catch (e) {
       AppLogger.error('Failed to clear sync room', e);
+    }
+  }
+
+  /// Loads the saved device ID from SharedPreferences
+  Future<void> _loadSavedDeviceId() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      _currentDeviceId = prefs.getString('device_id');
+    } catch (e) {
+      AppLogger.error('Failed to load saved device ID', e);
     }
   }
 }
