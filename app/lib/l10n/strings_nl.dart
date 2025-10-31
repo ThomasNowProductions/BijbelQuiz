@@ -490,7 +490,7 @@ class AppStrings {
   static const String bijbelquizGenStreakSubtitle = 'Je langste reeks toont je consistentie en toewijding!';
   static const String yearInReview = 'Jouw jaar in review';
   static const String bijbelquizGenYearReviewSubtitle = 'Een overzicht van je BijbelQuiz prestaties in het afgelopen jaar!';
-  static const String hours = 'uren';
+  static const String hours = 'Uren';
   static const String correctAnswers = 'Correcte antwoorden';
   static const String accuracy = 'Nauwkeurigheid';
   static const String currentStreak = 'Huidige reeks';

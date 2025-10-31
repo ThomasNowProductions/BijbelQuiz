@@ -166,7 +166,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           Text(
             '${strings.AppStrings.bijbelquizGenSubtitle} ${BijbelQuizGenPeriod.getStatsYear()}',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -208,20 +208,20 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
+          Text(
+            strings.AppStrings.bijbelquizGenQuestionsSubtitle,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 24),
           Text(
             '$totalQuestions',
             style: Theme.of(context).textTheme.displayLarge?.copyWith(
               fontWeight: FontWeight.bold,
               color: Theme.of(context).colorScheme.primary,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 40),
-          Text(
-            strings.AppStrings.bijbelquizGenQuestionsSubtitle,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Theme.of(context).colorScheme.onSurface,
             ),
             textAlign: TextAlign.center,
           ),
@@ -250,20 +250,20 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
+          Text(
+            strings.AppStrings.bijbelquizGenMistakesSubtitle,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 24),
           Text(
             '${gameStats.incorrectAnswers}',
             style: Theme.of(context).textTheme.displayLarge?.copyWith(
               fontWeight: FontWeight.bold,
               color: Theme.of(context).colorScheme.error,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 40),
-          Text(
-            strings.AppStrings.bijbelquizGenMistakesSubtitle,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Theme.of(context).colorScheme.onSurface,
             ),
             textAlign: TextAlign.center,
           ),
@@ -292,7 +292,15 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
+          Text(
+            strings.AppStrings.bijbelquizGenTimeSubtitle,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 24),
           Text(
             timeTracking.getTotalTimeSpentFormatted(),
             style: Theme.of(context).textTheme.displayLarge?.copyWith(
@@ -306,14 +314,6 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
             '${timeTracking.getTotalTimeSpentInHours().toStringAsFixed(1)} ${strings.AppStrings.hours}',
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
               color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 40),
-          Text(
-            strings.AppStrings.bijbelquizGenTimeSubtitle,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Theme.of(context).colorScheme.onSurface,
             ),
             textAlign: TextAlign.center,
           ),
@@ -342,20 +342,20 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
+          Text(
+            strings.AppStrings.bijbelquizGenStreakSubtitle,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 24),
           Text(
             '${gameStats.longestStreak}',
             style: Theme.of(context).textTheme.displayLarge?.copyWith(
               fontWeight: FontWeight.bold,
               color: Theme.of(context).colorScheme.primary,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 40),
-          Text(
-            strings.AppStrings.bijbelquizGenStreakSubtitle,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Theme.of(context).colorScheme.onSurface,
             ),
             textAlign: TextAlign.center,
           ),
@@ -387,7 +387,15 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 8),
+          Text(
+            strings.AppStrings.bijbelquizGenYearReviewSubtitle,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 24),
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(16),
@@ -406,14 +414,6 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                 _buildStatRow(context, gameStats.currentStreak.toString(), strings.AppStrings.currentStreak, Theme.of(context).colorScheme.surfaceTint),
               ],
             ),
-          ),
-          const SizedBox(height: 40),
-          Text(
-            strings.AppStrings.bijbelquizGenYearReviewSubtitle,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Theme.of(context).colorScheme.onSurface,
-            ),
-            textAlign: TextAlign.center,
           ),
         ],
       ),
@@ -464,7 +464,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           Text(
             strings.AppStrings.bijbelquizGenThankYouText,
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
