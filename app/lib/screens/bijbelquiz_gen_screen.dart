@@ -16,22 +16,7 @@ class BijbelQuizGenScreen extends StatefulWidget {
 
 class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
   final PageController _pageController = PageController();
-  int _currentPage = 0;
   
-  @override
-  void initState() {
-    super.initState();
-    // Add listener to track page changes
-    _pageController.addListener(() {
-      final page = _pageController.page?.round() ?? 0;
-      if (page != _currentPage) {
-        setState(() {
-          _currentPage = page;
-        });
-      }
-    });
-  }
-
   @override
   void dispose() {
     _pageController.dispose();
@@ -53,97 +38,121 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
       _buildThankYouPage(context),
     ];
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      body: Stack(
-        children: [
-          PageView(
-            controller: _pageController,
-            children: pages,
-          ),
-          // Skip button (only on first page)
-          if (_currentPage == 0)
-            Positioned(
-              top: MediaQuery.of(context).padding.top + 16,
-              right: 16,
-              child: TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
+    return AnimatedBuilder(
+      animation: _pageController,
+      builder: (context, child) {
+        // Calculate current page in real-time
+        int currentPage = _pageController.hasClients 
+            ? _pageController.page?.round() ?? 0 
+            : 0;
+        
+        // Define background colors for each page
+        final pageBackgroundColors = [
+          Theme.of(context).colorScheme.primaryContainer,     // Welcome page (keep theme)
+          Colors.purple.shade200,                            // Questions answered page - purple
+          Colors.orange.shade300,                            // Mistakes page - orange
+          Colors.lightBlue.shade200,                         // Time spent page - light blue
+          Colors.pink.shade300,                              // Best streak page - pink
+          Colors.amber.shade200,                             // Year in review page - amber
+          Colors.green.shade300,                             // Thank you page - green
+        ];
+
+        return Scaffold(
+          backgroundColor: pageBackgroundColors[currentPage],
+          body: Stack(
+            children: [
+              PageView(
+                controller: _pageController,
+                onPageChanged: (index) {
+                  // Optional: Add state update for other functionality if needed
                 },
-                child: Text(
-                  strings.AppStrings.bijbelquizGenSkip,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onSurface,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
+                children: pages,
               ),
-            ),
-          // Page indicator
-          Positioned(
-            bottom: 80,
-            left: 0,
-            right: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                pages.length,
-                (index) => Container(
-                  width: 8,
-                  height: 8,
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: _currentPage == index 
-                        ? Theme.of(context).colorScheme.primary 
-                        : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          // Navigation buttons
-          Positioned(
-            bottom: 24,
-            left: 16,
-            right: 16,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                if (_currentPage > 0)
-                  ElevatedButton(
+              // Skip button (only on first page)
+              if (currentPage == 0)
+                Positioned(
+                  top: MediaQuery.of(context).padding.top + 16,
+                  right: 16,
+                  child: TextButton(
                     onPressed: () {
-                      _pageController.previousPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
-                      foregroundColor: Theme.of(context).colorScheme.onSurface,
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                    ),
-                    child: const Icon(Icons.arrow_back),
-                  ),
-                const Spacer(),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_currentPage < pages.length - 1) {
-                      _pageController.nextPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
-                    } else {
                       Navigator.of(context).pop();
-                    }
-                  },
-                  child: const Icon(Icons.arrow_forward),
+                    },
+                    child: Text(
+                      strings.AppStrings.bijbelquizGenSkip,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSurface,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
                 ),
-              ],
-            ),
+              // Page indicator
+              Positioned(
+                bottom: 80,
+                left: 0,
+                right: 0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(
+                    pages.length,
+                    (index) => Container(
+                      width: 8,
+                      height: 8,
+                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: currentPage == index 
+                            ? Theme.of(context).colorScheme.primary 
+                            : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              // Navigation buttons
+              Positioned(
+                bottom: 24,
+                left: 16,
+                right: 16,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    if (currentPage > 0)
+                      ElevatedButton(
+                        onPressed: () {
+                          _pageController.previousPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+                          foregroundColor: Theme.of(context).colorScheme.onSurface,
+                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                        ),
+                        child: const Icon(Icons.arrow_back),
+                      ),
+                    const Spacer(),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (currentPage < pages.length - 1) {
+                          _pageController.nextPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
+                        } else {
+                          Navigator.of(context).pop();
+                        }
+                      },
+                      child: const Icon(Icons.arrow_forward),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
