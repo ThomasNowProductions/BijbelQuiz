@@ -272,68 +272,9 @@ class _SocialScreenState extends State<SocialScreen> {
     _DeviceType deviceType, 
     bool featuresEnabled,
   ) {
-    final iconSize = _getResponsiveSize(
-      _SpacingConstants.iconDesktopSize,
-      _SpacingConstants.iconTabletSize,
-      _SpacingConstants.iconMobileSize,
-      deviceType,
-    );
-    
-    final iconColor = featuresEnabled 
-        ? colorScheme.primary 
-        : colorScheme.primary.withValues(alpha: 0.5);
-    
-    final titleColor = featuresEnabled 
-        ? colorScheme.onSurface 
-        : colorScheme.onSurface.withValues(alpha: 0.7);
-    
-    final subtitleColor = featuresEnabled 
-        ? colorScheme.onSurface.withValues(alpha: 0.7) 
-        : colorScheme.onSurface.withValues(alpha: 0.5);
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(
-          Icons.groups_rounded,
-          size: iconSize,
-          color: iconColor,
-        ),
-        SizedBox(height: _getResponsiveSize(
-          _SpacingConstants.desktopSpacing,
-          _SpacingConstants.desktopSpacing,
-          _SpacingConstants.mobileSpacing,
-          deviceType,
-        )),
-        Text(
-          strings.AppStrings.socialFeatures,
-          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-            fontWeight: FontWeight.w700,
-            color: titleColor,
-          ),
-          textAlign: TextAlign.center,
-        ),
-        SizedBox(height: _getResponsiveSize(
-          _SpacingConstants.desktopSmallSpacing,
-          _SpacingConstants.desktopSmallSpacing,
-          _SpacingConstants.mobileSmallSpacing,
-          deviceType,
-        )),
-        Text(
-          strings.AppStrings.connectWithOtherUsers,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            color: subtitleColor,
-            fontWeight: FontWeight.w500,
-          ),
-          textAlign: TextAlign.center,
-        ),
-        // Add social feature buttons
-        SizedBox(height: _getResponsiveSize(
-          _SpacingConstants.desktopSmallSpacing,
-          _SpacingConstants.desktopSmallSpacing,
-          _SpacingConstants.mobileSmallSpacing,
-          deviceType,
-        )),
         _buildSocialFeatureButtons(colorScheme, deviceType),
         // Add followed users scores section
         _buildFollowedUsersScores(colorScheme, deviceType),
@@ -351,21 +292,21 @@ class _SocialScreenState extends State<SocialScreen> {
         _buildFeatureButton(
           colorScheme: colorScheme,
           icon: Icons.search,
-          label: strings.AppStrings.search,
+          label: 'Zoeken',
           onPressed: () => _navigateToUserSearchScreen(),
           deviceType: deviceType,
         ),
         _buildFeatureButton(
           colorScheme: colorScheme,
           icon: Icons.people_alt_rounded,
-          label: strings.AppStrings.myFollowing,
+          label: 'Volgend',
           onPressed: () => _navigateToFollowingList(),
           deviceType: deviceType,
         ),
         _buildFeatureButton(
           colorScheme: colorScheme,
           icon: Icons.person_add_rounded,
-          label: strings.AppStrings.myFollowers,
+          label: 'Volgers',
           onPressed: () => _navigateToFollowersList(),
           deviceType: deviceType,
         ),
@@ -409,54 +350,52 @@ class _SocialScreenState extends State<SocialScreen> {
               ),
             ),
             ...followedUsers.map((user) => 
-              Container(
+              Card(
+                color: colorScheme.surface,
+                elevation: 1,
                 margin: const EdgeInsets.only(bottom: 8),
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: colorScheme.surfaceContainer,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color: colorScheme.outlineVariant,
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            user['username'] ?? 'Unknown User',
-                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.w500,
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              user['username'] ?? 'Unknown User',
+                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: colorScheme.onSurface,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            'Laatste score: ${user['score'] ?? 'N/A'}',
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: colorScheme.onSurface.withValues(alpha: 0.7),
+                            const SizedBox(height: 4),
+                            Text(
+                              'Laatste score: ${user['score'] ?? 'N/A'}',
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                color: colorScheme.onSurfaceVariant,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                      decoration: BoxDecoration(
-                        color: colorScheme.primaryContainer,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(
-                        '${user['streak'] ?? 0} reeks',
-                        style: TextStyle(
-                          color: colorScheme.onPrimaryContainer,
-                          fontWeight: FontWeight.w600,
+                          ],
                         ),
                       ),
-                    ),
-                  ],
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: colorScheme.primaryContainer,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          '${user['streak'] ?? 0} reeks',
+                          style: TextStyle(
+                            color: colorScheme.onPrimaryContainer,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ).toList(),
@@ -514,17 +453,20 @@ class _SocialScreenState extends State<SocialScreen> {
     
     return SizedBox(
       width: buttonSize,
+      height: buttonSize * 0.8, // Maintain aspect ratio
       child: OutlinedButton(
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
-          padding: const EdgeInsets.all(16),
-          side: BorderSide(color: colorScheme.primary.withValues(alpha: 0.3)),
+          padding: const EdgeInsets.all(12),
+          side: BorderSide(color: colorScheme.outline),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
+          backgroundColor: colorScheme.surface,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               icon,
@@ -532,13 +474,16 @@ class _SocialScreenState extends State<SocialScreen> {
               color: colorScheme.primary,
             ),
             const SizedBox(height: 8),
-            Text(
-              label,
-              style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                color: colorScheme.onSurface,
-                fontWeight: FontWeight.w500,
+            Flexible(
+              child: Text(
+                label,
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  color: colorScheme.onSurface,
+                  fontWeight: FontWeight.w500,
+                ),
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
               ),
-              textAlign: TextAlign.center,
             ),
           ],
         ),
