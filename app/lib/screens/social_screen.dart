@@ -17,45 +17,6 @@ class SocialScreen extends StatefulWidget {
   State<SocialScreen> createState() => _SocialScreenState();
 }
 
-/// Device size breakpoints for responsive design.
-class _ResponsiveBreakpoints {
-  static const double desktop = 800.0;
-  static const double tablet = 600.0;
-}
-
-/// Spacing constants for consistent design.
-class _SpacingConstants {
-  static const double desktopPadding = 32.0;
-  static const double tabletPadding = 24.0;
-  static const double mobilePadding = 16.0;
-  
-  static const double desktopCardPadding = 16.0;
-  static const double mobileCardPadding = 12.0;
-  
-  static const double desktopSpacing = 32.0;
-  static const double mobileSpacing = 24.0;
-  
-  static const double desktopSmallSpacing = 16.0;
-  static const double mobileSmallSpacing = 12.0;
-  
-  static const double iconDesktopSize = 120.0;
-  static const double iconTabletSize = 100.0;
-  static const double iconMobileSize = 80.0;
-}
-
-/// Represents device type based on screen size.
-class _DeviceType {
-  final bool isDesktop;
-  final bool isTablet;
-  final bool isMobile;
-
-  const _DeviceType({
-    required this.isDesktop,
-    required this.isTablet,
-    required this.isMobile,
-  });
-}
-
 class _SocialScreenState extends State<SocialScreen> {
   bool _socialFeaturesEnabled = false;
   late AnalyticsService _analyticsService;
@@ -69,75 +30,51 @@ class _SocialScreenState extends State<SocialScreen> {
     _socialFeaturesEnabled = true;
   }
 
-  /// Track screen access and feature availability.
+  /// Track screen access and feature usage.
   void _trackScreenAccess() {
     _analyticsService.screen(context, 'SocialScreen');
     _analyticsService.trackFeatureUsage(context, 'social_features', 'screen_accessed');
   }
 
-  /// Get device type based on screen width.
-  _DeviceType _getDeviceType(Size size) {
-    final width = size.width;
-    return _DeviceType(
-      isDesktop: width > _ResponsiveBreakpoints.desktop,
-      isTablet: width > _ResponsiveBreakpoints.tablet && width <= _ResponsiveBreakpoints.desktop,
-      isMobile: width <= _ResponsiveBreakpoints.tablet,
-    );
-  }
-
-  /// Get responsive padding based on device type.
-  EdgeInsets _getResponsivePadding(_DeviceType deviceType) {
-    final horizontalPadding = deviceType.isDesktop 
-        ? _SpacingConstants.desktopPadding 
-        : (deviceType.isTablet ? _SpacingConstants.tabletPadding : _SpacingConstants.mobilePadding);
-    return EdgeInsets.symmetric(horizontal: horizontalPadding);
-  }
-
-  /// Get responsive size based on device type.
-  double _getResponsiveSize(double desktop, double tablet, double mobile, _DeviceType deviceType) {
-    return deviceType.isDesktop ? desktop : (deviceType.isTablet ? tablet : mobile);
-  }
-
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final size = MediaQuery.of(context).size;
-    final deviceType = _getDeviceType(size);
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
       appBar: _buildAppBar(colorScheme),
       body: SafeArea(
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          padding: _getResponsivePadding(deviceType),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxWidth: _getResponsiveSize(
-                    _ResponsiveBreakpoints.desktop, 
-                    _ResponsiveBreakpoints.tablet, 
-                    double.infinity, 
-                    deviceType,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            // Calculate responsive values based on available width
+            final isLargeScreen = constraints.maxWidth > 600;
+            final horizontalPadding = isLargeScreen ? 24.0 : 16.0;
+            final maxContainerWidth = isLargeScreen ? 600.0 : constraints.maxWidth;
+            
+            return SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+              child: Center(
+                child: Container(
+                  constraints: BoxConstraints(
+                    maxWidth: maxContainerWidth,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _buildBqidManagementCard(colorScheme),
+                      const SizedBox(height: 24),
+                      _buildSocialFeaturesContent(
+                        colorScheme, 
+                        isLargeScreen, 
+                        _socialFeaturesEnabled,
+                      ),
+                    ],
                   ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildBqidManagementCard(colorScheme, deviceType),
-                    const SizedBox(height: 24), // Add some spacing below the BQID card
-                    _buildSocialFeaturesContent(
-                      colorScheme, 
-                      deviceType, 
-                      _socialFeaturesEnabled, // Pass the flag to determine content
-                    ),
-                  ],
-                ),
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );
@@ -178,14 +115,7 @@ class _SocialScreenState extends State<SocialScreen> {
   }
 
   /// Builds the BQID management card.
-  Widget _buildBqidManagementCard(ColorScheme colorScheme, _DeviceType deviceType) {
-    final cardPadding = _getResponsiveSize(
-      _SpacingConstants.desktopCardPadding,
-      _SpacingConstants.desktopCardPadding,
-      _SpacingConstants.mobileCardPadding,
-      deviceType,
-    );
-
+  Widget _buildBqidManagementCard(ColorScheme colorScheme) {
     return Container(
       width: double.infinity,
       margin: EdgeInsets.zero,
@@ -206,7 +136,7 @@ class _SocialScreenState extends State<SocialScreen> {
           onTap: _handleBqidCardTap,
           borderRadius: BorderRadius.circular(16),
           child: Padding(
-            padding: EdgeInsets.all(cardPadding),
+            padding: const EdgeInsets.all(16.0),
             child: Row(
               children: [
                 Container(
@@ -221,7 +151,7 @@ class _SocialScreenState extends State<SocialScreen> {
                     color: Colors.blue,
                   ),
                 ),
-                SizedBox(width: _getResponsiveSize(12, 12, 8, deviceType)),
+                const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -266,58 +196,92 @@ class _SocialScreenState extends State<SocialScreen> {
     );
   }
 
-  /// Builds the social features content section, which now includes active features.
+  /// Builds the social features content section.
   Widget _buildSocialFeaturesContent(
     ColorScheme colorScheme, 
-    _DeviceType deviceType, 
+    bool isLargeScreen, 
     bool featuresEnabled,
   ) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _buildSocialFeatureButtons(colorScheme, deviceType),
-        // Add followed users scores section
-        _buildFollowedUsersScores(colorScheme, deviceType),
+        _buildSocialFeatureButtons(colorScheme, isLargeScreen),
+        _buildFollowedUsersScores(colorScheme, isLargeScreen),
       ],
     );
   }
 
-  /// Builds buttons for social features
-  Widget _buildSocialFeatureButtons(ColorScheme colorScheme, _DeviceType deviceType) {
-    return Wrap(
-      spacing: 16,
-      runSpacing: 16,
-      alignment: WrapAlignment.center,
-      children: [
-        _buildFeatureButton(
-          colorScheme: colorScheme,
-          icon: Icons.search,
-          label: 'Zoeken',
-          onPressed: () => _navigateToUserSearchScreen(),
-          deviceType: deviceType,
+  /// Builds responsive buttons for social features
+  Widget _buildSocialFeatureButtons(ColorScheme colorScheme, bool isLargeScreen) {
+    // Use a responsive grid based on screen size
+    if (isLargeScreen) {
+      // For large screens, arrange buttons in a grid
+      return GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          crossAxisSpacing: 16.0,
+          mainAxisSpacing: 16.0,
+          childAspectRatio: 1.0,
         ),
-        _buildFeatureButton(
-          colorScheme: colorScheme,
-          icon: Icons.people_alt_rounded,
-          label: 'Volgend',
-          onPressed: () => _navigateToFollowingList(),
-          deviceType: deviceType,
-        ),
-        _buildFeatureButton(
-          colorScheme: colorScheme,
-          icon: Icons.person_add_rounded,
-          label: 'Volgers',
-          onPressed: () => _navigateToFollowersList(),
-          deviceType: deviceType,
-        ),
-      ],
-    );
+        itemCount: 3,
+        itemBuilder: (context, index) {
+          final features = [
+            {'icon': Icons.search, 'label': 'Zoeken', 'onPressed': _navigateToUserSearchScreen},
+            {'icon': Icons.people_alt_rounded, 'label': 'Volgend', 'onPressed': _navigateToFollowingList},
+            {'icon': Icons.person_add_rounded, 'label': 'Volgers', 'onPressed': _navigateToFollowersList},
+          ];
+          
+          final feature = features[index];
+          return _buildFeatureButton(
+            colorScheme: colorScheme,
+            icon: feature['icon'] as IconData,
+            label: feature['label'] as String,
+            onPressed: feature['onPressed'] as VoidCallback,
+            isLargeScreen: isLargeScreen,
+          );
+        },
+      );
+    } else {
+      // For smaller screens, arrange buttons in a column
+      final features = [
+        {'icon': Icons.search, 'label': 'Zoeken', 'onPressed': _navigateToUserSearchScreen},
+        {'icon': Icons.people_alt_rounded, 'label': 'Volgend', 'onPressed': _navigateToFollowingList},
+        {'icon': Icons.person_add_rounded, 'label': 'Volgers', 'onPressed': _navigateToFollowersList},
+      ];
+      
+      return Column(
+        children: [
+          for (int i = 0; i < features.length; i++)
+            if (i < features.length - 1)
+              Column(
+                children: [
+                  _buildFeatureButton(
+                    colorScheme: colorScheme,
+                    icon: features[i]['icon'] as IconData,
+                    label: features[i]['label'] as String,
+                    onPressed: features[i]['onPressed'] as VoidCallback,
+                    isLargeScreen: isLargeScreen,
+                  ),
+                  const SizedBox(height: 16),
+                ],
+              )
+            else
+              _buildFeatureButton(
+                colorScheme: colorScheme,
+                icon: features[i]['icon'] as IconData,
+                label: features[i]['label'] as String,
+                onPressed: features[i]['onPressed'] as VoidCallback,
+                isLargeScreen: isLargeScreen,
+              ),
+        ],
+      );
+    }
   }
 
   /// Builds the followed users scores section
-  Widget _buildFollowedUsersScores(ColorScheme colorScheme, _DeviceType deviceType) {
-    // This would typically fetch and display scores from followed users
-    // For now, I'll implement a placeholder structure
+  Widget _buildFollowedUsersScores(ColorScheme colorScheme, bool isLargeScreen) {
     return FutureBuilder<List<Map<String, dynamic>>>(
       future: _getFollowedUsersScores(),
       builder: (context, snapshot) {
@@ -331,7 +295,7 @@ class _SocialScreenState extends State<SocialScreen> {
         }
         
         if (snapshot.hasError || !snapshot.hasData || snapshot.data!.isEmpty) {
-          return Container(); // Hide section if no followed users or error
+          return Container();
         }
         
         final followedUsers = snapshot.data!;
@@ -357,7 +321,6 @@ class _SocialScreenState extends State<SocialScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(12),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
                         child: Column(
@@ -411,25 +374,21 @@ class _SocialScreenState extends State<SocialScreen> {
       final gameStatsProvider = Provider.of<GameStatsProvider>(context, listen: false);
       final syncService = gameStatsProvider.syncService;
       
-      // Get list of followed users
       final followingList = await syncService.getFollowingList();
       if (followingList == null || followingList.isEmpty) {
-        return []; // Return empty list if no one is followed
+        return [];
       }
       
       final usersWithScores = <Map<String, dynamic>>[];
       
-      // For each followed user, get their username and scores
       for (final deviceId in followingList) {
         final username = await syncService.getUsernameByDeviceId(deviceId);
         if (username != null) {
-          // For now, we'll add placeholder data as we don't have the full score structure
-          // In a real implementation, you would fetch actual scores from the sync system
           usersWithScores.add({
             'username': username,
             'deviceId': deviceId,
-            'score': 'N/A', // Placeholder - would fetch actual score
-            'streak': 0,    // Placeholder - would fetch actual streak
+            'score': 'N/A',
+            'streak': 0,
           });
         }
       }
@@ -441,52 +400,46 @@ class _SocialScreenState extends State<SocialScreen> {
     }
   }
 
-  /// Builds a single feature button
+  /// Builds a single feature button with responsive sizing
   Widget _buildFeatureButton({
     required ColorScheme colorScheme,
     required IconData icon,
     required String label,
     required VoidCallback onPressed,
-    required _DeviceType deviceType,
+    required bool isLargeScreen,
   }) {
-    final buttonSize = _getResponsiveSize(120.0, 110.0, 100.0, deviceType);
-    
-    return SizedBox(
-      width: buttonSize,
-      height: buttonSize * 0.8, // Maintain aspect ratio
-      child: OutlinedButton(
-        onPressed: onPressed,
-        style: OutlinedButton.styleFrom(
-          padding: const EdgeInsets.all(12),
-          side: BorderSide(color: colorScheme.outline),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+    return OutlinedButton(
+      onPressed: onPressed,
+      style: OutlinedButton.styleFrom(
+        padding: EdgeInsets.all(isLargeScreen ? 16.0 : 12.0),
+        side: BorderSide(color: colorScheme.outline),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        backgroundColor: colorScheme.surface,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            size: isLargeScreen ? 28.0 : 24.0,
+            color: colorScheme.primary,
           ),
-          backgroundColor: colorScheme.surface,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              size: 24,
-              color: colorScheme.primary,
-            ),
-            const SizedBox(height: 8),
-            Flexible(
-              child: Text(
-                label,
-                style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: colorScheme.onSurface,
-                  fontWeight: FontWeight.w500,
-                ),
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
+          const SizedBox(height: 8),
+          Flexible(
+            child: Text(
+              label,
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                color: colorScheme.onSurface,
+                fontWeight: FontWeight.w500,
               ),
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
