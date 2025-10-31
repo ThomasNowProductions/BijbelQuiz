@@ -61,23 +61,24 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
             controller: _pageController,
             children: pages,
           ),
-          // Skip button
-          Positioned(
-            top: MediaQuery.of(context).padding.top + 16,
-            right: 16,
-            child: TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text(
-                strings.AppStrings.bijbelquizGenSkip,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onSurface,
-                  fontWeight: FontWeight.w500,
+          // Skip button (only on first page)
+          if (_currentPage == 0)
+            Positioned(
+              top: MediaQuery.of(context).padding.top + 16,
+              right: 16,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  strings.AppStrings.bijbelquizGenSkip,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurface,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ),
-          ),
           // Page indicator
           Positioned(
             bottom: 80,
