@@ -346,6 +346,8 @@ class _SyncScreenState extends State<SyncScreen> {
           _currentCode = code;
         });
         AppLogger.info('Successfully joined sync room: $code');
+        // Load the username after successfully joining the room
+        await _loadCurrentUsername();
         Navigator.of(context).pop(true); // Return success
       } else {
         setState(() {
