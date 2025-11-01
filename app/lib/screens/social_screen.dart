@@ -1,7 +1,9 @@
 import 'package:bijbelquiz/services/analytics_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../l10n/strings_nl.dart' as strings;
+import '../config/supabase_config.dart';
 import 'sync_screen.dart';
 import 'user_search_screen.dart';
 import 'following_list_screen.dart';
@@ -362,12 +364,23 @@ class _SocialScreenState extends State<SocialScreen> {
                               color: colorScheme.primaryContainer,
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            child: Text(
-                              '${user['streak'] ?? 0}${strings.AppStrings.streakLabel}',
-                              style: TextStyle(
-                                color: colorScheme.onPrimaryContainer,
-                                fontWeight: FontWeight.w600,
-                              ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.star,
+                                  size: 16,
+                                  color: colorScheme.onPrimaryContainer,
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  '${user['stars'] ?? 0}',
+                                  style: TextStyle(
+                                    color: colorScheme.onPrimaryContainer,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -423,9 +436,16 @@ class _SocialScreenState extends State<SocialScreen> {
         if (userScores.containsKey(deviceId)) {
           stats = userScores[deviceId];
         } else {
-          // Fetch fresh stats from the database
+          // Fetch fresh stats from the database - try global lookup if room-specific fails
           try {
+            // First try the regular room-based lookup
             stats = await syncService.getGameStatsForDevice(deviceId);
+            
+            // If that returns null or empty, try to get stats from all rooms globally
+            if (stats == null || stats!.isEmpty) {
+              stats = await _getGameStatsForDeviceGlobally(deviceId);
+            }
+            
             // Cache the result
             userScores[deviceId] = stats ?? <String, dynamic>{};
           } catch (e) {
@@ -435,15 +455,14 @@ class _SocialScreenState extends State<SocialScreen> {
           }
         }
         
-        // Extract score and streak from fetched stats
+        // Extract score and stars from fetched stats
         final score = stats?['score'] ?? 0;
-        final currentStreak = stats?['currentStreak'] ?? 0;
         
         usersWithScores.add({
           'username': username,
           'deviceId': deviceId,
           'score': score,
-          'streak': currentStreak,
+          'stars': score, // Stars are represented by the score field
         });
       }
       
@@ -454,6 +473,39 @@ class _SocialScreenState extends State<SocialScreen> {
     } catch (e) {
       AppLogger.error('Error getting followed users scores', e);
       return [];
+    }
+  }
+
+  /// Gets game stats for a specific device from all rooms globally
+  Future<Map<String, dynamic>?> _getGameStatsForDeviceGlobally(String deviceId) async {
+    try {
+      // Use the Supabase client directly to search across all rooms for game stats
+      final client = SupabaseConfig.client;
+      const tableName = 'sync_rooms'; // Same table used by sync service
+
+      // Get all rooms that have game stats data
+      final response = await client
+          .from(tableName)
+          .select('data')
+          .not('data', 'is', null);
+
+      for (final row in response) {
+        final data = row['data'] as Map<String, dynamic>?;
+        if (data != null) {
+          final gameStatsMap = data['game_stats'] as Map<String, dynamic>?;
+          if (gameStatsMap != null) {
+            // Check if the target device has stats in this room
+            final deviceStats = gameStatsMap[deviceId] as Map<String, dynamic>?;
+            if (deviceStats != null) {
+              return deviceStats['value'] as Map<String, dynamic>?;
+            }
+          }
+        }
+      }
+      return null;
+    } catch (e) {
+      AppLogger.error('Failed to get game stats globally for device: $deviceId', e);
+      return null;
     }
   }
 
