@@ -416,11 +416,17 @@ class SyncService {
 
   /// Gets username for a specific device only (more precise than the general method)
   Future<String?> getUsernameForDevice(String deviceId) async {
-    if (_currentRoomId == null) return null;
+    if (_currentRoomId == null) {
+      AppLogger.warning('Cannot get username for device: not in a room');
+      return null;
+    }
 
     try {
       final roomData = await getRoomData();
-      if (roomData == null) return null;
+      if (roomData == null) {
+        AppLogger.warning('No room data available when getting username for device: $deviceId');
+        return null;
+      }
 
       final usernamesData = roomData[_usernamesKey] as Map<String, dynamic>?;
       if (usernamesData == null) return null;
@@ -432,7 +438,7 @@ class SyncService {
 
       return null;
     } catch (e) {
-      AppLogger.error('Failed to get username for device: $deviceId', e);
+      AppLogger.error('Failed to get username for device: $deviceId, error: ${e.toString()}');
       return null;
     }
   }
@@ -640,6 +646,11 @@ class SyncService {
 
   /// Searches for users by username (globally across all rooms)
   Future<List<Map<String, dynamic>>?> searchUsers(String query) async {
+    if (query.isEmpty || query.length < 2) {
+      AppLogger.info('Search query too short: $query');
+      return <Map<String, dynamic>>[];
+    }
+    
     try {
       // Get all rooms that have usernames data
       final response = await _client
@@ -685,16 +696,20 @@ class SyncService {
           }
         }
       }
+      AppLogger.debug('Search completed, found ${matchingUsers.length} users for query: $query');
       return matchingUsers;
     } catch (e) {
-      AppLogger.error('Failed to search users', e);
-      return null;
+      AppLogger.error('Failed to search users: $query, error: ${e.toString()}');
+      return <Map<String, dynamic>>[];
     }
   }
 
   /// Follows a user by their device ID
   Future<bool> followUser(String targetDeviceId) async {
-    if (_currentRoomId == null) return false;
+    if (_currentRoomId == null) {
+      AppLogger.warning('Cannot follow user: not in a room');
+      return false;
+    }
 
     try {
       final currentDeviceId = await _getOrCreateDeviceId();
@@ -702,6 +717,13 @@ class SyncService {
       // Don't allow following yourself
       if (currentDeviceId == targetDeviceId) {
         AppLogger.warning('Cannot follow yourself');
+        return false;
+      }
+
+      // Check if the target user exists by trying to get their username
+      final targetUsername = await getUsernameByDeviceId(targetDeviceId);
+      if (targetUsername == null) {
+        AppLogger.warning('Cannot follow user: target user does not exist');
         return false;
       }
 
@@ -716,9 +738,11 @@ class SyncService {
 
       // Update following list
       final following = List<String>.from(currentData[_followingKey] as List<dynamic>? ?? []);
-      if (!following.contains(targetDeviceId)) {
-        following.add(targetDeviceId);
+      if (following.contains(targetDeviceId)) {
+        AppLogger.info('Already following user: $targetDeviceId');
+        return true; // Already following, return true
       }
+      following.add(targetDeviceId);
       
       // Update followers list for the target user
       final targetUserFollowers = List<String>.from(currentData[_followersKey] as List<dynamic>? ?? []);
@@ -735,20 +759,29 @@ class SyncService {
           .update({'data': currentData})
           .eq('room_id', _currentRoomId!);
       
-      AppLogger.debug('Followed user: $targetDeviceId');
+      AppLogger.debug('Successfully followed user: $targetDeviceId');
       return true;
     } catch (e) {
-      AppLogger.error('Failed to follow user', e);
+      AppLogger.error('Failed to follow user: ${e.toString()}');
       return false;
     }
   }
 
   /// Unfollows a user by their device ID
   Future<bool> unfollowUser(String targetDeviceId) async {
-    if (_currentRoomId == null) return false;
+    if (_currentRoomId == null) {
+      AppLogger.warning('Cannot unfollow user: not in a room');
+      return false;
+    }
 
     try {
       final currentDeviceId = await _getOrCreateDeviceId();
+
+      // Don't allow unfollowing yourself
+      if (currentDeviceId == targetDeviceId) {
+        AppLogger.warning('Cannot unfollow yourself');
+        return false;
+      }
 
       // Get current room data
       final roomResponse = await _client
@@ -761,6 +794,10 @@ class SyncService {
 
       // Update following list
       final following = List<String>.from(currentData[_followingKey] as List<dynamic>? ?? []);
+      if (!following.contains(targetDeviceId)) {
+        AppLogger.info('Not following user: $targetDeviceId, nothing to unfollow');
+        return true; // Not following, return true as desired state is achieved
+      }
       following.remove(targetDeviceId);
       
       // Update followers list for the target user
@@ -776,10 +813,10 @@ class SyncService {
           .update({'data': currentData})
           .eq('room_id', _currentRoomId!);
       
-      AppLogger.debug('Unfollowed user: $targetDeviceId');
+      AppLogger.debug('Successfully unfollowed user: $targetDeviceId');
       return true;
     } catch (e) {
-      AppLogger.error('Failed to unfollow user', e);
+      AppLogger.error('Failed to unfollow user: ${e.toString()}');
       return false;
     }
   }
@@ -802,31 +839,45 @@ class SyncService {
 
   /// Gets the list of users that the current user is following
   Future<List<String>?> getFollowingList() async {
-    if (_currentRoomId == null) return null;
+    if (_currentRoomId == null) {
+      AppLogger.warning('Cannot get following list: not in a room');
+      return null;
+    }
 
     try {
       final roomData = await getRoomData();
-      if (roomData == null) return null;
+      if (roomData == null) {
+        AppLogger.warning('No room data available when getting following list');
+        return <String>[];
+      }
 
-      return List<String>.from(roomData[_followingKey] as List<dynamic>? ?? []);
+      final following = roomData[_followingKey] as List<dynamic>? ?? [];
+      return List<String>.from(following.map((e) => e.toString()));
     } catch (e) {
-      AppLogger.error('Failed to get following list', e);
-      return null;
+      AppLogger.error('Failed to get following list: ${e.toString()}');
+      return <String>[];
     }
   }
 
   /// Gets the list of users following the current user
   Future<List<String>?> getFollowersList() async {
-    if (_currentRoomId == null) return null;
+    if (_currentRoomId == null) {
+      AppLogger.warning('Cannot get followers list: not in a room');
+      return null;
+    }
 
     try {
       final roomData = await getRoomData();
-      if (roomData == null) return null;
+      if (roomData == null) {
+        AppLogger.warning('No room data available when getting followers list');
+        return <String>[];
+      }
 
-      return List<String>.from(roomData[_followersKey] as List<dynamic>? ?? []);
+      final followers = roomData[_followersKey] as List<dynamic>? ?? [];
+      return List<String>.from(followers.map((e) => e.toString()));
     } catch (e) {
-      AppLogger.error('Failed to get followers list', e);
-      return null;
+      AppLogger.error('Failed to get followers list: ${e.toString()}');
+      return <String>[];
     }
   }
 
@@ -857,7 +908,7 @@ class SyncService {
       }
       return null;
     } catch (e) {
-      AppLogger.error('Failed to get username by device ID', e);
+      AppLogger.error('Failed to get username by device ID: $deviceId, error: ${e.toString()}');
       return null;
     }
   }
@@ -880,11 +931,17 @@ class SyncService {
 
   /// Gets game stats for a specific device from the room
   Future<Map<String, dynamic>?> getGameStatsForDevice(String deviceId) async {
-    if (_currentRoomId == null) return null;
+    if (_currentRoomId == null) {
+      AppLogger.warning('Cannot get game stats for device: not in a room');
+      return null;
+    }
 
     try {
       final roomData = await getRoomData();
-      if (roomData == null) return null;
+      if (roomData == null) {
+        AppLogger.warning('No room data available when getting game stats for device: $deviceId');
+        return null;
+      }
 
       final gameStatsMap = roomData['game_stats'] as Map<String, dynamic>?;
       if (gameStatsMap != null) {
@@ -897,7 +954,7 @@ class SyncService {
 
       return null;
     } catch (e) {
-      AppLogger.error('Failed to get game stats for device: $deviceId', e);
+      AppLogger.error('Failed to get game stats for device: $deviceId, error: ${e.toString()}');
       return null;
     }
   }
