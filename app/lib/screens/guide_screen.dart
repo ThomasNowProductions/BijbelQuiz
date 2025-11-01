@@ -552,7 +552,6 @@ class _GuidePageViewState extends State<GuidePageView> {
                                     ),
                                     const SizedBox(height: 12),
                                     DropdownButtonFormField<String>(
-                                      initialValue: settings.gameSpeed,
                                       items: [
                                         DropdownMenuItem(
                                           value: 'slow',
@@ -621,7 +620,6 @@ class _GuidePageViewState extends State<GuidePageView> {
                                       onChanged: (bool value) {
                                         settings.setMute(value);
                                       },
-                                      activeThumbColor: widget.colorScheme.primary,
                                     ),
                                   ],
                                 ),

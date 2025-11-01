@@ -309,7 +309,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   });
                   settings.setShowNavigationLabels(value);
                 },
-                activeThumbColor: colorScheme.primary,
               ),
             ),
             _buildSettingItem(
@@ -379,7 +378,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   });
                   settings.setColorfulMode(value);
                 },
-                activeThumbColor: colorScheme.primary,
               ),
             ),
             _buildSettingItem(
@@ -404,7 +402,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   });
                   settings.setHidePromoCard(value);
                 },
-                activeThumbColor: colorScheme.primary,
               ),
             ),
           ],
@@ -485,7 +482,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   });
                   settings.setMute(value);
                 },
-                activeThumbColor: colorScheme.primary,
               ),
             ),
           ],
@@ -577,7 +573,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 onChanged: (bool value) {
                   settings.setApiEnabled(value);
                 },
-                activeThumbColor: colorScheme.primary,
               ),
             ),
             if (settings.apiEnabled) ...[
@@ -733,7 +728,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   });
                   settings.setAnalyticsEnabled(value);
                 },
-                activeThumbColor: colorScheme.primary,
               ),
             ),
           ],
@@ -779,7 +773,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       await NotificationService().cancelAllNotifications();
                     }
                   },
-                  activeThumbColor: colorScheme.primary,
                 ),
               ),
             ],
