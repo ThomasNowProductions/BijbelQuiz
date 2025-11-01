@@ -348,6 +348,10 @@ class _SyncScreenState extends State<SyncScreen> {
         AppLogger.info('Successfully joined sync room: $code');
         // Load the username after successfully joining the room
         await _loadCurrentUsername();
+        
+        // Trigger immediate sync of all data after joining room
+        await _syncAllData();
+        
         Navigator.of(context).pop(true); // Return success
       } else {
         setState(() {
@@ -401,6 +405,35 @@ class _SyncScreenState extends State<SyncScreen> {
     );
   }
 
+  /// Syncs all current data to the room immediately
+  Future<void> _syncAllData() async {
+    try {
+      final gameStatsProvider = Provider.of<GameStatsProvider>(context, listen: false);
+      final lessonProgressProvider = Provider.of<LessonProgressProvider>(context, listen: false);
+      final settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
+
+      // Sync game stats
+      if (gameStatsProvider.syncService.isInRoom) {
+        await gameStatsProvider.syncService.syncData('game_stats', gameStatsProvider.getExportData());
+        AppLogger.info('Synced game stats to room');
+      }
+
+      // Sync lesson progress
+      if (lessonProgressProvider.syncService.isInRoom) {
+        await lessonProgressProvider.syncService.syncData('lesson_progress', lessonProgressProvider.getExportData());
+        AppLogger.info('Synced lesson progress to room');
+      }
+
+      // Sync settings
+      if (settingsProvider.syncService.isInRoom) {
+        await settingsProvider.syncService.syncData('settings', settingsProvider.getExportData());
+        AppLogger.info('Synced settings to room');
+      }
+    } catch (e) {
+      AppLogger.error('Error syncing all data', e);
+    }
+  }
+
   Future<void> _startRoom() async {
     setState(() {
       _isLoading = true;
@@ -420,6 +453,10 @@ class _SyncScreenState extends State<SyncScreen> {
           _currentCode = code;
         });
         AppLogger.info('Successfully started sync room: $code');
+        
+        // Trigger immediate sync of all data after creating room
+        await _syncAllData();
+        
         Navigator.of(context).pop(true); // Return success
       } else {
         setState(() {
