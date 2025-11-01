@@ -49,6 +49,11 @@ class _FollowingListScreenState extends State<FollowingListScreen> {
         setState(() {
           _followingList = followingList ?? [];
           _isLoading = false;
+          
+          // Show warning if not in a room since followers/following requires being in a room
+          if (!gameStatsProvider.syncService.isInRoom) {
+            _error = 'You need to join a room to see who you are following';
+          }
         });
       }
     } catch (e) {

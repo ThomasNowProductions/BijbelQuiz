@@ -706,11 +706,6 @@ class SyncService {
 
   /// Follows a user by their device ID
   Future<bool> followUser(String targetDeviceId) async {
-    if (_currentRoomId == null) {
-      AppLogger.warning('Cannot follow user: not in a room');
-      return false;
-    }
-
     try {
       final currentDeviceId = await _getOrCreateDeviceId();
       
@@ -727,40 +722,49 @@ class SyncService {
         return false;
       }
 
-      // Get current room data
-      final roomResponse = await _client
-          .from(_tableName)
-          .select('data')
-          .eq('room_id', _currentRoomId!)
-          .single();
-      
-      final currentData = Map<String, dynamic>.from(roomResponse['data'] as Map<String, dynamic>? ?? {});
+      // If in a room, use room data for backwards compatibility
+      if (_currentRoomId != null) {
+        // Get current room data
+        final roomResponse = await _client
+            .from(_tableName)
+            .select('data')
+            .eq('room_id', _currentRoomId!)
+            .single();
+        
+        final currentData = Map<String, dynamic>.from(roomResponse['data'] as Map<String, dynamic>? ?? {});
 
-      // Update following list
-      final following = List<String>.from(currentData[_followingKey] as List<dynamic>? ?? []);
-      if (following.contains(targetDeviceId)) {
-        AppLogger.info('Already following user: $targetDeviceId');
-        return true; // Already following, return true
+        // Update following list
+        final following = List<String>.from(currentData[_followingKey] as List<dynamic>? ?? []);
+        if (following.contains(targetDeviceId)) {
+          AppLogger.info('Already following user: $targetDeviceId');
+          return true; // Already following, return true
+        }
+        following.add(targetDeviceId);
+        
+        // Update followers list for the target user
+        final targetUserFollowers = List<String>.from(currentData[_followersKey] as List<dynamic>? ?? []);
+        if (!targetUserFollowers.contains(currentDeviceId)) {
+          targetUserFollowers.add(currentDeviceId);
+        }
+
+        // Update the data in the room
+        currentData[_followingKey] = following;
+        currentData[_followersKey] = targetUserFollowers;
+
+        await _client
+            .from(_tableName)
+            .update({'data': currentData})
+            .eq('room_id', _currentRoomId!);
+        
+        AppLogger.debug('Successfully followed user: $targetDeviceId');
+        return true;
+      } else {
+        // For global following, we'd need a different approach
+        // The current architecture doesn't support global following properly
+        // This is a limitation, but at least we don't show an error now
+        AppLogger.warning('Following functionality limited when not in a room');
+        return false;
       }
-      following.add(targetDeviceId);
-      
-      // Update followers list for the target user
-      final targetUserFollowers = List<String>.from(currentData[_followersKey] as List<dynamic>? ?? []);
-      if (!targetUserFollowers.contains(currentDeviceId)) {
-        targetUserFollowers.add(currentDeviceId);
-      }
-
-      // Update the data in the room
-      currentData[_followingKey] = following;
-      currentData[_followersKey] = targetUserFollowers;
-
-      await _client
-          .from(_tableName)
-          .update({'data': currentData})
-          .eq('room_id', _currentRoomId!);
-      
-      AppLogger.debug('Successfully followed user: $targetDeviceId');
-      return true;
     } catch (e) {
       AppLogger.error('Failed to follow user: ${e.toString()}');
       return false;
@@ -769,11 +773,6 @@ class SyncService {
 
   /// Unfollows a user by their device ID
   Future<bool> unfollowUser(String targetDeviceId) async {
-    if (_currentRoomId == null) {
-      AppLogger.warning('Cannot unfollow user: not in a room');
-      return false;
-    }
-
     try {
       final currentDeviceId = await _getOrCreateDeviceId();
 
@@ -783,38 +782,46 @@ class SyncService {
         return false;
       }
 
-      // Get current room data
-      final roomResponse = await _client
-          .from(_tableName)
-          .select('data')
-          .eq('room_id', _currentRoomId!)
-          .single();
-      
-      final currentData = Map<String, dynamic>.from(roomResponse['data'] as Map<String, dynamic>? ?? {});
+      // If in a room, use room data for backwards compatibility
+      if (_currentRoomId != null) {
+        // Get current room data
+        final roomResponse = await _client
+            .from(_tableName)
+            .select('data')
+            .eq('room_id', _currentRoomId!)
+            .single();
+        
+        final currentData = Map<String, dynamic>.from(roomResponse['data'] as Map<String, dynamic>? ?? {});
 
-      // Update following list
-      final following = List<String>.from(currentData[_followingKey] as List<dynamic>? ?? []);
-      if (!following.contains(targetDeviceId)) {
-        AppLogger.info('Not following user: $targetDeviceId, nothing to unfollow');
-        return true; // Not following, return true as desired state is achieved
+        // Update following list
+        final following = List<String>.from(currentData[_followingKey] as List<dynamic>? ?? []);
+        if (!following.contains(targetDeviceId)) {
+          AppLogger.info('Not following user: $targetDeviceId, nothing to unfollow');
+          return true; // Not following, return true as desired state is achieved
+        }
+        following.remove(targetDeviceId);
+        
+        // Update followers list for the target user
+        final targetUserFollowers = List<String>.from(currentData[_followersKey] as List<dynamic>? ?? []);
+        targetUserFollowers.remove(currentDeviceId);
+
+        // Update the data in the room
+        currentData[_followingKey] = following;
+        currentData[_followersKey] = targetUserFollowers;
+
+        await _client
+            .from(_tableName)
+            .update({'data': currentData})
+            .eq('room_id', _currentRoomId!);
+        
+        AppLogger.debug('Successfully unfollowed user: $targetDeviceId');
+        return true;
+      } else {
+        // For global unfollowing, we'd need a different approach
+        // The current architecture doesn't support global following properly
+        AppLogger.warning('Unfollowing functionality limited when not in a room');
+        return false;
       }
-      following.remove(targetDeviceId);
-      
-      // Update followers list for the target user
-      final targetUserFollowers = List<String>.from(currentData[_followersKey] as List<dynamic>? ?? []);
-      targetUserFollowers.remove(currentDeviceId);
-
-      // Update the data in the room
-      currentData[_followingKey] = following;
-      currentData[_followersKey] = targetUserFollowers;
-
-      await _client
-          .from(_tableName)
-          .update({'data': currentData})
-          .eq('room_id', _currentRoomId!);
-      
-      AppLogger.debug('Successfully unfollowed user: $targetDeviceId');
-      return true;
     } catch (e) {
       AppLogger.error('Failed to unfollow user: ${e.toString()}');
       return false;
@@ -823,14 +830,19 @@ class SyncService {
 
   /// Checks if a user is being followed
   Future<bool> isFollowingUser(String targetDeviceId) async {
-    if (_currentRoomId == null) return false;
-
     try {
-      final roomData = await getRoomData();
-      if (roomData == null) return false;
-
-      final following = List<String>.from(roomData[_followingKey] as List<dynamic>? ?? []);
-      return following.contains(targetDeviceId);
+      // If in a room, check room data for backwards compatibility
+      if (_currentRoomId != null) {
+        final roomData = await getRoomData();
+        if (roomData != null) {
+          final following = List<String>.from(roomData[_followingKey] as List<dynamic>? ?? []);
+          return following.contains(targetDeviceId);
+        }
+      }
+      
+      // For global check, return false in the current implementation
+      // The current architecture doesn't support global following properly
+      return false;
     } catch (e) {
       AppLogger.error('Failed to check if following user', e);
       return false;
@@ -839,20 +851,20 @@ class SyncService {
 
   /// Gets the list of users that the current user is following
   Future<List<String>?> getFollowingList() async {
-    if (_currentRoomId == null) {
-      AppLogger.warning('Cannot get following list: not in a room');
-      return null;
-    }
-
     try {
-      final roomData = await getRoomData();
-      if (roomData == null) {
-        AppLogger.warning('No room data available when getting following list');
-        return <String>[];
+      // If in a room, use room data for backwards compatibility
+      if (_currentRoomId != null) {
+        final roomData = await getRoomData();
+        if (roomData != null) {
+          final following = roomData[_followingKey] as List<dynamic>? ?? [];
+          return List<String>.from(following.map((e) => e.toString()));
+        }
       }
-
-      final following = roomData[_followingKey] as List<dynamic>? ?? [];
-      return List<String>.from(following.map((e) => e.toString()));
+      
+      // Return empty list for global following in the current implementation
+      // The current data structure doesn't properly support global following
+      // A proper implementation would require a separate table for following relationships
+      return <String>[];
     } catch (e) {
       AppLogger.error('Failed to get following list: ${e.toString()}');
       return <String>[];
@@ -861,20 +873,20 @@ class SyncService {
 
   /// Gets the list of users following the current user
   Future<List<String>?> getFollowersList() async {
-    if (_currentRoomId == null) {
-      AppLogger.warning('Cannot get followers list: not in a room');
-      return null;
-    }
-
     try {
-      final roomData = await getRoomData();
-      if (roomData == null) {
-        AppLogger.warning('No room data available when getting followers list');
-        return <String>[];
+      // If in a room, use room data for backwards compatibility
+      if (_currentRoomId != null) {
+        final roomData = await getRoomData();
+        if (roomData != null) {
+          final followers = roomData[_followersKey] as List<dynamic>? ?? [];
+          return List<String>.from(followers.map((e) => e.toString()));
+        }
       }
-
-      final followers = roomData[_followersKey] as List<dynamic>? ?? [];
-      return List<String>.from(followers.map((e) => e.toString()));
+      
+      // Return empty list for global followers in the current implementation
+      // The current data structure doesn't properly support global followers
+      // A proper implementation would require a separate table for following relationships
+      return <String>[];
     } catch (e) {
       AppLogger.error('Failed to get followers list: ${e.toString()}');
       return <String>[];
