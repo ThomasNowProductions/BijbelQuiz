@@ -1,31 +1,31 @@
 import 'package:bijbelquiz/services/analytics_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'providers/settings_provider.dart';
-import 'providers/game_stats_provider.dart';
-import 'providers/lesson_progress_provider.dart';
+import '../providers/settings_provider.dart';
+import '../providers/game_stats_provider.dart';
+import '../providers/lesson_progress_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'screens/guide_screen.dart';
+import 'guide_screen.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb, kDebugMode;
-import 'services/notification_service.dart';
-import 'services/api_service.dart';
-import 'widgets/top_snackbar.dart';
+import '../services/notification_service.dart';
+import '../services/api_service.dart';
+import '../widgets/top_snackbar.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:flutter/services.dart';
-import 'services/question_cache_service.dart';
+import '../services/question_cache_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'screens/lesson_select_screen.dart';
-import 'widgets/quiz_skeleton.dart';
-import 'constants/urls.dart';
-import 'l10n/strings_nl.dart' as strings;
+import 'lesson_select_screen.dart';
+import '../widgets/quiz_skeleton.dart';
+import '../constants/urls.dart';
+import '../l10n/strings_nl.dart' as strings;
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
-import 'services/logger.dart';
+import '../services/logger.dart';
 import 'package:archive/archive.dart';
-import 'utils/bijbelquiz_gen_utils.dart';
-import 'screens/bijbelquiz_gen_screen.dart';
-import 'theme/theme_manager.dart';
+import '../utils/bijbelquiz_gen_utils.dart';
+import 'bijbelquiz_gen_screen.dart';
+import '../theme/theme_manager.dart';
 
 /// The settings screen that allows users to customize app preferences
 class SettingsScreen extends StatefulWidget {

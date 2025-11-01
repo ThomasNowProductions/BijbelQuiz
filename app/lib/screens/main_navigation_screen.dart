@@ -6,7 +6,7 @@ import 'package:bijbelquiz/providers/settings_provider.dart';
 import '../screens/lesson_select_screen.dart';
 import '../screens/store_screen.dart';
 import '../screens/social_screen.dart';
-import '../settings_screen.dart';
+import 'settings_screen.dart';
 import '../l10n/strings_nl.dart' as strings;
 
 class MainNavigationScreen extends StatefulWidget {

@@ -28,7 +28,7 @@ import 'screens/bijbelquiz_gen_screen.dart';
 import 'screens/store_screen.dart';
 import 'providers/lesson_progress_provider.dart';
 import 'screens/main_navigation_screen.dart';
-import 'settings_screen.dart';
+import 'screens/settings_screen.dart';
 import 'screens/sync_screen.dart';
 import 'l10n/strings_nl.dart' as strings;
 import 'config/supabase_config.dart';
