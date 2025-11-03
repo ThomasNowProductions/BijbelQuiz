@@ -657,4 +657,7 @@ class AppStrings {
   static const String usernameBlacklisted =
       'Deze gebruikersnaam is niet toegestaan';
   static const String usernameSaved = 'Gebruikersnaam opgeslagen!';
+
+  // Beta
+  static const String beta = 'Bèta';
 }
