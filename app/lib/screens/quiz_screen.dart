@@ -357,14 +357,11 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
         return AlertDialog(
           title: Text(
             strings.AppStrings.timeUp,
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
           content: Text(
             strings.AppStrings.timeUpMessage,
-            style: const TextStyle(fontSize: 16),
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
           actions: [
             Builder(
@@ -789,7 +786,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
     final size = MediaQuery.of(context).size;
     double width = size.width;
 
@@ -801,11 +800,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
             padding: const EdgeInsets.all(16.0),
             child: Text(
               strings.AppStrings.screenSizeNotSupported,
-              style: TextStyle(
-                color: colorScheme.error,
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
+              style: textTheme.bodyLarge?.copyWith(color: colorScheme.error),
               textAlign: TextAlign.center,
             ),
           ),

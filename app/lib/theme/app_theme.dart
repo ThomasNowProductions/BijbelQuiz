@@ -9,6 +9,131 @@ double getResponsiveFontSize(BuildContext context, double baseSize) =>
 EdgeInsets getResponsivePadding(BuildContext context, EdgeInsets basePadding) =>
     ResponsiveUtils.getResponsivePadding(context, basePadding);
 
+// Base TextTheme creator
+TextTheme _createBaseTextTheme({
+  required Color primaryColor,
+  required Color bodyLargeColor,
+  required Color bodyMediumColor,
+}) {
+  return TextTheme(
+    headlineLarge: TextStyle(
+      fontSize: 32,
+      fontWeight: FontWeight.w700,
+      letterSpacing: -0.5,
+      color: primaryColor,
+    ),
+    headlineMedium: TextStyle(
+      fontSize: 28,
+      fontWeight: FontWeight.w600,
+      letterSpacing: -0.3,
+      color: primaryColor,
+    ),
+    headlineSmall: TextStyle(
+      fontSize: 24,
+      fontWeight: FontWeight.w600,
+      letterSpacing: -0.2,
+      color: primaryColor,
+    ),
+    titleLarge: TextStyle(
+      fontSize: 22,
+      fontWeight: FontWeight.w600,
+      letterSpacing: -0.1,
+      color: primaryColor,
+    ),
+    titleMedium: TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 0,
+      color: primaryColor,
+    ),
+    titleSmall: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 0.1,
+      color: primaryColor,
+    ),
+    bodyLarge: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0.1,
+      color: bodyLargeColor,
+    ),
+    bodyMedium: TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0.1,
+      color: bodyMediumColor,
+    ),
+    labelLarge: TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 0.5,
+      color: primaryColor,
+    ),
+  );
+}
+
+// Base ElevatedButtonThemeData creator
+ElevatedButtonThemeData _createBaseElevatedButtonTheme(
+    Color backgroundColor, Color foregroundColor) {
+  return ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      elevation: 2,
+      backgroundColor: backgroundColor,
+      foregroundColor: foregroundColor,
+      textStyle: const TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        letterSpacing: 0.1,
+      ),
+    ),
+  );
+}
+
+// Base CardThemeData creator
+CardThemeData _createBaseCardTheme(Color cardColor) {
+  return CardThemeData(
+    elevation: 2,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20),
+    ),
+    clipBehavior: Clip.antiAlias,
+    color: cardColor,
+    surfaceTintColor: Colors.transparent,
+  );
+}
+
+// Base AppBarTheme creator
+AppBarTheme _createBaseAppBarTheme(
+    Color backgroundColor, Color foregroundColor) {
+  return AppBarTheme(
+    centerTitle: true,
+    elevation: 0,
+    scrolledUnderElevation: 0,
+    backgroundColor: backgroundColor,
+    foregroundColor: foregroundColor,
+    surfaceTintColor: Colors.transparent,
+    titleTextStyle: TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.w600,
+      color: foregroundColor,
+      letterSpacing: -0.1,
+    ),
+  );
+}
+
+// Base PageTransitionsTheme
+const PageTransitionsTheme _basePageTransitionsTheme = PageTransitionsTheme(
+  builders: {
+    TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+    TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+  },
+);
+
 final ThemeData appLightTheme = ThemeData(
   colorScheme: ColorScheme.fromSeed(
     seedColor: const Color(0xFF2563EB),
@@ -25,111 +150,23 @@ final ThemeData appLightTheme = ThemeData(
     shadow: const Color(0xFF0F172A),
   ),
   useMaterial3: true,
-  textTheme: ThemeData.light().textTheme.apply(
-    fontFamily: 'Quicksand',
-    bodyColor: const Color(0xFF0F172A),
-    displayColor: const Color(0xFF0F172A),
-  ).copyWith(
-    headlineLarge: const TextStyle(
-      fontSize: 32,
-      fontWeight: FontWeight.w700,
-      letterSpacing: -0.5,
-      color: Color(0xFF0F172A),
-    ),
-    headlineMedium: const TextStyle(
-      fontSize: 28,
-      fontWeight: FontWeight.w600,
-      letterSpacing: -0.3,
-      color: Color(0xFF0F172A),
-    ),
-    headlineSmall: const TextStyle(
-      fontSize: 24,
-      fontWeight: FontWeight.w600,
-      letterSpacing: -0.2,
-      color: Color(0xFF0F172A),
-    ),
-    titleLarge: const TextStyle(
-      fontSize: 22,
-      fontWeight: FontWeight.w600,
-      letterSpacing: -0.1,
-      color: Color(0xFF0F172A),
-    ),
-    titleMedium: const TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.w600,
-      letterSpacing: 0,
-      color: Color(0xFF0F172A),
-    ),
-    titleSmall: const TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.w600,
-      letterSpacing: 0.1,
-      color: Color(0xFF0F172A),
-    ),
-    bodyLarge: const TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.w400,
-      letterSpacing: 0.1,
-      color: Color(0xFF334155),
-    ),
-    bodyMedium: const TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w400,
-      letterSpacing: 0.1,
-      color: Color(0xFF475569),
-    ),
-    labelLarge: const TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w600,
-      letterSpacing: 0.5,
-      color: Color(0xFF0F172A),
-    ),
-  ),
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ElevatedButton.styleFrom(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+  textTheme: ThemeData.light().textTheme.apply(fontFamily: 'Quicksand').merge(
+        _createBaseTextTheme(
+          primaryColor: const Color(0xFF0F172A),
+          bodyLargeColor: const Color(0xFF334155),
+          bodyMediumColor: const Color(0xFF475569),
+        ),
       ),
-      elevation: 2,
-      backgroundColor: const Color(0xFF2563EB),
-      foregroundColor: Colors.white,
-      textStyle: const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.w600,
-        letterSpacing: 0.1,
-      ),
-    ),
+  elevatedButtonTheme: _createBaseElevatedButtonTheme(
+    const Color(0xFF2563EB),
+    Colors.white,
   ),
-  cardTheme: CardThemeData(
-    elevation: 2,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20),
-    ),
-    clipBehavior: Clip.antiAlias,
-    color: Colors.white,
-    surfaceTintColor: Colors.transparent,
+  cardTheme: _createBaseCardTheme(Colors.white),
+  appBarTheme: _createBaseAppBarTheme(
+    Colors.white,
+    const Color(0xFF0F172A),
   ),
-  appBarTheme: const AppBarTheme(
-    centerTitle: true,
-    elevation: 0,
-    scrolledUnderElevation: 0,
-    backgroundColor: Colors.white,
-    foregroundColor: Color(0xFF0F172A),
-    surfaceTintColor: Colors.transparent,
-    titleTextStyle: TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.w600,
-      color: Color(0xFF0F172A),
-      letterSpacing: -0.1,
-    ),
-  ),
-  pageTransitionsTheme: const PageTransitionsTheme(
-    builders: {
-      TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-      TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-    },
-  ),
+  pageTransitionsTheme: _basePageTransitionsTheme,
   scaffoldBackgroundColor: const Color(0xFFFAFAFA),
 );
 
@@ -149,113 +186,25 @@ final ThemeData appDarkTheme = ThemeData(
     shadow: const Color(0xFF000000),
   ),
   useMaterial3: true,
-  textTheme: ThemeData.dark().textTheme.apply(
-    fontFamily: 'Quicksand',
-    bodyColor: const Color(0xFFF8FAFC),
-    displayColor: const Color(0xFFF8FAFC),
-  ).copyWith(
-    headlineLarge: const TextStyle(
-      fontSize: 32,
-      fontWeight: FontWeight.w700,
-      letterSpacing: -0.5,
-      color: Color(0xFFF8FAFC),
-    ),
-    headlineMedium: const TextStyle(
-      fontSize: 28,
-      fontWeight: FontWeight.w600,
-      letterSpacing: -0.3,
-      color: Color(0xFFF8FAFC),
-    ),
-    headlineSmall: const TextStyle(
-      fontSize: 24,
-      fontWeight: FontWeight.w600,
-      letterSpacing: -0.2,
-      color: Color(0xFFF8FAFC),
-    ),
-    titleLarge: const TextStyle(
-      fontSize: 22,
-      fontWeight: FontWeight.w600,
-      letterSpacing: -0.1,
-      color: Color(0xFFF8FAFC),
-    ),
-    titleMedium: const TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.w600,
-      letterSpacing: 0,
-      color: Color(0xFFF8FAFC),
-    ),
-    titleSmall: const TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.w600,
-      letterSpacing: 0.1,
-      color: Color(0xFFF8FAFC),
-    ),
-    bodyLarge: const TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.w400,
-      letterSpacing: 0.1,
-      color: Color(0xFFCBD5E1),
-    ),
-    bodyMedium: const TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w400,
-      letterSpacing: 0.1,
-      color: Color(0xFF94A3B8),
-    ),
-    labelLarge: const TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w600,
-      letterSpacing: 0.5,
-      color: Color(0xFFF8FAFC),
-    ),
-  ),
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ElevatedButton.styleFrom(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+  textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'Quicksand').merge(
+        _createBaseTextTheme(
+          primaryColor: const Color(0xFFF8FAFC),
+          bodyLargeColor: const Color(0xFFCBD5E1),
+          bodyMediumColor: const Color(0xFF94A3B8),
+        ),
       ),
-      elevation: 2,
-      backgroundColor: const Color(0xFF2563EB),
-      foregroundColor: Colors.white,
-      textStyle: const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.w600,
-        letterSpacing: 0.1,
-      ),
-    ),
+  elevatedButtonTheme: _createBaseElevatedButtonTheme(
+    const Color(0xFF2563EB),
+    Colors.white,
   ),
-  cardTheme: CardThemeData(
-    elevation: 2,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20),
-    ),
-    clipBehavior: Clip.antiAlias,
-    color: const Color(0xFF1E293B),
-    surfaceTintColor: Colors.transparent,
+  cardTheme: _createBaseCardTheme(const Color(0xFF1E293B)),
+  appBarTheme: _createBaseAppBarTheme(
+    const Color(0xFF0F172A),
+    const Color(0xFFF8FAFC),
   ),
-  appBarTheme: const AppBarTheme(
-    centerTitle: true,
-    elevation: 0,
-    scrolledUnderElevation: 0,
-    backgroundColor: Color(0xFF0F172A),
-    foregroundColor: Color(0xFFF8FAFC),
-    surfaceTintColor: Colors.transparent,
-    titleTextStyle: TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.w600,
-      color: Color(0xFFF8FAFC),
-      letterSpacing: -0.1,
-    ),
-  ),
-  pageTransitionsTheme: const PageTransitionsTheme(
-    builders: {
-      TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-      TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-    },
-  ),
+  pageTransitionsTheme: _basePageTransitionsTheme,
   scaffoldBackgroundColor: const Color(0xFF0F172A),
-); 
+);
 
 final ThemeData oledTheme = ThemeData(
   brightness: Brightness.dark,
@@ -271,336 +220,74 @@ final ThemeData oledTheme = ThemeData(
     onError: Colors.white,
   ),
   useMaterial3: true,
-  textTheme: ThemeData.dark().textTheme.apply(
-    fontFamily: 'Quicksand',
-    bodyColor: Colors.white,
-    displayColor: Colors.white,
-  ).copyWith(
-    headlineLarge: const TextStyle(
-      fontSize: 32,
-      fontWeight: FontWeight.w700,
-      letterSpacing: -0.5,
-      color: Colors.white,
-    ),
-    headlineMedium: const TextStyle(
-      fontSize: 28,
-      fontWeight: FontWeight.w600,
-      letterSpacing: -0.3,
-      color: Colors.white,
-    ),
-    headlineSmall: const TextStyle(
-      fontSize: 24,
-      fontWeight: FontWeight.w600,
-      letterSpacing: -0.2,
-      color: Colors.white,
-    ),
-    titleLarge: const TextStyle(
-      fontSize: 22,
-      fontWeight: FontWeight.w600,
-      letterSpacing: -0.1,
-      color: Colors.white,
-    ),
-    titleMedium: const TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.w600,
-      letterSpacing: 0,
-      color: Colors.white,
-    ),
-    titleSmall: const TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.w600,
-      letterSpacing: 0.1,
-      color: Colors.white,
-    ),
-    bodyLarge: const TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.w400,
-      letterSpacing: 0.1,
-      color: Colors.white,
-    ),
-    bodyMedium: const TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w400,
-      letterSpacing: 0.1,
-      color: Colors.white,
-    ),
-    labelLarge: const TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w600,
-      letterSpacing: 0.5,
-      color: Colors.white,
-    ),
-  ),
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ElevatedButton.styleFrom(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+  textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'Quicksand').merge(
+        _createBaseTextTheme(
+          primaryColor: Colors.white,
+          bodyLargeColor: Colors.white,
+          bodyMediumColor: Colors.white,
+        ),
       ),
-      elevation: 2,
-      backgroundColor: Colors.white,
-      foregroundColor: Colors.black,
-      textStyle: const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.w600,
-        letterSpacing: 0.1,
-      ),
-    ),
+  elevatedButtonTheme: _createBaseElevatedButtonTheme(
+    Colors.white,
+    Colors.black,
   ),
-  cardTheme: CardThemeData(
-    elevation: 2,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20),
-    ),
-    clipBehavior: Clip.antiAlias,
-    color: Colors.black,
-    surfaceTintColor: Colors.transparent,
+  cardTheme: _createBaseCardTheme(Colors.black),
+  appBarTheme: _createBaseAppBarTheme(
+    Colors.black,
+    Colors.white,
   ),
-  appBarTheme: const AppBarTheme(
-    backgroundColor: Colors.black,
-    foregroundColor: Colors.white,
-    elevation: 0,
-    centerTitle: true,
-    scrolledUnderElevation: 0,
-    surfaceTintColor: Colors.transparent,
-    titleTextStyle: TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.w600,
-      color: Colors.white,
-      letterSpacing: -0.1,
-    ),
-  ),
-  pageTransitionsTheme: const PageTransitionsTheme(
-    builders: {
-      TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-      TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-    },
-  ),
+  pageTransitionsTheme: _basePageTransitionsTheme,
 );
 
 final ThemeData greenTheme = ThemeData(
   brightness: Brightness.light,
-  colorScheme: ColorScheme.fromSeed(seedColor: Colors.green, brightness: Brightness.light),
+  colorScheme:
+      ColorScheme.fromSeed(seedColor: Colors.green, brightness: Brightness.light),
   useMaterial3: true,
-  textTheme: ThemeData.light().textTheme.apply(
-    fontFamily: 'Quicksand',
-    bodyColor: const Color(0xFF0F172A),
-    displayColor: const Color(0xFF0F172A),
-  ).copyWith(
-    headlineLarge: const TextStyle(
-      fontSize: 32,
-      fontWeight: FontWeight.w700,
-      letterSpacing: -0.5,
-      color: Color(0xFF0F172A),
-    ),
-    headlineMedium: const TextStyle(
-      fontSize: 28,
-      fontWeight: FontWeight.w600,
-      letterSpacing: -0.3,
-      color: Color(0xFF0F172A),
-    ),
-    headlineSmall: const TextStyle(
-      fontSize: 24,
-      fontWeight: FontWeight.w600,
-      letterSpacing: -0.2,
-      color: Color(0xFF0F172A),
-    ),
-    titleLarge: const TextStyle(
-      fontSize: 22,
-      fontWeight: FontWeight.w600,
-      letterSpacing: -0.1,
-      color: Color(0xFF0F172A),
-    ),
-    titleMedium: const TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.w600,
-      letterSpacing: 0,
-      color: Color(0xFF0F172A),
-    ),
-    titleSmall: const TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.w600,
-      letterSpacing: 0.1,
-      color: Color(0xFF0F172A),
-    ),
-    bodyLarge: const TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.w400,
-      letterSpacing: 0.1,
-      color: Color(0xFF334155),
-    ),
-    bodyMedium: const TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w400,
-      letterSpacing: 0.1,
-      color: Color(0xFF475569),
-    ),
-    labelLarge: const TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w600,
-      letterSpacing: 0.5,
-      color: Color(0xFF0F172A),
-    ),
-  ),
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ElevatedButton.styleFrom(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+  textTheme: ThemeData.light().textTheme.apply(fontFamily: 'Quicksand').merge(
+        _createBaseTextTheme(
+          primaryColor: const Color(0xFF0F172A),
+          bodyLargeColor: const Color(0xFF334155),
+          bodyMediumColor: const Color(0xFF475569),
+        ),
       ),
-      elevation: 2,
-      backgroundColor: Colors.green,
-      foregroundColor: Colors.white,
-      textStyle: const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.w600,
-        letterSpacing: 0.1,
-      ),
-    ),
+  elevatedButtonTheme: _createBaseElevatedButtonTheme(
+    Colors.green,
+    Colors.white,
   ),
-  cardTheme: CardThemeData(
-    elevation: 2,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20),
-    ),
-    clipBehavior: Clip.antiAlias,
-    color: Colors.white,
-    surfaceTintColor: Colors.transparent,
+  cardTheme: _createBaseCardTheme(Colors.white),
+  appBarTheme: _createBaseAppBarTheme(
+    Colors.white,
+    const Color(0xFF0F172A),
   ),
-  appBarTheme: const AppBarTheme(
-    centerTitle: true,
-    elevation: 0,
-    scrolledUnderElevation: 0,
-    backgroundColor: Colors.white,
-    foregroundColor: Color(0xFF0F172A),
-    surfaceTintColor: Colors.transparent,
-    titleTextStyle: TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.w600,
-      color: Color(0xFF0F172A),
-      letterSpacing: -0.1,
-    ),
-  ),
-  pageTransitionsTheme: const PageTransitionsTheme(
-    builders: {
-      TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-      TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-    },
-  ),
+  pageTransitionsTheme: _basePageTransitionsTheme,
   scaffoldBackgroundColor: const Color(0xFFFAFAFA),
 );
 
 final ThemeData orangeTheme = ThemeData(
   brightness: Brightness.light,
-  colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange, brightness: Brightness.light),
+  colorScheme: ColorScheme.fromSeed(
+      seedColor: Colors.orange, brightness: Brightness.light),
   useMaterial3: true,
-  textTheme: ThemeData.light().textTheme.apply(
-    fontFamily: 'Quicksand',
-    bodyColor: const Color(0xFF0F172A),
-    displayColor: const Color(0xFF0F172A),
-  ).copyWith(
-    headlineLarge: const TextStyle(
-      fontSize: 32,
-      fontWeight: FontWeight.w700,
-      letterSpacing: -0.5,
-      color: Color(0xFF0F172A),
-    ),
-    headlineMedium: const TextStyle(
-      fontSize: 28,
-      fontWeight: FontWeight.w600,
-      letterSpacing: -0.3,
-      color: Color(0xFF0F172A),
-    ),
-    headlineSmall: const TextStyle(
-      fontSize: 24,
-      fontWeight: FontWeight.w600,
-      letterSpacing: -0.2,
-      color: Color(0xFF0F172A),
-    ),
-    titleLarge: const TextStyle(
-      fontSize: 22,
-      fontWeight: FontWeight.w600,
-      letterSpacing: -0.1,
-      color: Color(0xFF0F172A),
-    ),
-    titleMedium: const TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.w600,
-      letterSpacing: 0,
-      color: Color(0xFF0F172A),
-    ),
-    titleSmall: const TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.w600,
-      letterSpacing: 0.1,
-      color: Color(0xFF0F172A),
-    ),
-    bodyLarge: const TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.w400,
-      letterSpacing: 0.1,
-      color: Color(0xFF334155),
-    ),
-    bodyMedium: const TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w400,
-      letterSpacing: 0.1,
-      color: Color(0xFF475569),
-    ),
-    labelLarge: const TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w600,
-      letterSpacing: 0.5,
-      color: Color(0xFF0F172A),
-    ),
-  ),
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ElevatedButton.styleFrom(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+  textTheme: ThemeData.light().textTheme.apply(fontFamily: 'Quicksand').merge(
+        _createBaseTextTheme(
+          primaryColor: const Color(0xFF0F172A),
+          bodyLargeColor: const Color(0xFF334155),
+          bodyMediumColor: const Color(0xFF475569),
+        ),
       ),
-      elevation: 2,
-      backgroundColor: Colors.orange,
-      foregroundColor: Colors.white,
-      textStyle: const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.w600,
-        letterSpacing: 0.1,
-      ),
-    ),
+  elevatedButtonTheme: _createBaseElevatedButtonTheme(
+    Colors.orange,
+    Colors.white,
   ),
-  cardTheme: CardThemeData(
-    elevation: 2,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20),
-    ),
-    clipBehavior: Clip.antiAlias,
-    color: Colors.white,
-    surfaceTintColor: Colors.transparent,
+  cardTheme: _createBaseCardTheme(Colors.white),
+  appBarTheme: _createBaseAppBarTheme(
+    Colors.white,
+    const Color(0xFF0F172A),
   ),
-  appBarTheme: const AppBarTheme(
-    centerTitle: true,
-    elevation: 0,
-    scrolledUnderElevation: 0,
-    backgroundColor: Colors.white,
-    foregroundColor: Color(0xFF0F172A),
-    surfaceTintColor: Colors.transparent,
-    titleTextStyle: TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.w600,
-      color: Color(0xFF0F172A),
-      letterSpacing: -0.1,
-    ),
-  ),
-  pageTransitionsTheme: const PageTransitionsTheme(
-    builders: {
-      TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-      TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-    },
-  ),
+  pageTransitionsTheme: _basePageTransitionsTheme,
   scaffoldBackgroundColor: const Color(0xFFFAFAFA),
-); 
+);
 
 final ThemeData greyTheme = ThemeData(
   brightness: Brightness.dark,
@@ -619,110 +306,22 @@ final ThemeData greyTheme = ThemeData(
     shadow: const Color(0xFF111827),
   ),
   useMaterial3: true,
-  textTheme: ThemeData.dark().textTheme.apply(
-    fontFamily: 'Quicksand',
-    bodyColor: const Color(0xFFF9FAFB),
-    displayColor: const Color(0xFFF9FAFB),
-  ).copyWith(
-    headlineLarge: const TextStyle(
-      fontSize: 32,
-      fontWeight: FontWeight.w700,
-      letterSpacing: -0.5,
-      color: Color(0xFFF9FAFB),
-    ),
-    headlineMedium: const TextStyle(
-      fontSize: 28,
-      fontWeight: FontWeight.w600,
-      letterSpacing: -0.3,
-      color: Color(0xFFF9FAFB),
-    ),
-    headlineSmall: const TextStyle(
-      fontSize: 24,
-      fontWeight: FontWeight.w600,
-      letterSpacing: -0.2,
-      color: Color(0xFFF9FAFB),
-    ),
-    titleLarge: const TextStyle(
-      fontSize: 22,
-      fontWeight: FontWeight.w600,
-      letterSpacing: -0.1,
-      color: Color(0xFFF9FAFB),
-    ),
-    titleMedium: const TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.w600,
-      letterSpacing: 0,
-      color: Color(0xFFF9FAFB),
-    ),
-    titleSmall: const TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.w600,
-      letterSpacing: 0.1,
-      color: Color(0xFFF9FAFB),
-    ),
-    bodyLarge: const TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.w400,
-      letterSpacing: 0.1,
-      color: Color(0xFFFFFFFF), // Fully opaque white
-    ),
-    bodyMedium: const TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w400,
-      letterSpacing: 0.1,
-      color: Color(0xE6FFFFFF), // 0.9 opacity white for slightly less emphasis
-    ),
-    labelLarge: const TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w600,
-      letterSpacing: 0.5,
-      color: Color(0xFFF9FAFB),
-    ),
-  ),
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ElevatedButton.styleFrom(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+  textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'Quicksand').merge(
+        _createBaseTextTheme(
+          primaryColor: const Color(0xFFF9FAFB),
+          bodyLargeColor: const Color(0xFFFFFFFF),
+          bodyMediumColor: const Color(0xE6FFFFFF),
+        ),
       ),
-      elevation: 2,
-      backgroundColor: const Color(0xFF4B5563),
-      foregroundColor: Colors.white,
-      textStyle: const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.w600,
-        letterSpacing: 0.1,
-      ),
-    ),
+  elevatedButtonTheme: _createBaseElevatedButtonTheme(
+    const Color(0xFF4B5563),
+    Colors.white,
   ),
-  cardTheme: CardThemeData(
-    elevation: 2,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20),
-    ),
-    clipBehavior: Clip.antiAlias,
-    color: const Color(0xFF374151), // Using the same as surfaceContainerHighest for consistency
-    surfaceTintColor: Colors.transparent,
+  cardTheme: _createBaseCardTheme(const Color(0xFF374151)),
+  appBarTheme: _createBaseAppBarTheme(
+    const Color(0xFF1F2937),
+    const Color(0xFFF9FAFB),
   ),
-  appBarTheme: const AppBarTheme(
-    centerTitle: true,
-    elevation: 0,
-    scrolledUnderElevation: 0,
-    backgroundColor: Color(0xFF1F2937),
-    foregroundColor: Color(0xFFF9FAFB),
-    surfaceTintColor: Colors.transparent,
-    titleTextStyle: TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.w600,
-      color: Color(0xFFF9FAFB),
-      letterSpacing: -0.1,
-    ),
-  ),
-  pageTransitionsTheme: const PageTransitionsTheme(
-    builders: {
-      TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-      TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-    },
-  ),
+  pageTransitionsTheme: _basePageTransitionsTheme,
   scaffoldBackgroundColor: const Color(0xFF111827),
 );

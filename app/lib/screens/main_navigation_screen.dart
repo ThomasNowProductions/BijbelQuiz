@@ -50,7 +50,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
     final screens = _getScreens();
     final settings = Provider.of<SettingsProvider>(context);
 
@@ -62,7 +64,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         elevation: 10,
         height: settings.showNavigationLabels ? 80 : 60, // Reduce height when labels are hidden
         backgroundColor: colorScheme.surface,
-        indicatorColor: colorScheme.primary.withValues(alpha: 0.1),
+        indicatorColor: colorScheme.primary.withOpacity(0.1),
         labelBehavior: settings.showNavigationLabels 
             ? NavigationDestinationLabelBehavior.alwaysShow 
             : NavigationDestinationLabelBehavior.alwaysHide, // Properly hide labels

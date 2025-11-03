@@ -60,7 +60,9 @@ class _GuideScreenState extends State<GuideScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
     final pages = _pages; // Get the current pages
     final isLastPage = _currentPage == pages.length - 1;
     // Log screen view for analytics
@@ -80,7 +82,6 @@ class _GuideScreenState extends State<GuideScreen> {
                   return GuidePageView(
                     key: ValueKey(page),
                     page: page,
-                    colorScheme: colorScheme,
                     onConsentComplete: page.isNotificationPage
                         ? () {
                             if (_currentPage < pages.length - 1) {
@@ -262,13 +263,11 @@ List<GuidePage> buildGuidePages({required bool showNotificationPage, required Bu
 
 class GuidePageView extends StatefulWidget {
   final GuidePage page;
-  final ColorScheme colorScheme;
   final VoidCallback? onConsentComplete;
 
   const GuidePageView({
     super.key,
     required this.page,
-    required this.colorScheme,
     this.onConsentComplete,
   });
 
@@ -340,14 +339,17 @@ class _GuidePageViewState extends State<GuidePageView> {
   }
 
   Widget _buildTermsAgreementText() {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: RichText(
           textAlign: TextAlign.center,
           text: TextSpan(
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: widget.colorScheme.onSurface.withValues(alpha: 0.7),
+            style: textTheme.bodySmall?.copyWith(
+                  color: colorScheme.onSurface.withOpacity(0.7),
                   height: 1.4,
                 ),
             children: [
@@ -368,7 +370,7 @@ class _GuidePageViewState extends State<GuidePageView> {
                   child: Text(
                     'algemene voorwaarden',
                     style: TextStyle(
-                      color: widget.colorScheme.primary,
+                      color: colorScheme.primary,
                       height: 1.4,
                     ),
                   ),
@@ -391,7 +393,7 @@ class _GuidePageViewState extends State<GuidePageView> {
                   child: Text(
                     'privacybeleid',
                     style: TextStyle(
-                      color: widget.colorScheme.primary,
+                      color: colorScheme.primary,
                       height: 1.4,
                     ),
                   ),
@@ -436,6 +438,9 @@ class _GuidePageViewState extends State<GuidePageView> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
     if (widget.page.isNotificationPage) {
       return Padding(
         padding: const EdgeInsets.all(24.0),
@@ -446,13 +451,13 @@ class _GuidePageViewState extends State<GuidePageView> {
               Icon(
                 widget.page.icon,
                 size: 100,
-                color: widget.colorScheme.primary,
+                color: colorScheme.primary,
               ),
               const SizedBox(height: 32),
               Text(
                 widget.page.title,
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      color: widget.colorScheme.onSurface,
+                style: textTheme.headlineMedium?.copyWith(
+                      color: colorScheme.onSurface,
                       fontWeight: FontWeight.bold,
                     ),
                 textAlign: TextAlign.center,
@@ -460,8 +465,8 @@ class _GuidePageViewState extends State<GuidePageView> {
               const SizedBox(height: 16),
               Text(
                 widget.page.description,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: widget.colorScheme.onSurface,
+                style: textTheme.bodyLarge?.copyWith(
+                      color: colorScheme.onSurface,
                     ),
                 textAlign: TextAlign.center,
               ),
@@ -508,13 +513,13 @@ class _GuidePageViewState extends State<GuidePageView> {
                     Icon(
                       widget.page.icon,
                       size: 100,
-                      color: widget.colorScheme.primary,
+                      color: colorScheme.primary,
                     ),
                     const SizedBox(height: 32),
                     Text(
                       widget.page.title,
-                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                            color: widget.colorScheme.onSurface,
+                      style: textTheme.headlineMedium?.copyWith(
+                            color: colorScheme.onSurface,
                             fontWeight: FontWeight.bold,
                           ),
                       textAlign: TextAlign.center,
@@ -522,8 +527,8 @@ class _GuidePageViewState extends State<GuidePageView> {
                     const SizedBox(height: 16),
                     Text(
                       widget.page.description,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: widget.colorScheme.onSurface,
+                      style: textTheme.bodyLarge?.copyWith(
+                            color: colorScheme.onSurface,
                           ),
                       textAlign: TextAlign.center,
                     ),
@@ -537,7 +542,7 @@ class _GuidePageViewState extends State<GuidePageView> {
                               Container(
                                 padding: const EdgeInsets.all(16),
                                 decoration: BoxDecoration(
-                                  color: widget.colorScheme.surfaceContainerHighest,
+                                  color: colorScheme.surfaceContainerHighest,
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Column(
@@ -545,8 +550,8 @@ class _GuidePageViewState extends State<GuidePageView> {
                                   children: [
                                     Text(
                                       strings.AppStrings.gameSpeed,
-                                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                            color: widget.colorScheme.onSurface,
+                                      style: textTheme.titleMedium?.copyWith(
+                                            color: colorScheme.onSurface,
                                             fontWeight: FontWeight.w600,
                                           ),
                                     ),
@@ -574,7 +579,7 @@ class _GuidePageViewState extends State<GuidePageView> {
                                       },
                                       decoration: InputDecoration(
                                         filled: true,
-                                        fillColor: widget.colorScheme.surface,
+                                        fillColor: colorScheme.surface,
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(8),
                                           borderSide: BorderSide.none,
@@ -589,7 +594,7 @@ class _GuidePageViewState extends State<GuidePageView> {
                               Container(
                                 padding: const EdgeInsets.all(16),
                                 decoration: BoxDecoration(
-                                  color: widget.colorScheme.surfaceContainerHighest,
+                                  color: colorScheme.surfaceContainerHighest,
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Row(
@@ -601,16 +606,16 @@ class _GuidePageViewState extends State<GuidePageView> {
                                         children: [
                                           Text(
                                             strings.AppStrings.muteSoundEffects,
-                                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                                  color: widget.colorScheme.onSurface,
+                                            style: textTheme.titleMedium?.copyWith(
+                                                  color: colorScheme.onSurface,
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                           ),
                                           const SizedBox(height: 4),
                                           Text(
                                             strings.AppStrings.soundEffectsDescription,
-                                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                                  color: widget.colorScheme.onSurface.withValues(alpha: 0.7),
+                                            style: textTheme.bodyMedium?.copyWith(
+                                                  color: colorScheme.onSurface.withOpacity(0.7),
                                                 ),
                                           ),
                                         ],
@@ -621,7 +626,7 @@ class _GuidePageViewState extends State<GuidePageView> {
                                       onChanged: (bool value) {
                                         settings.setMute(value);
                                       },
-                                      activeThumbColor: widget.colorScheme.primary,
+                                      activeThumbColor: colorScheme.primary,
                                     ),
                                   ],
                                 ),
@@ -731,7 +736,8 @@ class _GuideScreenTestHarnessState extends State<GuideScreenTestHarness> {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     final isLastPage = _currentPage == _pages.length - 1;
     return Scaffold(
       body: SafeArea(
@@ -747,7 +753,6 @@ class _GuideScreenTestHarnessState extends State<GuideScreenTestHarness> {
                   return GuidePageView(
                     key: ValueKey(page),
                     page: page,
-                    colorScheme: colorScheme,
                     onConsentComplete: page.isNotificationPage
                         ? () {
                             if (_currentPage < _pages.length - 1) {
@@ -804,4 +809,4 @@ class _GuideScreenTestHarnessState extends State<GuideScreenTestHarness> {
       ),
     );
   }
-} 
+}

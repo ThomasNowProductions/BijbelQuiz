@@ -37,7 +37,9 @@ class _StoreScreenState extends State<StoreScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
     final gameStats = Provider.of<GameStatsProvider>(context);
     final settings = Provider.of<SettingsProvider>(context);
     final unlocked = settings.unlockedThemes;
@@ -58,7 +60,7 @@ class _StoreScreenState extends State<StoreScreen> {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: colorScheme.primary.withAlpha((0.1 * 255).round()),
+                color: colorScheme.primary.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
@@ -70,9 +72,9 @@ class _StoreScreenState extends State<StoreScreen> {
             const SizedBox(width: 12),
             Text(
               strings.AppStrings.store,
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              style: textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w700,
-                color: colorScheme.onSurface.withAlpha((0.7 * 255).round()),
+                color: colorScheme.onSurface.withOpacity(0.7),
               ),
             ),
           ],
@@ -106,13 +108,13 @@ class _StoreScreenState extends State<StoreScreen> {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
-                          colorScheme.primary.withAlpha((0.1 * 255).round()),
-                          colorScheme.primary.withAlpha((0.05 * 255).round()),
+                          colorScheme.primary.withOpacity(0.1),
+                          colorScheme.primary.withOpacity(0.05),
                         ],
                       ),
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
-                        color: colorScheme.outline.withAlpha((0.1 * 255).round()),
+                        color: colorScheme.outline.withOpacity(0.1),
                         width: 1,
                       ),
                     ),
@@ -129,7 +131,7 @@ class _StoreScreenState extends State<StoreScreen> {
                             SizedBox(width: isDesktop ? 12 : 8),
                             Text(
                               '${gameStats.score}',
-                              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                              style: textTheme.headlineMedium?.copyWith(
                                 fontWeight: FontWeight.w700,
                                 color: colorScheme.primary,
                               ),
@@ -139,8 +141,8 @@ class _StoreScreenState extends State<StoreScreen> {
                         SizedBox(height: isDesktop ? 12 : 8),
                         Text(
                           strings.AppStrings.availableStars,
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: colorScheme.onSurface.withAlpha((0.7 * 255).round()),
+                          style: textTheme.titleMedium?.copyWith(
+                            color: colorScheme.onSurface.withOpacity(0.7),
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -319,14 +321,16 @@ class _StoreScreenState extends State<StoreScreen> {
 
 
   Widget _buildSectionHeader(BuildContext context, String title, IconData icon, Color color, bool isDesktop) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
     
     return Row(
       children: [
         Container(
           padding: EdgeInsets.all(isDesktop ? 12 : 10),
           decoration: BoxDecoration(
-            color: color.withAlpha((0.1 * 255).round()),
+            color: color.withOpacity(0.1),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(
@@ -338,7 +342,7 @@ class _StoreScreenState extends State<StoreScreen> {
         SizedBox(width: isDesktop ? 16 : 12),
         Text(
           title,
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+          style: textTheme.headlineSmall?.copyWith(
             fontWeight: FontWeight.w700,
             color: colorScheme.onSurface,
           ),
@@ -359,7 +363,9 @@ class _StoreScreenState extends State<StoreScreen> {
     required bool isDesktop,
     required String Function() onPurchase,
   }) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
     
     return Container(
       width: double.infinity,
@@ -367,12 +373,12 @@ class _StoreScreenState extends State<StoreScreen> {
         color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: colorScheme.outline.withAlpha((0.1 * 255).round()),
+          color: colorScheme.outline.withOpacity(0.1),
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: colorScheme.shadow.withAlpha((0.04 * 255).round()),
+            color: colorScheme.shadow.withOpacity(0.04),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -467,7 +473,7 @@ class _StoreScreenState extends State<StoreScreen> {
                 Container(
                   padding: EdgeInsets.all(isDesktop ? 16 : 12),
                   decoration: BoxDecoration(
-                    color: iconColor.withAlpha((0.1 * 255).round()),
+                    color: iconColor.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
@@ -483,7 +489,7 @@ class _StoreScreenState extends State<StoreScreen> {
                     children: [
                       Text(
                         title,
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        style: textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.w600,
                           color: colorScheme.onSurface,
                         ),
@@ -491,8 +497,8 @@ class _StoreScreenState extends State<StoreScreen> {
                       SizedBox(height: isDesktop ? 4 : 2),
                       Text(
                         description,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: colorScheme.onSurface.withAlpha((0.7 * 255).round()),
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.onSurface.withOpacity(0.7),
                         ),
                       ),
                     ],
@@ -505,10 +511,10 @@ class _StoreScreenState extends State<StoreScreen> {
                     vertical: isDesktop ? 8 : 6,
                   ),
                   decoration: BoxDecoration(
-                    color: colorScheme.primary.withAlpha((0.1 * 255).round()),
+                    color: colorScheme.primary.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color: colorScheme.primary.withAlpha((0.2 * 255).round()),
+                      color: colorScheme.primary.withOpacity(0.2),
                       width: 1,
                     ),
                   ),
@@ -523,7 +529,7 @@ class _StoreScreenState extends State<StoreScreen> {
                       SizedBox(width: isDesktop ? 6 : 4),
                       Text(
                         isDev ? 'Gratis' : '$cost',
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        style: textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.w600,
                           color: colorScheme.primary,
                         ),
@@ -553,7 +559,9 @@ class _StoreScreenState extends State<StoreScreen> {
     required String themeKey,
     required bool isDesktop,
   }) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
     final isUnlocked = unlocked.contains(themeKey);
     
     return Container(
@@ -563,13 +571,13 @@ class _StoreScreenState extends State<StoreScreen> {
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: isUnlocked 
-            ? colorScheme.primary.withAlpha((0.3 * 255).round())
-            : colorScheme.outline.withAlpha((0.1 * 255).round()),
+            ? colorScheme.primary.withOpacity(0.3)
+            : colorScheme.outline.withOpacity(0.1),
           width: isUnlocked ? 2 : 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: colorScheme.shadow.withAlpha((0.04 * 255).round()),
+            color: colorScheme.shadow.withOpacity(0.04),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -625,7 +633,7 @@ class _StoreScreenState extends State<StoreScreen> {
                 Container(
                   padding: EdgeInsets.all(isDesktop ? 16 : 12),
                   decoration: BoxDecoration(
-                    color: iconColor.withAlpha((0.1 * 255).round()),
+                    color: iconColor.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
@@ -641,7 +649,7 @@ class _StoreScreenState extends State<StoreScreen> {
                     children: [
                       Text(
                         title,
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        style: textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.w600,
                           color: colorScheme.onSurface,
                         ),
@@ -649,8 +657,8 @@ class _StoreScreenState extends State<StoreScreen> {
                       SizedBox(height: isDesktop ? 4 : 2),
                       Text(
                         description,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: colorScheme.onSurface.withAlpha((0.7 * 255).round()),
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.onSurface.withOpacity(0.7),
                         ),
                       ),
                     ],
@@ -661,7 +669,7 @@ class _StoreScreenState extends State<StoreScreen> {
                     ? Container(
                         padding: EdgeInsets.all(isDesktop ? 12 : 10),
                         decoration: BoxDecoration(
-                          color: colorScheme.primary.withAlpha((0.1 * 255).round()),
+                          color: colorScheme.primary.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Icon(
@@ -676,10 +684,10 @@ class _StoreScreenState extends State<StoreScreen> {
                           vertical: isDesktop ? 8 : 6,
                         ),
                         decoration: BoxDecoration(
-                          color: colorScheme.primary.withAlpha((0.1 * 255).round()),
+                          color: colorScheme.primary.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                            color: colorScheme.primary.withAlpha((0.2 * 255).round()),
+                            color: colorScheme.primary.withOpacity(0.2),
                             width: 1,
                           ),
                         ),
@@ -694,7 +702,7 @@ class _StoreScreenState extends State<StoreScreen> {
                             SizedBox(width: isDesktop ? 6 : 4),
                             Text(
                               isDev ? 'Gratis' : '$cost',
-                              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                              style: textTheme.titleSmall?.copyWith(
                                 fontWeight: FontWeight.w600,
                                 color: colorScheme.primary,
                               ),
@@ -721,7 +729,9 @@ class _StoreScreenState extends State<StoreScreen> {
     required GameStatsProvider gameStats,
     required bool isDesktop,
   }) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
 
     return Container(
       width: double.infinity,
@@ -729,12 +739,12 @@ class _StoreScreenState extends State<StoreScreen> {
         color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: colorScheme.outline.withAlpha((0.1 * 255).round()),
+          color: colorScheme.outline.withOpacity(0.1),
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: colorScheme.shadow.withAlpha((0.04 * 255).round()),
+            color: colorScheme.shadow.withOpacity(0.04),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -774,7 +784,7 @@ class _StoreScreenState extends State<StoreScreen> {
                 Container(
                   padding: EdgeInsets.all(isDesktop ? 16 : 12),
                   decoration: BoxDecoration(
-                    color: iconColor.withAlpha((0.1 * 255).round()),
+                    color: iconColor.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
@@ -790,7 +800,7 @@ class _StoreScreenState extends State<StoreScreen> {
                     children: [
                       Text(
                         title,
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        style: textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.w600,
                           color: colorScheme.onSurface,
                         ),
@@ -798,8 +808,8 @@ class _StoreScreenState extends State<StoreScreen> {
                       SizedBox(height: isDesktop ? 4 : 2),
                       Text(
                         description,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: colorScheme.onSurface.withAlpha((0.7 * 255).round()),
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.onSurface.withOpacity(0.7),
                         ),
                       ),
                     ],
@@ -812,10 +822,10 @@ class _StoreScreenState extends State<StoreScreen> {
                     vertical: isDesktop ? 8 : 6,
                   ),
                   decoration: BoxDecoration(
-                    color: colorScheme.primary.withAlpha((0.1 * 255).round()),
+                    color: colorScheme.primary.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color: colorScheme.primary.withAlpha((0.2 * 255).round()),
+                      color: colorScheme.primary.withOpacity(0.2),
                       width: 1,
                     ),
                   ),
@@ -830,7 +840,7 @@ class _StoreScreenState extends State<StoreScreen> {
                       SizedBox(width: isDesktop ? 6 : 4),
                       Text(
                         isDev ? 'Gratis' : '$cost',
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        style: textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.w600,
                           color: colorScheme.primary,
                         ),
