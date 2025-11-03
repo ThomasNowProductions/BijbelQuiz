@@ -48,7 +48,11 @@ class ProfileProvider extends ChangeNotifier {
 
       final activeProfileId = _prefs?.getString(_activeProfileKey);
       if (activeProfileId != null) {
-        _activeProfile = _profiles.firstWhere((p) => p.id == activeProfileId, orElse: () => _profiles.isNotEmpty ? _profiles.first : null);
+        try {
+          _activeProfile = _profiles.firstWhere((p) => p.id == activeProfileId);
+        } catch (e) {
+          _activeProfile = _profiles.isNotEmpty ? _profiles.first : null;
+        }
       } else if (_profiles.isNotEmpty) {
         _activeProfile = _profiles.first;
       }
