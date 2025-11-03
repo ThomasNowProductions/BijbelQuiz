@@ -41,11 +41,13 @@ class _SocialScreenState extends State<SocialScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
-      appBar: _buildAppBar(colorScheme),
+      appBar: _buildAppBar(colorScheme, textTheme),
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -65,10 +67,11 @@ class _SocialScreenState extends State<SocialScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      _buildBqidManagementCard(colorScheme),
+                      _buildBqidManagementCard(colorScheme, textTheme),
                       const SizedBox(height: 24),
                       _buildSocialFeaturesContent(
                         colorScheme, 
+                        textTheme,
                         isLargeScreen, 
                         _socialFeaturesEnabled,
                       ),
@@ -89,7 +92,7 @@ class _SocialScreenState extends State<SocialScreen> {
   }
 
   /// Builds the app bar with consistent styling.
-  AppBar _buildAppBar(ColorScheme colorScheme) {
+  AppBar _buildAppBar(ColorScheme colorScheme, TextTheme textTheme) {
     return AppBar(
       title: Row(
         mainAxisSize: MainAxisSize.min,
@@ -97,7 +100,7 @@ class _SocialScreenState extends State<SocialScreen> {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: colorScheme.primary.withValues(alpha: 0.1),
+              color: colorScheme.primary.withOpacity(0.1),
               borderRadius: BorderRadius.circular(10),
             ),
             child: const Icon(
@@ -108,9 +111,9 @@ class _SocialScreenState extends State<SocialScreen> {
           const SizedBox(width: 12),
           Text(
             strings.AppStrings.social,
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            style: textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.w700,
-              color: colorScheme.onSurface.withValues(alpha: 0.7),
+              color: colorScheme.onSurface.withOpacity(0.7),
             ),
           ),
         ],
@@ -123,7 +126,7 @@ class _SocialScreenState extends State<SocialScreen> {
   }
 
   /// Builds the BQID management card.
-  Widget _buildBqidManagementCard(ColorScheme colorScheme) {
+  Widget _buildBqidManagementCard(ColorScheme colorScheme, TextTheme textTheme) {
     return Container(
       width: double.infinity,
       margin: EdgeInsets.zero,
@@ -132,7 +135,7 @@ class _SocialScreenState extends State<SocialScreen> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: colorScheme.shadow.withValues(alpha: 0.04),
+            color: colorScheme.shadow.withOpacity(0.04),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -150,7 +153,7 @@ class _SocialScreenState extends State<SocialScreen> {
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: colorScheme.primary.withValues(alpha: 0.1),
+                    color: colorScheme.primary.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(
@@ -166,7 +169,7 @@ class _SocialScreenState extends State<SocialScreen> {
                     children: [
                       Text(
                         strings.AppStrings.manageYourBqid,
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        style: textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.w600,
                           color: colorScheme.onSurface,
                         ),
@@ -174,8 +177,8 @@ class _SocialScreenState extends State<SocialScreen> {
                       const SizedBox(height: 4),
                       Text(
                         strings.AppStrings.manageYourBqidSubtitle,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: colorScheme.onSurface.withValues(alpha: 0.7),
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.onSurface.withOpacity(0.7),
                         ),
                       ),
                     ],
@@ -184,7 +187,7 @@ class _SocialScreenState extends State<SocialScreen> {
                 Icon(
                   Icons.arrow_forward_ios_rounded,
                   size: 16,
-                  color: colorScheme.onSurface.withValues(alpha: 0.5),
+                  color: colorScheme.onSurface.withOpacity(0.5),
                 ),
               ],
             ),
@@ -207,20 +210,21 @@ class _SocialScreenState extends State<SocialScreen> {
   /// Builds the social features content section.
   Widget _buildSocialFeaturesContent(
     ColorScheme colorScheme, 
+    TextTheme textTheme,
     bool isLargeScreen, 
     bool featuresEnabled,
   ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _buildSocialFeatureButtons(colorScheme, isLargeScreen),
-        _buildFollowedUsersScores(colorScheme, isLargeScreen),
+        _buildSocialFeatureButtons(colorScheme, textTheme, isLargeScreen),
+        _buildFollowedUsersScores(colorScheme, textTheme, isLargeScreen),
       ],
     );
   }
 
   /// Builds responsive buttons for social features
-  Widget _buildSocialFeatureButtons(ColorScheme colorScheme, bool isLargeScreen) {
+  Widget _buildSocialFeatureButtons(ColorScheme colorScheme, TextTheme textTheme, bool isLargeScreen) {
     // Use a responsive grid based on screen size
     if (isLargeScreen) {
       // For large screens, arrange buttons in a grid
@@ -244,6 +248,7 @@ class _SocialScreenState extends State<SocialScreen> {
           final feature = features[index];
           return _buildFeatureButton(
             colorScheme: colorScheme,
+            textTheme: textTheme,
             icon: feature['icon'] as IconData,
             label: feature['label'] as String,
             onPressed: feature['onPressed'] as VoidCallback,
@@ -257,6 +262,7 @@ class _SocialScreenState extends State<SocialScreen> {
         children: [
           _buildSmallerFullWidthButton(
             colorScheme: colorScheme,
+            textTheme: textTheme,
             icon: Icons.search,
             label: strings.AppStrings.search,
             onPressed: _navigateToUserSearchScreen,
@@ -264,6 +270,7 @@ class _SocialScreenState extends State<SocialScreen> {
           const SizedBox(height: 16),
           _buildSmallerFullWidthButton(
             colorScheme: colorScheme,
+            textTheme: textTheme,
             icon: Icons.people_alt_rounded,
             label: strings.AppStrings.myFollowing,
             onPressed: _navigateToFollowingList,
@@ -271,6 +278,7 @@ class _SocialScreenState extends State<SocialScreen> {
           const SizedBox(height: 16),
           _buildSmallerFullWidthButton(
             colorScheme: colorScheme,
+            textTheme: textTheme,
             icon: Icons.person_add_rounded,
             label: strings.AppStrings.myFollowers,
             onPressed: _navigateToFollowersList,
@@ -281,7 +289,7 @@ class _SocialScreenState extends State<SocialScreen> {
   }
 
   /// Builds the followed users scores section
-  Widget _buildFollowedUsersScores(ColorScheme colorScheme, bool isLargeScreen) {
+  Widget _buildFollowedUsersScores(ColorScheme colorScheme, TextTheme textTheme, bool isLargeScreen) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -292,7 +300,7 @@ class _SocialScreenState extends State<SocialScreen> {
               Expanded(
                 child: Text(
                   strings.AppStrings.followedUsersScores,
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  style: textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: colorScheme.onSurface,
                   ),
@@ -344,7 +352,7 @@ class _SocialScreenState extends State<SocialScreen> {
                               children: [
                                 Text(
                                   user['username'] ?? strings.AppStrings.unknownUser,
-                                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  style: textTheme.titleMedium?.copyWith(
                                     fontWeight: FontWeight.w500,
                                     color: colorScheme.onSurface,
                                   ),
@@ -352,7 +360,7 @@ class _SocialScreenState extends State<SocialScreen> {
                                 const SizedBox(height: 4),
                                 Text(
                                   '${strings.AppStrings.lastScore} ${user['score'] ?? strings.AppStrings.notAvailable}',
-                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  style: textTheme.bodyMedium?.copyWith(
                                     color: colorScheme.onSurfaceVariant,
                                   ),
                                 ),
@@ -513,6 +521,7 @@ class _SocialScreenState extends State<SocialScreen> {
   /// Builds a single feature button with responsive sizing
   Widget _buildFeatureButton({
     required ColorScheme colorScheme,
+    required TextTheme textTheme,
     required IconData icon,
     required String label,
     required VoidCallback onPressed,
@@ -541,7 +550,7 @@ class _SocialScreenState extends State<SocialScreen> {
           Flexible(
             child: Text(
               label,
-              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+              style: textTheme.labelLarge?.copyWith(
                 color: colorScheme.onSurface,
                 fontWeight: FontWeight.w500,
               ),
@@ -557,6 +566,7 @@ class _SocialScreenState extends State<SocialScreen> {
   /// Builds a smaller, full-width button for following/followers
   Widget _buildSmallerFullWidthButton({
     required ColorScheme colorScheme,
+    required TextTheme textTheme,
     required IconData icon,
     required String label,
     required VoidCallback onPressed,
@@ -584,7 +594,7 @@ class _SocialScreenState extends State<SocialScreen> {
             const SizedBox(width: 12), // Increased spacing
             Text(
               label,
-              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+              style: textTheme.labelLarge?.copyWith(
                 color: colorScheme.onSurface,
                 fontWeight: FontWeight.w500,
               ),

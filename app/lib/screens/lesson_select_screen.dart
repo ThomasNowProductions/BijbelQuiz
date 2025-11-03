@@ -589,8 +589,10 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
     final progress = Provider.of<LessonProgressProvider>(context);
-    final colorScheme = Theme.of(context).colorScheme;
 
     // Responsive: adapt grid by max tile width instead of fixed column count
     final screenWidth = MediaQuery.sizeOf(context).width;
@@ -641,7 +643,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
           padding: const EdgeInsets.only(left: 12.0),
           child: Text(
             'Lessen',
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            style: textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.w800,
                 ),
           ),
@@ -655,7 +657,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(_error!, style: TextStyle(color: colorScheme.error)),
+                      Text(_error!, style: textTheme.bodyLarge?.copyWith(color: colorScheme.error)),
                       const SizedBox(height: 12),
                       ElevatedButton(
                         onPressed: _loadLessons,
