@@ -1,1 +1,2 @@
 [https://github.com/E-niek](E-Niek) in PR [#9](https://github.com/ThomasNowProductions/BijbelQuiz/pull/9) and [#10](https://github.com/BijbelQuiz/BijbelQuiz/pull/10)
+[https://github.com/Githubguy132010](Githubguy132010) in PR [#16](https://github.com/BijbelQuiz/BijbelQuiz/pull/16)
