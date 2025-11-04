@@ -150,59 +150,72 @@ class ModernAdminDashboard:
         data_frame = tb.Frame(tracking_frame)
         data_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
         
-        # Left side: Records display
+        # Left side: Features overview
         left_frame = tb.Frame(data_frame)
         left_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(0, 5))
         
-        # Records display
-        records_frame = tb.Labelframe(left_frame, text="Tracking Records", padding=10)
-        records_frame.pack(fill=tk.BOTH, expand=True)
+        # Features overview display
+        features_frame = tb.Labelframe(left_frame, text="All Features Overview", padding=10)
+        features_frame.pack(fill=tk.BOTH, expand=True)
         
-        # Treeview for records
-        tree_frame = tb.Frame(records_frame)
-        tree_frame.pack(fill=tk.BOTH, expand=True)
+        # Treeview for features
+        features_tree_frame = tb.Frame(features_frame)
+        features_tree_frame.pack(fill=tk.BOTH, expand=True)
         
-        self.tree = tb.Treeview(tree_frame, 
-                               columns=("ID", "UserID", "EventType", "EventName", "Properties", "Timestamp"), 
-                               show="headings", height=10, bootstyle="primary")
+        self.features_tree = tb.Treeview(features_tree_frame, 
+                                        columns=("Feature", "UsageCount", "UniqueUsers", "LastUsed"), 
+                                        show="headings", height=15, bootstyle="primary")
         
         # Configure columns
-        for col in self.tree["columns"]:
-            self.tree.heading(col, text=col)
-            if col == "Properties":
-                self.tree.column(col, width=200, minwidth=100)
-            else:
-                self.tree.column(col, width=100, minwidth=80)
+        self.features_tree.heading("Feature", text="Feature")
+        self.features_tree.heading("UsageCount", text="Total Usage")
+        self.features_tree.heading("UniqueUsers", text="Unique Users")
+        self.features_tree.heading("LastUsed", text="Last Used")
+        
+        # Set column widths
+        self.features_tree.column("Feature", width=200, minwidth=150)
+        self.features_tree.column("UsageCount", width=100, minwidth=80)
+        self.features_tree.column("UniqueUsers", width=100, minwidth=80)
+        self.features_tree.column("LastUsed", width=150, minwidth=120)
         
         # Scrollbars
-        v_scrollbar = tb.Scrollbar(tree_frame, orient="vertical", command=self.tree.yview, bootstyle="round")
-        h_scrollbar = tb.Scrollbar(tree_frame, orient="horizontal", command=self.tree.xview, bootstyle="round")
+        v_scrollbar = tb.Scrollbar(features_tree_frame, orient="vertical", command=self.features_tree.yview, bootstyle="round")
+        h_scrollbar = tb.Scrollbar(features_tree_frame, orient="horizontal", command=self.features_tree.xview, bootstyle="round")
         
-        self.tree.configure(yscrollcommand=v_scrollbar.set, xscrollcommand=h_scrollbar.set)
+        self.features_tree.configure(yscrollcommand=v_scrollbar.set, xscrollcommand=h_scrollbar.set)
         
-        self.tree.grid(row=0, column=0, sticky="nsew")
+        self.features_tree.grid(row=0, column=0, sticky="nsew")
         v_scrollbar.grid(row=0, column=1, sticky="ns")
         h_scrollbar.grid(row=1, column=0, sticky="ew")
         
-        tree_frame.grid_rowconfigure(0, weight=1)
-        tree_frame.grid_columnconfigure(0, weight=1)
+        features_tree_frame.grid_rowconfigure(0, weight=1)
+        features_tree_frame.grid_columnconfigure(0, weight=1)
         
-        # Bind selection event
-        self.tree.bind("<<TreeviewSelect>>", self.on_tracking_record_select)
+        # Bind selection event for features
+        self.features_tree.bind("<<TreeviewSelect>>", self.on_feature_select)
         
+        # Create the old treeview (for backward compatibility with some methods)
+        # This will be hidden but still available for methods that reference it
+        old_tree_frame = tb.Frame(features_frame)
+        old_tree_frame.pack(fill=tk.BOTH, expand=False)  # Don't expand to make it invisible
+        
+        self.tree = tb.Treeview(old_tree_frame,
+                               columns=("ID", "UserID", "EventType", "EventName", "Properties", "Timestamp"),
+                               show="headings", height=0, bootstyle="primary")  # Height of 0 makes it invisible
+
         # Right side: Analysis and details
         right_frame = tb.Frame(data_frame)
         right_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=(5, 0))
         
         # Details panel
-        details_frame = tb.Labelframe(right_frame, text="Record Details", padding=10)
+        details_frame = tb.Labelframe(right_frame, text="Feature Details", padding=10)
         details_frame.pack(fill=tk.BOTH, expand=True, pady=(0, 10))
         
         self.details_text = scrolledtext.ScrolledText(details_frame, height=8, wrap=tk.WORD)
         self.details_text.pack(fill=tk.BOTH, expand=True)
         
         # Analysis panel
-        analysis_frame = tb.Labelframe(right_frame, text="Feature Analysis", padding=10)
+        analysis_frame = tb.Labelframe(right_frame, text="Feature Usage Breakdown", padding=10)
         analysis_frame.pack(fill=tk.BOTH, expand=True)
         
         # Analysis controls
@@ -212,12 +225,13 @@ class ModernAdminDashboard:
         tb.Button(analysis_controls, text="Analyze Feature", 
                  command=self.analyze_feature_usage, bootstyle=INFO).pack(side=tk.LEFT, padx=5)
         
-        tb.Button(analysis_controls, text="Visualize Data", 
-                 command=self.visualize_feature_usage, bootstyle=INFO).pack(side=tk.LEFT, padx=5)
-        
         # Stats display
         self.stats_text = scrolledtext.ScrolledText(analysis_frame, height=8)
         self.stats_text.pack(fill=tk.BOTH, expand=True)
+        
+        # Frame for visualization (graphs) - initially hidden
+        self.viz_frame = tb.Labelframe(right_frame, text="Feature Usage Visualization", padding=10)
+        # Don't pack it yet - it will be packed when needed
     
     def setup_errors_tab(self):
         """Setup the error reporting tab"""
@@ -350,8 +364,9 @@ class ModernAdminDashboard:
             # Update filter options
             self.update_tracking_filter_options()
             
-            # Display records
+            # Display records - this will update both the old records view and the new features overview
             self.display_tracking_records()
+            self.display_features_overview()
             
             self.status_var.set(f"Loaded {len(self.df)} tracking records from Supabase")
             
@@ -429,9 +444,42 @@ class ModernAdminDashboard:
         self.action_combo['values'] = ['All'] + list(actions)
         self.action_combo.set('All')
     
-    def display_tracking_records(self):
-        """Display tracking records in the treeview"""
+    def display_features_overview(self):
+        """Display features overview in the treeview"""
         # Clear existing records
+        for item in self.features_tree.get_children():
+            self.features_tree.delete(item)
+        
+        if self.df is None or self.df.empty:
+            return
+        
+        # Get filtered data for overview
+        filtered_df = self.get_filtered_tracking_data()
+        
+        # Group by features and calculate statistics
+        feature_stats = filtered_df.groupby('event_name').agg({
+            'id': 'count',  # Total usage count
+            'user_id': 'nunique',  # Unique users
+            'timestamp': 'max'  # Last used
+        }).reset_index()
+        
+        # Rename columns for clarity
+        feature_stats.columns = ['Feature', 'UsageCount', 'UniqueUsers', 'LastUsed']
+        
+        # Insert records into features tree
+        for _, row in feature_stats.iterrows():
+            values = [
+                row['Feature'],
+                row['UsageCount'],
+                row['UniqueUsers'],
+                row['LastUsed'].strftime('%Y-%m-%d %H:%M:%S') if pd.notna(row['LastUsed']) else 'N/A'
+            ]
+            
+            self.features_tree.insert('', 'end', values=values)
+    
+    def display_tracking_records(self):
+        """Display detailed tracking records in the old records treeview"""
+        # Clear existing records in the old treeview (for backwards compatibility)
         for item in self.tree.get_children():
             self.tree.delete(item)
         
@@ -495,6 +543,98 @@ class ModernAdminDashboard:
     def apply_tracking_filters(self):
         """Apply filters to tracking data"""
         self.display_tracking_records()
+        self.display_features_overview()
+    
+    def on_feature_select(self, event):
+        """Handle feature selection in the features treeview"""
+        selection = self.features_tree.selection()
+        if not selection:
+            return
+        
+        item = self.features_tree.item(selection[0])
+        feature_name = item['values'][0]  # Feature name is in the first column
+        
+        if self.df is None or self.df.empty:
+            return
+        
+        # Filter for the selected feature
+        feature_df = self.df[self.df['event_name'] == feature_name]
+        
+        if feature_df.empty:
+            self.details_text.delete(1.0, tk.END)
+            self.details_text.insert(tk.END, f"No detailed data found for feature: {feature_name}")
+            return
+        
+        # Display simplified detailed information about this feature
+        details = f"Feature: {feature_name}\n"
+        details += f"Total Usage: {len(feature_df)} events\n"
+        details += f"Unique Users: {feature_df['user_id'].nunique()}\n"
+        details += f"Date Range: {feature_df['timestamp'].min()} to {feature_df['timestamp'].max()}\n"
+        details += f"First Used: {feature_df['timestamp'].min()}\n"
+        details += f"Last Used: {feature_df['timestamp'].max()}\n"
+        
+        self.details_text.delete(1.0, tk.END)
+        self.details_text.insert(tk.END, details)
+        
+        # Update the stats text with breakdown and detailed records
+        stats = []
+        stats.append(f"Feature: {feature_name}")
+        stats.append(f"Total Events: {len(feature_df)}")
+        stats.append(f"Unique Users: {feature_df['user_id'].nunique()}")
+        stats.append(f"Date Range: {feature_df['timestamp'].min()} to {feature_df['timestamp'].max()}")
+        
+        # Actions breakdown
+        action_counts = feature_df['event_type'].value_counts()
+        stats.append("\nEvent Type Breakdown:")
+        for action, count in action_counts.items():
+            stats.append(f"  {action}: {count}")
+        
+        # Daily usage pattern
+        daily_usage = feature_df.groupby(feature_df['timestamp'].dt.date).size()
+        if len(daily_usage) > 1:
+            stats.append(f"\nDaily Average: {daily_usage.mean():.2f} events per day")
+            stats.append(f"Peak Day: {daily_usage.idxmax()} with {daily_usage.max()} events")
+        
+        # Platform breakdown
+        platform_counts = feature_df['platform'].value_counts()
+        stats.append("\nPlatform Breakdown:")
+        for platform, count in platform_counts.items():
+            if pd.notna(platform):  # Skip NaN values
+                stats.append(f"  {platform}: {count}")
+        
+        # App version breakdown
+        version_counts = feature_df['app_version'].value_counts()
+        stats.append("\nApp Version Breakdown:")
+        for version, count in version_counts.items():
+            if pd.notna(version):  # Skip NaN values
+                stats.append(f"  {version}: {count}")
+        
+        # Add exact records to the breakdown
+        stats.append(f"\nExact Records ({len(feature_df)} total):")
+        stats.append("-" * 30)
+        
+        # Add all records with their details
+        for idx, (_, row) in enumerate(feature_df.iterrows()):
+            stats.append(f"Record #{idx + 1}:")
+            stats.append(f"  ID: {row.get('id', 'N/A')}")
+            stats.append(f"  User ID: {row.get('user_id', 'N/A')}")
+            stats.append(f"  Event Type: {row.get('event_type', 'N/A')}")
+            stats.append(f"  Properties: {json.dumps(json.loads(row.get('properties', '{}')), indent=2) if row.get('properties') else '{}'}")
+            stats.append(f"  Timestamp: {row.get('timestamp', 'N/A')}")
+            stats.append(f"  Screen Name: {row.get('screen_name', 'N/A')}")
+            stats.append(f"  Session ID: {row.get('session_id', 'N/A')}")
+            stats.append(f"  Device Info: {row.get('device_info', 'N/A')}")
+            stats.append(f"  App Version: {row.get('app_version', 'N/A')}")
+            stats.append(f"  Build Number: {row.get('build_number', 'N/A')}")
+            stats.append(f"  Platform: {row.get('platform', 'N/A')}")
+            stats.append("")
+        
+        # Display statistics and exact records
+        self.stats_text.delete(1.0, tk.END)
+        self.stats_text.insert(tk.END, "\n".join(stats))
+        
+        # Automatically generate and show visualization for the selected feature
+        self.visualize_feature_usage_for_feature(feature_name)
     
     def on_tracking_record_select(self, event):
         """Handle tracking record selection"""
@@ -537,15 +677,23 @@ class ModernAdminDashboard:
         if self.df is None or self.df.empty:
             return
         
-        # Get selected feature from tracking tab
-        selected_item = self.tree.selection()
-        if not selected_item:
-            messagebox.showwarning("Warning", "Please select a tracking record to analyze feature usage")
-            return
+        # First try to get the feature from features_tree (new interface)
+        selected_feature_item = self.features_tree.selection()
         
-        # Get the feature name from the selected record
-        item = self.tree.item(selected_item[0])
-        feature_name = item['values'][3]  # Event name is in the 4th column
+        # If no selection in features_tree, try the old tree
+        if not selected_feature_item:
+            selected_item = self.tree.selection()
+            if not selected_item:
+                messagebox.showwarning("Warning", "Please select a feature from the overview or a tracking record to analyze")
+                return
+        
+            # Get the feature name from the selected record in old tree
+            item = self.tree.item(selected_item[0])
+            feature_name = item['values'][3]  # Event name is in the 4th column
+        else:
+            # Get the feature name from the selected item in features tree
+            item = self.features_tree.item(selected_feature_item[0])
+            feature_name = item['values'][0]  # Feature name is in the first column
         
         if not feature_name or feature_name == 'All':
             messagebox.showwarning("Warning", "No feature selected for analysis")
@@ -601,35 +749,49 @@ class ModernAdminDashboard:
         if self.df is None or self.df.empty:
             return
         
-        # Get selected feature from tracking tab
-        selected_item = self.tree.selection()
-        if not selected_item:
-            messagebox.showwarning("Warning", "Please select a tracking record to visualize feature usage")
-            return
+        # First try to get the feature from features_tree (new interface)
+        selected_feature_item = self.features_tree.selection()
         
-        # Get the feature name from the selected record
-        item = self.tree.item(selected_item[0])
-        feature_name = item['values'][3]  # Event name is in the 4th column
+        # If no selection in features_tree, try the old tree
+        if not selected_feature_item:
+            selected_item = self.tree.selection()
+            if not selected_item:
+                messagebox.showwarning("Warning", "Please select a feature from the overview or a tracking record to visualize")
+                return
+        
+            # Get the feature name from the selected record in old tree
+            item = self.tree.item(selected_item[0])
+            feature_name = item['values'][3]  # Event name is in the 4th column
+        else:
+            # Get the feature name from the selected item in features tree
+            item = self.features_tree.item(selected_feature_item[0])
+            feature_name = item['values'][0]  # Feature name is in the first column
         
         if not feature_name or feature_name == 'All':
             messagebox.showwarning("Warning", "No feature selected for visualization")
             return
         
+        # Call the visualization method for the specified feature
+        self.visualize_feature_usage_for_feature(feature_name)
+
+    def visualize_feature_usage_for_feature(self, feature_name):
+        """Visualize feature usage for a specific feature"""
+        if self.df is None or self.df.empty:
+            return
+
         # Filter for the selected feature
         feature_df = self.df[self.df['event_name'] == feature_name]
         
         if feature_df.empty:
-            messagebox.showwarning("Warning", f"No data found for feature: {feature_name}")
-            return
+            return  # Don't show visualization if there's no data
         
-        # Create a new window for visualization
-        viz_window = tb.Toplevel(self.root)
-        viz_window.title(f"Feature Usage Visualization: {feature_name}")
-        viz_window.geometry("1200x800")
+        # Clear any existing visualization
+        for widget in self.viz_frame.winfo_children():
+            widget.destroy()
         
         # Create matplotlib figure
-        fig, axes = plt.subplots(2, 2, figsize=(12, 10))
-        fig.suptitle(f'Feature Usage Analysis: {feature_name}', fontsize=16)
+        fig, axes = plt.subplots(2, 2, figsize=(10, 8))
+        fig.suptitle(f'Feature Usage Analysis: {feature_name}', fontsize=14)
         
         # Plot 1: Event types over time
         event_counts = feature_df.groupby([feature_df['timestamp'].dt.date, 'event_type']).size().unstack(fill_value=0)
@@ -683,13 +845,16 @@ class ModernAdminDashboard:
         # Adjust layout to prevent overlap
         plt.tight_layout()
         
-        # Embed the plot in the Tkinter window
-        canvas = FigureCanvasTkAgg(fig, master=viz_window)
+        # Embed the plot in the dashboard frame
+        canvas = FigureCanvasTkAgg(fig, master=self.viz_frame)
         canvas.draw()
         canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
         
         # Store reference to canvas to prevent garbage collection
         self.canvas = canvas
+        
+        # Pack the visualization frame below the analysis panel
+        self.viz_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
     
     def on_error_select(self, event):
         """Handle error selection in the treeview"""
