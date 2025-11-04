@@ -15,10 +15,11 @@ jobs:
 
     steps:
     - name: Checkout repository
-       uses: actions/checkout@v4
-       with:
-         ref: main
-         token: ${{ secrets.GH_PAT }}
+     - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        ref: main
+        token: ${{ secrets.GH_PAT }}
 
     - name: Get PR author info
       id: pr-author
