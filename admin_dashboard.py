@@ -230,8 +230,32 @@ class ModernAdminDashboard:
         self.stats_text.pack(fill=tk.BOTH, expand=True)
         
         # Frame for visualization (graphs) - initially hidden
-        self.viz_frame = tb.Labelframe(right_frame, text="Feature Usage Visualization", padding=10)
-        # Don't pack it yet - it will be packed when needed
+        # Create a main container for the visualization with scrolling capability
+        viz_container = tb.Frame(right_frame)
+        viz_container.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        
+        # Create a canvas and scrollbar for scrolling
+        self.viz_canvas = tk.Canvas(viz_container, bg='white')
+        viz_scrollbar = tb.Scrollbar(viz_container, orient="vertical", command=self.viz_canvas.yview, bootstyle="round")
+        
+        # Create the visualization frame inside the canvas
+        self.viz_frame = tb.Labelframe(self.viz_canvas, text="Feature Usage Visualization", padding=10)
+        
+        # Configure the scrolling
+        self.viz_frame.bind(
+            "<Configure>",
+            lambda e: self.viz_canvas.configure(scrollregion=self.viz_canvas.bbox("all"))
+        )
+        
+        # Create a window inside the canvas to hold the visualization frame
+        self.viz_canvas.create_window((0, 0), window=self.viz_frame, anchor="nw")
+        self.viz_canvas.configure(yscrollcommand=viz_scrollbar.set)
+        
+        # Bind mousewheel to canvas for scrolling
+        def _on_mousewheel(event):
+            self.viz_canvas.yview_scroll(int(-1*(event.delta/120)), "units")
+        
+        self.viz_canvas.bind("<MouseWheel>", _on_mousewheel)
     
     def setup_errors_tab(self):
         """Setup the error reporting tab"""
@@ -789,72 +813,85 @@ class ModernAdminDashboard:
         for widget in self.viz_frame.winfo_children():
             widget.destroy()
         
-        # Create matplotlib figure
-        fig, axes = plt.subplots(2, 2, figsize=(10, 8))
+        # Calculate the number of subplots to determine figure size
+        n_plots = 4
+        fig, axes = plt.subplots(n_plots, 1, figsize=(10, 4*n_plots))
         fig.suptitle(f'Feature Usage Analysis: {feature_name}', fontsize=14)
+        
+        # Make sure axes is always a list, even if there's only one subplot
+        if n_plots == 1:
+            axes = [axes]
         
         # Plot 1: Event types over time
         event_counts = feature_df.groupby([feature_df['timestamp'].dt.date, 'event_type']).size().unstack(fill_value=0)
         if not event_counts.empty:
-            event_counts.plot(kind='bar', ax=axes[0,0], width=0.8)
-            axes[0,0].set_title('Event Types Over Time')
-            axes[0,0].set_xlabel('Date')
-            axes[0,0].set_ylabel('Event Count')
-            axes[0,0].tick_params(axis='x', rotation=45)
+            event_counts.plot(kind='bar', ax=axes[0], width=0.8)
+            axes[0].set_title('Event Types Over Time')
+            axes[0].set_xlabel('Date')
+            axes[0].set_ylabel('Event Count')
+            axes[0].tick_params(axis='x', rotation=45)
         else:
-            axes[0,0].text(0.5, 0.5, 'No data available', horizontalalignment='center', 
-                          verticalalignment='center', transform=axes[0,0].transAxes)
-            axes[0,0].set_title('Event Types Over Time')
+            axes[0].text(0.5, 0.5, 'No data available', horizontalalignment='center', 
+                          verticalalignment='center', transform=axes[0].transAxes)
+            axes[0].set_title('Event Types Over Time')
         
         # Plot 2: Platform distribution
         platform_counts = feature_df['platform'].value_counts()
         if not platform_counts.empty and len(platform_counts) > 0:
-            axes[0,1].pie(platform_counts.values, labels=platform_counts.index, autopct='%1.1f%%')
-            axes[0,1].set_title('Platform Distribution')
+            axes[1].pie(platform_counts.values, labels=platform_counts.index, autopct='%1.1f%%')
+            axes[1].set_title('Platform Distribution')
         else:
-            axes[0,1].text(0.5, 0.5, 'No platform data', horizontalalignment='center', 
-                          verticalalignment='center', transform=axes[0,1].transAxes)
-            axes[0,1].set_title('Platform Distribution')
+            axes[1].text(0.5, 0.5, 'No platform data', horizontalalignment='center', 
+                          verticalalignment='center', transform=axes[1].transAxes)
+            axes[1].set_title('Platform Distribution')
         
         # Plot 3: Daily activity pattern
         daily_counts = feature_df.groupby(feature_df['timestamp'].dt.date).size()
         if not daily_counts.empty:
-            axes[1,0].plot(daily_counts.index, daily_counts.values, marker='o')
-            axes[1,0].set_title('Daily Activity Trend')
-            axes[1,0].set_xlabel('Date')
-            axes[1,0].set_ylabel('Event Count')
-            axes[1,0].tick_params(axis='x', rotation=45)
+            axes[2].plot(daily_counts.index, daily_counts.values, marker='o')
+            axes[2].set_title('Daily Activity Trend')
+            axes[2].set_xlabel('Date')
+            axes[2].set_ylabel('Event Count')
+            axes[2].tick_params(axis='x', rotation=45)
         else:
-            axes[1,0].text(0.5, 0.5, 'No daily data', horizontalalignment='center', 
-                          verticalalignment='center', transform=axes[1,0].transAxes)
-            axes[1,0].set_title('Daily Activity Trend')
+            axes[2].text(0.5, 0.5, 'No daily data', horizontalalignment='center', 
+                          verticalalignment='center', transform=axes[2].transAxes)
+            axes[2].set_title('Daily Activity Trend')
         
         # Plot 4: App version distribution
         version_counts = feature_df['app_version'].value_counts()
         if not version_counts.empty and len(version_counts) > 0:
-            axes[1,1].bar(version_counts.index, version_counts.values)
-            axes[1,1].set_title('App Version Distribution')
-            axes[1,1].set_xlabel('App Version')
-            axes[1,1].set_ylabel('Event Count')
-            axes[1,1].tick_params(axis='x', rotation=45)
+            axes[3].bar(version_counts.index, version_counts.values)
+            axes[3].set_title('App Version Distribution')
+            axes[3].set_xlabel('App Version')
+            axes[3].set_ylabel('Event Count')
+            axes[3].tick_params(axis='x', rotation=45)
         else:
-            axes[1,1].text(0.5, 0.5, 'No version data', horizontalalignment='center', 
-                          verticalalignment='center', transform=axes[1,1].transAxes)
-            axes[1,1].set_title('App Version Distribution')
+            axes[3].text(0.5, 0.5, 'No version data', horizontalalignment='center', 
+                          verticalalignment='center', transform=axes[3].transAxes)
+            axes[3].set_title('App Version Distribution')
         
         # Adjust layout to prevent overlap
         plt.tight_layout()
         
         # Embed the plot in the dashboard frame
-        canvas = FigureCanvasTkAgg(fig, master=self.viz_frame)
-        canvas.draw()
-        canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+        figure_canvas = FigureCanvasTkAgg(fig, master=self.viz_frame)
+        figure_canvas.draw()
+        figure_canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
         
         # Store reference to canvas to prevent garbage collection
-        self.canvas = canvas
+        self.canvas = figure_canvas
         
         # Pack the visualization frame below the analysis panel
-        self.viz_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        self.viz_frame.pack(fill=tk.BOTH, expand=True)
+        
+        # Update the scroll region to include all content
+        self.viz_frame.update_idletasks()
+        self.viz_canvas.configure(scrollregion=self.viz_canvas.bbox("all"))
+        
+        # Pack the canvas and scrollbar
+        self.viz_canvas.pack(side="left", fill="both", expand=True)
+        viz_scrollbar.pack(side="right", fill="y")
     
     def on_error_select(self, event):
         """Handle error selection in the treeview"""
