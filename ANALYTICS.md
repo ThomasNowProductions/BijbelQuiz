@@ -1,21 +1,21 @@
 # Analytics Documentation
 
-This document explains the simplified analytics setup in the BijbelQuiz application, which uses PostHog for feature usage tracking.
+This document explains the simplified analytics setup in the BijbelQuiz application, which uses an in-house tracking service for feature usage tracking.
 
 ## Overview
 
-We use the `posthog_flutter` package to send events to PostHog. This allows us to understand which features users interact with, helping us prioritize development and improve user experience.
+We use our own in-house tracking service to store analytics events in a Supabase database. This allows us to understand which features users interact with, helping us prioritize development and improve user experience, while maintaining full control over user data.
 
 Users can opt out of analytics collection through a setting in the app's settings screen. All analytics methods respect this preference.
 
 ## AnalyticsService
 
-The `AnalyticsService` is a focused wrapper around the `posthog_flutter` package that provides feature usage tracking capabilities. It is located in `app/lib/services/analytics_service.dart`.
+The `AnalyticsService` is a wrapper around the in-house tracking service that provides feature usage tracking capabilities. It is located in `app/lib/services/analytics_service.dart`.
 
 ### Core Methods
 
--   `init()`: Initializes the PostHog SDK with configuration and API keys
--   `getObserver()`: Returns a `PosthogObserver` for automatic screen view tracking
+-   `init()`: Initializes the tracking service
+-   `getObserver()`: Returns a `TrackingObserver` for automatic screen view tracking
 -   `screen(BuildContext context, String screenName)`: Tracks screen views with user preference checks
 -   `capture(BuildContext context, String eventName, {Map<String, Object>? properties})`: Tracks custom events with optional properties
 

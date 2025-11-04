@@ -180,7 +180,7 @@ selector.resetForNewGame();
 - **Core Methods**: `init()`, `getObserver()`, `screen()`, `capture()` with user consent management
 - **Feature Usage Tracking**: `trackFeatureUsage()` for monitoring which features users interact with
 - **Privacy-Focused**: Only tracks feature usage, not detailed user behavior or technical events
-- **PostHog Integration**: Full analytics platform integration with user preference management
+- **In-house Tracking Service**: Analytics tracking service with user preference management, storing data in Supabase
 
 ### FeatureFlagsService
 
