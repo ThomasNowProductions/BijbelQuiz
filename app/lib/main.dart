@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:async';
 import 'dart:io' show Platform;
+import 'package:app_links/app_links.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:logging/logging.dart' show Level;
@@ -30,10 +31,12 @@ import 'providers/lesson_progress_provider.dart';
 import 'screens/main_navigation_screen.dart';
 import 'settings_screen.dart';
 import 'screens/sync_screen.dart';
+import 'screens/stats_share_screen.dart';
 import 'l10n/strings_nl.dart' as strings;
 import 'config/supabase_config.dart';
 
 final analyticsService = AnalyticsService();
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 /// The main entry point of the BijbelQuiz application with performance optimizations.
 void main() async {
@@ -41,9 +44,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   AppLogger.info('BijbelQuiz app starting up...');
 
-  // Initialize logging
-  AppLogger.init(level: Level.INFO);
-  AppLogger.info('Logger initialized successfully');
+  // Initialize logging with secure settings based on environment
+  bool isProduction = const bool.fromEnvironment('dart.vm.product', defaultValue: false);
+  AppLogger.setSecureLevel(isProduction: isProduction, productionLevel: Level.INFO, developmentLevel: Level.ALL);
+  AppLogger.info('Logger initialized successfully with secure settings (Production: $isProduction)');
 
   // Initialize analytics
   AppLogger.info('Initializing analytics service...');
@@ -123,6 +127,7 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
   ApiService? _apiService;
   StarTransactionService? _starTransactionService;
   TimeTrackingService _timeTrackingService = TimeTrackingService.instance;
+  StreamSubscription? _sub;
 
   // Add mounted getter for older Flutter versions
   @override
@@ -133,6 +138,9 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
   void initState() {
     super.initState();
     AppLogger.info('BijbelQuizApp state initializing...');
+
+    // Set up deep link handling
+    _initDeepLinks();
 
     // Track app lifecycle for session management
     _trackAppLifecycle();
@@ -239,6 +247,56 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
     });
   }
 
+  // Initialize deep link handling
+  void _initDeepLinks() async {
+    // For web platforms, use query parameters
+    if (kIsWeb) {
+      final uri = Uri.base;
+      if (uri.path.startsWith('/stats') || uri.path.startsWith('/gen.html') || uri.hasQuery) {
+        _handleDeepLink(uri);
+      }
+    } else if (Platform.isAndroid || Platform.isIOS) {
+      // For mobile platforms, use app_links
+      _sub = AppLinks().uriLinkStream.listen((Uri? uri) {
+        if (uri != null) {
+          _handleDeepLink(uri);
+        }
+      }, onError: (err) {
+        AppLogger.error('Error handling deep link: $err');
+      });
+    } else {
+      // For other platforms (Linux, Windows, macOS), skip deep link handling
+      AppLogger.info('Skipping deep link handling on ${Platform.operatingSystem} platform');
+    }
+  }
+
+  void _handleDeepLink(Uri uri) {
+    // Check if this is a stats share URL
+    if (uri.path.startsWith('/stats') || uri.path.startsWith('/gen.html') || uri.queryParameters.containsKey('score')) {
+      final params = <String, String>{};
+      
+      // Add all query parameters to the map
+      uri.queryParameters.forEach((key, value) {
+        params[key] = value;
+      });
+
+      // If we have the necessary parameters to show stats, navigate to the stats share screen
+      if (params.containsKey('score') || params.containsKey('currentStreak')) {
+        // Use a callback to navigate once the app is fully built
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) {
+            // Use the navigator key to navigate from the root
+            navigatorKey.currentState?.push(
+              MaterialPageRoute(
+                builder: (_) => StatsShareScreen(statsData: params),
+              ),
+            );
+          }
+        });
+      }
+    }
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -249,6 +307,7 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
   /// Builds the MaterialApp with theme configuration
   Widget _buildMaterialApp(SettingsProvider settings) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       navigatorObservers: [analyticsService.getObserver()],
       title: strings.AppStrings.appName,
       debugShowCheckedModeBanner: false,
@@ -295,7 +354,10 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
       }
       
       // Check if we're in the BijbelQuiz Gen period and redirect if needed
-      if (BijbelQuizGenPeriod.isGenPeriod()) {
+      if (BijbelQuizGenPeriod.isGenPeriod() && !_timeTrackingService.hasGenBeenShownThisPeriod()) {
+        // Mark the Gen as shown for this period before navigating
+        _timeTrackingService.markGenAsShownThisPeriod();
+        
         // Small delay to ensure context is ready
         Future.delayed(const Duration(milliseconds: 500), () {
           if (mounted) {
@@ -316,6 +378,20 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
 
         final app = _buildMaterialApp(settings);
         final deferredProviders = _getDeferredProviders();
+
+        // For deep link handling after app is built
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          // Wait a bit to ensure the app is fully initialized before checking for deep links
+          Future.delayed(const Duration(milliseconds: 100), () {
+            if (kIsWeb) {
+              // For web, check current URI for stats parameters
+              final uri = Uri.base;
+              if (uri.path.startsWith('/stats') || uri.path.startsWith('/gen.html') || uri.hasQuery) {
+                _handleDeepLink(uri);
+              }
+            }
+          });
+        });
 
         return deferredProviders.isNotEmpty
             ? MultiProvider(providers: deferredProviders, child: app)
@@ -388,6 +464,10 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
     _questionCacheService?.dispose();
     _connectionService?.dispose();
     _timeTrackingService.dispose();
+    
+    // Cancel the deep link subscription
+    _sub?.cancel();
+    
     AppLogger.info('BijbelQuizApp disposed successfully');
     super.dispose();
   }

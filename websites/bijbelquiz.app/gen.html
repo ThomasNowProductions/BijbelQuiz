@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="nl">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Gedeelde BijbelQuiz Statistieken</title>
+        <meta
+            name="description"
+            content="Bekijk de BijbelQuiz statistieken van een vriend - scores, voortgang en prestaties in de bijbelkennis quiz."
+        />
+        <meta
+            name="keywords"
+            content="bijbelquiz, gedeelde statistieken, scores, bijbelkennis, quiz resultaten, bijbelquiz scores, bijbel quiz statistieken"
+        />
+        <meta name="author" content="BijbelQuiz" />
+        <meta name="robots" content="index, follow" />
+        <meta name="theme-color" content="#4CAF50" />
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://bijbelquiz.app/gen.html" />
+        <meta property="og:title" content="Gedeelde BijbelQuiz Statistieken" />
+        <meta
+            property="og:description"
+            content="Bekijk de BijbelQuiz statistieken van een vriend - scores, voortgang en prestaties in de bijbelkennis quiz."
+        />
+        <meta property="og:site_name" content="BijbelQuiz" />
+        <meta property="og:locale" content="nl_NL" />
+
+        <!-- Additional SEO -->
+        <meta name="format-detection" content="telephone=no" />
+
+        <link rel="stylesheet" href="theme.css" />
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+
+        <!-- Structured Data -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "name": "Gedeelde BijbelQuiz Statistieken",
+                "description": "Bekijk de BijbelQuiz statistieken van een vriend - scores, voortgang en prestaties in de bijbelkennis quiz.",
+                "url": "https://bijbelquiz.app/gen.html",
+                "inLanguage": "nl",
+                "isPartOf": {
+                    "@type": "WebSite",
+                    "name": "BijbelQuiz",
+                    "url": "https://bijbelquiz.app/"
+                }
+            }
+        </script>
+
+        <style>
+            .stats-container {
+                width: 100%;
+                max-width: 800px; /* Increased width */
+                margin: 0 auto;
+                padding: 12px;
+                background: transparent;
+                border-radius: 16px;
+                border: 2px solid #000000; /* Black border like in Flutter app */
+            }
+
+            .stat-row {
+                display: flex;
+                justify-content: space-between;
+                padding: 8px 0;
+            }
+
+            .stat-label {
+                font-size: 1rem;
+                color: #000000; /* Black text like in Flutter app */
+            }
+
+            .stat-value {
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: #000000; /* Black text like in Flutter app */
+            }
+
+            .divider {
+                height: 16px;
+                width: 100%;
+            }
+
+            .divider-thin {
+                height: 16px;
+                width: 100%;
+                border-bottom: 1px solid #000000; /* Black thin divider like in Flutter app */
+            }
+
+            .center-screen {
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                padding: 24px;
+            }
+
+            .content-container {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .header-icon {
+                font-size: 80px;
+                color: #000000; /* Black icon like in Flutter app */
+                text-align: center;
+            }
+
+            .title {
+                font-size: 2rem;
+                font-weight: bold;
+                color: #000000; /* Black text like in Flutter app */
+                text-align: center;
+                margin: 24px 0 8px 0;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+                color: #000000; /* Black text like in Flutter app */
+                text-align: center;
+                margin-bottom: 24px;
+            }
+        </style>
+    </head>
+    <body class="center-screen fade-in" style="background-color: #fff9c4">
+        <!-- Amber shade 200 -->
+        <div class="content-container">
+            <i class="material-icons header-icon">star</i>
+            <h1 class="title">Dit is mijn BijbelQuiz Gen 2025</h1>
+            <p class="subtitle">
+                Deze scores heb ik in 2025 behaald, wat zijn jou scores?
+            </p>
+
+            <div class="stats-container">
+                <div class="stat-row">
+                    <span class="stat-label">Correcte antwoorden</span>
+                    <span class="stat-value" id="scoreValue">0</span>
+                </div>
+
+                <div class="divider-thin"></div>
+
+                <div class="stat-row">
+                    <span class="stat-label">Accuraatheid</span>
+                    <span class="stat-value" id="accuracyValue">0%</span>
+                </div>
+
+                <div class="divider-thin"></div>
+
+                <div class="stat-row">
+                    <span class="stat-label">Uren</span>
+                    <span class="stat-value" id="hoursValue">0.0</span>
+                </div>
+
+                <div class="divider-thin"></div>
+
+                <div class="stat-row">
+                    <span class="stat-label">Huidige reeks</span>
+                    <span class="stat-value" id="streakValue">0</span>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Function to extract URL parameters
+            function getUrlParameter(name) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(name);
+            }
+
+            // Function to update stats with URL parameters
+            function updateStatsFromUrl() {
+                // Get values from URL parameters, default to 0 if not present
+                const score = parseInt(getUrlParameter("score")) || 0;
+                const currentStreak =
+                    parseInt(getUrlParameter("currentStreak")) || 0;
+                const longestStreak =
+                    parseInt(getUrlParameter("longestStreak")) || 0;
+                const incorrect = parseInt(getUrlParameter("incorrect")) || 0;
+                const totalQuestions =
+                    parseInt(getUrlParameter("totalQuestions")) ||
+                    Math.max(score + incorrect, 1); // At least 1 to avoid division by zero
+                const accuracy = parseInt(getUrlParameter("accuracy")) || 0;
+                const hoursSpent =
+                    parseFloat(getUrlParameter("hoursSpent")) || 0.0;
+
+                // Update the DOM elements
+                document.getElementById("scoreValue").textContent = score;
+                document.getElementById("accuracyValue").textContent =
+                    `${accuracy}%`;
+                document.getElementById("hoursValue").textContent =
+                    hoursSpent.toFixed(1);
+                document.getElementById("streakValue").textContent =
+                    currentStreak;
+                document.getElementById("longestStreakValue").textContent =
+                    longestStreak;
+                document.getElementById("mistakesValue").textContent =
+                    incorrect;
+                document.getElementById("totalQuestionsValue").textContent =
+                    totalQuestions;
+
+                // Update the page title and description with the score
+                document.querySelector(".title").textContent =
+                    `Jaar in Review - ${score} correct`;
+                document.querySelector(".subtitle").textContent =
+                    `Bekijk de BijbelQuiz resultaten: ${accuracy}% accuraatheid, ${currentStreak} reeks`;
+            }
+
+            // Run when page loads
+            document.addEventListener("DOMContentLoaded", function () {
+                // Update stats from URL
+                updateStatsFromUrl();
+            });
+        </script>
+    </body>
+</html>

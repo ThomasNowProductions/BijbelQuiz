@@ -40,6 +40,9 @@ import '../services/quiz_timer_manager.dart';
 import '../services/quiz_animation_controller.dart';
 import '../services/progressive_question_selector.dart';
 import '../services/quiz_answer_handler.dart';
+import '../services/error_reporting_service.dart';
+import '../error/error_types.dart';
+import '../utils/automatic_error_reporter.dart';
 
 /// The main quiz screen that displays questions and handles user interactions
 /// with performance optimizations for low-end devices and poor connections.
@@ -420,7 +423,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
                       style: TextStyle(
                         color: hasEnoughPoints
                           ? Theme.of(localContext).colorScheme.primary
-                          : Colors.grey,
+                          : Theme.of(localContext).colorScheme.outline,
                         fontSize: 16,
                       ),
                     ),
@@ -430,14 +433,14 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
                       size: 16,
                       color: hasEnoughPoints
                         ? Theme.of(localContext).colorScheme.primary
-                        : Colors.grey,
+                        : Theme.of(localContext).colorScheme.outline,
                     ),
                     Text(
                       ' 50',
                       style: TextStyle(
                         color: hasEnoughPoints
                           ? Theme.of(localContext).colorScheme.primary
-                          : Colors.grey,
+                          : Theme.of(localContext).colorScheme.outline,
                         fontSize: 16,
                       ),
                     ),
@@ -1042,17 +1045,41 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
   Future<void> _handleFlag() async {
     final question = _quizState.question;
     final questionId = question.id;
-    final subject = '${strings.AppStrings.appName} vraag is incorrect';
-    final body = 'Er is een probleem met vraag $questionId in de ${strings.AppStrings.appName} app.';
-    final email = AppUrls.contactEmail;
-    final url = 'mailto:$email?subject=${Uri.encodeComponent(subject)}&body=${Uri.encodeComponent(body)}';
+    
+    try {
+      // Report the issue to the Supabase database
+      final gameStatsProvider = Provider.of<GameStatsProvider>(context, listen: false);
+      await AutomaticErrorReporter.reportQuestionError(
+        message: 'User reported issue with question',
+        userMessage: 'Question reported by user',
+        questionId: questionId,
+        questionText: question.question,
+        additionalInfo: {
+          'correct_answer': question.correctAnswer,
+          'incorrect_answers': question.incorrectAnswers,
+          'category': question.category,
+          'difficulty': question.difficulty,
+          'current_streak': gameStatsProvider.currentStreak,
+          'score': gameStatsProvider.score,
+        },
+      );
 
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url));
-    } else {
-      // Handle error, perhaps show a snackbar
+      // Show success feedback to user
       if (mounted) {
-        showTopSnackBar(context, strings.AppStrings.couldNotOpenEmail, style: TopSnackBarStyle.error);
+        showTopSnackBar(
+          context,
+          strings.AppStrings.questionReportedSuccessfully,
+          style: TopSnackBarStyle.success,
+        );
+      }
+    } catch (e) {
+      // If reporting fails, show error to user
+      if (mounted) {
+        showTopSnackBar(
+          context,
+          strings.AppStrings.errorReportingQuestion,
+          style: TopSnackBarStyle.error,
+        );
       }
     }
   }
@@ -1135,6 +1162,18 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
     // First check if the reference can be parsed
     final parsed = _parseBiblicalReference(_quizState.question.biblicalReference!);
     if (parsed == null) {
+      // Report this error automatically since it indicates issues with question data
+      await AutomaticErrorReporter.reportBiblicalReferenceError(
+        message: 'Could not parse biblical reference',
+        userMessage: 'Invalid biblical reference in question',
+        reference: question.biblicalReference ?? 'null',
+        questionId: question.id,
+        additionalInfo: {
+          'question_id': question.id,
+          'question_text': question.question,
+        },
+      );
+      
       if (mounted) {
         showTopSnackBar(localContext, strings.AppStrings.invalidBiblicalReference, style: TopSnackBarStyle.error);
       }
@@ -1177,7 +1216,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
         }
       });
     } else {
-      // Not enough stars
+      // Not enough stars - this is a user state issue, not an error to report automatically
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) {
           showTopSnackBar(localContext, strings.AppStrings.notEnoughStars, style: TopSnackBarStyle.warning);

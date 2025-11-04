@@ -10,8 +10,7 @@ class AppUrls {
   // Bible API
   static final String bibleApiBase = 'https://www.online-bijbel.nl/api.php';
 
-  // Analytics API
-  static final String posthogHost = 'https://us.i.posthog.com';
+
 
   // AI API
   static final String geminiApiBase = 'https://generativelanguage.googleapis.com/v1beta';

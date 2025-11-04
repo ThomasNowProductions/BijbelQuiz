@@ -10,6 +10,10 @@ import '../l10n/strings_nl.dart' as strings;
 import '../services/logger.dart';
 import '../services/gemini_service.dart';
 import '../models/ai_theme.dart';
+import '../utils/automatic_error_reporter.dart';
+import '../error/error_types.dart';
+import '../services/store_service.dart';
+import '../models/store_item.dart';
 
 class AIThemeDesignerScreen extends StatefulWidget {
   const AIThemeDesignerScreen({super.key});
@@ -22,6 +26,8 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
   final TextEditingController _themeController = TextEditingController();
   bool _isGenerating = false;
   String _generationStatus = '';
+  int _cost = 200; // Default cost
+  bool _isLoadingCost = true;
 
   @override
   void initState() {
@@ -35,6 +41,42 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
       context, 
       AnalyticsService.FEATURE_AI_THEME_GENERATOR
     );
+    
+    // Load the current price from store
+    _loadCost();
+  }
+
+  Future<void> _loadCost() async {
+    try {
+      final storeService = StoreService();
+      final items = await storeService.getStoreItems();
+      final aiThemeItem = items.firstWhere(
+        (item) => item.itemKey == 'ai_theme_generator',
+        orElse: () => StoreItem(
+          itemKey: 'ai_theme_generator',
+          itemName: 'AI Theme Generator',
+          itemDescription: '',
+          itemType: 'feature_access',
+          basePrice: 200,
+          currentPrice: 200,
+          isDiscounted: false,
+          discountPercentage: 0,
+          isActive: true,
+        ),
+      );
+      
+      setState(() {
+        _cost = aiThemeItem.currentPrice;
+        _isLoadingCost = false;
+      });
+      
+      AppLogger.info('Loaded AI theme generator cost: ${aiThemeItem.currentPrice}, isDiscounted: ${aiThemeItem.isDiscounted}');
+    } catch (e) {
+      AppLogger.error('Failed to load AI theme generator cost: $e');
+      setState(() {
+        _isLoadingCost = false; // Still set to false to show the UI with default cost
+      });
+    }
   }
 
   @override
@@ -168,13 +210,21 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
                             ),
                             const SizedBox(width: 8),
                             Expanded(
-                              child: Text(
-                                'AI thema generatie kost ${isDev ? '0' : cost} sterren',
-                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  color: colorScheme.primary,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
+                              child: _isLoadingCost
+                                  ? Text(
+                                      'Laden...',
+                                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                        color: colorScheme.primary,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    )
+                                  : Text(
+                                      'AI thema generatie kost ${isDev ? '0' : _cost} sterren',
+                                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                        color: colorScheme.primary,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
                             ),
                           ],
                         ),
@@ -252,14 +302,14 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
                 width: double.infinity,
                 padding: const EdgeInsets.only(bottom: 16),
                 child: ElevatedButton(
-                  onPressed: _isGenerating 
+                  onPressed: _isGenerating || _isLoadingCost
                     ? null 
                     : () async {
                         await _generateAITheme(
                           context, 
                           _themeController, 
                           gameStats, 
-                          cost, 
+                          _cost, 
                           isDev
                         );
                       },
@@ -271,14 +321,23 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: Text(
-                    _isGenerating ? 'Aan het genereren...' : 'Genereer Thema', 
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
-                  ),
+                  child: _isLoadingCost 
+                    ? Text(
+                        'Laden...',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white.withOpacity(0.7),
+                        ),
+                      )
+                    : Text(
+                        _isGenerating ? 'Aan het genereren...' : 'Genereer Thema', 
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
                 ),
               ),
             ],
@@ -309,16 +368,47 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
     );
 
     // Spend stars first
-    final success = isDev ? true : await gameStats.spendStarsWithTransaction(
-      amount: cost,
-      reason: 'AI thema generatie',
-      metadata: {
-        'description': description,
-        'feature': 'ai_theme_generator',
-      },
-    );
-    if (!success) {
-      showTopSnackBar(context, 'Niet genoeg sterren!', style: TopSnackBarStyle.error);
+    bool transactionSuccess = false;
+    try {
+      transactionSuccess = isDev ? true : await gameStats.spendStarsWithTransaction(
+        amount: cost,
+        reason: 'AI thema generatie',
+        metadata: {
+          'description': description,
+          'feature': 'ai_theme_generator',
+        },
+      );
+      if (!transactionSuccess) {
+        await AutomaticErrorReporter.reportStorageError(
+          message: 'Failed to process AI theme generation payment',
+          userMessage: 'Failed to process AI theme generation payment',
+          operation: 'spend_stars',
+          additionalInfo: {
+            'description': description,
+            'cost': cost,
+            'feature': 'ai_theme_generator',
+          },
+        );
+        if (context.mounted) {
+          showTopSnackBar(context, 'Niet genoeg sterren!', style: TopSnackBarStyle.error);
+        }
+        return;
+      }
+    } catch (e) {
+      await AutomaticErrorReporter.reportStorageError(
+        message: 'Error processing AI theme generation payment: ${e.toString()}',
+        userMessage: 'Error processing AI theme generation payment',
+        operation: 'spend_stars',
+        additionalInfo: {
+          'description': description,
+          'cost': cost,
+          'error': e.toString(),
+          'feature': 'ai_theme_generator',
+        },
+      );
+      if (context.mounted) {
+        showTopSnackBar(context, 'Fout bij betaling: ${e.toString()}', style: TopSnackBarStyle.error);
+      }
       return;
     }
 
@@ -391,25 +481,65 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
 
     } catch (e) {
       AppLogger.error('AI theme generation failed', e);
+      
+      // Auto-report the error
+      String errorType = 'unknown';
+      String userMessage = 'Er ging iets fout bij het genereren van het thema.';
+      
+      if (e is GeminiError) {
+        errorType = 'ai';
+        userMessage = 'AI fout: ${e.message}';
+        await AutomaticErrorReporter.reportStorageError(  // Using storage error since it's related to data processing
+          message: 'AI theme generation failed: ${e.message}',
+          userMessage: 'AI generation error',
+          operation: 'ai_theme_generation',
+          additionalInfo: {
+            'description': description,
+            'gemini_error': e.message,
+            'feature': 'ai_theme_generator',
+          },
+        );
+      } else {
+        await AutomaticErrorReporter.reportStorageError(
+          message: 'Error during AI theme generation: ${e.toString()}',
+          userMessage: 'Error during AI theme generation',
+          operation: 'ai_theme_generation',
+          additionalInfo: {
+            'description': description,
+            'error': e.toString(),
+            'feature': 'ai_theme_generator',
+          },
+        );
+      }
 
       if (context.mounted) {
-        String errorMessage = 'Er ging iets fout bij het genereren van het thema.';
-        if (e is GeminiError) {
-          errorMessage = 'AI fout: ${e.message}';
-        }
-
-        showTopSnackBar(context, errorMessage, style: TopSnackBarStyle.error);
+        showTopSnackBar(context, userMessage, style: TopSnackBarStyle.error);
 
         // Refund stars on error
         if (!isDev) {
-          await gameStats.addStarsWithTransaction(
-            amount: cost,
-            reason: 'Terugbetaling AI thema (fout)',
-            metadata: {
-              'original_transaction': 'ai_theme_generation',
-              'error': e.toString(),
-            },
-          );
+          try {
+            await gameStats.addStarsWithTransaction(
+              amount: cost,
+              reason: 'Terugbetaling AI thema (fout)',
+              metadata: {
+                'original_transaction': 'ai_theme_generation',
+                'error': e.toString(),
+              },
+            );
+          } catch (refundError) {
+            // Report the refund error as well
+            await AutomaticErrorReporter.reportStorageError(
+              message: 'Failed to refund stars after AI theme generation error: ${refundError.toString()}',
+              userMessage: 'Failed to refund stars after error',
+              operation: 'add_stars',
+              additionalInfo: {
+                'original_error': e.toString(),
+                'refund_error': refundError.toString(),
+                'cost': cost,
+                'feature': 'ai_theme_generator',
+              },
+            );
+          }
         }
       }
     } finally {
@@ -500,17 +630,41 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
             ),
             ElevatedButton(
               onPressed: () async {
-                // Apply the theme
-                final settings = Provider.of<SettingsProvider>(context, listen: false);
-                await settings.setCustomTheme(theme.id);
+                try {
+                  // Apply the theme
+                  final settings = Provider.of<SettingsProvider>(context, listen: false);
+                  await settings.setCustomTheme(theme.id);
 
-                if (context.mounted) {
-                  Navigator.of(context).pop();
-                  showTopSnackBar(
-                    context,
-                    'Thema "${theme.name}" is nu actief!',
-                    style: TopSnackBarStyle.success
+                  if (context.mounted) {
+                    Navigator.of(context).pop();
+                    showTopSnackBar(
+                      context,
+                      'Thema "${theme.name}" is nu actief!',
+                      style: TopSnackBarStyle.success
+                    );
+                  }
+                } catch (e) {
+                  // Auto-report the error
+                  await AutomaticErrorReporter.reportStorageError(
+                    message: 'Failed to apply AI theme: ${e.toString()}',
+                    userMessage: 'Failed to apply AI theme',
+                    operation: 'set_custom_theme',
+                    additionalInfo: {
+                      'theme_id': theme.id,
+                      'theme_name': theme.name,
+                      'error': e.toString(),
+                      'feature': 'ai_theme_generator',
+                    },
                   );
+                  
+                  if (context.mounted) {
+                    Navigator.of(context).pop();
+                    showTopSnackBar(
+                      context,
+                      'Fout bij toepassen van thema: ${e.toString()}',
+                      style: TopSnackBarStyle.error
+                    );
+                  }
                 }
               },
               style: ElevatedButton.styleFrom(

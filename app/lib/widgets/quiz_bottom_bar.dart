@@ -92,7 +92,7 @@ class QuizBottomBar extends StatelessWidget {
               _buildActionButton(
                 context: context,
                 icon: Icons.flag_rounded,
-                label: settings.language == 'en' ? 'Report' : 'Melden',
+                label: strings.AppStrings.reportQuestion,
                 cost: 0,
                 canUse: true,
                 onPressed: onFlagPressed,
@@ -115,7 +115,7 @@ class QuizBottomBar extends StatelessWidget {
     required bool isDesktop,
   }) {
     final colorScheme = Theme.of(context).colorScheme;
-    final textColor = canUse ? colorScheme.primary : Colors.grey;
+    final textColor = canUse ? colorScheme.primary : colorScheme.outline;
 
     // Build semantic label based on button state
     String semanticLabel = label;

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:flutter/services.dart'; // For Clipboard
 import '../providers/game_stats_provider.dart';
 import '../services/time_tracking_service.dart';
 import '../utils/bijbelquiz_gen_utils.dart';
@@ -591,6 +593,56 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
               ],
             ),
           ),
+          const SizedBox(height: 24),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              OutlinedButton.icon(
+                onPressed: () => _copyLink(context, gameStats, timeTracking),
+                icon: Icon(
+                  Icons.copy,
+                  color: Colors.black,
+                  size: 18,
+                ),
+                label: Text(
+                  strings.AppStrings.copyLink,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(
+                    color: Colors.black,
+                    width: 2,
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                ),
+              ),
+              OutlinedButton.icon(
+                onPressed: () => _shareStats(context, gameStats, timeTracking),
+                icon: Icon(
+                  Icons.share,
+                  color: Colors.black,
+                  size: 18,
+                ),
+                label: Text(
+                  strings.AppStrings.shareResults,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(
+                    color: Colors.black,
+                    width: 2,
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -705,6 +757,72 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  // Method to encode user stats into a shareable URL
+  String _encodeStatsToUrl(GameStatsProvider gameStats, TimeTrackingService timeTracking) {
+    final totalQuestions = gameStats.score + gameStats.incorrectAnswers;
+    final correctPercentage = totalQuestions > 0
+        ? (gameStats.score / totalQuestions * 100).round()
+        : 0;
+
+    // Create a base URL (you may want to use your actual domain)
+    final baseUrl = 'https://bijbelquiz.app/gen.html';
+    
+    // Encode stats as query parameters
+    final encodedStats = {
+      'score': gameStats.score.toString(),
+      'currentStreak': gameStats.currentStreak.toString(),
+      'longestStreak': gameStats.longestStreak.toString(),
+      'incorrect': gameStats.incorrectAnswers.toString(),
+      'totalQuestions': totalQuestions.toString(),
+      'accuracy': correctPercentage.toString(),
+      'hoursSpent': timeTracking.getTotalTimeSpentInHours().toString(),
+    };
+
+    // Build query string
+    final queryString = encodedStats.entries
+        .map((entry) => '${Uri.encodeComponent(entry.key)}=${Uri.encodeComponent(entry.value)}')
+        .join('&');
+
+    return '$baseUrl?$queryString';
+  }
+
+  // Method to handle sharing stats
+  void _shareStats(BuildContext context, GameStatsProvider gameStats, TimeTrackingService timeTracking) async {
+    final totalQuestions = gameStats.score + gameStats.incorrectAnswers;
+    final correctPercentage = totalQuestions > 0
+        ? (gameStats.score / totalQuestions * 100).round()
+        : 0;
+
+    final shareText = '''Dit is mijn BijbelQuiz Gen van ${BijbelQuizGenPeriod.getStatsYear()}:
+✅ ${strings.AppStrings.correctAnswersShare}: ${gameStats.score}
+🎯 ${strings.AppStrings.currentStreakShare}: ${gameStats.currentStreak}
+🔥 ${strings.AppStrings.bestStreakShare}: ${gameStats.longestStreak}
+❌ ${strings.AppStrings.mistakesShare}: ${gameStats.incorrectAnswers}
+📊 ${strings.AppStrings.accuracyShare}: $correctPercentage%
+⏱️ ${strings.AppStrings.timeSpentShare}: ${timeTracking.getTotalTimeSpentInHours().toStringAsFixed(1)} uur''';
+
+    await Share.share(
+      shareText,
+      subject: 'Mijn BijbelQuiz statistieken',
+    );
+  }
+
+  // Method to copy the stats link to clipboard
+  void _copyLink(BuildContext context, GameStatsProvider gameStats, TimeTrackingService timeTracking) async {
+    final shareUrl = _encodeStatsToUrl(gameStats, timeTracking);
+    
+    // Copy the URL to clipboard
+    await Clipboard.setData(ClipboardData(text: shareUrl));
+    
+    // Show a snackbar to indicate the URL has been copied
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('URL gekopieerd naar klembord!'),
+        backgroundColor: Colors.green,
       ),
     );
   }

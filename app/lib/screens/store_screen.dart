@@ -13,6 +13,12 @@ import '../screens/sync_screen.dart';
 import '../services/logger.dart';
 import '../services/gemini_service.dart';
 import '../models/ai_theme.dart';
+import '../utils/automatic_error_reporter.dart';
+import '../error/error_types.dart';
+import '../services/store_service.dart';
+import '../models/store_item.dart';
+import '../services/store_service.dart';
+import '../models/store_item.dart';
 
 
 
@@ -24,6 +30,10 @@ class StoreScreen extends StatefulWidget {
 }
 
 class _StoreScreenState extends State<StoreScreen> {
+  List<StoreItem> _storeItems = [];
+  bool _isLoadingItems = true;
+  String? _loadError;
+
   @override
   void initState() {
     super.initState();
@@ -33,6 +43,99 @@ class _StoreScreenState extends State<StoreScreen> {
 
     // Track store access
     analyticsService.trackFeatureStart(context, AnalyticsService.FEATURE_THEME_PURCHASES);
+    
+    // Load store items from Supabase
+    _loadStoreItems();
+  }
+
+  Future<void> _loadStoreItems() async {
+    try {
+      setState(() {
+        _isLoadingItems = true;
+        _loadError = null;
+      });
+
+      final storeService = StoreService();
+      final items = await storeService.getStoreItems();
+      
+      setState(() {
+        _storeItems = items;
+        _isLoadingItems = false;
+      });
+      
+      AppLogger.info('Loaded ${items.length} store items from database');
+    } catch (e) {
+      setState(() {
+        _isLoadingItems = false;
+        _loadError = 'Failed to load store items: ${e.toString()}';
+      });
+      
+      AppLogger.error('Error loading store items: $e');
+    }
+  }
+
+  // Helper methods to get item prices by key
+  int _getPriceByKey(String key) {
+    final item = _storeItems.firstWhere(
+      (item) => item.itemKey == key,
+      orElse: () => StoreItem(
+        itemKey: key,
+        itemName: '',
+        itemDescription: '',
+        itemType: '',
+        basePrice: 0,
+        currentPrice: 0,
+        isDiscounted: false,
+        discountPercentage: 0,
+        isActive: true,
+        discountStart: null,
+        discountEnd: null,
+      )
+    );
+    
+    return item.currentPrice;
+  }
+
+  bool _isDiscountedByKey(String key) {
+    final item = _storeItems.firstWhere(
+      (item) => item.itemKey == key,
+      orElse: () => StoreItem(
+        itemKey: key,
+        itemName: '',
+        itemDescription: '',
+        itemType: '',
+        basePrice: 0,
+        currentPrice: 0,
+        isDiscounted: false,
+        discountPercentage: 0,
+        isActive: true,
+        discountStart: null,  // Add these to ensure isCurrentlyDiscounted works properly
+        discountEnd: null,
+      )
+    );
+    
+    return item.isCurrentlyDiscounted;
+  }
+
+  int _getDiscountAmountByKey(String key) {
+    final item = _storeItems.firstWhere(
+      (item) => item.itemKey == key,
+      orElse: () => StoreItem(
+        itemKey: key,
+        itemName: '',
+        itemDescription: '',
+        itemType: '',
+        basePrice: 0,
+        currentPrice: 0,
+        isDiscounted: false,
+        discountPercentage: 0,
+        isActive: true,
+        discountStart: null,
+        discountEnd: null,
+      )
+    );
+    
+    return item.basePrice - item.currentPrice;
   }
 
   @override
@@ -45,11 +148,124 @@ class _StoreScreenState extends State<StoreScreen> {
     final unlocked = settings.unlockedThemes;
     final isDev = kDebugMode;
 
-    
     // Responsive design
     final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 800;
     final isTablet = size.width > 600 && size.width <= 800;
+
+    // Show loading screen while fetching store items
+    if (_isLoadingItems) {
+      return Scaffold(
+        backgroundColor: colorScheme.surface,
+        appBar: AppBar(
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: colorScheme.primary.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(
+                  Icons.store_rounded,
+                  color: colorScheme.primary,
+                  size: 20,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Text(
+                strings.AppStrings.store,
+                style: textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: colorScheme.onSurface.withOpacity(0.7),
+                ),
+              ),
+            ],
+          ),
+          backgroundColor: colorScheme.surface,
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          centerTitle: true,
+        ),
+        body: const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
+    // Show error if loading failed
+    if (_loadError != null) {
+      return Scaffold(
+        backgroundColor: colorScheme.surface,
+        appBar: AppBar(
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: colorScheme.primary.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(
+                  Icons.store_rounded,
+                  color: colorScheme.primary,
+                  size: 20,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Text(
+                strings.AppStrings.store,
+                style: textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: colorScheme.onSurface.withOpacity(0.7),
+                ),
+              ),
+            ],
+          ),
+          backgroundColor: colorScheme.surface,
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          centerTitle: true,
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.error_outline,
+                size: 64,
+                color: colorScheme.error,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'Fout bij laden winkel',
+                style: textTheme.headlineSmall?.copyWith(
+                  color: colorScheme.error,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Text(
+                  _loadError!,
+                  style: textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.onSurface.withOpacity(0.6),
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              const SizedBox(height: 24),
+              ElevatedButton(
+                onPressed: _loadStoreItems,
+                child: const Text('Opnieuw proberen'),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
@@ -169,7 +385,9 @@ class _StoreScreenState extends State<StoreScreen> {
                     description: strings.AppStrings.doubleStars5QuestionsDesc,
                     icon: Icons.flash_on_rounded,
                     iconColor: colorScheme.primary,
-                    cost: 100,
+                    cost: _getPriceByKey('double_stars_5_questions'),
+                    isDiscounted: _isDiscountedByKey('double_stars_5_questions'),
+                    discountAmount: _getDiscountAmountByKey('double_stars_5_questions'),
                     isDev: isDev,
                     gameStats: gameStats,
                     isDesktop: isDesktop,
@@ -187,7 +405,9 @@ class _StoreScreenState extends State<StoreScreen> {
                     description: strings.AppStrings.tripleStars5QuestionsDesc,
                     icon: Icons.flash_on_rounded,
                     iconColor: Colors.deepOrange,
-                    cost: 180,
+                    cost: _getPriceByKey('triple_stars_5_questions'),
+                    isDiscounted: _isDiscountedByKey('triple_stars_5_questions'),
+                    discountAmount: _getDiscountAmountByKey('triple_stars_5_questions'),
                     isDev: isDev,
                     gameStats: gameStats,
                     isDesktop: isDesktop,
@@ -205,7 +425,9 @@ class _StoreScreenState extends State<StoreScreen> {
                     description: strings.AppStrings.fiveTimesStars5QuestionsDesc,
                     icon: Icons.flash_on_rounded,
                     iconColor: Colors.redAccent,
-                    cost: 350,
+                    cost: _getPriceByKey('five_times_stars_5_questions'),
+                    isDiscounted: _isDiscountedByKey('five_times_stars_5_questions'),
+                    discountAmount: _getDiscountAmountByKey('five_times_stars_5_questions'),
                     isDev: isDev,
                     gameStats: gameStats,
                     isDesktop: isDesktop,
@@ -223,7 +445,9 @@ class _StoreScreenState extends State<StoreScreen> {
                     description: strings.AppStrings.doubleStars60SecondsDesc,
                     icon: Icons.timer_rounded,
                     iconColor: Colors.orangeAccent,
-                    cost: 120,
+                    cost: _getPriceByKey('double_stars_60_seconds'),
+                    isDiscounted: _isDiscountedByKey('double_stars_60_seconds'),
+                    discountAmount: _getDiscountAmountByKey('double_stars_60_seconds'),
                     isDev: isDev,
                     gameStats: gameStats,
                     isDesktop: isDesktop,
@@ -252,7 +476,9 @@ class _StoreScreenState extends State<StoreScreen> {
                     description: strings.AppStrings.oledThemeDesc,
                     icon: Icons.nights_stay_rounded,
                     iconColor: Colors.black,
-                    cost: 150,
+                    cost: _getPriceByKey('oled_theme'),
+                    isDiscounted: _isDiscountedByKey('oled_theme'),
+                    discountAmount: _getDiscountAmountByKey('oled_theme'),
                     isDev: isDev,
                     gameStats: gameStats,
                     settings: settings,
@@ -269,7 +495,9 @@ class _StoreScreenState extends State<StoreScreen> {
                     description: strings.AppStrings.greenThemeDesc,
                     icon: Icons.eco_rounded,
                     iconColor: Colors.green[700]!,
-                    cost: 120,
+                    cost: _getPriceByKey('green_theme'),
+                    isDiscounted: _isDiscountedByKey('green_theme'),
+                    discountAmount: _getDiscountAmountByKey('green_theme'),
                     isDev: isDev,
                     gameStats: gameStats,
                     settings: settings,
@@ -286,7 +514,9 @@ class _StoreScreenState extends State<StoreScreen> {
                     description: strings.AppStrings.orangeThemeDesc,
                     icon: Icons.circle_rounded,
                     iconColor: Colors.orange[700]!,
-                    cost: 120,
+                    cost: _getPriceByKey('orange_theme'),
+                    isDiscounted: _isDiscountedByKey('orange_theme'),
+                    discountAmount: _getDiscountAmountByKey('orange_theme'),
                     isDev: isDev,
                     gameStats: gameStats,
                     settings: settings,
@@ -303,7 +533,9 @@ class _StoreScreenState extends State<StoreScreen> {
                     description: strings.AppStrings.aiThemeGeneratorDescription,
                     icon: Icons.smart_toy_rounded,
                     iconColor: Colors.purple,
-                    cost: 200,
+                    cost: _getPriceByKey('ai_theme_generator'),
+                    isDiscounted: _isDiscountedByKey('ai_theme_generator'),
+                    discountAmount: _getDiscountAmountByKey('ai_theme_generator'),
                     isDev: isDev,
                     gameStats: gameStats,
                     isDesktop: isDesktop,
@@ -358,6 +590,8 @@ class _StoreScreenState extends State<StoreScreen> {
     required IconData icon,
     required Color iconColor,
     required int cost,
+    required bool isDiscounted,
+    required int discountAmount,
     required bool isDev,
     required GameStatsProvider gameStats,
     required bool isDesktop,
@@ -405,62 +639,95 @@ class _StoreScreenState extends State<StoreScreen> {
             final canAfford = isDev || localGameStats.score >= cost;
             if (canAfford) {
               AppLogger.info('Sufficient stars available for power-up: $title');
-              final success = isDev ? true : await localGameStats.spendStarsWithTransaction(
-                amount: cost,
-                reason: 'Thema aankoop: $title',
-                metadata: {
-                  'theme_name': title,
-                },
-              );
-              if (success) {
-
-                final message = onPurchase();
-                if (!localContext.mounted) return;
-                
-                // Show confirmation dialog
-                await showDialog(
-                  context: localContext,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      backgroundColor: colorScheme.surface,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      title: ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.8),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(Icons.check_circle_rounded, color: colorScheme.primary, size: 24),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Text(
-                                'Power-up Geactiveerd!',
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      content: Text(message),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            // Start free play (random practice) regardless of how Store is shown
-                            Navigator.of(localContext).push(
-                              MaterialPageRoute(
-                                builder: (_) => const QuizScreen(),
-                              ),
-                            );
-                          },
-                          child: Text('Naar de quiz', style: TextStyle(color: colorScheme.primary)),
-                        ),
-                      ],
-                    );
+              try {
+                final success = isDev ? true : await localGameStats.spendStarsWithTransaction(
+                  amount: cost,
+                  reason: 'Power-up aankoop: $title',
+                  metadata: {
+                    'powerup_name': title,
+                    'feature': 'store',
                   },
                 );
+                if (success) {
+                  final message = onPurchase();
+                  if (!localContext.mounted) return;
+                  
+                  // Show confirmation dialog
+                  await showDialog(
+                    context: localContext,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        backgroundColor: colorScheme.surface,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        title: ConstrainedBox(
+                          constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.8),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.check_circle_rounded, color: colorScheme.primary, size: 24),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Text(
+                                  'Power-up Geactiveerd!',
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        content: Text(message),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              // Start free play (random practice) regardless of how Store is shown
+                              Navigator.of(localContext).push(
+                                MaterialPageRoute(
+                                  builder: (_) => const QuizScreen(),
+                                ),
+                              );
+                            },
+                            child: Text('Naar de quiz', style: TextStyle(color: colorScheme.primary)),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                } else {
+                  // Auto-report transaction failure
+                  await AutomaticErrorReporter.reportStorageError(
+                    message: 'Failed to process power-up purchase transaction',
+                    userMessage: 'Failed to purchase power-up',
+                    operation: 'spend_stars',
+                    additionalInfo: {
+                      'powerup_name': title,
+                      'cost': cost,
+                      'expected_amount': cost,
+                    },
+                  );
+                  if (localContext.mounted) {
+                    showTopSnackBar(localContext, 'Aankoop mislukt, probeer het opnieuw', style: TopSnackBarStyle.error);
+                  }
+                }
+              } catch (e) {
+                // Auto-report the error
+                await AutomaticErrorReporter.reportStorageError(
+                  message: 'Error processing power-up purchase: ${e.toString()}',
+                  userMessage: 'Error processing power-up purchase',
+                  operation: 'spend_stars',
+                  additionalInfo: {
+                    'powerup_name': title,
+                    'cost': cost,
+                    'error': e.toString(),
+                    'feature': 'store',
+                  },
+                );
+                if (localContext.mounted) {
+                  showTopSnackBar(localContext, 'Fout bij aankoop: ${e.toString()}', style: TopSnackBarStyle.error);
+                }
               }
             } else {
               showTopSnackBar(localContext, 'Niet genoeg sterren!', style: TopSnackBarStyle.error);
@@ -487,12 +754,51 @@ class _StoreScreenState extends State<StoreScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        title,
-                        style: textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: colorScheme.onSurface,
-                        ),
+                      Row(
+                        children: [
+                          Text(
+                            title,
+                            style: textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: colorScheme.onSurface,
+                            ),
+                          ),
+                          if (isDiscounted && discountAmount > 0) ...[
+                            SizedBox(width: isDesktop ? 8 : 6),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: isDesktop ? 8 : 6,
+                                vertical: isDesktop ? 2 : 1,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.green[700]?.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: Colors.green[700]!.withOpacity(0.3),
+                                  width: 1,
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.local_offer_rounded,
+                                    color: Colors.green[700],
+                                    size: getResponsiveFontSize(context, 10),
+                                  ),
+                                  SizedBox(width: isDesktop ? 2 : 1),
+                                  Text(
+                                    'Korting!',
+                                    style: textTheme.labelSmall?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.green[700],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ],
                       ),
                       SizedBox(height: isDesktop ? 4 : 2),
                       Text(
@@ -505,37 +811,43 @@ class _StoreScreenState extends State<StoreScreen> {
                   ),
                 ),
                 SizedBox(width: isDesktop ? 16 : 12),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: isDesktop ? 16 : 12,
-                    vertical: isDesktop ? 8 : 6,
-                  ),
-                  decoration: BoxDecoration(
-                    color: colorScheme.primary.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: colorScheme.primary.withOpacity(0.2),
-                      width: 1,
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.star_rounded,
-                        color: colorScheme.primary,
-                        size: getResponsiveFontSize(context, 16),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Price display
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: isDesktop ? 16 : 12,
+                        vertical: isDesktop ? 8 : 6,
                       ),
-                      SizedBox(width: isDesktop ? 6 : 4),
-                      Text(
-                        isDev ? 'Gratis' : '$cost',
-                        style: textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: colorScheme.primary,
+                      decoration: BoxDecoration(
+                        color: colorScheme.primary.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: colorScheme.primary.withOpacity(0.2),
+                          width: 1,
                         ),
                       ),
-                    ],
-                  ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.star_rounded,
+                            color: colorScheme.primary,
+                            size: getResponsiveFontSize(context, 16),
+                          ),
+                          SizedBox(width: isDesktop ? 6 : 4),
+                          Text(
+                            isDev ? 'Gratis' : '$cost',
+                            style: textTheme.titleSmall?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: colorScheme.primary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -552,6 +864,8 @@ class _StoreScreenState extends State<StoreScreen> {
     required IconData icon,
     required Color iconColor,
     required int cost,
+    required bool isDiscounted,
+    required int discountAmount,
     required bool isDev,
     required GameStatsProvider gameStats,
     required SettingsProvider settings,
@@ -607,20 +921,56 @@ class _StoreScreenState extends State<StoreScreen> {
             }
             if (canAfford) {
               AppLogger.info('Sufficient stars available for theme: $themeKey');
-              final success = isDev ? true : await localGameStats.spendStarsWithTransaction(
-                amount: cost,
-                reason: 'Power-up aankoop: $title',
-                metadata: {
-                  'powerup_type': title,
-                  'duration_questions': title.contains('vragen') ? 5 : null,
-                  'duration_seconds': title.contains('seconden') ? 60 : null,
-                },
-              );
-              if (success) {
-                await localSettings.unlockTheme(themeKey);
-                if (!localContext.mounted) return;
-                final message = '$title ontgrendeld!';
-                showTopSnackBar(localContext, message, style: TopSnackBarStyle.success);
+              try {
+                final success = isDev ? true : await localGameStats.spendStarsWithTransaction(
+                  amount: cost,
+                  reason: 'Thema aankoop: $title',
+                  metadata: {
+                    'theme_name': title,
+                    'theme_key': themeKey,
+                    'feature': 'store',
+                  },
+                );
+                if (success) {
+                  await localSettings.unlockTheme(themeKey);
+                  if (!localContext.mounted) return;
+                  final message = '$title ontgrendeld!';
+                  showTopSnackBar(localContext, message, style: TopSnackBarStyle.success);
+                } else {
+                  // Auto-report transaction failure
+                  await AutomaticErrorReporter.reportStorageError(
+                    message: 'Failed to process theme purchase transaction',
+                    userMessage: 'Failed to purchase theme',
+                    operation: 'spend_stars',
+                    additionalInfo: {
+                      'theme_name': title,
+                      'theme_key': themeKey,
+                      'cost': cost,
+                      'expected_amount': cost,
+                      'feature': 'store',
+                    },
+                  );
+                  if (localContext.mounted) {
+                    showTopSnackBar(localContext, 'Aankoop mislukt, probeer het opnieuw', style: TopSnackBarStyle.error);
+                  }
+                }
+              } catch (e) {
+                // Auto-report the error
+                await AutomaticErrorReporter.reportStorageError(
+                  message: 'Error processing theme purchase: ${e.toString()}',
+                  userMessage: 'Error processing theme purchase',
+                  operation: 'spend_stars',
+                  additionalInfo: {
+                    'theme_name': title,
+                    'theme_key': themeKey,
+                    'cost': cost,
+                    'error': e.toString(),
+                    'feature': 'store',
+                  },
+                );
+                if (localContext.mounted) {
+                  showTopSnackBar(localContext, 'Fout bij aankoop: ${e.toString()}', style: TopSnackBarStyle.error);
+                }
               }
             } else {
               showTopSnackBar(localContext, 'Niet genoeg sterren!', style: TopSnackBarStyle.error);
@@ -647,12 +997,51 @@ class _StoreScreenState extends State<StoreScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        title,
-                        style: textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: colorScheme.onSurface,
-                        ),
+                      Row(
+                        children: [
+                          Text(
+                            title,
+                            style: textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: colorScheme.onSurface,
+                            ),
+                          ),
+                          if (isDiscounted && discountAmount > 0) ...[
+                            SizedBox(width: isDesktop ? 8 : 6),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: isDesktop ? 8 : 6,
+                                vertical: isDesktop ? 2 : 1,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.green[700]?.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: Colors.green[700]!.withOpacity(0.3),
+                                  width: 1,
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.local_offer_rounded,
+                                    color: Colors.green[700],
+                                    size: getResponsiveFontSize(context, 10),
+                                  ),
+                                  SizedBox(width: isDesktop ? 2 : 1),
+                                  Text(
+                                    'Korting!',
+                                    style: textTheme.labelSmall?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.green[700],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ],
                       ),
                       SizedBox(height: isDesktop ? 4 : 2),
                       Text(
@@ -678,37 +1067,43 @@ class _StoreScreenState extends State<StoreScreen> {
                           size: getResponsiveFontSize(context, 20),
                         ),
                       )
-                    : Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: isDesktop ? 16 : 12,
-                          vertical: isDesktop ? 8 : 6,
-                        ),
-                        decoration: BoxDecoration(
-                          color: colorScheme.primary.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: colorScheme.primary.withOpacity(0.2),
-                            width: 1,
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.star_rounded,
-                              color: colorScheme.primary,
-                              size: getResponsiveFontSize(context, 16),
+                    : Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // Price display
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: isDesktop ? 16 : 12,
+                              vertical: isDesktop ? 8 : 6,
                             ),
-                            SizedBox(width: isDesktop ? 6 : 4),
-                            Text(
-                              isDev ? 'Gratis' : '$cost',
-                              style: textTheme.titleSmall?.copyWith(
-                                fontWeight: FontWeight.w600,
-                                color: colorScheme.primary,
+                            decoration: BoxDecoration(
+                              color: colorScheme.primary.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: colorScheme.primary.withOpacity(0.2),
+                                width: 1,
                               ),
                             ),
-                          ],
-                        ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.star_rounded,
+                                  color: colorScheme.primary,
+                                  size: getResponsiveFontSize(context, 16),
+                                ),
+                                SizedBox(width: isDesktop ? 6 : 4),
+                                Text(
+                                  isDev ? 'Gratis' : '$cost',
+                                  style: textTheme.titleSmall?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    color: colorScheme.primary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
               ],
             ),
@@ -725,6 +1120,8 @@ class _StoreScreenState extends State<StoreScreen> {
     required IconData icon,
     required Color iconColor,
     required int cost,
+    required bool isDiscounted,
+    required int discountAmount,
     required bool isDev,
     required GameStatsProvider gameStats,
     required bool isDesktop,
@@ -767,12 +1164,72 @@ class _StoreScreenState extends State<StoreScreen> {
             final canAfford = isDev || localGameStats.score >= cost;
 
             if (canAfford) {
+              // Spend stars for AI theme generation
+              bool transactionSuccess = false;
+              try {
+                transactionSuccess = isDev ? true : await localGameStats.spendStarsWithTransaction(
+                  amount: cost,
+                  reason: 'AI thema generator toegang',
+                  metadata: {
+                    'feature': 'ai_theme_generator_access',
+                    'cost': cost,
+                  },
+                );
+                if (!transactionSuccess) {
+                  await AutomaticErrorReporter.reportStorageError(
+                    message: 'Failed to process AI theme generator access payment',
+                    userMessage: 'Failed to process AI theme generator payment',
+                    operation: 'spend_stars',
+                    additionalInfo: {
+                      'cost': cost,
+                      'feature': 'ai_theme_generator',
+                    },
+                  );
+                  if (localContext.mounted) {
+                    showTopSnackBar(localContext, 'Aankoop mislukt, probeer het opnieuw', style: TopSnackBarStyle.error);
+                  }
+                  return;
+                }
+              } catch (e) {
+                await AutomaticErrorReporter.reportStorageError(
+                  message: 'Error processing AI theme generator access payment: ${e.toString()}',
+                  userMessage: 'Error processing AI theme generator payment',
+                  operation: 'spend_stars',
+                  additionalInfo: {
+                    'cost': cost,
+                    'error': e.toString(),
+                    'feature': 'ai_theme_generator',
+                  },
+                );
+                if (localContext.mounted) {
+                  showTopSnackBar(localContext, 'Fout bij betaling: ${e.toString()}', style: TopSnackBarStyle.error);
+                }
+                return;
+              }
+              
               // Navigate to AI Theme Designer screen
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => const AIThemeDesignerScreen(),
-                ),
-              );
+              try {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const AIThemeDesignerScreen(),
+                  ),
+                );
+              } catch (navError) {
+                // Auto-report navigation error
+                await AutomaticErrorReporter.reportStorageError(
+                  message: 'Failed to navigate to AI theme designer: ${navError.toString()}',
+                  userMessage: 'Failed to open AI theme designer',
+                  operation: 'navigation',
+                  additionalInfo: {
+                    'cost': cost,
+                    'error': navError.toString(),
+                    'feature': 'ai_theme_generator',
+                  },
+                );
+                if (localContext.mounted) {
+                  showTopSnackBar(localContext, 'Fout bij openen van AI thema generator', style: TopSnackBarStyle.error);
+                }
+              }
             } else {
               showTopSnackBar(localContext, 'Niet genoeg sterren!', style: TopSnackBarStyle.error);
             }
@@ -798,12 +1255,51 @@ class _StoreScreenState extends State<StoreScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        title,
-                        style: textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: colorScheme.onSurface,
-                        ),
+                      Row(
+                        children: [
+                          Text(
+                            title,
+                            style: textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: colorScheme.onSurface,
+                            ),
+                          ),
+                          if (isDiscounted && discountAmount > 0) ...[
+                            SizedBox(width: isDesktop ? 8 : 6),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: isDesktop ? 8 : 6,
+                                vertical: isDesktop ? 2 : 1,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.green[700]?.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: Colors.green[700]!.withOpacity(0.3),
+                                  width: 1,
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.local_offer_rounded,
+                                    color: Colors.green[700],
+                                    size: getResponsiveFontSize(context, 10),
+                                  ),
+                                  SizedBox(width: isDesktop ? 2 : 1),
+                                  Text(
+                                    'Korting!',
+                                    style: textTheme.labelSmall?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.green[700],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ],
                       ),
                       SizedBox(height: isDesktop ? 4 : 2),
                       Text(
@@ -816,37 +1312,43 @@ class _StoreScreenState extends State<StoreScreen> {
                   ),
                 ),
                 SizedBox(width: isDesktop ? 16 : 12),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: isDesktop ? 16 : 12,
-                    vertical: isDesktop ? 8 : 6,
-                  ),
-                  decoration: BoxDecoration(
-                    color: colorScheme.primary.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: colorScheme.primary.withOpacity(0.2),
-                      width: 1,
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.star_rounded,
-                        color: colorScheme.primary,
-                        size: getResponsiveFontSize(context, 16),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Price display
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: isDesktop ? 16 : 12,
+                        vertical: isDesktop ? 8 : 6,
                       ),
-                      SizedBox(width: isDesktop ? 6 : 4),
-                      Text(
-                        isDev ? 'Gratis' : '$cost',
-                        style: textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: colorScheme.primary,
+                      decoration: BoxDecoration(
+                        color: colorScheme.primary.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: colorScheme.primary.withOpacity(0.2),
+                          width: 1,
                         ),
                       ),
-                    ],
-                  ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.star_rounded,
+                            color: colorScheme.primary,
+                            size: getResponsiveFontSize(context, 16),
+                          ),
+                          SizedBox(width: isDesktop ? 6 : 4),
+                          Text(
+                            isDev ? 'Gratis' : '$cost',
+                            style: textTheme.titleSmall?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: colorScheme.primary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
