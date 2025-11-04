@@ -84,7 +84,9 @@ class TrackingEvent {
     if (properties == null) return null;
     
     try {
-      return _mapToJson(properties);
+      // Sanitize properties to remove sensitive data before serialization
+      Map<String, dynamic> sanitizedProperties = AppLogger.sanitizeMap(properties);
+      return _mapToJson(sanitizedProperties);
     } catch (e) {
       AppLogger.warning('Failed to serialize properties: $e');
       return null;
@@ -256,12 +258,17 @@ class TrackingService {
       AppLogger.warning('Could not retrieve device info: $e');
     }
 
+    // Sanitize properties to remove any potential PII
+    Map<String, dynamic>? sanitizedProperties = properties != null 
+        ? AppLogger.sanitizeMap(Map<String, dynamic>.from(properties))
+        : null;
+
     return TrackingEvent(
       id: _generateEventId(),
       userId: userId,
       eventType: eventType,
       eventName: eventName,
-      properties: Map<String, dynamic>.from(properties ?? {}),
+      properties: sanitizedProperties ?? {},
       timestamp: DateTime.now(),
       screenName: screenName,
       sessionId: _getSessionId(),

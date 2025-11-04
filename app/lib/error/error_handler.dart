@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import '../services/error_reporting_service.dart';
+import '../services/logger.dart';
 
 import 'error_types.dart';
 import '../widgets/top_snackbar.dart';
@@ -13,8 +14,6 @@ class ErrorHandler {
   static final ErrorHandler _instance = ErrorHandler._internal();
   factory ErrorHandler() => _instance;
   ErrorHandler._internal();
-
-  static final Logger _logger = Logger('ErrorHandler');
 
   /// Displays a user-friendly error message using snackbar
   void showError({
@@ -103,10 +102,10 @@ class ErrorHandler {
             additionalInfo: additionalInfo,
           )
           .then((_) {
-            _logger.info('Error automatically reported to Supabase: ${error.userMessage}');
+            AppLogger.info('Error automatically reported to Supabase: ${error.userMessage}');
           })
           .catchError((e) {
-            _logger.warning('Failed to auto-report error to Supabase: $e');
+            AppLogger.warning('Failed to auto-report error to Supabase: $e');
           });
     } else {
       // For other errors, still report but with lower priority
@@ -117,7 +116,7 @@ class ErrorHandler {
             additionalInfo: additionalInfo,
           )
           .catchError((e) {
-            _logger.warning('Failed to report error to Supabase: $e');
+            AppLogger.warning('Failed to report error to Supabase: $e');
           });
     }
   }
@@ -197,10 +196,9 @@ class ErrorHandler {
 
   /// Logs the error to the application logger
   void _logError(AppError error) {
-    _logger.severe(
+    // Use the centralized AppLogger to ensure consistent sanitization
+    AppLogger.severe(
       'AppError: ${error.type} - ${error.technicalMessage}',
-      error.technicalMessage,
-      error.stackTrace,
     );
   }
 

@@ -2,6 +2,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:logging/logging.dart';
 import '../config/supabase_config.dart';
 import '../error/error_types.dart';
+import '../services/logger.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 /// Data class that represents an error report to be sent to Supabase
@@ -107,7 +108,7 @@ class ErrorReportingService {
     String? buildNumber,
   }) async {
     try {
-      _logger.info('Attempting to report error to Supabase: ${appError.userMessage}');
+      AppLogger.info('Attempting to report error to Supabase: ${appError.userMessage}');
 
       // Get app version and build number if not provided
       String actualAppVersion = appVersion ?? '';
@@ -119,24 +120,24 @@ class ErrorReportingService {
           if (appVersion == null) actualAppVersion = packageInfo.version;
           if (buildNumber == null) actualBuildNumber = packageInfo.buildNumber;
         } catch (e) {
-          _logger.warning('Could not retrieve app version info: $e');
+          AppLogger.warning('Could not retrieve app version info: $e');
           actualAppVersion = 'unknown';
           actualBuildNumber = 'unknown';
         }
       }
 
-      // Create error report object
+      // Create error report object with sanitized sensitive data
       final errorReport = ErrorReport(
         id: DateTime.now().millisecondsSinceEpoch.toString(), // Using timestamp as ID
-        userId: userId,
+        userId: userId, // This should be an anonymous user ID, not PII
         errorType: appError.type.toString(),
-        errorMessage: appError.technicalMessage,
+        errorMessage: _sanitizeErrorMessage(appError.technicalMessage),
         userMessage: appError.userMessage,
         errorCode: appError.errorCode,
-        stackTrace: appError.stackTrace?.toString(),
-        context: _serializeContext(appError.context),
+        stackTrace: _sanitizeStackTrace(appError.stackTrace?.toString()),
+        context: _serializeAndSanitizeContext(appError.context),
         questionId: questionId,
-        additionalInfo: _serializeAdditionalInfo(additionalInfo),
+        additionalInfo: _serializeAndSanitizeAdditionalInfo(additionalInfo),
         timestamp: DateTime.now(),
         deviceInfo: deviceInfo,
         appVersion: actualAppVersion,
@@ -149,14 +150,14 @@ class ErrorReportingService {
           .insert(errorReport.toMap());
 
       if (response.error != null) {
-        _logger.severe('Failed to report error to Supabase: ${response.error?.message}');
+        AppLogger.severe('Failed to report error to Supabase: ${response.error?.message}');
         // Even if Supabase fails, we still log locally
-        _logger.warning('Error saved locally but failed to send to database: ${appError.userMessage}');
+        AppLogger.warning('Error saved locally but failed to send to database: ${appError.userMessage}');
       } else {
-        _logger.info('Error successfully reported to Supabase: ${appError.userMessage}');
+        AppLogger.info('Error successfully reported to Supabase: ${appError.userMessage}');
       }
     } catch (e) {
-      _logger.severe('Failed to report error due to exception: $e');
+      AppLogger.severe('Failed to report error due to exception: $e');
     }
   }
 
@@ -200,26 +201,52 @@ class ErrorReportingService {
     );
   }
 
-  /// Serializes the context map to a JSON string
-  String? _serializeContext(Map<String, dynamic>? context) {
+  /// Sanitizes error messages to remove sensitive information
+  String _sanitizeErrorMessage(String errorMessage) {
+    return AppLogger.sanitizeLogMessage(errorMessage);
+  }
+
+  /// Sanitizes stack trace to remove sensitive information
+  String? _sanitizeStackTrace(String? stackTrace) {
+    if (stackTrace == null) return null;
+    
+    // In production, we might want to avoid sending full stack traces
+    // For now, we'll sanitize them by removing potential file paths and sensitive data
+    String sanitized = stackTrace;
+    
+    // Remove file paths that might contain sensitive information
+    sanitized = sanitized.replaceAll(RegExp(r'/[a-zA-Z0-9_/\-.]+/[a-zA-Z0-9_\-]+\.dart'), '[FILE PATH REDACTED]');
+    
+    // Sanitize any additional sensitive patterns
+    sanitized = AppLogger.sanitizeLogMessage(sanitized);
+    
+    return sanitized;
+  }
+
+  /// Serializes and sanitizes the context map to remove sensitive information
+  String? _serializeAndSanitizeContext(Map<String, dynamic>? context) {
     if (context == null) return null;
     
     try {
-      return _mapToJson(context);
+      // Sanitize the context map to remove sensitive information
+      Map<String, dynamic> sanitizedContext = AppLogger.sanitizeMap(context);
+      return _mapToJson(sanitizedContext);
     } catch (e) {
-      _logger.warning('Failed to serialize context: $e');
+      AppLogger.warning('Failed to serialize context: $e');
       return null;
     }
   }
 
-  /// Serializes additional info to a JSON string
-  String? _serializeAdditionalInfo(Map<String, dynamic>? additionalInfo) {
+  /// Serializes and sanitizes additional info to remove sensitive information
+  String? _serializeAndSanitizeAdditionalInfo(Map<String, dynamic>? additionalInfo) {
     if (additionalInfo == null) return null;
     
     try {
-      return _mapToJson(additionalInfo);
+      // Sanitize the additional info map to remove sensitive information
+      Map<String, dynamic> sanitizedAdditionalInfo = AppLogger.sanitizeMap(additionalInfo);
+      return _mapToJson(sanitizedAdditionalInfo);
     } catch (e) {
-      _logger.warning('Failed to serialize additional info: $e');
+      AppLogger.warning('Failed to serialize additional info: $e');
       return null;
     }
   }

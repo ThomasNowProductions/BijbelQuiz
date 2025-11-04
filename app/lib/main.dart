@@ -44,9 +44,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   AppLogger.info('BijbelQuiz app starting up...');
 
-  // Initialize logging
-  AppLogger.init(level: Level.INFO);
-  AppLogger.info('Logger initialized successfully');
+  // Initialize logging with secure settings based on environment
+  bool isProduction = const bool.fromEnvironment('dart.vm.product', defaultValue: false);
+  AppLogger.setSecureLevel(isProduction: isProduction, productionLevel: Level.INFO, developmentLevel: Level.ALL);
+  AppLogger.info('Logger initialized successfully with secure settings (Production: $isProduction)');
 
   // Initialize analytics
   AppLogger.info('Initializing analytics service...');

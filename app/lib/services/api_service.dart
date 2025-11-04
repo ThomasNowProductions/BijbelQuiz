@@ -252,9 +252,10 @@ class ApiService {
       return (Request request) async {
         final startTime = DateTime.now();
         final clientIp = _getClientIp(request);
-        final userAgent = request.headers['user-agent'] ?? 'Unknown';
+        final userAgent = _sanitizeHeader(request.headers['user-agent'] ?? 'Unknown');
 
-        AppLogger.info('API Request: ${request.method} ${request.url.path} from $clientIp (UA: $userAgent)');
+        // Only log non-sensitive information
+        AppLogger.info('API Request: ${request.method} ${request.url.path} from $clientIp (UA: ${userAgent.length > 100 ? userAgent.substring(0, 100) + '...' : userAgent})');
 
         try {
           final response = await innerHandler(request);
@@ -264,11 +265,23 @@ class ApiService {
           return response;
         } catch (e) {
           final duration = DateTime.now().difference(startTime);
-          AppLogger.error('API Error: ${request.method} ${request.url.path} failed after ${duration.inMilliseconds}ms - $e');
+          AppLogger.error('API Error: ${request.method} ${request.url.path} failed after ${duration.inMilliseconds}ms - ${e.toString()}');
           rethrow;
         }
       };
     };
+  }
+
+  /// Sanitizes headers to prevent sensitive data from being logged
+  String _sanitizeHeader(String headerValue) {
+    // Remove potential sensitive data from headers
+    String sanitized = headerValue;
+    
+    // Remove API keys, tokens, etc. from headers
+    // Sanitize using the centralized AppLogger method
+    sanitized = AppLogger.sanitizeLogMessage(sanitized);
+    
+    return sanitized;
   }
 
   /// Get client IP address from request
