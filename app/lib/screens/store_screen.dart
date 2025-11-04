@@ -300,249 +300,252 @@ class _StoreScreenState extends State<StoreScreen> {
         scrolledUnderElevation: 0,
         centerTitle: true,
       ),
-      body: SafeArea(
-        child: Center(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              maxWidth: isDesktop ? 800 : (isTablet ? 600 : double.infinity),
-            ),
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.symmetric(
-                horizontal: isDesktop ? 32 : (isTablet ? 24 : 16),
-                vertical: 24,
+      body: RefreshIndicator(
+        onRefresh: _loadStoreItems,
+        child: SafeArea(
+          child: Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: isDesktop ? 800 : (isTablet ? 600 : double.infinity),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Header section with stars display
-                  Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.all(isDesktop ? 24 : 20),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          colorScheme.primary.withOpacity(0.1),
-                          colorScheme.primary.withOpacity(0.05),
-                        ],
-                      ),
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: colorScheme.outline.withOpacity(0.1),
-                        width: 1,
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.star_rounded,
-                              color: colorScheme.primary,
-                              size: getResponsiveFontSize(context, 24),
-                            ),
-                            SizedBox(width: isDesktop ? 12 : 8),
-                            Text(
-                              '${gameStats.score}',
-                              style: textTheme.headlineMedium?.copyWith(
-                                fontWeight: FontWeight.w700,
-                                color: colorScheme.primary,
-                              ),
-                            ),
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                padding: EdgeInsets.symmetric(
+                  horizontal: isDesktop ? 32 : (isTablet ? 24 : 16),
+                  vertical: 24,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Header section with stars display
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.all(isDesktop ? 24 : 20),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            colorScheme.primary.withOpacity(0.1),
+                            colorScheme.primary.withOpacity(0.05),
                           ],
                         ),
-                        SizedBox(height: isDesktop ? 12 : 8),
-                        Text(
-                          strings.AppStrings.availableStars,
-                          style: textTheme.titleMedium?.copyWith(
-                            color: colorScheme.onSurface.withOpacity(0.7),
-                            fontWeight: FontWeight.w500,
-                          ),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: colorScheme.outline.withOpacity(0.1),
+                          width: 1,
                         ),
-                      ],
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.star_rounded,
+                                color: colorScheme.primary,
+                                size: getResponsiveFontSize(context, 24),
+                              ),
+                              SizedBox(width: isDesktop ? 12 : 8),
+                              Text(
+                                '${gameStats.score}',
+                                style: textTheme.headlineMedium?.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  color: colorScheme.primary,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: isDesktop ? 12 : 8),
+                          Text(
+                            strings.AppStrings.availableStars,
+                            style: textTheme.titleMedium?.copyWith(
+                              color: colorScheme.onSurface.withOpacity(0.7),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  
-                  SizedBox(height: isDesktop ? 32 : 24),
-                  
-                  // Power-ups section
-                  _buildSectionHeader(
-                    context,
-                    strings.AppStrings.powerUps,
-                    Icons.flash_on_rounded,
-                    colorScheme.primary,
-                    isDesktop,
-                  ),
-                  
-                  SizedBox(height: isDesktop ? 16 : 12),
-                  
-                  _buildPowerupCard(
-                    context,
-                    title: strings.AppStrings.doubleStars5Questions,
-                    description: strings.AppStrings.doubleStars5QuestionsDesc,
-                    icon: Icons.flash_on_rounded,
-                    iconColor: colorScheme.primary,
-                    cost: _getPriceByKey('double_stars_5_questions'),
-                    isDiscounted: _isDiscountedByKey('double_stars_5_questions'),
-                    discountAmount: _getDiscountAmountByKey('double_stars_5_questions'),
-                    isDev: isDev,
-                    gameStats: gameStats,
-                    isDesktop: isDesktop,
-                    onPurchase: () {
-                      gameStats.activatePowerup(multiplier: 2, questions: 5);
-                      return 'Dubbele Sterren geactiveerd voor 5 vragen!';
-                    },
-                  ),
-                  
-                  SizedBox(height: isDesktop ? 16 : 12),
-                  
-                  _buildPowerupCard(
-                    context,
-                    title: strings.AppStrings.tripleStars5Questions,
-                    description: strings.AppStrings.tripleStars5QuestionsDesc,
-                    icon: Icons.flash_on_rounded,
-                    iconColor: Colors.deepOrange,
-                    cost: _getPriceByKey('triple_stars_5_questions'),
-                    isDiscounted: _isDiscountedByKey('triple_stars_5_questions'),
-                    discountAmount: _getDiscountAmountByKey('triple_stars_5_questions'),
-                    isDev: isDev,
-                    gameStats: gameStats,
-                    isDesktop: isDesktop,
-                    onPurchase: () {
-                      gameStats.activatePowerup(multiplier: 3, questions: 5);
-                      return 'Driedubbele Sterren geactiveerd voor 5 vragen!';
-                    },
-                  ),
-                  
-                  SizedBox(height: isDesktop ? 16 : 12),
-                  
-                  _buildPowerupCard(
-                    context,
-                    title: strings.AppStrings.fiveTimesStars5Questions,
-                    description: strings.AppStrings.fiveTimesStars5QuestionsDesc,
-                    icon: Icons.flash_on_rounded,
-                    iconColor: Colors.redAccent,
-                    cost: _getPriceByKey('five_times_stars_5_questions'),
-                    isDiscounted: _isDiscountedByKey('five_times_stars_5_questions'),
-                    discountAmount: _getDiscountAmountByKey('five_times_stars_5_questions'),
-                    isDev: isDev,
-                    gameStats: gameStats,
-                    isDesktop: isDesktop,
-                    onPurchase: () {
-                      gameStats.activatePowerup(multiplier: 5, questions: 5);
-                      return '5x Sterren geactiveerd voor 5 vragen!';
-                    },
-                  ),
-                  
-                  SizedBox(height: isDesktop ? 16 : 12),
-                  
-                  _buildPowerupCard(
-                    context,
-                    title: strings.AppStrings.doubleStars60Seconds,
-                    description: strings.AppStrings.doubleStars60SecondsDesc,
-                    icon: Icons.timer_rounded,
-                    iconColor: Colors.orangeAccent,
-                    cost: _getPriceByKey('double_stars_60_seconds'),
-                    isDiscounted: _isDiscountedByKey('double_stars_60_seconds'),
-                    discountAmount: _getDiscountAmountByKey('double_stars_60_seconds'),
-                    isDev: isDev,
-                    gameStats: gameStats,
-                    isDesktop: isDesktop,
-                    onPurchase: () {
-                      gameStats.activatePowerup(multiplier: 2, time: Duration(seconds: 60));
-                      return 'Dubbele Sterren geactiveerd voor 60 seconden!';
-                    },
-                  ),
-                  
-                  SizedBox(height: isDesktop ? 32 : 24),
-                  
-                  // Themes section
-                  _buildSectionHeader(
-                    context,
-                    strings.AppStrings.themes,
-                    Icons.palette_rounded,
-                    colorScheme.secondary,
-                    isDesktop,
-                  ),
-                  
-                  SizedBox(height: isDesktop ? 16 : 12),
-                  
-                  _buildThemeCard(
-                    context,
-                    title: strings.AppStrings.oledThemeName,
-                    description: strings.AppStrings.oledThemeDesc,
-                    icon: Icons.nights_stay_rounded,
-                    iconColor: Colors.black,
-                    cost: _getPriceByKey('oled_theme'),
-                    isDiscounted: _isDiscountedByKey('oled_theme'),
-                    discountAmount: _getDiscountAmountByKey('oled_theme'),
-                    isDev: isDev,
-                    gameStats: gameStats,
-                    settings: settings,
-                    unlocked: unlocked,
-                    themeKey: 'oled',
-                    isDesktop: isDesktop,
-                  ),
-                  
-                  SizedBox(height: isDesktop ? 16 : 12),
-                  
-                  _buildThemeCard(
-                    context,
-                    title: strings.AppStrings.greenThemeName,
-                    description: strings.AppStrings.greenThemeDesc,
-                    icon: Icons.eco_rounded,
-                    iconColor: Colors.green[700]!,
-                    cost: _getPriceByKey('green_theme'),
-                    isDiscounted: _isDiscountedByKey('green_theme'),
-                    discountAmount: _getDiscountAmountByKey('green_theme'),
-                    isDev: isDev,
-                    gameStats: gameStats,
-                    settings: settings,
-                    unlocked: unlocked,
-                    themeKey: 'green',
-                    isDesktop: isDesktop,
-                  ),
-                  
-                  SizedBox(height: isDesktop ? 16 : 12),
-                  
-                  _buildThemeCard(
-                    context,
-                    title: strings.AppStrings.orangeThemeName,
-                    description: strings.AppStrings.orangeThemeDesc,
-                    icon: Icons.circle_rounded,
-                    iconColor: Colors.orange[700]!,
-                    cost: _getPriceByKey('orange_theme'),
-                    isDiscounted: _isDiscountedByKey('orange_theme'),
-                    discountAmount: _getDiscountAmountByKey('orange_theme'),
-                    isDev: isDev,
-                    gameStats: gameStats,
-                    settings: settings,
-                    unlocked: unlocked,
-                    themeKey: 'orange',
-                    isDesktop: isDesktop,
-                  ),
+                    
+                    SizedBox(height: isDesktop ? 32 : 24),
+                    
+                    // Power-ups section
+                    _buildSectionHeader(
+                      context,
+                      strings.AppStrings.powerUps,
+                      Icons.flash_on_rounded,
+                      colorScheme.primary,
+                      isDesktop,
+                    ),
+                    
+                    SizedBox(height: isDesktop ? 16 : 12),
+                    
+                    _buildPowerupCard(
+                      context,
+                      title: strings.AppStrings.doubleStars5Questions,
+                      description: strings.AppStrings.doubleStars5QuestionsDesc,
+                      icon: Icons.flash_on_rounded,
+                      iconColor: colorScheme.primary,
+                      cost: _getPriceByKey('double_stars_5_questions'),
+                      isDiscounted: _isDiscountedByKey('double_stars_5_questions'),
+                      discountAmount: _getDiscountAmountByKey('double_stars_5_questions'),
+                      isDev: isDev,
+                      gameStats: gameStats,
+                      isDesktop: isDesktop,
+                      onPurchase: () {
+                        gameStats.activatePowerup(multiplier: 2, questions: 5);
+                        return 'Dubbele Sterren geactiveerd voor 5 vragen!';
+                      },
+                    ),
+                    
+                    SizedBox(height: isDesktop ? 16 : 12),
+                    
+                    _buildPowerupCard(
+                      context,
+                      title: strings.AppStrings.tripleStars5Questions,
+                      description: strings.AppStrings.tripleStars5QuestionsDesc,
+                      icon: Icons.flash_on_rounded,
+                      iconColor: Colors.deepOrange,
+                      cost: _getPriceByKey('triple_stars_5_questions'),
+                      isDiscounted: _isDiscountedByKey('triple_stars_5_questions'),
+                      discountAmount: _getDiscountAmountByKey('triple_stars_5_questions'),
+                      isDev: isDev,
+                      gameStats: gameStats,
+                      isDesktop: isDesktop,
+                      onPurchase: () {
+                        gameStats.activatePowerup(multiplier: 3, questions: 5);
+                        return 'Driedubbele Sterren geactiveerd voor 5 vragen!';
+                      },
+                    ),
+                    
+                    SizedBox(height: isDesktop ? 16 : 12),
+                    
+                    _buildPowerupCard(
+                      context,
+                      title: strings.AppStrings.fiveTimesStars5Questions,
+                      description: strings.AppStrings.fiveTimesStars5QuestionsDesc,
+                      icon: Icons.flash_on_rounded,
+                      iconColor: Colors.redAccent,
+                      cost: _getPriceByKey('five_times_stars_5_questions'),
+                      isDiscounted: _isDiscountedByKey('five_times_stars_5_questions'),
+                      discountAmount: _getDiscountAmountByKey('five_times_stars_5_questions'),
+                      isDev: isDev,
+                      gameStats: gameStats,
+                      isDesktop: isDesktop,
+                      onPurchase: () {
+                        gameStats.activatePowerup(multiplier: 5, questions: 5);
+                        return '5x Sterren geactiveerd voor 5 vragen!';
+                      },
+                    ),
+                    
+                    SizedBox(height: isDesktop ? 16 : 12),
+                    
+                    _buildPowerupCard(
+                      context,
+                      title: strings.AppStrings.doubleStars60Seconds,
+                      description: strings.AppStrings.doubleStars60SecondsDesc,
+                      icon: Icons.timer_rounded,
+                      iconColor: Colors.orangeAccent,
+                      cost: _getPriceByKey('double_stars_60_seconds'),
+                      isDiscounted: _isDiscountedByKey('double_stars_60_seconds'),
+                      discountAmount: _getDiscountAmountByKey('double_stars_60_seconds'),
+                      isDev: isDev,
+                      gameStats: gameStats,
+                      isDesktop: isDesktop,
+                      onPurchase: () {
+                        gameStats.activatePowerup(multiplier: 2, time: Duration(seconds: 60));
+                        return 'Dubbele Sterren geactiveerd voor 60 seconden!';
+                      },
+                    ),
+                    
+                    SizedBox(height: isDesktop ? 32 : 24),
+                    
+                    // Themes section
+                    _buildSectionHeader(
+                      context,
+                      strings.AppStrings.themes,
+                      Icons.palette_rounded,
+                      colorScheme.secondary,
+                      isDesktop,
+                    ),
+                    
+                    SizedBox(height: isDesktop ? 16 : 12),
+                    
+                    _buildThemeCard(
+                      context,
+                      title: strings.AppStrings.oledThemeName,
+                      description: strings.AppStrings.oledThemeDesc,
+                      icon: Icons.nights_stay_rounded,
+                      iconColor: Colors.black,
+                      cost: _getPriceByKey('oled_theme'),
+                      isDiscounted: _isDiscountedByKey('oled_theme'),
+                      discountAmount: _getDiscountAmountByKey('oled_theme'),
+                      isDev: isDev,
+                      gameStats: gameStats,
+                      settings: settings,
+                      unlocked: unlocked,
+                      themeKey: 'oled',
+                      isDesktop: isDesktop,
+                    ),
+                    
+                    SizedBox(height: isDesktop ? 16 : 12),
+                    
+                    _buildThemeCard(
+                      context,
+                      title: strings.AppStrings.greenThemeName,
+                      description: strings.AppStrings.greenThemeDesc,
+                      icon: Icons.eco_rounded,
+                      iconColor: Colors.green[700]!,
+                      cost: _getPriceByKey('green_theme'),
+                      isDiscounted: _isDiscountedByKey('green_theme'),
+                      discountAmount: _getDiscountAmountByKey('green_theme'),
+                      isDev: isDev,
+                      gameStats: gameStats,
+                      settings: settings,
+                      unlocked: unlocked,
+                      themeKey: 'green',
+                      isDesktop: isDesktop,
+                    ),
+                    
+                    SizedBox(height: isDesktop ? 16 : 12),
+                    
+                    _buildThemeCard(
+                      context,
+                      title: strings.AppStrings.orangeThemeName,
+                      description: strings.AppStrings.orangeThemeDesc,
+                      icon: Icons.circle_rounded,
+                      iconColor: Colors.orange[700]!,
+                      cost: _getPriceByKey('orange_theme'),
+                      isDiscounted: _isDiscountedByKey('orange_theme'),
+                      discountAmount: _getDiscountAmountByKey('orange_theme'),
+                      isDev: isDev,
+                      gameStats: gameStats,
+                      settings: settings,
+                      unlocked: unlocked,
+                      themeKey: 'orange',
+                      isDesktop: isDesktop,
+                    ),
 
-                  SizedBox(height: isDesktop ? 16 : 12),
+                    SizedBox(height: isDesktop ? 16 : 12),
 
-                  _buildAIThemeCard(
-                    context,
-                    title: strings.AppStrings.aiThemeGenerator,
-                    description: strings.AppStrings.aiThemeGeneratorDescription,
-                    icon: Icons.smart_toy_rounded,
-                    iconColor: Colors.purple,
-                    cost: _getPriceByKey('ai_theme_generator'),
-                    isDiscounted: _isDiscountedByKey('ai_theme_generator'),
-                    discountAmount: _getDiscountAmountByKey('ai_theme_generator'),
-                    isDev: isDev,
-                    gameStats: gameStats,
-                    isDesktop: isDesktop,
-                  ),
+                    _buildAIThemeCard(
+                      context,
+                      title: strings.AppStrings.aiThemeGenerator,
+                      description: strings.AppStrings.aiThemeGeneratorDescription,
+                      icon: Icons.smart_toy_rounded,
+                      iconColor: Colors.purple,
+                      cost: _getPriceByKey('ai_theme_generator'),
+                      isDiscounted: _isDiscountedByKey('ai_theme_generator'),
+                      discountAmount: _getDiscountAmountByKey('ai_theme_generator'),
+                      isDev: isDev,
+                      gameStats: gameStats,
+                      isDesktop: isDesktop,
+                    ),
 
-                  SizedBox(height: isDesktop ? 32 : 24),
-                ],
+                    SizedBox(height: isDesktop ? 32 : 24),
+                  ],
+                ),
               ),
             ),
           ),
