@@ -7,12 +7,12 @@ This document provides guidelines for AI agents making changes to the BijbelQuiz
 When making UI changes, always use the standardized theme elements from `@app/lib/theme/app_theme.dart`:
 
 ### Available Themes
-- `appLightTheme` - Standard light theme
-- `appDarkTheme` - Standard dark theme  
-- `oledTheme` - Optimized for OLED displays
-- `greenTheme` - Green color scheme
-- `orangeTheme` - Orange color scheme
-- `greyTheme` - Grey/dark theme
+- `appLightTheme` - Standard light theme (loaded from themes.json)
+- `appDarkTheme` - Standard dark theme (loaded from themes.json)
+- `oledTheme` - Optimized for OLED displays (loaded from themes.json)
+- `greenTheme` - Green color scheme (loaded from themes.json)
+- `orangeTheme` - Orange color scheme (loaded from themes.json)
+- `greyTheme` - Grey/dark theme (loaded from themes.json)
 
 ### Theme Usage
 Always use the theme through Flutter's `Theme.of(context)` method to ensure consistency:

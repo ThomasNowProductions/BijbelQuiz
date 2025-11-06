@@ -77,23 +77,15 @@ class ThemeUtils {
     return settings.themeMode;
   }
 
-  /// Gets a hardcoded theme by key (fallback for when JSON theme is not found)
+  /// Gets a theme by key using the centralized theme system
   static ThemeData _getHardcodedTheme(String themeKey) {
-    switch (themeKey) {
-      case 'oled':
-        return oledTheme;
-      case 'green':
-        return greenTheme;
-      case 'orange':
-        return orangeTheme;
-      case 'grey':
-        return greyTheme;
-      case 'light':
-        return appLightTheme;
-      case 'dark':
-        return appDarkTheme;
-      default:
-        return appLightTheme;
+    // All themes are now defined in the JSON file via ThemeManager
+    // This is a fallback that should not be reached in normal operation
+    try {
+      return ThemeManager().getThemeData(themeKey);
+    } catch (e) {
+      // Fallback to a default theme if the theme is not found in JSON
+      return ThemeManager().getThemeData('light');
     }
   }
 
