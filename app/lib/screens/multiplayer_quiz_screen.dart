@@ -674,23 +674,26 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
           Expanded(
             child: SingleChildScrollView(
               physics: const ClampingScrollPhysics(),
-              child: Padding(
-                padding: EdgeInsets.all(isSmallScreen ? 4 : 8),
-                child: _showResults
-                    ? Center(
-                        child: _buildResultsWidget(context, isPlayer1, isWinner, isTie),
-                      )
-                    : QuestionWidget(
-                        question: isPlayer1 ? _player1QuizState.question : _player2QuizState.question,
-                        selectedAnswerIndex: isPlayer1 ? _player1QuizState.selectedAnswerIndex : _player2QuizState.selectedAnswerIndex,
-                        isAnswering: isPlayer1 ? _player1QuizState.isAnswering : _player2QuizState.isAnswering,
-                        isTransitioning: isPlayer1 ? _player1QuizState.isTransitioning : _player2QuizState.isTransitioning,
-                        onAnswerSelected: (index) => _handleAnswer(index, isPlayer1),
-                        language: settings.language,
-                        performanceService: _performanceService,
-                        isCompact: true,
-                        customLetters: isMobile ? ['A', 'B', 'C', 'D'] : (isPlayer1 ? ['A', 'S', 'D', 'F'] : ['H', 'J', 'K', 'L']),
-                      ),
+              child: Transform.scale(
+                scale: 0.85, // Scale down the entire content to reduce scrolling
+                child: Padding(
+                  padding: EdgeInsets.all(isSmallScreen ? 4 : 8),
+                  child: _showResults
+                      ? Center(
+                          child: _buildResultsWidget(context, isPlayer1, isWinner, isTie),
+                        )
+                      : QuestionWidget(
+                          question: isPlayer1 ? _player1QuizState.question : _player2QuizState.question,
+                          selectedAnswerIndex: isPlayer1 ? _player1QuizState.selectedAnswerIndex : _player2QuizState.selectedAnswerIndex,
+                          isAnswering: isPlayer1 ? _player1QuizState.isAnswering : _player2QuizState.isAnswering,
+                          isTransitioning: isPlayer1 ? _player1QuizState.isTransitioning : _player2QuizState.isTransitioning,
+                          onAnswerSelected: (index) => _handleAnswer(index, isPlayer1),
+                          language: settings.language,
+                          performanceService: _performanceService,
+                          isCompact: true,
+                          customLetters: isMobile ? ['A', 'B', 'C', 'D'] : (isPlayer1 ? ['A', 'S', 'D', 'F'] : ['H', 'J', 'K', 'L']),
+                        ),
+                ),
               ),
             ),
           ),
