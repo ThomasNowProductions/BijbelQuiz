@@ -711,10 +711,8 @@ class TrackingService {
             featureUsage[feature] = (featureUsage[feature] ?? 0) + 1;
             
             final userId = event['user_id'] as String;
-            if (userId != null) {
-              featureUsers.putIfAbsent(feature, () => <String>{}).add(userId);
-            }
-                    }
+            featureUsers.putIfAbsent(feature, () => <String>{}).add(userId);
+                              }
         }
       }
       

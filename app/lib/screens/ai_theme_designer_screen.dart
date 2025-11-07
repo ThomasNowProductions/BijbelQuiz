@@ -11,7 +11,6 @@ import '../services/logger.dart';
 import '../services/gemini_service.dart';
 import '../models/ai_theme.dart';
 import '../utils/automatic_error_reporter.dart';
-import '../error/error_types.dart';
 import '../services/store_service.dart';
 import '../models/store_item.dart';
 

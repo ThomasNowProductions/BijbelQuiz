@@ -35,7 +35,7 @@ class StoreService {
           .eq('item_key', itemKey)
           .single();
 
-      return StoreItem.fromJson(response as Map<String, dynamic>);
+      return StoreItem.fromJson(response);
         } catch (e) {
       AppLogger.error('Error fetching store item with key $itemKey: $e');
       return null;

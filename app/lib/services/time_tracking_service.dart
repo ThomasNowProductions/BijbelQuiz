@@ -1,5 +1,4 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/foundation.dart';
 import 'dart:async';
 import '../services/logger.dart';
 import '../utils/bijbelquiz_gen_utils.dart';

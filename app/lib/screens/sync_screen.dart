@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'dart:convert';
-import 'dart:io';
 import 'dart:math';
 import '../providers/game_stats_provider.dart';
 import '../providers/lesson_progress_provider.dart';
@@ -10,7 +8,6 @@ import '../providers/settings_provider.dart';
 import '../services/logger.dart';
 import '../l10n/strings_nl.dart' as strings;
 import '../utils/automatic_error_reporter.dart';
-import '../error/error_types.dart';
 
 class SyncScreen extends StatefulWidget {
   const SyncScreen({super.key});

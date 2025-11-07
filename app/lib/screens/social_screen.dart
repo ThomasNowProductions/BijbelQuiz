@@ -1,7 +1,6 @@
 import 'package:bijbelquiz/services/analytics_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import '../l10n/strings_nl.dart' as strings;
 import '../config/supabase_config.dart';
 import 'sync_screen.dart';
@@ -227,81 +226,58 @@ class _SocialScreenState extends State<SocialScreen> {
 
   /// Builds responsive buttons for social features
   Widget _buildSocialFeatureButtons(ColorScheme colorScheme, TextTheme textTheme, bool isLargeScreen) {
-    // Use a responsive grid based on screen size
-    if (isLargeScreen) {
-      // For large screens, arrange buttons in a grid
-      return GridView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          crossAxisSpacing: 16.0,
-          mainAxisSpacing: 16.0,
-          childAspectRatio: 1.0,
-        ),
-        itemCount: 4,
-        itemBuilder: (context, index) {
-          final features = [
-            {'icon': Icons.search, 'label': strings.AppStrings.search, 'onPressed': _navigateToUserSearchScreen, 'isMessages': false},
-            {'icon': Icons.people_alt_rounded, 'label': strings.AppStrings.myFollowing, 'onPressed': _navigateToFollowingList, 'isMessages': false},
-            {'icon': Icons.person_add_rounded, 'label': strings.AppStrings.myFollowers, 'onPressed': _navigateToFollowersList, 'isMessages': false},
-            {'icon': Icons.message_rounded, 'label': strings.AppStrings.messages, 'onPressed': _navigateToMessagesScreen, 'isMessages': true},
-          ];
-          
-          final feature = features[index];
-          return _buildFeatureButton(
-            colorScheme: colorScheme,
-            textTheme: textTheme,
-            icon: feature['icon'] as IconData,
-            label: feature['label'] as String,
-            onPressed: feature['onPressed'] as VoidCallback,
-            isLargeScreen: isLargeScreen,
-            isMessages: feature['isMessages'] as bool,
-          );
-        },
-      );
-    } else {
-      // For smaller screens, arrange all buttons as smaller, full-width buttons
-      return Column(
-        children: [
-          _buildSmallerFullWidthButton(
+    // Always arrange all buttons in a single row
+    return Row(
+      children: [
+        Expanded(
+          child: _buildFeatureButton(
             colorScheme: colorScheme,
             textTheme: textTheme,
             icon: Icons.search,
             label: strings.AppStrings.search,
             onPressed: _navigateToUserSearchScreen,
+            isLargeScreen: isLargeScreen,
             isMessages: false,
           ),
-          const SizedBox(height: 16),
-          _buildSmallerFullWidthButton(
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: _buildFeatureButton(
             colorScheme: colorScheme,
             textTheme: textTheme,
             icon: Icons.people_alt_rounded,
             label: strings.AppStrings.myFollowing,
             onPressed: _navigateToFollowingList,
+            isLargeScreen: isLargeScreen,
             isMessages: false,
           ),
-          const SizedBox(height: 16),
-          _buildSmallerFullWidthButton(
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: _buildFeatureButton(
             colorScheme: colorScheme,
             textTheme: textTheme,
             icon: Icons.person_add_rounded,
             label: strings.AppStrings.myFollowers,
             onPressed: _navigateToFollowersList,
+            isLargeScreen: isLargeScreen,
             isMessages: false,
           ),
-          const SizedBox(height: 16),
-          _buildSmallerFullWidthButton(
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: _buildFeatureButton(
             colorScheme: colorScheme,
             textTheme: textTheme,
             icon: Icons.message_rounded,
             label: strings.AppStrings.messages,
             onPressed: _navigateToMessagesScreen,
+            isLargeScreen: isLargeScreen,
             isMessages: true,
           ),
-        ],
-      );
-    }
+        ),
+      ],
+    );
   }
 
   /// Builds the followed users scores section
@@ -630,21 +606,22 @@ class _SocialScreenState extends State<SocialScreen> {
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          Container(
-            margin: const EdgeInsets.only(top: 4),
-            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-            decoration: BoxDecoration(
-              color: colorScheme.secondaryContainer,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Text(
-              strings.AppStrings.beta,
-              style: textTheme.labelSmall?.copyWith(
-                color: colorScheme.onSecondaryContainer,
-                fontWeight: FontWeight.w600,
+          if (!isMessages) // Don't show beta badge for messages
+            Container(
+              margin: const EdgeInsets.only(top: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              decoration: BoxDecoration(
+                color: colorScheme.secondaryContainer,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                strings.AppStrings.beta,
+                style: textTheme.labelSmall?.copyWith(
+                  color: colorScheme.onSecondaryContainer,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
-          ),
         ],
       ),
     );
