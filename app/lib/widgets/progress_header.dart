@@ -5,6 +5,7 @@ import '../models/lesson.dart';
 import '../providers/lesson_progress_provider.dart';
 import '../screens/quiz_screen.dart';
 import '../services/analytics_service.dart';
+import '../services/greeting_service.dart';
 import '../l10n/strings_nl.dart' as strings;
 
 enum DayState { success, fail, freeze, future }
@@ -33,6 +34,8 @@ class _ProgressHeaderState extends State<ProgressHeader>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _progressAnimation;
+  String _greeting = 'Jouw voortgang'; // Default fallback
+  final GreetingService _greetingService = GreetingService();
 
   @override
   void initState() {
@@ -45,9 +48,29 @@ class _ProgressHeaderState extends State<ProgressHeader>
       parent: _animationController,
       curve: Curves.easeOutCubic,
     );
+    _loadGreeting();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) _animationController.forward();
     });
+  }
+
+Future<void> _loadGreeting() async {
+    try {
+      final greeting = await _greetingService.getTimeBasedGreeting();
+      if (mounted) {
+        setState(() {
+          _greeting = greeting;
+        });
+        print('Loaded greeting: $greeting');
+      }
+    } catch (e) {
+      print('Error loading greeting: $e');
+      if (mounted) {
+        setState(() {
+          _greeting = 'Jouw voortgang'; // Keep fallback
+        });
+      }
+    }
   }
 
   @override
@@ -84,7 +107,7 @@ class _ProgressHeaderState extends State<ProgressHeader>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(strings.AppStrings.yourProgress, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
+            Text(_greeting, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
             const SizedBox(height: 8),
             Semantics(
               label: 'Lesson completion progress',
