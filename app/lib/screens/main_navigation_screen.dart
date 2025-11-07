@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bijbelquiz/services/analytics_service.dart';
 import 'package:bijbelquiz/providers/settings_provider.dart';
+import 'package:bijbelquiz/providers/messages_provider.dart';
 
 import '../screens/lesson_select_screen.dart';
 import '../screens/store_screen.dart';
@@ -47,6 +48,62 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
        analyticsService.trackFeatureStart(context, featureNames[index]);
      });
    }
+  /// Builds the social destination with activity indicator for unread messages
+  NavigationDestination _buildSocialDestination() {
+    final messagesProvider = Provider.of<MessagesProvider>(context);
+    final hasUnreadMessages = messagesProvider.hasUnreadMessages;
+
+    return NavigationDestination(
+      icon: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          const Icon(Icons.groups_outlined),
+          if (hasUnreadMessages)
+            Positioned(
+              right: -2,
+              top: -2,
+              child: Container(
+                width: 8,
+                height: 8,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.error,
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Theme.of(context).colorScheme.surface,
+                    width: 1,
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
+      selectedIcon: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          const Icon(Icons.groups),
+          if (hasUnreadMessages)
+            Positioned(
+              right: -2,
+              top: -2,
+              child: Container(
+                width: 8,
+                height: 8,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.error,
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Theme.of(context).colorScheme.surface,
+                    width: 1,
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
+      label: strings.AppStrings.social,
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -79,11 +136,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             selectedIcon: const Icon(Icons.store),
             label: strings.AppStrings.store,
           ),
-          NavigationDestination(
-            icon: const Icon(Icons.groups_outlined),
-            selectedIcon: const Icon(Icons.groups),
-            label: strings.AppStrings.social,
-          ),
+          _buildSocialDestination(),
           NavigationDestination(
             icon: const Icon(Icons.settings_outlined),
             selectedIcon: const Icon(Icons.settings),

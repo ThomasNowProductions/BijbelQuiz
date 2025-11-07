@@ -10,6 +10,7 @@ import 'following_list_screen.dart';
 import 'followers_list_screen.dart';
 import 'messages_screen.dart';
 import '../providers/game_stats_provider.dart';
+import '../providers/messages_provider.dart';
 import '../services/logger.dart';
 
 /// Screen displaying social features of the app.
@@ -71,9 +72,9 @@ class _SocialScreenState extends State<SocialScreen> {
                       _buildBqidManagementCard(colorScheme, textTheme),
                       const SizedBox(height: 24),
                       _buildSocialFeaturesContent(
-                        colorScheme, 
+                        colorScheme,
                         textTheme,
-                        isLargeScreen, 
+                        isLargeScreen,
                         _socialFeaturesEnabled,
                       ),
                     ],
@@ -241,10 +242,10 @@ class _SocialScreenState extends State<SocialScreen> {
         itemCount: 4,
         itemBuilder: (context, index) {
           final features = [
-            {'icon': Icons.search, 'label': strings.AppStrings.search, 'onPressed': _navigateToUserSearchScreen},
-            {'icon': Icons.people_alt_rounded, 'label': strings.AppStrings.myFollowing, 'onPressed': _navigateToFollowingList},
-            {'icon': Icons.person_add_rounded, 'label': strings.AppStrings.myFollowers, 'onPressed': _navigateToFollowersList},
-            {'icon': Icons.message_rounded, 'label': strings.AppStrings.messages, 'onPressed': _navigateToMessagesScreen},
+            {'icon': Icons.search, 'label': strings.AppStrings.search, 'onPressed': _navigateToUserSearchScreen, 'isMessages': false},
+            {'icon': Icons.people_alt_rounded, 'label': strings.AppStrings.myFollowing, 'onPressed': _navigateToFollowingList, 'isMessages': false},
+            {'icon': Icons.person_add_rounded, 'label': strings.AppStrings.myFollowers, 'onPressed': _navigateToFollowersList, 'isMessages': false},
+            {'icon': Icons.message_rounded, 'label': strings.AppStrings.messages, 'onPressed': _navigateToMessagesScreen, 'isMessages': true},
           ];
           
           final feature = features[index];
@@ -255,6 +256,7 @@ class _SocialScreenState extends State<SocialScreen> {
             label: feature['label'] as String,
             onPressed: feature['onPressed'] as VoidCallback,
             isLargeScreen: isLargeScreen,
+            isMessages: feature['isMessages'] as bool,
           );
         },
       );
@@ -268,6 +270,7 @@ class _SocialScreenState extends State<SocialScreen> {
             icon: Icons.search,
             label: strings.AppStrings.search,
             onPressed: _navigateToUserSearchScreen,
+            isMessages: false,
           ),
           const SizedBox(height: 16),
           _buildSmallerFullWidthButton(
@@ -276,6 +279,7 @@ class _SocialScreenState extends State<SocialScreen> {
             icon: Icons.people_alt_rounded,
             label: strings.AppStrings.myFollowing,
             onPressed: _navigateToFollowingList,
+            isMessages: false,
           ),
           const SizedBox(height: 16),
           _buildSmallerFullWidthButton(
@@ -284,6 +288,7 @@ class _SocialScreenState extends State<SocialScreen> {
             icon: Icons.person_add_rounded,
             label: strings.AppStrings.myFollowers,
             onPressed: _navigateToFollowersList,
+            isMessages: false,
           ),
           const SizedBox(height: 16),
           _buildSmallerFullWidthButton(
@@ -292,6 +297,7 @@ class _SocialScreenState extends State<SocialScreen> {
             icon: Icons.message_rounded,
             label: strings.AppStrings.messages,
             onPressed: _navigateToMessagesScreen,
+            isMessages: true,
           ),
         ],
       );
@@ -556,7 +562,11 @@ class _SocialScreenState extends State<SocialScreen> {
     required String label,
     required VoidCallback onPressed,
     required bool isLargeScreen,
+    bool isMessages = false,
   }) {
+    final messagesProvider = Provider.of<MessagesProvider>(context);
+    final unreadCount = messagesProvider.unreadCount;
+
     return OutlinedButton(
       onPressed: onPressed,
       style: OutlinedButton.styleFrom(
@@ -571,10 +581,42 @@ class _SocialScreenState extends State<SocialScreen> {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            icon,
-            size: isLargeScreen ? 28.0 : 24.0,
-            color: colorScheme.primary,
+          Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Icon(
+                icon,
+                size: isLargeScreen ? 28.0 : 24.0,
+                color: colorScheme.primary,
+              ),
+              if (isMessages && unreadCount > 0)
+                Positioned(
+                  right: -4,
+                  top: -4,
+                  child: Container(
+                    width: 16,
+                    height: 16,
+                    decoration: BoxDecoration(
+                      color: colorScheme.error,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: colorScheme.surface,
+                        width: 2,
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        unreadCount > 9 ? '9+' : unreadCount.toString(),
+                        style: TextStyle(
+                          color: colorScheme.onError,
+                          fontSize: 8,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+            ],
           ),
           const SizedBox(height: 8),
           Flexible(
@@ -615,7 +657,11 @@ class _SocialScreenState extends State<SocialScreen> {
     required IconData icon,
     required String label,
     required VoidCallback onPressed,
+    bool isMessages = false,
   }) {
+    final messagesProvider = Provider.of<MessagesProvider>(context);
+    final unreadCount = messagesProvider.unreadCount;
+
     return SizedBox(
       width: double.infinity, // Full width
       child: OutlinedButton(
@@ -636,10 +682,42 @@ class _SocialScreenState extends State<SocialScreen> {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  icon,
-                  size: 24.0, // Increased icon size
-                  color: colorScheme.primary,
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Icon(
+                      icon,
+                      size: 24.0, // Increased icon size
+                      color: colorScheme.primary,
+                    ),
+                    if (isMessages && unreadCount > 0)
+                      Positioned(
+                        right: -4,
+                        top: -4,
+                        child: Container(
+                          width: 16,
+                          height: 16,
+                          decoration: BoxDecoration(
+                            color: colorScheme.error,
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: colorScheme.surface,
+                              width: 2,
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              unreadCount > 9 ? '9+' : unreadCount.toString(),
+                              style: TextStyle(
+                                color: colorScheme.onError,
+                                fontSize: 8,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
                 const SizedBox(width: 12), // Increased spacing
                 Text(
@@ -705,6 +783,10 @@ class _SocialScreenState extends State<SocialScreen> {
   /// Navigate to messages screen
   void _navigateToMessagesScreen() {
     _analyticsService.capture(context, 'messages_screen_opened');
+    // Mark messages as viewed when navigating to messages screen
+    final messagesProvider = Provider.of<MessagesProvider>(context, listen: false);
+    messagesProvider.markAllMessagesAsViewed();
+    
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const MessagesScreen(),

@@ -13,6 +13,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'providers/settings_provider.dart';
 import 'providers/game_stats_provider.dart';
+import 'providers/messages_provider.dart';
 import 'utils/theme_utils.dart';
 import 'theme/theme_manager.dart';
 import 'services/logger.dart';
@@ -95,6 +96,10 @@ void main() async {
         ChangeNotifierProvider(create: (_) => LessonProgressProvider()),
         Provider.value(value: analyticsService),
         Provider(create: (_) => MessagingService()),
+        ChangeNotifierProvider(create: (context) {
+          final messagingService = Provider.of<MessagingService>(context, listen: false);
+          return MessagesProvider(messagingService);
+        }),
       ],
       child: BijbelQuizApp(),
     ),
@@ -246,7 +251,24 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
       } else {
         AppLogger.info('Skipping notification service initialization for Web platform');
       }
+
+      // Load messages on app startup (after other services are initialized)
+      _loadMessagesOnAppStart();
     });
+  }
+
+  /// Load messages on app startup
+  void _loadMessagesOnAppStart() async {
+    try {
+      final context = navigatorKey.currentContext;
+      if (context != null) {
+        final messagesProvider = Provider.of<MessagesProvider>(context, listen: false);
+        await messagesProvider.loadActiveMessages();
+        AppLogger.info('Messages loaded on app startup');
+      }
+    } catch (e) {
+      AppLogger.warning('Could not load messages on app startup: $e');
+    }
   }
 
   // Initialize deep link handling
@@ -501,6 +523,8 @@ class _AppLifecycleObserver extends WidgetsBindingObserver {
         AppLogger.info('App lifecycle: resumed');
         // Start a new session when app is resumed (brought to foreground)
         _parent._timeTrackingService.startSession();
+        // Check for new messages when app is resumed
+        _checkForMessagesOnAppResume();
         break;
       case AppLifecycleState.paused:
         AppLogger.info('App lifecycle: paused');
@@ -526,6 +550,19 @@ class _AppLifecycleObserver extends WidgetsBindingObserver {
           _parent._timeTrackingService.endSession();
         }
         break;
+    }
+  }
+
+  /// Check for messages when the app is resumed
+  void _checkForMessagesOnAppResume() {
+    try {
+      final context = navigatorKey.currentContext;
+      if (context != null) {
+        final messagesProvider = Provider.of<MessagesProvider>(context, listen: false);
+        messagesProvider.checkForNewMessages();
+      }
+    } catch (e) {
+      AppLogger.warning('Could not check for messages on app resume: $e');
     }
   }
 }
