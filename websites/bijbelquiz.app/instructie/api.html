@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Instructies - BijbelQuiz</title>
+    <link rel="stylesheet" href="https://bijbelquiz.app/theme.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="center-screen fade-in">
+    <div class="container card">
+        <i class="material-icons icon-large">code</i>
+        <h1>BijbelQuiz Local API Instructies</h1>
+        <p>De BijbelQuiz app biedt een lokale HTTP API die externe applicaties in staat stelt om quiz-vragen, gebruikersvoortgang en game-statistieken te benaderen. Deze API is ontworpen voor integratie met andere apps, tools of services.</p>
+        
+        <div class="instructions">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>De API inschakelen</h3>
+                    <p>Om de BijbelQuiz API te gebruiken, moet u deze eerst inschakelen in de app:</p>
+                    <ul>
+                        <li>Open de BijbelQuiz app</li>
+                        <li>Ga naar <strong>Instellingen</strong> → <strong>Local API</strong></li>
+                        <li>Schakel <strong>"API Inschakelen"</strong> in</li>
+                        <li>Klik op <strong>"Sleutel Genereren"</strong> om een API-sleutel aan te maken</li>
+                        <li>U kunt desgewenst de <strong>API Poort</strong> wijzigen (standaard: 7777)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Uw netwerk toegang verkrijgen</h3>
+                    <p>De API-server bindt aan alle netwerkinterfaces (0.0.0.0), waardoor deze toegankelijk is vanaf:</p>
+                    <ul>
+                        <li><strong>Lokale computer:</strong> <code>http://localhost:7777</code></li>
+                        <li><strong>Lokaal netwerk:</strong> <code>http://[uw-apparaat-ip]:7777</code></li>
+                        <li><strong>Externe tools:</strong> Gebruik het IP-adres van uw apparaat</li>
+                    </ul>
+                    <div class="code-block">
+                        <strong>Uw API-sleutel:</strong> <code>bq_xxxxxxxxxxxxxxxx</code><br>
+                        <strong>API URL:</strong> <code>http://localhost:7777/v1</code>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>API-sleutel beheer</h3>
+                    <ul>
+                        <li><strong>Nieuwe sleutel genereren:</strong> Maakt een nieuwe API-sleutel aan en maakt de vorige ongeldig</li>
+                        <li><strong>Sleutel formaat:</strong> <code>bq_</code> gevolgd door een 16-karakter alfanumerieke tekenreeks</li>
+                        <li><strong>Beveiliging:</strong> Houd uw API-sleutel veilig en deel deze niet publiek</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Authenticatie methoden</h3>
+                    <p>Alle API-eindpunten (behalve <code>/health</code>) vereisen authenticatie met uw API-sleutel:</p>
+                    
+                    <h4>Methode 1: Bearer Token (Aanbevolen)</h4>
+                    <div class="code-block">
+                        curl -H "Authorization: Bearer uw-api-sleutel" \<br>
+                             http://localhost:7777/v1/questions
+                    </div>
+                    
+                    <h4>Methode 2: API-sleutel Header</h4>
+                    <div class="code-block">
+                        curl -H "X-API-Key: uw-api-sleutel" \<br>
+                             http://localhost:7777/v1/questions
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">5</div>
+                <div class="step-content">
+                    <h3>Belangrijke API-eindpunten</h3>
+                    
+                    <h4>• Gezondheidscontrole</h4>
+                    <div class="code-block">
+                        GET http://localhost:7777/v1/health
+                    </div>
+                    <p>Controleer of de API-server actief is.</p>
+                    
+                    <h4>• Quiz-vragen ophalen</h4>
+                    <div class="code-block">
+                        GET http://localhost:7777/v1/questions<br>
+                        GET http://localhost:7777/v1/questions?category=Genesis&limit=10<br>
+                        GET http://localhost:7777/v1/questions?difficulty=3
+                    </div>
+                    <p>Haal quiz-vragen op met optionele filters voor categorie, limiet en moeilijkheidsgraad.</p>
+                    
+                    <h4>• Gebruikersvoortgang</h4>
+                    <div class="code-block">
+                        GET http://localhost:7777/v1/progress
+                    </div>
+                    <p>Haal de lesvoortgang en ontgrendelstatus van de gebruiker op.</p>
+                    
+                    <h4>• Game-statistieken</h4>
+                    <div class="code-block">
+                        GET http://localhost:7777/v1/stats
+                    </div>
+                    <p>Haal huidige game-statistieken en prestatiemetingen op.</p>
+                    
+                    <h4>• Sterren beheer</h4>
+                    <div class="code-block">
+                        GET http://localhost:7777/v1/stars/balance<br>
+                        POST http://localhost:7777/v1/stars/add<br>
+                        POST http://localhost:7777/v1/stars/spend
+                    </div>
+                    <p>Beheer sterrentransacties en saldo.</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">6</div>
+                <div class="step-content">
+                    <h3>Rate beperking</h3>
+                    <p>De API implementeert rate limiting om misbruik te voorkomen:</p>
+                    <ul>
+                        <li><strong>Maximum:</strong> 100 verzoeken per minuut per IP-adres</li>
+                        <li><strong>Beveiliging:</strong> Verzoeken worden bijgehouden per IP-adres</li>
+                        <li><strong>Automatisch opruimen:</strong> Rate limit gegevens worden automatisch elke 5 minuten opgeruimd</li>
+                        <li><strong>Gezondheidscontrole:</strong> Eindpunt is uitgesloten van rate limiting</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">7</div>
+                <div class="step-content">
+                    <h3>Praktische voorbeelden</h3>
+                    
+                    <h4>Python voorbeeld:</h4>
+                    <div class="code-block">
+                        import requests<br><br>
+                        API_KEY = "uw-api-sleutel-hier"<br>
+                        BASE_URL = "http://localhost:7777/v1"<br><br>
+                        
+                        def get_questions(category=None, limit=10):<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;headers = {"X-API-Key": API_KEY}<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;params = {"limit": limit}<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;if category:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;params["category"] = category<br><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;response = requests.get(f"{BASE_URL}/questions", headers=headers, params=params)<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;response.raise_for_status()<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;return response.json()<br><br>
+                        
+                        # Gebruik<br>
+                        questions = get_questions(category="Genesis", limit=5)<br>
+                        print(f"Opgehaald: {questions['count']} vragen")
+                    </div>
+                    
+                    <h4>JavaScript/Node.js voorbeeld:</h4>
+                    <div class="code-block">
+                        const API_KEY = "uw-api-sleutel-hier";<br>
+                        const BASE_URL = "http://localhost:7777/v1";<br><br>
+                        
+                        async function getQuestions(category = null, limit = 10) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;const headers = { "X-API-Key": API_KEY };<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;const params = new URLSearchParams({ limit: limit.toString() });<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;if (category) { params.append("category", category); }<br><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;const response = await fetch(`${BASE_URL}/questions?${params}`, { headers });<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;if (!response.ok) { throw new Error(`API error: ${response.status}`); }<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;return await response.json();<br>
+                        }
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">8</div>
+                <div class="step-content">
+                    <h3>Veelvoorkomende problemen</h3>
+                    
+                    <h4>• Verbinding geweigerd</h4>
+                    <ul>
+                        <li>Controleer of de API ingeschakeld is in BijbelQuiz instellingen</li>
+                        <li>Controleer of de poort (standaard: 7777) niet geblokkeerd is door firewall</li>
+                        <li>Controleer of de app actief is en niet op de achtergrond</li>
+                    </ul>
+                    
+                    <h4>• Authenticatie mislukt</h4>
+                    <ul>
+                        <li>Gebruik de juiste API-sleutel</li>
+                        <li>Controleer of de API-sleutel niet opnieuw is gegenereerd</li>
+                        <li>Probeer beide authenticatie methoden</li>
+                    </ul>
+                    
+                    <h4>• Rate limit overschreden</h4>
+                    <ul>
+                        <li>Verminder uw verzoeksnelheid (max 100/minuut per IP)</li>
+                        <li>Implementeer retry logica met exponentiële backoff</li>
+                        <li>Overweeg het cachen van antwoorden</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">9</div>
+                <div class="step-content">
+                    <h3>Beveiligingsoverwegingen</h3>
+                    <ul>
+                        <li><strong>API-sleutel bescherming:</strong> Houd uw API-sleutel veilig en commit deze niet naar versiebeheer</li>
+                        <li><strong>Netwerk toegang:</strong> De API is toegankelijk vanaf uw lokale netwerk - wees hiervan bewust bij openbare WiFi</li>
+                        <li><strong>Firewall configuratie:</strong> Overweeg firewallregels als u toegang moet beperken tot specifieke IP-bereiken</li>
+                        <li><strong>Sleutelrotatie:</strong> Genereer regelmatig uw API-sleutel voor verbeterde beveiliging</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="note">
+            <h3>Tip: API-documentatie</h3>
+            <p>De volledige technische API-documentatie is beschikbaar in het API.md bestand met gedetailleerde eindpunt-specificaties, voorbeeldreacties en geavanceerde functies.</p>
+        </div>
+        
+        <div class="note">
+            <h3>Ondersteuning</h3>
+            <p>Voor API-gerelateerde vragen, controleer eerst de troubleshooting sectie hierboven. Voor meer technische ondersteuning, bekijk de volledige documentatie of neem contact op met het development team.</p>
+        </div>
+        
+        <a href="index.html" class="btn primary">Terug naar instructies</a>
+        
+        <footer id="main-footer"></footer>
+    </div>
+    
+    <style>
+        .instructions {
+            text-align: left;
+            margin: 2rem 0;
+        }
+        
+        .step {
+            display: flex;
+            margin-bottom: 2rem;
+            align-items: flex-start;
+        }
+        
+        .step-number {
+            background: var(--primary);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-right: 1rem;
+            margin-top: 0.25rem;
+        }
+        
+        .step-content h3 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            color: var(--on-surface);
+        }
+        
+        .step-content h4 {
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .step-content p {
+            margin-bottom: 1rem;
+        }
+        
+        .step-content ul {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        
+        .step-content li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .code-block {
+            background: var(--surface-highest);
+            border: 1px solid var(--outline);
+            border-radius: var(--radius-sm);
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+        
+        .note {
+            background: var(--surface);
+            border-left: 4px solid var(--primary);
+            padding: 1rem;
+            margin: 2rem 0;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        }
+        
+        .note h3 {
+            margin-top: 0;
+            color: var(--on-surface);
+        }
+        
+        .note p {
+            margin-bottom: 0;
+        }
+        
+        code {
+            background: var(--surface-highest);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 480px) {
+            .step {
+                flex-direction: column;
+            }
+            
+            .step-number {
+                margin-bottom: 0.5rem;
+            }
+            
+            .code-block {
+                font-size: 0.8rem;
+                padding: 0.75rem;
+            }
+        }
+    </style>
+    
+    <script>
+        // Fetch and inject the central footer
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/components/footer.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('main-footer').innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('Error loading footer:', error);
+                });
+        });
+    </script>
+</body>
+</html>
