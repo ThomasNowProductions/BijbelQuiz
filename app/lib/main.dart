@@ -502,10 +502,9 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
 
 /// Observer class to track app lifecycle events
 class AppLifecycleObserver {
-  final AnalyticsService _analyticsService;
   final TimeTrackingService _timeTrackingService;
 
-  AppLifecycleObserver(this._analyticsService, this._timeTrackingService);
+  AppLifecycleObserver(AnalyticsService analyticsService, this._timeTrackingService);
 
   void observe() {
     WidgetsBinding.instance.addObserver(_AppLifecycleObserver(this));

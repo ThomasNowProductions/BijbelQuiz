@@ -114,23 +114,6 @@ class LessonProgressProvider extends ChangeNotifier {
       await _persist();
       notifyListeners();
     }
-  
-    /// Joins a sync room
-    Future<bool> joinSyncRoom(String code) async {
-      return await syncService.joinRoom(code);
-    }
-  
-    /// Leaves the sync room
-    Future<void> leaveSyncRoom() async {
-      await syncService.leaveRoom();
-    }
-  
-    /// Sets up sync listener
-    void setupSyncListener() {
-      syncService.addListener('lesson_progress', (data) {
-        loadImportData(data);
-      });
-    }
   }
 
   /// Resets all lesson progress.

@@ -237,7 +237,6 @@ class ErrorHandler {
       case AppErrorType.sync:
         return strings_en.AppStrings.syncError; // Note: this might not exist, will add to localization later
       case AppErrorType.unknown:
-      default:
         return strings_en.AppStrings.unknownError;
     }
   }
