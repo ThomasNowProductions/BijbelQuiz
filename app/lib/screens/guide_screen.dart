@@ -349,7 +349,7 @@ class _GuidePageViewState extends State<GuidePageView> {
           textAlign: TextAlign.center,
           text: TextSpan(
             style: textTheme.bodySmall?.copyWith(
-                  color: colorScheme.onSurface.withOpacity(0.7),
+                  color: colorScheme.onSurface.withValues(alpha: 0.7),
                   height: 1.4,
                 ),
             children: [
@@ -615,7 +615,7 @@ class _GuidePageViewState extends State<GuidePageView> {
                                           Text(
                                             strings.AppStrings.soundEffectsDescription,
                                             style: textTheme.bodyMedium?.copyWith(
-                                                  color: colorScheme.onSurface.withOpacity(0.7),
+                                                  color: colorScheme.onSurface.withValues(alpha: 0.7),
                                                 ),
                                           ),
                                         ],

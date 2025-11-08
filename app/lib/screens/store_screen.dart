@@ -199,7 +199,7 @@ class _StoreScreenState extends State<StoreScreen> {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: colorScheme.primary.withOpacity(0.1),
+                  color: colorScheme.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Icon(
@@ -213,7 +213,7 @@ class _StoreScreenState extends State<StoreScreen> {
                 strings.AppStrings.store,
                 style: textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: colorScheme.onSurface.withOpacity(0.7),
+                  color: colorScheme.onSurface.withValues(alpha: 0.7),
                 ),
               ),
             ],
@@ -262,7 +262,7 @@ class _StoreScreenState extends State<StoreScreen> {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: colorScheme.primary.withOpacity(0.1),
+                  color: colorScheme.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Icon(
@@ -276,7 +276,7 @@ class _StoreScreenState extends State<StoreScreen> {
                 strings.AppStrings.store,
                 style: textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: colorScheme.onSurface.withOpacity(0.7),
+                  color: colorScheme.onSurface.withValues(alpha: 0.7),
                 ),
               ),
             ],
@@ -301,10 +301,10 @@ class _StoreScreenState extends State<StoreScreen> {
                     Container(
                       padding: EdgeInsets.all(isDesktop ? 32 : 24),
                       decoration: BoxDecoration(
-                        color: errorColor.withOpacity(0.1),
+                        color: errorColor.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(24),
                         border: Border.all(
-                          color: errorColor.withOpacity(0.2),
+                          color: errorColor.withValues(alpha: 0.2),
                           width: 2,
                         ),
                       ),
@@ -327,7 +327,7 @@ class _StoreScreenState extends State<StoreScreen> {
                     Text(
                       _errorMessage!,
                       style: textTheme.bodyLarge?.copyWith(
-                        color: colorScheme.onSurface.withOpacity(0.7),
+                        color: colorScheme.onSurface.withValues(alpha: 0.7),
                         height: 1.5,
                       ),
                       textAlign: TextAlign.center,
@@ -399,7 +399,7 @@ class _StoreScreenState extends State<StoreScreen> {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: colorScheme.primary.withOpacity(0.1),
+                color: colorScheme.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
@@ -413,7 +413,7 @@ class _StoreScreenState extends State<StoreScreen> {
               strings.AppStrings.store,
               style: textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w700,
-                color: colorScheme.onSurface.withOpacity(0.7),
+                color: colorScheme.onSurface.withValues(alpha: 0.7),
               ),
             ),
           ],
@@ -449,13 +449,13 @@ class _StoreScreenState extends State<StoreScreen> {
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                           colors: [
-                            colorScheme.primary.withOpacity(0.1),
-                            colorScheme.primary.withOpacity(0.05),
+                            colorScheme.primary.withValues(alpha: 0.1),
+                            colorScheme.primary.withValues(alpha: 0.05),
                           ],
                         ),
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: colorScheme.outline.withOpacity(0.1),
+                          color: colorScheme.outline.withValues(alpha: 0.1),
                           width: 1,
                         ),
                       ),
@@ -483,7 +483,7 @@ class _StoreScreenState extends State<StoreScreen> {
                           Text(
                             strings.AppStrings.availableStars,
                             style: textTheme.titleMedium?.copyWith(
-                              color: colorScheme.onSurface.withOpacity(0.7),
+                              color: colorScheme.onSurface.withValues(alpha: 0.7),
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -707,7 +707,7 @@ class _StoreScreenState extends State<StoreScreen> {
         Container(
           padding: EdgeInsets.all(isDesktop ? 12 : 10),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: color.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(
@@ -752,12 +752,12 @@ class _StoreScreenState extends State<StoreScreen> {
         color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: colorScheme.outline.withOpacity(0.1),
+          color: colorScheme.outline.withValues(alpha: 0.1),
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: colorScheme.shadow.withOpacity(0.04),
+            color: colorScheme.shadow.withValues(alpha: 0.04),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -883,7 +883,7 @@ class _StoreScreenState extends State<StoreScreen> {
                 Container(
                   padding: EdgeInsets.all(isDesktop ? 16 : 12),
                   decoration: BoxDecoration(
-                    color: iconColor.withOpacity(0.1),
+                    color: iconColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
@@ -914,10 +914,10 @@ class _StoreScreenState extends State<StoreScreen> {
                                 vertical: isDesktop ? 2 : 1,
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.green[700]?.withOpacity(0.1),
+                                color: Colors.green[700]?.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
-                                  color: Colors.green[700]!.withOpacity(0.3),
+                                  color: Colors.green[700]!.withValues(alpha: 0.3),
                                   width: 1,
                                 ),
                               ),
@@ -947,7 +947,7 @@ class _StoreScreenState extends State<StoreScreen> {
                       Text(
                         description,
                         style: textTheme.bodyMedium?.copyWith(
-                          color: colorScheme.onSurface.withOpacity(0.7),
+                          color: colorScheme.onSurface.withValues(alpha: 0.7),
                         ),
                       ),
                     ],
@@ -964,10 +964,10 @@ class _StoreScreenState extends State<StoreScreen> {
                         vertical: isDesktop ? 8 : 6,
                       ),
                       decoration: BoxDecoration(
-                        color: colorScheme.primary.withOpacity(0.1),
+                        color: colorScheme.primary.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: colorScheme.primary.withOpacity(0.2),
+                          color: colorScheme.primary.withValues(alpha: 0.2),
                           width: 1,
                         ),
                       ),
@@ -1028,13 +1028,13 @@ class _StoreScreenState extends State<StoreScreen> {
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: isUnlocked 
-            ? colorScheme.primary.withOpacity(0.3)
-            : colorScheme.outline.withOpacity(0.1),
+            ? colorScheme.primary.withValues(alpha: 0.3)
+            : colorScheme.outline.withValues(alpha: 0.1),
           width: isUnlocked ? 2 : 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: colorScheme.shadow.withOpacity(0.04),
+            color: colorScheme.shadow.withValues(alpha: 0.04),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -1126,7 +1126,7 @@ class _StoreScreenState extends State<StoreScreen> {
                 Container(
                   padding: EdgeInsets.all(isDesktop ? 16 : 12),
                   decoration: BoxDecoration(
-                    color: iconColor.withOpacity(0.1),
+                    color: iconColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
@@ -1157,10 +1157,10 @@ class _StoreScreenState extends State<StoreScreen> {
                                 vertical: isDesktop ? 2 : 1,
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.green[700]?.withOpacity(0.1),
+                                color: Colors.green[700]?.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
-                                  color: Colors.green[700]!.withOpacity(0.3),
+                                  color: Colors.green[700]!.withValues(alpha: 0.3),
                                   width: 1,
                                 ),
                               ),
@@ -1190,7 +1190,7 @@ class _StoreScreenState extends State<StoreScreen> {
                       Text(
                         description,
                         style: textTheme.bodyMedium?.copyWith(
-                          color: colorScheme.onSurface.withOpacity(0.7),
+                          color: colorScheme.onSurface.withValues(alpha: 0.7),
                         ),
                       ),
                     ],
@@ -1201,7 +1201,7 @@ class _StoreScreenState extends State<StoreScreen> {
                     ? Container(
                         padding: EdgeInsets.all(isDesktop ? 12 : 10),
                         decoration: BoxDecoration(
-                          color: colorScheme.primary.withOpacity(0.1),
+                          color: colorScheme.primary.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Icon(
@@ -1220,10 +1220,10 @@ class _StoreScreenState extends State<StoreScreen> {
                               vertical: isDesktop ? 8 : 6,
                             ),
                             decoration: BoxDecoration(
-                              color: colorScheme.primary.withOpacity(0.1),
+                              color: colorScheme.primary.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
-                                color: colorScheme.primary.withOpacity(0.2),
+                                color: colorScheme.primary.withValues(alpha: 0.2),
                                 width: 1,
                               ),
                             ),
@@ -1279,12 +1279,12 @@ class _StoreScreenState extends State<StoreScreen> {
         color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: colorScheme.outline.withOpacity(0.1),
+          color: colorScheme.outline.withValues(alpha: 0.1),
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: colorScheme.shadow.withOpacity(0.04),
+            color: colorScheme.shadow.withValues(alpha: 0.04),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -1384,7 +1384,7 @@ class _StoreScreenState extends State<StoreScreen> {
                 Container(
                   padding: EdgeInsets.all(isDesktop ? 16 : 12),
                   decoration: BoxDecoration(
-                    color: iconColor.withOpacity(0.1),
+                    color: iconColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
@@ -1415,10 +1415,10 @@ class _StoreScreenState extends State<StoreScreen> {
                                 vertical: isDesktop ? 2 : 1,
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.green[700]?.withOpacity(0.1),
+                                color: Colors.green[700]?.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
-                                  color: Colors.green[700]!.withOpacity(0.3),
+                                  color: Colors.green[700]!.withValues(alpha: 0.3),
                                   width: 1,
                                 ),
                               ),
@@ -1448,7 +1448,7 @@ class _StoreScreenState extends State<StoreScreen> {
                       Text(
                         description,
                         style: textTheme.bodyMedium?.copyWith(
-                          color: colorScheme.onSurface.withOpacity(0.7),
+                          color: colorScheme.onSurface.withValues(alpha: 0.7),
                         ),
                       ),
                     ],
@@ -1465,10 +1465,10 @@ class _StoreScreenState extends State<StoreScreen> {
                         vertical: isDesktop ? 8 : 6,
                       ),
                       decoration: BoxDecoration(
-                        color: colorScheme.primary.withOpacity(0.1),
+                        color: colorScheme.primary.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: colorScheme.primary.withOpacity(0.2),
+                          color: colorScheme.primary.withValues(alpha: 0.2),
                           width: 1,
                         ),
                       ),

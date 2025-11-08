@@ -121,7 +121,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         elevation: 10,
         height: settings.showNavigationLabels ? 80 : 60, // Reduce height when labels are hidden
         backgroundColor: colorScheme.surface,
-        indicatorColor: colorScheme.primary.withOpacity(0.1),
+        indicatorColor: colorScheme.primary.withValues(alpha: 0.1),
         labelBehavior: settings.showNavigationLabels 
             ? NavigationDestinationLabelBehavior.alwaysShow 
             : NavigationDestinationLabelBehavior.alwaysHide, // Properly hide labels
