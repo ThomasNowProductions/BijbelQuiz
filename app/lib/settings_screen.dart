@@ -14,6 +14,7 @@ import 'widgets/top_snackbar.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:flutter/services.dart';
 import 'services/question_cache_service.dart';
+import 'services/connection_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/lesson_select_screen.dart';
 import 'widgets/quiz_skeleton.dart';
@@ -902,7 +903,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               isDesktop,
               onPressed: () async {
                 Provider.of<AnalyticsService>(context, listen: false).capture(context, 'clear_question_cache');
-                await QuestionCacheService().clearCache();
+                await QuestionCacheService(ConnectionService()).clearCache();
                 if (context.mounted) {
                   showTopSnackBar(context, strings.AppStrings.cacheCleared, style: TopSnackBarStyle.success);
                 }
@@ -1339,7 +1340,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                   // Clear caches and notifications
                   AppLogger.info('Clearing question cache...');
-                  await QuestionCacheService().clearCache();
+                  await QuestionCacheService(ConnectionService()).clearCache();
                   AppLogger.info('Question cache cleared');
                   await NotificationService().cancelAllNotifications();
                   AppLogger.info('Notifications cancelled');

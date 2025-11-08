@@ -114,10 +114,10 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
     _startGameTimer();
 
     // Initialize services
-    _questionCacheService = QuestionCacheService();
     _performanceService = PerformanceService();
     _connectionService = ConnectionService();
     _platformFeedbackService = PlatformFeedbackService();
+    _questionCacheService = QuestionCacheService(_connectionService);
 
     _initializeServices();
     _initializeManagers();

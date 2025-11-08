@@ -170,7 +170,7 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
       AppLogger.info('Starting deferred service initialization...');
       final performanceService = PerformanceService();
       final connectionService = ConnectionService();
-      final questionCacheService = QuestionCacheService();
+      final questionCacheService = QuestionCacheService(connectionService);
       // FeatureFlagsService removed
       final apiService = ApiService();
 

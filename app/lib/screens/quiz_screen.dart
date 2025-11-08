@@ -126,10 +126,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
     });
     
     // Initialize services
-    _questionCacheService = QuestionCacheService();
     _performanceService = PerformanceService();
     _connectionService = ConnectionService();
     _platformFeedbackService = PlatformFeedbackService();
+    _questionCacheService = QuestionCacheService(_connectionService);
     
     _initializeServices();
     _initializeManagers();

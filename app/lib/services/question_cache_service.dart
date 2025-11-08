@@ -5,6 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/quiz_question.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'logger.dart';
+import '../config/supabase_config.dart';
+import 'connection_service.dart';
 
  // Simplified memory cache: store QuizQuestion directly; access tracked via LRU list
 
@@ -23,16 +25,21 @@ class QuestionCacheService {
   static const String _cacheTimestampKey = 'cache_timestamp';
   static const String _metadataCacheKey = 'cached_metadata';
   static const String _appVersionKey = 'app_version';
-  
+
   // Enhanced LRU Cache implementation with predictive loading
   final Map<String, QuizQuestion> _memoryCache = {};
   final List<String> _lruList = [];
   final Map<String, int> _accessFrequency = {}; // Track access frequency for smarter eviction
   final Map<String, DateTime> _lastAccessTime = {}; // Track access time for temporal patterns
   final Set<String> _predictiveLoadCandidates = {}; // Questions to load preemptively
-  
+
   late SharedPreferences _prefs;
   bool _isInitialized = false;
+
+  // Connection service for checking online status
+  final ConnectionService _connectionService;
+
+  QuestionCacheService(this._connectionService);
   
   // Track loading state per language
   final Map<String, Completer<void>> _loadingCompleters = {};
@@ -179,16 +186,16 @@ class QuestionCacheService {
   /// Load question metadata from assets if not already loaded
   Future<void> _ensureMetadataLoaded(String language) async {
     if (_questionMetadata.containsKey(language)) return;
-    
+
     // If another request is already loading this language, wait for it
     if (_loadingCompleters.containsKey(language)) {
       await _loadingCompleters[language]!.future;
       return;
     }
-    
+
     final completer = Completer<void>();
     _loadingCompleters[language] = completer;
-    
+
     try {
       // Try to load from cache first
       final cachedMetadata = await _getCachedMetadata(language);
@@ -198,47 +205,41 @@ class QuestionCacheService {
         completer.complete();
         return;
       }
-      
-      // If no cache, load from assets
-      final String response = await rootBundle.loadString('assets/questions-nl-sv.json');
-      final List<dynamic> data = json.decode(response);
-      
-      if (data.isEmpty) {
-        throw Exception('Question file is empty');
-      }
-      
-      // Extract and store just the metadata (much smaller memory footprint)
-      final metadata = data.map<Map<String, dynamic>>((json) {
-        try {
-          return {
-            'id': json['id'] ?? '',
-            'difficulty': json['moeilijkheidsgraad']?.toString() ?? '',
-            'categories': (json['categories'] as List<dynamic>?)?.cast<String>() ?? [],
-            'type': json['type']?.toString() ?? 'mc',
-            'biblicalReference': json['biblicalReference'] is String ? json['biblicalReference'] as String : null,
-          };
-        } catch (e) {
-          throw Exception('Invalid question format: $e');
+
+      // Try to load from database first, fallback to JSON if offline or failed
+      List<Map<String, dynamic>> metadata;
+      try {
+        final isOnline = _connectionService.isConnected;
+        if (isOnline) {
+          metadata = await _loadMetadataFromDatabase(language);
+          AppLogger.info('Loaded ${metadata.length} metadata entries from database for language: $language');
+        } else {
+          metadata = await _loadMetadataFromJson(language);
+          AppLogger.info('Loaded ${metadata.length} metadata entries from JSON (offline) for language: $language');
         }
-      }).toList();
-      
+      } catch (e) {
+        AppLogger.warning('Failed to load metadata from database, falling back to JSON: $e');
+        metadata = await _loadMetadataFromJson(language);
+        AppLogger.info('Loaded ${metadata.length} metadata entries from JSON (fallback) for language: $language');
+      }
+
       if (metadata.isEmpty) {
         throw Exception('No valid questions found');
       }
-      
+
       // Sort questions by difficulty for better performance
       metadata.sort((a, b) {
         final int da = int.tryParse(a['difficulty']?.toString() ?? '') ?? 3;
         final int db = int.tryParse(b['difficulty']?.toString() ?? '') ?? 3;
         return da.compareTo(db);
       });
-      
+
       _questionMetadata[language] = metadata;
       _loadedQuestionIndices[language] = {};
-      
+
       // Cache the metadata for faster startup next time
       await _cacheMetadata(language, metadata);
-      
+
       completer.complete();
     } catch (e) {
       completer.completeError('Failed to load questions: $e');
@@ -255,7 +256,7 @@ class QuestionCacheService {
     List<int> indices,
   ) async {
     if (indices.isEmpty) return [];
-    
+
     try {
       // Try to load from cache if available and valid
       if (await _isCacheValid(language)) {
@@ -264,32 +265,33 @@ class QuestionCacheService {
           return cachedQuestions;
         }
       }
-      
-      // Load the full questions from assets
-      final String response = await rootBundle.loadString('assets/questions-nl-sv.json');
-      final List<dynamic> data = json.decode(response) as List;
-      
-      if (data.isEmpty) {
-        throw Exception('Question file is empty');
-      }
-      
-      final loadedQuestions = <QuizQuestion>[];
-      
-      for (final index in indices) {
-        if (index < 0 || index >= data.length) continue;
-        
-        try {
-          final questionData = data[index] as Map<String, dynamic>;
-          final question = QuizQuestion.fromJson(questionData);
-          _addToMemoryCache(language, index, question);
-          _updateLru(language, index);
-          _loadedQuestionIndices.putIfAbsent(language, () => <int>{}).add(index);
-          loadedQuestions.add(question);
-        } catch (e) {
-          AppLogger.error('Error parsing question at index $index', e);
+
+      // Try to load from database first, fallback to JSON if offline or failed
+      List<QuizQuestion> loadedQuestions = [];
+      try {
+        final isOnline = _connectionService.isConnected;
+        if (isOnline) {
+          loadedQuestions = await _loadQuestionsFromDatabaseByIndices(language, indices);
+          AppLogger.info('Loaded ${loadedQuestions.length} questions from database for indices: $indices');
+        } else {
+          loadedQuestions = await _loadQuestionsFromJsonByIndices(language, indices);
+          AppLogger.info('Loaded ${loadedQuestions.length} questions from JSON (offline) for indices: $indices');
         }
+      } catch (e) {
+        AppLogger.warning('Failed to load from database, falling back to JSON: $e');
+        loadedQuestions = await _loadQuestionsFromJsonByIndices(language, indices);
+        AppLogger.info('Loaded ${loadedQuestions.length} questions from JSON (fallback) for indices: $indices');
       }
-      
+
+      // Add loaded questions to memory cache
+      for (int i = 0; i < loadedQuestions.length; i++) {
+        final question = loadedQuestions[i];
+        final index = indices[i];
+        _addToMemoryCache(language, index, question);
+        _updateLru(language, index);
+        _loadedQuestionIndices.putIfAbsent(language, () => <int>{}).add(index);
+      }
+
       return loadedQuestions;
     } catch (e) {
       AppLogger.error('Failed to load questions by indices', e);
@@ -595,6 +597,123 @@ class QuestionCacheService {
     } catch (e) {
       AppLogger.error('Failed to clear cache', e);
     }
+  }
+
+  /// Load questions from database by indices
+  Future<List<QuizQuestion>> _loadQuestionsFromDatabaseByIndices(String language, List<int> indices) async {
+    try {
+      final client = SupabaseConfig.getClient();
+      final ids = indices.map((index) => '000${(index + 1).toString().padLeft(3, '0')}').toList();
+
+      final response = await client
+          .from('questions')
+          .select('id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference')
+          .inFilter('id', ids);
+
+      final questions = <QuizQuestion>[];
+      for (final row in response) {
+        try {
+          final question = QuizQuestion.fromJson({
+            'id': row['id'],
+            'vraag': row['vraag'],
+            'juisteAntwoord': row['juiste_antwoord'],
+            'fouteAntwoorden': row['foute_antwoorden'] ?? [],
+            'moeilijkheidsgraad': row['moeilijkheidsgraad'],
+            'type': row['type'] ?? 'mc',
+            'categories': row['categories'] ?? [],
+            'biblicalReference': row['biblical_reference'],
+          });
+          questions.add(question);
+        } catch (e) {
+          AppLogger.error('Error parsing database question: $e', e);
+        }
+      }
+
+      return questions;
+    } catch (e) {
+      AppLogger.error('Failed to load questions from database', e);
+      rethrow;
+    }
+  }
+
+  /// Load questions from JSON by indices
+  Future<List<QuizQuestion>> _loadQuestionsFromJsonByIndices(String language, List<int> indices) async {
+    final String response = await rootBundle.loadString('assets/questions-nl-sv.json');
+    final List<dynamic> data = json.decode(response) as List;
+
+    if (data.isEmpty) {
+      throw Exception('Question file is empty');
+    }
+
+    final loadedQuestions = <QuizQuestion>[];
+
+    for (final index in indices) {
+      if (index < 0 || index >= data.length) continue;
+
+      try {
+        final questionData = data[index] as Map<String, dynamic>;
+        final question = QuizQuestion.fromJson(questionData);
+        loadedQuestions.add(question);
+      } catch (e) {
+        AppLogger.error('Error parsing question at index $index', e);
+      }
+    }
+
+    return loadedQuestions;
+  }
+
+  /// Load metadata from database
+  Future<List<Map<String, dynamic>>> _loadMetadataFromDatabase(String language) async {
+    try {
+      final client = SupabaseConfig.getClient();
+      final response = await client
+          .from('questions')
+          .select('id, moeilijkheidsgraad, categories, type, biblical_reference')
+          .order('moeilijkheidsgraad');
+
+      final metadata = <Map<String, dynamic>>[];
+      for (final row in response) {
+        metadata.add({
+          'id': row['id'],
+          'difficulty': row['moeilijkheidsgraad']?.toString() ?? '',
+          'categories': (row['categories'] as List<dynamic>?)?.cast<String>() ?? [],
+          'type': row['type']?.toString() ?? 'mc',
+          'biblicalReference': row['biblical_reference'] is String ? row['biblical_reference'] as String : null,
+        });
+      }
+
+      return metadata;
+    } catch (e) {
+      AppLogger.error('Failed to load metadata from database', e);
+      rethrow;
+    }
+  }
+
+  /// Load metadata from JSON
+  Future<List<Map<String, dynamic>>> _loadMetadataFromJson(String language) async {
+    final String response = await rootBundle.loadString('assets/questions-nl-sv.json');
+    final List<dynamic> data = json.decode(response);
+
+    if (data.isEmpty) {
+      throw Exception('Question file is empty');
+    }
+
+    // Extract and store just the metadata (much smaller memory footprint)
+    final metadata = data.map<Map<String, dynamic>>((json) {
+      try {
+        return {
+          'id': json['id'] ?? '',
+          'difficulty': json['moeilijkheidsgraad']?.toString() ?? '',
+          'categories': (json['categories'] as List<dynamic>?)?.cast<String>() ?? [],
+          'type': json['type']?.toString() ?? 'mc',
+          'biblicalReference': json['biblicalReference'] is String ? json['biblicalReference'] as String : null,
+        };
+      } catch (e) {
+        throw Exception('Invalid question format: $e');
+      }
+    }).toList();
+
+    return metadata;
   }
 
   /// Dispose of resources
