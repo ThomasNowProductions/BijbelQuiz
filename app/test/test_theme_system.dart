@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
-import '../lib/services/logger.dart';
+import 'package:bijbelquiz/services/logger.dart';
 
 /// Test to verify that the themes JSON is valid and can be loaded
 void main() async {
