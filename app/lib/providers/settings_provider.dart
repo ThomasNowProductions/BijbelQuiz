@@ -106,6 +106,21 @@ class SettingsProvider extends ChangeNotifier {
   /// Whether slow mode is enabled (backward compatibility)
   bool get slowMode => _gameSpeed == 'slow';
 
+  /// Gets the timer duration in seconds based on the current game speed setting
+  /// Returns 35 for slow, 20 for medium, 15 for fast
+  int get gameSpeedTimerDuration {
+    switch (_gameSpeed) {
+      case 'slow':
+        return 35;
+      case 'medium':
+        return 20;
+      case 'fast':
+        return 15;
+      default:
+        return 20; // Default to medium speed
+    }
+  }
+
   /// Whether the user has seen the guide
   bool get hasSeenGuide => _hasSeenGuide;
 

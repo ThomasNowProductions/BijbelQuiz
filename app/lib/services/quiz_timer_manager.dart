@@ -106,7 +106,7 @@ class QuizTimerManager {
 
   void restartTimer(BuildContext context, int currentTimeRemaining) {
     final settings = Provider.of<SettingsProvider>(context, listen: false);
-    final baseTimerDuration = settings.slowMode ? 35 : 20;
+    final baseTimerDuration = settings.gameSpeedTimerDuration;
     final optimalTimerDuration = _performanceService.getOptimalTimerDuration(
       Duration(seconds: baseTimerDuration)
     );
@@ -130,7 +130,7 @@ class QuizTimerManager {
 
   void startTimer({required BuildContext context, bool reset = false, int? timeRemaining}) {
     final settings = Provider.of<SettingsProvider>(context, listen: false);
-    final baseTimerDuration = settings.slowMode ? 35 : 20;
+    final baseTimerDuration = settings.gameSpeedTimerDuration;
     final optimalTimerDuration = _performanceService.getOptimalTimerDuration(
       Duration(seconds: baseTimerDuration)
     );

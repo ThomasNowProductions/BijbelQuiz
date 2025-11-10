@@ -388,7 +388,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
                         if (mounted) {
                           setState(() {
                             final optimalTimerDuration = _performanceService.getOptimalTimerDuration(
-                              Duration(seconds: settings.slowMode ? 35 : 20)
+                              Duration(seconds: settings.gameSpeedTimerDuration)
                             );
                             _quizState = _quizState.copyWith(
                               timeRemaining: optimalTimerDuration.inSeconds,
@@ -568,7 +568,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
       // Initialize quiz state with PQU (Progressive Question Up-selection)
       final isSlowMode = settings.slowMode;
       final optimalTimerDuration = _performanceService.getOptimalTimerDuration(
-        Duration(seconds: isSlowMode ? 35 : 20)
+        Duration(seconds: settings.gameSpeedTimerDuration)
       );
 
       // Track slow mode usage
@@ -776,7 +776,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
     final QuizQuestion nextQuestion = _questionSelector.pickNextQuestion(calculatedNewDifficulty, context);
     setState(() {
       final optimalTimerDuration = _performanceService.getOptimalTimerDuration(
-        Duration(seconds: settings.slowMode ? 35 : 20)
+        Duration(seconds: settings.gameSpeedTimerDuration)
       );
       _quizState = QuizState(
         question: nextQuestion,
@@ -1135,7 +1135,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
         _questionSelector.recordAnswerResult(_quizState.question.question, false);
         final nextQuestion = _questionSelector.pickNextQuestion(newDifficulty, context);
         final optimalTimerDuration = _performanceService.getOptimalTimerDuration(
-          Duration(seconds: settings.slowMode ? 35 : 20)
+          Duration(seconds: settings.gameSpeedTimerDuration)
         );
         _quizState = QuizState(
           question: nextQuestion,
