@@ -674,7 +674,8 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
             playerName: playerName,
           ),
         ),
-        QuizBottomBar(
+        // Only show bottom bar when not showing results
+        if (!_showResults) QuizBottomBar(
           quizState: isPlayer1 ? _player1QuizState : _player2QuizState,
           gameStats: Provider.of<GameStatsProvider>(context),
           settings: Provider.of<SettingsProvider>(context),
