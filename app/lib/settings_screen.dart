@@ -14,6 +14,7 @@ import 'services/api_service.dart';
 import 'widgets/top_snackbar.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:flutter/services.dart';
+import 'package:crypto/crypto.dart' as crypto;
 import 'services/question_cache_service.dart';
 import 'services/connection_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -1393,8 +1394,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
 
   Future<void> _exportStats(BuildContext context) async {
-    String? statsKey = dotenv.env["STATS_KEY"];
-    if(statsKey == null || statsKey.isEmpty) statsKey = "";
+    final statsKey = dotenv.env["STATS_KEY"] ?? "";
 
     try {
       final gameStats = Provider.of<GameStatsProvider>(context, listen: false);
@@ -1413,7 +1413,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       final jsonString = json.encode(data);
 
       // Create hash for tamper-proofing (based on original JSON) - use SHA-1 for shorter hash
-      final hash = sha1.convert(utf8.encode(jsonString + statsKey)).toString();
+      final hash = crypto.Hmac(crypto.sha1, utf8.encode(statsKey)).convert(utf8.encode(jsonString)).toString();
 
       // Compress the JSON string
       final compressedBytes = GZipEncoder().encode(utf8.encode(jsonString));
@@ -1972,8 +1972,7 @@ class _ImportStatsScreenState extends State<ImportStatsScreen> {
                         final dataString = importData['data'] as String;
                         String jsonString;
 
-                        String? statsKey = dotenv.env["STATS_KEY"];
-                        if(statsKey == null || statsKey.isEmpty) statsKey = "";
+                        final statsKey = dotenv.env["STATS_KEY"] ?? "";
 
                         // Detect format based on hash length: SHA-1 (40 chars) for new, SHA-256 (64 chars) for old
                         if (hash.length == 40) {
@@ -1982,7 +1981,7 @@ class _ImportStatsScreenState extends State<ImportStatsScreen> {
                             final compressedData = base64Url.decode(dataString);
                             jsonString = utf8.decode(GZipDecoder().decodeBytes(compressedData));
                             // Verify with SHA-1
-                            final computedHash = sha1.convert(utf8.encode(jsonString + statsKey)).toString();
+                            final computedHash = crypto.Hmac(crypto.sha1, utf8.encode(statsKey)).convert(utf8.encode(jsonString)).toString();
                             if (computedHash != hash) {
                               if (!safeContext.mounted) return;
                               showTopSnackBar(safeContext, strings.AppStrings.invalidOrTamperedData, style: TopSnackBarStyle.error);
@@ -1997,7 +1996,7 @@ class _ImportStatsScreenState extends State<ImportStatsScreen> {
                           // Old uncompressed format with SHA-256
                           jsonString = dataString;
                           // Verify with SHA-256
-                          final computedHash = sha256.convert(utf8.encode(jsonString + statsKey)).toString();
+                          final computedHash = crypto.Hmac(crypto.sha256, utf8.encode(statsKey)).convert(utf8.encode(jsonString)).toString();
                           if (computedHash != hash) {
                             if (!safeContext.mounted) return;
                             showTopSnackBar(safeContext, strings.AppStrings.invalidOrTamperedData, style: TopSnackBarStyle.error);
