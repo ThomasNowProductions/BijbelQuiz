@@ -8,9 +8,10 @@ A command-line interface for interacting with the BijbelQuiz local API.
 import argparse
 import json
 import sys
+import urllib.request
+import urllib.parse
+import urllib.error
 from typing import Optional
-
-import requests
 
 
 class BijbelQuizAPI:
@@ -19,44 +20,58 @@ class BijbelQuizAPI:
     def __init__(self, base_url: str = "http://localhost:7777/v1", api_key: Optional[str] = None):
         self.base_url = base_url.rstrip('/')
         self.api_key = api_key
-        self.session = requests.Session()
+        self.headers = {"Content-Type": "application/json"}
         if api_key:
-            self.session.headers.update({"X-API-Key": api_key})
+            self.headers.update({"X-API-Key": api_key})
 
     def _get(self, endpoint: str, params: Optional[dict] = None) -> dict:
         """Make a GET request to the API."""
         url = f"{self.base_url}/{endpoint.lstrip('/')}"
+        if params:
+            url += "?" + urllib.parse.urlencode(params)
+        
         try:
-            response = self.session.get(url, params=params)
-            response.raise_for_status()
-            return response.json()
-        except requests.exceptions.RequestException as e:
+            request = urllib.request.Request(url, headers=self.headers)
+            with urllib.request.urlopen(request) as response:
+                return json.loads(response.read().decode('utf-8'))
+        except urllib.error.HTTPError as e:
             print(f"Error: {e}", file=sys.stderr)
-            if hasattr(e, 'response') and e.response:
-                try:
-                    error_data = e.response.json()
-                    print(f"API Error: {error_data.get('error', 'Unknown error')}", file=sys.stderr)
-                    print(f"Message: {error_data.get('message', '')}", file=sys.stderr)
-                except:
-                    print(f"HTTP {e.response.status_code}: {e.response.text}", file=sys.stderr)
+            try:
+                error_data = json.loads(e.read().decode('utf-8'))
+                print(f"API Error: {error_data.get('error', 'Unknown error')}", file=sys.stderr)
+                print(f"Message: {error_data.get('message', '')}", file=sys.stderr)
+            except:
+                print(f"HTTP {e.code}: {e.reason}", file=sys.stderr)
+            sys.exit(1)
+        except urllib.error.URLError as e:
+            print(f"URL Error: {e.reason}", file=sys.stderr)
+            sys.exit(1)
+        except Exception as e:
+            print(f"Unexpected error: {e}", file=sys.stderr)
             sys.exit(1)
 
     def _post(self, endpoint: str, data: dict) -> dict:
         """Make a POST request to the API."""
         url = f"{self.base_url}/{endpoint.lstrip('/')}"
         try:
-            response = self.session.post(url, json=data)
-            response.raise_for_status()
-            return response.json()
-        except requests.exceptions.RequestException as e:
+            json_data = json.dumps(data).encode('utf-8')
+            request = urllib.request.Request(url, data=json_data, headers=self.headers, method='POST')
+            with urllib.request.urlopen(request) as response:
+                return json.loads(response.read().decode('utf-8'))
+        except urllib.error.HTTPError as e:
             print(f"Error: {e}", file=sys.stderr)
-            if hasattr(e, 'response') and e.response:
-                try:
-                    error_data = e.response.json()
-                    print(f"API Error: {error_data.get('error', 'Unknown error')}", file=sys.stderr)
-                    print(f"Message: {error_data.get('message', '')}", file=sys.stderr)
-                except:
-                    print(f"HTTP {e.response.status_code}: {e.response.text}", file=sys.stderr)
+            try:
+                error_data = json.loads(e.read().decode('utf-8'))
+                print(f"API Error: {error_data.get('error', 'Unknown error')}", file=sys.stderr)
+                print(f"Message: {error_data.get('message', '')}", file=sys.stderr)
+            except:
+                print(f"HTTP {e.code}: {e.reason}", file=sys.stderr)
+            sys.exit(1)
+        except urllib.error.URLError as e:
+            print(f"URL Error: {e.reason}", file=sys.stderr)
+            sys.exit(1)
+        except Exception as e:
+            print(f"Unexpected error: {e}", file=sys.stderr)
             sys.exit(1)
 
     def health(self) -> dict:

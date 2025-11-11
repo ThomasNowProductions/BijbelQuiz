@@ -6,11 +6,10 @@ A command-line interface for interacting with the BijbelQuiz local API.
 
 ## Installation
 
-1. Create a virtual environment and install Python dependencies:
+1. Create a virtual environment (optional but recommended):
 ```bash
 python3 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
 ```
 
 2. Make the script executable:
@@ -168,8 +167,8 @@ The CLI provides clear error messages for common issues:
 ## Requirements
 
 - Python 3.6+
-- Virtual environment (recommended)
-- requests library (installed via requirements.txt)
+- Virtual environment (optional but recommended)
+- No external dependencies required (uses only Python standard library)
 
 ## Notes
 
