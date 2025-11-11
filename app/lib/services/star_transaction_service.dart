@@ -83,7 +83,7 @@ class StarTransactionService {
       AppLogger.info('StarTransactionService initialized with ${_transactions.length} transactions');
     } catch (e) {
       // Use the new error handling system
-      final appError = ErrorHandler().fromException(
+      ErrorHandler().fromException(
         e,
         type: AppErrorType.storage,
         userMessage: 'Failed to initialize transaction service',
@@ -215,7 +215,7 @@ class StarTransactionService {
       return true;
     } catch (e) {
       // Use the new error handling system
-      final appError = ErrorHandler().fromException(
+      ErrorHandler().fromException(
         e,
         type: AppErrorType.storage,
         userMessage: 'Failed to add stars',
@@ -269,7 +269,7 @@ class StarTransactionService {
       return true;
     } catch (e) {
       // Use the new error handling system
-      final appError = ErrorHandler().fromException(
+      ErrorHandler().fromException(
         e,
         type: AppErrorType.storage,
         userMessage: 'Failed to spend stars',

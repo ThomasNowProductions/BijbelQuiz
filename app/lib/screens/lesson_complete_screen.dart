@@ -39,8 +39,6 @@ class LessonCompleteScreen extends StatefulWidget {
 class _LessonCompleteScreenState extends State<LessonCompleteScreen> with SingleTickerProviderStateMixin {
   final AdService _adService = AdService();
   Ad? _currentAd;
-  bool _showAd = false;
-  bool _adLoaded = false;
 
   @override
   void initState() {
@@ -55,15 +53,11 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen> with Single
       
       setState(() {
         _currentAd = ad;
-        _showAd = ad != null;
-        _adLoaded = true;
       });
     } catch (e) {
       if (mounted) {
         setState(() {
           _currentAd = null;
-          _showAd = false;
-          _adLoaded = true;
         });
       }
     }
@@ -224,7 +218,7 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen> with Single
                               Expanded(
                                 child: OutlinedButton(
                                   onPressed: () {
-                                    final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+                                    Provider.of<AnalyticsService>(context, listen: false);
 
 
                                     Provider.of<AnalyticsService>(context, listen: false).capture(context, 'retry_lesson_from_complete');
@@ -247,7 +241,7 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen> with Single
                               Expanded(
                                 child: ElevatedButton(
                                   onPressed: widget.stars > 0 ? () {
-                                    final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+                                    Provider.of<AnalyticsService>(context, listen: false);
 
 
                                     Provider.of<AnalyticsService>(context, listen: false).capture(context, 'start_next_lesson_from_complete');

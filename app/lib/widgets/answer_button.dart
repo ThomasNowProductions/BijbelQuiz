@@ -36,7 +36,6 @@ class _AnswerButtonState extends State<AnswerButton>
     with SingleTickerProviderStateMixin {
   AnimationController? _animationController;
   late Animation<double> _scaleAnimation;
-  late Animation<double> _elevationAnimation;
   late Color _backgroundColor;
   late Color _borderColor;
   late Color _textColor;
@@ -55,9 +54,6 @@ class _AnswerButtonState extends State<AnswerButton>
         vsync: this,
       );
       _scaleAnimation = Tween<double>(begin: 1.0, end: 0.96).animate(
-        CurvedAnimation(parent: _animationController!, curve: Curves.easeInOut),
-      );
-      _elevationAnimation = Tween<double>(begin: 1.0, end: 4.0).animate(
         CurvedAnimation(parent: _animationController!, curve: Curves.easeInOut),
       );
     }

@@ -4,10 +4,8 @@ import 'package:bijbelquiz/error/error_types.dart';
 
 void main() {
   group('ErrorReportingService Tests', () {
-    late ErrorReportingService errorReportingService;
 
     setUp(() {
-      errorReportingService = ErrorReportingService();
     });
 
     test('ErrorReport can be created with all parameters', () {

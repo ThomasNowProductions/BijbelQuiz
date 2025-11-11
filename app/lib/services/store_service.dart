@@ -44,7 +44,7 @@ class StoreService {
   /// Updates a store item in the database
   Future<bool> updateStoreItem(StoreItem item) async {
     try {
-      final response = await SupabaseConfig.getClient()
+      await SupabaseConfig.getClient()
           .from('store_items')
           .update(item.toJson())
           .eq('item_key', item.itemKey)

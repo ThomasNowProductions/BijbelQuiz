@@ -23,11 +23,9 @@ class _SyncScreenState extends State<SyncScreen> {
   bool _isLoadingUsername = false;
   String? _error;
   String? _usernameError;
-  String? _currentCode;
   List<String>? _devicesInRoom;
   bool _isLoadingDevices = false;
   String? _currentDeviceId;
-  String? _currentUsername;
   List<String>? _blacklistedUsernames;
 
   @override
@@ -46,7 +44,6 @@ class _SyncScreenState extends State<SyncScreen> {
       final currentUsername = await gameStatsProvider.syncService.getUsername();
       if (mounted) {
         setState(() {
-          _currentUsername = currentUsername;
           if (currentUsername != null) {
             _usernameController.text = currentUsername;
           }
@@ -122,8 +119,8 @@ class _SyncScreenState extends State<SyncScreen> {
 
   void _setupSyncListeners() {
     final gameStatsProvider = Provider.of<GameStatsProvider>(context, listen: false);
-    final lessonProgressProvider = Provider.of<LessonProgressProvider>(context, listen: false);
-    final settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
+    Provider.of<LessonProgressProvider>(context, listen: false);
+    Provider.of<SettingsProvider>(context, listen: false);
 
     gameStatsProvider.setupSyncListener();
   }
@@ -336,7 +333,7 @@ class _SyncScreenState extends State<SyncScreen> {
     // Check if username is blacklisted
     if (_isUsernameBlacklisted(username)) {
       setState(() {
-        _usernameError = strings.AppStrings.usernameBlacklisted ?? 'This username is not allowed';
+        _usernameError = strings.AppStrings.usernameBlacklisted;
       });
       return;
     }
@@ -353,7 +350,6 @@ class _SyncScreenState extends State<SyncScreen> {
       if (success) {
         if (mounted) {
           setState(() {
-            _currentUsername = username;
           });
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -429,14 +425,13 @@ class _SyncScreenState extends State<SyncScreen> {
 
     try {
       final gameStatsProvider = Provider.of<GameStatsProvider>(context, listen: false);
-      final lessonProgressProvider = Provider.of<LessonProgressProvider>(context, listen: false);
-      final settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
+      Provider.of<LessonProgressProvider>(context, listen: false);
+      Provider.of<SettingsProvider>(context, listen: false);
 
       final success = await gameStatsProvider.joinSyncRoom(code);
 
       if (success) {
         setState(() {
-          _currentCode = code;
         });
         AppLogger.info('Successfully joined sync room: $code');
         // Load the username after successfully joining the room
@@ -492,8 +487,8 @@ class _SyncScreenState extends State<SyncScreen> {
 
     try {
       final gameStatsProvider = Provider.of<GameStatsProvider>(context, listen: false);
-      final lessonProgressProvider = Provider.of<LessonProgressProvider>(context, listen: false);
-      final settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
+      Provider.of<LessonProgressProvider>(context, listen: false);
+      Provider.of<SettingsProvider>(context, listen: false);
 
       await gameStatsProvider.leaveSyncRoom();
 
@@ -577,14 +572,13 @@ class _SyncScreenState extends State<SyncScreen> {
     try {
       final code = _generateSyncCode();
       final gameStatsProvider = Provider.of<GameStatsProvider>(context, listen: false);
-      final lessonProgressProvider = Provider.of<LessonProgressProvider>(context, listen: false);
-      final settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
+      Provider.of<LessonProgressProvider>(context, listen: false);
+      Provider.of<SettingsProvider>(context, listen: false);
 
       final success = await gameStatsProvider.joinSyncRoom(code);
 
       if (success) {
         setState(() {
-          _currentCode = code;
         });
         AppLogger.info('Successfully started sync room: $code');
         
@@ -1027,7 +1021,7 @@ class _SyncScreenState extends State<SyncScreen> {
                                 // Check for blacklisted username in real-time
                                 if (_isUsernameBlacklisted(value)) {
                                   setState(() {
-                                    _usernameError = strings.AppStrings.usernameBlacklisted ?? 'This username is not allowed';
+                                    _usernameError = strings.AppStrings.usernameBlacklisted;
                                   });
                                 }
                               },

@@ -238,9 +238,7 @@ void main() {
       await soundService.initialize();
 
       // Set error callback
-      String? lastError;
       soundService.onError = (message) {
-        lastError = message;
       };
 
       // Try to play an unknown sound (should trigger error handling)

@@ -258,7 +258,7 @@ class SyncService {
           .select('devices')
           .eq('room_id', _currentRoomId!)
           .single();
-      return List<String>.from(response['devices'] as List<dynamic> ?? []);
+      return List<String>.from(response['devices'] as List<dynamic>);
     } catch (e) {
       AppLogger.error('Failed to get devices in room', e);
       return null;
@@ -276,7 +276,7 @@ class SyncService {
           .eq('room_id', _currentRoomId!)
           .single();
 
-      final devices = List<String>.from(roomResponse['devices'] as List<dynamic> ?? []);
+      final devices = List<String>.from(roomResponse['devices'] as List<dynamic>);
       if (devices.contains(deviceId)) {
         devices.remove(deviceId);
         await _client
@@ -471,42 +471,6 @@ class SyncService {
     }
   }
 
-  /// Updates the data structure to store multiple usernames per room (for future expansion)
-  Future<void> _updateUsernameStorage(String username) async {
-    if (_currentRoomId == null) return;
-
-    try {
-      final deviceId = await _getOrCreateDeviceId();
-      
-      // Get current data to merge with the new username
-      final roomResponse = await _client
-          .from(_tableName)
-          .select('data')
-          .eq('room_id', _currentRoomId!)
-          .single();
-      
-      final currentData = Map<String, dynamic>.from(roomResponse['data'] as Map<String, dynamic>? ?? {});
-      
-      // Get current usernames mapping or create new one
-      final usernamesData = Map<String, dynamic>.from(currentData[_usernamesKey] as Map<String, dynamic>? ?? {});
-      
-      // Update the username for this device
-      usernamesData[deviceId] = {
-        'value': username,
-        'timestamp': DateTime.now().toIso8601String(),
-      };
-
-      // Update the usernames data
-      currentData[_usernamesKey] = usernamesData;
-
-      await _client
-          .from(_tableName)
-          .update({'data': currentData})
-          .eq('room_id', _currentRoomId!);
-    } catch (e) {
-      AppLogger.error('Failed to update username storage', e);
-    }
-  }
 
   /// Adds a username listener for the current device
   void addUsernameListener(Function(String?) callback) {

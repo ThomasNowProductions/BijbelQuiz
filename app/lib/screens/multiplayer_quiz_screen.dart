@@ -245,8 +245,7 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
   }
 
   Future<void> _initializeQuiz() async {
-    final initStartTime = DateTime.now();
-    final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+    Provider.of<AnalyticsService>(context, listen: false);
 
     try {
       setState(() {
@@ -439,7 +438,7 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
   }
 
   void _handleAnswer(int selectedIndex, bool isPlayer1) {
-    final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+    Provider.of<AnalyticsService>(context, listen: false);
 
     // Prevent race conditions - check if already processing
     if (isPlayer1 && _player1IsProcessingAnswer) {
@@ -640,21 +639,14 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
   }
 
   Widget _buildPlayerColumn(BuildContext context, {required bool isPlayer1, required String playerName}) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final settings = Provider.of<SettingsProvider>(context);
+    Provider.of<SettingsProvider>(context);
 
     // Determine winner
-    String? winner;
     if (_player1Score > _player2Score) {
-      winner = 'player1';
     } else if (_player2Score > _player1Score) {
-      winner = 'player2';
     } else {
-      winner = 'tie';
     }
 
-    final isWinner = winner == 'player1' && isPlayer1 || winner == 'player2' && !isPlayer1;
-    final isTie = winner == 'tie';
 
     // Check if we're on a mobile device
     bool isMobile = !kIsWeb && (defaultTargetPlatform == TargetPlatform.android ||
@@ -874,7 +866,6 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
   Widget _buildResultsWidget(BuildContext context, bool isPlayer1, bool isWinner, bool isTie) {
     final colorScheme = Theme.of(context).colorScheme;
     final score = isPlayer1 ? _player1Score : _player2Score;
-    final playerName = isPlayer1 ? 'Speler 1' : 'Speler 2';
 
     String statusText;
     if (isTie) {
@@ -981,7 +972,6 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
     final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
     final QuizState quizState = isPlayer1 ? _player1QuizState : _player2QuizState;
     final ProgressiveQuestionSelector questionSelector = isPlayer1 ? _player1QuestionSelector : _player2QuestionSelector;
-    final QuizAnimationController animationController = isPlayer1 ? _player1AnimationController : _player2AnimationController;
     final String playerName = isPlayer1 ? 'Player1' : 'Player2';
 
     // Track skip feature usage
@@ -994,7 +984,7 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
 
     Provider.of<AnalyticsService>(context, listen: false).capture(context, 'skip_question_$playerName');
     final gameStats = Provider.of<GameStatsProvider>(context, listen: false);
-    final settings = Provider.of<SettingsProvider>(context, listen: false);
+    Provider.of<SettingsProvider>(context, listen: false);
     final isDev = kDebugMode;
 
     final success = isDev ? true : await gameStats.spendStarsWithTransaction(

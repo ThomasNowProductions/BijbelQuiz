@@ -98,20 +98,6 @@ class QuestionCacheService {
     }
   }
   
-  /// Check if cached questions need to be refreshed based on app version
-  Future<bool> _shouldRefreshCache() async {
-    try {
-      final packageInfo = await PackageInfo.fromPlatform();
-      final currentVersion = packageInfo.version;
-      final savedVersion = _prefs.getString(_appVersionKey);
-      
-      // If no saved version or version has changed, we should refresh
-      return savedVersion == null || savedVersion != currentVersion;
-    } catch (e) {
-      AppLogger.error('Error checking if cache should be refreshed', e);
-      return true; // Better to refresh on error than use potentially stale data
-    }
-  }
   
 
   /// Get questions for a specific language with lazy loading
@@ -356,40 +342,6 @@ class QuestionCacheService {
     }
   }
   
-  /// Cache downloaded questions for offline use
-  Future<void> _cacheDownloadedQuestions(String language, List<dynamic> questions) async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      
-      // Create a simplified representation for caching to save space
-      final simplifiedQuestions = questions.map((question) {
-        if (question is Map<String, dynamic>) {
-          return {
-            'id': question['id'],
-            'vraag': question['vraag'],
-            'juisteAntwoord': question['juisteAntwoord'],
-            'fouteAntwoorden': question['fouteAntwoorden'],
-            'moeilijkheidsgraad': question['moeilijkheidsgraad'],
-            'type': question['type'],
-            'categories': question['categories'],
-            'biblicalReference': question['biblicalReference'],
-          };
-        }
-        return question;
-      }).toList();
-      
-      final jsonString = json.encode(simplifiedQuestions);
-      final cacheKey = '${_cacheKey}_$language';
-      final timestampKey = '${_cacheTimestampKey}_$language';
-      
-      await prefs.setString(cacheKey, jsonString);
-      await prefs.setInt(timestampKey, DateTime.now().millisecondsSinceEpoch);
-      
-      AppLogger.info('Cached ${questions.length} questions for offline use');
-    } catch (e) {
-      AppLogger.error('Failed to cache downloaded questions', e);
-    }
-  }
   
   /// Update the LRU list and access tracking for a question
   void _updateLru(String language, int index) {

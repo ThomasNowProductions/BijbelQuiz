@@ -121,11 +121,6 @@ class NotificationService {
     return deviceInfo.version.sdkInt >= 33; // Android 13 is API level 33
   }
 
-  Future<bool> _isAndroid12OrHigher() async {
-    if (!Platform.isAndroid) return false;
-    final deviceInfo = await DeviceInfoPlugin().androidInfo;
-    return deviceInfo.version.sdkInt >= 31; // Android 12 is API level 31
-  }
 
   // Handle iOS/macOS local notification
   static Future<void> _onDidReceiveLocalNotification(
@@ -167,7 +162,6 @@ class NotificationService {
     for (int i = 0; i < 3; i++) {
       // Berekent begin van dit blok
       int blockStartMinutes = i * blockDuration;
-      int blockEndMinutes = (i + 1) * blockDuration;
       
       // Voeg wat willekeur toe binnen het blok
       int randomMinutesInBlock = blockStartMinutes + random.nextInt(blockDuration ~/ 2);

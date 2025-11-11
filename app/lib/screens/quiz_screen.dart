@@ -99,7 +99,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
   @override
   void initState() {
     super.initState();
-    final initStartTime = DateTime.now();
     final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
 
     // Track screen view
@@ -522,7 +521,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
 
   /// Initialize animations with performance optimizations
   Future<void> _initializeQuiz() async {
-    final initStartTime = DateTime.now();
     final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
 
     try {
@@ -673,8 +671,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
 
 
   void _handleAnswer(int selectedIndex) {
-    final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
-    final question = _quizState.question;
+    Provider.of<AnalyticsService>(context, listen: false);
 
 
     _answerHandler.handleAnswer(
@@ -691,10 +688,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
   }
 
   Future<void> _handleNextQuestion(bool isCorrect, double newDifficulty) async {
-    final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+    Provider.of<AnalyticsService>(context, listen: false);
     final gameStats = Provider.of<GameStatsProvider>(context, listen: false);
     final settings = Provider.of<SettingsProvider>(context, listen: false);
-    final question = _quizState.question;
 
 
     // Update game stats first
@@ -999,7 +995,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin, 
 
 
   Future<void> _completeLessonSession() async {
-    final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+    Provider.of<AnalyticsService>(context, listen: false);
 
     // Mark today's streak as active since lesson was completed
     await _markStreakActive();

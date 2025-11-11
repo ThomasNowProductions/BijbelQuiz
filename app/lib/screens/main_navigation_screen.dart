@@ -109,7 +109,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final textTheme = theme.textTheme;
     final screens = _getScreens();
     final settings = Provider.of<SettingsProvider>(context);
 

@@ -227,7 +227,7 @@ class TrackingService {
     String? screenName,
   }) async {
     // Get user ID from settings or generate an anonymous ID
-    final settings = Provider.of<SettingsProvider>(context, listen: false);
+    Provider.of<SettingsProvider>(context, listen: false);
     final userId = await _getPersistentUserId();
 
     // Get app version and build number

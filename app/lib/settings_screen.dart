@@ -246,7 +246,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   }).toList(),
                   onChanged: (String? value) {
                     if (value != null) {
-                      final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+                      Provider.of<AnalyticsService>(context, listen: false);
                       final previousTheme = _getThemeDropdownValue(settings);
   
                       final analytics = Provider.of<AnalyticsService>(context, listen: false);
@@ -306,7 +306,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: Switch(
                 value: settings.showNavigationLabels,
                 onChanged: (bool value) {
-                  final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+                  Provider.of<AnalyticsService>(context, listen: false);
 
                   final analytics = Provider.of<AnalyticsService>(context, listen: false);
                   analytics.capture(context, 'toggle_navigation_labels', properties: {'show_labels': value});
@@ -346,7 +346,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ],
                 onChanged: (String? value) {
                   if (value != null) {
-                    final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+                    Provider.of<AnalyticsService>(context, listen: false);
 
                     final analytics = Provider.of<AnalyticsService>(context, listen: false);
                     analytics.capture(context, 'change_layout_type', properties: {'layout': value});
@@ -376,7 +376,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: Switch(
                 value: settings.colorfulMode,
                 onChanged: (bool value) {
-                  final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+                  Provider.of<AnalyticsService>(context, listen: false);
 
                   final analytics = Provider.of<AnalyticsService>(context, listen: false);
                   analytics.capture(context, 'toggle_colorful_mode', properties: {'enabled': value});
@@ -401,7 +401,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: Switch(
                 value: settings.hidePromoCard,
                 onChanged: (bool value) {
-                  final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+                  Provider.of<AnalyticsService>(context, listen: false);
 
                   final analytics = Provider.of<AnalyticsService>(context, listen: false);
                   analytics.capture(context, 'toggle_hide_promo_card', properties: {'hide': value});
@@ -452,7 +452,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ],
                 onChanged: (String? value) {
                   if (value != null) {
-                    final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+                    Provider.of<AnalyticsService>(context, listen: false);
 
                     final analytics = Provider.of<AnalyticsService>(context, listen: false);
                     analytics.capture(context, 'change_game_speed', properties: {'speed': value});
@@ -482,7 +482,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: Switch(
                 value: settings.mute,
                 onChanged: (bool value) {
-                  final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+                  Provider.of<AnalyticsService>(context, listen: false);
 
                   final analytics = Provider.of<AnalyticsService>(context, listen: false);
                   analytics.capture(context, 'toggle_mute', properties: {'muted': value});
@@ -771,7 +771,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 child: Switch(
                   value: settings.notificationEnabled,
                   onChanged: (bool value) async {
-                    final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+                    Provider.of<AnalyticsService>(context, listen: false);
 
                     final analytics = Provider.of<AnalyticsService>(context, listen: false);
                     analytics.capture(context, 'toggle_notifications', properties: {'enabled': value});
@@ -810,7 +810,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               isSmallScreen,
               isDesktop,
               onPressed: () async {
-                final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+                Provider.of<AnalyticsService>(context, listen: false);
 
                 // Track donation attempt
                 final analytics = Provider.of<AnalyticsService>(context, listen: false);
@@ -1601,31 +1601,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Future<void> _shareApp(BuildContext context) async {
-    final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
-    analyticsService.capture(context, 'share_app');
-    
-    final String inviteUrl = 'https://bijbelquiz.app/i';
-    
-    try {
-      await Clipboard.setData(ClipboardData(text: inviteUrl));
-      if (context.mounted) {
-        showTopSnackBar(
-          context,
-          strings.AppStrings.inviteLinkCopied,
-          style: TopSnackBarStyle.success,
-        );
-      }
-    } catch (e) {
-      if (context.mounted) {
-        showTopSnackBar(
-          context,
-          '${strings.AppStrings.errorCopyingLink}${e.toString()}',
-          style: TopSnackBarStyle.error,
-        );
-      }
-    }
-  }
 
   Future<void> _shareStats(BuildContext context) async {
     final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
@@ -1754,7 +1729,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         color: Colors.transparent,
         child: InkWell(
           onTap: () async {
-            final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+            Provider.of<AnalyticsService>(context, listen: false);
 
             Provider.of<AnalyticsService>(context, listen: false).capture(context, 'follow_social_media', properties: {'platform': platform});
             final Uri uri = Uri.parse(url);

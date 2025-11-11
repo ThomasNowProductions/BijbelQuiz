@@ -1,4 +1,3 @@
-import 'package:logging/logging.dart';
 import '../config/supabase_config.dart';
 import '../error/error_types.dart';
 import '../services/logger.dart';
@@ -86,7 +85,6 @@ class ErrorReportingService {
   factory ErrorReportingService() => _instance;
   ErrorReportingService._internal();
 
-  static final Logger _logger = Logger('ErrorReportingService');
 
   /// Reports an error to the Supabase database
   /// 

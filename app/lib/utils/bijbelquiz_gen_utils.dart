@@ -3,11 +3,10 @@ class BijbelQuizGenPeriod {
   /// Check if the current date falls within the BijbelQuiz Gen period (December 31 - January 7)
   static bool isGenPeriod([DateTime? date]) {
     final now = date ?? DateTime.now();
-    final currentYear = now.year;
     
     // Define the start and end of the Gen period
-    final genStart = DateTime(currentYear, 12, 31); // December 31
-    final genEnd = DateTime(currentYear + 1, 1, 7);  // January 7 of next year
+// December 31
+// January 7 of next year
     
     // Handle year transition: if current date is after December 31 in the same year
     if (now.month == 12 && now.day >= 31) {
