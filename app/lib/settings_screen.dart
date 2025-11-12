@@ -1407,6 +1407,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
           'error_type': 'missing_config',
         },
       );
+        if (context.mounted) {
+          showTopSnackBar(
+            context,
+            'Fout: Exportconfiguratie voor statistieken ontbreekt. Neem contact op met support.',
+            style: TopSnackBarStyle.error,
+          );
+        }
+        return;
     }
 
     try {
