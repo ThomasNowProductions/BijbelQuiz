@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/services.dart';
 import 'logger.dart';
 
@@ -77,11 +78,9 @@ class GreetingService {
 
   /// Get random index
   int _getRandomIndex(int length) {
-    final now = DateTime.now();
-    // Use current time to generate a pseudo-random but consistent index
-    // This ensures the same greeting for the same time period
-    final seed = now.year + now.month + now.day + (now.hour ~/ 4); // Change every 4 hours
-    return seed % length;
+    // Use the Dart math library to get a proper random index
+    final random = Random();
+    return random.nextInt(length);
   }
 
   /// Clear cached data (useful for testing)
