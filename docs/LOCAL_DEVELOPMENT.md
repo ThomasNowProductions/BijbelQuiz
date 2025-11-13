@@ -58,9 +58,6 @@ The app is located in the `app/` directory:
 # Analyze code for issues
 flutter analyze
 
-# Format code
-flutter format lib/
-
 # Check for outdated dependencies
 flutter pub outdated
 
