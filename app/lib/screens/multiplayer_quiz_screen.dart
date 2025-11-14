@@ -30,6 +30,7 @@ import '../l10n/strings_nl.dart' as strings;
 import '../constants/urls.dart';
 import '../utils/bible_book_mapper.dart';
 import '../services/logger.dart';
+import '../utils/quiz_action_price_helper.dart';
 
 import '../utils/automatic_error_reporter.dart';
 
@@ -995,8 +996,9 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
     Provider.of<SettingsProvider>(context, listen: false);
     final isDev = kDebugMode;
 
+    final skipCost = await QuizActionPriceHelper().getSkipQuestionPrice();
     final success = isDev ? true : await gameStats.spendStarsWithTransaction(
-      amount: 35,
+      amount: skipCost,
       reason: 'Vraag overslaan',
       metadata: {
         'question_category': quizState.question.category,
@@ -1105,9 +1107,10 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
       return;
     }
 
-    // Spend 10 stars for unlocking the biblical reference (free in debug mode)
+    // Spend stars for unlocking the biblical reference (free in debug mode)
+    final biblicalCost = await QuizActionPriceHelper().getUnlockBiblicalReferencePrice();
     final success = isDev ? true : await gameStats.spendStarsWithTransaction(
-      amount: 10,
+      amount: biblicalCost,
       reason: 'Bijbelse referentie ontgrendelen',
       metadata: {
         'question_category': quizState.question.category,

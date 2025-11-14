@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import '../providers/game_stats_provider.dart';
 import '../providers/settings_provider.dart';
 import '../models/quiz_state.dart';
+import '../utils/quiz_action_price_helper.dart';
 import '../l10n/strings_nl.dart' as strings;
 
 /// Bottom navigation bar for quiz screen with action buttons
 /// (skip question, unlock biblical reference, report question) and cost display.
-class QuizBottomBar extends StatelessWidget {
+class QuizBottomBar extends StatefulWidget {
   final QuizState quizState;
   final GameStatsProvider gameStats;
   final SettingsProvider settings;
@@ -29,15 +30,74 @@ class QuizBottomBar extends StatelessWidget {
   });
 
   @override
+  State<QuizBottomBar> createState() => _QuizBottomBarState();
+}
+
+class _QuizBottomBarState extends State<QuizBottomBar> {
+  int _skipCost = 35; // Default fallback
+  int _biblicalCost = 10; // Default fallback
+  bool _isLoadingPrices = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadActionPrices();
+  }
+
+  Future<void> _loadActionPrices() async {
+    try {
+      setState(() {
+        _isLoadingPrices = true;
+      });
+
+      final priceHelper = QuizActionPriceHelper();
+      
+      // Load both prices concurrently
+      final results = await Future.wait([
+        priceHelper.getSkipQuestionPrice(),
+        priceHelper.getUnlockBiblicalReferencePrice(),
+      ]);
+
+      setState(() {
+        _skipCost = results[0];
+        _biblicalCost = results[1];
+        _isLoadingPrices = false;
+      });
+    } catch (e) {
+      // Keep default prices if loading fails (offline fallback)
+      setState(() {
+        _isLoadingPrices = false;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final canSkip = gameStats.score >= 35 && !quizState.isAnswering && !quizState.isTransitioning;
-    final hasBiblicalReference = quizState.question.biblicalReference != null &&
-                                quizState.question.biblicalReference!.isNotEmpty;
-    final canUnlock = gameStats.score >= 10 &&
-                      !quizState.isAnswering &&
-                      !quizState.isTransitioning &&
+    
+    final canSkip = widget.gameStats.score >= _skipCost && 
+                    !widget.quizState.isAnswering && 
+                    !widget.quizState.isTransitioning;
+    final hasBiblicalReference = widget.quizState.question.biblicalReference != null &&
+                                widget.quizState.question.biblicalReference!.isNotEmpty;
+    final canUnlock = widget.gameStats.score >= _biblicalCost &&
+                      !widget.quizState.isAnswering &&
+                      !widget.quizState.isTransitioning &&
                       hasBiblicalReference;
+
+    // Show loading indicator while fetching prices
+    if (_isLoadingPrices) {
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        child: const Center(
+          child: SizedBox(
+            height: 20,
+            width: 20,
+            child: CircularProgressIndicator(strokeWidth: 2),
+          ),
+        ),
+      );
+    }
 
     return Semantics(
       label: 'Quiz actions',
@@ -69,11 +129,11 @@ class QuizBottomBar extends StatelessWidget {
               _buildActionButton(
                 context: context,
                 icon: Icons.skip_next_rounded,
-                label: settings.language == 'en' ? strings.AppStrings.skip : strings.AppStrings.overslaan,
-                cost: 35,
+                label: widget.settings.language == 'en' ? strings.AppStrings.skip : strings.AppStrings.overslaan,
+                cost: _skipCost,
                 canUse: canSkip,
-                onPressed: onSkipPressed,
-                isDesktop: isDesktop,
+                onPressed: widget.onSkipPressed,
+                isDesktop: widget.isDesktop,
               ),
 
               // Unlock biblical reference button
@@ -82,10 +142,10 @@ class QuizBottomBar extends StatelessWidget {
                   context: context,
                   icon: Icons.book_rounded,
                   label: strings.AppStrings.unlockBiblicalReference,
-                  cost: 10,
+                  cost: _biblicalCost,
                   canUse: canUnlock,
-                  onPressed: onUnlockPressed,
-                  isDesktop: isDesktop,
+                  onPressed: widget.onUnlockPressed,
+                  isDesktop: widget.isDesktop,
                 ),
 
               // Report question button
@@ -95,8 +155,8 @@ class QuizBottomBar extends StatelessWidget {
                 label: strings.AppStrings.reportQuestion,
                 cost: 0,
                 canUse: true,
-                onPressed: onFlagPressed,
-                isDesktop: isDesktop,
+                onPressed: widget.onFlagPressed,
+                isDesktop: widget.isDesktop,
               ),
             ],
           ),
