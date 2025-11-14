@@ -99,12 +99,12 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: Colors.purple.withValues(alpha: 0.1),
+                color: colorScheme.primaryContainer,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
                 Icons.smart_toy_rounded,
-                color: Colors.purple,
+                color: colorScheme.onPrimaryContainer,
                 size: 20,
               ),
             ),
@@ -113,7 +113,7 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
               strings.AppStrings.aiThemeGenerator,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w700,
-                color: colorScheme.onSurface.withValues(alpha: 0.7),
+                color: colorScheme.onSurface,
               ),
             ),
           ],
@@ -143,13 +143,13 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                             colors: [
-                              colorScheme.primary.withValues(alpha: 0.1),
-                              colorScheme.primary.withValues(alpha: 0.05),
+                              colorScheme.primaryContainer,
+                              colorScheme.primaryContainer.withValues(alpha: 0.6),
                             ],
                           ),
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
-                            color: colorScheme.outline.withValues(alpha: 0.1),
+                            color: colorScheme.outline,
                             width: 1,
                           ),
                         ),
@@ -177,7 +177,7 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
                             Text(
                               strings.AppStrings.availableStars,
                               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                color: colorScheme.onSurface.withValues(alpha: 0.7),
+                                color: colorScheme.onPrimaryContainer,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -192,10 +192,10 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
                         width: double.infinity,
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: colorScheme.primary.withValues(alpha: 0.1),
+                          color: colorScheme.primaryContainer,
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                            color: colorScheme.primary.withValues(alpha: 0.2),
+                            color: colorScheme.outline,
                             width: 1,
                           ),
                         ),
@@ -241,7 +241,7 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
                       Text(
                         'Bijvoorbeeld: "Een blauw thema met gouden accenten, geïnspireerd op de oceaan..."',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: colorScheme.onSurface.withValues(alpha: 0.6),
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                       
@@ -254,12 +254,16 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
                         enabled: !_isGenerating,
                         decoration: InputDecoration(
                           hintText: 'Beschrijf hier jouw gewenste thema...',
+                          hintStyle: TextStyle(color: colorScheme.onSurfaceVariant),
+                          filled: true,
+                          fillColor: colorScheme.surfaceContainerHighest,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(color: colorScheme.outline),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(color: Colors.purple, width: 2),
+                            borderSide: BorderSide(color: colorScheme.primary, width: 2),
                           ),
                         ),
                       ),
@@ -269,7 +273,7 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
                       // Generation status
                       if (_isGenerating) ...[
                         LinearProgressIndicator(
-                          backgroundColor: colorScheme.primary.withValues(alpha: 0.1),
+                          backgroundColor: colorScheme.surfaceContainerHighest,
                           valueColor: AlwaysStoppedAnimation<Color>(colorScheme.primary),
                         ),
                         const SizedBox(height: 12),
@@ -277,13 +281,17 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
                           width: double.infinity,
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: colorScheme.surfaceContainerHighest,
+                            color: colorScheme.surface,
                             borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                              color: colorScheme.outline,
+                              width: 1,
+                            ),
                           ),
                           child: Text(
                             _generationStatus,
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: colorScheme.primary,
+                              color: colorScheme.onSurface,
                               fontWeight: FontWeight.w500,
                             ),
                             textAlign: TextAlign.center,
@@ -312,28 +320,28 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
                         );
                       },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.purple,
-                    foregroundColor: Colors.white,
+                    backgroundColor: colorScheme.primary,
+                    foregroundColor: colorScheme.onPrimary,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: _isLoadingCost 
+                  child: _isLoadingCost
                     ? Text(
                         'Laden...',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          color: Colors.white.withValues(alpha: 0.7),
+                          color: colorScheme.onPrimary.withValues(alpha: 0.7),
                         ),
                       )
                     : Text(
-                        _isGenerating ? 'Aan het genereren...' : 'Genereer Thema', 
+                        _isGenerating ? 'Aan het genereren...' : 'Genereer Thema',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          color: Colors.white,
+                          color: colorScheme.onPrimary,
                         ),
                       ),
                 ),
@@ -444,6 +452,7 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
       final themeDescription = 'AI-gegenereerd thema gebaseerd op: $description';
 
       final lightTheme = AIThemeBuilder.createLightThemeFromPalette(colorPalette.toJson());
+      final darkTheme = AIThemeBuilder.createDarkThemeFromPalette(colorPalette.toJson());
 
       final aiTheme = AITheme(
         id: themeId,
@@ -451,6 +460,7 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
         description: themeDescription,
         createdAt: DateTime.now(),
         lightTheme: lightTheme,
+        darkTheme: darkTheme,
         colorPalette: colorPalette.toJson(),
         prompt: description,
       );
@@ -614,11 +624,11 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
               const SizedBox(height: 8),
               Row(
                 children: [
-                  _buildColorPreview(theme.lightTheme.colorScheme.primary, 'Primair'),
+                  _buildColorPreview(context, theme.lightTheme.colorScheme.primary, 'Primair'),
                   const SizedBox(width: 8),
-                  _buildColorPreview(theme.lightTheme.colorScheme.secondary, 'Secundair'),
+                  _buildColorPreview(context, theme.lightTheme.colorScheme.secondary, 'Secundair'),
                   const SizedBox(width: 8),
-                  _buildColorPreview(theme.lightTheme.colorScheme.tertiary, 'Tertiair'),
+                  _buildColorPreview(context, theme.lightTheme.colorScheme.tertiary, 'Tertiair'),
                 ],
               ),
             ],
@@ -630,7 +640,9 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
               },
               child: Text(
                 'Sluiten',
-                style: TextStyle(color: colorScheme.onSurface.withValues(alpha: 0.7)),
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  color: colorScheme.primary,
+                ),
               ),
             ),
             ElevatedButton(
@@ -687,7 +699,9 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
     );
   }
 
-  Widget _buildColorPreview(Color color, String label) {
+  Widget _buildColorPreview(BuildContext context, Color color, String label) {
+    final colorScheme = Theme.of(context).colorScheme;
+    
     return Expanded(
       child: Column(
         children: [
@@ -698,7 +712,7 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
               color: color,
               borderRadius: BorderRadius.circular(8),
               border: Border.all(
-                color: Colors.grey.withValues(alpha: 0.3),
+                color: colorScheme.outline,
                 width: 1,
               ),
             ),
