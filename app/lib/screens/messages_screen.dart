@@ -485,21 +485,5 @@ class _MessagesScreenState extends State<MessagesScreen> {
     );
   }
 
-  /// Formats a date for display
-  String _formatDate(DateTime date) {
-    final now = DateTime.now();
-    final difference = date.difference(now);
-    
-    if (difference.inDays == 0) {
-      // Same day - show time
-      return '${date.day}/${date.month} ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
-    } else if (difference.inDays < 7) {
-      // Within a week - show day and month
-      return '${date.day}/${date.month}';
-    } else {
-      // Otherwise - show full date
-      return '${date.day}/${date.month}/${date.year}';
-    }
-  }
 
 }
