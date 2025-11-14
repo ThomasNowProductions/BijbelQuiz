@@ -386,9 +386,6 @@ class _MessagesScreenState extends State<MessagesScreen> {
 
   /// Builds a card for a single message
   Widget _buildMessageCard(Message message, ColorScheme colorScheme, TextTheme textTheme) {
-    final timeUntilExpiration = _getTimeUntilExpiration(message.expirationDate);
-    final isExpiringSoon = _isExpiringSoon(message.expirationDate);
-
     return Card(
       margin: const EdgeInsets.only(top: 16),
       elevation: 2,
@@ -397,45 +394,25 @@ class _MessagesScreenState extends State<MessagesScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    message.title,
-                    style: textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: colorScheme.onSurface,
-                    ),
-                  ),
-                ),
-                if (isExpiringSoon && message.expirationDate != null)
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: colorScheme.errorContainer,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      strings.AppStrings.expiringSoon,
-                      style: textTheme.labelSmall?.copyWith(
-                        color: colorScheme.onErrorContainer,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-              ],
+            Text(
+              message.title,
+              style: textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.w600,
+                color: colorScheme.onSurface,
+              ),
             ),
             const SizedBox(height: 8),
-            if (message.expirationDate != null)
+            if (message.createdBy != null && message.createdBy!.isNotEmpty)
               Text(
-                '${strings.AppStrings.expiresIn} $timeUntilExpiration',
+                message.createdBy!,
                 style: textTheme.bodyMedium?.copyWith(
                   color: colorScheme.onSurfaceVariant,
+                  fontWeight: FontWeight.w500,
                 ),
               )
             else
               Text(
-                strings.AppStrings.noExpirationDate,
+                '',
                 style: textTheme.bodyMedium?.copyWith(
                   color: colorScheme.onSurfaceVariant,
                 ),
@@ -450,16 +427,6 @@ class _MessagesScreenState extends State<MessagesScreen> {
             const SizedBox(height: 16),
             // Emoji reactions row
             _buildEmojiReactionsRow(message, colorScheme, textTheme),
-            const SizedBox(height: 12),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                '${strings.AppStrings.created}: ${_formatDate(message.createdAt)}',
-                style: textTheme.bodySmall?.copyWith(
-                  color: colorScheme.onSurfaceVariant,
-                ),
-              ),
-            ),
           ],
         ),
       ),
@@ -535,34 +502,4 @@ class _MessagesScreenState extends State<MessagesScreen> {
     }
   }
 
-  /// Gets the time until expiration in a human-readable format
-  String _getTimeUntilExpiration(DateTime? expirationDate) {
-    if (expirationDate == null) {
-      return strings.AppStrings.noExpirationDate;
-    }
-    
-    final now = DateTime.now();
-    final difference = expirationDate.difference(now);
-    
-    if (difference.inDays > 0) {
-      return '${difference.inDays} ${strings.AppStrings.days}';
-    } else if (difference.inHours > 0) {
-      return '${difference.inHours} ${strings.AppStrings.hoursMessage}';
-    } else if (difference.inMinutes > 0) {
-      return '${difference.inMinutes} ${strings.AppStrings.minutes}';
-    } else {
-      return strings.AppStrings.lessThanAMinute;
-    }
-  }
-
-  /// Checks if a message is expiring soon (less than 24 hours)
-  bool _isExpiringSoon(DateTime? expirationDate) {
-    if (expirationDate == null) {
-      return false;
-    }
-    
-    final now = DateTime.now();
-    final difference = expirationDate.difference(now);
-    return difference.inHours <= 24 && difference.inHours >= 0;
-  }
 }
