@@ -3,10 +3,15 @@
 Script to convert the questions JSON file to SQL INSERT statements for Supabase.
 This script reads the questions-nl-sv.json file and generates SQL statements
 to populate the questions table.
+
+The script outputs SQL to a file and uses ON CONFLICT to handle:
+- Adding new records if ID doesn't exist
+- Updating existing records if ID already exists
 """
 
 import json
 import sys
+import argparse
 from pathlib import Path
 
 def escape_sql_string(s):
@@ -23,8 +28,21 @@ def array_to_sql(arr):
     return f"ARRAY[{','.join(escaped_items)}]"
 
 def main():
-    # Path to the questions JSON file
-    json_path = Path(__file__).parent.parent / "app" / "assets" / "questions-nl-sv.json"
+    parser = argparse.ArgumentParser(description='Convert questions JSON to SQL statements')
+    parser.add_argument('--output', '-o', 
+                       default='database_supabase/questions_data.sql',
+                       help='Output SQL file path (default: database_supabase/questions_data.sql)')
+    parser.add_argument('--json-file', '-j',
+                       default=None,
+                       help='Path to JSON file (default: app/assets/questions-nl-sv.json)')
+    
+    args = parser.parse_args()
+    
+    # Determine JSON file path
+    if args.json_file:
+        json_path = Path(args.json_file)
+    else:
+        json_path = Path(__file__).parent.parent / "app" / "assets" / "questions-nl-sv.json"
 
     if not json_path.exists():
         print(f"Error: Questions JSON file not found at {json_path}")
@@ -37,9 +55,16 @@ def main():
         print(f"Error reading JSON file: {e}")
         sys.exit(1)
 
-    print("-- SQL INSERT statements for questions table")
-    print("-- Generated from questions-nl-sv.json")
-    print()
+    # Prepare SQL output
+    sql_lines = []
+    sql_lines.append("-- SQL INSERT statements for questions table")
+    sql_lines.append(f"-- Generated from {json_path.name}")
+    sql_lines.append(f"-- Generated on: {Path(__file__).stat().st_mtime}")
+    sql_lines.append("")
+    
+    # Ensure output directory exists
+    output_path = Path(args.output)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
 
     for question in questions:
         # Extract fields
@@ -52,7 +77,7 @@ def main():
         categories = array_to_sql(question.get('categories', []))
         biblical_reference = escape_sql_string(question.get('biblicalReference'))
 
-        # Generate INSERT statement
+        # Generate INSERT statement with ON CONFLICT handling
         sql = f"""INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
 VALUES ({question_id}, {vraag}, {juiste_antwoord}, {foute_antwoorden}, {moeilijkheidsgraad}, {question_type}, {categories}, {biblical_reference})
 ON CONFLICT (id) DO UPDATE SET
@@ -65,10 +90,20 @@ ON CONFLICT (id) DO UPDATE SET
     biblical_reference = EXCLUDED.biblical_reference,
     updated_at = NOW();"""
 
-        print(sql)
-        print()
+        sql_lines.append(sql)
+        sql_lines.append("")
 
-    print(f"-- Total questions processed: {len(questions)}")
+    sql_lines.append(f"-- Total questions processed: {len(questions)}")
+
+    # Write SQL to file (overwriting if exists)
+    try:
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write('\n'.join(sql_lines))
+        print(f"SQL statements successfully written to: {output_path}")
+        print(f"Total questions processed: {len(questions)}")
+    except Exception as e:
+        print(f"Error writing to output file: {e}")
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
