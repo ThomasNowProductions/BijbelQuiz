@@ -363,6 +363,12 @@ void main() {
   group('Categories parsing', () {
     test('should parse list of categories from JSON', () {
       final json = {
+        'id': 'test011',
+        'vraag': 'Test question',
+        'juisteAntwoord': 'Answer',
+        'fouteAntwoorden': ['Wrong'],
+        'moeilijkheidsgraad': 'easy',
+        'type': 'mc',
         'categories': ['Old Testament', 'Genesis', 'Creation']
       };
       final question = QuizQuestion.fromJson(json);
@@ -371,6 +377,12 @@ void main() {
 
     test('should handle empty categories list', () {
       final json = {
+        'id': 'test012',
+        'vraag': 'Test question',
+        'juisteAntwoord': 'Answer',
+        'fouteAntwoorden': ['Wrong'],
+        'moeilijkheidsgraad': 'easy',
+        'type': 'mc',
         'categories': []
       };
       final question = QuizQuestion.fromJson(json);
@@ -379,10 +391,32 @@ void main() {
 
     test('should handle non-list categories', () {
       final json = {
+        'id': 'test013',
+        'vraag': 'Test question',
+        'juisteAntwoord': 'Answer',
+        'fouteAntwoorden': ['Wrong'],
+        'moeilijkheidsgraad': 'easy',
+        'type': 'mc',
         'categories': 'not a list'
       };
       final question = QuizQuestion.fromJson(json);
       expect(question.categories, isEmpty);
+    });
+
+    test('should handle more than 10 categories', () {
+      final categories = List.generate(15, (i) => 'Category${i + 1}');
+      final json = {
+        'id': 'test014',
+        'vraag': 'Test question',
+        'juisteAntwoord': 'Answer',
+        'fouteAntwoorden': ['Wrong'],
+        'moeilijkheidsgraad': 'easy',
+        'type': 'mc',
+        'categories': categories
+      };
+      final question = QuizQuestion.fromJson(json);
+      expect(question.categories, categories);
+      expect(question.categories.length, 15);
     });
   });
 }

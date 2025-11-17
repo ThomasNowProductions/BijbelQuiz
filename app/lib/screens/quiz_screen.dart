@@ -55,16 +55,23 @@ class QuizScreen extends StatefulWidget {
 class _QuizScreenState extends State<QuizScreen>
     with TickerProviderStateMixin, WidgetsBindingObserver {
   int currentQuestionIndex = 0;
-  bool _isLoading = true;
-  String? _error;
   String? _lastLanguage;
 
-  // Lesson session mode (cap session to N questions with completion screen)
-  bool get _lessonMode => widget.lesson != null && widget.sessionLimit != null;
+  // Quiz state
+  late QuizState _quizState;
+
+  // Loading and error states
+  bool _isLoading = true;
+  String? _error;
+
+  // Lesson session counters
   int _sessionAnswered = 0;
   int _sessionCorrect = 0;
   int _sessionCurrentStreakLocal = 0;
   int _sessionBestStreak = 0;
+
+  // Lesson session mode (cap session to N questions with completion screen)
+  bool get _lessonMode => widget.lesson != null && widget.sessionLimit != null;
 
   // Previous values for comparison
   int _previousScore = 0;
@@ -74,9 +81,8 @@ class _QuizScreenState extends State<QuizScreen>
 
   // Track if we've initialized previous values after loading
   bool _initializedStats = false;
-  // New state management
-  late QuizState _quizState;
   bool _hasLoggedScreenView = false;
+
 
   // Performance optimization: track loading states to reduce debug logging
   bool _lastLoadingState = true;
@@ -188,6 +194,8 @@ class _QuizScreenState extends State<QuizScreen>
 
   /// Initialize the new extracted managers
   void _initializeManagers() {
+    // Managers removed as they are not currently used
+
     _timerManager = QuizTimerManager(
       performanceService: _performanceService,
       vsync: this,

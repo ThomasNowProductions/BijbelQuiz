@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'dart:io' show Platform;
+import 'package:shared_preferences/shared_preferences.dart';
 import '../providers/settings_provider.dart';
 import 'logger.dart';
 import 'tracking_service.dart';
+import 'package:uuid/uuid.dart';
 
 /// A service that provides an interface to the in-house tracking service.
 ///
 /// This service is a singleton and can be accessed using `Provider.of<AnalyticsService>(context)`.
 class AnalyticsService {
   final TrackingService _trackingService = TrackingService();
+  static final Uuid _uuid = Uuid();
 
   /// Initializes the in-house tracking service.
   ///
@@ -134,14 +137,16 @@ class AnalyticsService {
       BuildContext context, String feature, String action,
       {Map<String, Object>? additionalProperties}) async {
     final properties = Map<String, Object>.from(additionalProperties ?? {});
+    final sessionId = await _getSessionId();
     properties.addAll({
       'feature': feature,
       'action': action,
       'timestamp': DateTime.now().toIso8601String(),
-      'session_id': _getSessionId(),
+      'session_id': sessionId,
       'platform': _getPlatform(),
     });
 
+    // ignore: use_build_context_synchronously
     await capture(context, 'feature_usage', properties: properties);
   }
 
@@ -187,11 +192,22 @@ class AnalyticsService {
         additionalProperties: additionalProperties);
   }
 
-  /// Get or create a session ID for tracking user sessions
-  String _getSessionId() {
-    // In a real implementation, you'd want to persist this across app restarts
-    // For now, we'll use a simple timestamp-based session ID
-    return 'session_${DateTime.now().millisecondsSinceEpoch}';
+  /// Get or create a persistent session ID for tracking user sessions
+  Future<String> _getSessionId() async {
+    final prefs = await SharedPreferences.getInstance();
+    const sessionKey = 'analytics_session_id';
+
+    String? sessionId = prefs.getString(sessionKey);
+    if (sessionId == null) {
+      // Create a new session ID and store it
+      sessionId = _uuid.v4();
+      await prefs.setString(sessionKey, sessionId);
+      AppLogger.info('Created new persistent analytics session: $sessionId');
+    } else {
+      AppLogger.info('Using existing persistent analytics session: $sessionId');
+    }
+
+    return sessionId;
   }
 
   /// Get the current platform

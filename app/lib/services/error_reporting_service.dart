@@ -5,6 +5,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import '../providers/settings_provider.dart';
+import 'package:uuid/uuid.dart';
 
 /// Data class that represents an error report to be sent to Supabase
 class ErrorReport {
@@ -90,6 +91,8 @@ class ErrorReportingService {
   factory ErrorReportingService() => _instance;
   ErrorReportingService._internal();
 
+  static final Uuid _uuid = Uuid();
+
   /// Reports an error to the Supabase database
   ///
   /// [appError] The AppError object to report
@@ -141,9 +144,7 @@ class ErrorReportingService {
 
       // Create error report object with sanitized sensitive data
       final errorReport = ErrorReport(
-        id: DateTime.now()
-            .millisecondsSinceEpoch
-            .toString(), // Using timestamp as ID
+        id: _uuid.v4(), // Generate unique UUID for error report
         userId: userId, // This should be an anonymous user ID, not PII
         errorType: appError.type.toString(),
         errorMessage: _sanitizeErrorMessage(appError.technicalMessage),

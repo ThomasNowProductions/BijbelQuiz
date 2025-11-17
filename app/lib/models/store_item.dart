@@ -27,14 +27,109 @@ class StoreItem {
     this.category,
     this.discountStart,
     this.discountEnd,
-  });
+  }) {
+    // Input validation
+    _validateItemKey(itemKey);
+    _validateItemName(itemName);
+    _validateItemDescription(itemDescription);
+    _validateItemType(itemType);
+    _validatePrices(basePrice, currentPrice);
+    _validateDiscountPercentage(discountPercentage);
+    _validateIcon(icon);
+    _validateCategory(category);
+    _validateDiscountDates(discountStart, discountEnd);
+  }
+
+  static void _validateItemKey(String itemKey) {
+    if (itemKey.isEmpty || itemKey.length > 50) {
+      throw ArgumentError('itemKey must be non-empty and less than 50 characters');
+    }
+  }
+
+  static void _validateItemName(String itemName) {
+    if (itemName.isEmpty || itemName.length > 100) {
+      throw ArgumentError('itemName must be non-empty and less than 100 characters');
+    }
+  }
+
+  static void _validateItemDescription(String itemDescription) {
+    if (itemDescription.length > 500) {
+      throw ArgumentError('itemDescription must be less than 500 characters');
+    }
+  }
+
+  static void _validateItemType(String itemType) {
+    if (!['powerup', 'theme', 'feature'].contains(itemType)) {
+      throw ArgumentError('itemType must be one of: powerup, theme, feature');
+    }
+  }
+
+  static void _validatePrices(int basePrice, int currentPrice) {
+    if (basePrice < 0) {
+      throw ArgumentError('basePrice must be non-negative');
+    }
+    if (currentPrice < 0) {
+      throw ArgumentError('currentPrice must be non-negative');
+    }
+  }
+
+  static void _validateDiscountPercentage(int discountPercentage) {
+    if (discountPercentage < 0 || discountPercentage > 100) {
+      throw ArgumentError('discountPercentage must be between 0 and 100');
+    }
+  }
+
+  static void _validateIcon(String? icon) {
+    if (icon != null && icon.length > 200) {
+      throw ArgumentError('icon must be less than 200 characters');
+    }
+  }
+
+  static void _validateCategory(String? category) {
+    if (category != null && category.length > 50) {
+      throw ArgumentError('category must be less than 50 characters');
+    }
+  }
+
+  static void _validateDiscountDates(DateTime? discountStart, DateTime? discountEnd) {
+    if (discountStart != null && discountEnd != null && discountStart.isAfter(discountEnd)) {
+      throw ArgumentError('discountStart must be before discountEnd');
+    }
+  }
 
   factory StoreItem.fromJson(Map<String, dynamic> json) {
+    // Validate required fields before creating instance
+    final itemKey = json['item_key'] ?? '';
+    final itemName = json['item_name'] ?? '';
+    final itemDescription = json['item_description'] ?? '';
+    final itemType = json['item_type'] ?? '';
+
+    _validateItemKey(itemKey);
+    _validateItemName(itemName);
+    _validateItemDescription(itemDescription);
+    _validateItemType(itemType);
+
+    // Parse and validate dates
+    DateTime? discountStart;
+    DateTime? discountEnd;
+    try {
+      if (json['discount_start'] != null) {
+        discountStart = DateTime.parse(json['discount_start']);
+      }
+      if (json['discount_end'] != null) {
+        discountEnd = DateTime.parse(json['discount_end']);
+      }
+    } catch (e) {
+      throw ArgumentError('Invalid date format in discount dates');
+    }
+
+    _validateDiscountDates(discountStart, discountEnd);
+
     return StoreItem(
-      itemKey: json['item_key'] ?? '',
-      itemName: json['item_name'] ?? '',
-      itemDescription: json['item_description'] ?? '',
-      itemType: json['item_type'] ?? '',
+      itemKey: itemKey,
+      itemName: itemName,
+      itemDescription: itemDescription,
+      itemType: itemType,
       icon: json['icon'],
       basePrice: json['base_price']?.toInt() ?? 0,
       currentPrice: json['current_price']?.toInt() ?? 0,
@@ -42,12 +137,8 @@ class StoreItem {
       discountPercentage: json['discount_percentage']?.toInt() ?? 0,
       isActive: json['is_active'] ?? true,
       category: json['category'],
-      discountStart: json['discount_start'] != null
-          ? DateTime.parse(json['discount_start'])
-          : null,
-      discountEnd: json['discount_end'] != null
-          ? DateTime.parse(json['discount_end'])
-          : null,
+      discountStart: discountStart,
+      discountEnd: discountEnd,
     );
   }
 

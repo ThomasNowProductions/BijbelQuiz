@@ -101,7 +101,71 @@ class QuizQuestion {
     this.categories = const [],
     this.biblicalReference,
   }) : _shuffledOptions =
-            _createShuffledOptions(correctAnswer, incorrectAnswers);
+            _createShuffledOptions(correctAnswer, incorrectAnswers) {
+    // Input validation
+    _validateId(id);
+    _validateQuestion(question);
+    _validateCorrectAnswer(correctAnswer);
+    _validateIncorrectAnswers(incorrectAnswers);
+    _validateDifficulty(difficulty);
+    _validateCategories(categories);
+    _validateBiblicalReference(biblicalReference);
+  }
+
+  static void _validateId(String id) {
+    if (id.isEmpty || id.length > 100) {
+      throw ArgumentError('id must be non-empty and less than 100 characters');
+    }
+  }
+
+  static void _validateQuestion(String question) {
+    if (question.isEmpty || question.length > 1000) {
+      throw ArgumentError('question must be non-empty and less than 1000 characters');
+    }
+  }
+
+  static void _validateCorrectAnswer(String correctAnswer) {
+    if (correctAnswer.isEmpty || correctAnswer.length > 500) {
+      throw ArgumentError('correctAnswer must be non-empty and less than 500 characters');
+    }
+  }
+
+  static void _validateIncorrectAnswers(List<String> incorrectAnswers) {
+    if (incorrectAnswers.isEmpty) {
+      throw ArgumentError('incorrectAnswers must not be empty');
+    }
+    if (incorrectAnswers.length > 10) {
+      throw ArgumentError('incorrectAnswers must have at most 10 items');
+    }
+    for (final answer in incorrectAnswers) {
+      if (answer.isEmpty || answer.length > 500) {
+        throw ArgumentError('Each incorrect answer must be non-empty and less than 500 characters');
+      }
+    }
+  }
+
+  static void _validateDifficulty(String difficulty) {
+    if (difficulty.isEmpty || difficulty.length > 50) {
+      throw ArgumentError('difficulty must be non-empty and less than 50 characters');
+    }
+  }
+
+  static void _validateCategories(List<String> categories) {
+    if (categories.length > 50) {
+      throw ArgumentError('categories must have at most 50 items');
+    }
+    for (final category in categories) {
+      if (category.isEmpty || category.length > 50) {
+        throw ArgumentError('Each category must be non-empty and less than 50 characters');
+      }
+    }
+  }
+
+  static void _validateBiblicalReference(String? biblicalReference) {
+    if (biblicalReference != null && biblicalReference.length > 100) {
+      throw ArgumentError('biblicalReference must be less than 100 characters');
+    }
+  }
 
   /// Creates a [QuizQuestion] from a JSON map.
   ///
@@ -115,13 +179,24 @@ class QuizQuestion {
     final categories = _parseCategories(json['categories']);
     final biblicalReference = json['biblicalReference'] as String?;
     final id = json['id']?.toString() ?? '';
+    final question = json['vraag']?.toString() ?? '';
+    final difficulty = json['moeilijkheidsgraad']?.toString() ?? '';
+
+    // Validate parsed data before creating instance
+    _validateId(id);
+    _validateQuestion(question);
+    _validateCorrectAnswer(correctAnswer);
+    _validateIncorrectAnswers(incorrectAnswers);
+    _validateDifficulty(difficulty);
+    _validateCategories(categories);
+    _validateBiblicalReference(biblicalReference);
 
     return QuizQuestion(
       id: id,
-      question: json['vraag']?.toString() ?? '',
+      question: question,
       correctAnswer: correctAnswer,
       incorrectAnswers: incorrectAnswers,
-      difficulty: json['moeilijkheidsgraad']?.toString() ?? '',
+      difficulty: difficulty,
       type: type,
       categories: categories,
       biblicalReference: biblicalReference,

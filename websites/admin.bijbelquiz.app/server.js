@@ -14,6 +14,9 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Trust proxy for proper IP detection behind reverse proxies (important for rate limiting)
+app.set('trust proxy', 1);
+
 // Initialize Supabase client
 let supabase;
 if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
@@ -24,6 +27,17 @@ if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
 
 // Serve static files from the current directory
 app.use(express.static(__dirname));
+
+// Force HTTPS in production
+if (process.env.NODE_ENV === 'production') {
+    app.use((req, res, next) => {
+        if (req.header('x-forwarded-proto') !== 'https') {
+            res.redirect(`https://${req.header('host')}${req.url}`);
+        } else {
+            next();
+        }
+    });
+}
 
 // Security middleware
 app.use(helmet({
@@ -45,13 +59,23 @@ app.use(helmet({
 }));
 
 // CORS Configuration - only allow specific origins
-const allowedOrigins = process.env.ALLOWED_ORIGINS ? 
-  process.env.ALLOWED_ORIGINS.split(',') : 
+const allowedOrigins = process.env.ALLOWED_ORIGINS ?
+  process.env.ALLOWED_ORIGINS.split(',') :
   ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5500'];
 
 app.use(cors({
-  origin: allowedOrigins,
-  credentials: true
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  optionsSuccessStatus: 200 // Some legacy browsers choke on 204
 }));
 
 // Rate limiting for API endpoints
@@ -654,8 +678,9 @@ app.get('/health', (req, res) => {
 
 // If this file is run directly (not imported), start the server
 if (require.main === module) {
-  app.listen(PORT, () => {
-    console.log(`Admin Dashboard Server running on port ${PORT}`);
+  const host = process.env.NODE_ENV === 'production' ? 'localhost' : '0.0.0.0';
+  app.listen(PORT, host, () => {
+    console.log(`Admin Dashboard Server running on ${host}:${PORT} (${process.env.NODE_ENV || 'development'} mode)`);
   });
 }
 
