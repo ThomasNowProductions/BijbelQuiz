@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:convert';
+import 'dart:async';
 import '../providers/game_stats_provider.dart';
+import '../providers/lesson_progress_provider.dart';
 import '../services/logger.dart';
 import '../utils/automatic_error_reporter.dart';
 
@@ -23,6 +25,10 @@ class _SyncScreenState extends State<SyncScreen> {
   final TextEditingController _displayNameController = TextEditingController();
   final TextEditingController _bioController = TextEditingController();
 
+  // Auth state management
+  StreamSubscription<AuthState>? _authSubscription;
+  bool _isLoadingProfile = false;
+
   bool _isLoading = false;
   String? _error;
   bool _isLoginMode = true; // true for login, false for signup
@@ -31,10 +37,14 @@ class _SyncScreenState extends State<SyncScreen> {
   List<String>? _blacklistedUsernames;
 
   // Account management states
-  bool _showAccountSettings = false;
   bool _isChangingPassword = false;
   bool _isChangingUsername = false;
   bool _isUpdatingProfile = false;
+
+  // Sync status tracking
+  Map<String, DateTime> _lastSyncTimes = {};
+  List<String> _syncedDataTypes = [];
+  bool _isManualSync = false;
 
   @override
   void initState() {
@@ -53,10 +63,19 @@ class _SyncScreenState extends State<SyncScreen> {
   }
 
   void _setupAuthListener() {
-    Supabase.instance.client.auth.onAuthStateChange.listen((event) {
+    _authSubscription = Supabase.instance.client.auth.onAuthStateChange.listen((event) {
+      AppLogger.debug('Auth state changed: ${event.event} for user: ${event.session?.user?.email ?? 'none'}');
+      
+      // Prevent race conditions by checking if we're already loading profile
+      if (_isLoadingProfile) {
+        AppLogger.debug('Skipping profile load - already in progress');
+        return;
+      }
+      
       setState(() {
         _currentUser = event.session?.user;
       });
+      AppLogger.debug('Calling _loadUserProfile after auth state change');
       _loadUserProfile();
     });
   }
@@ -69,6 +88,14 @@ class _SyncScreenState extends State<SyncScreen> {
       return;
     }
 
+    // Prevent race conditions by tracking loading state
+    if (_isLoadingProfile) {
+      AppLogger.debug('Profile load already in progress, skipping');
+      return;
+    }
+
+    _isLoadingProfile = true;
+    
     try {
       final gameStatsProvider = Provider.of<GameStatsProvider>(context, listen: false);
       final profile = await gameStatsProvider.syncService.getCurrentUserProfile();
@@ -82,8 +109,548 @@ class _SyncScreenState extends State<SyncScreen> {
           }
         });
       }
+      AppLogger.debug('User profile loaded successfully');
     } catch (e) {
       AppLogger.error('Failed to load user profile', e);
+    } finally {
+      _isLoadingProfile = false;
+    }
+  }
+
+  /// Tracks sync status for different data types
+  Future<void> _trackSyncStatus(String dataType) async {
+    setState(() {
+      _lastSyncTimes[dataType] = DateTime.now();
+      if (!_syncedDataTypes.contains(dataType)) {
+        _syncedDataTypes.add(dataType);
+      }
+    });
+  }
+
+  /// Triggers manual sync of all data
+  Future<void> _manualSync() async {
+    setState(() {
+      _isManualSync = true;
+    });
+
+    try {
+      final gameStatsProvider = Provider.of<GameStatsProvider>(context, listen: false);
+      
+      // Sync each data type
+      await _trackSyncStatus('game_stats');
+      await gameStatsProvider.syncService.syncData('game_stats', gameStatsProvider.getExportData());
+      
+      await _trackSyncStatus('lesson_progress');
+      await gameStatsProvider.syncService.syncData('lesson_progress', gameStatsProvider.getExportData());
+      
+      await _trackSyncStatus('settings');
+      await gameStatsProvider.syncService.syncData('settings', gameStatsProvider.getExportData());
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Gegevens succesvol gesynchroniseerd'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Synchronisatie mislukt: ${e.toString()}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      setState(() {
+        _isManualSync = false;
+      });
+    }
+  }
+
+  /// Gets list of data types being synced
+  List<String> _getSyncDataTypes() {
+    return [
+      'game_stats',
+      'lesson_progress', 
+      'settings',
+    ];
+  }
+
+  /// Builds sync status row for a data type
+  Widget _buildSyncStatusRow(String dataType) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    
+    final lastSync = _lastSyncTimes[dataType];
+    final isSynced = _syncedDataTypes.contains(dataType);
+    
+    String displayName;
+    switch (dataType) {
+      case 'game_stats':
+        displayName = 'Game Statistieken';
+        break;
+      case 'lesson_progress':
+        displayName = 'Les Voortgang';
+        break;
+      case 'settings':
+        displayName = 'Instellingen';
+        break;
+      default:
+        displayName = dataType;
+    }
+    
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Row(
+        children: [
+          Icon(
+            isSynced ? Icons.check_circle : Icons.pending,
+            color: isSynced ? Colors.green : colorScheme.primary,
+            size: 16,
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              displayName,
+              style: theme.textTheme.bodySmall,
+            ),
+          ),
+          Text(
+            lastSync != null 
+                ? '${lastSync.hour.toString().padLeft(2, '0')}:${lastSync.minute.toString().padLeft(2, '0')}'
+                : 'Nooit',
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: colorScheme.onSurface.withValues(alpha: 0.6),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Gets account statistics from providers
+  Future<Map<String, dynamic>> _getAccountStatistics() async {
+    try {
+      final gameStatsProvider = Provider.of<GameStatsProvider>(context, listen: false);
+      final lessonProgressProvider = Provider.of<LessonProgressProvider>(context, listen: false);
+      
+      final gameStats = gameStatsProvider.getExportData();
+      final lessonProgress = lessonProgressProvider.getExportData();
+      
+      // Count completed lessons (lessons with > 0 stars)
+      int completedLessons = 0;
+      final bestStarsByLesson = lessonProgress['bestStarsByLesson'] as Map<String, int>? ?? {};
+      for (final stars in bestStarsByLesson.values) {
+        if (stars > 0) completedLessons++;
+      }
+      
+      return {
+        'totalScore': gameStats['score'] ?? 0,
+        'currentStreak': gameStats['currentStreak'] ?? 0,
+        'longestStreak': gameStats['longestStreak'] ?? 0,
+        'incorrectAnswers': gameStats['incorrectAnswers'] ?? 0,
+        'completedLessons': completedLessons,
+        'totalLessons': bestStarsByLesson.length,
+      };
+    } catch (e) {
+      AppLogger.error('Failed to get account statistics', e);
+      return {
+        'totalScore': 0,
+        'currentStreak': 0,
+        'longestStreak': 0,
+        'incorrectAnswers': 0,
+        'completedLessons': 0,
+        'totalLessons': 0,
+      };
+    }
+  }
+
+  /// Builds a statistics row
+  Widget _buildStatRow(String label, String value) {
+    final theme = Theme.of(context);
+    
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: theme.textTheme.bodyMedium,
+          ),
+          Text(
+            value,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Builds account menu items
+  List<Widget> _buildAccountMenuItems() {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    return [
+      _buildMenuItem(
+        icon: Icons.person_rounded,
+        title: 'Profiel bewerken',
+        subtitle: 'Naam en bio aanpassen',
+        onTap: () => _showProfileEditDialog(),
+      ),
+      const SizedBox(height: 16),
+      _buildMenuItem(
+        icon: Icons.alternate_email_rounded,
+        title: 'Gebruikersnaam wijzigen',
+        subtitle: 'Je gebruikersnaam aanpassen',
+        onTap: () => _showUsernameChangeDialog(),
+      ),
+      const SizedBox(height: 16),
+      _buildMenuItem(
+        icon: Icons.lock_rounded,
+        title: 'Wachtwoord wijzigen',
+        subtitle: 'Beveilig je account',
+        onTap: () => _showPasswordChangeDialog(),
+      ),
+      const SizedBox(height: 16),
+      _buildDangerMenuItem(
+        icon: Icons.logout_rounded,
+        title: 'Uitloggen',
+        subtitle: 'Van dit apparaat afmelden',
+        onTap: _signOut,
+        color: colorScheme.error,
+      ),
+      const SizedBox(height: 16),
+      _buildDangerMenuItem(
+        icon: Icons.delete_rounded,
+        title: 'Account verwijderen',
+        subtitle: 'Account permanent verwijderen',
+        onTap: _deleteAccount,
+        color: colorScheme.error,
+      ),
+    ];
+  }
+
+  /// Builds a menu item
+  Widget _buildMenuItem({
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
+  }) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: colorScheme.surfaceContainerHighest,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          children: [
+            Icon(
+              icon,
+              color: colorScheme.primary,
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    subtitle,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: colorScheme.onSurface.withValues(alpha: 0.6),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Icon(
+              Icons.chevron_right_rounded,
+              color: colorScheme.onSurface.withValues(alpha: 0.4),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// Builds a danger menu item
+  Widget _buildDangerMenuItem({
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
+    required Color color,
+  }) {
+    final theme = Theme.of(context);
+
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: color.withValues(alpha: 0.1),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: color.withValues(alpha: 0.3)),
+        ),
+        child: Row(
+          children: [
+            Icon(
+              icon,
+              color: color,
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: color,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    subtitle,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: color.withValues(alpha: 0.7),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Icon(
+              Icons.chevron_right_rounded,
+              color: color.withValues(alpha: 0.7),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// Shows profile edit dialog
+  void _showProfileEditDialog() {
+    _displayNameController.text = _userProfile?['display_name'] ?? '';
+    _bioController.text = _userProfile?['bio'] ?? '';
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Profiel bewerken'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: _displayNameController,
+              decoration: const InputDecoration(
+                labelText: 'Weergavenaam',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: _bioController,
+              decoration: const InputDecoration(
+                labelText: 'Bio (optioneel)',
+                border: OutlineInputBorder(),
+              ),
+              maxLines: 3,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Annuleren'),
+          ),
+          ElevatedButton(
+            onPressed: _isUpdatingProfile ? null : () async {
+              Navigator.of(context).pop();
+              await _updateProfile();
+            },
+            child: _isUpdatingProfile 
+                ? const SizedBox(
+                    width: 16, 
+                    height: 16, 
+                    child: CircularProgressIndicator(strokeWidth: 2)
+                  )
+                : const Text('Opslaan'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Shows username change dialog
+  void _showUsernameChangeDialog() {
+    _usernameController.clear();
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Gebruikersnaam wijzigen'),
+        content: TextField(
+          controller: _usernameController,
+          decoration: const InputDecoration(
+            labelText: 'Nieuwe gebruikersnaam',
+            hintText: 'Kies een unieke naam',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Annuleren'),
+          ),
+          ElevatedButton(
+            onPressed: _isChangingUsername ? null : () async {
+              Navigator.of(context).pop();
+              await _changeUsername();
+            },
+            child: _isChangingUsername 
+                ? const SizedBox(
+                    width: 16, 
+                    height: 16, 
+                    child: CircularProgressIndicator(strokeWidth: 2)
+                  )
+                : const Text('Wijzigen'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Shows password change dialog
+  void _showPasswordChangeDialog() {
+    _passwordController.clear();
+    _newPasswordController.clear();
+    _confirmNewPasswordController.clear();
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Wachtwoord wijzigen'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: _passwordController,
+              decoration: const InputDecoration(
+                labelText: 'Huidig wachtwoord',
+                border: OutlineInputBorder(),
+              ),
+              obscureText: true,
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: _newPasswordController,
+              decoration: const InputDecoration(
+                labelText: 'Nieuw wachtwoord',
+                hintText: 'Minimaal 6 karakters',
+                border: OutlineInputBorder(),
+              ),
+              obscureText: true,
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: _confirmNewPasswordController,
+              decoration: const InputDecoration(
+                labelText: 'Bevestig nieuw wachtwoord',
+                border: OutlineInputBorder(),
+              ),
+              obscureText: true,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Annuleren'),
+          ),
+          ElevatedButton(
+            onPressed: _isChangingPassword ? null : () async {
+              Navigator.of(context).pop();
+              await _changePassword();
+            },
+            child: _isChangingPassword 
+                ? const SizedBox(
+                    width: 16, 
+                    height: 16, 
+                    child: CircularProgressIndicator(strokeWidth: 2)
+                  )
+                : const Text('Wijzigen'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Checks if data is up to date (within last hour)
+  bool _isDataUpToDate() {
+    if (_lastSyncTimes.isEmpty) return false;
+    
+    final lastSync = _lastSyncTimes.values.isNotEmpty 
+        ? _lastSyncTimes.values.reduce((a, b) => a.isAfter(b) ? a : b)
+        : null;
+        
+    if (lastSync == null) return false;
+    
+    final now = DateTime.now();
+    final difference = now.difference(lastSync);
+    
+    // Consider data up to date if synced within last hour
+    return difference.inMinutes < 60;
+  }
+
+  /// Gets the last sync time as a formatted string
+  String _getLastSyncTime() {
+    if (_lastSyncTimes.isEmpty) {
+      return 'Nooit';
+    }
+    
+    final lastSync = _lastSyncTimes.values.isNotEmpty 
+        ? _lastSyncTimes.values.reduce((a, b) => a.isAfter(b) ? a : b)
+        : null;
+        
+    if (lastSync == null) {
+      return 'Nooit';
+    }
+    
+    final now = DateTime.now();
+    final difference = now.difference(lastSync);
+    
+    if (difference.inMinutes < 1) {
+      return 'Zojuist';
+    } else if (difference.inMinutes < 60) {
+      return '${difference.inMinutes}m geleden';
+    } else if (difference.inHours < 24) {
+      return '${difference.inHours}u geleden';
+    } else {
+      return '${difference.inDays}d geleden';
     }
   }
 
@@ -376,17 +943,15 @@ class _SyncScreenState extends State<SyncScreen> {
     });
 
     try {
-      // First verify current password by attempting to sign in
+      // Update password directly - Supabase handles current password verification internally
       final email = _currentUser!.email!;
-      await Supabase.instance.client.auth.signInWithPassword(
-        email: email,
-        password: currentPassword,
-      );
-
-      // If successful, update password
+      AppLogger.debug('Updating password for user: $email');
+      
       await Supabase.instance.client.auth.updateUser(
         UserAttributes(password: newPassword),
       );
+      
+      AppLogger.debug('Password update completed successfully');
 
       // Clear fields
       _passwordController.clear();
@@ -579,37 +1144,6 @@ class _SyncScreenState extends State<SyncScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Header section
-              Container(
-                margin: const EdgeInsets.only(bottom: 24),
-                child: Column(
-                  children: [
-                    Icon(
-                      Icons.account_circle_rounded,
-                      size: 64,
-                      color: colorScheme.primary,
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      'Account',
-                      style: theme.textTheme.headlineMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      _currentUser != null
-                          ? 'Je bent ingelogd met ${_currentUser!.email}'
-                          : 'Log in of maak een account aan om je gegevens te synchroniseren',
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: colorScheme.onSurface.withValues(alpha: 0.7),
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ),
 
               // Error message
               if (_error != null)
@@ -712,7 +1246,7 @@ class _SyncScreenState extends State<SyncScreen> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 16),
 
                       // Email field
                       TextField(
@@ -831,7 +1365,7 @@ class _SyncScreenState extends State<SyncScreen> {
                         const SizedBox(height: 16),
                       ],
 
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 16),
                       SizedBox(
                         width: double.infinity,
                         height: 50,
@@ -886,17 +1420,28 @@ class _SyncScreenState extends State<SyncScreen> {
                   ),
                   child: Column(
                     children: [
-                      // Account info header
+                      // Unified Profile Card
                       Container(
                         width: double.infinity,
-                        padding: const EdgeInsets.all(24),
+                        padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: colorScheme.primaryContainer,
+                          color: colorScheme.surfaceContainerHighest,
                           borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: colorScheme.outline.withValues(alpha: 0.2),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.08),
+                              blurRadius: 8,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            // Profile Picture
                             CircleAvatar(
                               radius: 32,
                               backgroundColor: colorScheme.primary,
@@ -908,428 +1453,112 @@ class _SyncScreenState extends State<SyncScreen> {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 16),
-                            Text(
-                              _userProfile?['display_name'] ?? 'Gebruiker',
-                              style: theme.textTheme.titleLarge?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: colorScheme.primary,
+                            const SizedBox(width: 16),
+                            
+                            // Profile Information
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // Display Name
+                                  Text(
+                                    _userProfile?['display_name'] ?? 'Gebruiker',
+                                    style: theme.textTheme.titleLarge?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: colorScheme.primary,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  
+                                  // Username
+                                  Text(
+                                    '@${_userProfile?['username'] ?? 'username'}',
+                                    style: theme.textTheme.bodyMedium?.copyWith(
+                                      color: colorScheme.onSurface.withValues(alpha: 0.7),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  
+                                  // Email
+                                  Text(
+                                    _currentUser!.email ?? 'Geen email',
+                                    style: theme.textTheme.bodySmall?.copyWith(
+                                      color: colorScheme.onSurface.withValues(alpha: 0.6),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              '@${_userProfile?['username'] ?? 'username'}',
-                              style: theme.textTheme.bodyMedium?.copyWith(
-                                color: colorScheme.onPrimaryContainer.withValues(alpha: 0.7),
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              _currentUser!.email ?? 'Geen email',
-                              style: theme.textTheme.bodySmall?.copyWith(
-                                color: colorScheme.onPrimaryContainer.withValues(alpha: 0.6),
-                              ),
-                              textAlign: TextAlign.center,
                             ),
                           ],
                         ),
                       ),
 
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 16),
 
-                      // Account management options
-                      if (!_showAccountSettings) ...[
-                        // Profile info
-                        if (_userProfile?['bio']?.isNotEmpty == true) ...[
-                          Container(
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: colorScheme.surfaceContainerHighest,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                      // Simplified Sync Status
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: colorScheme.surfaceContainerHighest,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
                               children: [
-                                Text(
-                                  'Bio',
-                                  style: theme.textTheme.titleSmall?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: colorScheme.primary,
+                                Icon(
+                                  _isDataUpToDate() ? Icons.cloud_done : Icons.cloud_sync,
+                                  color: _isDataUpToDate() ? Colors.green : colorScheme.primary,
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        _isDataUpToDate() ? 'Bijgewerkt' : 'Niet bijgewerkt',
+                                        style: theme.textTheme.bodyMedium?.copyWith(
+                                          fontWeight: FontWeight.w500,
+                                          color: _isDataUpToDate() ? Colors.green : colorScheme.primary,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Laatste sync: ${_getLastSyncTime()}',
+                                        style: theme.textTheme.bodySmall?.copyWith(
+                                          color: colorScheme.onSurface.withValues(alpha: 0.6),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  _userProfile!['bio'],
-                                  style: theme.textTheme.bodyMedium,
+                                SizedBox(
+                                  height: 40,
+                                  child: ElevatedButton.icon(
+                                    onPressed: _isManualSync ? null : _manualSync,
+                                    icon: _isManualSync
+                                        ? const SizedBox(
+                                            width: 16,
+                                            height: 16,
+                                            child: CircularProgressIndicator(strokeWidth: 2),
+                                          )
+                                        : const Icon(Icons.sync_rounded, size: 16),
+                                    label: Text(_isManualSync ? 'Syncing...' : 'Sync'),
+                                    style: ElevatedButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
-                          ),
-                          const SizedBox(height: 16),
-                        ],
-
-                        // Sync status
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: colorScheme.surfaceContainerHighest,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.sync_rounded,
-                                color: colorScheme.primary,
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Text(
-                                  'Je gegevens worden automatisch gesynchroniseerd tussen al je apparaten.',
-                                  style: theme.textTheme.bodyMedium,
-                                ),
-                              ),
-                            ],
-                          ),
+                          ],
                         ),
+                      ),
 
-                        const SizedBox(height: 24),
+                      const SizedBox(height: 16),
 
-                        // Account management buttons
-                        Text(
-                          'Account beheren',
-                          style: theme.textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-
-                        // Settings button
-                        SizedBox(
-                          width: double.infinity,
-                          height: 50,
-                          child: OutlinedButton.icon(
-                            onPressed: () => setState(() => _showAccountSettings = true),
-                            icon: const Icon(Icons.settings_rounded),
-                            label: const Text('Account instellingen'),
-                            style: OutlinedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
-                          ),
-                        ),
-
-                        const SizedBox(height: 12),
-
-                        // Sign out button
-                        SizedBox(
-                          width: double.infinity,
-                          height: 50,
-                          child: OutlinedButton.icon(
-                            onPressed: _isLoading ? null : _signOut,
-                            icon: const Icon(Icons.logout_rounded),
-                            label: const Text('Uitloggen'),
-                            style: OutlinedButton.styleFrom(
-                              foregroundColor: colorScheme.error,
-                              side: BorderSide(color: colorScheme.error),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ] else ...[
-                        // Account settings view
-                        Text(
-                          'Account instellingen',
-                          style: theme.textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 24),
-
-                        // Profile settings
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: colorScheme.surfaceContainerHighest,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Profiel bewerken',
-                                style: theme.textTheme.titleSmall?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: colorScheme.primary,
-                                ),
-                              ),
-                              const SizedBox(height: 16),
-
-                              TextField(
-                                controller: _displayNameController,
-                                decoration: InputDecoration(
-                                  labelText: 'Weergavenaam',
-                                  hintText: 'Hoe anderen je zien',
-                                  prefixIcon: const Icon(Icons.person_rounded),
-                                  filled: true,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                ),
-                                enabled: !_isUpdatingProfile,
-                              ),
-                              const SizedBox(height: 12),
-
-                              TextField(
-                                controller: _bioController,
-                                decoration: InputDecoration(
-                                  labelText: 'Bio (optioneel)',
-                                  hintText: 'Vertel iets over jezelf',
-                                  prefixIcon: const Icon(Icons.description_rounded),
-                                  filled: true,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                ),
-                                maxLines: 3,
-                                enabled: !_isUpdatingProfile,
-                              ),
-                              const SizedBox(height: 16),
-
-                              SizedBox(
-                                width: double.infinity,
-                                height: 40,
-                                child: ElevatedButton(
-                                  onPressed: _isUpdatingProfile ? null : _updateProfile,
-                                  child: _isUpdatingProfile
-                                      ? const SizedBox(
-                                          width: 20,
-                                          height: 20,
-                                          child: CircularProgressIndicator(strokeWidth: 2),
-                                        )
-                                      : const Text('Profiel bijwerken'),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        const SizedBox(height: 16),
-
-                        // Username change
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: colorScheme.surfaceContainerHighest,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Gebruikersnaam wijzigen',
-                                style: theme.textTheme.titleSmall?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: colorScheme.primary,
-                                ),
-                              ),
-                              const SizedBox(height: 16),
-
-                              TextField(
-                                controller: _usernameController,
-                                decoration: InputDecoration(
-                                  labelText: 'Nieuwe gebruikersnaam',
-                                  hintText: 'Kies een unieke naam',
-                                  prefixIcon: const Icon(Icons.alternate_email_rounded),
-                                  filled: true,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                ),
-                                enabled: !_isChangingUsername,
-                              ),
-                              const SizedBox(height: 16),
-
-                              SizedBox(
-                                width: double.infinity,
-                                height: 40,
-                                child: ElevatedButton(
-                                  onPressed: _isChangingUsername ? null : _changeUsername,
-                                  child: _isChangingUsername
-                                      ? const SizedBox(
-                                          width: 20,
-                                          height: 20,
-                                          child: CircularProgressIndicator(strokeWidth: 2),
-                                        )
-                                      : const Text('Gebruikersnaam wijzigen'),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        const SizedBox(height: 16),
-
-                        // Password change
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: colorScheme.surfaceContainerHighest,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Wachtwoord wijzigen',
-                                style: theme.textTheme.titleSmall?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: colorScheme.primary,
-                                ),
-                              ),
-                              const SizedBox(height: 16),
-
-                              TextField(
-                                controller: _passwordController,
-                                decoration: InputDecoration(
-                                  labelText: 'Huidig wachtwoord',
-                                  prefixIcon: const Icon(Icons.lock_rounded),
-                                  filled: true,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                ),
-                                obscureText: true,
-                                enabled: !_isChangingPassword,
-                              ),
-                              const SizedBox(height: 12),
-
-                              TextField(
-                                controller: _newPasswordController,
-                                decoration: InputDecoration(
-                                  labelText: 'Nieuw wachtwoord',
-                                  hintText: 'Minimaal 6 karakters',
-                                  prefixIcon: const Icon(Icons.lock_outline_rounded),
-                                  filled: true,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                ),
-                                obscureText: true,
-                                enabled: !_isChangingPassword,
-                              ),
-                              const SizedBox(height: 12),
-
-                              TextField(
-                                controller: _confirmNewPasswordController,
-                                decoration: InputDecoration(
-                                  labelText: 'Bevestig nieuw wachtwoord',
-                                  prefixIcon: const Icon(Icons.lock_outline_rounded),
-                                  filled: true,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                ),
-                                obscureText: true,
-                                enabled: !_isChangingPassword,
-                              ),
-                              const SizedBox(height: 16),
-
-                              SizedBox(
-                                width: double.infinity,
-                                height: 40,
-                                child: ElevatedButton(
-                                  onPressed: _isChangingPassword ? null : _changePassword,
-                                  child: _isChangingPassword
-                                      ? const SizedBox(
-                                          width: 20,
-                                          height: 20,
-                                          child: CircularProgressIndicator(strokeWidth: 2),
-                                        )
-                                      : const Text('Wachtwoord wijzigen'),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        const SizedBox(height: 24),
-
-                        // Danger zone
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: colorScheme.errorContainer,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: colorScheme.error),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Gevaarlijke zone',
-                                style: theme.textTheme.titleSmall?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: colorScheme.error,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                'Deze acties kunnen niet ongedaan worden gemaakt.',
-                                style: theme.textTheme.bodySmall?.copyWith(
-                                  color: colorScheme.onErrorContainer.withValues(alpha: 0.8),
-                                ),
-                              ),
-                              const SizedBox(height: 16),
-
-                              SizedBox(
-                                width: double.infinity,
-                                height: 40,
-                                child: ElevatedButton(
-                                  onPressed: _isLoading ? null : _deleteAccount,
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: colorScheme.error,
-                                    foregroundColor: colorScheme.onError,
-                                  ),
-                                  child: _isLoading
-                                      ? const SizedBox(
-                                          width: 20,
-                                          height: 20,
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 2,
-                                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                                          ),
-                                        )
-                                      : const Text('Account verwijderen'),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        const SizedBox(height: 24),
-
-                        // Back button
-                        SizedBox(
-                          width: double.infinity,
-                          height: 50,
-                          child: OutlinedButton.icon(
-                            onPressed: () => setState(() => _showAccountSettings = false),
-                            icon: const Icon(Icons.arrow_back_rounded),
-                            label: const Text('Terug'),
-                          ),
-                        ),
-                      ],
+                      // Account Management Menu - No header, just menu items
+                      ..._buildAccountMenuItems(),
                     ],
                   ),
                 ),
@@ -1350,6 +1579,10 @@ class _SyncScreenState extends State<SyncScreen> {
     _confirmNewPasswordController.dispose();
     _displayNameController.dispose();
     _bioController.dispose();
+    
+    // Cancel auth subscription to prevent memory leaks
+    _authSubscription?.cancel();
+    
     super.dispose();
   }
 }
