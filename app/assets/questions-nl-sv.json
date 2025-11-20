@@ -2079,7 +2079,7 @@
     "moeilijkheidsgraad": 1,
     "type": "mc",
     "categories": [],
-    "biblicalReference": "In de Evangeliën",
+    "biblicalReference": null,
     "id": "000133"
   },
   {
@@ -4194,7 +4194,7 @@
     "fouteAntwoorden": [
       "Niet waar"
     ],
-    "biblicalReference": "Esther",
+    "biblicalReference": "Esther 1",
     "id": "000271"
   },
   {
@@ -4794,7 +4794,7 @@
     "fouteAntwoorden": [
       "Waar"
     ],
-    "biblicalReference": "Maleachi",
+    "biblicalReference": "Maleachi 1",
     "id": "000314"
   },
   {
@@ -8333,7 +8333,7 @@
     "categories": [
       "Genesis"
     ],
-    "biblicalReference": "Genesis 43: 8,9",
+    "biblicalReference": "Genesis 43:8-9",
     "fouteAntwoorden": [
       "Simeon",
       "Ruben",
