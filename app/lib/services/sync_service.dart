@@ -1,8 +1,44 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../config/supabase_config.dart';
 import 'logger.dart';
+
+/// Data class for offline sync queue items
+class _OfflineSyncItem {
+  final String key;
+  final Map<String, dynamic> data;
+  final DateTime timestamp;
+  final String? userId;
+
+  _OfflineSyncItem({
+    required this.key,
+    required this.data,
+    required this.timestamp,
+    this.userId,
+  });
+
+  /// Creates an OfflineSyncItem from JSON
+  factory _OfflineSyncItem.fromJson(Map<String, dynamic> json) {
+    return _OfflineSyncItem(
+      key: json['key'] as String,
+      data: json['data'] as Map<String, dynamic>,
+      timestamp: DateTime.parse(json['timestamp'] as String),
+      userId: json['userId'] as String?,
+    );
+  }
+
+  /// Converts to JSON for storage
+  Map<String, dynamic> toJson() {
+    return {
+      'key': key,
+      'data': data,
+      'timestamp': timestamp.toIso8601String(),
+      'userId': userId,
+    };
+  }
+}
 
 class SyncService {
   static const String _tableName = 'user_sync_data';
@@ -296,49 +332,108 @@ class SyncService {
     return merged;
   }
 
-  /// Queues failed sync data for later retry
+  /// Queues failed sync data for later retry with proper JSON serialization
   Future<void> _queueOfflineSync(String key, Map<String, dynamic> data) async {
     if (_prefs == null) return;
 
-    final queue = _prefs!.getStringList(_offlineQueueKey) ?? [];
-    final queueItem = {
-      'key': key,
-      'data': data,
-      'timestamp': DateTime.now().toIso8601String(),
-      'userId': _currentUserId,
-    };
-    queue.add(queueItem.toString()); // Simple serialization, could use JSON
-    await _prefs!.setStringList(_offlineQueueKey, queue);
-    AppLogger.info('Queued offline sync for key: $key');
+    final queueJson = _prefs!.getString(_offlineQueueKey) ?? '[]';
+    final queue = List<Map<String, dynamic>>.from(json.decode(queueJson) as List);
+
+    final queueItem = _OfflineSyncItem(
+      key: key,
+      data: data,
+      timestamp: DateTime.now(),
+      userId: _currentUserId,
+    );
+
+    queue.add(queueItem.toJson());
+    await _prefs!.setString(_offlineQueueKey, json.encode(queue));
+    AppLogger.info('Queued offline sync for key: $key (${queue.length} items in queue)');
   }
 
-  /// Processes the offline sync queue
+  /// Processes the offline sync queue with conflict resolution
   Future<void> _processOfflineQueue() async {
     if (_prefs == null || _currentUserId == null) return;
 
-    final queue = _prefs!.getStringList(_offlineQueueKey) ?? [];
+    final queueJson = _prefs!.getString(_offlineQueueKey);
+    if (queueJson == null || queueJson.isEmpty) return;
+
+    final queue = List<Map<String, dynamic>>.from(json.decode(queueJson) as List);
     if (queue.isEmpty) return;
 
     AppLogger.info('Processing ${queue.length} offline sync items');
 
-    final remainingQueue = <String>[];
-    for (final item in queue) {
+    // Group items by key to handle conflicts
+    final groupedItems = <String, List<_OfflineSyncItem>>{};
+    final remainingQueue = <Map<String, dynamic>>[];
+
+    for (final itemJson in queue) {
       try {
-        // Simple parsing, in real app use proper JSON
-        final parts = item.split(',');
-        if (parts.length >= 4) {
-          final key = parts[0].replaceAll('key:', '');
-          // For simplicity, skip complex parsing and just try to sync current data
-          // In production, properly deserialize
-          await syncData(key, {}); // This would need proper data
+        final item = _OfflineSyncItem.fromJson(itemJson);
+        if (item.userId == _currentUserId) { // Only process items for current user
+          groupedItems.putIfAbsent(item.key, () => []).add(item);
+        } else {
+          remainingQueue.add(itemJson); // Keep items for other users
         }
       } catch (e) {
-        AppLogger.error('Failed to process offline sync item', e);
-        remainingQueue.add(item); // Keep for next attempt
+        AppLogger.error('Failed to parse offline sync item', e);
+        remainingQueue.add(itemJson); // Keep malformed items
       }
     }
 
-    await _prefs!.setStringList(_offlineQueueKey, remainingQueue);
+    // Process each group, merging conflicts
+    for (final entry in groupedItems.entries) {
+      final key = entry.key;
+      final items = entry.value;
+
+      if (items.isEmpty) continue;
+
+      // Sort by timestamp (oldest first)
+      items.sort((a, b) => a.timestamp.compareTo(b.timestamp));
+
+      // Merge all items for this key using conflict resolution
+      Map<String, dynamic> mergedData = items.first.data;
+      for (int i = 1; i < items.length; i++) {
+        mergedData = _mergeDataByKey(key, mergedData, items[i].data);
+      }
+
+      try {
+        // Try to sync the merged data
+        await syncData(key, mergedData);
+        AppLogger.info('Successfully processed offline sync for key: $key');
+      } catch (e) {
+        AppLogger.error('Failed to sync merged offline data for key: $key', e);
+        // Re-queue the merged item
+        final mergedItem = _OfflineSyncItem(
+          key: key,
+          data: mergedData,
+          timestamp: DateTime.now(),
+          userId: _currentUserId,
+        );
+        remainingQueue.add(mergedItem.toJson());
+      }
+    }
+
+    // Save remaining queue
+    await _prefs!.setString(_offlineQueueKey, json.encode(remainingQueue));
+
+    if (remainingQueue.isNotEmpty) {
+      AppLogger.info('${remainingQueue.length} offline sync items remaining');
+    }
+  }
+
+  /// Merges data based on the key type (same logic as real-time sync)
+  Map<String, dynamic> _mergeDataByKey(String key, Map<String, dynamic> existing, Map<String, dynamic> incoming) {
+    switch (key) {
+      case 'game_stats':
+        return _mergeGameStats(existing, incoming);
+      case 'settings':
+        return _mergeSettings(existing, incoming);
+      case 'lesson_progress':
+        return _mergeLessonProgress(existing, incoming);
+      default:
+        return incoming; // Last write wins for unknown keys
+    }
   }
 
   /// Starts the offline retry timer

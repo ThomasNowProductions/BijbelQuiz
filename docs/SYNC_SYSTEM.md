@@ -69,9 +69,11 @@ For game statistics, conflicts are resolved by:
 
 ### Offline Support
 
-- Failed sync operations are stored locally
-- Automatic retry when connectivity is restored
-- Data integrity validation before sync
+- **Full offline queue with proper serialization**: Failed sync operations are stored as JSON objects with timestamps
+- **Conflict resolution for queued items**: Multiple offline changes are merged using the same conflict resolution logic as real-time sync
+- **Automatic retry when online**: Queue is processed every 5 minutes when user is authenticated
+- **Data integrity validation**: All queued data is validated before syncing
+- **User-specific queuing**: Only processes items for the currently authenticated user
 
 ## Troubleshooting
 
@@ -262,7 +264,7 @@ lessonProgressProvider.setupSyncListener();
    - User choice for conflicting data
    - Timestamp-based last-write-wins for all data types
 
-2. **Enhanced Offline Support**
+2. **Enhanced Offline Support** ✅
    - Full offline queue with proper serialization
    - Conflict resolution for queued items
 
