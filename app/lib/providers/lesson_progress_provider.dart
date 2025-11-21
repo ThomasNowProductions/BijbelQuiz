@@ -36,6 +36,20 @@ class LessonProgressProvider extends ChangeNotifier {
 
   Future<void> _initializeSyncService() async {
     await syncService.initialize();
+    // Set up error callbacks for user notifications
+    syncService.setCallbacks(
+      onSyncError: (key, error) {
+        if (key == 'lesson_progress') {
+          _error = 'Synchronisatie mislukt: $error';
+          notifyListeners();
+        }
+      },
+      onSyncSuccess: (key) {
+        if (key == 'lesson_progress') {
+          AppLogger.debug('Lesson progress sync successful');
+        }
+      },
+    );
   }
 
   Future<void> _load() async {
@@ -197,5 +211,14 @@ class LessonProgressProvider extends ChangeNotifier {
       AppLogger.info('Received synced lesson progress update');
       loadImportData(data);
     });
+  }
+
+  /// Cleans up resources and listeners
+  @override
+  void dispose() {
+    // Remove sync listeners to prevent memory leaks
+    syncService.removeListener('lesson_progress');
+    AppLogger.debug('LessonProgressProvider disposed - listeners cleaned up');
+    super.dispose();
   }
 }

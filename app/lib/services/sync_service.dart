@@ -50,6 +50,25 @@ class SyncService {
   SharedPreferences? _prefs;
   Timer? _retryTimer;
 
+  // Rate limiting and debouncing
+  final Map<String, DateTime> _lastSyncTimes = {};
+  final Map<String, Timer> _debounceTimers = {};
+  static const Duration _minSyncInterval = Duration(seconds: 5); // Minimum 5 seconds between syncs for same key
+  static const Duration _debounceDelay = Duration(seconds: 2); // Wait 2 seconds after last change before syncing
+
+  // Concurrency protection
+  final Map<String, bool> _syncInProgress = {}; // Track ongoing sync operations per key
+  bool _isApplyingRealtimeUpdate = false; // Prevent conflicts during real-time updates
+
+  // Retry configuration
+  static const int _maxRetries = 3;
+  static const Duration _baseRetryDelay = Duration(seconds: 2);
+  static const double _retryBackoffMultiplier = 1.5;
+
+  // Error handling callbacks
+  Function(String, String)? _onSyncError;
+  Function(String)? _onSyncSuccess;
+
   SyncService() {
     _client = SupabaseConfig.client;
   }
@@ -61,6 +80,24 @@ class SyncService {
     _startOfflineRetryTimer();
   }
 
+  /// Sets error and success callbacks for user notifications
+  void setCallbacks({
+    Function(String, String)? onSyncError,
+    Function(String)? onSyncSuccess,
+  }) {
+    _onSyncError = onSyncError;
+    _onSyncSuccess = onSyncSuccess;
+  }
+
+  /// Performs immediate sync without debouncing (for manual sync operations)
+  Future<void> syncDataImmediate(String key, Map<String, dynamic> data) async {
+    // Cancel any pending debounced sync for this key
+    _debounceTimers[key]?.cancel();
+    _debounceTimers.remove(key);
+
+    await _performSync(key, data);
+  }
+
   /// Sets up auth state listener to handle user login/logout
   void _setupAuthListener() {
     Supabase.instance.client.auth.onAuthStateChange.listen((event) {
@@ -70,111 +107,197 @@ class SyncService {
         _startListening();
         AppLogger.info('User logged in, starting sync for user: ${user.id}');
       } else {
-        _currentUserId = null;
-        _stopListening();
-        AppLogger.info('User logged out, stopping sync');
+        // User logged out - perform complete session cleanup
+        _performSessionCleanup();
+        AppLogger.info('User logged out, complete session cleanup performed');
       }
     });
   }
 
-  /// Syncs data to the current user's data with retry logic
+  /// Performs complete cleanup of user session data
+  void _performSessionCleanup() {
+    // Stop all sync operations
+    _currentUserId = null;
+    _stopListening();
+
+    // Cancel all pending debounced sync operations
+    for (final timer in _debounceTimers.values) {
+      timer.cancel();
+    }
+    _debounceTimers.clear();
+
+    // Reset sync state
+    _syncInProgress.clear();
+    _lastSyncTimes.clear();
+    _isApplyingRealtimeUpdate = false;
+
+    // Clear all listeners to prevent cross-user contamination
+    _listeners.clear();
+
+    // Clear offline queue for the previous user
+    if (_prefs != null) {
+      _prefs!.remove(_offlineQueueKey);
+    }
+
+    AppLogger.info('Complete session cleanup performed - all user data cleared');
+  }
+
+  /// Syncs data to the current user's data with rate limiting, debouncing, and improved retry logic
   Future<void> syncData(String key, Map<String, dynamic> data) async {
     if (_currentUserId == null) {
       AppLogger.warning('Cannot sync data: no user logged in');
       return;
     }
 
-    // Validate data integrity
-    if (key == 'game_stats' && !_isValidGameStatsData(data)) {
-      AppLogger.error('Invalid game stats data, skipping sync');
+    // Rate limiting: check if we're syncing this key too frequently
+    final lastSync = _lastSyncTimes[key];
+    if (lastSync != null && DateTime.now().difference(lastSync) < _minSyncInterval) {
+      AppLogger.debug('Rate limiting: skipping sync for key $key, too soon since last sync');
+      // Schedule a debounced sync instead
+      _scheduleDebouncedSync(key, data);
       return;
     }
 
-    AppLogger.info('Starting sync for key: $key, user: $_currentUserId, data keys: ${data.keys.toList()}');
+    // Use debounced sync for better performance
+    _scheduleDebouncedSync(key, data);
+  }
 
-    const maxRetries = 3;
-    const retryDelay = Duration(seconds: 2);
+  /// Schedules a debounced sync operation
+  void _scheduleDebouncedSync(String key, Map<String, dynamic> data) {
+    // Cancel any existing timer for this key
+    _debounceTimers[key]?.cancel();
 
-    for (int attempt = 1; attempt <= maxRetries; attempt++) {
-      try {
-        // Get current user data or create new record
-        final userDataResponse = await _client
-            .from(_tableName)
-            .select('data')
-            .eq('user_id', _currentUserId!)
-            .maybeSingle();
+    // Schedule new debounced sync
+    _debounceTimers[key] = Timer(_debounceDelay, () async {
+      _debounceTimers.remove(key);
+      await _performSync(key, data);
+    });
+  }
 
-        final currentData = Map<String, dynamic>.from(
-            userDataResponse?['data'] as Map<String, dynamic>? ?? {});
+  /// Performs the actual sync operation with retry logic and error handling
+  Future<void> _performSync(String key, Map<String, dynamic> data) async {
+    if (_currentUserId == null) {
+      AppLogger.warning('Cannot sync data: no user logged in');
+      return;
+    }
 
-        AppLogger.debug('Current sync data keys before update: ${currentData.keys.toList()}');
+    // Concurrency protection: prevent multiple syncs for the same key
+    if (_syncInProgress[key] == true) {
+      AppLogger.debug('Sync already in progress for key: $key, skipping');
+      return;
+    }
 
-        // Check for potential conflicts
-        final existingEntry = currentData[key] as Map<String, dynamic>?;
-        if (existingEntry != null) {
-          final existingTimestamp = DateTime.parse(existingEntry['timestamp'] as String);
-          final now = DateTime.now();
-          AppLogger.info('Potential conflict for key $key: existing timestamp $existingTimestamp, new timestamp $now');
+    // Prevent real-time updates during sync operations
+    _isApplyingRealtimeUpdate = true;
+    _syncInProgress[key] = true;
 
-          // Implement conflict resolution based on data type
-          if (key == 'game_stats') {
-            final existingValue = existingEntry['value'] as Map<String, dynamic>;
-            final mergedData = _mergeGameStats(existingValue, data);
-            currentData[key] = {
-              'value': mergedData,
-              'timestamp': DateTime.now().toIso8601String(),
-            };
-            AppLogger.info('Merged game stats due to conflict');
-          } else if (key == 'settings') {
-            final existingValue = existingEntry['value'] as Map<String, dynamic>;
-            final mergedData = _mergeSettings(existingValue, data);
-            currentData[key] = {
-              'value': mergedData,
-              'timestamp': DateTime.now().toIso8601String(),
-            };
-            AppLogger.info('Merged settings due to conflict');
-          } else if (key == 'lesson_progress') {
-            final existingValue = existingEntry['value'] as Map<String, dynamic>;
-            final mergedData = _mergeLessonProgress(existingValue, data);
-            currentData[key] = {
-              'value': mergedData,
-              'timestamp': DateTime.now().toIso8601String(),
-            };
-            AppLogger.info('Merged lesson progress due to conflict');
+    try {
+      // Validate data integrity
+      if (!_isValidSyncedData(key, data)) {
+        AppLogger.error('Invalid $key data, skipping sync');
+        _onSyncError?.call(key, 'Invalid $key data');
+        return;
+      }
+
+      AppLogger.info('Starting sync for key: $key, user: $_currentUserId, data keys: ${data.keys.toList()}');
+
+      for (int attempt = 1; attempt <= _maxRetries; attempt++) {
+        try {
+          // Calculate retry delay with exponential backoff
+          final retryDelay = attempt > 1
+              ? _baseRetryDelay * (_retryBackoffMultiplier * (attempt - 1))
+              : Duration.zero;
+
+          if (retryDelay > Duration.zero) {
+            AppLogger.info('Retrying sync in ${retryDelay.inSeconds} seconds...');
+            await Future.delayed(retryDelay);
+          }
+
+          // Get current user data or create new record
+          final userDataResponse = await _client
+              .from(_tableName)
+              .select('data')
+              .eq('user_id', _currentUserId!)
+              .maybeSingle();
+
+          final currentData = Map<String, dynamic>.from(
+              userDataResponse?['data'] as Map<String, dynamic>? ?? {});
+
+          AppLogger.debug('Current sync data keys before update: ${currentData.keys.toList()}');
+
+          // Check for potential conflicts
+          final existingEntry = currentData[key] as Map<String, dynamic>?;
+          if (existingEntry != null) {
+            final existingTimestamp = DateTime.parse(existingEntry['timestamp'] as String);
+            final now = DateTime.now();
+            AppLogger.info('Potential conflict for key $key: existing timestamp $existingTimestamp, new timestamp $now');
+
+            // Implement conflict resolution based on data type
+            if (key == 'game_stats') {
+              final existingValue = existingEntry['value'] as Map<String, dynamic>;
+              final mergedData = _mergeGameStats(existingValue, data);
+              currentData[key] = {
+                'value': mergedData,
+                'timestamp': DateTime.now().toIso8601String(),
+              };
+              AppLogger.info('Merged game stats due to conflict');
+            } else if (key == 'settings') {
+              final existingValue = existingEntry['value'] as Map<String, dynamic>;
+              final mergedData = _mergeSettings(existingValue, data);
+              currentData[key] = {
+                'value': mergedData,
+                'timestamp': DateTime.now().toIso8601String(),
+              };
+              AppLogger.info('Merged settings due to conflict');
+            } else if (key == 'lesson_progress') {
+              final existingValue = existingEntry['value'] as Map<String, dynamic>;
+              final mergedData = _mergeLessonProgress(existingValue, data);
+              currentData[key] = {
+                'value': mergedData,
+                'timestamp': DateTime.now().toIso8601String(),
+              };
+              AppLogger.info('Merged lesson progress due to conflict');
+            } else {
+              // For other keys, last write wins
+              currentData[key] = {
+                'value': data,
+                'timestamp': DateTime.now().toIso8601String(),
+              };
+            }
           } else {
-            // For other keys, last write wins
+            // No existing data, just set it
             currentData[key] = {
               'value': data,
               'timestamp': DateTime.now().toIso8601String(),
             };
           }
-        } else {
-          // No existing data, just set it
-          currentData[key] = {
-            'value': data,
-            'timestamp': DateTime.now().toIso8601String(),
-          };
-        }
 
-        // Upsert the user data
-        await _client.from(_tableName).upsert({
-          'user_id': _currentUserId,
-          'data': currentData,
-          'updated_at': DateTime.now().toIso8601String(),
-        });
+          // Upsert the user data
+          await _client.from(_tableName).upsert({
+            'user_id': _currentUserId,
+            'data': currentData,
+            'updated_at': DateTime.now().toIso8601String(),
+          });
 
-        AppLogger.info('Successfully synced data for key: $key for user: $_currentUserId on attempt $attempt');
-        return; // Success, exit retry loop
-      } catch (e) {
-        AppLogger.error('Failed to sync data for key: $key on attempt $attempt/$maxRetries', e);
-        if (attempt < maxRetries) {
-          AppLogger.info('Retrying sync in ${retryDelay.inSeconds} seconds...');
-          await Future.delayed(retryDelay);
-        } else {
-          AppLogger.error('All retry attempts failed for key: $key, queuing for offline sync');
-          await _queueOfflineSync(key, data);
+          // Update rate limiting timestamp
+          _lastSyncTimes[key] = DateTime.now();
+
+          AppLogger.info('Successfully synced data for key: $key for user: $_currentUserId on attempt $attempt');
+          _onSyncSuccess?.call(key);
+          return; // Success, exit retry loop
+        } catch (e) {
+          AppLogger.error('Failed to sync data for key: $key on attempt $attempt/$_maxRetries', e);
+          if (attempt == _maxRetries) {
+            AppLogger.error('All retry attempts failed for key: $key, queuing for offline sync');
+            await _queueOfflineSync(key, data);
+            _onSyncError?.call(key, 'Sync failed after $_maxRetries attempts: ${e.toString()}');
+          }
         }
       }
+    } finally {
+      // Reset concurrency flags
+      _syncInProgress[key] = false;
+      _isApplyingRealtimeUpdate = false;
     }
   }
 
@@ -239,6 +362,12 @@ class SyncService {
 
   /// Notifies all listeners of data changes
   void _notifyListeners(Map<String, dynamic> data) {
+    // Prevent real-time updates during sync operations to avoid conflicts
+    if (_isApplyingRealtimeUpdate) {
+      AppLogger.debug('Skipping real-time listener notifications during sync operation');
+      return;
+    }
+
     AppLogger.debug('Notifying listeners for ${data.length} data keys');
     data.forEach((key, value) {
       final listener = _listeners[key];
@@ -274,8 +403,14 @@ class SyncService {
   /// Gets the current user ID
   String? get currentUserId => _currentUserId;
 
-  /// Merges game stats by taking the maximum values
+  /// Merges game stats by taking the maximum values (prevents accumulation bugs)
   Map<String, dynamic> _mergeGameStats(Map<String, dynamic> existing, Map<String, dynamic> incoming) {
+    // Validate input data
+    if (!_isValidGameStatsData(existing) || !_isValidGameStatsData(incoming)) {
+      AppLogger.warning('Invalid game stats data in merge, using incoming data as fallback');
+      return incoming;
+    }
+
     return {
       'score': (existing['score'] as int? ?? 0) > (incoming['score'] as int? ?? 0)
           ? existing['score']
@@ -286,7 +421,10 @@ class SyncService {
       'longestStreak': (existing['longestStreak'] as int? ?? 0) > (incoming['longestStreak'] as int? ?? 0)
           ? existing['longestStreak']
           : incoming['longestStreak'],
-      'incorrectAnswers': (existing['incorrectAnswers'] as int? ?? 0) + (incoming['incorrectAnswers'] as int? ?? 0),
+      // Take maximum incorrect answers instead of summing to prevent accumulation
+      'incorrectAnswers': (existing['incorrectAnswers'] as int? ?? 0) > (incoming['incorrectAnswers'] as int? ?? 0)
+          ? existing['incorrectAnswers']
+          : incoming['incorrectAnswers'],
     };
   }
 
@@ -468,10 +606,53 @@ class SyncService {
            (data['incorrectAnswers'] as int) >= 0;
   }
 
+  /// Validates lesson progress data
+  bool _isValidLessonProgressData(Map<String, dynamic> data) {
+    if (!data.containsKey('unlockedCount') || !(data['unlockedCount'] is int)) return false;
+    if ((data['unlockedCount'] as int) < 1) return false;
+
+    if (data.containsKey('bestStarsByLesson')) {
+      final starsMap = data['bestStarsByLesson'];
+      if (starsMap is! Map<String, dynamic>) return false;
+
+      for (final value in starsMap.values) {
+        if (value is! int || value < 0 || value > 3) return false;
+      }
+    }
+
+    return true;
+  }
+
+  /// Validates settings data
+  bool _isValidSettingsData(Map<String, dynamic> data) {
+    // Basic structure validation - could be expanded
+    return data is Map<String, dynamic>;
+  }
+
+  /// Validates synced data before applying
+  bool _isValidSyncedData(String key, Map<String, dynamic> data) {
+    switch (key) {
+      case 'game_stats':
+        return _isValidGameStatsData(data);
+      case 'lesson_progress':
+        return _isValidLessonProgressData(data);
+      case 'settings':
+        return _isValidSettingsData(data);
+      default:
+        return true; // Allow unknown keys for forward compatibility
+    }
+  }
+
   /// Disposes the service
   void dispose() {
     _stopListening();
     _stopOfflineRetryTimer();
+
+    // Cancel all debounce timers
+    for (final timer in _debounceTimers.values) {
+      timer.cancel();
+    }
+    _debounceTimers.clear();
   }
 
   /// Gets the current user's profile, creating it if it doesn't exist

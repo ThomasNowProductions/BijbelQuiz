@@ -97,6 +97,19 @@ class GameStatsProvider extends ChangeNotifier {
 
   Future<void> _initializeSyncService() async {
     await syncService.initialize();
+    // Set up error callbacks for user notifications
+    syncService.setCallbacks(
+      onSyncError: (key, error) {
+        if (key == 'game_stats') {
+          onError?.call('Synchronisatie mislukt: $error');
+        }
+      },
+      onSyncSuccess: (key) {
+        if (key == 'game_stats') {
+          AppLogger.debug('Game stats sync successful');
+        }
+      },
+    );
   }
 
   /// The current game score
@@ -538,6 +551,15 @@ class GameStatsProvider extends ChangeNotifier {
       AppLogger.info('Received synced game stats update: ${data.keys.toList()}');
       loadImportData(data);
     });
+  }
+
+  /// Cleans up resources and listeners
+  @override
+  void dispose() {
+    // Remove sync listeners to prevent memory leaks
+    syncService.removeListener('game_stats');
+    AppLogger.debug('GameStatsProvider disposed - listeners cleaned up');
+    super.dispose();
   }
 }
 

@@ -100,6 +100,20 @@ class SettingsProvider extends ChangeNotifier {
 
   Future<void> _initializeSyncService() async {
     await syncService.initialize();
+    // Set up error callbacks for user notifications
+    syncService.setCallbacks(
+      onSyncError: (key, error) {
+        if (key == 'settings') {
+          _error = 'Synchronisatie mislukt: $error';
+          notifyListeners();
+        }
+      },
+      onSyncSuccess: (key) {
+        if (key == 'settings') {
+          AppLogger.debug('Settings sync successful');
+        }
+      },
+    );
   }
 
   /// De huidige taalinstelling (altijd 'nl')
@@ -1086,5 +1100,14 @@ class SettingsProvider extends ChangeNotifier {
     syncService.addListener('settings', (data) {
       loadImportData(data);
     });
+  }
+
+  /// Cleans up resources and listeners
+  @override
+  void dispose() {
+    // Remove sync listeners to prevent memory leaks
+    syncService.removeListener('settings');
+    AppLogger.debug('SettingsProvider disposed - listeners cleaned up');
+    super.dispose();
   }
 }

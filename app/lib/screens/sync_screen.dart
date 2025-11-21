@@ -143,15 +143,15 @@ class _SyncScreenState extends State<SyncScreen> {
       final lessonProgressProvider = Provider.of<LessonProgressProvider>(context, listen: false);
       final settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
 
-      // Sync each data type with correct provider data
+      // Force immediate sync bypassing debouncing
       await _trackSyncStatus('game_stats');
-      await gameStatsProvider.syncService.syncData('game_stats', gameStatsProvider.getExportData());
+      await gameStatsProvider.syncService.syncDataImmediate('game_stats', gameStatsProvider.getExportData());
 
       await _trackSyncStatus('lesson_progress');
-      await gameStatsProvider.syncService.syncData('lesson_progress', lessonProgressProvider.getExportData());
+      await gameStatsProvider.syncService.syncDataImmediate('lesson_progress', lessonProgressProvider.getExportData());
 
       await _trackSyncStatus('settings');
-      await gameStatsProvider.syncService.syncData('settings', settingsProvider.getExportData());
+      await gameStatsProvider.syncService.syncDataImmediate('settings', settingsProvider.getExportData());
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
