@@ -18,10 +18,12 @@ class ApiService {
   static const String _apiVersion = 'v1';
   static const int _maxRequestsPerMinute = 100;
   static const Duration _rateLimitWindow = Duration(minutes: 1);
+  static const int _maxDailyStars = 150; // Maximum stars that can be added per day
 
   HttpServer? _server;
   bool _isRunning = false;
   final Map<String, List<DateTime>> _requestLog = {};
+  final Map<String, int> _dailyStarsAdded = {}; // date -> total stars added
 
   /// Whether the API server is currently running
   bool get isRunning => _isRunning;
@@ -57,6 +59,17 @@ class ApiService {
       requests.removeWhere((timestamp) => timestamp.isBefore(cutoff));
       return requests.isEmpty;
     });
+
+    // Also clean up old daily stars entries (older than 7 days)
+    final sevenDaysAgo = now.subtract(Duration(days: 7));
+    final cutoffDate = _getDateString(sevenDaysAgo);
+
+    _dailyStarsAdded.removeWhere((date, _) => date.compareTo(cutoffDate) < 0);
+  }
+
+  /// Get date string in YYYY-MM-DD format
+  String _getDateString(DateTime date) {
+    return '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
   }
 
   /// Starts the API server on the specified port with authentication
@@ -130,12 +143,14 @@ class ApiService {
       _isRunning = false;
       _server = null;
       _requestLog.clear();
+      _dailyStarsAdded.clear();
       AppLogger.info('API server stopped successfully');
     } catch (e) {
       AppLogger.error('Failed to stop API server: $e');
       _isRunning = false;
       _server = null;
       _requestLog.clear();
+      _dailyStarsAdded.clear();
       // Don't throw exception on stop failure to avoid crashes during app shutdown
       AppLogger.warning('API server stopped with errors but continuing');
     }
@@ -765,6 +780,23 @@ class ApiService {
               headers: {'Content-Type': 'application/json'});
         }
 
+        // Check daily limit
+        final today = _getDateString(DateTime.now());
+        final currentDailyTotal = _dailyStarsAdded[today] ?? 0;
+
+        if (currentDailyTotal + amount > _maxDailyStars) {
+          return Response(429,
+              body: json.encode({
+                'error': 'Daily star limit exceeded',
+                'message': 'Cannot add $amount stars. Daily limit of $_maxDailyStars stars exceeded.',
+                'current_daily_total': currentDailyTotal,
+                'requested_amount': amount,
+                'remaining_allowed': _maxDailyStars - currentDailyTotal,
+                'timestamp': DateTime.now().toIso8601String(),
+              }),
+              headers: {'Content-Type': 'application/json'});
+        }
+
         final starService = StarTransactionService.instance;
         final success = await starService.addStars(
           amount: amount,
@@ -782,18 +814,22 @@ class ApiService {
               headers: {'Content-Type': 'application/json'});
         }
 
+        // Update daily total
+        _dailyStarsAdded[today] = currentDailyTotal + amount;
+
         final response = {
           'success': true,
           'balance': starService.currentBalance,
           'amount_added': amount,
           'reason': reason,
+          'daily_total_added': _dailyStarsAdded[today],
           'timestamp': DateTime.now().toIso8601String(),
           'processing_time_ms':
               DateTime.now().difference(startTime).inMilliseconds,
         };
 
         AppLogger.info(
-            'Add stars endpoint: Added $amount stars in ${DateTime.now().difference(startTime).inMilliseconds}ms');
+            'Add stars endpoint: Added $amount stars (daily total: ${_dailyStarsAdded[today]}) in ${DateTime.now().difference(startTime).inMilliseconds}ms');
         return Response.ok(json.encode(response),
             headers: {'Content-Type': 'application/json'});
       } catch (e) {
