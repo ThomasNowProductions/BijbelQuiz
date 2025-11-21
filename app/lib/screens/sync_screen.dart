@@ -8,6 +8,7 @@ import '../providers/lesson_progress_provider.dart';
 import '../providers/settings_provider.dart';
 import '../services/logger.dart';
 import '../utils/automatic_error_reporter.dart';
+import '../screens/main_navigation_screen.dart';
 
 class SyncScreen extends StatefulWidget {
   const SyncScreen({super.key, this.requiredForSocial = false});
@@ -900,7 +901,14 @@ class _SyncScreenState extends State<SyncScreen> {
     try {
       await Supabase.instance.client.auth.signOut();
       AppLogger.info('Successfully signed out');
-      // Stay on the screen - auth state change will update UI to show login form
+
+      // Navigate to main app screen after logout
+      if (mounted) {
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => const MainNavigationScreen()),
+          (route) => false,
+        );
+      }
     } catch (e) {
       AppLogger.error('Sign out failed', e);
       setState(() {
