@@ -805,6 +805,22 @@ class _GuideScreenTestHarnessState extends State<GuideScreenTestHarness> {
     final colorScheme = theme.colorScheme;
     final isLastPage = _currentPage == _pages.length - 1;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: [
+          TextButton(
+            onPressed: () => handleGuideCompletion(),
+            child: Text(
+              strings.AppStrings.skip,
+              style: TextStyle(
+                color: colorScheme.primary,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Column(
           children: [

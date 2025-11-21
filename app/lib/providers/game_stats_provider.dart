@@ -398,10 +398,10 @@ class GameStatsProvider extends ChangeNotifier {
 
   /// Attempts to spend points for a retry
   /// Returns true if successful, false if not enough points
-  Future<bool> spendPointsForRetry() async {
+  Future<bool> spendPointsForRetry({int amount = 50}) async {
     try {
-      if (_score >= 50) {
-        _score -= 50;
+      if (_score >= amount) {
+        _score -= amount;
         await _prefs?.setInt(_scoreKey, _score);
         notifyListeners();
         return true;
@@ -413,7 +413,7 @@ class GameStatsProvider extends ChangeNotifier {
         e,
         type: AppErrorType.storage,
         userMessage: 'Failed to spend points',
-        context: {'operation': 'spend_points', 'required_points': 50},
+        context: {'operation': 'spend_points', 'required_points': amount},
       );
       _error = appError.userMessage;
       notifyListeners();

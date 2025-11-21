@@ -308,8 +308,8 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
       return false;
     }
 
-    // 20% chance to show a popup
-    if (Random().nextInt(5) != 0) {
+    // 10% chance to show a popup
+    if (Random().nextInt(10) != 0) {
       return false;
     }
 

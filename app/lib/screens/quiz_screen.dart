@@ -143,10 +143,6 @@ class _QuizScreenState extends State<QuizScreen>
     _initializeManagers();
     _initializeQuiz();
 
-    // Add frame callback to monitor performance
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _monitorPerformance();
-    });
 
     // Listen for game stats reset to reset question pool
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -221,24 +217,6 @@ class _QuizScreenState extends State<QuizScreen>
     );
   }
 
-  // Monitor performance by tracking frame times
-  void _monitorPerformance() {
-    if (!mounted) return;
-
-    // Update frame timing
-    _performanceService.updateFrameTime();
-
-    // PERFORMANCE OPTIMIZATION: Periodically optimize memory usage
-    if (_performanceService.averageFrameRate < 30.0) {
-      // If frame rate drops below 30fps, optimize memory
-      _questionCacheService.optimizeMemoryUsage();
-    }
-
-    // Schedule next frame callback
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _monitorPerformance();
-    });
-  }
 
   @override
   void dispose() {
@@ -316,7 +294,11 @@ class _QuizScreenState extends State<QuizScreen>
     final settings = Provider.of<SettingsProvider>(localContext, listen: false);
     final gameStats =
         Provider.of<GameStatsProvider>(localContext, listen: false);
-    final hasEnoughPoints = gameStats.score >= 50;
+
+    // Get dynamic retry price from database
+    final priceHelper = QuizActionPriceHelper();
+    final retryPrice = await priceHelper.getRetryQuestionPrice();
+    final hasEnoughPoints = gameStats.score >= retryPrice;
 
     OverlayEntry? tooltipEntry;
 
@@ -392,7 +374,7 @@ class _QuizScreenState extends State<QuizScreen>
                               'current_streak': gameStats.currentStreak,
                               'current_score': gameStats.score,
                             });
-                        gameStats.spendPointsForRetry().then((success) {
+                        gameStats.spendPointsForRetry(amount: retryPrice).then((success) {
                           if (!dialogContext.mounted) return;
                           if (success) {
                             // Track successful retry with points
@@ -469,7 +451,7 @@ class _QuizScreenState extends State<QuizScreen>
                           : Theme.of(localContext).colorScheme.outline,
                     ),
                     Text(
-                      ' 50',
+                      ' $retryPrice',
                       style: TextStyle(
                         color: hasEnoughPoints
                             ? Theme.of(localContext).colorScheme.primary

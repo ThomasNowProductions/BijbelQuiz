@@ -23,6 +23,11 @@ class QuizActionPriceHelper {
         defaultPrice: 10);
   }
 
+  /// Get price for retrying a question after time up
+  Future<int> getRetryQuestionPrice() async {
+    return await _getPriceForItem('retry_question', defaultPrice: 15);
+  }
+
   /// Internal method to get price for an item with caching
   Future<int> _getPriceForItem(String itemKey,
       {required int defaultPrice}) async {
