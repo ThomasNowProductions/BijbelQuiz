@@ -13,6 +13,7 @@ import 'providers/settings_provider.dart';
 import 'providers/game_stats_provider.dart';
 import 'providers/messages_provider.dart';
 import 'providers/lesson_progress_provider.dart';
+import 'providers/multiplayer_provider.dart';
 import 'utils/theme_utils.dart';
 import 'services/logger.dart';
 import 'services/service_container.dart';
@@ -78,6 +79,10 @@ Future<void> main() async {
     final gameStatsProvider = serviceContainer.gameStatsProvider;
     final settingsProvider = serviceContainer.settingsProvider;
     final lessonProgressProvider = LessonProgressProvider();
+    final multiplayerProvider = MultiplayerProvider(
+      serviceContainer.questionCacheService!,
+      serviceContainer.connectionService!,
+    );
 
     // Set up sync listeners for real-time updates
     gameStatsProvider.setupSyncListener();
@@ -92,6 +97,7 @@ Future<void> main() async {
           ChangeNotifierProvider.value(value: settingsProvider),
           ChangeNotifierProvider.value(value: gameStatsProvider),
           ChangeNotifierProvider.value(value: lessonProgressProvider),
+          ChangeNotifierProvider.value(value: multiplayerProvider),
 
           // Service container access
           Provider.value(value: serviceContainer),

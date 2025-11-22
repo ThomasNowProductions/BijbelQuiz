@@ -11,9 +11,10 @@ import '../utils/automatic_error_reporter.dart';
 import '../screens/main_navigation_screen.dart';
 
 class SyncScreen extends StatefulWidget {
-  const SyncScreen({super.key, this.requiredForSocial = false});
+  const SyncScreen({super.key, this.requiredForSocial = false, this.requiredForMultiplayer = false});
 
   final bool requiredForSocial;
+  final bool requiredForMultiplayer;
 
   @override
   State<SyncScreen> createState() => _SyncScreenState();
@@ -1244,6 +1245,49 @@ class _SyncScreenState extends State<SyncScreen> {
                               Expanded(
                                 child: Text(
                                   'Maak een account aan om sociale functies te gebruiken, zoals het zoeken naar gebruikers, vrienden maken en berichten versturen.',
+                                  style: theme.textTheme.bodyMedium?.copyWith(
+                                    color: colorScheme.onSurface,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ] else if (widget.requiredForMultiplayer) ...[
+                        // Multiplayer requirement message
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: Text(
+                            'Login voor Multiplayer',
+                            style: theme.textTheme.displaySmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: colorScheme.primary,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          margin: const EdgeInsets.only(bottom: 16),
+                          decoration: BoxDecoration(
+                            color: colorScheme.primaryContainer.withValues(alpha: 0.3),
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                              color: colorScheme.primary.withValues(alpha: 0.2),
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.people,
+                                color: colorScheme.primary,
+                                size: 24,
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Text(
+                                  'Maak een account aan om deel te nemen aan multiplayer quizzen. Je gebruikersnaam wordt gebruikt in de leaderboards.',
                                   style: theme.textTheme.bodyMedium?.copyWith(
                                     color: colorScheme.onSurface,
                                     fontWeight: FontWeight.w500,

@@ -622,4 +622,56 @@ class AppStrings {
   // Automatic Bug Reporting
   static String get automaticBugReports => _language == 'en' ? AppStringsEn.automaticBugReports : 'Automatisch problemen melden';
   static String get automaticBugReportsDesc => _language == 'en' ? AppStringsEn.automaticBugReportsDesc : 'Automatisch bug rapporten verzenden wanneer er fouten optreden (aanbevolen)';
+
+  // Multiplayer Strings
+  static String get onlineMultiplayerQuiz => _language == 'en' ? AppStringsEn.onlineMultiplayerQuiz : 'Online Multiplayer Quiz';
+  static String get createGame => _language == 'en' ? AppStringsEn.createGame : 'Spel starten';
+  static String get joinGame => _language == 'en' ? AppStringsEn.joinGame : 'Join Spel';
+  static String get gameCode => _language == 'en' ? AppStringsEn.gameCode : 'Game Code';
+  static String get enterGameCode => _language == 'en' ? AppStringsEn.enterGameCode : 'Voer de 6-letter code in';
+  static String get gameCodeRequired => _language == 'en' ? AppStringsEn.gameCodeRequired : 'Game code moet 6 letters bevatten';
+  static String get creatingGame => _language == 'en' ? AppStringsEn.creatingGame : 'Spel maken...';
+  static String get joiningGame => _language == 'en' ? AppStringsEn.joiningGame : 'Verbinden...';
+  static String get gameCreated => _language == 'en' ? AppStringsEn.gameCreated : 'Spel aangemaakt!';
+  static String get gameJoined => _language == 'en' ? AppStringsEn.gameJoined : 'Spel gejoined!';
+  static String get waitingForPlayers => _language == 'en' ? AppStringsEn.waitingForPlayers : 'Wachten op spelers...';
+  static String get startGame => _language == 'en' ? AppStringsEn.startGame : 'Start Spel';
+  static String get organizer => _language == 'en' ? AppStringsEn.organizer : 'Organizer';
+  static String get players => _language == 'en' ? AppStringsEn.players : 'Spelers';
+  static String get multiplayerGameSettings => _language == 'en' ? AppStringsEn.multiplayerGameSettings : 'Spel instellingen';
+  static String get numberOfQuestions => _language == 'en' ? AppStringsEn.numberOfQuestions : 'Aantal vragen';
+  static String get timeLimit => _language == 'en' ? AppStringsEn.timeLimit : 'Tijd limiet';
+  static String get questionTime => _language == 'en' ? AppStringsEn.questionTime : 'Tijd per vraag';
+  static String get seconds => _language == 'en' ? AppStringsEn.seconds : 'seconden';
+  static String get multiplayerMinutes => _language == 'en' ? AppStringsEn.multiplayerMinutes : 'minuten';
+  static String get gameRules => _language == 'en' ? AppStringsEn.gameRules : 'Spelregels';
+  static String get multiplayerRule1 => _language == 'en' ? AppStringsEn.multiplayerRule1 : '• Maximaal 50 spelers per spel';
+  static String get multiplayerRule2 => _language == 'en' ? AppStringsEn.multiplayerRule2 : '• 20 seconden per vraag om te antwoorden';
+  static String get multiplayerRule3 => _language == 'en' ? AppStringsEn.multiplayerRule3 : '• Snellere antwoorden geven bonuspunten';
+  static String get multiplayerRule4 => _language == 'en' ? AppStringsEn.multiplayerRule4 : '• Organizer bepaalt wanneer het spel begint';
+  static String get multiplayerRule5 => _language == 'en' ? AppStringsEn.multiplayerRule5 : '• Organizer gaat door naar volgende vragen';
+  static String get waitingForOrganizer => _language == 'en' ? AppStringsEn.waitingForOrganizer : 'Wachten tot de organizer het spel start...';
+  static String get waitForAllPlayers => _language == 'en' ? AppStringsEn.waitForAllPlayers : 'Wachten tot alle spelers klaar zijn...';
+  static String get continueToNext => _language == 'en' ? AppStringsEn.continueToNext : 'Doorgaan naar volgende';
+  static String get gameResults => _language == 'en' ? AppStringsEn.gameResults : 'Spel resultaten';
+  static String get winner => _language == 'en' ? AppStringsEn.winner : 'Winnaar';
+  static String get topPlayers => _language == 'en' ? AppStringsEn.topPlayers : 'Top spelers';
+  static String get yourRank => _language == 'en' ? AppStringsEn.yourRank : 'Jouw rang';
+  static String get rank => _language == 'en' ? AppStringsEn.rank : 'Rang';
+  static String get points => _language == 'en' ? AppStringsEn.points : 'Punten';
+  static String get leaveGame => _language == 'en' ? AppStringsEn.leaveGame : 'Verlaat spel';
+  static String get gameEnded => _language == 'en' ? AppStringsEn.gameEnded : 'Spel beëindigd';
+  static String get playerDisconnected => _language == 'en' ? AppStringsEn.playerDisconnected : 'Speler verbroken';
+  static String get connectionLost => _language == 'en' ? AppStringsEn.connectionLost : 'Verbinding verloren';
+  static String get reconnecting => _language == 'en' ? AppStringsEn.reconnecting : 'Opnieuw verbinden...';
+  static String get gameCodeCopied => _language == 'en' ? AppStringsEn.gameCodeCopied : 'Game code gekopieerd naar klembord';
+  static String get shareGameCode => _language == 'en' ? AppStringsEn.shareGameCode : 'Deel deze code met anderen om mee te doen';
+  static String get minimumPlayersRequired => _language == 'en' ? AppStringsEn.minimumPlayersRequired : 'Minimaal 2 spelers nodig om te starten';
+  static String get gameFull => _language == 'en' ? AppStringsEn.gameFull : 'Spel is vol (max 50 spelers)';
+  static String get invalidGameCode => _language == 'en' ? AppStringsEn.invalidGameCode : 'Ongeldige game code';
+  static String get gameNotFound => _language == 'en' ? AppStringsEn.gameNotFound : 'Spel niet gevonden';
+  static String get gameAlreadyStarted => _language == 'en' ? AppStringsEn.gameAlreadyStarted : 'Spel is al begonnen';
+  static String get gameFinished => _language == 'en' ? AppStringsEn.gameFinished : 'Spel is afgelopen';
+  static String get loginRequiredForMultiplayer => _language == 'en' ? AppStringsEn.loginRequiredForMultiplayer : 'Login vereist voor multiplayer';
+  static String get loginRequiredForMultiplayerDesc => _language == 'en' ? AppStringsEn.loginRequiredForMultiplayerDesc : 'Maak een account aan om deel te nemen aan multiplayer quizzen. Je gebruikersnaam wordt gebruikt in de leaderboards.';
 }
