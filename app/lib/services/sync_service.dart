@@ -4,6 +4,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../config/supabase_config.dart';
 import 'logger.dart';
+import 'connection_service.dart';
+import '../utils/automatic_error_reporter.dart';
 
 /// Data class for offline sync queue items
 class _OfflineSyncItem {
@@ -43,7 +45,12 @@ class _OfflineSyncItem {
 class SyncService {
   static const String _tableName = 'user_sync_data';
   static const String _offlineQueueKey = 'sync_offline_queue';
+  static const int _maxOfflineQueueSize = 100; // Maximum offline queue items
+  static const Duration _queueItemExpirationDuration = Duration(days: 7); // Clean up old queue items
+  
   late final SupabaseClient _client;
+  late final ConnectionService _connectionService;
+  
   String? _currentUserId;
   RealtimeChannel? _channel;
   final Map<String, Function(Map<String, dynamic>)> _listeners = {};
@@ -58,7 +65,7 @@ class SyncService {
 
   // Concurrency protection
   final Map<String, bool> _syncInProgress = {}; // Track ongoing sync operations per key
-  bool _isApplyingRealtimeUpdate = false; // Prevent conflicts during real-time updates
+  final Map<String, bool> _realtimeUpdateInProgress = {}; // Track real-time updates per key
 
   // Retry configuration
   static const int _maxRetries = 3;
@@ -71,13 +78,16 @@ class SyncService {
 
   SyncService() {
     _client = SupabaseConfig.client;
+    _connectionService = ConnectionService();
   }
 
   /// Initializes the service
   Future<void> initialize() async {
     _prefs = await SharedPreferences.getInstance();
+    await _connectionService.initialize();
     _setupAuthListener();
     _startOfflineRetryTimer();
+    await _cleanupExpiredQueueItems();
   }
 
   /// Sets error and success callbacks for user notifications
@@ -129,7 +139,7 @@ class SyncService {
     // Reset sync state
     _syncInProgress.clear();
     _lastSyncTimes.clear();
-    _isApplyingRealtimeUpdate = false;
+    _realtimeUpdateInProgress.clear();
 
     // Clear all listeners to prevent cross-user contamination
     _listeners.clear();
@@ -181,14 +191,24 @@ class SyncService {
       return;
     }
 
+    // Check network connectivity first
+    if (!_connectionService.isConnected) {
+      AppLogger.warning('Cannot sync data: no network connection');
+      await _queueOfflineSync(key, data);
+      return;
+    }
+
     // Concurrency protection: prevent multiple syncs for the same key
     if (_syncInProgress[key] == true) {
       AppLogger.debug('Sync already in progress for key: $key, skipping');
       return;
     }
 
-    // Prevent real-time updates during sync operations
-    _isApplyingRealtimeUpdate = true;
+    // Wait for any ongoing real-time updates for this key
+    while (_realtimeUpdateInProgress[key] == true) {
+      await Future.delayed(const Duration(milliseconds: 100));
+    }
+
     _syncInProgress[key] = true;
 
     try {
@@ -196,6 +216,14 @@ class SyncService {
       if (!_isValidSyncedData(key, data)) {
         AppLogger.error('Invalid $key data, skipping sync');
         _onSyncError?.call(key, 'Invalid $key data');
+        await AutomaticErrorReporter.reportStorageError(
+          message: 'Invalid sync data for key: $key',
+          additionalInfo: {
+            'key': key,
+            'dataKeys': data.keys.toList(),
+            'userId': _currentUserId,
+          },
+        );
         return;
       }
 
@@ -225,50 +253,66 @@ class SyncService {
 
           AppLogger.debug('Current sync data keys before update: ${currentData.keys.toList()}');
 
-          // Check for potential conflicts
+          // Check for potential conflicts using timestamp-based resolution
           final existingEntry = currentData[key] as Map<String, dynamic>?;
+          final now = DateTime.now();
+          
           if (existingEntry != null) {
             final existingTimestamp = DateTime.parse(existingEntry['timestamp'] as String);
-            final now = DateTime.now();
-            AppLogger.info('Potential conflict for key $key: existing timestamp $existingTimestamp, new timestamp $now');
+            AppLogger.info('Conflict check for key $key: existing=$existingTimestamp, new=$now');
 
-            // Implement conflict resolution based on data type
-            if (key == 'game_stats') {
-              final existingValue = existingEntry['value'] as Map<String, dynamic>;
-              final mergedData = _mergeGameStats(existingValue, data);
-              currentData[key] = {
-                'value': mergedData,
-                'timestamp': DateTime.now().toIso8601String(),
-              };
-              AppLogger.info('Merged game stats due to conflict');
-            } else if (key == 'settings') {
-              final existingValue = existingEntry['value'] as Map<String, dynamic>;
-              final mergedData = _mergeSettings(existingValue, data);
-              currentData[key] = {
-                'value': mergedData,
-                'timestamp': DateTime.now().toIso8601String(),
-              };
-              AppLogger.info('Merged settings due to conflict');
-            } else if (key == 'lesson_progress') {
-              final existingValue = existingEntry['value'] as Map<String, dynamic>;
-              final mergedData = _mergeLessonProgress(existingValue, data);
-              currentData[key] = {
-                'value': mergedData,
-                'timestamp': DateTime.now().toIso8601String(),
-              };
-              AppLogger.info('Merged lesson progress due to conflict');
+            // Use timestamp-based conflict resolution
+            // Only merge if the existing data is recent (within last 60 seconds)
+            final timeDifference = now.difference(existingTimestamp);
+            final shouldMerge = timeDifference.inSeconds < 60;
+
+            if (shouldMerge) {
+              // Implement conflict resolution based on data type
+              if (key == 'game_stats') {
+                final existingValue = existingEntry['value'] as Map<String, dynamic>;
+                final mergedData = _mergeGameStats(existingValue, data);
+                currentData[key] = {
+                  'value': mergedData,
+                  'timestamp': now.toIso8601String(),
+                };
+                AppLogger.info('Merged game stats due to recent conflict');
+              } else if (key == 'settings') {
+                final existingValue = existingEntry['value'] as Map<String, dynamic>;
+                final mergedData = _mergeSettings(existingValue, data);
+                currentData[key] = {
+                  'value': mergedData,
+                  'timestamp': now.toIso8601String(),
+                };
+                AppLogger.info('Merged settings due to recent conflict');
+              } else if (key == 'lesson_progress') {
+                final existingValue = existingEntry['value'] as Map<String, dynamic>;
+                final mergedData = _mergeLessonProgress(existingValue, data);
+                currentData[key] = {
+                  'value': mergedData,
+                  'timestamp': now.toIso8601String(),
+                };
+                AppLogger.info('Merged lesson progress due to recent conflict');
+              } else {
+                // For other keys, last write wins
+                currentData[key] = {
+                  'value': data,
+                  'timestamp': now.toIso8601String(),
+                };
+                AppLogger.info('Last write wins for key $key');
+              }
             } else {
-              // For other keys, last write wins
+              // Old data, just overwrite
               currentData[key] = {
                 'value': data,
-                'timestamp': DateTime.now().toIso8601String(),
+                'timestamp': now.toIso8601String(),
               };
+              AppLogger.info('Overwriting old data for key $key');
             }
           } else {
             // No existing data, just set it
             currentData[key] = {
               'value': data,
-              'timestamp': DateTime.now().toIso8601String(),
+              'timestamp': now.toIso8601String(),
             };
           }
 
@@ -276,28 +320,55 @@ class SyncService {
           await _client.from(_tableName).upsert({
             'user_id': _currentUserId,
             'data': currentData,
-            'updated_at': DateTime.now().toIso8601String(),
+            'updated_at': now.toIso8601String(),
           });
 
           // Update rate limiting timestamp
-          _lastSyncTimes[key] = DateTime.now();
+          _lastSyncTimes[key] = now;
 
           AppLogger.info('Successfully synced data for key: $key for user: $_currentUserId on attempt $attempt');
           _onSyncSuccess?.call(key);
           return; // Success, exit retry loop
         } catch (e) {
+          final isNetworkError = e.toString().toLowerCase().contains('network') ||
+                                  e.toString().toLowerCase().contains('connection') ||
+                                  e.toString().toLowerCase().contains('timeout');
+          
           AppLogger.error('Failed to sync data for key: $key on attempt $attempt/$_maxRetries', e);
+          
           if (attempt == _maxRetries) {
             AppLogger.error('All retry attempts failed for key: $key, queuing for offline sync');
             await _queueOfflineSync(key, data);
             _onSyncError?.call(key, 'Sync failed after $_maxRetries attempts: ${e.toString()}');
+            
+            // Report error with appropriate categorization
+            if (isNetworkError) {
+              await AutomaticErrorReporter.reportNetworkError(
+                message: 'Sync network failure for key: $key',
+                url: _tableName,
+                statusCode: 0,
+                additionalInfo: {
+                  'key': key,
+                  'attempts': _maxRetries,
+                  'error': e.toString(),
+                },
+              );
+            } else {
+              await AutomaticErrorReporter.reportStorageError(
+                message: 'Sync failure for key: $key',
+                additionalInfo: {
+                  'key': key,
+                  'attempts': _maxRetries,
+                  'error': e.toString(),
+                },
+              );
+            }
           }
         }
       }
     } finally {
-      // Reset concurrency flags
+      // Reset concurrency flag
       _syncInProgress[key] = false;
-      _isApplyingRealtimeUpdate = false;
     }
   }
 
@@ -361,23 +432,33 @@ class SyncService {
   }
 
   /// Notifies all listeners of data changes
-  void _notifyListeners(Map<String, dynamic> data) {
-    // Prevent real-time updates during sync operations to avoid conflicts
-    if (_isApplyingRealtimeUpdate) {
-      AppLogger.debug('Skipping real-time listener notifications during sync operation');
-      return;
-    }
-
+  Future<void> _notifyListeners(Map<String, dynamic> data) async {
     AppLogger.debug('Notifying listeners for ${data.length} data keys');
-    data.forEach((key, value) {
+    
+    for (final entry in data.entries) {
+      final key = entry.key;
+      final value = entry.value;
+      
+      // Skip if sync is in progress for this key
+      if (_syncInProgress[key] == true) {
+        AppLogger.debug('Skipping real-time notification for key $key - sync in progress');
+        continue;
+      }
+      
       final listener = _listeners[key];
       if (listener != null && value is Map<String, dynamic>) {
-        AppLogger.info('Notifying listener for key: $key');
-        listener(value['value'] as Map<String, dynamic>);
+        // Mark that real-time update is in progress
+        _realtimeUpdateInProgress[key] = true;
+        try {
+          AppLogger.info('Notifying listener for key: $key');
+          listener(value['value'] as Map<String, dynamic>);
+        } finally {
+          _realtimeUpdateInProgress[key] = false;
+        }
       } else if (listener == null) {
         AppLogger.warning('No listener registered for key: $key');
       }
-    });
+    }
   }
 
   /// Gets the current user's data
@@ -474,19 +555,33 @@ class SyncService {
   Future<void> _queueOfflineSync(String key, Map<String, dynamic> data) async {
     if (_prefs == null) return;
 
-    final queueJson = _prefs!.getString(_offlineQueueKey) ?? '[]';
-    final queue = List<Map<String, dynamic>>.from(json.decode(queueJson) as List);
+    try {
+      final queueJson = _prefs!.getString(_offlineQueueKey) ?? '[]';
+      final queue = List<Map<String, dynamic>>.from(json.decode(queueJson) as List);
 
-    final queueItem = _OfflineSyncItem(
-      key: key,
-      data: data,
-      timestamp: DateTime.now(),
-      userId: _currentUserId,
-    );
+      // Enforce maximum queue size
+      if (queue.length >= _maxOfflineQueueSize) {
+        AppLogger.warning('Offline queue at maximum size ($_maxOfflineQueueSize), removing oldest item');
+        queue.removeAt(0); // Remove oldest item
+      }
 
-    queue.add(queueItem.toJson());
-    await _prefs!.setString(_offlineQueueKey, json.encode(queue));
-    AppLogger.info('Queued offline sync for key: $key (${queue.length} items in queue)');
+      final queueItem = _OfflineSyncItem(
+        key: key,
+        data: data,
+        timestamp: DateTime.now(),
+        userId: _currentUserId,
+      );
+
+      queue.add(queueItem.toJson());
+      await _prefs!.setString(_offlineQueueKey, json.encode(queue));
+      AppLogger.info('Queued offline sync for key: $key (${queue.length} items in queue)');
+    } catch (e) {
+      AppLogger.error('Failed to queue offline sync', e);
+      await AutomaticErrorReporter.reportStorageError(
+        message: 'Failed to queue offline sync for key: $key',
+        additionalInfo: {'key': key, 'error': e.toString()},
+      );
+    }
   }
 
   /// Processes the offline sync queue with conflict resolution
@@ -590,6 +685,39 @@ class SyncService {
     _retryTimer = null;
   }
 
+  /// Cleans up expired offline queue items
+  Future<void> _cleanupExpiredQueueItems() async {
+    if (_prefs == null) return;
+
+    try {
+      final queueJson = _prefs!.getString(_offlineQueueKey);
+      if (queueJson == null || queueJson.isEmpty) return;
+
+      final queue = List<Map<String, dynamic>>.from(json.decode(queueJson) as List);
+      final now = DateTime.now();
+      
+      // Filter out expired items
+      final filteredQueue = queue.where((itemJson) {
+        try {
+          final item = _OfflineSyncItem.fromJson(itemJson);
+          final age = now.difference(item.timestamp);
+          return age < _queueItemExpirationDuration;
+        } catch (e) {
+          AppLogger.error('Failed to parse queue item during cleanup', e);
+          return false; // Remove malformed items
+        }
+      }).toList();
+
+      if (filteredQueue.length < queue.length) {
+        final removedCount = queue.length - filteredQueue.length;
+        AppLogger.info('Cleaned up $removedCount expired queue items');
+        await _prefs!.setString(_offlineQueueKey, json.encode(filteredQueue));
+      }
+    } catch (e) {
+      AppLogger.error('Failed to clean up expired queue items', e);
+    }
+  }
+
   /// Validates data integrity
   bool _isValidGameStatsData(Map<String, dynamic> data) {
     return data.containsKey('score') &&
@@ -608,7 +736,7 @@ class SyncService {
 
   /// Validates lesson progress data
   bool _isValidLessonProgressData(Map<String, dynamic> data) {
-    if (!data.containsKey('unlockedCount') || !(data['unlockedCount'] is int)) return false;
+    if (!data.containsKey('unlockedCount') || data['unlockedCount'] is! int) return false;
     if ((data['unlockedCount'] as int) < 1) return false;
 
     if (data.containsKey('bestStarsByLesson')) {
@@ -625,8 +753,8 @@ class SyncService {
 
   /// Validates settings data
   bool _isValidSettingsData(Map<String, dynamic> data) {
-    // Basic structure validation - could be expanded
-    return data is Map<String, dynamic>;
+    // Settings data is always valid as long as it's a Map
+    return true;
   }
 
   /// Validates synced data before applying
