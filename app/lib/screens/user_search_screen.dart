@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../l10n/strings_nl.dart' as strings;
 import '../providers/game_stats_provider.dart';
 import '../services/analytics_service.dart';
+import 'profile_details_screen.dart';
 
 /// Screen for searching and following other users
 class UserSearchScreen extends StatefulWidget {
@@ -362,6 +363,17 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
                                       .withValues(alpha: 0.5),
                                 ),
                               ),
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ProfileDetailsScreen(
+                                userId: userId,
+                                initialUsername: username,
+                                initialDisplayName: displayName,
+                              ),
+                            ),
+                          );
+                        },
                       );
                     },
                   ),
