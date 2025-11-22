@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../l10n/strings_nl.dart' as strings;
 import '../providers/game_stats_provider.dart';
-import '../services/analytics_service.dart';
+import '../services/tracking_service.dart';
 import '../services/logger.dart';
 
 class ProfileDetailsScreen extends StatefulWidget {
@@ -22,7 +22,7 @@ class ProfileDetailsScreen extends StatefulWidget {
 }
 
 class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
-  late AnalyticsService _analyticsService;
+  final TrackingService _trackingService = TrackingService();
   bool _isLoading = true;
   String? _error;
   Map<String, dynamic>? _userProfile;
@@ -33,15 +33,13 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    _analyticsService = Provider.of<AnalyticsService>(context, listen: false);
     _trackScreenAccess();
     _loadData();
   }
 
   void _trackScreenAccess() {
-    _analyticsService.screen(context, 'ProfileDetailsScreen');
-    _analyticsService.trackFeatureUsage(
-        context, 'social_features', 'view_profile');
+    _trackingService.screen(context, 'ProfileDetailsScreen');
+    _trackingService.trackSocialFeatureUsed(context, 'view_profile');
   }
 
   Future<void> _loadData() async {
@@ -98,7 +96,7 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
       final syncService = gameStatsProvider.syncService;
       final username = _userProfile?['username'] ?? widget.initialUsername ?? '';
 
-      _analyticsService.capture(
+      _trackingService.capture(
         context,
         _isFollowing ? 'unfollow_user' : 'follow_user',
         properties: {
