@@ -1,17 +1,15 @@
 #!/usr/bin/env python3
-"""Release helper script for BijbelQuiz.
+"""Release helper script for BijbelQuiz (now located in scripts/).
 
 Usage:
-    python3 update_release.py <new_version>
+    python3 scripts/update_release.py <new_version>
 
 The script will:
-  1. Update `app/pubspec.yaml` (or the pubspec.yaml in the Flutter project root) with the new version **and increment the build number**.
-  2. Increment Android `versionCode` and set `versionName` in the appropriate `build.gradle`.
+  1. Update `app/pubspec.yaml` with the new version and increment the build number.
+  2. Increment Android `versionCode` and set `versionName` in `app/android/app/build.gradle`.
   3. Replace the version string in `websites/bijbelquiz.app/download.html`.
-  4. Run Flutter builds for web, Android APK, Android App Bundle (AAB) and Linux.
+  4. Build Flutter artefacts (web, APK, AAB, Linux).
   5. Copy the generated web build into `websites/play.bijbelquiz.app`.
-
-All operations abort on first error to avoid partial releases.
 """
 
 import argparse
@@ -37,21 +35,16 @@ def read_file(path: Path) -> str:
 def write_file(path: Path, content: str) -> None:
     path.write_text(content, encoding="utf-8")
 
-def find_flutter_root(start: Path) -> Path:
-    """Walk upwards from *start* until a directory containing pubspec.yaml is found.
-    Returns the directory containing the pubspec.yaml (the Flutter project root).
-    """
-    current = start.resolve()
-    while True:
-        if (current / "pubspec.yaml").exists():
-            return current
-        if current.parent == current:
-            raise RuntimeError("Could not locate a pubspec.yaml in any parent directory.")
-        current = current.parent
+# ---------- Paths based on script location ----------
+# The script lives in <repo_root>/scripts/, so the repo root is its parent.
+REPO_ROOT = Path(__file__).resolve().parent.parent
+APP_ROOT = REPO_ROOT / "app"
+WEB_ROOT = REPO_ROOT / "websites"
 
 # ---------- 1️⃣ Update pubspec.yaml (bump version & build number) ----------
-def update_pubspec(project_root: Path, new_version: str) -> None:
-    pubspec_path = project_root / "pubspec.yaml"
+
+def update_pubspec(new_version: str) -> None:
+    pubspec_path = APP_ROOT / "pubspec.yaml"
     content = read_file(pubspec_path)
     match = re.search(r"^version:\s*([0-9]+\.[0-9]+\.[0-9]+)\+([0-9]+)", content, re.MULTILINE)
     if not match:
@@ -64,9 +57,9 @@ def update_pubspec(project_root: Path, new_version: str) -> None:
     print(f"Updated pubspec.yaml: {old_version}+{old_build} → {new_version}+{new_build}")
 
 # ---------- 2️⃣ Update Android build.gradle ----------
-def update_build_gradle(project_root: Path, new_version: str) -> int:
-    # The gradle file lives under <project_root>/android/app/build.gradle
-    gradle_path = project_root / "android" / "app" / "build.gradle"
+
+def update_build_gradle(new_version: str) -> int:
+    gradle_path = APP_ROOT / "android" / "app" / "build.gradle"
     content = read_file(gradle_path)
     # versionCode
     code_match = re.search(r"versionCode\s+(\d+)", content)
@@ -86,15 +79,12 @@ def update_build_gradle(project_root: Path, new_version: str) -> int:
     return new_code
 
 # ---------- 3️⃣ Update download.html ----------
-def update_download_html(project_root: Path, new_version: str) -> None:
-    # The download.html lives in the top‑level 'websites' directory, not inside the Flutter app folder.
-    # First try the path relative to the detected project_root.
-    html_path = project_root / "websites" / "bijbelquiz.app" / "download.html"
+
+def update_download_html(new_version: str) -> None:
+    html_path = WEB_ROOT / "bijbelquiz.app" / "download.html"
     if not html_path.exists():
-        # Fallback: the project_root may be the 'app' subdirectory, so go one level up.
-        html_path = project_root.parent / "websites" / "bijbelquiz.app" / "download.html"
+        raise RuntimeError(f"download.html not found at {html_path}")
     content = read_file(html_path)
-    # Replace any occurrence like "Version: X.Y.Z" (case‑insensitive)
     new_content, count = re.subn(r"(Version[:\s]*)[0-9]+\.[0-9]+\.[0-9]+", f"\1{new_version}", content, flags=re.IGNORECASE)
     if count == 0:
         print("Warning: No version string found in download.html to replace.")
@@ -102,22 +92,23 @@ def update_download_html(project_root: Path, new_version: str) -> None:
     print(f"Updated download.html (replaced {count} occurrence(s)).")
 
 # ---------- 4️⃣ Build steps ----------
-def flutter_build(project_root: Path) -> None:
-    # Clean first
-    run_cmd(["flutter", "clean"], cwd=project_root)
-    run_cmd(["flutter", "pub", "get"], cwd=project_root)
-    # Web
-    run_cmd(["flutter", "build", "web", "--release"], cwd=project_root)
-    # Android APK
-    run_cmd(["flutter", "build", "apk", "--release"], cwd=project_root)
-    # Android AAB
-    run_cmd(["flutter", "build", "appbundle", "--release"], cwd=project_root)
-    # Linux
-    run_cmd(["flutter", "build", "linux", "--release"], cwd=project_root)
 
-def copy_web_output(project_root: Path) -> None:
-    src = project_root / "build" / "web"
-    dest = project_root / "websites" / "play.bijbelquiz.app"
+def flutter_build() -> None:
+    # Clean first
+    run_cmd(["flutter", "clean"], cwd=APP_ROOT)
+    run_cmd(["flutter", "pub", "get"], cwd=APP_ROOT)
+    # Web
+    run_cmd(["flutter", "build", "web", "--release"], cwd=APP_ROOT)
+    # Android APK
+    run_cmd(["flutter", "build", "apk", "--release"], cwd=APP_ROOT)
+    # Android AAB
+    run_cmd(["flutter", "build", "appbundle", "--release"], cwd=APP_ROOT)
+    # Linux
+    run_cmd(["flutter", "build", "linux", "--release"], cwd=APP_ROOT)
+
+def copy_web_output() -> None:
+    src = APP_ROOT / "build" / "web"
+    dest = WEB_ROOT / "play.bijbelquiz.app"
     if dest.exists():
         shutil.rmtree(dest)
     shutil.copytree(src, dest)
@@ -125,34 +116,24 @@ def copy_web_output(project_root: Path) -> None:
 
 # ---------- Main ----------
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Release automation for BijbelQuiz")
+    parser = argparse.ArgumentParser(description="Release automation for BijbelQuiz (scripts version)")
     parser.add_argument("version", help="New version string, e.g. 2.1.0")
     args = parser.parse_args()
 
-    # Determine the Flutter project root (where pubspec.yaml lives)
-    script_dir = Path(__file__).resolve().parent
-    # The pubspec.yaml is inside the 'app' subdirectory of the repo.
-    possible_app_root = script_dir / "app"
-    if (possible_app_root / "pubspec.yaml").exists():
-        project_root = possible_app_root
-    else:
-        project_root = find_flutter_root(script_dir)
-    print(f"Detected Flutter project root: {project_root}")
-
     try:
-        update_pubspec(project_root, args.version)
-        new_code = update_build_gradle(project_root, args.version)
-        update_download_html(project_root, args.version)
-        flutter_build(project_root)
-        copy_web_output(project_root)
+        update_pubspec(args.version)
+        new_code = update_build_gradle(args.version)
+        update_download_html(args.version)
+        flutter_build()
+        copy_web_output()
         # Summarise artefacts
-        apk = next(project_root.glob("build/app/outputs/apk/**/*.apk"), None)
-        aab = next(project_root.glob("build/app/outputs/bundle/**/*.aab"), None)
-        linux_bin = next((p for p in project_root.rglob("build/linux/**/release/*") if p.is_file() and os.access(p, os.X_OK)), None)
+        apk = next(APP_ROOT.glob("build/app/outputs/apk/**/*.apk"), None)
+        aab = next(APP_ROOT.glob("build/app/outputs/bundle/**/*.aab"), None)
+        linux_bin = next((p for p in APP_ROOT.rglob("build/linux/**/release/*") if p.is_file() and os.access(p, os.X_OK)), None)
         print("\n=== Release Summary ===")
         print(f"Version: {args.version}")
         print(f"Android versionCode: {new_code}")
-        print(f"Web output: {project_root / 'websites' / 'play.bijbelquiz.app'}")
+        print(f"Web output: {WEB_ROOT / 'play.bijbelquiz.app'}")
         print(f"APK: {apk}")
         print(f"AAB: {aab}")
         print(f"Linux binary: {linux_bin}")
