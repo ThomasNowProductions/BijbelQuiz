@@ -248,7 +248,7 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
                                       const Icon(Icons.refresh_rounded,
                                           size: 20),
                                       const SizedBox(width: 8),
-                                      const Text(
+                                      Text(
                                           strings.AppStrings.retryLesson),
                                     ],
                                   ),
@@ -276,7 +276,7 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const Text(strings.AppStrings.nextLesson),
+                                      Text(strings.AppStrings.nextLesson),
                                       const SizedBox(width: 8),
                                       const Icon(Icons.arrow_forward_rounded,
                                           size: 20),

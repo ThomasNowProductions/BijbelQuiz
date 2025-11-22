@@ -365,8 +365,9 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
       ],
       supportedLocales: const [
         Locale('nl', ''), // Dutch
+        Locale('en', ''), // English
       ],
-      locale: const Locale('nl', ''), // Force Dutch locale
+      locale: Locale(settings.language, ''),
       routes: {
         '/store': (context) => const StoreScreen(),
         '/settings': (context) => const SettingsScreen(),

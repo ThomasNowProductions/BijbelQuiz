@@ -6,6 +6,7 @@ import '../models/ai_theme.dart';
 import '../services/sync_service.dart';
 import '../error/error_handler.dart';
 import '../error/error_types.dart';
+import '../l10n/strings_nl.dart' as strings;
 
 /// Manages the app's settings including language and theme preferences
 class SettingsProvider extends ChangeNotifier {
@@ -404,8 +405,9 @@ class SettingsProvider extends ChangeNotifier {
 
       _prefs = await SharedPreferences.getInstance();
       AppLogger.info('SharedPreferences instance obtained');
-      // Altijd Nederlands forceren
-      _language = 'nl';
+      // Load language
+      _language = _prefs?.getString('language') ?? 'nl';
+      strings.AppStrings.setLanguage(_language);
       final themeModeIndex = _prefs?.getInt(_themeModeKey) ?? 0;
       _themeMode = ThemeMode.values[themeModeIndex];
       // Load old boolean slow mode setting for backward compatibility
@@ -513,13 +515,22 @@ class SettingsProvider extends ChangeNotifier {
     }
   }
 
-  /// Update de taalinstelling (alleen 'nl' toegestaan)
+  /// Update de taalinstelling
   Future<void> setLanguage(String language) async {
-    if (language != 'nl') {
-      throw ArgumentError('Taal moet "nl" zijn (alleen Nederlands toegestaan)');
+    if (language != 'nl' && language != 'en') {
+      throw ArgumentError('Taal moet "nl" of "en" zijn');
     }
-    // Geen effect, altijd Nederlands
-    notifyListeners();
+    
+    await _saveSetting(
+      action: () async {
+        _language = language;
+        strings.AppStrings.setLanguage(language);
+        await _prefs?.setString('language', language);
+        AppLogger.info('Language saved successfully: $language');
+        await _syncSettings();
+      },
+      errorMessage: 'Failed to save language setting',
+    );
   }
 
   /// Updates the theme mode setting

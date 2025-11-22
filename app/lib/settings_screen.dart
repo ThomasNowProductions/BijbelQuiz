@@ -260,6 +260,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
           icon: Icons.palette_rounded,
           items: [
             _SettingItem(
+              title: strings.AppStrings.language,
+              subtitle: settings.language == 'nl' ? 'Nederlands' : 'English',
+              child: _buildLanguageDropdown(settings, colorScheme, isSmallScreen),
+            ),
+            _SettingItem(
               title: strings.AppStrings.theme,
               subtitle: strings.AppStrings.chooseTheme,
               child: _buildThemeDropdown(settings, colorScheme, isSmallScreen),
@@ -786,6 +791,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       dropdownColor: colorScheme.surfaceContainerHighest,
       isExpanded: true,
+    );
+  }
+
+  Widget _buildLanguageDropdown(
+      SettingsProvider settings, ColorScheme colorScheme, bool isSmallScreen) {
+    return DropdownButton<String>(
+      value: settings.language,
+      items: const [
+        DropdownMenuItem(
+          value: 'nl',
+          child: Text('Nederlands'),
+        ),
+        DropdownMenuItem(
+          value: 'en',
+          child: Text('English'),
+        ),
+      ],
+      onChanged: (String? value) {
+        if (value != null) {
+          _updateSetting(settings, 'change_language',
+              () => settings.setLanguage(value));
+        }
+      },
+      style: TextStyle(
+        color: colorScheme.onSurface,
+        fontSize: isSmallScreen ? 12 : 14,
+      ),
+      dropdownColor: colorScheme.surfaceContainerHighest,
+      isExpanded: true,
+      underline: Container(),
     );
   }
 

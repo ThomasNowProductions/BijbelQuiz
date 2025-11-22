@@ -1,6 +1,6 @@
 import 'package:bijbelquiz/constants/urls.dart';
 
-class AppStrings {
+class AppStringsEn {
   // Common
   static const String appName = 'BibleQuiz';
   static const String appDescription = 'Test Your Bible Knowledge';
@@ -678,4 +678,38 @@ class AppStrings {
       'Share a personalized invite link with friends';
   static const String bugReport = 'Bug Report';
   static const String bugReportDesc = 'Report bugs and issues with the app';
+
+  // Missing translations added automatically
+  static const String streakLabel = ' streak';
+  static const String unknownUser = 'Unknown User';
+  static const String lastScore = 'Last score:';
+  static const String notAvailable = 'Unknown';
+  static const String followedUsersScores = 'Scores of Followed Users';
+  static const String thankYouForSupport = 'Thank you for your support!';
+  static const String thankYouForYourSupport = 'We appreciate you using BibleQuiz and participating in our community.';
+  static const String supportWithDonation = 'Support us with a donation';
+  static const String bijbelquizGenDonationText = 'Your donation helps us maintain and improve BibleQuiz for you and others.';
+  static const String noExpirationDate = 'No expiration date';
+  static const String username = 'Username';
+  static const String enterUsername = 'Enter username';
+  static const String usernameHint = 'e.g. John2025';
+  static const String saveUsername = 'Save username';
+  static const String pleaseEnterUsername = 'Please enter a username';
+  static const String usernameTooLong = 'Username must be at most 30 characters';
+  static const String usernameAlreadyTaken = 'Username is already taken';
+  static const String usernameBlacklisted = 'This username is not allowed';
+  static const String usernameSaved = 'Username saved!';
+  static const String beta = 'Beta';
+  static const String shareStatsTitle = 'Share your stats';
+  static const String shareYourBijbelQuizStats = 'Share your BibleQuiz stats';
+  static const String correctAnswersShare = 'Correct answers';
+  static const String currentStreakShare = 'Current streak';
+  static const String bestStreakShare = 'Best streak';
+  static const String mistakesShare = 'Mistakes';
+  static const String accuracyShare = 'Accuracy';
+  static const String timeSpentShare = 'Time spent';
+  static const String shareResults = 'Share your results';
+  static const String copyLink = 'Copy link';
+  static const String automaticBugReports = 'Automatic bug reporting';
+  static const String automaticBugReportsDesc = 'Automatically send bug reports when errors occur (recommended)';
 }
