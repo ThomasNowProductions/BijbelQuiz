@@ -1,6 +1,7 @@
 import 'package:bijbelquiz/services/analytics_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../providers/settings_provider.dart';
 
 import '../services/notification_service.dart';
@@ -10,6 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../services/logger.dart';
 import '../widgets/quiz_skeleton.dart';
 import '../widgets/top_snackbar.dart';
+import '../widgets/auth_view.dart';
 import '../constants/urls.dart';
 import '../l10n/strings_nl.dart' as strings;
 import '../screens/main_navigation_screen.dart';
@@ -25,11 +27,29 @@ class _GuideScreenState extends State<GuideScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
-  List<GuidePage> get _pages {
+  late final List<GuidePage> _pages;
+
+  @override
+  void initState() {
+    super.initState();
+    final analyticsService =
+        Provider.of<AnalyticsService>(context, listen: false);
+
+    analyticsService.screen(context, 'GuideScreen');
+
+    // Track guide screen access and feature usage
+    analyticsService.trackFeatureStart(
+        context, AnalyticsService.featureOnboarding);
+
+    AppLogger.info('GuideScreen loaded');
+    
     final showNotificationPage = !kIsWeb && !Platform.isLinux;
-    return buildGuidePages(
+    final isLoggedIn = Supabase.instance.client.auth.currentUser != null;
+    
+    _pages = buildGuidePages(
       showNotificationPage: showNotificationPage,
       context: context,
+      isLoggedIn: isLoggedIn,
     );
   }
 
@@ -47,20 +67,7 @@ class _GuideScreenState extends State<GuideScreen> {
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
-    final analyticsService =
-        Provider.of<AnalyticsService>(context, listen: false);
 
-    analyticsService.screen(context, 'GuideScreen');
-
-    // Track guide screen access and feature usage
-    analyticsService.trackFeatureStart(
-        context, AnalyticsService.featureOnboarding);
-
-    AppLogger.info('GuideScreen loaded');
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +84,9 @@ class _GuideScreenState extends State<GuideScreen> {
           children: [
             Expanded(
               child: PageView.builder(
+                physics: pages[_currentPage].isAuthPage 
+                    ? const NeverScrollableScrollPhysics() 
+                    : const BouncingScrollPhysics(),
                 controller: _pageController,
                 onPageChanged: _onPageChanged,
                 itemCount: pages.length,
@@ -85,7 +95,7 @@ class _GuideScreenState extends State<GuideScreen> {
                   return GuidePageView(
                     key: ValueKey(page),
                     page: page,
-                    onConsentComplete: page.isNotificationPage
+                    onConsentComplete: page.isNotificationPage || page.isAuthPage
                         ? () {
                             if (_currentPage < pages.length - 1) {
                               _pageController.nextPage(
@@ -135,16 +145,18 @@ class _GuideScreenState extends State<GuideScreen> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {
-                      if (isLastPage) {
-                        _handleGuideCompletion(context);
-                      } else {
-                        _pageController.nextPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                        );
-                      }
-                    },
+                    onPressed: pages[_currentPage].isAuthPage
+                        ? null
+                        : () {
+                            if (isLastPage) {
+                              _handleGuideCompletion(context);
+                            } else {
+                              _pageController.nextPage(
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.easeInOut,
+                              );
+                            }
+                          },
                     child: Text(
                       isLastPage
                           ? strings.AppStrings.getStarted
@@ -206,6 +218,7 @@ class GuidePage {
   final IconData icon;
   final bool isNotificationPage;
   final bool isDonationPage;
+  final bool isAuthPage;
   final String? buttonText;
   final IconData? buttonIcon;
 
@@ -217,12 +230,24 @@ class GuidePage {
     this.isDonationPage = false,
     this.buttonText,
     this.buttonIcon,
+    this.isAuthPage = false,
   });
 }
 
 List<GuidePage> buildGuidePages(
-    {required bool showNotificationPage, required BuildContext context}) {
-  final pages = <GuidePage>[
+    {required bool showNotificationPage, required BuildContext context, required bool isLoggedIn}) {
+  final pages = <GuidePage>[];
+  
+  if (!isLoggedIn) {
+    pages.add(GuidePage(
+      title: 'Account',
+      description: 'Maak een account aan of log in om je voortgang te bewaren en sociale functies te gebruiken.',
+      icon: Icons.account_circle,
+      isAuthPage: true,
+    ));
+  }
+
+  pages.addAll([
     GuidePage(
       title: strings.AppStrings.welcomeTitle,
       description: strings.AppStrings.welcomeDescription,
@@ -243,7 +268,7 @@ List<GuidePage> buildGuidePages(
       description: strings.AppStrings.customizeExperienceDescription,
       icon: Icons.settings,
     ),
-  ];
+  ]);
 
   if (showNotificationPage) {
     pages.add(
@@ -438,6 +463,49 @@ class _GuidePageViewState extends State<GuidePageView> {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
+
+    if (widget.page.isAuthPage) {
+      return Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  widget.page.icon,
+                  size: 80,
+                  color: colorScheme.primary,
+                ),
+                const SizedBox(height: 24),
+                Text(
+                  widget.page.title,
+                  style: textTheme.headlineMedium?.copyWith(
+                    color: colorScheme.onSurface,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  widget.page.description,
+                  style: textTheme.bodyLarge?.copyWith(
+                    color: colorScheme.onSurface,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 32),
+                AuthView(
+                  isEmbedded: true,
+                  onLoginSuccess: widget.onConsentComplete,
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
     if (widget.page.isNotificationPage) {
       return Padding(
         padding: const EdgeInsets.all(24.0),
@@ -753,6 +821,7 @@ class _GuideScreenTestHarnessState extends State<GuideScreenTestHarness> {
       _pages = buildGuidePages(
         showNotificationPage: showNotificationPage,
         context: context,
+        isLoggedIn: false, // Default to false for test harness
       );
       setState(() {}); // Rebuild after initializing pages
       widget.onPageShown?.call(_currentPage, _pages.length);

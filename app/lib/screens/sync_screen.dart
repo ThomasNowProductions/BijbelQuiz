@@ -9,6 +9,7 @@ import '../providers/settings_provider.dart';
 import '../services/logger.dart';
 import '../utils/automatic_error_reporter.dart';
 import '../screens/main_navigation_screen.dart';
+import '../widgets/auth_view.dart';
 
 class SyncScreen extends StatefulWidget {
   const SyncScreen({super.key, this.requiredForSocial = false});
@@ -20,9 +21,7 @@ class SyncScreen extends StatefulWidget {
 }
 
 class _SyncScreenState extends State<SyncScreen> {
-  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _newPasswordController = TextEditingController();
   final TextEditingController _confirmNewPasswordController = TextEditingController();
@@ -33,9 +32,8 @@ class _SyncScreenState extends State<SyncScreen> {
   StreamSubscription<AuthState>? _authSubscription;
   bool _isLoadingProfile = false;
 
-  bool _isLoading = false;
+
   String? _error;
-  bool _isLoginMode = true; // true for login, false for signup
   User? _currentUser;
   Map<String, dynamic>? _userProfile;
   List<String>? _blacklistedUsernames;
@@ -177,128 +175,13 @@ class _SyncScreenState extends State<SyncScreen> {
     }
   }
 
-  /// Gets list of data types being synced
-  List<String> _getSyncDataTypes() {
-    return [
-      'game_stats',
-      'lesson_progress', 
-      'settings',
-    ];
-  }
 
-  /// Builds sync status row for a data type
-  Widget _buildSyncStatusRow(String dataType) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    
-    final lastSync = _lastSyncTimes[dataType];
-    final isSynced = _syncedDataTypes.contains(dataType);
-    
-    String displayName;
-    switch (dataType) {
-      case 'game_stats':
-        displayName = 'Game Statistieken';
-        break;
-      case 'lesson_progress':
-        displayName = 'Les Voortgang';
-        break;
-      case 'settings':
-        displayName = 'Instellingen';
-        break;
-      default:
-        displayName = dataType;
-    }
-    
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Row(
-        children: [
-          Icon(
-            isSynced ? Icons.check_circle : Icons.pending,
-            color: isSynced ? Colors.green : colorScheme.primary,
-            size: 16,
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              displayName,
-              style: theme.textTheme.bodySmall,
-            ),
-          ),
-          Text(
-            lastSync != null 
-                ? '${lastSync.hour.toString().padLeft(2, '0')}:${lastSync.minute.toString().padLeft(2, '0')}'
-                : 'Nooit',
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: colorScheme.onSurface.withValues(alpha: 0.6),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
-  /// Gets account statistics from providers
-  Future<Map<String, dynamic>> _getAccountStatistics() async {
-    try {
-      final gameStatsProvider = Provider.of<GameStatsProvider>(context, listen: false);
-      final lessonProgressProvider = Provider.of<LessonProgressProvider>(context, listen: false);
-      
-      final gameStats = gameStatsProvider.getExportData();
-      final lessonProgress = lessonProgressProvider.getExportData();
-      
-      // Count completed lessons (lessons with > 0 stars)
-      int completedLessons = 0;
-      final bestStarsByLesson = lessonProgress['bestStarsByLesson'] as Map<String, int>? ?? {};
-      for (final stars in bestStarsByLesson.values) {
-        if (stars > 0) completedLessons++;
-      }
-      
-      return {
-        'totalScore': gameStats['score'] ?? 0,
-        'currentStreak': gameStats['currentStreak'] ?? 0,
-        'longestStreak': gameStats['longestStreak'] ?? 0,
-        'incorrectAnswers': gameStats['incorrectAnswers'] ?? 0,
-        'completedLessons': completedLessons,
-        'totalLessons': bestStarsByLesson.length,
-      };
-    } catch (e) {
-      AppLogger.error('Failed to get account statistics', e);
-      return {
-        'totalScore': 0,
-        'currentStreak': 0,
-        'longestStreak': 0,
-        'incorrectAnswers': 0,
-        'completedLessons': 0,
-        'totalLessons': 0,
-      };
-    }
-  }
 
-  /// Builds a statistics row
-  Widget _buildStatRow(String label, String value) {
-    final theme = Theme.of(context);
-    
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            label,
-            style: theme.textTheme.bodyMedium,
-          ),
-          Text(
-            value,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+
+
+
+
 
   /// Builds account menu items
   List<Widget> _buildAccountMenuItems() {
@@ -661,6 +544,8 @@ class _SyncScreenState extends State<SyncScreen> {
     }
   }
 
+
+
   Future<void> _loadBlacklistedUsernames() async {
     try {
       // Load blacklisted usernames from assets
@@ -731,178 +616,9 @@ class _SyncScreenState extends State<SyncScreen> {
     }
   }
 
-  Future<void> _signIn() async {
-    final email = _emailController.text.trim();
-    final password = _passwordController.text.trim();
-
-    if (email.isEmpty || password.isEmpty) {
-      setState(() {
-        _error = 'Vul alle velden in';
-      });
-      return;
-    }
-
-    setState(() {
-      _isLoading = true;
-      _error = null;
-    });
-
-    try {
-      final response = await Supabase.instance.client.auth.signInWithPassword(
-        email: email,
-        password: password,
-      );
-
-      if (response.user != null) {
-        AppLogger.info('Successfully signed in user: ${response.user!.email}');
-        // Sync will be handled automatically by auth state change
-
-        // Navigate to social screen after login
-        if (mounted) {
-          Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (_) => const MainNavigationScreen(initialIndex: 2)),
-            (route) => false,
-          );
-        }
-      }
-    } catch (e) {
-      setState(() {
-        _error = 'Inloggen mislukt: ${e.toString()}';
-      });
-      AppLogger.error('Sign in failed', e);
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
-
-  Future<void> _signUp() async {
-    final email = _emailController.text.trim();
-    final password = _passwordController.text.trim();
-    final confirmPassword = _confirmPasswordController.text.trim();
-    final username = _usernameController.text.trim();
-
-    if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty || username.isEmpty) {
-      setState(() {
-        _error = 'Vul alle velden in';
-      });
-      return;
-    }
-
-    if (password != confirmPassword) {
-      setState(() {
-        _error = 'Wachtwoorden komen niet overeen';
-      });
-      return;
-    }
-
-    if (password.length < 6) {
-      setState(() {
-        _error = 'Wachtwoord moet minimaal 6 karakters bevatten';
-      });
-      return;
-    }
-
-    if (username.length < 3) {
-      setState(() {
-        _error = 'Gebruikersnaam moet minimaal 3 karakters bevatten';
-      });
-      return;
-    }
-
-    if (username.length > 20) {
-      setState(() {
-        _error = 'Gebruikersnaam mag maximaal 20 karakters bevatten';
-      });
-      return;
-    }
-
-    if (_isUsernameBlacklisted(username)) {
-      setState(() {
-        _error = 'Deze gebruikersnaam is niet toegestaan';
-      });
-      return;
-    }
-
-    // Check if username is already taken
-    final usernameTaken = await _isUsernameTaken(username);
-    if (usernameTaken) {
-      setState(() {
-        _error = 'Deze gebruikersnaam is al in gebruik';
-      });
-      return;
-    }
-
-    setState(() {
-      _isLoading = true;
-      _error = null;
-    });
-
-    try {
-      final response = await Supabase.instance.client.auth.signUp(
-        email: email,
-        password: password,
-      );
-
-      if (response.user != null) {
-        try {
-          // Create user profile with username
-          await Supabase.instance.client.from('user_profiles').insert({
-            'user_id': response.user!.id,
-            'username': username.toLowerCase().trim(),
-            'display_name': username.trim(),
-            'bio': null,
-            'avatar_url': null,
-            'created_at': DateTime.now().toIso8601String(),
-            'updated_at': DateTime.now().toIso8601String(),
-          });
-
-          AppLogger.info('Successfully signed up user: ${response.user!.email} with username: $username');
-        } catch (profileError) {
-          // If profile creation fails, log it but don't fail the signup
-          AppLogger.error('Failed to create user profile during signup', profileError);
-          // Try to create a basic profile as fallback
-          try {
-            await Supabase.instance.client.from('user_profiles').insert({
-              'user_id': response.user!.id,
-              'username': username.toLowerCase().trim(),
-              'display_name': username.trim(),
-            });
-            AppLogger.info('Created basic user profile as fallback');
-          } catch (fallbackError) {
-            AppLogger.error('Failed to create fallback user profile', fallbackError);
-          }
-        }
-
-        if (mounted) {
-          setState(() {
-            _isLoginMode = true; // Switch to login mode after signup
-            _usernameController.clear(); // Clear username field
-          });
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Account aangemaakt! Controleer je email voor verificatie.'),
-              backgroundColor: Colors.green,
-            ),
-          );
-        }
-      }
-    } catch (e) {
-      setState(() {
-        _error = 'Aanmelden mislukt: ${e.toString()}';
-      });
-      AppLogger.error('Sign up failed', e);
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
-
   Future<void> _signOut() async {
     setState(() {
-      _isLoading = true;
+      // _isLoading = true;
     });
 
     try {
@@ -923,7 +639,7 @@ class _SyncScreenState extends State<SyncScreen> {
       });
     } finally {
       setState(() {
-        _isLoading = false;
+        // _isLoading = false;
       });
     }
   }
@@ -1194,276 +910,17 @@ class _SyncScreenState extends State<SyncScreen> {
 
               // Main content
               if (_currentUser == null)
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: colorScheme.surface,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.08),
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      // Social features requirement message
-                      if (widget.requiredForSocial) ...[
-                        // Large header
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 20),
-                          child: Text(
-                            'Login met je BQID',
-                            style: theme.textTheme.displaySmall?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: colorScheme.primary,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          margin: const EdgeInsets.only(bottom: 16),
-                          decoration: BoxDecoration(
-                            color: colorScheme.primaryContainer.withValues(alpha: 0.3),
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: colorScheme.primary.withValues(alpha: 0.2),
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.group_rounded,
-                                color: colorScheme.primary,
-                                size: 24,
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Text(
-                                  'Maak een account aan om sociale functies te gebruiken, zoals het zoeken naar gebruikers, vrienden maken en berichten versturen.',
-                                  style: theme.textTheme.bodyMedium?.copyWith(
-                                    color: colorScheme.onSurface,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                      // Mode toggle
-                      Row(
-                        children: [
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () => setState(() => _isLoginMode = true),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(vertical: 12),
-                                decoration: BoxDecoration(
-                                  color: _isLoginMode
-                                      ? colorScheme.primaryContainer
-                                      : Colors.transparent,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Text(
-                                  'Inloggen',
-                                  style: TextStyle(
-                                    color: _isLoginMode
-                                        ? colorScheme.primary
-                                        : colorScheme.onSurface,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () => setState(() => _isLoginMode = false),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(vertical: 12),
-                                decoration: BoxDecoration(
-                                  color: !_isLoginMode
-                                      ? colorScheme.primaryContainer
-                                      : Colors.transparent,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Text(
-                                  'Aanmelden',
-                                  style: TextStyle(
-                                    color: !_isLoginMode
-                                        ? colorScheme.primary
-                                        : colorScheme.onSurface,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-
-                      // Email field
-                      TextField(
-                        controller: _emailController,
-                        decoration: InputDecoration(
-                          labelText: 'Email',
-                          hintText: 'jouw@email.com',
-                          prefixIcon: const Icon(Icons.email_rounded),
-                          filled: true,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide.none,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide.none,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(
-                                color: colorScheme.primary, width: 2),
-                          ),
-                        ),
-                        keyboardType: TextInputType.emailAddress,
-                        textInputAction: TextInputAction.next,
-                        enabled: !_isLoading,
-                      ),
-                      const SizedBox(height: 16),
-
-                      // Username field (only for signup)
-                      if (!_isLoginMode) ...[
-                        TextField(
-                          controller: _usernameController,
-                          decoration: InputDecoration(
-                            labelText: 'Gebruikersnaam',
-                            hintText: 'Kies een unieke naam',
-                            prefixIcon: const Icon(Icons.person_outline_rounded),
-                            filled: true,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide.none,
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide.none,
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(
-                                  color: colorScheme.primary, width: 2),
-                            ),
-                          ),
-                          textInputAction: TextInputAction.next,
-                          enabled: !_isLoading,
-                        ),
-                        const SizedBox(height: 16),
-                      ],
-
-                      // Password field
-                      TextField(
-                        controller: _passwordController,
-                        decoration: InputDecoration(
-                          labelText: 'Wachtwoord',
-                          hintText: 'Minimaal 6 karakters',
-                          prefixIcon: const Icon(Icons.lock_rounded),
-                          filled: true,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide.none,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide.none,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(
-                                color: colorScheme.primary, width: 2),
-                          ),
-                        ),
-                        obscureText: true,
-                        textInputAction: _isLoginMode
-                            ? TextInputAction.done
-                            : TextInputAction.next,
-                        enabled: !_isLoading,
-                      ),
-                      const SizedBox(height: 16),
-
-                      // Confirm password field (only for signup)
-                      if (!_isLoginMode) ...[
-                        TextField(
-                          controller: _confirmPasswordController,
-                          decoration: InputDecoration(
-                            labelText: 'Bevestig wachtwoord',
-                            hintText: 'Herhaal je wachtwoord',
-                            prefixIcon: const Icon(Icons.lock_outline_rounded),
-                            filled: true,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide.none,
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide.none,
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(
-                                  color: colorScheme.primary, width: 2),
-                            ),
-                          ),
-                          obscureText: true,
-                          textInputAction: TextInputAction.done,
-                          enabled: !_isLoading,
-                        ),
-                        const SizedBox(height: 16),
-                      ],
-
-                      const SizedBox(height: 16),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 50,
-                        child: ElevatedButton(
-                          onPressed: _isLoading
-                              ? null
-                              : (_isLoginMode ? _signIn : _signUp),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: colorScheme.primary,
-                            foregroundColor: colorScheme.onPrimary,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            elevation: 0,
-                          ),
-                          child: _isLoading
-                              ? const SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.white),
-                                  ),
-                                )
-                              : Text(
-                                  _isLoginMode ? 'Inloggen' : 'Account aanmaken',
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                        ),
-                      ),
-                    ],
-                  ),
+                AuthView(
+                  requiredForSocial: widget.requiredForSocial,
+                  onLoginSuccess: () {
+                    // Navigate to social screen after login if required
+                    if (widget.requiredForSocial && mounted) {
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (_) => const MainNavigationScreen(initialIndex: 2)),
+                        (route) => false,
+                      );
+                    }
+                  },
                 )
               else
                 // Account management view
@@ -1633,9 +1090,7 @@ class _SyncScreenState extends State<SyncScreen> {
 
   @override
   void dispose() {
-    _emailController.dispose();
     _passwordController.dispose();
-    _confirmPasswordController.dispose();
     _usernameController.dispose();
     _newPasswordController.dispose();
     _confirmNewPasswordController.dispose();

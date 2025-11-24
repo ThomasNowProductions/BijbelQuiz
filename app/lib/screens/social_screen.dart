@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../l10n/strings_nl.dart' as strings;
+import 'auth_screen.dart';
 import 'sync_screen.dart';
 import 'user_search_screen.dart';
 import 'following_list_screen.dart';
@@ -12,6 +13,7 @@ import '../providers/game_stats_provider.dart';
 import '../providers/messages_provider.dart';
 import '../services/logger.dart';
 import 'profile_details_screen.dart';
+import 'main_navigation_screen.dart';
 
 /// Screen displaying social features of the app.
 class SocialScreen extends StatefulWidget {
@@ -242,7 +244,16 @@ class _SocialScreenState extends State<SocialScreen> {
     _analyticsService.capture(context, 'open_sync_screen_from_social');
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (context) => const SyncScreen(requiredForSocial: true),
+        builder: (context) => AuthScreen(
+          requiredForSocial: true,
+          onLoginSuccess: () {
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                  builder: (_) => const MainNavigationScreen(initialIndex: 2)),
+              (route) => false,
+            );
+          },
+        ),
       ),
     );
   }
