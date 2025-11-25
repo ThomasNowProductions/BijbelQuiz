@@ -31,6 +31,56 @@ class _AuthViewState extends State<AuthView> {
   bool _isLoginMode = true; // true for login, false for signup
   List<String>? _blacklistedUsernames;
 
+  /// Converts technical error messages to user-friendly messages
+  String _getUserFriendlyErrorMessage(dynamic error) {
+    final errorString = error.toString().toLowerCase();
+    
+    // Network/connection errors
+    if (errorString.contains('failed to fetch') || 
+        errorString.contains('network error') ||
+        errorString.contains('connection')) {
+      return 'Geen internetverbinding. Controleer je verbinding en probeer opnieuw.';
+    }
+    
+    // Authentication errors
+    if (errorString.contains('invalid login credentials') ||
+        errorString.contains('email not confirmed') ||
+        errorString.contains('invalid email or password')) {
+      return 'Ongeldig email of wachtwoord. Controleer je gegevens en probeer opnieuw.';
+    }
+    
+    if (errorString.contains('email not confirmed')) {
+      return 'Je email is nog niet geverifieerd. Controleer je inbox en klik op de verificatielink.';
+    }
+    
+    if (errorString.contains('too many requests')) {
+      return 'Te veel pogingen. Wacht even voordat je opnieuw probeert.';
+    }
+    
+    if (errorString.contains('password should be at least')) {
+      return 'Wachtwoord moet minimaal 6 karakters bevatten.';
+    }
+    
+    if (errorString.contains('unable to validate email address')) {
+      return 'Ongeldig emailadres. Controleer of je een geldig emailadres hebt ingevoerd.';
+    }
+    
+    if (errorString.contains('user already registered')) {
+      return 'Er bestaat al een account met dit emailadres. Probeer in te loggen of gebruik een ander emailadres.';
+    }
+    
+    if (errorString.contains('signup is disabled')) {
+      return 'Aanmelden is momenteel uitgeschakeld. Probeer het later opnieuw.';
+    }
+    
+    if (errorString.contains('weak password')) {
+      return 'Wachtwoord is te zwak. Kies een sterker wachtwoord met meer karakters.';
+    }
+    
+    // Generic error fallback
+    return 'Er is iets misgegaan. Probeer het opnieuw of neem contact op als het probleem aanhoudt.';
+  }
+
   @override
   void initState() {
     super.initState();
@@ -126,7 +176,14 @@ class _AuthViewState extends State<AuthView> {
 
     if (email.isEmpty || password.isEmpty) {
       setState(() {
-        _error = 'Vul alle velden in';
+        _error = 'Vul je email en wachtwoord in om door te gaan.';
+      });
+      return;
+    }
+
+    if (!email.contains('@')) {
+      setState(() {
+        _error = 'Voer een geldig emailadres in.';
       });
       return;
     }
@@ -148,7 +205,7 @@ class _AuthViewState extends State<AuthView> {
       }
     } catch (e) {
       setState(() {
-        _error = 'Inloggen mislukt: ${e.toString()}';
+        _error = _getUserFriendlyErrorMessage(e);
       });
       AppLogger.error('Sign in failed', e);
     } finally {
@@ -166,53 +223,73 @@ class _AuthViewState extends State<AuthView> {
     final confirmPassword = _confirmPasswordController.text.trim();
     final username = _usernameController.text.trim();
 
+    // Enhanced field validation with specific messages
     if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty || username.isEmpty) {
       setState(() {
-        _error = 'Vul alle velden in';
+        _error = 'Vul alle velden in om een account aan te maken.';
+      });
+      return;
+    }
+
+    if (!email.contains('@')) {
+      setState(() {
+        _error = 'Voer een geldig emailadres in.';
       });
       return;
     }
 
     if (password != confirmPassword) {
       setState(() {
-        _error = 'Wachtwoorden komen niet overeen';
+        _error = 'Wachtwoorden komen niet overeen. Controleer of je beide velden hetzelfde hebt ingevuld.';
       });
       return;
     }
 
     if (password.length < 6) {
       setState(() {
-        _error = 'Wachtwoord moet minimaal 6 karakters bevatten';
+        _error = 'Wachtwoord moet minimaal 6 karakters bevatten voor je veiligheid.';
       });
       return;
     }
 
     if (username.length < 3) {
       setState(() {
-        _error = 'Gebruikersnaam moet minimaal 3 karakters bevatten';
+        _error = 'Gebruikersnaam moet minimaal 3 karakters bevatten.';
       });
       return;
     }
 
     if (username.length > 20) {
       setState(() {
-        _error = 'Gebruikersnaam mag maximaal 20 karakters bevatten';
+        _error = 'Gebruikersnaam mag maximaal 20 karakters bevatten.';
+      });
+      return;
+    }
+
+    // Check for valid username characters
+    if (!RegExp(r'^[a-zA-Z0-9_]+$').hasMatch(username)) {
+      setState(() {
+        _error = 'Gebruikersnaam mag alleen letters, cijfers en underscores bevatten.';
       });
       return;
     }
 
     if (_isUsernameBlacklisted(username)) {
       setState(() {
-        _error = 'Deze gebruikersnaam is niet toegestaan';
+        _error = 'Deze gebruikersnaam is niet toegestaan. Kies een andere naam.';
       });
       return;
     }
 
     // Check if username is already taken
+    setState(() {
+      _error = 'Beschikbaarheid van gebruikersnaam wordt gecontroleerd...';
+    });
+    
     final usernameTaken = await _isUsernameTaken(username);
     if (usernameTaken) {
       setState(() {
-        _error = 'Deze gebruikersnaam is al in gebruik';
+        _error = 'Deze gebruikersnaam is al in gebruik. Kies een andere naam.';
       });
       return;
     }
@@ -273,7 +350,7 @@ class _AuthViewState extends State<AuthView> {
       }
     } catch (e) {
       setState(() {
-        _error = 'Aanmelden mislukt: ${e.toString()}';
+        _error = _getUserFriendlyErrorMessage(e);
       });
       AppLogger.error('Sign up failed', e);
     } finally {
