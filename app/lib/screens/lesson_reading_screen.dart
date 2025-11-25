@@ -250,16 +250,12 @@ class _LessonReadingScreenState extends State<LessonReadingScreen> {
                           : Icons.arrow_forward),
                       label: Text(
                         isLastSection
-                            ? (settings.language == 'en'
-                                ? 'Start Quiz'
-                                : 'Start Quiz')
+                            ? strings.AppStrings.startQuiz
                             : strings.AppStrings.next,
                       ),
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 14),
-                        backgroundColor: isLastSection
-                            ? colorScheme.primary
-                            : colorScheme.primary,
+                        backgroundColor: colorScheme.primary,
                       ),
                     ),
                   ),

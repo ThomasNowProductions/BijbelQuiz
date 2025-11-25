@@ -89,6 +89,33 @@ class _ProgressHeaderState extends State<ProgressHeader>
     super.dispose();
   }
 
+  /// Builds the Bible Basics button widget
+  Widget _buildBibleBasicsButton(ColorScheme cs) {
+    return Semantics(
+      label: 'Bible Basics',
+      hint: 'Learn the basics of the Bible with reading lessons',
+      button: true,
+      child: _AnimatedButton(
+        onPressed: () {
+          Provider.of<AnalyticsService>(context, listen: false)
+              .capture(context, 'open_bible_basics');
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => const BibleLessonSelectScreen(),
+            ),
+          );
+        },
+        label: Provider.of<SettingsProvider>(context, listen: false).language == 'en'
+            ? 'Bible Basics'
+            : 'Bijbel Basis',
+        icon: Icons.school,
+        color: Colors.transparent,
+        textColor: cs.secondary,
+        borderColor: cs.secondary,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
@@ -376,29 +403,7 @@ class _ProgressHeaderState extends State<ProgressHeader>
                   ],
                   // Bible Basics button for new users
                   const SizedBox(height: 8),
-                  Semantics(
-                    label: 'Bible Basics',
-                    hint: 'Learn the basics of the Bible with reading lessons',
-                    button: true,
-                    child: _AnimatedButton(
-                      onPressed: () {
-                        Provider.of<AnalyticsService>(context, listen: false)
-                            .capture(context, 'open_bible_basics');
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => const BibleLessonSelectScreen(),
-                          ),
-                        );
-                      },
-                      label: Provider.of<SettingsProvider>(context, listen: false).language == 'en'
-                          ? 'Bible Basics'
-                          : 'Bijbel Basis',
-                      icon: Icons.school,
-                      color: Colors.transparent,
-                      textColor: cs.secondary,
-                      borderColor: cs.secondary,
-                    ),
-                  ),
+                  _buildBibleBasicsButton(cs),
                 ],
               ),
             ] else ...[
@@ -440,29 +445,7 @@ class _ProgressHeaderState extends State<ProgressHeader>
               ],
               // Bible Basics button for new users
               const SizedBox(height: 8),
-              Semantics(
-                label: 'Bible Basics',
-                hint: 'Learn the basics of the Bible with reading lessons',
-                button: true,
-                child: _AnimatedButton(
-                  onPressed: () {
-                    Provider.of<AnalyticsService>(context, listen: false)
-                        .capture(context, 'open_bible_basics');
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => const BibleLessonSelectScreen(),
-                      ),
-                    );
-                  },
-                  label: Provider.of<SettingsProvider>(context, listen: false).language == 'en'
-                      ? 'Bible Basics'
-                      : 'Bijbel Basis',
-                  icon: Icons.school,
-                  color: Colors.transparent,
-                  textColor: cs.secondary,
-                  borderColor: cs.secondary,
-                ),
-              ),
+              _buildBibleBasicsButton(cs),
             ],
           ],
         ),
