@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 
 import '../models/lesson.dart';
 import '../providers/lesson_progress_provider.dart';
-import '../providers/settings_provider.dart';
 import '../screens/quiz_screen.dart';
 import '../screens/bible_lesson_select_screen.dart';
 import '../services/analytics_service.dart';
@@ -105,9 +104,7 @@ class _ProgressHeaderState extends State<ProgressHeader>
             ),
           );
         },
-        label: Provider.of<SettingsProvider>(context, listen: false).language == 'en'
-            ? 'Bible Basics'
-            : 'Bijbel Basis',
+        label: strings.AppStrings.bibleBasics,
         icon: Icons.school,
         color: Colors.transparent,
         textColor: cs.secondary,
