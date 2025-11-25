@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/lesson.dart';
@@ -50,6 +51,19 @@ class LessonProgressProvider extends ChangeNotifier {
         }
       },
     );
+
+    // Listen for auth changes to reload data
+    Supabase.instance.client.auth.onAuthStateChange.listen((event) {
+      final session = event.session;
+      if (session?.user != null) {
+        AppLogger.info('User signed in (LessonProgressProvider), reloading data...');
+        // Small delay to ensure SyncService has processed the user update
+        Future.delayed(const Duration(milliseconds: 500), () {
+          _load();
+          setupSyncListener();
+        });
+      }
+    });
   }
 
   Future<void> _load() async {

@@ -58,41 +58,62 @@ class ConnectionService {
 
     try {
       // Use connectivity_plus to check connection type
-      final connectivityResults = await (Connectivity().checkConnectivity());
-
-      // Get the first result or none if empty
-      final connectivityResult = connectivityResults.isNotEmpty
-          ? connectivityResults.first
-          : ConnectivityResult.none;
+      // On some Linux environments, this might fail with DBus errors.
+      // We catch this specific error and fallback to pinging.
+      ConnectivityResult connectivityResult = ConnectivityResult.none;
+      try {
+        final connectivityResults = await (Connectivity().checkConnectivity());
+        connectivityResult = connectivityResults.isNotEmpty
+            ? connectivityResults.first
+            : ConnectivityResult.none;
+      } catch (e) {
+        // This is a common issue on some Linux environments (DBus error).
+        // We log it as debug to avoid spamming the user, as we have a fallback.
+        AppLogger.debug('Connectivity platform check failed (likely DBus error), falling back to ping: $e');
+        // Default to wifi/ethernet assumption if we can't check, but rely on ping to confirm
+        connectivityResult = ConnectivityResult.wifi; 
+      }
 
       if (connectivityResult == ConnectivityResult.none) {
+        // Even if platform says none, we might want to double check with ping if we suspect platform issues?
+        // But usually 'none' is reliable. The issue is when it throws.
         _isConnected = false;
         _connectionType = ConnectionType.none;
-        AppLogger.info('Connection checked: not connected');
+        AppLogger.info('Connection checked: not connected (platform reported none)');
       } else {
-        _isConnected = true;
-
         // Test connection with a simple ping
-        final result = await InternetAddress.lookup('google.com')
-            .timeout(_connectionTimeout);
+        try {
+          final result = await InternetAddress.lookup('google.com')
+              .timeout(_connectionTimeout);
 
-        if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-          // Determine connection type based on connectivity result
-          if (connectivityResult == ConnectivityResult.wifi) {
-            _connectionType = ConnectionType.fast;
-            _isSlowConnection = false;
+          if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+            _isConnected = true;
+            
+            // Determine connection type based on connectivity result
+            if (connectivityResult == ConnectivityResult.wifi || 
+                connectivityResult == ConnectivityResult.ethernet) {
+              _connectionType = ConnectionType.fast;
+              _isSlowConnection = false;
+            } else {
+              await _determineConnectionType();
+            }
+            AppLogger.info(
+                'Connection checked: connected via ${connectivityResult.toString()}');
           } else {
-            await _determineConnectionType();
+            _isConnected = false;
+            _connectionType = ConnectionType.none;
+            AppLogger.info('Connection checked: not connected (ping failed)');
           }
-          AppLogger.info(
-              'Connection checked: connected via ${connectivityResult.toString()}');
-        } else {
-          _isConnected = false;
-          _connectionType = ConnectionType.none;
-          AppLogger.info('Connection checked: not connected');
+        } catch (e) {
+           _isConnected = false;
+           _connectionType = ConnectionType.none;
+           AppLogger.info('Connection checked: not connected (ping threw exception)');
         }
       }
     } catch (e) {
+      // This outer catch block handles unexpected errors in the flow
+      // But we should try to assume connected if it was just a logic error?
+      // No, safest is to assume disconnected if everything blows up, but we tried to handle the DBus one above.
       _isConnected = false;
       _connectionType = ConnectionType.none;
       AppLogger.error('Error checking connection', e);
