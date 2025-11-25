@@ -675,4 +675,12 @@ class AppStrings {
   static String get hoursAgo => _language == 'en' ? AppStringsEn.hoursAgo : 'u geleden';
   static String get daysAgo => _language == 'en' ? AppStringsEn.daysAgo : 'd geleden';
   static String get noEmail => _language == 'en' ? AppStringsEn.noEmail : 'Geen email';
+
+  // Bible Basics / Learning Lessons
+  static String get bibleBasics => _language == 'en' ? AppStringsEn.bibleBasics : 'Bijbel Basis';
+  static String get bibleBasicsDescription => _language == 'en' ? AppStringsEn.bibleBasicsDescription : 'Leer de basis van de Bijbel door te lezen en te oefenen met quizzen.';
+  static String get startQuiz => _language == 'en' ? AppStringsEn.startQuiz : 'Start Quiz';
+  static String get readingProgress => _language == 'en' ? AppStringsEn.readingProgress : 'Leesvoortgang';
+  static String get section => _language == 'en' ? AppStringsEn.section : 'Sectie';
+  static String get sections => _language == 'en' ? AppStringsEn.sections : 'Secties';
 }

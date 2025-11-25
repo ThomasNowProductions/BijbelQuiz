@@ -3,7 +3,9 @@ import 'package:provider/provider.dart';
 
 import '../models/lesson.dart';
 import '../providers/lesson_progress_provider.dart';
+import '../providers/settings_provider.dart';
 import '../screens/quiz_screen.dart';
+import '../screens/bible_lesson_select_screen.dart';
 import '../services/analytics_service.dart';
 import '../services/greeting_service.dart';
 import '../services/logger.dart';
@@ -372,6 +374,31 @@ class _ProgressHeaderState extends State<ProgressHeader>
                       ),
                     ),
                   ],
+                  // Bible Basics button for new users
+                  const SizedBox(height: 8),
+                  Semantics(
+                    label: 'Bible Basics',
+                    hint: 'Learn the basics of the Bible with reading lessons',
+                    button: true,
+                    child: _AnimatedButton(
+                      onPressed: () {
+                        Provider.of<AnalyticsService>(context, listen: false)
+                            .capture(context, 'open_bible_basics');
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => const BibleLessonSelectScreen(),
+                          ),
+                        );
+                      },
+                      label: Provider.of<SettingsProvider>(context, listen: false).language == 'en'
+                          ? 'Bible Basics'
+                          : 'Bijbel Basis',
+                      icon: Icons.school,
+                      color: Colors.transparent,
+                      textColor: cs.secondary,
+                      borderColor: cs.secondary,
+                    ),
+                  ),
                 ],
               ),
             ] else ...[
@@ -411,6 +438,31 @@ class _ProgressHeaderState extends State<ProgressHeader>
                   ),
                 ),
               ],
+              // Bible Basics button for new users
+              const SizedBox(height: 8),
+              Semantics(
+                label: 'Bible Basics',
+                hint: 'Learn the basics of the Bible with reading lessons',
+                button: true,
+                child: _AnimatedButton(
+                  onPressed: () {
+                    Provider.of<AnalyticsService>(context, listen: false)
+                        .capture(context, 'open_bible_basics');
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const BibleLessonSelectScreen(),
+                      ),
+                    );
+                  },
+                  label: Provider.of<SettingsProvider>(context, listen: false).language == 'en'
+                      ? 'Bible Basics'
+                      : 'Bijbel Basis',
+                  icon: Icons.school,
+                  color: Colors.transparent,
+                  textColor: cs.secondary,
+                  borderColor: cs.secondary,
+                ),
+              ),
             ],
           ],
         ),

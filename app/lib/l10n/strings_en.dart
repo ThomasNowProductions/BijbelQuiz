@@ -765,4 +765,12 @@ class AppStringsEn {
   static const String hoursAgo = 'h ago';
   static const String daysAgo = 'd ago';
   static const String noEmail = 'No email';
+
+  // Bible Basics / Learning Lessons
+  static const String bibleBasics = 'Bible Basics';
+  static const String bibleBasicsDescription = 'Learn the basics of the Bible through reading and practice quizzes.';
+  static const String startQuiz = 'Start Quiz';
+  static const String readingProgress = 'Reading Progress';
+  static const String section = 'Section';
+  static const String sections = 'Sections';
 }
