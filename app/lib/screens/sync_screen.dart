@@ -10,6 +10,7 @@ import '../services/logger.dart';
 import '../utils/automatic_error_reporter.dart';
 import '../screens/main_navigation_screen.dart';
 import '../widgets/auth_view.dart';
+import '../l10n/strings_nl.dart';
 
 class SyncScreen extends StatefulWidget {
   const SyncScreen({super.key, this.requiredForSocial = false});
@@ -153,8 +154,8 @@ class _SyncScreenState extends State<SyncScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Gegevens succesvol gesynchroniseerd'),
+          SnackBar(
+            content: Text(AppStrings.dataSuccessfullySynchronized),
             backgroundColor: Colors.green,
           ),
         );
@@ -163,7 +164,7 @@ class _SyncScreenState extends State<SyncScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Synchronisatie mislukt: ${e.toString()}'),
+            content: Text('${AppStrings.synchronizationFailed}${e.toString()}'),
             backgroundColor: Colors.red,
           ),
         );
@@ -191,37 +192,37 @@ class _SyncScreenState extends State<SyncScreen> {
     return [
       _buildMenuItem(
         icon: Icons.person_rounded,
-        title: 'Profiel bewerken',
-        subtitle: 'Naam en bio aanpassen',
+        title: AppStrings.editProfile,
+        subtitle: AppStrings.adjustNameAndBio,
         onTap: () => _showProfileEditDialog(),
       ),
       const SizedBox(height: 16),
       _buildMenuItem(
         icon: Icons.alternate_email_rounded,
-        title: 'Gebruikersnaam wijzigen',
-        subtitle: 'Je gebruikersnaam aanpassen',
+        title: AppStrings.changeUsername,
+        subtitle: AppStrings.adjustYourUsername,
         onTap: () => _showUsernameChangeDialog(),
       ),
       const SizedBox(height: 16),
       _buildMenuItem(
         icon: Icons.lock_rounded,
-        title: 'Wachtwoord wijzigen',
-        subtitle: 'Beveilig je account',
+        title: AppStrings.changePassword,
+        subtitle: AppStrings.secureYourAccount,
         onTap: () => _showPasswordChangeDialog(),
       ),
       const SizedBox(height: 16),
       _buildDangerMenuItem(
         icon: Icons.logout_rounded,
-        title: 'Uitloggen',
-        subtitle: 'Van dit apparaat afmelden',
+        title: AppStrings.signOut,
+        subtitle: AppStrings.signOutFromDevice,
         onTap: _signOut,
         color: colorScheme.error,
       ),
       const SizedBox(height: 16),
       _buildDangerMenuItem(
         icon: Icons.delete_rounded,
-        title: 'Account verwijderen',
-        subtitle: 'Account permanent verwijderen',
+        title: AppStrings.deleteAccount,
+        subtitle: AppStrings.permanentlyDeleteAccount,
         onTap: _deleteAccount,
         color: colorScheme.error,
       ),
@@ -350,23 +351,23 @@ class _SyncScreenState extends State<SyncScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Profiel bewerken'),
+        title: Text(AppStrings.editProfile),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: _displayNameController,
-              decoration: const InputDecoration(
-                labelText: 'Weergavenaam',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: AppStrings.displayName,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 12),
             TextField(
               controller: _bioController,
-              decoration: const InputDecoration(
-                labelText: 'Bio (optioneel)',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: AppStrings.bioOptional,
+                border: const OutlineInputBorder(),
               ),
               maxLines: 3,
             ),
@@ -375,7 +376,7 @@ class _SyncScreenState extends State<SyncScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Annuleren'),
+            child: Text(AppStrings.cancel),
           ),
           ElevatedButton(
             onPressed: _isUpdatingProfile ? null : () async {
@@ -388,7 +389,7 @@ class _SyncScreenState extends State<SyncScreen> {
                     height: 16, 
                     child: CircularProgressIndicator(strokeWidth: 2)
                   )
-                : const Text('Opslaan'),
+                : Text(AppStrings.save),
           ),
         ],
       ),
@@ -402,19 +403,19 @@ class _SyncScreenState extends State<SyncScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Gebruikersnaam wijzigen'),
+        title: Text(AppStrings.changeUsername),
         content: TextField(
           controller: _usernameController,
-          decoration: const InputDecoration(
-            labelText: 'Nieuwe gebruikersnaam',
-            hintText: 'Kies een unieke naam',
-            border: OutlineInputBorder(),
+          decoration: InputDecoration(
+            labelText: AppStrings.newUsername,
+            hintText: AppStrings.chooseUniqueName,
+            border: const OutlineInputBorder(),
           ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Annuleren'),
+            child: Text(AppStrings.cancel),
           ),
           ElevatedButton(
             onPressed: _isChangingUsername ? null : () async {
@@ -427,7 +428,7 @@ class _SyncScreenState extends State<SyncScreen> {
                     height: 16, 
                     child: CircularProgressIndicator(strokeWidth: 2)
                   )
-                : const Text('Wijzigen'),
+                : Text(AppStrings.change),
           ),
         ],
       ),
@@ -443,34 +444,34 @@ class _SyncScreenState extends State<SyncScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Wachtwoord wijzigen'),
+        title: Text(AppStrings.changePassword),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: _passwordController,
-              decoration: const InputDecoration(
-                labelText: 'Huidig wachtwoord',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: AppStrings.currentPassword,
+                border: const OutlineInputBorder(),
               ),
               obscureText: true,
             ),
             const SizedBox(height: 12),
             TextField(
               controller: _newPasswordController,
-              decoration: const InputDecoration(
-                labelText: 'Nieuw wachtwoord',
-                hintText: 'Minimaal 6 karakters',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: AppStrings.newPassword,
+                hintText: AppStrings.atLeast6Characters,
+                border: const OutlineInputBorder(),
               ),
               obscureText: true,
             ),
             const SizedBox(height: 12),
             TextField(
               controller: _confirmNewPasswordController,
-              decoration: const InputDecoration(
-                labelText: 'Bevestig nieuw wachtwoord',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: AppStrings.confirmNewPassword,
+                border: const OutlineInputBorder(),
               ),
               obscureText: true,
             ),
@@ -479,7 +480,7 @@ class _SyncScreenState extends State<SyncScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Annuleren'),
+            child: Text(AppStrings.cancel),
           ),
           ElevatedButton(
             onPressed: _isChangingPassword ? null : () async {
@@ -492,7 +493,7 @@ class _SyncScreenState extends State<SyncScreen> {
                     height: 16, 
                     child: CircularProgressIndicator(strokeWidth: 2)
                   )
-                : const Text('Wijzigen'),
+                : Text(AppStrings.change),
           ),
         ],
       ),
@@ -519,7 +520,7 @@ class _SyncScreenState extends State<SyncScreen> {
   /// Gets the last sync time as a formatted string
   String _getLastSyncTime() {
     if (_lastSyncTimes.isEmpty) {
-      return 'Nooit';
+      return AppStrings.never;
     }
     
     final lastSync = _lastSyncTimes.values.isNotEmpty 
@@ -527,20 +528,20 @@ class _SyncScreenState extends State<SyncScreen> {
         : null;
         
     if (lastSync == null) {
-      return 'Nooit';
+      return AppStrings.never;
     }
     
     final now = DateTime.now();
     final difference = now.difference(lastSync);
     
     if (difference.inMinutes < 1) {
-      return 'Zojuist';
+      return AppStrings.justNow;
     } else if (difference.inMinutes < 60) {
-      return '${difference.inMinutes}m geleden';
+      return '${difference.inMinutes}${AppStrings.minutesAgo}';
     } else if (difference.inHours < 24) {
-      return '${difference.inHours}u geleden';
+      return '${difference.inHours}${AppStrings.hoursAgo}';
     } else {
-      return '${difference.inDays}d geleden';
+      return '${difference.inDays}${AppStrings.daysAgo}';
     }
   }
 
@@ -635,7 +636,7 @@ class _SyncScreenState extends State<SyncScreen> {
     } catch (e) {
       AppLogger.error('Sign out failed', e);
       setState(() {
-        _error = 'Uitloggen mislukt: ${e.toString()}';
+        _error = '${AppStrings.signOutFailed}${e.toString()}';
       });
     } finally {
       setState(() {
@@ -651,21 +652,21 @@ class _SyncScreenState extends State<SyncScreen> {
 
     if (currentPassword.isEmpty || newPassword.isEmpty || confirmNewPassword.isEmpty) {
       setState(() {
-        _error = 'Vul alle wachtwoord velden in';
+        _error = AppStrings.fillAllPasswordFields;
       });
       return;
     }
 
     if (newPassword != confirmNewPassword) {
       setState(() {
-        _error = 'Nieuwe wachtwoorden komen niet overeen';
+        _error = AppStrings.newPasswordsDoNotMatch;
       });
       return;
     }
 
     if (newPassword.length < 6) {
       setState(() {
-        _error = 'Nieuw wachtwoord moet minimaal 6 karakters bevatten';
+        _error = AppStrings.newPasswordMin6Chars;
       });
       return;
     }
@@ -693,8 +694,8 @@ class _SyncScreenState extends State<SyncScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Wachtwoord succesvol gewijzigd'),
+          SnackBar(
+            content: Text(AppStrings.passwordSuccessfullyChanged),
             backgroundColor: Colors.green,
           ),
         );
@@ -702,7 +703,7 @@ class _SyncScreenState extends State<SyncScreen> {
       AppLogger.info('Successfully changed password for user: $email');
     } catch (e) {
       setState(() {
-        _error = 'Wachtwoord wijzigen mislukt: ${e.toString()}';
+        _error = '${AppStrings.failedToChangePassword}${e.toString()}';
       });
       AppLogger.error('Password change failed', e);
     } finally {
@@ -717,28 +718,28 @@ class _SyncScreenState extends State<SyncScreen> {
 
     if (newUsername.isEmpty) {
       setState(() {
-        _error = 'Voer een nieuwe gebruikersnaam in';
+        _error = AppStrings.enterNewUsername;
       });
       return;
     }
 
     if (newUsername.length < 3) {
       setState(() {
-        _error = 'Gebruikersnaam moet minimaal 3 karakters bevatten';
+        _error = AppStrings.usernameMin3Chars;
       });
       return;
     }
 
     if (newUsername.length > 20) {
       setState(() {
-        _error = 'Gebruikersnaam mag maximaal 20 karakters bevatten';
+        _error = AppStrings.usernameMax20Chars;
       });
       return;
     }
 
     if (_isUsernameBlacklisted(newUsername)) {
       setState(() {
-        _error = 'Deze gebruikersnaam is niet toegestaan';
+        _error = AppStrings.usernameNotAllowed;
       });
       return;
     }
@@ -747,7 +748,7 @@ class _SyncScreenState extends State<SyncScreen> {
     final usernameTaken = await _isUsernameTaken(newUsername);
     if (usernameTaken) {
       setState(() {
-        _error = 'Deze gebruikersnaam is al in gebruik';
+        _error = AppStrings.thisUsernameAlreadyTaken;
       });
       return;
     }
@@ -771,8 +772,8 @@ class _SyncScreenState extends State<SyncScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Gebruikersnaam succesvol gewijzigd'),
+          SnackBar(
+            content: Text(AppStrings.usernameSuccessfullyChanged),
             backgroundColor: Colors.green,
           ),
         );
@@ -780,7 +781,7 @@ class _SyncScreenState extends State<SyncScreen> {
       AppLogger.info('Successfully changed username for user: ${_currentUser!.id} to: $newUsername');
     } catch (e) {
       setState(() {
-        _error = 'Gebruikersnaam wijzigen mislukt: ${e.toString()}';
+        _error = '${AppStrings.failedToChangeUsername}${e.toString()}';
       });
       AppLogger.error('Username change failed', e);
     } finally {
@@ -796,7 +797,7 @@ class _SyncScreenState extends State<SyncScreen> {
 
     if (displayName.isEmpty) {
       setState(() {
-        _error = 'Weergavenaam is verplicht';
+          _error = AppStrings.displayNameRequired;
       });
       return;
     }
@@ -817,8 +818,8 @@ class _SyncScreenState extends State<SyncScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Profiel succesvol bijgewerkt'),
+          SnackBar(
+            content: Text(AppStrings.profileSuccessfullyUpdated),
             backgroundColor: Colors.green,
           ),
         );
@@ -826,7 +827,7 @@ class _SyncScreenState extends State<SyncScreen> {
       AppLogger.info('Successfully updated profile for user: ${_currentUser!.id}');
     } catch (e) {
       setState(() {
-        _error = 'Profiel bijwerken mislukt: ${e.toString()}';
+        _error = '${AppStrings.failedToUpdateProfile}${e.toString()}';
       });
       AppLogger.error('Profile update failed', e);
     } finally {
@@ -840,7 +841,7 @@ class _SyncScreenState extends State<SyncScreen> {
     await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Account verwijderen'),
+        title: Text(AppStrings.deleteAccount),
         content: const Text(
           'Neem contact op met thomasnowprod@proton.me om je account te verwijderen.'
         ),
@@ -868,7 +869,7 @@ class _SyncScreenState extends State<SyncScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Account'),
+        title: Text(AppStrings.account),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -981,7 +982,7 @@ class _SyncScreenState extends State<SyncScreen> {
                                 children: [
                                   // Display Name
                                   Text(
-                                    _userProfile?['display_name'] ?? 'Gebruiker',
+                                    _userProfile?['display_name'] ?? AppStrings.user,
                                     style: theme.textTheme.titleLarge?.copyWith(
                                       fontWeight: FontWeight.bold,
                                       color: colorScheme.primary,
@@ -1000,7 +1001,7 @@ class _SyncScreenState extends State<SyncScreen> {
                                   
                                   // Email
                                   Text(
-                                    _currentUser!.email ?? 'Geen email',
+                                    _currentUser!.email ?? AppStrings.noEmail,
                                     style: theme.textTheme.bodySmall?.copyWith(
                                       color: colorScheme.onSurface.withValues(alpha: 0.6),
                                     ),
@@ -1036,14 +1037,14 @@ class _SyncScreenState extends State<SyncScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        _isDataUpToDate() ? 'Bijgewerkt' : 'Niet bijgewerkt',
+                                        _isDataUpToDate() ? AppStrings.updated : AppStrings.notUpdated,
                                         style: theme.textTheme.bodyMedium?.copyWith(
                                           fontWeight: FontWeight.w500,
                                           color: _isDataUpToDate() ? Colors.green : colorScheme.primary,
                                         ),
                                       ),
                                       Text(
-                                        'Laatste sync: ${_getLastSyncTime()}',
+                                        '${AppStrings.lastSync}: ${_getLastSyncTime()}',
                                         style: theme.textTheme.bodySmall?.copyWith(
                                           color: colorScheme.onSurface.withValues(alpha: 0.6),
                                         ),
@@ -1062,7 +1063,7 @@ class _SyncScreenState extends State<SyncScreen> {
                                             child: CircularProgressIndicator(strokeWidth: 2),
                                           )
                                         : const Icon(Icons.sync_rounded, size: 16),
-                                    label: Text(_isManualSync ? 'Syncing...' : 'Sync'),
+                                    label: Text(_isManualSync ? AppStrings.syncing : AppStrings.sync),
                                     style: ElevatedButton.styleFrom(
                                       padding: const EdgeInsets.symmetric(horizontal: 12),
                                     ),

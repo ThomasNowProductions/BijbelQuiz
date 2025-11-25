@@ -549,7 +549,7 @@ class AppStrings {
   static String get saveUsername => _language == 'en' ? AppStringsEn.saveUsername : 'Bewaar gebruikersnaam';
   static String get pleaseEnterUsername => _language == 'en' ? AppStringsEn.pleaseEnterUsername : 'Voer een gebruikersnaam in';
   static String get usernameTooLong => _language == 'en' ? AppStringsEn.usernameTooLong : 'Gebruikersnaam mag maximaal 30 tekens bevatten';
-  static String get usernameAlreadyTaken => _language == 'en' ? AppStringsEn.usernameAlreadyTaken : 'Gebruikersnaam is al in gebruik';
+  static String get usernameAlreadyTaken => _language == 'en' ? AppStringsEn.thisUsernameAlreadyTaken : 'Gebruikersnaam is al in gebruik';
   static String get usernameBlacklisted => _language == 'en' ? AppStringsEn.usernameBlacklisted : 'Deze gebruikersnaam is niet toegestaan';
   static String get usernameSaved => _language == 'en' ? AppStringsEn.usernameSaved : 'Gebruikersnaam opgeslagen!';
 
@@ -622,4 +622,57 @@ class AppStrings {
   // Automatic Bug Reporting
   static String get automaticBugReports => _language == 'en' ? AppStringsEn.automaticBugReports : 'Automatisch problemen melden';
   static String get automaticBugReportsDesc => _language == 'en' ? AppStringsEn.automaticBugReportsDesc : 'Automatisch bug rapporten verzenden wanneer er fouten optreden (aanbevolen)';
+
+  // Sync Screen
+  static String get dataSuccessfullySynchronized => _language == 'en' ? AppStringsEn.dataSuccessfullySynchronized : 'Gegevens succesvol gesynchroniseerd';
+  static String get synchronizationFailed => _language == 'en' ? AppStringsEn.synchronizationFailed : 'Synchronisatie mislukt: ';
+  static String get editProfile => _language == 'en' ? AppStringsEn.editProfile : 'Profiel bewerken';
+  static String get adjustNameAndBio => _language == 'en' ? AppStringsEn.adjustNameAndBio : 'Naam en bio aanpassen';
+  static String get changeUsername => _language == 'en' ? AppStringsEn.changeUsername : 'Gebruikersnaam wijzigen';
+  static String get adjustYourUsername => _language == 'en' ? AppStringsEn.adjustYourUsername : 'Je gebruikersnaam aanpassen';
+  static String get changePassword => _language == 'en' ? AppStringsEn.changePassword : 'Wachtwoord wijzigen';
+  static String get secureYourAccount => _language == 'en' ? AppStringsEn.secureYourAccount : 'Beveilig je account';
+  static String get signOut => _language == 'en' ? AppStringsEn.signOut : 'Uitloggen';
+  static String get signOutFromDevice => _language == 'en' ? AppStringsEn.signOutFromDevice : 'Van dit apparaat afmelden';
+  static String get deleteAccount => _language == 'en' ? AppStringsEn.deleteAccount : 'Account verwijderen';
+  static String get permanentlyDeleteAccount => _language == 'en' ? AppStringsEn.permanentlyDeleteAccount : 'Account permanent verwijderen';
+  static String get displayName => _language == 'en' ? AppStringsEn.displayName : 'Weergavenaam';
+  static String get bioOptional => _language == 'en' ? AppStringsEn.bioOptional : 'Bio (optioneel)';
+  static String get newUsername => _language == 'en' ? AppStringsEn.newUsername : 'Nieuwe gebruikersnaam';
+  static String get chooseUniqueName => _language == 'en' ? AppStringsEn.chooseUniqueName : 'Kies een unieke naam';
+  static String get currentPassword => _language == 'en' ? AppStringsEn.currentPassword : 'Huidig wachtwoord';
+  static String get newPassword => _language == 'en' ? AppStringsEn.newPassword : 'Nieuw wachtwoord';
+  static String get atLeast6Characters => _language == 'en' ? AppStringsEn.atLeast6Characters : 'Minimaal 6 karakters';
+  static String get confirmNewPassword => _language == 'en' ? AppStringsEn.confirmNewPassword : 'Bevestig nieuw wachtwoord';
+  static String get fillAllPasswordFields => _language == 'en' ? AppStringsEn.fillAllPasswordFields : 'Vul alle wachtwoord velden in';
+  static String get newPasswordsDoNotMatch => _language == 'en' ? AppStringsEn.newPasswordsDoNotMatch : 'Nieuwe wachtwoorden komen niet overeen';
+  static String get newPasswordMin6Chars => _language == 'en' ? AppStringsEn.newPasswordMin6Chars : 'Nieuw wachtwoord moet minimaal 6 karakters bevatten';
+  static String get enterNewUsername => _language == 'en' ? AppStringsEn.enterNewUsername : 'Voer een nieuwe gebruikersnaam in';
+  static String get usernameMin3Chars => _language == 'en' ? AppStringsEn.usernameMin3Chars : 'Gebruikersnaam moet minimaal 3 karakters bevatten';
+  static String get usernameMax20Chars => _language == 'en' ? AppStringsEn.usernameMax20Chars : 'Gebruikersnaam mag maximaal 20 karakters bevatten';
+  static String get usernameNotAllowed => _language == 'en' ? AppStringsEn.usernameNotAllowed : 'Deze gebruikersnaam is niet toegestaan';
+  static String get thisUsernameAlreadyTaken => _language == 'en' ? AppStringsEn.thisUsernameAlreadyTaken : 'Deze gebruikersnaam is al in gebruik';
+  static String get usernameSuccessfullyChanged => _language == 'en' ? AppStringsEn.usernameSuccessfullyChanged : 'Gebruikersnaam succesvol gewijzigd';
+  static String get failedToChangeUsername => _language == 'en' ? AppStringsEn.failedToChangeUsername : 'Gebruikersnaam wijzigen mislukt';
+  static String get displayNameRequired => _language == 'en' ? AppStringsEn.displayNameRequired : 'Weergavenaam is verplicht';
+  static String get profileSuccessfullyUpdated => _language == 'en' ? AppStringsEn.profileSuccessfullyUpdated : 'Profiel succesvol bijgewerkt';
+  static String get failedToUpdateProfile => _language == 'en' ? AppStringsEn.failedToUpdateProfile : 'Profiel bijwerken mislukt';
+  static String get signOutFailed => _language == 'en' ? AppStringsEn.signOutFailed : 'Uitloggen mislukt';
+  static String get passwordSuccessfullyChanged => _language == 'en' ? AppStringsEn.passwordSuccessfullyChanged : 'Wachtwoord succesvol gewijzigd';
+  static String get failedToChangePassword => _language == 'en' ? AppStringsEn.failedToChangePassword : 'Wachtwoord wijzigen mislukt';
+  static String get updated => _language == 'en' ? AppStringsEn.updated : 'Bijgewerkt';
+  static String get notUpdated => _language == 'en' ? AppStringsEn.notUpdated : 'Niet bijgewerkt';
+  static String get lastSync => _language == 'en' ? AppStringsEn.lastSync : 'Laatste sync';
+  static String get user => _language == 'en' ? AppStringsEn.user : 'Gebruiker';
+  static String get account => _language == 'en' ? AppStringsEn.account : 'Account';
+  static String get syncing => _language == 'en' ? AppStringsEn.syncing : 'Syncing...';
+  static String get sync => _language == 'en' ? AppStringsEn.sync : 'Sync';
+  static String get save => _language == 'en' ? AppStringsEn.save : 'Opslaan';
+  static String get change => _language == 'en' ? AppStringsEn.change : 'Wijzigen';
+  static String get never => _language == 'en' ? AppStringsEn.never : 'Nooit';
+  static String get justNow => _language == 'en' ? AppStringsEn.justNow : 'Zojuist';
+  static String get minutesAgo => _language == 'en' ? AppStringsEn.minutesAgo : 'm geleden';
+  static String get hoursAgo => _language == 'en' ? AppStringsEn.hoursAgo : 'u geleden';
+  static String get daysAgo => _language == 'en' ? AppStringsEn.daysAgo : 'd geleden';
+  static String get noEmail => _language == 'en' ? AppStringsEn.noEmail : 'Geen email';
 }
