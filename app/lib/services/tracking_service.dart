@@ -488,6 +488,37 @@ class TrackingService {
 
   /// ===== POSTHOG-SPECIFIC METHODS =====
 
+  /// Disable analytics data collection
+  Future<void> disableAnalytics() async {
+    if (!_isInitialized) {
+      AppLogger.warning('PostHog not initialized, cannot disable analytics');
+      return;
+    }
+
+    try {
+      await Posthog().disable();
+      AppLogger.info('PostHog analytics disabled');
+    } catch (e) {
+      AppLogger.error('Failed to disable PostHog analytics', e);
+    }
+  }
+
+  /// Enable analytics data collection
+  Future<void> enableAnalytics() async {
+    if (!_isInitialized) {
+      AppLogger.warning('PostHog not initialized, cannot enable analytics');
+      return;
+    }
+
+    try {
+      await Posthog().enable();
+      AppLogger.info('PostHog analytics enabled');
+    } catch (e) {
+      AppLogger.error('Failed to enable PostHog analytics', e);
+    }
+  }
+
+
   /// Get the current user's distinct ID
   Future<String> getDistinctId() async {
     try {

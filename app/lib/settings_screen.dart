@@ -1108,6 +1108,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
         additionalProperties: {
           'enabled': value,
         });
+    if (value) {
+      analytics.enableAnalytics();
+    } else {
+      analytics.disableAnalytics();
+    }
     settings.setAnalyticsEnabled(value);
   }
 

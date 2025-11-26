@@ -242,4 +242,14 @@ class AnalyticsService {
   Widget buildFeatureUsageWidget(BuildContext context) {
     return _trackingService.buildFeatureUsageWidget(context);
   }
+
+  /// Disable analytics data collection
+  Future<void> disableAnalytics() async {
+    await _trackingService.disableAnalytics();
+  }
+
+  /// Enable analytics data collection
+  Future<void> enableAnalytics() async {
+    await _trackingService.enableAnalytics();
+  }
 }
