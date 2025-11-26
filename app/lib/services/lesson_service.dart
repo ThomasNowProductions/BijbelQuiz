@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:flutter/services.dart';
 import '../models/lesson.dart';
 import '../services/logger.dart';
 
@@ -5,6 +7,21 @@ import '../services/logger.dart';
 /// Lessons are generic, numbered, and each pulls a capped set of random questions.
 class LessonService {
   LessonService();
+
+  List<String>? _categories;
+
+  Future<List<String>> _loadCategories() async {
+    if (_categories != null) return _categories!;
+    try {
+      final jsonString = await rootBundle.loadString('assets/categories.json');
+      final List<dynamic> jsonList = json.decode(jsonString);
+      _categories = jsonList.map((e) => e.toString()).toList();
+      return _categories!;
+    } catch (e) {
+      AppLogger.error('Failed to load categories', e);
+      return ['Genesis', 'Exodus', 'Matteüs', 'Johannes']; // Fallback
+    }
+  }
 
   /// Generates a sequential list of generic lessons (Les 1, Les 2, ...).
   ///
@@ -17,20 +34,45 @@ class LessonService {
     int maxQuestionsPerLesson = 10,
   }) async {
     try {
-      final lessons = List<Lesson>.generate(maxLessons, (i) {
+      final categories = await _loadCategories();
+      final lessons = <Lesson>[];
+
+      for (int i = 0; i < maxLessons; i++) {
         final id = 'lesson_${i.toString().padLeft(4, '0')}';
-        final title = 'Les ${i + 1}';
-        return Lesson(
+        final lessonNumber = i + 1;
+
+        // Check if this should be a special lesson (every 7-10 lessons)
+        final isSpecial = lessonNumber > 1 && (lessonNumber - 1) % (7 + (i % 4)) == 0;
+
+        String category;
+        String title;
+        String description;
+        bool special = false;
+
+        if (isSpecial) {
+          // Special lesson: pick a random category from categories.json
+          category = categories[i % categories.length];
+          title = 'Speciale Les $lessonNumber - $category';
+          description = 'Beantwoord $maxQuestionsPerLesson vragen uit $category';
+          special = true;
+        } else {
+          // Regular lesson
+          category = 'Algemeen';
+          title = 'Les $lessonNumber';
+          description = 'Beantwoord $maxQuestionsPerLesson vragen';
+        }
+
+        lessons.add(Lesson(
           id: id,
           title: title,
-          // Not category-based. We keep a neutral marker.
-          category: 'Algemeen',
+          category: category,
           maxQuestions: maxQuestionsPerLesson,
           index: i,
-          description: 'Beantwoord $maxQuestionsPerLesson vragen',
+          description: description,
           iconHint: _iconForIndex(i),
-        );
-      });
+          isSpecial: special,
+        ));
+      }
 
       if (lessons.isEmpty) {
         return [
@@ -42,6 +84,7 @@ class LessonService {
             index: 0,
             description: 'Beantwoord $maxQuestionsPerLesson vragen',
             iconHint: 'menu_book',
+            isSpecial: false,
           ),
         ];
       }
@@ -59,6 +102,7 @@ class LessonService {
           index: 0,
           description: 'Beantwoord $maxQuestionsPerLesson vragen',
           iconHint: 'menu_book',
+          isSpecial: false,
         ),
       ];
     }

@@ -29,10 +29,11 @@ class LessonTile extends StatefulWidget {
 }
 
 class _LessonTileState extends State<LessonTile>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
   late Animation<double> _shadowAnimation;
+  late AnimationController _rainbowController;
 
   @override
   void initState() {
@@ -53,11 +54,18 @@ class _LessonTileState extends State<LessonTile>
         curve: Curves.easeInOut,
       ),
     );
+
+    // Rainbow animation for special locked lessons
+    _rainbowController = AnimationController(
+      duration: const Duration(seconds: 4),
+      vsync: this,
+    )..repeat();
   }
 
   @override
   void dispose() {
     _animationController.dispose();
+    _rainbowController.dispose();
     super.dispose();
   }
 
@@ -83,9 +91,11 @@ class _LessonTileState extends State<LessonTile>
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final settings = Provider.of<SettingsProvider>(context, listen: false);
-    final gradient = settings.colorfulMode
-        ? _tileGradientForIndex(cs, widget.index)
-        : _singleColorGradient(cs);
+    final gradient = widget.lesson.isSpecial
+        ? _specialLessonGradient(cs)
+        : settings.colorfulMode
+            ? _tileGradientForIndex(cs, widget.index)
+            : _singleColorGradient(cs);
 
     String semanticLabel =
         'Lesson ${widget.lesson.index + 1}: ${widget.lesson.title}';
@@ -200,12 +210,27 @@ class _LessonTileState extends State<LessonTile>
                   else
                     Positioned.fill(
                       child: Center(
-                        child: Icon(
-                          Icons.lock_rounded,
-                          color: cs.onSurface.withValues(alpha: 0.7),
-                          size: 40,
-                          semanticLabel: 'Locked lesson',
-                        ),
+                        child: widget.lesson.isSpecial
+                            ? AnimatedBuilder(
+                                animation: _rainbowController,
+                                builder: (context, child) {
+                                  // Create muted rainbow effect by cycling through HSV hue values
+                                  final hue = (_rainbowController.value * 360.0) % 360.0;
+                                  final rainbowColor = HSVColor.fromAHSV(1.0, hue, 0.7, 0.9).toColor();
+                                  return Icon(
+                                    Icons.lock_rounded,
+                                    color: rainbowColor,
+                                    size: 40,
+                                    semanticLabel: 'Locked special lesson',
+                                  );
+                                },
+                              )
+                            : Icon(
+                                Icons.lock_rounded,
+                                color: cs.onSurface.withValues(alpha: 0.7),
+                                size: 40,
+                                semanticLabel: 'Locked lesson',
+                              ),
                       ),
                     ),
                   if (widget.recommended)
@@ -276,6 +301,18 @@ class _LessonTileState extends State<LessonTile>
       colors: [
         cs.primaryContainer.withValues(alpha: 0.7),
         cs.primary.withValues(alpha: 0.3)
+      ],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    );
+  }
+
+  LinearGradient _specialLessonGradient(ColorScheme cs) {
+    // Special gradient for special lessons - using gold/yellow tones
+    return LinearGradient(
+      colors: [
+        const Color(0xFFFFD700).withValues(alpha: 0.8), // Gold
+        const Color(0xFFFFA500).withValues(alpha: 0.6), // Orange
       ],
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
