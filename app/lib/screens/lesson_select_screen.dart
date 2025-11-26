@@ -28,23 +28,25 @@ class LessonSelectScreen extends StatefulWidget {
 }
 
 class _LessonSelectScreenState extends State<LessonSelectScreen> {
-  final LessonService _lessonService = LessonService();
+   final LessonService _lessonService = LessonService();
+   final ScrollController _scrollController = ScrollController();
 
-  bool _loading = true;
-  String? _error;
-  List<Lesson> _lessons = const [];
-  bool _guideCheckCompleted = false; // Prevent multiple guide checks
-  bool _showPromoCard = false;
-  bool _isDonationPromo = true; // true for donation, false for follow
-  bool _isSatisfactionPromo = false; // true for satisfaction survey
-  bool _isDifficultyPromo = false; // true for difficulty feedback
-  String? _socialMediaType; // for individual social media popups
-  // Search and filters removed for simplified UI
+   bool _loading = true;
+   bool _loadingMore = false;
+   String? _error;
+   List<Lesson> _lessons = const [];
+   bool _guideCheckCompleted = false; // Prevent multiple guide checks
+   bool _showPromoCard = false;
+   bool _isDonationPromo = true; // true for donation, false for follow
+   bool _isSatisfactionPromo = false; // true for satisfaction survey
+   bool _isDifficultyPromo = false; // true for difficulty feedback
+   String? _socialMediaType; // for individual social media popups
+   // Search and filters removed for simplified UI
 
-  // Daily usage streak tracking (persisted locally)
-  static const String _activeDaysKey = 'daily_active_days_v1';
-  Set<String> _activeDays = {};
-  int _streakDays = 0;
+   // Daily usage streak tracking (persisted locally)
+   static const String _activeDaysKey = 'daily_active_days_v1';
+   Set<String> _activeDays = {};
+   int _streakDays = 0;
 
   @override
   void initState() {
@@ -59,13 +61,20 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
     analyticsService.trackFeatureStart(
         context, AnalyticsService.featureLessonSystem);
 
-    _loadLessons();
+    _loadLessons(maxLessons: 20);
     _loadStreakData();
+    _scrollController.addListener(_onScroll);
 
     // Check if we need to show the guide screen (only once)
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _checkAndShowGuide();
     });
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 500 && !_loadingMore && !_loading) {
+      _loadMoreLessons();
+    }
   }
 
   void _checkAndShowGuide() {
@@ -109,6 +118,12 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
         _checkAndShowGuide();
       });
     }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   // --- Daily streak helpers ---
@@ -188,23 +203,25 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
     return out;
   }
 
-  Future<void> _loadLessons() async {
+  Future<void> _loadLessons({int? maxLessons, bool append = false}) async {
     Provider.of<AnalyticsService>(context, listen: false)
         .capture(context, 'load_lessons');
     final progress =
         Provider.of<LessonProgressProvider>(context, listen: false);
     final settings = Provider.of<SettingsProvider>(context, listen: false);
     try {
-      setState(() {
-        _loading = true;
-        _error = null;
-      });
+      if (!append) {
+        setState(() {
+          _loading = true;
+          _error = null;
+        });
+      }
 
       // Read current progress to size the visible track dynamically.
       // Always show at least (unlockedCount + buffer) lessons, with a floor.
       const int buffer = 12;
       const int minVisible = 36;
-      final int desired = progress.unlockedCount + buffer;
+      final int desired = append ? (maxLessons ?? _lessons.length + 20) : (progress.unlockedCount + buffer);
       final int visibleCount = desired < minVisible ? minVisible : desired;
 
       final lessons = await _lessonService.generateLessons(
@@ -215,11 +232,17 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
 
       if (!mounted) return;
       setState(() {
-        _lessons = lessons;
+        if (append) {
+          _lessons.addAll(lessons.sublist(_lessons.length));
+        } else {
+          _lessons = lessons;
+        }
       });
 
       // Ensure at least the first lesson is unlocked for new users.
-      await progress.ensureUnlockedCountAtLeast(1);
+      if (!append) {
+        await progress.ensureUnlockedCountAtLeast(1);
+      }
     } catch (e) {
       if (!mounted) return;
       Provider.of<AnalyticsService>(context, listen: false).capture(
@@ -229,7 +252,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
         _error = strings.AppStrings.couldNotLoadLessons;
       });
     } finally {
-      if (mounted) {
+      if (mounted && !append) {
         setState(() {
           _loading = false;
           // Show promo card occasionally (20% chance) with new logic for different popup types
@@ -298,6 +321,16 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
           }
         });
       }
+    }
+  }
+
+  Future<void> _loadMoreLessons() async {
+    if (_loadingMore || _loading) return;
+    setState(() => _loadingMore = true);
+    try {
+      await _loadLessons(maxLessons: _lessons.length + 20, append: true);
+    } finally {
+      if (mounted) setState(() => _loadingMore = false);
     }
   }
 
@@ -810,8 +843,9 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                       return const SizedBox.shrink();
                     }
                     return RefreshIndicator(
-                      onRefresh: _loadLessons,
+                      onRefresh: () => _loadLessons(maxLessons: 20),
                       child: CustomScrollView(
+                        controller: _scrollController,
                         // Increase cache extent to prebuild upcoming sliver children
                         // for smoother, jank-free scrolling at the cost of some memory.
                         cacheExtent: 800,
