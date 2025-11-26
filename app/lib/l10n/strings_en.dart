@@ -96,6 +96,8 @@ class AppStringsEn {
   static const String retryLesson = 'Try Again';
   static const String nextLesson = 'Next Lesson';
   static const String backToLessons = 'Back to Lessons';
+  static const String endScore = 'End Score';
+  static const String endScoreHint = 'Your total score in percentage on a speedometer';
 
   // Settings screen
   static const String display = 'Display';

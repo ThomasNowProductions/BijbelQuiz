@@ -104,6 +104,8 @@ class AppStrings {
   static String get retryLesson => _language == 'en' ? AppStringsEn.retryLesson : 'Opnieuw proberen';
   static String get nextLesson => _language == 'en' ? AppStringsEn.nextLesson : 'Volgende les';
   static String get backToLessons => _language == 'en' ? AppStringsEn.backToLessons : 'Terug naar lessen';
+  static String get endScore => _language == 'en' ? AppStringsEn.endScore : 'Eindscore';
+  static String get endScoreHint => _language == 'en' ? AppStringsEn.endScoreHint : 'Jouw totaalscore in percentage op een snelheidsmeter';
 
   // Settings screen
   static String get display => _language == 'en' ? AppStringsEn.display : 'Weergave';
