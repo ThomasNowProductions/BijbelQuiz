@@ -121,14 +121,6 @@ class TrackingService {
     AppLogger.info(
         'Tracking event with PostHog: $eventName${properties != null ? ' with properties: $properties' : ''}');
     try {
-      // Get user ID from settings or generate an anonymous ID
-      final userId = await _getPersistentUserId();
-      
-      // Ensure user is identified in PostHog
-      await Posthog().identify(
-        userId: userId,
-      );
-
       await Posthog().capture(
         eventName: eventName,
         properties: properties,
