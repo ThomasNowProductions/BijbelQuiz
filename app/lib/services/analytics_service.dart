@@ -7,6 +7,7 @@ import '../providers/settings_provider.dart';
 import 'logger.dart';
 import 'tracking_service.dart';
 import 'package:uuid/uuid.dart';
+import 'package:posthog_flutter/posthog_flutter.dart';
 
 /// A service that provides an interface to the in-house tracking service.
 ///
@@ -29,8 +30,8 @@ class AnalyticsService {
     }
   }
 
-  /// Returns a [TrackingObserver] that can be used to automatically track screen views.
-  TrackingObserver getObserver() => _trackingService.getObserver();
+  /// Returns a [PosthogObserver] that can be used to automatically track screen views.
+  PosthogObserver getObserver() => _trackingService.getObserver();
 
   /// Tracks a screen view.
   ///

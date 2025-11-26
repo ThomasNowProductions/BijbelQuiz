@@ -53,6 +53,10 @@
 	<array>
 		<string>mailto</string>
 	</array>
+	
+	<!-- PostHog Configuration -->
+	<key>com.posthog.posthog.AUTO_INIT</key>
+	<false/>
 
 </dict>
 </plist>

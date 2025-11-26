@@ -1,0 +1,32 @@
+# Flutter Podfile
+# This is a custom Podfile to set minimum iOS version for PostHog
+
+platform :ios, '13.0'
+
+ENV['FLUTTER_ROOT'] = `which flutter`
+ENV['FLUTTER_APPLICATION_PATH'] = ENV['PWD'] + '/..'
+ENV['FLUTTER_BUILD_DIR'] = 'build'
+
+# CocoaPods analytics sends network data synchronously affecting flutter build latency.
+ENV['COCOAPODS_DISABLE_STATS'] = 'true'
+
+require 'fluttercocoapods/flutter'
+
+target 'Runner' do
+  use_frameworks!
+  use_modular_headers!
+
+  flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+
+  target 'RunnerTests' do
+    inherit! :search_paths
+  end
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+    end
+  end
+end

@@ -26,7 +26,7 @@ android {
 
     defaultConfig {
         applicationId "app.bijbelquiz.play"
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 21
         targetSdkVersion 36
         multiDexEnabled true
         versionCode 15
