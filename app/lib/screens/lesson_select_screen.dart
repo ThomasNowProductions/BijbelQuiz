@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'dart:convert';
 import 'dart:math';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:bijbelquiz/services/analytics_service.dart';
@@ -48,6 +49,9 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
    Set<String> _activeDays = {};
    int _streakDays = 0;
 
+   // Cached lessons
+   static const String _cachedLessonsKey = 'cached_lessons_v1';
+
   @override
   void initState() {
     super.initState();
@@ -63,6 +67,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
 
     _loadLessons(maxLessons: 20);
     _loadStreakData();
+    _loadCachedLessons();
     _scrollController.addListener(_onScroll);
 
     // Check if we need to show the guide screen (only once)
@@ -149,6 +154,30 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
 
   Future<void> _refreshStreakData() async {
     await _loadStreakData();
+  }
+
+  Future<void> _loadCachedLessons() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final jsonString = prefs.getString(_cachedLessonsKey);
+      if (jsonString != null) {
+        final List<dynamic> jsonList = json.decode(jsonString);
+        _lessons = jsonList.map((e) => Lesson.fromJson(e)).toList();
+      }
+    } catch (_) {
+      // Ignore errors
+    }
+    if (mounted) setState(() {});
+  }
+
+  Future<void> _saveCachedLessons() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final jsonString = json.encode(_lessons.map((l) => l.toJson()).toList());
+      await prefs.setString(_cachedLessonsKey, jsonString);
+    } catch (_) {
+      // Ignore errors
+    }
   }
 
   void _recomputeStreak() {
@@ -238,6 +267,9 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
           _lessons = lessons;
         }
       });
+
+      // Save cached lessons
+      await _saveCachedLessons();
 
       // Ensure at least the first lesson is unlocked for new users.
       if (!append) {
@@ -449,7 +481,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                 final recommended =
                     totalLessons > 0 && realIndex == continueIdx;
 
-                final playable = unlocked && realIndex == continueIdx;
+                final playable = unlocked;
 
                 return Container(
                   height: 120, // Fixed height for list items
@@ -469,15 +501,6 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                                   properties: {'lesson_id': lesson.id});
                           showTopSnackBar(context, 'Les is nog vergrendeld',
                               style: TopSnackBarStyle.warning);
-                          return;
-                        }
-                        if (!playable) {
-                          Provider.of<AnalyticsService>(context, listen: false)
-                              .capture(context, 'tap_unplayable_lesson',
-                                  properties: {'lesson_id': lesson.id});
-                          showTopSnackBar(context,
-                              'Je kunt alleen de meest recente ontgrendelde les spelen',
-                              style: TopSnackBarStyle.info);
                           return;
                         }
 
@@ -553,7 +576,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                 final recommended =
                     totalLessons > 0 && realIndex == continueIdx;
 
-                final playable = unlocked && realIndex == continueIdx;
+                final playable = unlocked;
 
                 return RepaintBoundary(
                   child: LessonTile(
@@ -570,15 +593,6 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                                 properties: {'lesson_id': lesson.id});
                         showTopSnackBar(context, 'Les is nog vergrendeld',
                             style: TopSnackBarStyle.warning);
-                        return;
-                      }
-                      if (!playable) {
-                        Provider.of<AnalyticsService>(context, listen: false)
-                            .capture(context, 'tap_unplayable_lesson',
-                                properties: {'lesson_id': lesson.id});
-                        showTopSnackBar(context,
-                            'Je kunt alleen de meest recente ontgrendelde les spelen',
-                            style: TopSnackBarStyle.info);
                         return;
                       }
 
@@ -654,7 +668,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                 final recommended =
                     totalLessons > 0 && realIndex == continueIdx;
 
-                final playable = unlocked && realIndex == continueIdx;
+                final playable = unlocked;
 
                 return RepaintBoundary(
                   child: LessonTile(
@@ -671,15 +685,6 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                                 properties: {'lesson_id': lesson.id});
                         showTopSnackBar(context, 'Les is nog vergrendeld',
                             style: TopSnackBarStyle.warning);
-                        return;
-                      }
-                      if (!playable) {
-                        Provider.of<AnalyticsService>(context, listen: false)
-                            .capture(context, 'tap_unplayable_lesson',
-                                properties: {'lesson_id': lesson.id});
-                        showTopSnackBar(context,
-                            'Je kunt alleen de meest recente ontgrendelde les spelen',
-                            style: TopSnackBarStyle.info);
                         return;
                       }
 
