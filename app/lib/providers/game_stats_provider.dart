@@ -147,31 +147,40 @@ class GameStatsProvider extends ChangeNotifier {
 
       // Check for synced data and merge if available
       if (syncService.isAuthenticated) {
-        AppLogger.info('User authenticated, checking for synced game stats');
-        final syncedStats = await syncService.getGameStatsForUser(syncService.currentUserId!);
-        if (syncedStats != null) {
-          AppLogger.info('Found synced game stats: ${syncedStats.keys.toList()}');
-          // Merge local and synced data, taking the maximum values
-          final mergedStats = {
-            'score': (_score > (syncedStats['score'] as int? ?? 0)) ? _score : syncedStats['score'],
-            'currentStreak': (_currentStreak > (syncedStats['currentStreak'] as int? ?? 0)) ? _currentStreak : syncedStats['currentStreak'],
-            'longestStreak': (_longestStreak > (syncedStats['longestStreak'] as int? ?? 0)) ? _longestStreak : syncedStats['longestStreak'],
-            'incorrectAnswers': _incorrectAnswers + (syncedStats['incorrectAnswers'] as int? ?? 0),
-          };
-          _score = mergedStats['score'];
-          _currentStreak = mergedStats['currentStreak'];
-          _longestStreak = mergedStats['longestStreak'];
-          _incorrectAnswers = mergedStats['incorrectAnswers'];
+        AppLogger.info('User authenticated, fetching synced data from server');
+        final allData = await syncService.fetchAllData();
+        
+        AppLogger.info('fetchAllData returned: $allData');
+        
+        if (allData != null && allData.containsKey('game_stats')) {
+          final syncedStats = allData['game_stats'];
+          AppLogger.info('Found synced game stats: $syncedStats');
+          
+          if (syncedStats != null) {
+            AppLogger.info('Local score: $_score, Server score: ${syncedStats['score']}');
+            
+            // Merge local and synced data, taking the maximum values
+            final mergedStats = {
+              'score': (_score > (syncedStats['score'] as int? ?? 0)) ? _score : syncedStats['score'],
+              'currentStreak': (_currentStreak > (syncedStats['currentStreak'] as int? ?? 0)) ? _currentStreak : syncedStats['currentStreak'],
+              'longestStreak': (_longestStreak > (syncedStats['longestStreak'] as int? ?? 0)) ? _longestStreak : syncedStats['longestStreak'],
+              'incorrectAnswers': _incorrectAnswers + (syncedStats['incorrectAnswers'] as int? ?? 0),
+            };
+            _score = mergedStats['score'];
+            _currentStreak = mergedStats['currentStreak'];
+            _longestStreak = mergedStats['longestStreak'];
+            _incorrectAnswers = mergedStats['incorrectAnswers'];
 
-          // Save merged data to local storage
-          await _prefs?.setInt(_scoreKey, _score);
-          await _prefs?.setInt(_currentStreakKey, _currentStreak);
-          await _prefs?.setInt(_longestStreakKey, _longestStreak);
-          await _prefs?.setInt(_incorrectAnswersKey, _incorrectAnswers);
+            // Save merged data to local storage
+            await _prefs?.setInt(_scoreKey, _score);
+            await _prefs?.setInt(_currentStreakKey, _currentStreak);
+            await _prefs?.setInt(_longestStreakKey, _longestStreak);
+            await _prefs?.setInt(_incorrectAnswersKey, _incorrectAnswers);
 
-          AppLogger.info('Merged local and synced game stats: score=$_score, streak=$_currentStreak');
+            AppLogger.info('Merged local and synced game stats: score=$_score, streak=$_currentStreak');
+          }
         } else {
-          AppLogger.debug('No synced game stats found');
+          AppLogger.info('No synced game stats found in response');
         }
       }
     } catch (e) {
@@ -259,14 +268,6 @@ class GameStatsProvider extends ChangeNotifier {
       await _prefs?.setInt(_scoreKey, _score);
       await _prefs?.setInt(_currentStreakKey, _currentStreak);
       notifyListeners();
-
-      // Sync data if user is authenticated
-      if (syncService.isAuthenticated) {
-        AppLogger.info('Syncing game stats after update: score=$_score, streak=$_currentStreak');
-        await syncService.syncData('game_stats', getExportData());
-      } else {
-        AppLogger.debug('Not syncing game stats: user not authenticated');
-      }
     } catch (e) {
       // Use the new error handling system
       final appError = ErrorHandler().fromException(
@@ -551,6 +552,23 @@ class GameStatsProvider extends ChangeNotifier {
       AppLogger.info('Received synced game stats update: ${data.keys.toList()}');
       loadImportData(data);
     });
+  }
+
+  /// Triggers immediate sync of game stats to server
+  Future<void> triggerSync() async {
+    if (!syncService.isAuthenticated) {
+      AppLogger.debug('Skipping game stats sync: user not authenticated');
+      return;
+    }
+    
+    // Check connection before attempting sync
+    if (!syncService.isConnected) {
+      AppLogger.debug('Skipping game stats sync: device is offline');
+      return;
+    }
+    
+    AppLogger.info('Triggering game stats sync');
+    await syncService.syncDataImmediate('game_stats', getExportData());
   }
 
   /// Cleans up resources and listeners

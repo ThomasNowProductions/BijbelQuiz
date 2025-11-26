@@ -1057,6 +1057,9 @@ class _QuizScreenState extends State<QuizScreen>
         Provider.of<LessonProgressProvider>(context, listen: false);
     await progress.markCompleted(
         lesson: lesson, correct: correct, total: total);
+    
+    // Trigger sync after lesson completion
+    await progress.triggerSync();
 
     // Show full-screen completion screen - capture context before navigation
     if (!mounted) return;

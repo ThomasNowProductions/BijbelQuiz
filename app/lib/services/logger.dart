@@ -61,6 +61,9 @@ class AppLogger {
           buffer.write('\n  StackTrace: [STACK TRACE REMOVED FOR SECURITY]');
         }
       }
+      
+      // Actually print the log message to console
+      print(buffer.toString());
     });
     _logger.info('Logger initialized at level: ${level.name}');
   }

@@ -7,8 +7,6 @@ import 'logger.dart';
 import 'connection_service.dart';
 import '../utils/automatic_error_reporter.dart';
 
-import 'sync/sync_types.dart';
-import 'sync/sync_queue.dart';
 import 'sync/conflict_resolver.dart';
 
 class SyncService {
@@ -16,32 +14,22 @@ class SyncService {
   
   late final SupabaseClient _client;
   late final ConnectionService _connectionService;
-  late final SyncQueue _syncQueue;
   
   String? _currentUserId;
   RealtimeChannel? _channel;
   final Map<String, Function(Map<String, dynamic>)> _listeners = {};
   SharedPreferences? _prefs;
-  Timer? _retryTimer;
-
-  // Rate limiting and debouncing
-  final Map<String, DateTime> _lastSyncTimes = {};
-  final Map<String, Timer> _debounceTimers = {};
-  static const Duration _minSyncInterval = Duration(seconds: 5); // Minimum 5 seconds between syncs for same key
-  static const Duration _debounceDelay = Duration(seconds: 2); // Wait 2 seconds after last change before syncing
 
   // Concurrency protection
   final Map<String, bool> _syncInProgress = {}; // Track ongoing sync operations per key
   final Map<String, bool> _realtimeUpdateInProgress = {}; // Track real-time updates per key
 
-  // Retry configuration
-  static const int _maxRetries = 3;
-  static const Duration _baseRetryDelay = Duration(seconds: 2);
-  static const double _retryBackoffMultiplier = 1.5;
-
   // Error handling callbacks
   Function(String, String)? _onSyncError;
   Function(String)? _onSyncSuccess;
+
+  /// Public getter for connection status
+  bool get isConnected => _connectionService.isConnected;
 
   SyncService() {
     _client = SupabaseConfig.client;
@@ -51,11 +39,8 @@ class SyncService {
   /// Initializes the service
   Future<void> initialize() async {
     _prefs = await SharedPreferences.getInstance();
-    _syncQueue = SyncQueue(_prefs!);
     await _connectionService.initialize();
     _setupAuthListener();
-    _startOfflineRetryTimer();
-    await _syncQueue.cleanupExpired();
   }
 
   /// Sets error and success callbacks for user notifications
@@ -67,12 +52,8 @@ class SyncService {
     _onSyncSuccess = onSyncSuccess;
   }
 
-  /// Performs immediate sync without debouncing (for manual sync operations)
+  /// Syncs data to the server immediately
   Future<void> syncDataImmediate(String key, Map<String, dynamic> data) async {
-    // Cancel any pending debounced sync for this key
-    _debounceTimers[key]?.cancel();
-    _debounceTimers.remove(key);
-
     await _performSync(key, data);
   }
 
@@ -98,58 +79,17 @@ class SyncService {
     _currentUserId = null;
     _stopListening();
 
-    // Cancel all pending debounced sync operations
-    for (final timer in _debounceTimers.values) {
-      timer.cancel();
-    }
-    _debounceTimers.clear();
-
     // Reset sync state
     _syncInProgress.clear();
-    _lastSyncTimes.clear();
     _realtimeUpdateInProgress.clear();
 
     // Clear all listeners to prevent cross-user contamination
     _listeners.clear();
 
-    // Clear offline queue for the previous user
-    // We don't clear the queue here anymore as it might contain items for other users
-    // SyncQueue handles user separation
-
     AppLogger.info('Complete session cleanup performed - all user data cleared');
   }
 
-  /// Syncs data to the current user's data with rate limiting, debouncing, and improved retry logic
-  Future<void> syncData(String key, Map<String, dynamic> data) async {
-    if (_currentUserId == null) {
-      AppLogger.warning('Cannot sync data: no user logged in');
-      return;
-    }
 
-    // Rate limiting: check if we're syncing this key too frequently
-    final lastSync = _lastSyncTimes[key];
-    if (lastSync != null && DateTime.now().difference(lastSync) < _minSyncInterval) {
-      AppLogger.debug('Rate limiting: skipping sync for key $key, too soon since last sync');
-      // Schedule a debounced sync instead
-      _scheduleDebouncedSync(key, data);
-      return;
-    }
-
-    // Use debounced sync for better performance
-    _scheduleDebouncedSync(key, data);
-  }
-
-  /// Schedules a debounced sync operation
-  void _scheduleDebouncedSync(String key, Map<String, dynamic> data) {
-    // Cancel any existing timer for this key
-    _debounceTimers[key]?.cancel();
-
-    // Schedule new debounced sync
-    _debounceTimers[key] = Timer(_debounceDelay, () async {
-      _debounceTimers.remove(key);
-      await _performSync(key, data);
-    });
-  }
 
   /// Performs the actual sync operation with retry logic and error handling
   Future<void> _performSync(String key, Map<String, dynamic> data) async {
@@ -161,7 +101,7 @@ class SyncService {
     // Check network connectivity first
     if (!_connectionService.isConnected) {
       AppLogger.warning('Cannot sync data: no network connection');
-      await _queueOfflineSync(key, data);
+      _onSyncError?.call(key, 'No network connection');
       return;
     }
 
@@ -196,137 +136,105 @@ class SyncService {
 
       AppLogger.info('Starting sync for key: $key, user: $_currentUserId, data keys: ${data.keys.toList()}');
 
-      for (int attempt = 1; attempt <= _maxRetries; attempt++) {
-        try {
-          // Calculate retry delay with exponential backoff
-          final retryDelay = attempt > 1
-              ? _baseRetryDelay * (_retryBackoffMultiplier * (attempt - 1))
-              : Duration.zero;
+      // Get current user data or create new record
+      final userDataResponse = await _client
+          .from(_tableName)
+          .select('data')
+          .eq('user_id', _currentUserId!)
+          .maybeSingle();
 
-          if (retryDelay > Duration.zero) {
-            AppLogger.info('Retrying sync in ${retryDelay.inSeconds} seconds...');
-            await Future.delayed(retryDelay);
-          }
+      final currentData = Map<String, dynamic>.from(
+          userDataResponse?['data'] as Map<String, dynamic>? ?? {});
 
-          // Get current user data or create new record
-          final userDataResponse = await _client
-              .from(_tableName)
-              .select('data')
-              .eq('user_id', _currentUserId!)
-              .maybeSingle();
+      // Check for potential conflicts using ConflictResolver
+      final existingEntry = currentData[key] as Map<String, dynamic>?;
+      final now = DateTime.now();
+      
+      if (existingEntry != null) {
+        final existingTimestamp = DateTime.parse(existingEntry['timestamp'] as String);
+        final existingValue = existingEntry['value'] as Map<String, dynamic>;
+        
+        final timeDifference = now.difference(existingTimestamp);
+        final shouldMerge = timeDifference.inSeconds < 60;
 
-          final currentData = Map<String, dynamic>.from(
-              userDataResponse?['data'] as Map<String, dynamic>? ?? {});
-
-          // Check for potential conflicts using ConflictResolver
-          final existingEntry = currentData[key] as Map<String, dynamic>?;
-          final now = DateTime.now();
-          
-          if (existingEntry != null) {
-            final existingTimestamp = DateTime.parse(existingEntry['timestamp'] as String);
-            final existingValue = existingEntry['value'] as Map<String, dynamic>;
-            
-            // Only resolve conflict if the existing data is recent (within last 60 seconds)
-            // or if we want to be safe and always resolve.
-            // The previous logic was: if (shouldMerge) resolve else overwrite.
-            // Let's keep the time check for now to avoid unnecessary merging of old data,
-            // but for robustness, maybe we should always resolve?
-            // The previous logic: "Old data, just overwrite".
-            // Let's stick to the previous logic but use the resolver.
-            
-            final timeDifference = now.difference(existingTimestamp);
-            final shouldMerge = timeDifference.inSeconds < 60;
-
-            if (shouldMerge) {
-               final resolver = ConflictResolverFactory.getResolver(key);
-               final mergedData = resolver.resolve(existingValue, data);
-               
-               currentData[key] = {
-                 'value': mergedData,
-                 'timestamp': now.toIso8601String(),
-               };
-               AppLogger.info('Merged $key data due to recent conflict');
-            } else {
-              // Old data, just overwrite
-              currentData[key] = {
-                'value': data,
-                'timestamp': now.toIso8601String(),
-              };
-              AppLogger.info('Overwriting old data for key $key');
-            }
-          } else {
-            // No existing data, just set it
-            currentData[key] = {
-              'value': data,
-              'timestamp': now.toIso8601String(),
-            };
-          }
-
-          // Upsert the user data
-          await _client.from(_tableName).upsert({
-            'user_id': _currentUserId,
-            'data': currentData,
-            'updated_at': now.toIso8601String(),
-          });
-
-          // Update rate limiting timestamp
-          _lastSyncTimes[key] = now;
-
-          AppLogger.info('Successfully synced data for key: $key for user: $_currentUserId on attempt $attempt');
-          _onSyncSuccess?.call(key);
-          return; // Success, exit retry loop
-        } catch (e) {
-          final isNetworkError = e.toString().toLowerCase().contains('network') ||
-                                  e.toString().toLowerCase().contains('connection') ||
-                                  e.toString().toLowerCase().contains('timeout');
-          final isAuthError = e.toString().contains('JWT') || 
-                              e.toString().toLowerCase().contains('unauthorized') ||
-                              e.toString().toLowerCase().contains('expired');
-
-          AppLogger.error('Failed to sync data for key: $key on attempt $attempt/$_maxRetries', e);
-          
-          if (isAuthError) {
-             AppLogger.warning('Auth error detected during sync, attempting to refresh session...');
-             try {
-               await _client.auth.refreshSession();
-               // If refresh successful, next retry loop will work
-               continue;
-             } catch (refreshError) {
-               AppLogger.error('Failed to refresh session', refreshError);
-               // If refresh fails, we can't do much, maybe force logout?
-               // For now, let it fail to offline queue
-             }
-          }
-
-          if (attempt == _maxRetries) {
-            AppLogger.error('All retry attempts failed for key: $key, queuing for offline sync');
-            await _queueOfflineSync(key, data);
-            _onSyncError?.call(key, 'Sync failed after $_maxRetries attempts: ${e.toString()}');
-            
-            // Report error with appropriate categorization
-            if (isNetworkError) {
-              await AutomaticErrorReporter.reportNetworkError(
-                message: 'Sync network failure for key: $key',
-                url: _tableName,
-                statusCode: 0,
-                additionalInfo: {
-                  'key': key,
-                  'attempts': _maxRetries,
-                  'error': e.toString(),
-                },
-              );
-            } else {
-              await AutomaticErrorReporter.reportStorageError(
-                message: 'Sync failure for key: $key',
-                additionalInfo: {
-                  'key': key,
-                  'attempts': _maxRetries,
-                  'error': e.toString(),
-                },
-              );
-            }
-          }
+        if (shouldMerge) {
+           final resolver = ConflictResolverFactory.getResolver(key);
+           final mergedData = resolver.resolve(existingValue, data);
+           
+           currentData[key] = {
+             'value': mergedData,
+             'timestamp': now.toIso8601String(),
+           };
+           AppLogger.info('Merged $key data due to recent conflict');
+        } else {
+          // Old data, just overwrite
+          currentData[key] = {
+            'value': data,
+            'timestamp': now.toIso8601String(),
+          };
+          AppLogger.info('Overwriting old data for key $key');
         }
+      } else {
+        // No existing data, just set it
+        currentData[key] = {
+          'value': data,
+          'timestamp': now.toIso8601String(),
+        };
+      }
+
+      // Upsert the user data
+      await _client.from(_tableName).upsert({
+        'user_id': _currentUserId,
+        'data': currentData,
+        'updated_at': now.toIso8601String(),
+      });
+
+      AppLogger.info('Successfully synced data for key: $key for user: $_currentUserId');
+      _onSyncSuccess?.call(key);
+    } catch (e) {
+      final isNetworkError = e.toString().toLowerCase().contains('network') ||
+                              e.toString().toLowerCase().contains('connection') ||
+                              e.toString().toLowerCase().contains('timeout');
+      final isAuthError = e.toString().contains('JWT') || 
+                          e.toString().toLowerCase().contains('unauthorized') ||
+                          e.toString().toLowerCase().contains('expired');
+
+      AppLogger.error('Failed to sync data for key: $key', e);
+      
+      if (isAuthError) {
+         AppLogger.warning('Auth error detected during sync, attempting to refresh session...');
+         try {
+           await _client.auth.refreshSession();
+           // Retry once after refresh
+           AppLogger.info('Session refreshed, retrying sync for key: $key');
+           await syncDataImmediate(key, data);
+           return;
+         } catch (refreshError) {
+           AppLogger.error('Failed to refresh session', refreshError);
+         }
+      }
+
+      _onSyncError?.call(key, 'Sync failed: ${e.toString()}');
+      
+      // Report error with appropriate categorization
+      if (isNetworkError) {
+        await AutomaticErrorReporter.reportNetworkError(
+          message: 'Sync network failure for key: $key',
+          url: _tableName,
+          statusCode: 0,
+          additionalInfo: {
+            'key': key,
+            'error': e.toString(),
+          },
+        );
+      } else {
+        await AutomaticErrorReporter.reportStorageError(
+          message: 'Sync failure for key: $key',
+          additionalInfo: {
+            'key': key,
+            'error': e.toString(),
+          },
+        );
       }
     } finally {
       // Reset concurrency flag
@@ -468,96 +376,60 @@ class SyncService {
   /// Gets the current user ID
   String? get currentUserId => _currentUserId;
 
+  /// Fetches all user data from the server (for on-boot initialization)
+  Future<Map<String, Map<String, dynamic>>?> fetchAllData() async {
+    if (_currentUserId == null) {
+      AppLogger.warning('Cannot fetch data: no user logged in');
+      return null;
+    }
 
-
-
-
-  /// Queues failed sync data for later retry
-  Future<void> _queueOfflineSync(String key, Map<String, dynamic> data) async {
     try {
-      final item = SyncItem(
-        key: key,
-        data: data,
-        timestamp: DateTime.now(),
-        userId: _currentUserId,
-      );
+      AppLogger.info('Fetching all user data from server for user: $_currentUserId');
       
-      await _syncQueue.add(item);
+      final response = await _client
+          .from(_tableName)
+          .select('data')
+          .eq('user_id', _currentUserId!)
+          .maybeSingle();
+
+      if (response == null) {
+        AppLogger.info('No synced data found for user, starting fresh');
+        return {};
+      }
+
+      final data = response['data'] as Map<String, dynamic>? ?? {};
+      final result = <String, Map<String, dynamic>>{};
+
+      // Extract the value from each key's stored format
+      for (final entry in data.entries) {
+        if (entry.value is Map<String, dynamic>) {
+          final valueMap = entry.value as Map<String, dynamic>;
+          if (valueMap.containsKey('value')) {
+            result[entry.key] = valueMap['value'] as Map<String, dynamic>;
+          }
+        }
+      }
+
+      AppLogger.info('Fetched data for ${result.length} keys: ${result.keys.toList()}');
+      return result;
     } catch (e) {
-      AppLogger.error('Failed to queue offline sync', e);
-      await AutomaticErrorReporter.reportStorageError(
-        message: 'Failed to queue offline sync for key: $key',
-        additionalInfo: {'key': key, 'error': e.toString()},
+      AppLogger.error('Failed to fetch user data', e);
+      await AutomaticErrorReporter.reportNetworkError(
+        message: 'Failed to fetch user data on boot',
+        url: _tableName,
+        statusCode: 0,
+        additionalInfo: {
+          'userId': _currentUserId,
+          'error': e.toString(),
+        },
       );
+      return null;
     }
   }
 
-  /// Processes the offline sync queue with conflict resolution
-  Future<void> _processOfflineQueue() async {
-    if (_currentUserId == null) return;
 
-    final queueItems = await _syncQueue.getForUser(_currentUserId!);
-    if (queueItems.isEmpty) return;
 
-    AppLogger.info('Processing ${queueItems.length} offline sync items');
 
-    // Group items by key to handle conflicts
-    final groupedItems = <String, List<SyncItem>>{};
-    
-    for (final item in queueItems) {
-      groupedItems.putIfAbsent(item.key, () => []).add(item);
-    }
-
-    // Process each group, merging conflicts
-    for (final entry in groupedItems.entries) {
-      final key = entry.key;
-      final items = entry.value;
-
-      if (items.isEmpty) continue;
-
-      // Sort by timestamp (oldest first)
-      items.sort((a, b) => a.timestamp.compareTo(b.timestamp));
-
-      // Merge all items for this key using conflict resolution
-      Map<String, dynamic> mergedData = items.first.data;
-      final resolver = ConflictResolverFactory.getResolver(key);
-      
-      for (int i = 1; i < items.length; i++) {
-        mergedData = resolver.resolve(mergedData, items[i].data);
-      }
-
-      try {
-        // Try to sync the merged data
-        // We use syncData which handles network checks and re-queuing if needed
-        await syncData(key, mergedData);
-        AppLogger.info('Successfully processed offline sync for key: $key');
-        
-        // Remove processed items from queue
-        // If syncData failed, it would have re-queued the merged item, so we can safely remove the old ones
-        await _syncQueue.remove(items);
-      } catch (e) {
-        AppLogger.error('Failed to sync merged offline data for key: $key', e);
-        // If syncData threw an exception (unexpected), we should probably leave items in queue or re-queue merged
-        // But syncData catches most exceptions.
-      }
-    }
-  }
-
-  /// Starts the offline retry timer
-  void _startOfflineRetryTimer() {
-    _retryTimer?.cancel();
-    _retryTimer = Timer.periodic(const Duration(minutes: 5), (_) {
-      if (_currentUserId != null) {
-        _processOfflineQueue();
-      }
-    });
-  }
-
-  /// Stops the offline retry timer
-  void _stopOfflineRetryTimer() {
-    _retryTimer?.cancel();
-    _retryTimer = null;
-  }
 
   /// Validates synced data before applying
   bool _isValidSyncedData(String key, Map<String, dynamic> data) {
@@ -573,13 +445,6 @@ class SyncService {
   /// Disposes the service
   void dispose() {
     _stopListening();
-    _stopOfflineRetryTimer();
-
-    // Cancel all debounce timers
-    for (final timer in _debounceTimers.values) {
-      timer.cancel();
-    }
-    _debounceTimers.clear();
   }
 
   /// Gets the current user's profile, creating it if it doesn't exist
