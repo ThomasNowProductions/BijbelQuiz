@@ -30,7 +30,7 @@ import '../l10n/strings_nl.dart' as strings;
 import '../constants/urls.dart';
 import '../utils/bible_book_mapper.dart';
 import '../services/logger.dart';
-import '../utils/quiz_action_price_helper.dart';
+
 
 import '../utils/automatic_error_reporter.dart';
 
@@ -1070,23 +1070,10 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
 
     Provider.of<AnalyticsService>(context, listen: false)
         .capture(context, 'skip_question_$playerName');
-    final gameStats = Provider.of<GameStatsProvider>(context, listen: false);
     Provider.of<SettingsProvider>(context, listen: false);
-    final isDev = kDebugMode;
 
-    final skipCost = await QuizActionPriceHelper().getSkipQuestionPrice();
-    final success = isDev
-        ? true
-        : await gameStats.spendStarsWithTransaction(
-            amount: skipCost,
-            reason: 'Vraag overslaan',
-            metadata: {
-              'question_category': quizState.question.category,
-              'question_difficulty': quizState.question.difficulty,
-              'time_remaining': quizState.timeRemaining,
-              'player': playerName,
-            },
-          );
+    // Skip is now free in multiplayer mode
+    final success = true;
 
     if (success) {
       setState(() {
@@ -1145,11 +1132,6 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
           _player2AnimationController.triggerTimeAnimation();
         }
       });
-    } else {
-      if (mounted) {
-        showTopSnackBar(context, strings.AppStrings.notEnoughStarsForSkip,
-            style: TopSnackBarStyle.warning);
-      }
     }
   }
 
@@ -1170,9 +1152,6 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
           'time_remaining': quizState.timeRemaining,
           'player': playerName,
         });
-
-    final gameStats = Provider.of<GameStatsProvider>(context, listen: false);
-    final isDev = kDebugMode;
 
     // First check if the reference can be parsed
     final parsed =
@@ -1198,23 +1177,8 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
       return;
     }
 
-    // Spend stars for unlocking the biblical reference (free in debug mode)
-    final biblicalCost =
-        await QuizActionPriceHelper().getUnlockBiblicalReferencePrice();
-    final success = isDev
-        ? true
-        : await gameStats.spendStarsWithTransaction(
-            amount: biblicalCost,
-            reason: 'Bijbelse referentie ontgrendelen',
-            metadata: {
-              'question_category': quizState.question.category,
-              'question_difficulty': quizState.question.difficulty,
-              'biblical_reference':
-                  quizState.question.biblicalReference ?? 'none',
-              'time_remaining': quizState.timeRemaining,
-              'player': playerName,
-            },
-          );
+    // Biblical reference unlock is now free in multiplayer mode
+    final success = true;
     if (success) {
       // Show the biblical reference dialog only for the specific player
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -1237,14 +1201,6 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
               'player': playerName,
             });
       }
-    } else {
-      // Not enough stars - this is a user state issue, not an error to report automatically
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) {
-          showTopSnackBar(context, strings.AppStrings.notEnoughStars,
-              style: TopSnackBarStyle.warning);
-        }
-      });
     }
   }
 

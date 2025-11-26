@@ -82,6 +82,14 @@ class AppStrings {
   static String get dailyStreak => _language == 'en' ? AppStringsEn.dailyStreak : 'Dagelijkse reeks';
   static String get continueWith => _language == 'en' ? AppStringsEn.continueWith : 'Ga verder';
   static String get multiplayerQuiz => _language == 'en' ? AppStringsEn.multiplayerQuiz : 'Multiplayer Quiz';
+  static String get chooseGameDuration => _language == 'en' ? AppStringsEn.chooseGameDuration : 'Kies spelduur';
+  static String get startMultiplayerQuiz => _language == 'en' ? AppStringsEn.startMultiplayerQuiz : 'Start Multiplayer Quiz';
+  static String get multiplayerDescription => _language == 'en' ? AppStringsEn.multiplayerDescription : 'Speel tegen elkaar op één telefoon! De telefoon wordt in tweeën gesplitst - bovenste helft draait 180 graden om.';
+  static String get gameRules => _language == 'en' ? AppStringsEn.gameRules : 'Spelregels:';
+  static String get ruleBothPlayers => _language == 'en' ? AppStringsEn.ruleBothPlayers : '• Beide spelers beantwoorden Bijbelvragen';
+  static String get ruleCorrectAnswer => _language == 'en' ? AppStringsEn.ruleCorrectAnswer : '• Een correct antwoord geeft punten';
+  static String get ruleWinner => _language == 'en' ? AppStringsEn.ruleWinner : '• Degene met de correcte antwoorden aan het einde wint';
+  static String get ruleScreenRotation => _language == 'en' ? AppStringsEn.ruleScreenRotation : '• De bovenste helft van het scherm draait 180 graden op mobiel';
 
   // Time up dialog
   static String get timeUp => _language == 'en' ? AppStringsEn.timeUp : 'Tijd is om!';

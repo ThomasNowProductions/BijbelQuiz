@@ -74,6 +74,14 @@ class AppStringsEn {
   static const String dailyStreak = 'Daily Streak';
   static const String continueWith = 'Continue With';
   static const String multiplayerQuiz = 'Multiplayer Quiz';
+  static const String chooseGameDuration = 'Choose game duration';
+  static const String startMultiplayerQuiz = 'Start Multiplayer Quiz';
+  static const String multiplayerDescription = 'Play against each other on one phone! The phone is split in two - the top half rotates 180 degrees.';
+  static const String gameRules = 'Game rules:';
+  static const String ruleBothPlayers = '• Both players answer Bible questions';
+  static const String ruleCorrectAnswer = '• A correct answer gives points';
+  static const String ruleWinner = '• The one with the correct answers at the end wins';
+  static const String ruleScreenRotation = '• The top half of the screen rotates 180 degrees on mobile';
 
   // Time up dialog
   static const String timeUp = 'Time is up!';

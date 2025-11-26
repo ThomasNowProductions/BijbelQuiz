@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/analytics_service.dart';
 import 'multiplayer_quiz_screen.dart';
+import '../l10n/strings_nl.dart' as strings;
 
 /// Screen for setting up a multiplayer game
 class MultiplayerGameSetupScreen extends StatefulWidget {
@@ -36,7 +37,7 @@ class _MultiplayerGameSetupScreenState
         backgroundColor: colorScheme.surface,
         elevation: 0,
         title: Text(
-          'Multiplayer Quiz',
+          strings.AppStrings.multiplayerQuiz,
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w800,
               ),
@@ -73,7 +74,7 @@ class _MultiplayerGameSetupScreenState
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        'Multiplayer Quiz',
+                        strings.AppStrings.multiplayerQuiz,
                         style:
                             Theme.of(context).textTheme.headlineSmall?.copyWith(
                                   fontWeight: FontWeight.bold,
@@ -83,7 +84,7 @@ class _MultiplayerGameSetupScreenState
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        'Speel tegen elkaar op één telefoon! De telefoon wordt in tweeën gesplitst - bovenste helft draait 180 graden om.',
+                        strings.AppStrings.multiplayerDescription,
                         style: Theme.of(context).textTheme.bodyLarge,
                         textAlign: TextAlign.center,
                       ),
@@ -95,7 +96,7 @@ class _MultiplayerGameSetupScreenState
 
                 // Duration selection
                 Text(
-                  'Kies spelduur',
+                  strings.AppStrings.chooseGameDuration,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -120,7 +121,7 @@ class _MultiplayerGameSetupScreenState
                     ),
                   ),
                   child: Text(
-                    'Start Multiplayer Quiz',
+                    strings.AppStrings.startMultiplayerQuiz,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -141,20 +142,17 @@ class _MultiplayerGameSetupScreenState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Spelregels:',
+                        strings.AppStrings.gameRules,
                         style:
                             Theme.of(context).textTheme.titleMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
                       ),
                       const SizedBox(height: 8),
-                      _buildRuleItem(
-                          '• Beide spelers beantwoorden Bijbelvragen'),
-                      _buildRuleItem('• Een correct antwoord geeft punten'),
-                      _buildRuleItem(
-                          '• Degene met de correcte antwoorden aan het einde wint'),
-                      _buildRuleItem(
-                          '• De bovenste helft van het scherm draait 180 graden op mobiel'),
+                      _buildRuleItem(strings.AppStrings.ruleBothPlayers),
+                      _buildRuleItem(strings.AppStrings.ruleCorrectAnswer),
+                      _buildRuleItem(strings.AppStrings.ruleWinner),
+                      _buildRuleItem(strings.AppStrings.ruleScreenRotation),
                     ],
                   ),
                 ),
@@ -201,7 +199,7 @@ class _MultiplayerGameSetupScreenState
                 ),
                 const SizedBox(width: 12),
                 Text(
-                  '$duration minuten',
+                  '$duration ${strings.AppStrings.minutes}',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight:
                             isSelected ? FontWeight.bold : FontWeight.normal,
