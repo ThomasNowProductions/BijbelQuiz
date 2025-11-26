@@ -595,7 +595,7 @@ class AppStringsEn {
   static const String created = 'Created';
 
   // BijbelQuiz Gen (Year in Review) Strings
-  static const String bijbelquizGenTitle = 'BibleQuiz Year in Review';
+  static const String bijbelquizGenTitle = 'BibleQuiz Gen';
   static const String bijbelquizGenSubtitle = 'Your year in ';
   static const String bijbelquizGenWelcomeText =
       'Review your achievements today and share your BibleQuiz year!';
