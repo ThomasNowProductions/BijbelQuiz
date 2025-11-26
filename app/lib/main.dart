@@ -14,6 +14,7 @@ import 'providers/game_stats_provider.dart';
 import 'providers/messages_provider.dart';
 import 'providers/lesson_progress_provider.dart';
 import 'utils/theme_utils.dart';
+import 'utils/font_utils.dart'; // Import font utilities
 import 'services/logger.dart';
 import 'services/service_container.dart';
 import 'services/analytics_service.dart';
@@ -40,6 +41,10 @@ Future<void> main() async {
   AppLogger.info('BijbelQuiz app starting up...');
 
   try {
+    // Ensure Quicksand font is loaded before starting the app
+    AppLogger.info('Loading Quicksand font...');
+    await FontUtils.ensureQuicksandFontLoaded();
+    AppLogger.info('Quicksand font loaded successfully');
     // Initialize logging with secure settings based on environment
     bool isProduction =
         const bool.fromEnvironment('dart.vm.product', defaultValue: false);
