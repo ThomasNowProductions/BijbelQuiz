@@ -242,6 +242,10 @@ class _BugReportScreenState extends State<BugReportScreen> {
           _isSubmitting = false;
           // Change button to green to indicate success
           _isSubmitted = true;
+          // Clear the form immediately after successful submission
+          _subjectController.clear();
+          _descriptionController.clear();
+          _emailController.clear();
         });
 
         // Automatically reset the button state after 5 seconds
@@ -249,10 +253,6 @@ class _BugReportScreenState extends State<BugReportScreen> {
           if (mounted) {
             setState(() {
               _isSubmitted = false;
-              // Clear the form after successful submission
-              _subjectController.clear();
-              _descriptionController.clear();
-              _emailController.clear();
             });
           }
         });
