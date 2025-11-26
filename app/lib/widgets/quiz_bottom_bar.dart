@@ -80,7 +80,8 @@ class _QuizBottomBarState extends State<QuizBottomBar> {
         !widget.quizState.isTransitioning;
     final hasBiblicalReference =
         widget.quizState.question.biblicalReference != null &&
-            widget.quizState.question.biblicalReference!.isNotEmpty;
+            widget.quizState.question.biblicalReference!.isNotEmpty &&
+            widget.settings.language != 'en';
     final canUnlock = widget.gameStats.score >= _biblicalCost &&
         !widget.quizState.isAnswering &&
         !widget.quizState.isTransitioning &&
