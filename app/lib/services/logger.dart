@@ -28,44 +28,52 @@ class AppLogger {
     r'jwt',
   ];
 
-  /// Initializes the logger with the given [level].
+  /// Initializes the logger.
   ///
   /// Listens to log records and prints them to the console.
-  static void init({Level level = Level.ALL}) {
-    Logger.root.level = level;
+  static void init() {
     _subscription?.cancel();
     _subscription = Logger.root.onRecord.listen((record) {
-      // Don't log if the record level is below the configured minimum level
-      if (record.level.value < Logger.root.level.value) {
-        return;
-      }
+      try {
+        // Don't log if the record level is below the configured minimum level
+        if (record.level.value < Logger.root.level.value) {
+          return;
+        }
 
-      final buffer = StringBuffer();
-      buffer.write('[${record.level.name}] ');
-      buffer.write('${record.time.toIso8601String()} ');
-      buffer.write('${record.loggerName}: ');
+        final buffer = StringBuffer();
+        buffer.write('[${record.level.name}] ');
+        buffer.write('${record.time.toIso8601String()} ');
+        buffer.write('${record.loggerName}: ');
 
-      // Sanitize the message before logging
-      String sanitizedMessage = _sanitizeLogMessage(record.message);
-      buffer.write(sanitizedMessage);
+        // Sanitize the message before logging
+        String sanitizedMessage = _sanitizeLogMessage(record.message);
+        buffer.write(sanitizedMessage);
 
-      if (record.error != null) {
-        String sanitizedError = _sanitizeLogMessage(record.error.toString());
-        buffer.write('\n  Error: $sanitizedError');
-      }
-      if (record.stackTrace != null) {
-        // Only log stack traces for levels more verbose than INFO to avoid exposing internal data in production
-        if (level.value > Level.INFO.value) {
-          buffer.write('\n  StackTrace: ${record.stackTrace.toString()}');
-        } else {
-          buffer.write('\n  StackTrace: [STACK TRACE REMOVED FOR SECURITY]');
+        if (record.error != null) {
+          String sanitizedError = _sanitizeLogMessage(record.error.toString());
+          buffer.write('\n  Error: $sanitizedError');
+        }
+        if (record.stackTrace != null) {
+          // Only log stack traces for levels more verbose than INFO to avoid exposing internal data in production
+          if (Logger.root.level.value > Level.INFO.value) {
+            buffer.write('\n  StackTrace: ${record.stackTrace.toString()}');
+          } else {
+            buffer.write('\n  StackTrace: [STACK TRACE REMOVED FOR SECURITY]');
+          }
+        }
+
+        // Actually print the log message to console
+        print(buffer.toString());
+      } catch (e, stackTrace) {
+        // Fallback logging if sanitization or printing fails
+        print('[LOGGER ERROR] Failed to log message: $e');
+        print('[LOGGER ERROR] Original message: ${record.message}');
+        if (record.error != null) {
+          print('[LOGGER ERROR] Original error: ${record.error}');
         }
       }
-      
-      // Actually print the log message to console
-      print(buffer.toString());
     });
-    _logger.info('Logger initialized at level: ${level.name}');
+    _logger.info('Logger initialized at level: ${Logger.root.level.name}');
   }
 
   /// Sanitizes log messages by removing sensitive information
