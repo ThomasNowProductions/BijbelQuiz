@@ -9,6 +9,10 @@
       "destination": "https://buymeacoffee.com/bijbelquiz"
     },
     {
+      "source": "/doneer",
+      "destination": "https://buymeacoffee.com/bijbelquiz"
+    },
+    {
       "source": "/donate.html",
       "destination": "https://bijbelquiz.app/donate"
     },
@@ -87,6 +91,14 @@
     {
       "source": "/playstore",
       "destination": "https://play.google.com/store/apps/details?id=app.bijbelquiz.play"
+    },
+    {
+      "source": "/play",  
+      "destination": "https://play.bijbelquiz.app"
+    },
+   {
+      "source": "/speel",
+      "destination": "https://play.bijbelquiz.app"
     }
   ],
   "headers": [

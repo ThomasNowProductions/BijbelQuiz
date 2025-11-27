@@ -1,328 +1,297 @@
 <!DOCTYPE html>
 <html lang="nl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Download BijbelQuiz</title>
     <meta name="robots" content="noindex, nofollow">
-    <link rel="stylesheet" href="https://bijbelquiz.app/theme.css">
+    <meta name="description" content="Download BijbelQuiz voor Android, Windows, Linux of speel direct in je browser.">
+    <meta name="keywords" content="bijbel quiz, bijbelkennis, bijbel vragen, christelijke quiz, bijbelstudie, bijbel app, religieuze quiz, bijbel test, bijbelquiz, bible quiz, bijbel quiz app, test bijbelkennis, bijbel spel, quiz bijbel">
+    <meta name="author" content="BijbelQuiz">
+    <meta name="theme-color" content="#4CAF50">
+    <meta name="msapplication-TileColor" content="#4CAF50">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://bijbelquiz.app/download">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://bijbelquiz.app/download">
+    <meta property="og:title" content="Download BijbelQuiz">
+    <meta property="og:description" content="Download BijbelQuiz voor Android, Windows, Linux of speel direct in je browser.">
+    <meta property="og:image" content="https://bijbelquiz.app/og-image.png">
+    <meta property="og:image:alt" content="BijbelQuiz Download pagina">
+    <meta property="og:site_name" content="BijbelQuiz">
+    <meta property="og:locale" content="nl_NL">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://bijbelquiz.app/download">
+    <meta property="twitter:title" content="Download BijbelQuiz">
+    <meta property="twitter:description" content="Download BijbelQuiz voor Android, Windows, Linux of speel direct in je browser.">
+    <meta property="twitter:image" content="https://bijbelquiz.app/og-image.png">
+    <meta property="twitter:image:alt" content="BijbelQuiz Download pagina">
+
+    <!-- Additional SEO -->
+    <meta name="application-name" content="BijbelQuiz">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="BijbelQuiz">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="theme.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<body class="center-screen fade-in">
-    <div class="container card responsive-card">
-        <i class="material-icons icon-large" id="pageIcon">download</i>
-        <h1 id="pageTitle">Download BijbelQuiz</h1>
-        <div id="pageContent">
-            <p id="pageDescription">Kies uw platform om de app te downloaden.</p>
-        </div>
+    <!-- Social Media Verification -->
+    <a rel="me" href="https://toot.community/@BijbelQuiz" style="display: none;">Mastodon</a>
 
-        <!-- Platform selection grid -->
-        <div id="platformGrid" class="platform-grid" style="display: none;">
-            <!-- Platforms will be dynamically inserted here -->
-        </div>
-
-
-
-        <!-- Single download button (fallback for mobile view) -->
-        <div class="actions" id="singleDownloadActions">
-            <a href="#" id="primaryBtn" class="btn primary btn-large">Download Android App</a>
-        </div>
-
-        <footer id="main-footer"></footer>
-    </div>
-
-    <script>
-        // Get URL parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        const platform = urlParams.get('platform') || 'android';
-        const currentVersion = urlParams.get('version') || null;
-        const isUpdate = currentVersion !== null;
-
-
-        // Platform configuration - pointing directly to downloads directory with file extensions
-        const platforms = {
-            'android': {
-                name: 'Android',
-                icon: 'android',
-                description: 'Schrijf u in voor de Google Play Store',
-                downloadUrl: 'https://bijbelquiz.app/wachtijst',
-                currentVersion: '1.3.0'
-            },
-            'windows': {
-                name: 'Windows',
-                icon: 'desktop_windows',
-                description: 'Desktop App',
-                downloadUrl: 'https://bijbelquiz.app/downloads/windows.exe',
-                currentVersion: '1.3.0'
-            },
-            'linux': {
-                name: 'Linux',
-                icon: 'desktop_windows',
-                description: 'Desktop App',
-                downloadUrl: 'https://bijbelquiz.app/downloads/linux',
-                currentVersion: '1.3.0'
-            },
-            'web': {
-                name: 'Web',
-                icon: 'public',
-                description: 'Web App',
-                downloadUrl: 'https://play.bijbelquiz.app',
-                currentVersion: '1.3.0'
-            }
-        };
-
-        // Initialize page based on context
-        if (isUpdate) {
-            // Check if user is already on the latest version
-            const platformInfo = platforms[platform];
-            const isLatestVersion = currentVersion === platformInfo.currentVersion;
-
-            if (isLatestVersion) {
-                // No update available - show current version message
-                document.getElementById('pageIcon').textContent = 'check_circle';
-                document.getElementById('pageTitle').textContent = 'Geen Update Beschikbaar';
-                document.getElementById('pageDescription').textContent = `Je hebt al de nieuwste versie van BijbelQuiz voor ${platformInfo.name} (v${platformInfo.currentVersion}).`;
-
-                // Hide the single download actions (no button needed)
-                document.getElementById('singleDownloadActions').style.display = 'none';
-            } else {
-                // Update available - show update for specific platform
-                document.getElementById('pageIcon').textContent = 'system_update';
-                document.getElementById('pageTitle').textContent = 'Update Beschikbaar';
-                document.getElementById('pageDescription').textContent = `Er is een nieuwe versie van BijbelQuiz beschikbaar voor ${platformInfo.name}!`;
-
-                // Show single download button for the specific platform
-                document.getElementById('singleDownloadActions').style.display = 'block';
-                document.getElementById('primaryBtn').innerHTML = `<i class="material-icons" style="vertical-align: middle; margin-right: 8px;">system_update</i> Download Update`;
-                document.getElementById('primaryBtn').href = platformInfo.downloadUrl;
-
-                // Add installation instructions link
-                const instructionsLink = document.createElement('a');
-                instructionsLink.href = `https://bijbelquiz.app/instructie/${platform}.html`;
-                instructionsLink.className = 'btn secondary';
-                instructionsLink.innerHTML = `<i class="material-icons" style="vertical-align: middle; margin-right: 8px;">help</i> Installatiehulp`;
-                instructionsLink.target = '_blank';
-                instructionsLink.rel = 'noopener';
-
-                // Add the instructions link to the actions
-                const actionsContainer = document.getElementById('singleDownloadActions');
-                actionsContainer.appendChild(instructionsLink);
-            }
-        } else {
-            // Initial download flow - show all platforms
-            showAllPlatforms();
-        }
-
-        // Show all platforms download interface
-        function showAllPlatforms() {
-            const platformGrid = document.getElementById('platformGrid');
-            const singleDownloadActions = document.getElementById('singleDownloadActions');
-
-            // Create platform cards for main platforms
-            // Order: Android, Web, Linux, Windows
-            const mainPlatforms = ['android', 'web', 'linux', 'windows'];
-            mainPlatforms.forEach(platformKey => {
-                const platformInfo = platforms[platformKey];
-                const platformCard = document.createElement('div');
-                platformCard.className = 'platform-card';
-
-                // Special handling for web platform
-                if (platformKey === 'web') {
-                    platformCard.innerHTML = `
-                        <div class="platform-header">
-                            <div class="platform-icon">
-                                <i class="material-icons">${platformInfo.icon}</i>
-                            </div>
-                            <div class="platform-info">
-                                <h3>${platformInfo.name}</h3>
-                                <p>${platformInfo.description}</p>
-                            </div>
-                        </div>
-                        <div class="platform-actions">
-                            <a href="${platformInfo.downloadUrl}" class="btn primary" target="_blank" rel="noopener">
-                                <i class="material-icons" style="font-size: 18px; margin-right: 4px;">play_arrow</i>
-                                Speel nu
-                            </a>
-                        </div>
-                    `;
-                    platformGrid.appendChild(platformCard);
-                    return;
-                }
-
-                // Check if platform is available (Linux is available, others are waitlist or coming soon)
-                const isAvailable = platformKey === 'linux';
-                const isWaitlist = platformKey === 'android';
-                const buttonClass = isAvailable ? 'btn primary' : (isWaitlist ? 'btn primary' : 'btn secondary disabled');
-                const buttonText = isAvailable ? 'Download' : (isWaitlist ? 'Meld je aan' : 'Komt later');
-                const icon = isAvailable ? 'download' : (isWaitlist ? 'list_alt' : 'hourglass_empty');
-                const targetAttr = isAvailable || isWaitlist ? 'target="_blank"' : '';
-                const relAttr = isAvailable || isWaitlist ? 'rel="noopener"' : '';
-
-                platformCard.innerHTML = `
-                    <div class="platform-header">
-                        <div class="platform-icon">
-                            <i class="material-icons">${platformInfo.icon}</i>
-                        </div>
-                        <div class="platform-info">
-                            <h3>${platformInfo.name}</h3>
-                            <p>${platformInfo.description}</p>
-                        </div>
-                    </div>
-                    <div class="platform-actions">
-                        <a href="${isAvailable || isWaitlist ? platformInfo.downloadUrl : '#'}" class="${buttonClass}" ${targetAttr} ${relAttr}>
-                            <i class="material-icons" style="font-size: 18px; margin-right: 4px;">${icon}</i>
-                            ${buttonText}
-                        </a>
-                        ${isAvailable && !isWaitlist && platformKey !== 'linux' ? `<a href="https://bijbelquiz.app/instructie/${platformKey}.html" class="btn secondary" target="_blank" rel="noopener">
-                            <i class="material-icons" style="font-size: 18px; margin-right: 4px;">help</i>
-                            Installatiehulp
-                        </a>` : ''}
-                    </div>
-                `;
-                platformGrid.appendChild(platformCard);
-            });
-
-            // Show platform grid, hide single download
-            platformGrid.style.display = 'grid';
-            singleDownloadActions.style.display = 'none';
-        }
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "BijbelQuiz",
+      "description": "Download BijbelQuiz voor Android, Windows, Linux of speel direct in je browser.",
+      "url": "https://bijbelquiz.app/download",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Web, Android, Windows, Linux",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR"
+      },
+      "creator": {
+        "@type": "Organization",
+        "name": "BijbelQuiz"
+      },
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Christians, Bible students, religious education"
+      },
+      "educationalUse": "Bible study, religious education, quiz game",
+      "inLanguage": "nl",
+      "featureList": [
+        "500+ bijbelvragen",
+        "Meerdere moeilijkheidsgraden",
+        "Scoringsysteem",
+        "Multiplayer modus",
+        "Offline spelen"
+      ],
+      "screenshot": "https://bijbelquiz.app/screenshot.png",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "20"
+      }
+    }
     </script>
 
+    <!-- BreadcrumbList structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bijbelquiz.app/"
+      }, {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Download",
+        "item": "https://bijbelquiz.app/download"
+      }]
+    }
+    </script>
+
+    <!-- Organization structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "BijbelQuiz",
+      "url": "https://bijbelquiz.app/",
+      "description": "Educatieve bijbel quiz app om bijbelkennis te testen en te verbeteren",
+      "sameAs": [
+        "https://toot.community/@BijbelQuiz"
+      ]
+    }
+    </script>
+</head>
+<body class="center-screen fade-in">
+    <div class="container hero-container">
+        <div class="hero-layout">
+            <!-- Left Column: Content -->
+            <div class="hero-content">
+                <div class="hero-text">
+                    <i class="material-icons icon-large">download</i>
+                    <h1>Download BijbelQuiz</h1>
+                    <p class="hero-description">Kies uw platform om de app te downloaden. Speel alleen, met familie of vrienden!</p>
+
+                    <div class="cta-buttons">
+                        <a href="https://bijbelquiz.app/wachtijst" class="btn primary btn-large">
+                            <i class="material-icons">android</i>
+                            Android - Meld je aan
+                        </a>
+
+                        <a href="https://play.bijbelquiz.app" class="btn primary btn-large" target="_blank" rel="noopener">
+                            <i class="material-icons">public</i>
+                            Web - Speel nu
+                        </a>
+
+                        <a href="#" class="btn secondary disabled btn-large">
+                            <i class="material-icons">desktop_windows</i>
+                            Linux - Komt later
+                        </a>
+
+                        <a href="#" class="btn secondary disabled btn-large">
+                            <i class="material-icons">desktop_windows</i>
+                            Windows - Komt later
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Phone Screenshot -->
+            <div class="hero-image">
+                <div class="phone-mockup">
+                    <div class="phone-frame">
+                        <div class="phone-screen">
+                            <img src="screenshot.png" alt="BijbelQuiz App Screenshot" class="app-screenshot">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="main-footer"></footer>
+
+    <!-- JavaScript for scroll reveal -->
+    <script>
+        // Intersection Observer for scroll-triggered animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all scroll sections
+        document.querySelectorAll('.scroll-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Smooth scrolling for anchor links (if any)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+
+    <!-- Additional CSS for scroll sections (inline for simplicity) -->
     <style>
-        .responsive-card {
-            max-width: 100%;
-            width: 100%;
-            padding: 1.5rem;
+        .scroll-section {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            padding: 60px 20px;
+            background: #f9f9f9;
+            margin: 20px 0;
         }
 
-        .btn.btn-large {
-            padding: 1rem 2rem;
-            font-size: 1.25rem;
-            margin-top: 20px;
-            display: inline-block;
-            width: 100%;
-            box-sizing: border-box;
+        .scroll-section:nth-child(even) {
+            background: #fff;
         }
 
-        .btn.btn-large:hover {
-            transform: scale(1.05) translateY(-2px);
+        .scroll-section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-
-        .actions {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            width: 100%;
-        }
-
-        /* Equal width buttons for update flow */
-        .actions .btn {
-            width: 100%;
-            min-width: 200px;
-        }
-
-        .platform-grid {
+        .features-grid, .steps-grid, .testimonials-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-            margin: 2rem 0;
-            width: 100%;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
         }
 
-        .platform-card {
+        .feature-item, .step-item {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .step-item {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
-            padding: 1.5rem;
-            background: var(--surface);
-            border-radius: var(--radius-md);
-            border: 1px solid var(--outline);
-            transition: all 0.3s ease;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .platform-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            border-color: var(--primary);
-        }
-
-        .platform-header {
-            display: flex;
-            flex-direction: row;
             align-items: center;
-            gap: 1rem;
         }
 
-        .platform-icon {
-            position: relative;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--surface-highest);
+        .step-number {
+            background: #4CAF50;
+            color: white;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            border: 2px solid var(--outline);
-            flex-shrink: 0;
-        }
-
-        .platform-icon i {
-            font-size: 32px;
-            color: var(--primary);
-        }
-
-        .platform-info {
-            flex: 1;
-            width: 100%;
-        }
-
-        .platform-info h3 {
-            margin: 0 0 0.25rem 0;
-            font-size: 1.1rem;
-            color: var(--on-surface);
-        }
-
-        .platform-info p {
-            margin: 0 0 0.5rem 0;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .platform-actions {
             display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            width: 100%;
-        }
-
-        .platform-actions .btn {
-            width: 100%;
-            text-align: center;
+            align-items: center;
             justify-content: center;
+            font-weight: bold;
+            margin-bottom: 15px;
         }
 
-        .web-play-section {
+        .testimonial-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            font-style: italic;
+        }
+
+        .testimonial-item cite {
+            display: block;
+            margin-top: 10px;
+            font-style: normal;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        h2 {
             text-align: center;
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--outline);
-            width: 100%;
+            margin-bottom: 40px;
+            color: #333;
         }
 
-        .web-play-section p {
-            margin-bottom: 1rem;
-            color: var(--text-secondary);
+        h3 {
+            color: #4CAF50;
+            margin-bottom: 10px;
         }
 
-        .web-play-section .btn {
-            width: 100%;
-            text-align: center;
-            justify-content: center;
+        @media (max-width: 768px) {
+            .features-grid, .steps-grid, .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* Disabled button styles */
@@ -333,81 +302,9 @@
             opacity: 0.6;
             pointer-events: none;
         }
-
-        @media (min-width: 480px) {
-            .responsive-card {
-                padding: 2rem;
-            }
-
-            .platform-card {
-                flex-direction: row;
-            }
-
-            .platform-info {
-                flex: 1;
-            }
-
-            .platform-actions {
-                flex-direction: row;
-                width: auto;
-                gap: 0.5rem;
-            }
-
-            .platform-actions .btn {
-                width: auto;
-                min-width: 120px;
-            }
-
-            .web-play-section .btn {
-                width: auto;
-            }
-        }
-
-        @media (min-width: 600px) {
-            .responsive-card {
-                max-width: 800px;
-                padding: 2.5rem;
-            }
-
-            .actions {
-                flex-direction: row;
-                justify-content: center;
-            }
-
-            .actions .btn {
-                width: auto;
-                min-width: 150px;
-            }
-
-            .platform-grid {
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 2rem;
-            }
-
-            .platform-card {
-                padding: 2rem;
-            }
-
-            .platform-icon {
-                width: 70px;
-                height: 70px;
-            }
-
-            .platform-icon i {
-                font-size: 36px;
-            }
-
-            .platform-header {
-                flex: 1;
-            }
-        }
-
-        @media (min-width: 900px) {
-            .platform-grid {
-                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            }
-        }
     </style>
+
+
     <script>
         // Fetch and inject the central footer
         document.addEventListener('DOMContentLoaded', function() {
@@ -422,5 +319,4 @@
         });
     </script>
 </body>
-
 </html>
