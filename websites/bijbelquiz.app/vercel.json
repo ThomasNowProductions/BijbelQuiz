@@ -96,7 +96,9 @@
       "source": "/play",  
       "destination": "https://play.bijbelquiz.app"
     },
-   {
+    },
+    {
+      "source": "/speel",
       "source": "/speel",
       "destination": "https://play.bijbelquiz.app"
     }
