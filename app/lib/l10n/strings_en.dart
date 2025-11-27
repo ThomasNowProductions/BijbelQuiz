@@ -322,7 +322,7 @@ class AppStringsEn {
   // Popups
   static const String followUs = 'Follow Us';
   static const String followUsMessage =
-      'Follow us on Mastodon, Pixelfed, Kwebler, Signal, Discord, Bluesky and Nooki for updates and community!';
+      'Follow us on social media for updates and community!';
   static const String followMastodon = 'Follow Mastodon';
   static const String followPixelfed = 'Follow Pixelfed';
   static const String followKwebler = 'Follow Kwebler';
@@ -352,6 +352,12 @@ class AppStringsEn {
   static const String difficultyTooHard = 'Too difficult';
   static const String difficultyGood = 'Good';
   static const String difficultyTooEasy = 'Too easy';
+
+  // Account Creation
+  static const String createAccount = 'Create Account';
+  static const String createAccountMessage =
+      'Create an account to unlock social features and sync your progress across devices!';
+  static const String createAccountButton = 'Create Account';
 
   // Quiz Screen
   static const String skip = 'Skip';

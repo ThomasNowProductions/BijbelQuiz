@@ -298,7 +298,7 @@ class AppStrings {
 
   // Popups
   static String get followUs => _language == 'en' ? AppStringsEn.followUs : 'Volg ons';
-  static String get followUsMessage => _language == 'en' ? AppStringsEn.followUsMessage : 'Volg ons op Mastodon, Pixelfed, Kwebler, Signal, Discord, Bluesky en Nooki voor updates en community!';
+  static String get followUsMessage => _language == 'en' ? AppStringsEn.followUsMessage : 'Volg ons op social media voor updates en community!';
   static String get followMastodon => _language == 'en' ? AppStringsEn.followMastodon : 'Volg Mastodon';
   static String get followPixelfed => _language == 'en' ? AppStringsEn.followPixelfed : 'Volg Pixelfed';
   static String get followKwebler => _language == 'en' ? AppStringsEn.followKwebler : 'Volg Kwebler';
@@ -325,6 +325,11 @@ class AppStrings {
   static String get difficultyTooHard => _language == 'en' ? AppStringsEn.difficultyTooHard : 'Te moeilijk';
   static String get difficultyGood => _language == 'en' ? AppStringsEn.difficultyGood : 'Goed';
   static String get difficultyTooEasy => _language == 'en' ? AppStringsEn.difficultyTooEasy : 'Te makkelijk';
+
+  // Account Creation
+  static String get createAccount => _language == 'en' ? AppStringsEn.createAccount : 'Account aanmaken';
+  static String get createAccountMessage => _language == 'en' ? AppStringsEn.createAccountMessage : 'Maak een account aan om sociale functies te ontgrendelen en je voortgang over apparaten te synchroniseren!';
+  static String get createAccountButton => _language == 'en' ? AppStringsEn.createAccountButton : 'Account aanmaken';
 
   // Quiz Screen
   static String get skip => _language == 'en' ? AppStringsEn.skip : 'Skip';
