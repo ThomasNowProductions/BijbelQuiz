@@ -278,6 +278,15 @@ p {
   touch-action: manipulation;
 }
 
+/* Button element styling to match anchor styling */
+button.btn {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: transparent;
+  font: inherit;
+}
+
 /* Fix icon alignment in buttons */
 .btn i.material-icons {
   vertical-align: middle;
