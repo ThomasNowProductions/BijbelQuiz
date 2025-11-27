@@ -19,6 +19,7 @@ class SyncService {
   RealtimeChannel? _channel;
   final Map<String, Function(Map<String, dynamic>)> _listeners = {};
   SharedPreferences? _prefs;
+  bool _isListening = false;
 
   // Concurrency protection
   final Map<String, bool> _syncInProgress = {}; // Track ongoing sync operations per key
@@ -85,6 +86,7 @@ class SyncService {
 
     // Clear all listeners to prevent cross-user contamination
     _listeners.clear();
+    _isListening = false;
 
     AppLogger.info('Complete session cleanup performed - all user data cleared');
   }
@@ -255,11 +257,16 @@ class SyncService {
   /// Starts listening for real-time updates for the current user
   void _startListening() {
     if (_currentUserId == null) return;
+    if (_isListening) {
+      AppLogger.debug('Already listening for real-time updates, skipping');
+      return;
+    }
 
     // Unsubscribe from any existing channel
     _stopListening();
 
     AppLogger.info('Starting real-time sync listening for user: $_currentUserId');
+    _isListening = true;
 
     _channel = _client
         .channel('user_sync_$_currentUserId')
@@ -321,6 +328,7 @@ class SyncService {
       _channel!.unsubscribe();
       _channel = null;
     }
+    _isListening = false;
   }
 
   /// Notifies all listeners of data changes
