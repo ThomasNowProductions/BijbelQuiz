@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../providers/settings_provider.dart';
 
-import '../services/notification_service.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:url_launcher/url_launcher.dart';
@@ -43,11 +42,9 @@ class _GuideScreenState extends State<GuideScreen> {
 
     AppLogger.info('GuideScreen loaded');
     
-    final showNotificationPage = !kIsWeb && !Platform.isLinux;
     final isLoggedIn = Supabase.instance.client.auth.currentUser != null;
-    
+
     _pages = buildGuidePages(
-      showNotificationPage: showNotificationPage,
       context: context,
       isLoggedIn: isLoggedIn,
     );
@@ -95,7 +92,7 @@ class _GuideScreenState extends State<GuideScreen> {
                   return GuidePageView(
                     key: ValueKey(page),
                     page: page,
-                    onConsentComplete: page.isNotificationPage || page.isAuthPage
+                    onConsentComplete: page.isAuthPage
                         ? () {
                             if (_currentPage < pages.length - 1) {
                               _pageController.nextPage(
@@ -189,10 +186,6 @@ class _GuideScreenState extends State<GuideScreen> {
       await settings.markGuideAsSeen();
       // Initialize telemetry service with default setting (disabled)
 
-      // Request notification permission if enabled and on supported platform
-      // if (settings.notificationEnabled && !kIsWeb && !Platform.isLinux) {
-      //   await NotificationService.requestNotificationPermission();
-      // }
       // Navigate to main app screen
       if (!mounted) return;
       if (localContext.mounted) {
@@ -216,7 +209,6 @@ class GuidePage {
   final String title;
   final String description;
   final IconData icon;
-  final bool isNotificationPage;
   final bool isDonationPage;
   final bool isAuthPage;
   final String? buttonText;
@@ -226,7 +218,6 @@ class GuidePage {
     required this.title,
     required this.description,
     required this.icon,
-    this.isNotificationPage = false,
     this.isDonationPage = false,
     this.buttonText,
     this.buttonIcon,
@@ -235,7 +226,7 @@ class GuidePage {
 }
 
 List<GuidePage> buildGuidePages(
-    {required bool showNotificationPage, required BuildContext context, required bool isLoggedIn}) {
+    {required BuildContext context, required bool isLoggedIn}) {
   final pages = <GuidePage>[];
   
   if (!isLoggedIn) {
@@ -270,16 +261,6 @@ List<GuidePage> buildGuidePages(
     ),
   ]);
 
-  if (showNotificationPage) {
-    pages.add(
-      GuidePage(
-        title: strings.AppStrings.notificationsTitle,
-        description: strings.AppStrings.notificationsDescription,
-        icon: Icons.notifications_active_outlined,
-        isNotificationPage: true,
-      ),
-    );
-  }
 
   // Only add donation page if user hasn't donated yet
   final settings = Provider.of<SettingsProvider>(context, listen: false);
@@ -372,7 +353,6 @@ class _GuidePageViewState extends State<GuidePageView> {
     }
   }
 
-  bool _permissionGranted = true;
 
   bool _isWelcomePage() {
     return widget.page.title == strings.AppStrings.welcomeTitle &&
@@ -424,39 +404,8 @@ class _GuidePageViewState extends State<GuidePageView> {
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-    if (widget.page.isNotificationPage) {
-      _checkPermission();
-    }
-  }
 
-  Future<void> _checkPermission() async {
-    if (!kIsWeb && !Platform.isLinux) {
-      // Optionally, check permission status here if needed
-      setState(() {
-        _permissionGranted = true; // Assume granted for now
-      });
-    }
-  }
 
-  Future<void> _requestPermission() async {
-    Provider.of<AnalyticsService>(context, listen: false)
-        .capture(context, 'guide_notification_permission_requested');
-    setState(() {
-      _isLoading = true;
-    });
-    final granted = await NotificationService.requestNotificationPermission();
-    setState(() {
-      _isLoading = false;
-      _permissionGranted = granted;
-    });
-    if (!granted && mounted) {
-      showTopSnackBar(context, strings.AppStrings.notificationPermissionDenied,
-          style: TopSnackBarStyle.warning);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -506,60 +455,6 @@ class _GuidePageViewState extends State<GuidePageView> {
       );
     }
 
-    if (widget.page.isNotificationPage) {
-      return Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                widget.page.icon,
-                size: 100,
-                color: colorScheme.primary,
-              ),
-              const SizedBox(height: 32),
-              Text(
-                widget.page.title,
-                style: textTheme.headlineMedium?.copyWith(
-                  color: colorScheme.onSurface,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 16),
-              Text(
-                widget.page.description,
-                style: textTheme.bodyLarge?.copyWith(
-                  color: colorScheme.onSurface,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 32),
-              ElevatedButton.icon(
-                icon: const Icon(Icons.notifications_active_outlined),
-                label: Text(_permissionGranted
-                    ? strings.AppStrings.notificationsEnabled
-                    : strings.AppStrings.enableNotifications),
-                onPressed: _permissionGranted || _isLoading
-                    ? null
-                    : _requestPermission,
-              ),
-              if (_isLoading)
-                Padding(
-                  padding: const EdgeInsets.only(top: 16.0),
-                  child: SizedBox(
-                    height: 48,
-                    child: QuizSkeleton(
-                      isSmallPhone: false,
-                    ),
-                  ),
-                ),
-            ],
-          ),
-        ),
-      );
-    }
 
     // Check if this is the "Pas Je Ervaring Aan" page
     final isCustomizationPage = widget.page.title == 'Pas Je Ervaring Aan';
@@ -816,10 +711,8 @@ class _GuideScreenTestHarnessState extends State<GuideScreenTestHarness> {
   void initState() {
     super.initState();
     _pageController = PageController();
-    final showNotificationPage = !kIsWeb && !Platform.isLinux;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _pages = buildGuidePages(
-        showNotificationPage: showNotificationPage,
         context: context,
         isLoggedIn: false, // Default to false for test harness
       );
@@ -861,9 +754,6 @@ class _GuideScreenTestHarnessState extends State<GuideScreenTestHarness> {
     final settings = Provider.of<SettingsProvider>(context, listen: false);
     await settings.markGuideAsSeen();
 
-    if (settings.notificationEnabled && !kIsWeb && !Platform.isLinux) {
-      await NotificationService.requestNotificationPermission();
-    }
     widget.onComplete?.call();
     if (mounted) Navigator.of(context, rootNavigator: false).pop();
   }
@@ -903,18 +793,7 @@ class _GuideScreenTestHarnessState extends State<GuideScreenTestHarness> {
                   return GuidePageView(
                     key: ValueKey(page),
                     page: page,
-                    onConsentComplete: page.isNotificationPage
-                        ? () {
-                            if (_currentPage < _pages.length - 1) {
-                              _pageController.nextPage(
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeInOut,
-                              );
-                            } else {
-                              handleGuideCompletion();
-                            }
-                          }
-                        : null,
+                    onConsentComplete: null,
                   );
                 },
               ),

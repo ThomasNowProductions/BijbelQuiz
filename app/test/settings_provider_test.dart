@@ -29,7 +29,6 @@ void main() {
       expect(provider.slowMode, false);
       expect(provider.hasSeenGuide, false);
       expect(provider.mute, false);
-      expect(provider.notificationEnabled, true);
       expect(provider.hasDonated, false);
       expect(provider.hasCheckedForUpdate, false);
       expect(provider.isLoading, false);
@@ -42,7 +41,6 @@ void main() {
         'game_speed': 'slow',
         'has_seen_guide': true,
         'mute': true,
-        'notification_enabled': false,
         'has_donated': true,
         'has_checked_for_update': true,
         'unlocked_themes': ['theme1', 'theme2'],
@@ -59,7 +57,6 @@ void main() {
       expect(provider.slowMode, true);
       expect(provider.hasSeenGuide, true);
       expect(provider.mute, true);
-      expect(provider.notificationEnabled, false);
       expect(provider.hasDonated, true);
       expect(provider.hasCheckedForUpdate, true);
       expect(provider.unlockedThemes, {'theme1', 'theme2'});
@@ -121,16 +118,6 @@ void main() {
       expect(provider.mute, true);
     });
 
-    test('should set notification enabled correctly', () async {
-      SharedPreferences.setMockInitialValues({});
-
-      provider = SettingsProvider();
-      await Future.delayed(Duration.zero);
-
-      await provider.setNotificationEnabled(false);
-
-      expect(provider.notificationEnabled, false);
-    });
 
     test('should mark as donated correctly', () async {
       SharedPreferences.setMockInitialValues({});
@@ -272,7 +259,6 @@ void main() {
         'game_speed': 'slow',
         'has_seen_guide': true,
         'mute': true,
-        'notification_enabled': false,
         'has_donated': true,
         'has_checked_for_update': true,
         'unlocked_themes': ['theme1'],
@@ -288,7 +274,6 @@ void main() {
       expect(data['gameSpeed'], 'slow');
       expect(data['hasSeenGuide'], true);
       expect(data['mute'], true);
-      expect(data['notificationEnabled'], false);
       expect(data['hasDonated'], true);
       expect(data['hasCheckedForUpdate'], true);
       expect(data['unlockedThemes'], ['theme1']);
@@ -319,7 +304,6 @@ void main() {
       expect(provider.gameSpeed, 'fast');
       expect(provider.hasSeenGuide, true);
       expect(provider.mute, true);
-      expect(provider.notificationEnabled, false);
       expect(provider.hasDonated, true);
       expect(provider.hasCheckedForUpdate, true);
       expect(provider.unlockedThemes, {'imported_theme'});
@@ -407,20 +391,6 @@ void main() {
       expect(provider.isThemeUnlocked('theme1'), true);
     });
 
-    test('should handle notification settings correctly', () async {
-      SharedPreferences.setMockInitialValues({});
-
-      provider = SettingsProvider();
-      await Future.delayed(Duration.zero);
-
-      // Test enabling notifications
-      await provider.setNotificationEnabled(true);
-      expect(provider.notificationEnabled, true);
-
-      // Test disabling notifications
-      await provider.setNotificationEnabled(false);
-      expect(provider.notificationEnabled, false);
-    });
 
     test('should handle donation status correctly', () async {
       SharedPreferences.setMockInitialValues({});

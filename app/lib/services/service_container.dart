@@ -14,7 +14,6 @@ import '../providers/game_stats_provider.dart';
 import '../providers/lesson_progress_provider.dart';
 import '../theme/theme_manager.dart';
 import 'messaging_service.dart';
-import 'notification_service.dart';
 
 /// Container for managing service lifecycle and dependencies
 class ServiceContainer {
@@ -36,7 +35,6 @@ class ServiceContainer {
   GeminiService? _geminiService;
   StarTransactionService? _starTransactionService;
   MessagingService? _messagingService;
-  NotificationService? _notificationService;
 
   // Initialization state tracking
   final Map<String, Completer<void>> _initializationCompleters = {};
@@ -128,13 +126,6 @@ class ServiceContainer {
       // This will be initialized properly later when providers are available
     }));
 
-    // Platform-specific services
-    if (!kIsWeb && !Platform.isLinux) {
-      unawaited(_initializeService('notification', () async {
-        _notificationService = NotificationService();
-        await _notificationService!.init();
-      }));
-    }
 
     AppLogger.info('Optional services initialization started');
   }
@@ -252,7 +243,6 @@ class ServiceContainer {
 
   MessagingService? get messagingService => _messagingService;
 
-  NotificationService? get notificationService => _notificationService;
 
   /// Check if all critical services are ready
   bool get areCriticalServicesReady {
@@ -283,8 +273,6 @@ class ServiceContainer {
             _isServiceInitialized('star_transaction');
       case 'messaging':
         return _messagingService != null;
-      case 'notification':
-        return _notificationService != null;
       default:
         return false;
     }
@@ -308,7 +296,6 @@ class ServiceContainer {
         'star_transaction': _starTransactionService != null &&
             _isServiceInitialized('star_transaction'),
         'messaging': _messagingService != null,
-        'notification': _notificationService != null,
       },
       'failed_services': _failedServices.toList(),
       'all_critical_ready': areCriticalServicesReady,

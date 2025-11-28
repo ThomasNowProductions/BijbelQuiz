@@ -116,7 +116,6 @@ Future<void> main() async {
           Provider.value(value: serviceContainer.geminiService),
           Provider.value(value: serviceContainer.starTransactionService),
           Provider.value(value: serviceContainer.messagingService),
-          Provider.value(value: serviceContainer.notificationService),
 
           // Messaging service and provider
           Provider(

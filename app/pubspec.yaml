@@ -51,8 +51,6 @@ dependencies:
     sdk: flutter
   intl: ^0.20.2
 
-  flutter_local_notifications_plus: ^17.2.5
-  timezone: ^0.9.4
   package_info_plus: ^9.0.0
   device_info_plus: ^12.2.0
   connectivity_plus: ^7.0.0

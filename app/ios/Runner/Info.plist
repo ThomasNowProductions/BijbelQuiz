@@ -45,8 +45,6 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
-	<key>NSUserNotificationsUsageDescription</key>
-	<string>BijbelQuiz uses notifications to remind you to take daily Bible quizzes and track your progress.</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>

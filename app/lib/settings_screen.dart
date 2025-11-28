@@ -9,7 +9,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'screens/guide_screen.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb, kDebugMode;
-import 'services/notification_service.dart';
 import 'services/api_service.dart';
 import 'widgets/top_snackbar.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -49,12 +48,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     analyticsService.trackFeatureStart(
         context, AnalyticsService.featureSettings);
 
-    NotificationService.onError = (message) {
-      AppLogger.error('Notification service error: $message');
-      if (mounted) {
-        showTopSnackBar(context, message, style: TopSnackBarStyle.error);
-      }
-    };
   }
 
   @override
@@ -332,16 +325,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 colorScheme,
               ),
             ),
-            if (!(kIsWeb || Platform.isLinux))
-              _SettingItem(
-                title: strings.AppStrings.motivationNotifications,
-                subtitle: strings.AppStrings.motivationNotificationsDesc,
-                child: _buildSwitch(
-                  settings.notificationEnabled,
-                  (value) => _toggleNotifications(context, settings, value),
-                  colorScheme,
-                ),
-              ),
           ],
           searchQuery: searchQuery,
         ),
@@ -1116,26 +1099,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     settings.setAnalyticsEnabled(value);
   }
 
-  Future<void> _toggleNotifications(
-      BuildContext context, SettingsProvider settings, bool value) async {
-    final analytics = Provider.of<AnalyticsService>(context, listen: false);
-    analytics.capture(context, 'toggle_notifications',
-        properties: {'enabled': value});
-    analytics.trackFeatureSuccess(context, AnalyticsService.featureSettings,
-        additionalProperties: {
-          'setting': 'notifications',
-          'value': value,
-        });
-    await settings.setNotificationEnabled(value);
-    if (value) {
-      final granted = await NotificationService.requestNotificationPermission();
-      if (granted) {
-        await NotificationService().scheduleDailyMotivationNotifications();
-      }
-    } else {
-      await NotificationService().cancelAllNotifications();
-    }
-  }
 
   // Dialog and navigation methods (simplified implementations)
   void _showDonateDialog(BuildContext context) async {
@@ -1399,7 +1362,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         .resetAll();
                   }
                   await QuestionCacheService(ConnectionService()).clearCache();
-                  await NotificationService().cancelAllNotifications();
                   final prefs = await SharedPreferences.getInstance();
                   await prefs.clear();
                   await settings.reloadSettings();

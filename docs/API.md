@@ -235,7 +235,6 @@ Retrieve current app settings and preferences.
   "gameSpeed": "medium",
   "mute": false,
   "analyticsEnabled": true,
-  "notificationEnabled": true,
   "timestamp": "2025-10-20T16:45:49.539Z",
   "processing_time_ms": 15
 }

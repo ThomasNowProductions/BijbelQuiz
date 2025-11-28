@@ -16,7 +16,6 @@ class SettingsProvider extends ChangeNotifier {
   static const String _slowModeKey = 'game_speed';
   static const String _hasSeenGuideKey = 'has_seen_guide';
   static const String _muteKey = 'mute';
-  static const String _notificationEnabledKey = 'notification_enabled';
   static const String _hasDonatedKey = 'has_donated';
   static const String _hasCheckedForUpdateKey = 'has_checked_for_update';
   static const String _lastDonationPopupKey = 'last_donation_popup';
@@ -47,7 +46,6 @@ class SettingsProvider extends ChangeNotifier {
   String _gameSpeed = 'medium'; // 'slow', 'medium', 'fast'
   bool _hasSeenGuide = false;
   bool _mute = false;
-  bool _notificationEnabled = true;
   bool _hasDonated = false;
   bool _hasCheckedForUpdate = false;
   DateTime? _lastDonationPopup;
@@ -156,8 +154,6 @@ class SettingsProvider extends ChangeNotifier {
   /// Any error that occurred while loading settings
   String? get error => _error;
 
-  /// Whether notifications are enabled
-  bool get notificationEnabled => _notificationEnabled;
   bool get hasDonated => _hasDonated;
   bool get hasCheckedForUpdate => _hasCheckedForUpdate;
   DateTime? get lastDonationPopup => _lastDonationPopup;
@@ -437,8 +433,6 @@ class SettingsProvider extends ChangeNotifier {
       // Safely load boolean settings with type checking
       _hasSeenGuide = _getBoolSetting(_hasSeenGuideKey, defaultValue: false);
       _mute = _getBoolSetting(_muteKey, defaultValue: false);
-      _notificationEnabled =
-          _getBoolSetting(_notificationEnabledKey, defaultValue: true);
       _hasDonated = _getBoolSetting(_hasDonatedKey, defaultValue: false);
       _hasCheckedForUpdate =
           _getBoolSetting(_hasCheckedForUpdateKey, defaultValue: false);
@@ -788,15 +782,6 @@ class SettingsProvider extends ChangeNotifier {
     );
   }
 
-  Future<void> setNotificationEnabled(bool enabled) async {
-    await _saveSetting(
-      action: () async {
-        _notificationEnabled = enabled;
-        await _prefs?.setBool(_notificationEnabledKey, enabled);
-      },
-      errorMessage: 'Failed to save notification setting',
-    );
-  }
 
   /// Updates the analytics enabled setting
   Future<void> setAnalyticsEnabled(bool enabled) async {
@@ -958,7 +943,6 @@ class SettingsProvider extends ChangeNotifier {
       'gameSpeed': _gameSpeed,
       'hasSeenGuide': _hasSeenGuide,
       'mute': _mute,
-      'notificationEnabled': _notificationEnabled,
       'hasDonated': _hasDonated,
       'hasCheckedForUpdate': _hasCheckedForUpdate,
       'selectedCustomThemeKey': _selectedCustomThemeKey,
@@ -991,7 +975,6 @@ class SettingsProvider extends ChangeNotifier {
     _gameSpeed = data['gameSpeed'] ?? 'medium';
     _hasSeenGuide = data['hasSeenGuide'] ?? false;
     _mute = data['mute'] ?? false;
-    _notificationEnabled = data['notificationEnabled'] ?? true;
     _hasDonated = data['hasDonated'] ?? false;
     _hasCheckedForUpdate = data['hasCheckedForUpdate'] ?? false;
     _analyticsEnabled = data['analyticsEnabled'] ?? true;
@@ -1068,7 +1051,6 @@ class SettingsProvider extends ChangeNotifier {
     await _prefs?.setString(_slowModeKey, _gameSpeed);
     await _prefs?.setBool(_hasSeenGuideKey, _hasSeenGuide);
     await _prefs?.setBool(_muteKey, _mute);
-    await _prefs?.setBool(_notificationEnabledKey, _notificationEnabled);
     await _prefs?.setBool(_hasDonatedKey, _hasDonated);
     await _prefs?.setBool(_hasCheckedForUpdateKey, _hasCheckedForUpdate);
     await _prefs?.setBool(_analyticsEnabledKey, _analyticsEnabled);

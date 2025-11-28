@@ -711,7 +711,6 @@ class ApiService {
           'gameSpeed': settingsProvider.gameSpeed,
           'mute': settingsProvider.mute,
           'analyticsEnabled': settingsProvider.analyticsEnabled,
-          'notificationEnabled': settingsProvider.notificationEnabled,
           'timestamp': DateTime.now().toIso8601String(),
           'processing_time_ms':
               DateTime.now().difference(startTime).inMilliseconds,

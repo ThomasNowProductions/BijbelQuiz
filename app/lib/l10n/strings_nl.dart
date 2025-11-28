@@ -35,7 +35,6 @@ class AppStrings {
   // Settings
   static String get settings => _language == 'en' ? AppStringsEn.settings : 'Instellingen';
   static String get sound => _language == 'en' ? AppStringsEn.sound : 'Geluid';
-  static String get notifications => _language == 'en' ? AppStringsEn.notifications : 'Meldingen';
   static String get language => _language == 'en' ? AppStringsEn.language : 'Taal';
   static String get theme => _language == 'en' ? AppStringsEn.theme : 'Thema';
   static String get darkMode => _language == 'en' ? AppStringsEn.darkMode : 'Donkere modus';
@@ -148,11 +147,6 @@ class AppStrings {
   static String get welcomeDescription => _language == 'en' ? AppStringsEn.welcomeDescription : 'Ontdek de Bijbel op een leuke en interactieve manier met uitdagende vragen en lessen.';
   static String get howToPlayTitle => _language == 'en' ? AppStringsEn.howToPlayTitle : 'Hoe speel je?';
   static String get howToPlayDescription => _language == 'en' ? AppStringsEn.howToPlayDescription : 'Beantwoord vragen over de Bijbel en verdien punten. Hoe sneller je antwoordt, hoe meer punten je verdient!';
-  static String get notificationsTitle => _language == 'en' ? AppStringsEn.notificationsTitle : 'Blijf op de hoogte';
-  static String get notificationsDescription => _language == 'en' ? AppStringsEn.notificationsDescription : 'Ontvang herinneringen en uitdagingen om je Bijbelkennis te verbeteren.';
-  static String get enableNotifications => _language == 'en' ? AppStringsEn.enableNotifications : 'Meldingen inschakelen';
-  static String get notificationsEnabled => _language == 'en' ? AppStringsEn.notificationsEnabled : 'Meldingen ingeschakeld';
-  static String get continueText => _language == 'en' ? AppStringsEn.continueText : 'Doorgaan';
   static String get trackProgressTitle => _language == 'en' ? AppStringsEn.trackProgressTitle : 'Volg Je Voortgang';
   static String get trackProgressDescription => _language == 'en' ? AppStringsEn.trackProgressDescription : 'Houd je scores bij en verbeter jezelf in de loop van de tijd.';
   static String get customizeExperienceTitle => _language == 'en' ? AppStringsEn.customizeExperienceTitle : 'Pas Je Ervaring Aan';
@@ -232,8 +226,6 @@ class AppStrings {
   static String get openStatusPage => _language == 'en' ? AppStringsEn.openStatusPage : 'Open statuspagina';
 
   // Notifications
-  static String get motivationNotifications => _language == 'en' ? AppStringsEn.motivationNotifications : 'Motivatie-meldingen (Béta)';
-  static String get motivationNotificationsDesc => _language == 'en' ? AppStringsEn.motivationNotificationsDesc : 'Ontvang dagelijkse herinneringen voor BijbelQuiz';
 
   // Actions
   static String get actions => _language == 'en' ? AppStringsEn.actions : 'Acties';
@@ -292,9 +284,6 @@ class AppStrings {
   static String get statsLinkCopied => _language == 'en' ? AppStringsEn.statsLinkCopied : 'Statistieken link gekopieerd naar klembord!';
   static String get copyStatsLinkToClipboard => _language == 'en' ? AppStringsEn.copyStatsLinkToClipboard : 'Kopieer je statistieken link naar het klembord';
   static String get importButton => _language == 'en' ? AppStringsEn.importButton : 'Importeren';
-  static String get couldNotScheduleAnyNotifications => _language == 'en' ? AppStringsEn.couldNotScheduleAnyNotifications : 'Kon geen enkele melding plannen. Controleer de toestemmingen voor meldingen in de app-instellingen.';
-  static String get couldNotScheduleSomeNotificationsTemplate => _language == 'en' ? AppStringsEn.couldNotScheduleSomeNotificationsTemplate : 'Kon slechts {successCount} van de {total} meldingen plannen.';
-  static String get couldNotScheduleNotificationsError => _language == 'en' ? AppStringsEn.couldNotScheduleNotificationsError : 'Kon meldingen niet plannen: ';
 
   // Popups
   static String get followUs => _language == 'en' ? AppStringsEn.followUs : 'Volg ons';
@@ -341,7 +330,6 @@ class AppStrings {
 
   // Guide Screen
   static String get donationError => _language == 'en' ? AppStringsEn.donationError : 'Er is een fout opgetreden bij het openen van de donatiepagina';
-  static String get notificationPermissionDenied => _language == 'en' ? AppStringsEn.notificationPermissionDenied : 'Meldingstoestemming geweigerd.';
   static String get soundEffectsDescription => _language == 'en' ? AppStringsEn.soundEffectsDescription : 'Schakel alle spelgeluiden in of uit';
 
   // Store Screen
@@ -444,7 +432,6 @@ class AppStrings {
   static String get failedToSaveGuideStatus => _language == 'en' ? AppStringsEn.failedToSaveGuideStatus : 'Kon gidsstatus niet opslaan:';
   static String get failedToResetGuideStatus => _language == 'en' ? AppStringsEn.failedToResetGuideStatus : 'Kon gidsstatus niet resetten:';
   static String get failedToResetCheckForUpdateStatus => _language == 'en' ? AppStringsEn.failedToResetCheckForUpdateStatus : 'Kon update-controle status niet resetten:';
-  static String get failedToSaveNotificationSetting => _language == 'en' ? AppStringsEn.failedToSaveNotificationSetting : 'Kon meldingsinstelling niet opslaan:';
 
   // Export/Import Stats
   static String get exportStatsTitle => _language == 'en' ? AppStringsEn.exportStatsTitle : 'Statistieken exporteren';
