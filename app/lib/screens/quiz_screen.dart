@@ -1058,6 +1058,11 @@ class _QuizScreenState extends State<QuizScreen>
     await progress.markCompleted(
         lesson: lesson, correct: correct, total: total);
 
+    // If this is a Bible lesson, also mark it completed in Bible lessons storage
+    if (lesson.isBibleLesson && stars > 0) {
+      await _markBibleLessonCompleted(lesson.id);
+    }
+
     // Show full-screen completion screen - capture context before navigation
     if (!mounted) return;
     final quizContext = context;
@@ -1082,6 +1087,20 @@ class _QuizScreenState extends State<QuizScreen>
         ),
       ),
     );
+  }
+
+  /// Marks a Bible lesson as completed in SharedPreferences
+  Future<void> _markBibleLessonCompleted(String lessonId) async {
+    try {
+      const completedLessonsKey = 'completed_bible_lessons_v1';
+      final prefs = await SharedPreferences.getInstance();
+      final completedList = prefs.getStringList(completedLessonsKey) ?? [];
+      final completedSet = completedList.toSet();
+      completedSet.add(lessonId);
+      await prefs.setStringList(completedLessonsKey, completedSet.toList());
+    } catch (e) {
+      AppLogger.warning('Failed to mark Bible lesson as completed: $e');
+    }
   }
 
   // Callback methods for bottom bar buttons
