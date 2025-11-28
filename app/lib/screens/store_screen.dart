@@ -819,6 +819,10 @@ class _StoreScreenState extends State<StoreScreen> {
                       );
                 if (success) {
                   final message = onPurchase();
+                  
+                  // Trigger sync after successful purchase
+                  await localGameStats.triggerSync();
+                  
                   if (!localContext.mounted) return;
 
                   // Show confirmation dialog
@@ -1125,6 +1129,10 @@ class _StoreScreenState extends State<StoreScreen> {
                       );
                 if (success) {
                   await localSettings.unlockTheme(themeKey);
+                  
+                  // Trigger sync after successful purchase
+                  await localGameStats.triggerSync();
+                  
                   if (!localContext.mounted) return;
                   final message = '$title ontgrendeld!';
                   showTopSnackBar(localContext, message,

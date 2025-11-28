@@ -74,6 +74,14 @@ class AppStringsEn {
   static const String dailyStreak = 'Daily Streak';
   static const String continueWith = 'Continue With';
   static const String multiplayerQuiz = 'Multiplayer Quiz';
+  static const String chooseGameDuration = 'Choose game duration';
+  static const String startMultiplayerQuiz = 'Start Multiplayer Quiz';
+  static const String multiplayerDescription = 'Play against each other on one phone! The phone is split in two - the top half rotates 180 degrees.';
+  static const String gameRules = 'Game rules:';
+  static const String ruleBothPlayers = '• Both players answer Bible questions';
+  static const String ruleCorrectAnswer = '• A correct answer gives points';
+  static const String ruleWinner = '• The one with the correct answers at the end wins';
+  static const String ruleScreenRotation = '• The top half of the screen rotates 180 degrees on mobile';
 
   // Time up dialog
   static const String timeUp = 'Time is up!';
@@ -88,6 +96,8 @@ class AppStringsEn {
   static const String retryLesson = 'Try Again';
   static const String nextLesson = 'Next Lesson';
   static const String backToLessons = 'Back to Lessons';
+  static const String endScore = 'End Score';
+  static const String endScoreHint = 'Your total score in percentage on a speedometer';
 
   // Settings screen
   static const String display = 'Display';
@@ -312,7 +322,7 @@ class AppStringsEn {
   // Popups
   static const String followUs = 'Follow Us';
   static const String followUsMessage =
-      'Follow us on Mastodon, Pixelfed, Kwebler, Signal, Discord, Bluesky and Nooki for updates and community!';
+      'Follow us on social media for updates and community!';
   static const String followMastodon = 'Follow Mastodon';
   static const String followPixelfed = 'Follow Pixelfed';
   static const String followKwebler = 'Follow Kwebler';
@@ -342,6 +352,12 @@ class AppStringsEn {
   static const String difficultyTooHard = 'Too difficult';
   static const String difficultyGood = 'Good';
   static const String difficultyTooEasy = 'Too easy';
+
+  // Account Creation
+  static const String createAccount = 'Create Account';
+  static const String createAccountMessage =
+      'Create an account to unlock social features and sync your progress across devices!';
+  static const String createAccountButton = 'Create Account';
 
   // Quiz Screen
   static const String skip = 'Skip';
@@ -585,7 +601,7 @@ class AppStringsEn {
   static const String created = 'Created';
 
   // BijbelQuiz Gen (Year in Review) Strings
-  static const String bijbelquizGenTitle = 'BibleQuiz Year in Review';
+  static const String bijbelquizGenTitle = 'BibleQuiz Gen';
   static const String bijbelquizGenSubtitle = 'Your year in ';
   static const String bijbelquizGenWelcomeText =
       'Review your achievements today and share your BibleQuiz year!';

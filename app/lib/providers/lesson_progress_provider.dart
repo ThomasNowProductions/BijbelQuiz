@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/lesson.dart';
@@ -50,6 +51,19 @@ class LessonProgressProvider extends ChangeNotifier {
         }
       },
     );
+
+    // Listen for auth changes to reload data
+    Supabase.instance.client.auth.onAuthStateChange.listen((event) {
+      final session = event.session;
+      if (session?.user != null) {
+        AppLogger.info('User signed in (LessonProgressProvider), reloading data...');
+        // Small delay to ensure SyncService has processed the user update
+        Future.delayed(const Duration(milliseconds: 500), () {
+          _load();
+          setupSyncListener();
+        });
+      }
+    });
   }
 
   Future<void> _load() async {
@@ -73,12 +87,14 @@ class LessonProgressProvider extends ChangeNotifier {
 
       // Check for synced data and merge if available
       if (syncService.isAuthenticated) {
-        AppLogger.info('User authenticated, checking for synced lesson progress');
-        final syncedProgress = await syncService.getUserData();
-        if (syncedProgress != null && syncedProgress.containsKey('lesson_progress')) {
-          final syncedData = syncedProgress['lesson_progress']?['value'] as Map<String, dynamic>?;
+        AppLogger.info('User authenticated, fetching synced data from server');
+        final allData = await syncService.fetchAllData();
+        
+        if (allData != null && allData.containsKey('lesson_progress')) {
+          final syncedData = allData['lesson_progress'];
+          AppLogger.info('Found synced lesson progress, merging with local data');
+          
           if (syncedData != null) {
-            AppLogger.info('Found synced lesson progress, merging with local data');
             // Merge: take maximum unlocked count and best stars
             final syncedUnlockedCount = syncedData['unlockedCount'] as int? ?? 1;
             if (syncedUnlockedCount > _unlockedCount) {
@@ -143,11 +159,6 @@ class LessonProgressProvider extends ChangeNotifier {
 
     await _persist();
     notifyListeners();
-
-    // Sync data if user is authenticated
-    if (syncService.isAuthenticated) {
-      await syncService.syncData('lesson_progress', getExportData());
-    }
   }
 
   /// Ensures at least [count] lessons are unlocked (used when lesson list shorter/longer changes).
@@ -211,6 +222,23 @@ class LessonProgressProvider extends ChangeNotifier {
       AppLogger.info('Received synced lesson progress update');
       loadImportData(data);
     });
+  }
+
+  /// Triggers immediate sync of lesson progress to server
+  Future<void> triggerSync() async {
+    if (!syncService.isAuthenticated) {
+      AppLogger.debug('Skipping lesson progress sync: user not authenticated');
+      return;
+    }
+    
+    // Check connection before attempting sync
+    if (!syncService.isConnected) {
+      AppLogger.debug('Skipping lesson progress sync: device is offline');
+      return;
+    }
+    
+    AppLogger.info('Triggering lesson progress sync');
+    await syncService.syncDataImmediate('lesson_progress', getExportData());
   }
 
   /// Cleans up resources and listeners

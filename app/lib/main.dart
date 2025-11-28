@@ -6,7 +6,7 @@ import 'dart:async';
 import 'dart:io' show Platform;
 import 'package:app_links/app_links.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:logging/logging.dart' show Level;
+import 'package:logging/logging.dart' show Level, Logger;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'providers/settings_provider.dart';
@@ -14,6 +14,7 @@ import 'providers/game_stats_provider.dart';
 import 'providers/messages_provider.dart';
 import 'providers/lesson_progress_provider.dart';
 import 'utils/theme_utils.dart';
+import 'utils/font_utils.dart'; // Import font utilities
 import 'services/logger.dart';
 import 'services/service_container.dart';
 import 'services/analytics_service.dart';
@@ -37,18 +38,25 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 Future<void> main() async {
   // Ensure that the Flutter binding is initialized before running the app.
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize logging with secure settings based on environment
+  bool isProduction =
+      const bool.fromEnvironment('dart.vm.product', defaultValue: false);
+  AppLogger.setSecureLevel(
+      isProduction: isProduction,
+      productionLevel: Level.INFO,
+      developmentLevel: Level.ALL);
+  AppLogger.init();
+  AppLogger.info(
+      'Logger initialized successfully with secure settings (Production: $isProduction)');
+
   AppLogger.info('BijbelQuiz app starting up...');
 
   try {
-    // Initialize logging with secure settings based on environment
-    bool isProduction =
-        const bool.fromEnvironment('dart.vm.product', defaultValue: false);
-    AppLogger.setSecureLevel(
-        isProduction: isProduction,
-        productionLevel: Level.INFO,
-        developmentLevel: Level.ALL);
-    AppLogger.info(
-        'Logger initialized successfully with secure settings (Production: $isProduction)');
+    // Ensure Quicksand font is loaded before starting the app
+    AppLogger.info('Loading Quicksand font...');
+    await FontUtils.ensureQuicksandFontLoaded();
+    AppLogger.info('Quicksand font loaded successfully');
 
     // Load environment variables
     AppLogger.info('Loading environment variables...');
@@ -58,6 +66,8 @@ Future<void> main() async {
     // Initialize Supabase
     AppLogger.info('Initializing Supabase...');
     await SupabaseConfig.initialize();
+    // Restore our desired log level after Supabase changes it
+    Logger.root.level = isProduction ? Level.INFO : Level.ALL;
     AppLogger.info('Supabase initialized successfully');
 
     // Set preferred screen orientations. On web, this helps maintain a consistent layout.

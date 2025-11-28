@@ -25,9 +25,8 @@ class Lesson {
   /// Sequential index in the lesson track (0-based)
   final int index;
 
-  /// Whether this lesson is a Bible Basics lesson
-  /// Used to track completion separately from regular lessons
-  final bool isBibleLesson;
+  /// Whether this is a special lesson with unique theming and category focus
+  final bool isSpecial;
 
   const Lesson({
     required this.id,
@@ -37,7 +36,7 @@ class Lesson {
     required this.index,
     this.description,
     this.iconHint,
-    this.isBibleLesson = false,
+    this.isSpecial = false,
   });
 
   /// Convenience factory to build a lesson from a category name.
@@ -71,7 +70,7 @@ class Lesson {
     String? iconHint,
     int? maxQuestions,
     int? index,
-    bool? isBibleLesson,
+    bool? isSpecial,
   }) {
     return Lesson(
       id: id ?? this.id,
@@ -81,35 +80,35 @@ class Lesson {
       iconHint: iconHint ?? this.iconHint,
       maxQuestions: maxQuestions ?? this.maxQuestions,
       index: index ?? this.index,
-      isBibleLesson: isBibleLesson ?? this.isBibleLesson,
+      isSpecial: isSpecial ?? this.isSpecial,
     );
   }
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'title': title,
-        'category': category,
-        'description': description,
-        'iconHint': iconHint,
-        'maxQuestions': maxQuestions,
-        'index': index,
-        'isBibleLesson': isBibleLesson,
-      };
+         'id': id,
+         'title': title,
+         'category': category,
+         'description': description,
+         'iconHint': iconHint,
+         'maxQuestions': maxQuestions,
+         'index': index,
+         'isSpecial': isSpecial,
+       };
 
   factory Lesson.fromJson(Map<String, dynamic> json) => Lesson(
-        id: json['id']?.toString() ?? '',
-        title: json['title']?.toString() ?? '',
-        category: json['category']?.toString() ?? '',
-        description: json['description']?.toString(),
-        iconHint: json['iconHint']?.toString(),
-        maxQuestions: (json['maxQuestions'] is int)
-            ? json['maxQuestions'] as int
-            : int.tryParse(json['maxQuestions']?.toString() ?? '') ?? 10,
-        index: (json['index'] is int)
-            ? json['index'] as int
-            : int.tryParse(json['index']?.toString() ?? '') ?? 0,
-        isBibleLesson: json['isBibleLesson'] == true,
-      );
+         id: json['id']?.toString() ?? '',
+         title: json['title']?.toString() ?? '',
+         category: json['category']?.toString() ?? '',
+         description: json['description']?.toString(),
+         iconHint: json['iconHint']?.toString(),
+         maxQuestions: (json['maxQuestions'] is int)
+             ? json['maxQuestions'] as int
+             : int.tryParse(json['maxQuestions']?.toString() ?? '') ?? 10,
+         index: (json['index'] is int)
+             ? json['index'] as int
+             : int.tryParse(json['index']?.toString() ?? '') ?? 0,
+         isSpecial: json['isSpecial'] == true,
+       );
 
   @override
   String toString() => jsonEncode(toJson());

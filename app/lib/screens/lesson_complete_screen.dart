@@ -74,6 +74,9 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
     final cs = Theme.of(context).colorScheme;
     final pctValue =
         widget.total > 0 ? (widget.correct / widget.total * 100.0) : 0.0;
+    
+    // Check if it's a mobile device
+    final isMobile = MediaQuery.of(context).size.width < 600;
 
     // For Bible lessons, use onExit to go back to Bible lesson selection
     // For regular lessons, go to first route (main navigation)
@@ -100,14 +103,6 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
         },
         child: Scaffold(
           backgroundColor: cs.surface,
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: cs.onSurface),
-              onPressed: handleExit,
-            ),
-          ),
           body: Stack(
             children: [
               // Background gradient
@@ -126,176 +121,275 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
                   ),
                 ),
               ),
-              // Confetti removed
+              
+              // Back button positioned at top
+              Positioned(
+                top: 8,
+                left: 8,
+                child: SafeArea(
+                  child: IconButton(
+                    icon: Icon(Icons.arrow_back, color: cs.onSurface),
+                    onPressed: () {
+                      Navigator.of(context).popUntil((route) => route.isFirst);
+                    },
+                  ),
+                ),
+              ),
+              
               SafeArea(
                 child: Center(
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 640),
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 28),
-                      child: SingleChildScrollView(
-                          child: Column(
+                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                      child: Column(
                         children: [
-                          const SizedBox(height: 8),
-                          // Heading + Icon (animated)
-                          TweenAnimationBuilder<double>(
-                            tween: Tween(begin: 0.9, end: 1.0),
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.easeOutBack,
-                            builder: (context, value, child) =>
-                                Transform.scale(scale: value, child: child),
-                            child: Container(
-                              padding: const EdgeInsets.all(18),
-                              decoration: BoxDecoration(
-                                color: cs.primary.withValues(alpha: 0.1),
-                                borderRadius: BorderRadius.circular(20),
-                                border: Border.all(color: cs.outlineVariant),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: cs.primary.withValues(alpha: 0.15),
-                                    blurRadius: 18,
-                                    spreadRadius: 2,
-                                    offset: const Offset(0, 6),
-                                  ),
-                                ],
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
+                          Expanded(
+                            child: SingleChildScrollView(
+                              child: Column(
                                 children: [
-                                  Icon(Icons.emoji_events_rounded,
-                                      color: cs.primary, size: 36),
-                                  const SizedBox(width: 12),
-                                  Text(
-                                    strings.AppStrings.lessonComplete,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall
-                                        ?.copyWith(
-                                          fontWeight: FontWeight.w800,
-                                        ),
+                                  const SizedBox(height: 32),
+                                  // Heading + Icon (animated)
+                                  TweenAnimationBuilder<double>(
+                                    tween: Tween(begin: 0.9, end: 1.0),
+                                    duration: const Duration(milliseconds: 500),
+                                    curve: Curves.easeOutBack,
+                                    builder: (context, value, child) =>
+                                        Transform.scale(scale: value, child: child),
+                                    child: Container(
+                                      padding: const EdgeInsets.all(18),
+                                      decoration: BoxDecoration(
+                                        color: cs.primary.withValues(alpha: 0.1),
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(color: cs.outlineVariant),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: cs.primary.withValues(alpha: 0.15),
+                                            blurRadius: 18,
+                                            spreadRadius: 2,
+                                            offset: const Offset(0, 6),
+                                          ),
+                                        ],
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(Icons.emoji_events_rounded,
+                                              color: cs.primary, size: 36),
+                                          const SizedBox(width: 12),
+                                          Text(
+                                            strings.AppStrings.lessonComplete,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headlineSmall
+                                                ?.copyWith(
+                                                  fontWeight: FontWeight.w800,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
+
+                                  const SizedBox(height: 16),
+                                  // Lesson title/badge
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12, vertical: 8),
+                                    decoration: BoxDecoration(
+                                      color: cs.surface,
+                                      borderRadius: BorderRadius.circular(14),
+                                      border: Border.all(color: cs.outlineVariant),
+                                    ),
+                                    child: Text(
+                                      widget.lesson.title,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium
+                                          ?.copyWith(fontWeight: FontWeight.w700),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+
+                                  const SizedBox(height: 24),
+                                  // Speedometer (total score)
+                                  _Speedometer(percentage: pctValue.clamp(0.0, 100.0)),
+
+                                  const SizedBox(height: 60),
+                                  // Stats cards in single row
+                                  if (isMobile)
+                                    // Mobile: Horizontal scrollable row
+                                    SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                        children: [
+                                          _AnimatedNumberCard(
+                                            icon: Icons.check_circle_rounded,
+                                            label: strings.AppStrings.correct,
+                                            target: widget.correct,
+                                          ),
+                                          const SizedBox(width: 12),
+                                          _StatCard(
+                                            icon: Icons.local_fire_department_rounded,
+                                            label: strings.AppStrings.bestStreak,
+                                            value: '${widget.bestStreak}',
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  else
+                                    // Desktop: Fixed row
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        _AnimatedNumberCard(
+                                          icon: Icons.check_circle_rounded,
+                                          label: strings.AppStrings.correct,
+                                          target: widget.correct,
+                                        ),
+                                        const SizedBox(width: 12),
+                                        _StatCard(
+                                          icon: Icons.local_fire_department_rounded,
+                                          label: strings.AppStrings.bestStreak,
+                                          value: '${widget.bestStreak}',
+                                        ),
+                                      ],
+                                    ),
+                                  
+                                  const SizedBox(height: 24),
                                 ],
                               ),
                             ),
                           ),
+                          
+                          // Buttons at bottom
+                          if (isMobile)
+                            // Mobile: Compact buttons with short labels
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: OutlinedButton(
+                                    onPressed: () {
+                                      Provider.of<AnalyticsService>(context,
+                                          listen: false);
 
-                          const SizedBox(height: 16),
-                          // Lesson title/badge
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 8),
-                            decoration: BoxDecoration(
-                              color: cs.surface,
-                              borderRadius: BorderRadius.circular(14),
-                              border: Border.all(color: cs.outlineVariant),
-                            ),
-                            child: Text(
-                              widget.lesson.title,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
-                                  ?.copyWith(fontWeight: FontWeight.w700),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-
-                          const SizedBox(height: 24),
-                          // Speedometer (total score)
-                          _Speedometer(percentage: pctValue.clamp(0.0, 100.0)),
-
-                          const SizedBox(height: 28),
-                          // Stats cards
-                          Wrap(
-                            alignment: WrapAlignment.center,
-                            spacing: 12,
-                            runSpacing: 12,
-                            children: [
-                              _AnimatedNumberCard(
-                                icon: Icons.check_circle_rounded,
-                                label: strings.AppStrings.correct,
-                                target: widget.correct,
-                              ),
-                              _AnimatedNumberCard(
-                                icon: Icons.percent_rounded,
-                                label: strings.AppStrings.percentage,
-                                target: pctValue.round(),
-                                suffix: '%',
-                              ),
-                              _StatCard(
-                                icon: Icons.local_fire_department_rounded,
-                                label: strings.AppStrings.bestStreak,
-                                value: '${widget.bestStreak}',
-                              ),
-                            ],
-                          ),
-
-                          const SizedBox(height: 16),
-
-                          // Call-to-actions
-                          Row(
-                            children: [
-                              Expanded(
-                                child: OutlinedButton(
-                                  onPressed: () {
-                                    Provider.of<AnalyticsService>(context,
-                                        listen: false);
-
-                                    Provider.of<AnalyticsService>(context,
-                                            listen: false)
-                                        .capture(context,
-                                            'retry_lesson_from_complete');
-                                    widget.onRetry();
-                                  },
-                                  style: OutlinedButton.styleFrom(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 14),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Icon(Icons.refresh_rounded,
-                                          size: 20),
-                                      const SizedBox(width: 8),
-                                      Text(
-                                          strings.AppStrings.retryLesson),
-                                    ],
+                                      Provider.of<AnalyticsService>(context,
+                                              listen: false)
+                                          .capture(context,
+                                              'retry_lesson_from_complete');
+                                      widget.onRetry();
+                                    },
+                                    style: OutlinedButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 12),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Icons.refresh_rounded, size: 18),
+                                        const SizedBox(width: 4),
+                                        Text(strings.AppStrings.retryLesson),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: ElevatedButton(
-                                  onPressed: widget.stars > 0
-                                      ? () {
-                                          Provider.of<AnalyticsService>(context,
-                                              listen: false);
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: ElevatedButton(
+                                    onPressed: widget.stars > 0
+                                        ? () {
+                                            Provider.of<AnalyticsService>(context,
+                                                listen: false);
 
-                                          Provider.of<AnalyticsService>(context,
-                                                  listen: false)
-                                              .capture(context,
-                                                  'start_next_lesson_from_complete');
-                                          _startNextQuiz();
-                                        }
-                                      : null,
-                                  style: ElevatedButton.styleFrom(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 14),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(strings.AppStrings.nextLesson),
-                                      const SizedBox(width: 8),
-                                      const Icon(Icons.arrow_forward_rounded,
-                                          size: 20),
-                                    ],
+                                            Provider.of<AnalyticsService>(context,
+                                                    listen: false)
+                                                .capture(context,
+                                                    'start_next_lesson_from_complete');
+                                            _startNextQuiz();
+                                          }
+                                        : null,
+                                    style: ElevatedButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 12),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(strings.AppStrings.nextLesson),
+                                        const SizedBox(width: 4),
+                                        const Icon(Icons.arrow_forward_rounded, size: 18),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
+                              ],
+                            )
+                          else
+                            // Desktop: Full buttons with text
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: OutlinedButton(
+                                    onPressed: () {
+                                      Provider.of<AnalyticsService>(context,
+                                          listen: false);
+
+                                      Provider.of<AnalyticsService>(context,
+                                              listen: false)
+                                          .capture(context,
+                                              'retry_lesson_from_complete');
+                                      widget.onRetry();
+                                    },
+                                    style: OutlinedButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 14),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Icons.refresh_rounded,
+                                            size: 20),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                            strings.AppStrings.retryLesson),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: ElevatedButton(
+                                    onPressed: widget.stars > 0
+                                        ? () {
+                                            Provider.of<AnalyticsService>(context,
+                                                listen: false);
+
+                                            Provider.of<AnalyticsService>(context,
+                                                    listen: false)
+                                                .capture(context,
+                                                    'start_next_lesson_from_complete');
+                                            _startNextQuiz();
+                                          }
+                                        : null,
+                                    style: ElevatedButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 14),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(strings.AppStrings.nextLesson),
+                                        const SizedBox(width: 8),
+                                        const Icon(Icons.arrow_forward_rounded,
+                                            size: 20),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                         ],
-                      )),
+                      ),
                     ),
                   ),
                 ),
@@ -390,7 +484,7 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: const Text('Doorgaan naar volgende les'),
+                    child: Text(strings.AppStrings.nextLesson),
                   ),
                 ),
               ],
@@ -426,8 +520,8 @@ class _Speedometer extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     return Semantics(
-      label: 'Eindscore',
-      hint: 'Jouw totaalscore in percentage op een snelheidsmeter',
+      label: strings.AppStrings.endScore,
+      hint: strings.AppStrings.endScoreHint,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

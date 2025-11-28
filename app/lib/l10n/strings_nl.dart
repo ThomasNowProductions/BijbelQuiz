@@ -82,6 +82,14 @@ class AppStrings {
   static String get dailyStreak => _language == 'en' ? AppStringsEn.dailyStreak : 'Dagelijkse reeks';
   static String get continueWith => _language == 'en' ? AppStringsEn.continueWith : 'Ga verder';
   static String get multiplayerQuiz => _language == 'en' ? AppStringsEn.multiplayerQuiz : 'Multiplayer Quiz';
+  static String get chooseGameDuration => _language == 'en' ? AppStringsEn.chooseGameDuration : 'Kies spelduur';
+  static String get startMultiplayerQuiz => _language == 'en' ? AppStringsEn.startMultiplayerQuiz : 'Start Multiplayer Quiz';
+  static String get multiplayerDescription => _language == 'en' ? AppStringsEn.multiplayerDescription : 'Speel tegen elkaar op één telefoon! De telefoon wordt in tweeën gesplitst - bovenste helft draait 180 graden om.';
+  static String get gameRules => _language == 'en' ? AppStringsEn.gameRules : 'Spelregels:';
+  static String get ruleBothPlayers => _language == 'en' ? AppStringsEn.ruleBothPlayers : '• Beide spelers beantwoorden Bijbelvragen';
+  static String get ruleCorrectAnswer => _language == 'en' ? AppStringsEn.ruleCorrectAnswer : '• Een correct antwoord geeft punten';
+  static String get ruleWinner => _language == 'en' ? AppStringsEn.ruleWinner : '• Degene met de correcte antwoorden aan het einde wint';
+  static String get ruleScreenRotation => _language == 'en' ? AppStringsEn.ruleScreenRotation : '• De bovenste helft van het scherm draait 180 graden op mobiel';
 
   // Time up dialog
   static String get timeUp => _language == 'en' ? AppStringsEn.timeUp : 'Tijd is om!';
@@ -96,6 +104,8 @@ class AppStrings {
   static String get retryLesson => _language == 'en' ? AppStringsEn.retryLesson : 'Opnieuw proberen';
   static String get nextLesson => _language == 'en' ? AppStringsEn.nextLesson : 'Volgende les';
   static String get backToLessons => _language == 'en' ? AppStringsEn.backToLessons : 'Terug naar lessen';
+  static String get endScore => _language == 'en' ? AppStringsEn.endScore : 'Eindscore';
+  static String get endScoreHint => _language == 'en' ? AppStringsEn.endScoreHint : 'Jouw totaalscore in percentage op een snelheidsmeter';
 
   // Settings screen
   static String get display => _language == 'en' ? AppStringsEn.display : 'Weergave';
@@ -288,7 +298,7 @@ class AppStrings {
 
   // Popups
   static String get followUs => _language == 'en' ? AppStringsEn.followUs : 'Volg ons';
-  static String get followUsMessage => _language == 'en' ? AppStringsEn.followUsMessage : 'Volg ons op Mastodon, Pixelfed, Kwebler, Signal, Discord, Bluesky en Nooki voor updates en community!';
+  static String get followUsMessage => _language == 'en' ? AppStringsEn.followUsMessage : 'Volg ons op social media voor updates en community!';
   static String get followMastodon => _language == 'en' ? AppStringsEn.followMastodon : 'Volg Mastodon';
   static String get followPixelfed => _language == 'en' ? AppStringsEn.followPixelfed : 'Volg Pixelfed';
   static String get followKwebler => _language == 'en' ? AppStringsEn.followKwebler : 'Volg Kwebler';
@@ -315,6 +325,11 @@ class AppStrings {
   static String get difficultyTooHard => _language == 'en' ? AppStringsEn.difficultyTooHard : 'Te moeilijk';
   static String get difficultyGood => _language == 'en' ? AppStringsEn.difficultyGood : 'Goed';
   static String get difficultyTooEasy => _language == 'en' ? AppStringsEn.difficultyTooEasy : 'Te makkelijk';
+
+  // Account Creation
+  static String get createAccount => _language == 'en' ? AppStringsEn.createAccount : 'Account aanmaken';
+  static String get createAccountMessage => _language == 'en' ? AppStringsEn.createAccountMessage : 'Maak een account aan om sociale functies te ontgrendelen en je voortgang over apparaten te synchroniseren!';
+  static String get createAccountButton => _language == 'en' ? AppStringsEn.createAccountButton : 'Account aanmaken';
 
   // Quiz Screen
   static String get skip => _language == 'en' ? AppStringsEn.skip : 'Skip';

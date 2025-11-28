@@ -1,167 +1,68 @@
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:io' show Platform;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:math';
 import 'dart:async';
-import '../config/supabase_config.dart';
 import '../providers/settings_provider.dart';
 import 'logger.dart';
+import 'package:posthog_flutter/posthog_flutter.dart';
 
-/// Data class that represents a tracking event to be sent to Supabase
-class TrackingEvent {
-  final String id;
-  final String userId; // Anonymous user ID
-  final String eventType;
-  final String eventName;
-  final Map<String, dynamic>? properties;
-  final DateTime timestamp;
-  final String? screenName;
-  final String? sessionId;
-  final String? deviceInfo;
-  final String? appVersion;
-  final String? buildNumber;
-  final String? platform;
-
-  TrackingEvent({
-    required this.id,
-    required this.userId,
-    required this.eventType,
-    required this.eventName,
-    this.properties,
-    required this.timestamp,
-    this.screenName,
-    this.sessionId,
-    this.deviceInfo,
-    this.appVersion,
-    this.buildNumber,
-    this.platform,
-  });
-
-  /// Convert the TrackingEvent to a map for Supabase insertion
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'user_id': userId, // This is an anonymous ID, not PII
-      'event_type': eventType,
-      'event_name': eventName,
-      'properties': _serializeProperties(properties),
-      'timestamp': timestamp.toIso8601String(),
-      'screen_name': screenName,
-      'session_id': sessionId,
-      'device_info': deviceInfo,
-      'app_version': appVersion,
-      'build_number': buildNumber,
-      'platform': platform,
-    };
-  }
-
-  /// Create a TrackingEvent from a map (for reading from Supabase)
-  static TrackingEvent fromMap(Map<String, dynamic> map) {
-    return TrackingEvent(
-      id: map['id'] ?? '',
-      userId: map['user_id'] ?? '',
-      eventType: map['event_type'] ?? '',
-      eventName: map['event_name'] ?? '',
-      properties: _deserializeProperties(map['properties']),
-      timestamp:
-          DateTime.parse(map['timestamp'] ?? DateTime.now().toIso8601String()),
-      screenName: map['screen_name'],
-      sessionId: map['session_id'],
-      deviceInfo: map['device_info'],
-      appVersion: map['app_version'],
-      buildNumber: map['build_number'],
-      platform: map['platform'],
-    );
-  }
-
-  /// Serializes the properties map to a JSON string
-  static String? _serializeProperties(Map<String, dynamic>? properties) {
-    if (properties == null) return null;
-
-    try {
-      // Sanitize properties to remove sensitive data before serialization
-      Map<String, dynamic> sanitizedProperties =
-          AppLogger.sanitizeMap(properties);
-      return _mapToJson(sanitizedProperties);
-    } catch (e) {
-      AppLogger.warning('Failed to serialize properties: $e');
-      return null;
-    }
-  }
-
-  /// Deserializes the properties JSON string back to a Map
-  static Map<String, dynamic>? _deserializeProperties(String? properties) {
-    if (properties == null) return null;
-
-    try {
-      // Simplified deserialization - in a real implementation you'd want a proper JSON parser
-      return {
-        'deserialized': properties
-      }; // Placeholder for actual implementation
-    } catch (e) {
-      AppLogger.warning('Failed to deserialize properties: $e');
-      return null;
-    }
-  }
-
-  /// Converts a map to a JSON-like string representation
-  static String _mapToJson(Map<String, dynamic> map) {
-    final entries = <String>[];
-    map.forEach((key, value) {
-      String valueStr;
-      if (value is Map<String, dynamic>) {
-        valueStr = _mapToJson(value);
-      } else if (value is List) {
-        valueStr = _listToJson(value);
-      } else {
-        valueStr = value.toString();
-      }
-      entries.add('"$key": "$valueStr"');
-    });
-    return '{${entries.join(', ')}}';
-  }
-
-  /// Converts a list to a JSON-like string representation
-  static String _listToJson(List list) {
-    final items = <String>[];
-    for (final item in list) {
-      if (item is Map<String, dynamic>) {
-        items.add(_mapToJson(item));
-      } else {
-        items.add(item.toString());
-      }
-    }
-    return '[${items.join(', ')}]';
-  }
-}
-
-/// Centralized tracking service that stores analytics events in Supabase
-/// This service replaces the PostHog integration while maintaining the same interface
+/// PostHog-based tracking service that replaces the in-house Supabase tracking solution
+/// while maintaining the same interface for backward compatibility
 class TrackingService {
   static final TrackingService _instance = TrackingService._internal();
   factory TrackingService() => _instance;
   TrackingService._internal();
 
   static final Logger _logger = Logger('TrackingService');
+  static bool _isInitialized = false;
 
-  /// Initializes the tracking service.
+  /// Initializes the tracking service with PostHog
   ///
   /// This should be called once when the app starts.
   Future<void> init() async {
-    AppLogger.info('Initializing in-house tracking service...');
-    // Ensure we have a persistent anonymous user ID
-    await _ensurePersistentUserId();
-    AppLogger.info('In-house tracking service initialized successfully');
+    if (_isInitialized) {
+      AppLogger.info('PostHog tracking service already initialized');
+      return;
+    }
+
+    AppLogger.info('Initializing PostHog tracking service...');
+    
+    try {
+      // Ensure we have a persistent anonymous user ID
+      await _ensurePersistentUserId();
+      
+      // Load PostHog configuration from environment variables
+      final apiKey = dotenv.env['POSTHOG_API_KEY'];
+      final host = dotenv.env['POSTHOG_HOST'] ?? 'https://us.i.posthog.com';
+      
+      if (apiKey == null || apiKey.isEmpty || apiKey == 'YOUR_POSTHOG_API_KEY_HERE') {
+        throw Exception('PostHog API key not found in environment variables. Please check your .env file.');
+      }
+      
+      // Configure PostHog
+      final config = PostHogConfig(apiKey);
+      config.debug = kDebugMode; // Use debug mode in development
+      config.captureApplicationLifecycleEvents = true;
+      config.host = host;
+      
+      // Setup PostHog
+      await Posthog().setup(config);
+      
+      _isInitialized = true;
+      AppLogger.info('PostHog tracking service initialized successfully with API key: ${apiKey.substring(0, 8)}...');
+    } catch (e) {
+      AppLogger.error('Failed to initialize PostHog tracking service: $e', e);
+      rethrow;
+    }
   }
 
-  /// Returns a [TrackingObserver] that can be used to automatically track screen views.
-  /// For now, we'll return a placeholder - in a full implementation this would provide
-  /// automatic screen tracking functionality
-  TrackingObserver getObserver() => TrackingObserver();
+  /// Returns a [PosthogObserver] that can be used to automatically track screen views.
+  /// This now returns the actual PostHog observer for automatic screen tracking.
+  PosthogObserver getObserver() => PosthogObserver();
 
   /// Tracks a screen view event.
   ///
@@ -177,17 +78,20 @@ class TrackingService {
       return;
     }
 
-    AppLogger.info('Tracking screen view: $screenName');
-    try {
-      final event = await _createTrackingEvent(
-        context: context,
-        eventType: 'screen_view',
-        eventName: screenName,
-        properties: {'screen_name': screenName},
-        screenName: screenName,
-      );
+    if (!_isInitialized) {
+      AppLogger.warning('PostHog not initialized, skipping screen tracking');
+      return;
+    }
 
-      await _sendEvent(event);
+    AppLogger.info('Tracking screen view with PostHog: $screenName');
+    try {
+      await Posthog().screen(
+        screenName: screenName,
+        properties: {
+          'screen_name': screenName,
+          'timestamp': DateTime.now().toIso8601String(),
+        },
+      );
       AppLogger.info('Screen view tracked successfully: $screenName');
     } catch (e) {
       AppLogger.error('Failed to track screen view: $screenName', e);
@@ -209,104 +113,22 @@ class TrackingService {
       return;
     }
 
+    if (!_isInitialized) {
+      AppLogger.warning('PostHog not initialized, skipping event tracking');
+      return;
+    }
+
     AppLogger.info(
-        'Tracking event: $eventName${properties != null ? ' with properties: $properties' : ''}');
+        'Tracking event with PostHog: $eventName${properties != null ? ' with properties: $properties' : ''}');
     try {
-      final event = await _createTrackingEvent(
-        context: context,
-        eventType: 'custom',
+      await Posthog().capture(
         eventName: eventName,
         properties: properties,
       );
-
-      await _sendEvent(event);
       AppLogger.info('Event tracked successfully: $eventName');
     } catch (e) {
       AppLogger.error('Failed to track event: $eventName', e);
     }
-  }
-
-  /// Creates a tracking event with common properties
-  Future<TrackingEvent> _createTrackingEvent({
-    required BuildContext context,
-    required String eventType,
-    required String eventName,
-    Map<String, Object>? properties,
-    String? screenName,
-  }) async {
-    // Get user ID from settings or generate an anonymous ID
-    Provider.of<SettingsProvider>(context, listen: false);
-    final userId = await _getPersistentUserId();
-
-    // Get app version and build number
-    String appVersion = 'unknown';
-    String buildNumber = 'unknown';
-
-    try {
-      final packageInfo = await PackageInfo.fromPlatform();
-      appVersion = packageInfo.version;
-      buildNumber = packageInfo.buildNumber;
-    } catch (e) {
-      AppLogger.warning('Could not retrieve app version info: $e');
-    }
-
-    // Get device information
-    String? deviceInfo = '';
-    try {
-      if (Platform.isAndroid) {
-        final androidInfo = await DeviceInfoPlugin().androidInfo;
-        deviceInfo =
-            'Android ${androidInfo.version.release} (${androidInfo.model})';
-      } else if (Platform.isIOS) {
-        final iosInfo = await DeviceInfoPlugin().iosInfo;
-        deviceInfo = 'iOS ${iosInfo.systemVersion} (${iosInfo.model})';
-      }
-    } catch (e) {
-      AppLogger.warning('Could not retrieve device info: $e');
-    }
-
-    // Sanitize properties to remove any potential PII
-    Map<String, dynamic>? sanitizedProperties = properties != null
-        ? AppLogger.sanitizeMap(Map<String, dynamic>.from(properties))
-        : null;
-
-    return TrackingEvent(
-      id: _generateEventId(),
-      userId: userId,
-      eventType: eventType,
-      eventName: eventName,
-      properties: sanitizedProperties ?? {},
-      timestamp: DateTime.now(),
-      screenName: screenName,
-      sessionId: _getSessionId(),
-      deviceInfo: deviceInfo,
-      appVersion: appVersion,
-      buildNumber: buildNumber,
-      platform: _getPlatform(),
-    );
-  }
-
-  /// Sends the tracking event to Supabase
-  Future<void> _sendEvent(TrackingEvent event) async {
-    try {
-      final response = await SupabaseConfig.getClient()
-          .from('tracking_events')
-          .insert(event.toMap());
-
-      if (response.error != null) {
-        _logger.severe(
-            'Failed to send tracking event to Supabase: ${response.error?.message}');
-      } else {
-        _logger.info('Tracking event sent successfully: ${event.eventName}');
-      }
-    } catch (e) {
-      _logger.severe('Failed to send tracking event due to exception: $e');
-    }
-  }
-
-  /// Generate a unique event ID
-  String _generateEventId() {
-    return '${DateTime.now().millisecondsSinceEpoch}_${_generateRandomString(8)}';
   }
 
   /// Ensures we have a persistent anonymous user ID stored in shared preferences
@@ -341,23 +163,6 @@ class TrackingService {
   /// Generate an anonymous user ID if needed (fallback method)
   String _generateAnonymousId() {
     return 'anon_${DateTime.now().millisecondsSinceEpoch}_${_generateRandomString(12)}';
-  }
-
-  /// Get or create a session ID for tracking user sessions
-  String _getSessionId() {
-    // In a real implementation, you'd want to persist this across app restarts
-    // For now, we'll use a simple timestamp-based session ID
-    return 'session_${DateTime.now().millisecondsSinceEpoch}';
-  }
-
-  /// Get the current platform
-  String _getPlatform() {
-    if (Platform.isAndroid) return 'android';
-    if (Platform.isIOS) return 'ios';
-    if (Platform.isWindows) return 'windows';
-    if (Platform.isMacOS) return 'macos';
-    if (Platform.isLinux) return 'linux';
-    return 'web';
   }
 
   /// Generate a random string of specified length
@@ -419,8 +224,6 @@ class TrackingService {
       'feature': feature,
       'action': action,
       'timestamp': DateTime.now().toIso8601String(),
-      'session_id': _getSessionId(),
-      'platform': _getPlatform(),
     });
 
     await capture(context, 'feature_usage', properties: properties);
@@ -675,293 +478,239 @@ class TrackingService {
     await trackFeatureUsage(context, featureStreakTracking, actionUsed);
   }
 
-  /// Get comprehensive feature usage statistics (for reporting)
+  /// ===== POSTHOG-SPECIFIC METHODS =====
+
+  /// Disable analytics data collection
+  Future<void> disableAnalytics() async {
+    if (!_isInitialized) {
+      AppLogger.warning('PostHog not initialized, cannot disable analytics');
+      return;
+    }
+
+    try {
+      await Posthog().disable();
+      AppLogger.info('PostHog analytics disabled');
+    } catch (e) {
+      AppLogger.error('Failed to disable PostHog analytics', e);
+    }
+  }
+
+  /// Enable analytics data collection
+  Future<void> enableAnalytics() async {
+    if (!_isInitialized) {
+      AppLogger.warning('PostHog not initialized, cannot enable analytics');
+      return;
+    }
+
+    try {
+      await Posthog().enable();
+      AppLogger.info('PostHog analytics enabled');
+    } catch (e) {
+      AppLogger.error('Failed to enable PostHog analytics', e);
+    }
+  }
+
+
+  /// Get the current user's distinct ID
+  Future<String> getDistinctId() async {
+    try {
+      return await Posthog().getDistinctId();
+    } catch (e) {
+      AppLogger.error('Failed to get distinct ID: $e', e);
+      return await _getPersistentUserId();
+    }
+  }
+
+  /// Identify a user with PostHog
+  Future<void> identifyUser(BuildContext context, String userId,
+      {Map<String, Object>? userProperties}) async {
+    final settings = Provider.of<SettingsProvider>(context, listen: false);
+
+    if (!settings.analyticsEnabled) {
+      AppLogger.info(
+          'Analytics disabled in settings, skipping user identification');
+      return;
+    }
+
+    if (!_isInitialized) {
+      AppLogger.warning('PostHog not initialized, skipping user identification');
+      return;
+    }
+
+    AppLogger.info('Identifying user with PostHog: $userId');
+    try {
+      await Posthog().identify(
+        userId: userId,
+        userProperties: userProperties,
+      );
+      AppLogger.info('User identified successfully: $userId');
+    } catch (e) {
+      AppLogger.error('Failed to identify user: $userId', e);
+    }
+  }
+
+  /// Register super properties with PostHog
+  Future<void> registerSuperProperty(String key, Object value) async {
+    if (!_isInitialized) {
+      AppLogger.warning('PostHog not initialized, skipping super property registration');
+      return;
+    }
+
+    try {
+      await Posthog().register(key, value);
+      AppLogger.info('Super property registered: $key = $value');
+    } catch (e) {
+      AppLogger.error('Failed to register super property: $key', e);
+    }
+  }
+
+  /// Unregister super properties with PostHog
+  Future<void> unregisterSuperProperty(String key) async {
+    if (!_isInitialized) {
+      AppLogger.warning('PostHog not initialized, skipping super property unregistration');
+      return;
+    }
+
+    try {
+      await Posthog().unregister(key);
+      AppLogger.info('Super property unregistered: $key');
+    } catch (e) {
+      AppLogger.error('Failed to unregister super property: $key', e);
+    }
+  }
+
+  /// Reset PostHog data (useful for logout)
+  Future<void> reset() async {
+    if (!_isInitialized) {
+      AppLogger.warning('PostHog not initialized, cannot reset');
+      return;
+    }
+
+    try {
+      await Posthog().reset();
+      AppLogger.info('PostHog data reset successfully');
+    } catch (e) {
+      AppLogger.error('Failed to reset PostHog data', e);
+    }
+  }
+
+  /// Check if a feature flag is enabled
+  Future<bool> isFeatureEnabled(String flagKey) async {
+    if (!_isInitialized) {
+      AppLogger.warning('PostHog not initialized, cannot check feature flag');
+      return false;
+    }
+
+    try {
+      return await Posthog().isFeatureEnabled(flagKey);
+    } catch (e) {
+      AppLogger.error('Failed to check feature flag: $flagKey', e);
+      return false;
+    }
+  }
+
+  /// Get feature flag value
+  Future<String?> getFeatureFlag(String flagKey) async {
+    if (!_isInitialized) {
+      AppLogger.warning('PostHog not initialized, cannot get feature flag');
+      return null;
+    }
+
+    try {
+      final result = await Posthog().getFeatureFlag(flagKey);
+      return result?.toString();
+    } catch (e) {
+      AppLogger.error('Failed to get feature flag: $flagKey', e);
+      return null;
+    }
+  }
+
+  /// Reload feature flags
+  Future<void> reloadFeatureFlags() async {
+    if (!_isInitialized) {
+      AppLogger.warning('PostHog not initialized, cannot reload feature flags');
+      return;
+    }
+
+    try {
+      await Posthog().reloadFeatureFlags();
+      AppLogger.info('Feature flags reloaded successfully');
+    } catch (e) {
+      AppLogger.error('Failed to reload feature flags', e);
+    }
+  }
+
+  /// ===== COMPATIBILITY METHODS FOR REPORTING =====
+
+  /// Get comprehensive feature usage statistics (legacy method for compatibility)
+  /// Note: This now returns an empty map since PostHog handles analytics differently
   Future<Map<String, dynamic>> getFeatureUsageStats() async {
-    try {
-      // Query the tracking_events table to get usage statistics
-      final response = await SupabaseConfig.getClient()
-          .from('tracking_events')
-          .select('event_name, properties, timestamp')
-          .gte('timestamp',
-              DateTime.now().subtract(Duration(days: 30)).toIso8601String());
-
-      // The response is actually a List<Map<String, dynamic>> rather than a response object
-      // In the Supabase Dart client, some operations might return data directly
-      final events = response as List;
-
-      // Process the events to extract feature usage statistics
-      final stats = <String, dynamic>{};
-      final featureUsage = <String, int>{};
-      final featureUsers = <String, Set<String>>{};
-
-      for (final event in events) {
-        final eventName = event['event_name'] as String;
-        if (eventName == 'feature_usage') {
-          final properties = event['properties'] as Map<String, dynamic>?;
-          if (properties != null) {
-            final feature = properties['feature'] as String;
-            featureUsage[feature] = (featureUsage[feature] ?? 0) + 1;
-
-            final userId = event['user_id'] as String;
-            featureUsers.putIfAbsent(feature, () => <String>{}).add(userId);
-          }
-        }
-      }
-
-      // Create the stats structure
-      stats['total_features_tracked'] = featureUsage.length;
-      stats['most_used_features'] = featureUsage.entries
-          .map((entry) => {
-                'feature': entry.key,
-                'usage_count': entry.value,
-                'unique_users': featureUsers[entry.key]?.length ?? 0,
-              })
-          .toList()
-        ..sort((a, b) =>
-            (b['usage_count'] as int).compareTo(a['usage_count'] as int));
-
-      final allFeatures = [
-        featureQuizGameplay,
-        featureLessonSystem,
-        featureQuestionCategories,
-        featureBiblicalReferences,
-        featureSkipQuestion,
-        featureRetryWithPoints,
-        featureStreakTracking,
-        featureProgressiveDifficulty,
-        featurePowerUps,
-        featureThemePurchases,
-        featureAiThemeGenerator,
-        featureSocialFeatures,
-        featurePromoCards,
-        featureSettings,
-        featureThemeSelection,
-        featureAnalyticsSettings,
-        featureLanguageSettings,
-        featureOnboarding,
-        featureDonationSystem,
-        featureSatisfactionSurveys,
-        featureDifficultyFeedback,
-        featureMultiplayerGame
-      ];
-
-      stats['unused_features'] = allFeatures
-          .where((feature) => !featureUsage.containsKey(feature))
-          .map((feature) => {
-                'feature': feature,
-                'days_since_last_use': 0,
-              })
-          .toList();
-
-      stats['feature_retention'] = {
-        'daily_active_features': 0, // Would be calculated from actual data
-        'weekly_active_features': 0,
-        'monthly_active_features': 0,
-      };
-
-      return stats;
-    } catch (e) {
-      // Check if this is a Supabase-related exception by checking message content
-      if (e.toString().contains('Postgrest') ||
-          e.toString().contains('supabase')) {
-        AppLogger.error(
-            'Failed to fetch feature usage stats: Supabase error - ${e.toString()}',
-            e);
-      } else {
-        AppLogger.error(
-            'Failed to fetch feature usage stats: ${e.toString()}', e);
-      }
-      return {};
-    }
+    AppLogger.info('getFeatureUsageStats called - PostHog handles analytics differently');
+    return {};
   }
 
-  /// Generate a feature usage report for decision making
+  /// Generate a feature usage report for decision making (legacy method for compatibility)
+  /// Note: This now returns a placeholder since PostHog handles analytics differently
   Future<String> generateFeatureUsageReport() async {
-    final stats = await getFeatureUsageStats();
+    AppLogger.info('generateFeatureUsageReport called - PostHog handles analytics differently');
+    return '''
+# Feature Usage Analytics Report
+Generated on: ${DateTime.now().toIso8601String()}
 
-    final buffer = StringBuffer();
-    buffer.writeln('# Feature Usage Analytics Report');
-    buffer.writeln('Generated on: ${DateTime.now().toIso8601String()}');
-    buffer.writeln();
+## Note
+This application now uses PostHog for analytics. 
+Please check your PostHog dashboard for detailed analytics and feature usage reports.
 
-    buffer.writeln('## Most Used Features');
-    final mostUsed = stats['most_used_features'] as List?;
-    if (mostUsed != null) {
-      for (var feature in mostUsed) {
-        buffer.writeln(
-            '- ${feature['feature']}: ${feature['usage_count']} uses by ${feature['unique_users']} users');
-      }
-    }
-    buffer.writeln();
-
-    buffer.writeln('## Unused or Rarely Used Features');
-    final unused = stats['unused_features'] as List?;
-    if (unused != null) {
-      for (var feature in unused) {
-        buffer.writeln(
-            '- ${feature['feature']}: Last used ${feature['days_since_last_use']} days ago');
-      }
-    }
-    buffer.writeln();
-
-    buffer.writeln('## Recommendations');
-    if (unused != null && unused.isNotEmpty) {
-      buffer.writeln('- Consider removing or improving these unused features:');
-      for (var feature in unused) {
-        buffer.writeln('  - ${feature['feature']}');
-      }
-    }
-
-    buffer.writeln('- Focus development efforts on most used features');
-    buffer.writeln(
-        '- Consider A/B testing improvements for moderately used features');
-
-    return buffer.toString();
+## PostHog Benefits
+- Real-time analytics
+- Advanced segmentation
+- Feature flags
+- A/B testing
+- Session replay
+- Privacy-focused
+''';
   }
 
-  /// Get feature usage insights for a specific feature
+  /// Get feature usage insights for a specific feature (legacy method for compatibility)
+  /// Note: This now returns an empty map since PostHog handles analytics differently
   Future<Map<String, dynamic>> getFeatureInsights(String feature) async {
-    try {
-      // Query specific feature data
-      final response = await SupabaseConfig.getClient()
-          .from('tracking_events')
-          .select('user_id, timestamp, properties')
-          .ilike('properties', '%$feature%')
-          .gte('timestamp',
-              DateTime.now().subtract(Duration(days: 30)).toIso8601String());
-
-      final events = response as List;
-      final userIds = <String>{};
-      var totalUsage = 0;
-
-      for (final event in events) {
-        final userId = event['user_id'] as String;
-        userIds.add(userId);
-        totalUsage++;
-      }
-
-      return {
-        'feature': feature,
-        'total_usage': totalUsage,
-        'unique_users': userIds.length,
-        'average_session_duration': 0, // Would need additional data
-        'retention_rate': 0, // Would need additional calculations
-        'conversion_rate': 0, // Would need additional data
-        'recommendation': 'Monitor usage patterns',
-      };
-    } catch (e) {
-      // Check if this is a Supabase-related exception by checking message content
-      if (e.toString().contains('Postgrest') ||
-          e.toString().contains('supabase')) {
-        AppLogger.error(
-            'Failed to fetch feature insights: Supabase error - ${e.toString()}',
-            e);
-      } else {
-        AppLogger.error(
-            'Error getting feature insights for $feature: ${e.toString()}', e);
-      }
-      return {};
-    }
+    AppLogger.info('getFeatureInsights called for $feature - PostHog handles analytics differently');
+    return {
+      'feature': feature,
+      'note': 'Use PostHog dashboard for detailed insights',
+      'recommendation': 'Check PostHog analytics for feature usage data',
+    };
   }
 
-  /// Create a feature usage analytics widget for display in settings
+  /// Create a feature usage analytics widget for display in settings (legacy method for compatibility)
+  /// Note: This now returns a placeholder widget since PostHog handles analytics differently
   Widget buildFeatureUsageWidget(BuildContext context) {
-    return FutureBuilder<Map<String, dynamic>>(
-      future: getFeatureUsageStats(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
-
-        if (snapshot.hasError) {
-          return const Center(child: Text('Error loading analytics'));
-        }
-
-        final stats = snapshot.data ?? {};
-        final mostUsed = stats['most_used_features'] as List? ?? [];
-        final unused = stats['unused_features'] as List? ?? [];
-
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Feature Usage Analytics',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Most Used Features',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 8),
-            ...mostUsed.map((feature) => _buildFeatureUsageItem(
-                  context,
-                  feature['feature'] as String,
-                  '${feature['usage_count']} uses',
-                )),
-            const SizedBox(height: 16),
-            Text(
-              'Features Needing Attention',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 8),
-            ...unused.map((feature) => _buildFeatureUsageItem(
-                  context,
-                  feature['feature'] as String,
-                  'Last used ${feature['days_since_last_use']} days ago',
-                  isWarning: true,
-                )),
-          ],
-        );
-      },
-    );
-  }
-
-  Widget _buildFeatureUsageItem(
-      BuildContext context, String feature, String usage,
-      {bool isWarning = false}) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 8),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: isWarning
-            ? Theme.of(context).colorScheme.errorContainer
-            : Theme.of(context).colorScheme.surfaceContainerHighest,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: isWarning
-              ? Theme.of(context).colorScheme.error
-              : Theme.of(context).colorScheme.outline,
-        ),
-      ),
-      child: Row(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Text(
-              feature,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.w500,
-                  ),
-            ),
-          ),
           Text(
-            usage,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: isWarning
-                      ? Theme.of(context).colorScheme.onErrorContainer
-                      : Theme.of(context).colorScheme.onSurface,
+            'Analytics & Privacy',
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'This app now uses PostHog for privacy-focused analytics. '
+            'All analytics can be disabled in the privacy settings.',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'Visit your PostHog dashboard for detailed analytics and insights.',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
           ),
         ],
       ),
     );
   }
-}
-
-/// Observer class for automatic screen tracking, extending NavigatorObserver
-class TrackingObserver extends NavigatorObserver {
-  // In a full implementation, this would provide automatic screen tracking
-  // For now, it's a placeholder to maintain interface compatibility
 }

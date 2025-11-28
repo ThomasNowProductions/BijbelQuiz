@@ -106,6 +106,7 @@ class AIThemeBuilder {
 
     return ThemeData(
       useMaterial3: true,
+      fontFamily: 'Quicksand', // Ensure font family is applied at theme level
       colorScheme: ColorScheme.fromSeed(
         seedColor: primary,
         brightness: Brightness.light,
@@ -148,6 +149,7 @@ class AIThemeBuilder {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
+      fontFamily: 'Quicksand', // Ensure font family is applied at theme level
       colorScheme: ColorScheme.fromSeed(
         seedColor: primary,
         brightness: Brightness.dark,

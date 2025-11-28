@@ -242,7 +242,11 @@ class SettingsProvider extends ChangeNotifier {
         _aiThemes[theme.id] = theme;
         await _saveAIThemesToStorage();
         AppLogger.info('AI theme saved: ${theme.name} (${theme.id})');
-        await _syncSettings();
+        
+        // Sync settings after save
+        if (syncService.isAuthenticated) {
+          await syncService.syncDataImmediate('settings', getExportData());
+        }
       },
       errorMessage: 'Failed to save AI theme',
     );
@@ -261,7 +265,11 @@ class SettingsProvider extends ChangeNotifier {
         }
 
         AppLogger.info('AI theme removed: $themeId');
-        await _syncSettings();
+        
+        // Sync settings after removal
+        if (syncService.isAuthenticated) {
+          await syncService.syncDataImmediate('settings', getExportData());
+        }
       },
       errorMessage: 'Failed to remove AI theme',
     );
@@ -379,13 +387,10 @@ class SettingsProvider extends ChangeNotifier {
       notifyListeners();
       rethrow;
     }
-  }
 
-  /// Syncs settings data if user is authenticated
-  Future<void> _syncSettings() async {
+    // Sync data immediately if user is authenticated (settings changes should sync right away)
     if (syncService.isAuthenticated) {
-      AppLogger.info('Syncing settings after change');
-      await syncService.syncData('settings', getExportData());
+      await syncService.syncDataImmediate('settings', getExportData());
     }
   }
 
@@ -527,7 +532,11 @@ class SettingsProvider extends ChangeNotifier {
         strings.AppStrings.setLanguage(language);
         await _prefs?.setString('language', language);
         AppLogger.info('Language saved successfully: $language');
-        await _syncSettings();
+        
+        // Sync settings immediately
+        if (syncService.isAuthenticated) {
+          await syncService.syncDataImmediate('settings', getExportData());
+        }
       },
       errorMessage: 'Failed to save language setting',
     );
@@ -541,7 +550,11 @@ class SettingsProvider extends ChangeNotifier {
         _themeMode = mode;
         await _prefs?.setInt(_themeModeKey, mode.index);
         AppLogger.info('Theme mode saved successfully: $mode');
-        await _syncSettings();
+        
+        // Sync settings immediately
+        if (syncService.isAuthenticated) {
+          await syncService.syncDataImmediate('settings', getExportData());
+        }
       },
       errorMessage: 'Failed to save theme setting',
     );
@@ -571,7 +584,11 @@ class SettingsProvider extends ChangeNotifier {
         _gameSpeed = speed;
         await _prefs?.setString(_slowModeKey, speed);
         AppLogger.info('Game speed saved successfully: $speed');
-        await _syncSettings();
+        
+        // Sync settings immediately
+        if (syncService.isAuthenticated) {
+          await syncService.syncDataImmediate('settings', getExportData());
+        }
       },
       errorMessage: 'Failed to save game speed setting',
     );
@@ -585,7 +602,11 @@ class SettingsProvider extends ChangeNotifier {
         _mute = enabled;
         await _prefs?.setBool(_muteKey, enabled);
         AppLogger.info('Mute setting saved successfully: $enabled');
-        await _syncSettings();
+        
+        // Sync settings immediately
+        if (syncService.isAuthenticated) {
+          await syncService.syncDataImmediate('settings', getExportData());
+        }
       },
       errorMessage: 'Failed to save mute setting',
     );

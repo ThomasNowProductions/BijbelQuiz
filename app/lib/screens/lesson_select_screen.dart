@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'dart:convert';
 import 'dart:math';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:bijbelquiz/services/analytics_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,6 +14,7 @@ import '../services/lesson_service.dart';
 import '../screens/quiz_screen.dart';
 import '../screens/guide_screen.dart';
 import '../screens/multiplayer_game_setup_screen.dart';
+import '../screens/social_screen.dart';
 import '../widgets/top_snackbar.dart';
 import '../l10n/strings_nl.dart' as strings;
 import '../constants/urls.dart';
@@ -28,23 +31,29 @@ class LessonSelectScreen extends StatefulWidget {
 }
 
 class _LessonSelectScreenState extends State<LessonSelectScreen> {
-  final LessonService _lessonService = LessonService();
+   final LessonService _lessonService = LessonService();
+   final ScrollController _scrollController = ScrollController();
 
-  bool _loading = true;
-  String? _error;
-  List<Lesson> _lessons = const [];
-  bool _guideCheckCompleted = false; // Prevent multiple guide checks
-  bool _showPromoCard = false;
-  bool _isDonationPromo = true; // true for donation, false for follow
-  bool _isSatisfactionPromo = false; // true for satisfaction survey
-  bool _isDifficultyPromo = false; // true for difficulty feedback
-  String? _socialMediaType; // for individual social media popups
-  // Search and filters removed for simplified UI
+   bool _loading = true;
+   bool _loadingMore = false;
+   String? _error;
+   List<Lesson> _lessons = const [];
+   bool _guideCheckCompleted = false; // Prevent multiple guide checks
+   bool _showPromoCard = false;
+   bool _isDonationPromo = true; // true for donation, false for follow
+   bool _isSatisfactionPromo = false; // true for satisfaction survey
+   bool _isDifficultyPromo = false; // true for difficulty feedback
+   bool _isAccountCreationPromo = false; // true for account creation
+   String? _socialMediaType; // for individual social media popups
+   // Search and filters removed for simplified UI
 
-  // Daily usage streak tracking (persisted locally)
-  static const String _activeDaysKey = 'daily_active_days_v1';
-  Set<String> _activeDays = {};
-  int _streakDays = 0;
+   // Daily usage streak tracking (persisted locally)
+   static const String _activeDaysKey = 'daily_active_days_v1';
+   Set<String> _activeDays = {};
+   int _streakDays = 0;
+
+   // Cached lessons
+   static const String _cachedLessonsKey = 'cached_lessons_v1';
 
   @override
   void initState() {
@@ -59,13 +68,21 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
     analyticsService.trackFeatureStart(
         context, AnalyticsService.featureLessonSystem);
 
-    _loadLessons();
+    _loadLessons(maxLessons: 20);
     _loadStreakData();
+    _loadCachedLessons();
+    _scrollController.addListener(_onScroll);
 
     // Check if we need to show the guide screen (only once)
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _checkAndShowGuide();
     });
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 500 && !_loadingMore && !_loading) {
+      _loadMoreLessons();
+    }
   }
 
   void _checkAndShowGuide() {
@@ -111,6 +128,12 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
     }
   }
 
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   // --- Daily streak helpers ---
   String _fmtDate(DateTime d) {
     // yyyy-MM-dd
@@ -134,6 +157,30 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
 
   Future<void> _refreshStreakData() async {
     await _loadStreakData();
+  }
+
+  Future<void> _loadCachedLessons() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final jsonString = prefs.getString(_cachedLessonsKey);
+      if (jsonString != null) {
+        final List<dynamic> jsonList = json.decode(jsonString);
+        _lessons = jsonList.map((e) => Lesson.fromJson(e)).toList();
+      }
+    } catch (_) {
+      // Ignore errors
+    }
+    if (mounted) setState(() {});
+  }
+
+  Future<void> _saveCachedLessons() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final jsonString = json.encode(_lessons.map((l) => l.toJson()).toList());
+      await prefs.setString(_cachedLessonsKey, jsonString);
+    } catch (_) {
+      // Ignore errors
+    }
   }
 
   void _recomputeStreak() {
@@ -188,23 +235,25 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
     return out;
   }
 
-  Future<void> _loadLessons() async {
+  Future<void> _loadLessons({int? maxLessons, bool append = false}) async {
     Provider.of<AnalyticsService>(context, listen: false)
         .capture(context, 'load_lessons');
     final progress =
         Provider.of<LessonProgressProvider>(context, listen: false);
     final settings = Provider.of<SettingsProvider>(context, listen: false);
     try {
-      setState(() {
-        _loading = true;
-        _error = null;
-      });
+      if (!append) {
+        setState(() {
+          _loading = true;
+          _error = null;
+        });
+      }
 
       // Read current progress to size the visible track dynamically.
       // Always show at least (unlockedCount + buffer) lessons, with a floor.
       const int buffer = 12;
       const int minVisible = 36;
-      final int desired = progress.unlockedCount + buffer;
+      final int desired = append ? (maxLessons ?? _lessons.length + 20) : (progress.unlockedCount + buffer);
       final int visibleCount = desired < minVisible ? minVisible : desired;
 
       final lessons = await _lessonService.generateLessons(
@@ -215,11 +264,20 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
 
       if (!mounted) return;
       setState(() {
-        _lessons = lessons;
+        if (append) {
+          _lessons.addAll(lessons.sublist(_lessons.length));
+        } else {
+          _lessons = lessons;
+        }
       });
 
+      // Save cached lessons
+      await _saveCachedLessons();
+
       // Ensure at least the first lesson is unlocked for new users.
-      await progress.ensureUnlockedCountAtLeast(1);
+      if (!append) {
+        await progress.ensureUnlockedCountAtLeast(1);
+      }
     } catch (e) {
       if (!mounted) return;
       Provider.of<AnalyticsService>(context, listen: false).capture(
@@ -229,75 +287,70 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
         _error = strings.AppStrings.couldNotLoadLessons;
       });
     } finally {
-      if (mounted) {
+      if (mounted && !append) {
         setState(() {
           _loading = false;
           // Show promo card occasionally (20% chance) with new logic for different popup types
           _showPromoCard = _shouldShowPromoCard(settings);
           if (_showPromoCard) {
-            // Determine which type of promo to show
-            final rand = Random().nextDouble();
-            if (rand < 0.125) {
-              _isDonationPromo = true;
+            // Check if user is not logged in
+            final isLoggedIn = Supabase.instance.client.auth.currentUser != null;
+            if (!isLoggedIn) {
+              _isDonationPromo = false;
               _isSatisfactionPromo = false;
               _isDifficultyPromo = false;
+              _isAccountCreationPromo = true;
               _socialMediaType = null;
-            } else if (rand < 0.25) {
-              _isDonationPromo = false;
-              _isSatisfactionPromo = false;
-              _isDifficultyPromo = true;
-              _socialMediaType = null;
-            } else if (rand < 0.375) {
-              _isDonationPromo = false;
-              _isSatisfactionPromo = true;
-              _isDifficultyPromo = false;
-              _socialMediaType = null;
-            } else if (rand < 0.5) {
-              _isDonationPromo = false;
-              _isSatisfactionPromo = false;
-              _isDifficultyPromo = false;
-              _socialMediaType = 'mastodon';
-            } else if (rand < 0.625) {
-              _isDonationPromo = false;
-              _isSatisfactionPromo = false;
-              _isDifficultyPromo = false;
-              _socialMediaType = 'pixelfed';
-            } else if (rand < 0.75) {
-              _isDonationPromo = false;
-              _isSatisfactionPromo = false;
-              _isDifficultyPromo = false;
-              _socialMediaType = 'kwebler';
-            } else if (rand < 0.875) {
-              _isDonationPromo = false;
-              _isSatisfactionPromo = false;
-              _isDifficultyPromo = false;
-              _socialMediaType = 'signal';
-            } else if (rand < 0.9375) {
-              _isDonationPromo = false;
-              _isSatisfactionPromo = false;
-              _isDifficultyPromo = false;
-              _socialMediaType = 'discord';
-            } else if (rand < 0.96875) {
-              _isDonationPromo = false;
-              _isSatisfactionPromo = false;
-              _isDifficultyPromo = false;
-              _socialMediaType = 'bluesky';
             } else {
-              _isDonationPromo = false;
-              _isSatisfactionPromo = false;
-              _isDifficultyPromo = false;
-              _socialMediaType = 'nooki';
+              // Determine which type of promo to show
+              final rand = Random().nextDouble();
+              if (rand < 0.125) {
+                _isDonationPromo = true;
+                _isSatisfactionPromo = false;
+                _isDifficultyPromo = false;
+                _isAccountCreationPromo = false;
+                _socialMediaType = null;
+              } else if (rand < 0.25) {
+                _isDonationPromo = false;
+                _isSatisfactionPromo = false;
+                _isDifficultyPromo = true;
+                _isAccountCreationPromo = false;
+                _socialMediaType = null;
+              } else if (rand < 0.375) {
+                _isDonationPromo = false;
+                _isSatisfactionPromo = true;
+                _isDifficultyPromo = false;
+                _isAccountCreationPromo = false;
+                _socialMediaType = null;
+              } else {
+                _isDonationPromo = false;
+                _isSatisfactionPromo = false;
+                _isDifficultyPromo = false;
+                _isAccountCreationPromo = false;
+                _socialMediaType = 'follow';
+              }
             }
             Provider.of<AnalyticsService>(context, listen: false)
                 .capture(context, 'show_promo_card', properties: {
               'is_donation': _isDonationPromo,
               'is_satisfaction': _isSatisfactionPromo,
               'is_difficulty': _isDifficultyPromo,
+              'is_account_creation': _isAccountCreationPromo,
               'social_media_type': _socialMediaType ?? '',
             });
           }
         });
       }
+    }
+  }
+
+  Future<void> _loadMoreLessons() async {
+    if (_loadingMore || _loading) return;
+    setState(() => _loadingMore = true);
+    try {
+      await _loadLessons(maxLessons: _lessons.length + 20, append: true);
+    } finally {
+      if (mounted) setState(() => _loadingMore = false);
     }
   }
 
@@ -416,7 +469,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                 final recommended =
                     totalLessons > 0 && realIndex == continueIdx;
 
-                final playable = unlocked && realIndex == continueIdx;
+                final playable = unlocked;
 
                 return Container(
                   height: 120, // Fixed height for list items
@@ -436,15 +489,6 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                                   properties: {'lesson_id': lesson.id});
                           showTopSnackBar(context, 'Les is nog vergrendeld',
                               style: TopSnackBarStyle.warning);
-                          return;
-                        }
-                        if (!playable) {
-                          Provider.of<AnalyticsService>(context, listen: false)
-                              .capture(context, 'tap_unplayable_lesson',
-                                  properties: {'lesson_id': lesson.id});
-                          showTopSnackBar(context,
-                              'Je kunt alleen de meest recente ontgrendelde les spelen',
-                              style: TopSnackBarStyle.info);
                           return;
                         }
 
@@ -520,7 +564,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                 final recommended =
                     totalLessons > 0 && realIndex == continueIdx;
 
-                final playable = unlocked && realIndex == continueIdx;
+                final playable = unlocked;
 
                 return RepaintBoundary(
                   child: LessonTile(
@@ -537,15 +581,6 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                                 properties: {'lesson_id': lesson.id});
                         showTopSnackBar(context, 'Les is nog vergrendeld',
                             style: TopSnackBarStyle.warning);
-                        return;
-                      }
-                      if (!playable) {
-                        Provider.of<AnalyticsService>(context, listen: false)
-                            .capture(context, 'tap_unplayable_lesson',
-                                properties: {'lesson_id': lesson.id});
-                        showTopSnackBar(context,
-                            'Je kunt alleen de meest recente ontgrendelde les spelen',
-                            style: TopSnackBarStyle.info);
                         return;
                       }
 
@@ -621,7 +656,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                 final recommended =
                     totalLessons > 0 && realIndex == continueIdx;
 
-                final playable = unlocked && realIndex == continueIdx;
+                final playable = unlocked;
 
                 return RepaintBoundary(
                   child: LessonTile(
@@ -638,15 +673,6 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                                 properties: {'lesson_id': lesson.id});
                         showTopSnackBar(context, 'Les is nog vergrendeld',
                             style: TopSnackBarStyle.warning);
-                        return;
-                      }
-                      if (!playable) {
-                        Provider.of<AnalyticsService>(context, listen: false)
-                            .capture(context, 'tap_unplayable_lesson',
-                                properties: {'lesson_id': lesson.id});
-                        showTopSnackBar(context,
-                            'Je kunt alleen de meest recente ontgrendelde les spelen',
-                            style: TopSnackBarStyle.info);
                         return;
                       }
 
@@ -810,8 +836,9 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                       return const SizedBox.shrink();
                     }
                     return RefreshIndicator(
-                      onRefresh: _loadLessons,
+                      onRefresh: () => _loadLessons(maxLessons: 20),
                       child: CustomScrollView(
+                        controller: _scrollController,
                         // Increase cache extent to prebuild upcoming sliver children
                         // for smoother, jank-free scrolling at the cost of some memory.
                         cacheExtent: 800,
@@ -829,6 +856,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                                     isDonation: _isDonationPromo,
                                     isSatisfaction: _isSatisfactionPromo,
                                     isDifficulty: _isDifficultyPromo,
+                                    isAccountCreation: _isAccountCreationPromo,
                                     socialMediaType: _socialMediaType,
                                     onDismiss: () {
                                       final analyticsService =
@@ -846,8 +874,10 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                                                     ? 'satisfaction'
                                                     : (_isDifficultyPromo
                                                         ? 'difficulty'
-                                                        : (_socialMediaType ??
-                                                            'follow'))),
+                                                        : (_isAccountCreationPromo
+                                                            ? 'account_creation'
+                                                            : (_socialMediaType ??
+                                                                'follow')))),
                                           });
                                       setState(() {
                                         _showPromoCard = false;
@@ -869,8 +899,10 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                                                     ? 'satisfaction'
                                                     : (_isDifficultyPromo
                                                         ? 'difficulty'
-                                                        : (_socialMediaType ??
-                                                            'follow'))),
+                                                        : (_isAccountCreationPromo
+                                                            ? 'account_creation'
+                                                            : (_socialMediaType ??
+                                                                'follow')))),
                                           });
                                     },
                                     onAction: (url) async {
@@ -948,6 +980,19 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                                         setState(() {
                                           _showPromoCard = false;
                                         });
+                                      } else if (_isAccountCreationPromo) {
+                                        final analyticsService =
+                                            Provider.of<AnalyticsService>(
+                                                context,
+                                                listen: false);
+                                        analyticsService.capture(
+                                            context, 'tap_create_account_promo');
+                                        // Navigate to social screen which will handle auth
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) => const SocialScreen(),
+                                          ),
+                                        );
                                       } else {
                                         Provider.of<AnalyticsService>(context,
                                                 listen: false)

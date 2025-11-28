@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:bijbelquiz/services/analytics_service.dart';
 import 'package:bijbelquiz/providers/settings_provider.dart';
 import 'package:bijbelquiz/providers/messages_provider.dart';
@@ -63,17 +64,19 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     });
   }
 
-  /// Builds the social destination with activity indicator for unread messages
+  /// Builds the social destination with activity indicator for unread messages or login required
   NavigationDestination _buildSocialDestination() {
     final messagesProvider = Provider.of<MessagesProvider>(context);
     final hasUnreadMessages = messagesProvider.hasUnreadMessages;
+    final isLoggedIn = Supabase.instance.client.auth.currentUser != null;
+    final showAlertDot = !isLoggedIn || hasUnreadMessages;
 
     return NavigationDestination(
       icon: Stack(
         clipBehavior: Clip.none,
         children: [
           const Icon(Icons.groups_outlined),
-          if (hasUnreadMessages)
+          if (showAlertDot)
             Positioned(
               right: -2,
               top: -2,
@@ -96,7 +99,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         clipBehavior: Clip.none,
         children: [
           const Icon(Icons.groups),
-          if (hasUnreadMessages)
+          if (showAlertDot)
             Positioned(
               right: -2,
               top: -2,

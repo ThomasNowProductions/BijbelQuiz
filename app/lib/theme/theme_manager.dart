@@ -77,6 +77,7 @@ class ThemeManager {
       useMaterial3: true,
       brightness: brightness,
       colorScheme: colorScheme,
+      fontFamily: 'Quicksand', // Ensure font family is applied at theme level
       textTheme: textTheme,
       scaffoldBackgroundColor: scaffoldBackgroundColor,
       elevatedButtonTheme: _buildButtonTheme(themeDef.buttonStyles),
@@ -452,6 +453,7 @@ class ThemeManager {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
+      fontFamily: 'Quicksand', // Ensure font family is applied at theme level
       colorScheme: ColorScheme.fromSeed(
         seedColor: const Color(0xFF2563EB),
         brightness: Brightness.light,
@@ -470,6 +472,7 @@ class ThemeManager {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
+      fontFamily: 'Quicksand', // Ensure font family is applied at theme level
       colorScheme: ColorScheme.fromSeed(
         seedColor: const Color(0xFF2563EB),
         brightness: Brightness.dark,
