@@ -63,9 +63,7 @@ class _BibleLessonSelectScreenState extends State<BibleLessonSelectScreen> {
       
       setState(() {
         _hasShownKnowledgePrompt = hasSeenPrompt;
-        if (levelIndex != null && levelIndex >= 0 && levelIndex < BibleKnowledgeLevel.values.length) {
-          _knowledgeLevel = BibleKnowledgeLevel.values[levelIndex];
-        }
+        _knowledgeLevel = _parseKnowledgeLevel(levelIndex);
       });
 
       // Show knowledge prompt if not seen before
@@ -76,6 +74,16 @@ class _BibleLessonSelectScreenState extends State<BibleLessonSelectScreen> {
       }
     } catch (e) {
       // Ignore errors loading knowledge level
+    }
+  }
+
+  /// Safely parses a knowledge level from an integer index
+  BibleKnowledgeLevel? _parseKnowledgeLevel(int? index) {
+    if (index == null) return null;
+    try {
+      return BibleKnowledgeLevel.values[index];
+    } catch (_) {
+      return null;
     }
   }
 
@@ -202,20 +210,27 @@ class _BibleLessonSelectScreenState extends State<BibleLessonSelectScreen> {
     });
   }
 
-  /// Returns the starting lesson index based on knowledge level
+  /// Returns the starting lesson index based on knowledge level.
+  /// The index is clamped to ensure it doesn't exceed available lessons.
   int _getStartingLessonIndex() {
+    final maxIndex = _lessons.isEmpty ? 0 : _lessons.length - 1;
+    
+    int suggestedIndex;
     switch (_knowledgeLevel) {
       case BibleKnowledgeLevel.none:
-        return 0; // Start from the beginning
+        suggestedIndex = 0; // Start from the beginning
       case BibleKnowledgeLevel.some:
-        return 2; // Skip intro lessons
+        suggestedIndex = 2; // Skip intro lessons
       case BibleKnowledgeLevel.reasonable:
-        return 4; // Skip early lessons
+        suggestedIndex = 4; // Skip early lessons
       case BibleKnowledgeLevel.much:
-        return 6; // Skip to later lessons
+        suggestedIndex = 6; // Skip to later lessons
       case null:
-        return 0; // Default to beginning
+        suggestedIndex = 0; // Default to beginning
     }
+    
+    // Ensure the index doesn't exceed available lessons
+    return suggestedIndex.clamp(0, maxIndex);
   }
 
   /// Returns a personalized welcome message based on knowledge level
