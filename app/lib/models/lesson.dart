@@ -25,6 +25,10 @@ class Lesson {
   /// Sequential index in the lesson track (0-based)
   final int index;
 
+  /// Whether this lesson is a Bible Basics lesson
+  /// Used to track completion separately from regular lessons
+  final bool isBibleLesson;
+
   const Lesson({
     required this.id,
     required this.title,
@@ -33,6 +37,7 @@ class Lesson {
     required this.index,
     this.description,
     this.iconHint,
+    this.isBibleLesson = false,
   });
 
   /// Convenience factory to build a lesson from a category name.
@@ -42,6 +47,7 @@ class Lesson {
     int maxQuestions = 10,
     String? description,
     String? iconHint,
+    bool isBibleLesson = false,
   }) {
     final safeId = 'lesson_${index.toString().padLeft(4, '0')}';
     final title = _toTitleCase(category);
@@ -53,6 +59,7 @@ class Lesson {
       index: index,
       description: description,
       iconHint: iconHint,
+      isBibleLesson: isBibleLesson,
     );
   }
 
@@ -64,6 +71,7 @@ class Lesson {
     String? iconHint,
     int? maxQuestions,
     int? index,
+    bool? isBibleLesson,
   }) {
     return Lesson(
       id: id ?? this.id,
@@ -73,6 +81,7 @@ class Lesson {
       iconHint: iconHint ?? this.iconHint,
       maxQuestions: maxQuestions ?? this.maxQuestions,
       index: index ?? this.index,
+      isBibleLesson: isBibleLesson ?? this.isBibleLesson,
     );
   }
 
@@ -84,6 +93,7 @@ class Lesson {
         'iconHint': iconHint,
         'maxQuestions': maxQuestions,
         'index': index,
+        'isBibleLesson': isBibleLesson,
       };
 
   factory Lesson.fromJson(Map<String, dynamic> json) => Lesson(
@@ -98,6 +108,7 @@ class Lesson {
         index: (json['index'] is int)
             ? json['index'] as int
             : int.tryParse(json['index']?.toString() ?? '') ?? 0,
+        isBibleLesson: json['isBibleLesson'] == true,
       );
 
   @override

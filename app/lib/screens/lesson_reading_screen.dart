@@ -84,6 +84,7 @@ class _LessonReadingScreenState extends State<LessonReadingScreen> {
       index: widget.lesson.index,
       description: widget.lesson.description,
       iconHint: widget.lesson.iconHint,
+      isBibleLesson: true,
     );
 
     Navigator.of(context).pushReplacement(

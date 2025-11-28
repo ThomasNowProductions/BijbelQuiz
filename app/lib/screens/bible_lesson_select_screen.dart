@@ -9,6 +9,14 @@ import '../services/bible_lesson_service.dart';
 import '../screens/lesson_reading_screen.dart';
 import '../l10n/strings_nl.dart' as strings;
 
+/// User's self-assessed Bible knowledge level
+enum BibleKnowledgeLevel {
+  none,       // No knowledge
+  some,       // Some knowledge
+  reasonable, // Reasonable knowledge
+  much,       // Much knowledge
+}
+
 /// Screen for selecting and browsing Bible learning lessons.
 /// These are educational lessons designed for new users who want
 /// to learn about the Bible before taking quizzes.
@@ -26,8 +34,12 @@ class _BibleLessonSelectScreenState extends State<BibleLessonSelectScreen> {
   bool _isLoading = true;
   String? _error;
   Set<String> _completedLessons = {};
+  BibleKnowledgeLevel? _knowledgeLevel;
+  bool _hasShownKnowledgePrompt = false;
 
   static const String _completedLessonsKey = 'completed_bible_lessons_v1';
+  static const String _knowledgeLevelKey = 'bible_knowledge_level_v1';
+  static const String _hasSeenPromptKey = 'bible_knowledge_prompt_seen_v1';
 
   @override
   void initState() {
@@ -39,6 +51,212 @@ class _BibleLessonSelectScreenState extends State<BibleLessonSelectScreen> {
 
     _loadLessons();
     _loadCompletedLessons();
+    _loadKnowledgeLevel();
+  }
+
+  /// Loads the user's saved knowledge level
+  Future<void> _loadKnowledgeLevel() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final hasSeenPrompt = prefs.getBool(_hasSeenPromptKey) ?? false;
+      final levelIndex = prefs.getInt(_knowledgeLevelKey);
+      
+      setState(() {
+        _hasShownKnowledgePrompt = hasSeenPrompt;
+        _knowledgeLevel = _parseKnowledgeLevel(levelIndex);
+      });
+
+      // Show knowledge prompt if not seen before
+      if (!hasSeenPrompt && mounted) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) _showKnowledgeLevelPrompt();
+        });
+      }
+    } catch (e) {
+      // Ignore errors loading knowledge level
+    }
+  }
+
+  /// Safely parses a knowledge level from an integer index
+  BibleKnowledgeLevel? _parseKnowledgeLevel(int? index) {
+    if (index == null) return null;
+    try {
+      return BibleKnowledgeLevel.values[index];
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// Saves the user's knowledge level
+  Future<void> _saveKnowledgeLevel(BibleKnowledgeLevel level) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setInt(_knowledgeLevelKey, level.index);
+      await prefs.setBool(_hasSeenPromptKey, true);
+      
+      setState(() {
+        _knowledgeLevel = level;
+        _hasShownKnowledgePrompt = true;
+      });
+
+      // Track the selection
+      if (mounted) {
+        Provider.of<AnalyticsService>(context, listen: false).capture(
+          context,
+          'bible_knowledge_level_selected',
+          properties: {'level': level.name},
+        );
+      }
+    } catch (e) {
+      // Ignore errors saving knowledge level
+    }
+  }
+
+  /// Shows the knowledge level selection prompt
+  Future<void> _showKnowledgeLevelPrompt() async {
+    final settings = Provider.of<SettingsProvider>(context, listen: false);
+    final isEnglish = settings.language == 'en';
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    await showDialog<BibleKnowledgeLevel>(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: colorScheme.surface,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Row(
+          children: [
+            Icon(Icons.school, color: colorScheme.primary),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                isEnglish ? 'Your Bible Knowledge' : 'Je Bijbelkennis',
+                style: textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                isEnglish
+                    ? 'How would you describe your current knowledge of the Bible?'
+                    : 'Hoe zou je je huidige kennis van de Bijbel omschrijven?',
+                style: textTheme.bodyMedium,
+              ),
+              const SizedBox(height: 16),
+              _KnowledgeLevelOption(
+                level: BibleKnowledgeLevel.none,
+                title: isEnglish ? 'None' : 'Geen',
+                description: isEnglish
+                    ? 'I am completely new to the Bible'
+                    : 'Ik ben volledig nieuw met de Bijbel',
+                icon: Icons.lightbulb_outline,
+                onTap: () {
+                  Navigator.of(ctx).pop(BibleKnowledgeLevel.none);
+                },
+              ),
+              const SizedBox(height: 8),
+              _KnowledgeLevelOption(
+                level: BibleKnowledgeLevel.some,
+                title: isEnglish ? 'Some' : 'Enige',
+                description: isEnglish
+                    ? 'I know some basic stories'
+                    : 'Ik ken enkele basisverhalen',
+                icon: Icons.auto_stories,
+                onTap: () {
+                  Navigator.of(ctx).pop(BibleKnowledgeLevel.some);
+                },
+              ),
+              const SizedBox(height: 8),
+              _KnowledgeLevelOption(
+                level: BibleKnowledgeLevel.reasonable,
+                title: isEnglish ? 'Reasonable' : 'Redelijk',
+                description: isEnglish
+                    ? 'I have a good understanding'
+                    : 'Ik heb een goed begrip',
+                icon: Icons.menu_book,
+                onTap: () {
+                  Navigator.of(ctx).pop(BibleKnowledgeLevel.reasonable);
+                },
+              ),
+              const SizedBox(height: 8),
+              _KnowledgeLevelOption(
+                level: BibleKnowledgeLevel.much,
+                title: isEnglish ? 'Much' : 'Veel',
+                description: isEnglish
+                    ? 'I know the Bible well'
+                    : 'Ik ken de Bijbel goed',
+                icon: Icons.workspace_premium,
+                onTap: () {
+                  Navigator.of(ctx).pop(BibleKnowledgeLevel.much);
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    ).then((level) {
+      if (level != null) {
+        _saveKnowledgeLevel(level);
+      } else {
+        // Default to 'none' if dismissed
+        _saveKnowledgeLevel(BibleKnowledgeLevel.none);
+      }
+    });
+  }
+
+  /// Returns the starting lesson index based on knowledge level.
+  /// The index is clamped to ensure it doesn't exceed available lessons.
+  int _getStartingLessonIndex() {
+    final maxIndex = _lessons.isEmpty ? 0 : _lessons.length - 1;
+    
+    int suggestedIndex;
+    switch (_knowledgeLevel) {
+      case BibleKnowledgeLevel.none:
+        suggestedIndex = 0; // Start from the beginning
+      case BibleKnowledgeLevel.some:
+        suggestedIndex = 2; // Skip intro lessons
+      case BibleKnowledgeLevel.reasonable:
+        suggestedIndex = 4; // Skip early lessons
+      case BibleKnowledgeLevel.much:
+        suggestedIndex = 6; // Skip to later lessons
+      case null:
+        suggestedIndex = 0; // Default to beginning
+    }
+    
+    // Ensure the index doesn't exceed available lessons
+    return suggestedIndex.clamp(0, maxIndex);
+  }
+
+  /// Returns a personalized welcome message based on knowledge level
+  String _getWelcomeMessage(bool isEnglish) {
+    switch (_knowledgeLevel) {
+      case BibleKnowledgeLevel.none:
+        return isEnglish
+            ? 'Welcome! Start your journey to discover the Bible.'
+            : 'Welkom! Begin je reis om de Bijbel te ontdekken.';
+      case BibleKnowledgeLevel.some:
+        return isEnglish
+            ? 'Great! Let\'s build on what you already know.'
+            : 'Geweldig! Laten we voortbouwen op wat je al weet.';
+      case BibleKnowledgeLevel.reasonable:
+        return isEnglish
+            ? 'Excellent! Deepen your understanding of the Bible.'
+            : 'Uitstekend! Verdiep je begrip van de Bijbel.';
+      case BibleKnowledgeLevel.much:
+        return isEnglish
+            ? 'Wonderful! Explore and refresh your knowledge.'
+            : 'Prachtig! Verken en vernieuw je kennis.';
+      case null:
+        return isEnglish
+            ? 'Learn the basics of the Bible through reading and practice quizzes.'
+            : 'Leer de basis van de Bijbel door te lezen en te oefenen met quizzen.';
+    }
   }
 
   Future<void> _loadLessons() async {
@@ -226,9 +444,7 @@ class _BibleLessonSelectScreenState extends State<BibleLessonSelectScreen> {
                                     const SizedBox(width: 12),
                                     Expanded(
                                       child: Text(
-                                        settings.language == 'en'
-                                            ? 'Learn the basics of the Bible through reading and practice quizzes.'
-                                            : 'Leer de basis van de Bijbel door te lezen en te oefenen met quizzen.',
+                                        _getWelcomeMessage(settings.language == 'en'),
                                         style: textTheme.bodyMedium?.copyWith(
                                           color: colorScheme.onSurface
                                               .withValues(alpha: 0.8),
@@ -562,6 +778,89 @@ class _BibleLessonCard extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Widget for displaying a knowledge level option in the prompt dialog
+class _KnowledgeLevelOption extends StatelessWidget {
+  final BibleKnowledgeLevel level;
+  final String title;
+  final String description;
+  final IconData icon;
+  final VoidCallback onTap;
+
+  const _KnowledgeLevelOption({
+    required this.level,
+    required this.title,
+    required this.description,
+    required this.icon,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    return Material(
+      color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+      borderRadius: BorderRadius.circular(12),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: colorScheme.outlineVariant,
+            ),
+          ),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: colorScheme.primary.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(
+                  icon,
+                  color: colorScheme.primary,
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      description,
+                      style: textTheme.bodySmall?.copyWith(
+                        color: colorScheme.onSurface.withValues(alpha: 0.7),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Icon(
+                Icons.arrow_forward_ios,
+                size: 16,
+                color: colorScheme.onSurface.withValues(alpha: 0.5),
+              ),
+            ],
           ),
         ),
       ),

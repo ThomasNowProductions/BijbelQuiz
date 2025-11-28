@@ -107,8 +107,8 @@ class _ProgressHeaderState extends State<ProgressHeader>
         label: strings.AppStrings.bibleBasics,
         icon: Icons.school,
         color: Colors.transparent,
-        textColor: cs.secondary,
-        borderColor: cs.secondary,
+        textColor: cs.primary,
+        borderColor: cs.primary,
       ),
     );
   }

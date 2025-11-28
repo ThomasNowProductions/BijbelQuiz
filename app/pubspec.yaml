@@ -95,6 +95,7 @@ flutter:
     - assets/questions-nl-sv.json
     - assets/questions-en.json
     - assets/greetings.json
+    - assets/bible-lessons.json
     - assets/sounds/
     - assets/.env
     - assets/themes/

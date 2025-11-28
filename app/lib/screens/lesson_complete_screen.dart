@@ -75,17 +75,27 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
     final pctValue =
         widget.total > 0 ? (widget.correct / widget.total * 100.0) : 0.0;
 
+    // For Bible lessons, use onExit to go back to Bible lesson selection
+    // For regular lessons, go to first route (main navigation)
+    void handleExit() {
+      if (widget.lesson.isBibleLesson) {
+        widget.onExit();
+      } else {
+        Navigator.of(context).popUntil((route) => route.isFirst);
+      }
+    }
+
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {
         if (!didPop) {
-          Navigator.of(context).popUntil((route) => route.isFirst);
+          handleExit();
         }
       },
       child: GestureDetector(
         onHorizontalDragEnd: (DragEndDetails details) {
           if (details.primaryVelocity != null && details.primaryVelocity! > 0) {
-            Navigator.of(context).popUntil((route) => route.isFirst);
+            handleExit();
           }
         },
         child: Scaffold(
@@ -95,9 +105,7 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
             elevation: 0,
             leading: IconButton(
               icon: Icon(Icons.arrow_back, color: cs.onSurface),
-              onPressed: () {
-                Navigator.of(context).popUntil((route) => route.isFirst);
-              },
+              onPressed: handleExit,
             ),
           ),
           body: Stack(
