@@ -15,6 +15,8 @@ import '../screens/quiz_screen.dart';
 import '../screens/guide_screen.dart';
 import '../screens/multiplayer_game_setup_screen.dart';
 import '../screens/social_screen.dart';
+import '../screens/beginner_onboarding_screen.dart';
+import '../screens/learning_path_screen.dart';
 import '../widgets/top_snackbar.dart';
 import '../l10n/strings_nl.dart' as strings;
 import '../constants/urls.dart';
@@ -39,6 +41,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
    String? _error;
    List<Lesson> _lessons = const [];
    bool _guideCheckCompleted = false; // Prevent multiple guide checks
+   bool _beginnerOnboardingCheckCompleted = false; // Prevent multiple beginner checks
    bool _showPromoCard = false;
    bool _isDonationPromo = true; // true for donation, false for follow
    bool _isSatisfactionPromo = false; // true for satisfaction survey
@@ -115,6 +118,43 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
 
     // No need to show the guide; mark check as completed
     _guideCheckCompleted = true;
+
+    // After guide check, check for beginner onboarding
+    _checkAndShowBeginnerOnboarding();
+  }
+
+  void _checkAndShowBeginnerOnboarding() {
+    if (!mounted || _beginnerOnboardingCheckCompleted) return;
+
+    final settings = Provider.of<SettingsProvider>(context, listen: false);
+
+    // If settings are still loading, retry shortly
+    if (settings.isLoading) {
+      Future.delayed(const Duration(milliseconds: 150), () {
+        if (mounted) _checkAndShowBeginnerOnboarding();
+      });
+      return;
+    }
+
+    // Only show beginner onboarding if user hasn't seen it yet
+    if (!settings.hasSeenBeginnerOnboarding) {
+      _beginnerOnboardingCheckCompleted = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        if (!mounted) return;
+        final result = await showBeginnerOnboardingDialog(context);
+        if (result == true && mounted) {
+          // User chose to start learning path
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const LearningPathScreen(),
+            ),
+          );
+        }
+      });
+      return;
+    }
+
+    _beginnerOnboardingCheckCompleted = true;
   }
 
   @override

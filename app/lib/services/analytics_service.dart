@@ -119,6 +119,7 @@ class AnalyticsService {
   static const String featureSatisfactionSurveys = 'satisfaction_surveys';
   static const String featureDifficultyFeedback = 'difficulty_feedback';
   static const String featureMultiplayerGame = 'multiplayer_game';
+  static const String featureLearningPath = 'learning_path';
 
   /// Standardized action names for consistent tracking
   static const String actionAccessed = 'accessed';

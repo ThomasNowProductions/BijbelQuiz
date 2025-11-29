@@ -690,4 +690,39 @@ class AppStrings {
   static String get hoursAgo => _language == 'en' ? AppStringsEn.hoursAgo : 'u geleden';
   static String get daysAgo => _language == 'en' ? AppStringsEn.daysAgo : 'd geleden';
   static String get noEmail => _language == 'en' ? AppStringsEn.noEmail : 'Geen email';
+
+  // Beginner Learning Path
+  static String get learningPath => _language == 'en' ? AppStringsEn.learningPath : 'Leerpad';
+  static String get beginnerMode => _language == 'en' ? AppStringsEn.beginnerMode : 'Beginner Modus';
+  static String get beginnerModeDescription => _language == 'en' ? AppStringsEn.beginnerModeDescription : 'Leer de basis van de Bijbel met speciale leermodules';
+  static String get beginnerOnboardingTitle => _language == 'en' ? AppStringsEn.beginnerOnboardingTitle : 'Nieuw met de Bijbel?';
+  static String get beginnerOnboardingMessage => _language == 'en' ? AppStringsEn.beginnerOnboardingMessage : 'We hebben een speciaal leerpad voor beginners! Leer stap voor stap over de Bijbel met interactieve lessen.';
+  static String get startLearningPath => _language == 'en' ? AppStringsEn.startLearningPath : 'Start Leerpad';
+  static String get skipForNow => _language == 'en' ? AppStringsEn.skipForNow : 'Niet nu';
+  static String get learningModules => _language == 'en' ? AppStringsEn.learningModules : 'Leermodules';
+  static String get moduleComplete => _language == 'en' ? AppStringsEn.moduleComplete : 'Module Voltooid!';
+  static String get practiceQuiz => _language == 'en' ? AppStringsEn.practiceQuiz : 'Oefen Quiz';
+  static String get practiceQuizDescription => _language == 'en' ? AppStringsEn.practiceQuizDescription : 'Test wat je net geleerd hebt';
+  static String get continueToQuiz => _language == 'en' ? AppStringsEn.continueToQuiz : 'Naar Quiz';
+  static String get backToModules => _language == 'en' ? AppStringsEn.backToModules : 'Terug naar Modules';
+  static String get nextModule => _language == 'en' ? AppStringsEn.nextModule : 'Volgende Module';
+  static String get learningObjective => _language == 'en' ? AppStringsEn.learningObjective : 'Wat je leert';
+  static String get funFact => _language == 'en' ? AppStringsEn.funFact : 'Leuk om te weten';
+  static String get keyPoints => _language == 'en' ? AppStringsEn.keyPoints : 'Belangrijke Punten';
+  static String get estimatedTime => _language == 'en' ? AppStringsEn.estimatedTime : 'Geschatte tijd';
+  static String get minutesShort => _language == 'en' ? AppStringsEn.minutesShort : 'min';
+  static String get modulesCompleted => _language == 'en' ? AppStringsEn.modulesCompleted : 'Modules voltooid';
+  static String get learningStreak => _language == 'en' ? AppStringsEn.learningStreak : 'Leerreeks';
+  static String get achievements => _language == 'en' ? AppStringsEn.achievements : 'Prestaties';
+  static String get noAchievementsYet => _language == 'en' ? AppStringsEn.noAchievementsYet : 'Nog geen prestaties behaald';
+  static String get achievementUnlocked => _language == 'en' ? AppStringsEn.achievementUnlocked : 'Prestatie Ontgrendeld!';
+  static String get readyForRegularQuizzes => _language == 'en' ? AppStringsEn.readyForRegularQuizzes : 'Klaar voor reguliere quizzen';
+  static String get readyForRegularQuizzesMessage => _language == 'en' ? AppStringsEn.readyForRegularQuizzesMessage : 'Je hebt genoeg geleerd om de reguliere quizzen te proberen. Ga voor de uitdaging!';
+  static String get tryRegularQuizzes => _language == 'en' ? AppStringsEn.tryRegularQuizzes : 'Probeer Reguliere Quizzen';
+  static String get continueLearning => _language == 'en' ? AppStringsEn.continueLearning : 'Verder Leren';
+  static String get accessLearningPath => _language == 'en' ? AppStringsEn.accessLearningPath : 'Leerpad openen';
+  static String get accessLearningPathDescription => _language == 'en' ? AppStringsEn.accessLearningPathDescription : 'Bekijk de leermodules voor beginners';
+  static String get quizFeedbackCorrect => _language == 'en' ? AppStringsEn.quizFeedbackCorrect : 'Goed gedaan! Dat is correct.';
+  static String get quizFeedbackIncorrect => _language == 'en' ? AppStringsEn.quizFeedbackIncorrect : 'Niet helemaal. Het juiste antwoord is:';
+  static String get retryQuestion => _language == 'en' ? AppStringsEn.retryQuestion : 'Probeer Opnieuw';
 }

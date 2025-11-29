@@ -7,6 +7,7 @@ import 'providers/game_stats_provider.dart';
 import 'providers/lesson_progress_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'screens/guide_screen.dart';
+import 'screens/learning_path_screen.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb, kDebugMode;
 import 'services/notification_service.dart';
@@ -423,6 +424,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: _buildActionButton(
                 context,
                 icon: Icons.help_outline,
+              ),
+            ),
+            _SettingItem(
+              title: strings.AppStrings.accessLearningPath,
+              subtitle: strings.AppStrings.accessLearningPathDescription,
+              onTap: () => _openLearningPath(context),
+              child: _buildActionButton(
+                context,
+                icon: Icons.school_outlined,
               ),
             ),
             _SettingItem(
@@ -1164,6 +1174,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const GuideScreen(),
+      ),
+    );
+  }
+
+  void _openLearningPath(BuildContext context) {
+    final analytics = Provider.of<AnalyticsService>(context, listen: false);
+    analytics.capture(context, 'open_learning_path_from_settings');
+    analytics.trackFeatureStart(context, AnalyticsService.featureLearningPath);
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const LearningPathScreen(),
       ),
     );
   }

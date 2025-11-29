@@ -40,6 +40,8 @@ class SettingsProvider extends ChangeNotifier {
   static const String _colorfulModeKey = 'colorful_mode';
   static const String _hidePromoCardKey = 'hide_promo_card';
   static const String _automaticBugReportingKey = 'automatic_bug_reporting';
+  static const String _beginnerModeEnabledKey = 'beginner_mode_enabled';
+  static const String _hasSeenBeginnerOnboardingKey = 'has_seen_beginner_onboarding';
 
   SharedPreferences? _prefs;
   String _language = 'nl';
@@ -91,6 +93,10 @@ class SettingsProvider extends ChangeNotifier {
   // Bug reporting settings
   bool _automaticBugReporting =
       true; // default to true (automatically send bug reports)
+
+  // Beginner mode settings
+  bool _beginnerModeEnabled = false; // default to false
+  bool _hasSeenBeginnerOnboarding = false; // track if user has seen beginner onboarding
 
   SettingsProvider() {
     syncService = SyncService();
@@ -199,6 +205,12 @@ class SettingsProvider extends ChangeNotifier {
 
   /// Whether automatic bug reporting is enabled
   bool get automaticBugReporting => _automaticBugReporting;
+
+  /// Whether beginner mode is enabled
+  bool get beginnerModeEnabled => _beginnerModeEnabled;
+
+  /// Whether the user has seen the beginner onboarding prompt
+  bool get hasSeenBeginnerOnboarding => _hasSeenBeginnerOnboarding;
 
   /// Static method to check automatic bug reporting setting without BuildContext
   /// Returns true by default to maintain backward compatibility
@@ -496,6 +508,12 @@ class SettingsProvider extends ChangeNotifier {
       // Load automatic bug reporting setting
       _automaticBugReporting =
           _getBoolSetting(_automaticBugReportingKey, defaultValue: true);
+
+      // Load beginner mode settings
+      _beginnerModeEnabled =
+          _getBoolSetting(_beginnerModeEnabledKey, defaultValue: false);
+      _hasSeenBeginnerOnboarding =
+          _getBoolSetting(_hasSeenBeginnerOnboardingKey, defaultValue: false);
 
       final unlocked = _prefs?.getStringList(_unlockedThemesKey);
       if (unlocked != null) {
@@ -931,6 +949,44 @@ class SettingsProvider extends ChangeNotifier {
     );
   }
 
+  /// Updates the beginner mode setting
+  Future<void> setBeginnerModeEnabled(bool enabled) async {
+    AppLogger.info(
+        'Changing beginner mode setting from $_beginnerModeEnabled to $enabled');
+    await _saveSetting(
+      action: () async {
+        _beginnerModeEnabled = enabled;
+        await _prefs?.setBool(_beginnerModeEnabledKey, enabled);
+        AppLogger.info('Beginner mode setting saved successfully: $enabled');
+      },
+      errorMessage: 'Failed to save beginner mode setting',
+    );
+  }
+
+  /// Marks that the user has seen the beginner onboarding prompt
+  Future<void> markBeginnerOnboardingAsSeen() async {
+    await _saveSetting(
+      action: () async {
+        _hasSeenBeginnerOnboarding = true;
+        await _prefs?.setBool(_hasSeenBeginnerOnboardingKey, true);
+        AppLogger.info('Beginner onboarding marked as seen');
+      },
+      errorMessage: 'Failed to save beginner onboarding status',
+    );
+  }
+
+  /// Resets the beginner onboarding status
+  Future<void> resetBeginnerOnboardingStatus() async {
+    await _saveSetting(
+      action: () async {
+        _hasSeenBeginnerOnboarding = false;
+        await _prefs?.setBool(_hasSeenBeginnerOnboardingKey, false);
+        AppLogger.info('Beginner onboarding status reset');
+      },
+      errorMessage: 'Failed to reset beginner onboarding status',
+    );
+  }
+
   // Helper method to safely get a boolean setting with type checking
   bool _getBoolSetting(String key, {required bool defaultValue}) {
     try {
@@ -981,6 +1037,8 @@ class SettingsProvider extends ChangeNotifier {
       'colorfulMode': _colorfulMode,
       'hidePromoCard': _hidePromoCard,
       'automaticBugReporting': _automaticBugReporting,
+      'beginnerModeEnabled': _beginnerModeEnabled,
+      'hasSeenBeginnerOnboarding': _hasSeenBeginnerOnboarding,
       'aiThemes': _aiThemes.map((key, value) => MapEntry(key, value.toJson())),
     };
   }
@@ -1034,6 +1092,8 @@ class SettingsProvider extends ChangeNotifier {
     _colorfulMode = data['colorfulMode'] ?? false;
     _hidePromoCard = data['hidePromoCard'] ?? false;
     _automaticBugReporting = data['automaticBugReporting'] ?? true;
+    _beginnerModeEnabled = data['beginnerModeEnabled'] ?? false;
+    _hasSeenBeginnerOnboarding = data['hasSeenBeginnerOnboarding'] ?? false;
 
     final lastDifficultyPopupMs = data['lastDifficultyPopup'];
     _lastDifficultyPopup = lastDifficultyPopupMs != null
@@ -1117,6 +1177,10 @@ class SettingsProvider extends ChangeNotifier {
 
     // Save automatic bug reporting setting
     await _prefs?.setBool(_automaticBugReportingKey, _automaticBugReporting);
+
+    // Save beginner mode settings
+    await _prefs?.setBool(_beginnerModeEnabledKey, _beginnerModeEnabled);
+    await _prefs?.setBool(_hasSeenBeginnerOnboardingKey, _hasSeenBeginnerOnboarding);
 
     // Save difficulty popup tracking data
     if (_lastDifficultyPopup != null) {
