@@ -13,6 +13,7 @@ import 'providers/settings_provider.dart';
 import 'providers/game_stats_provider.dart';
 import 'providers/messages_provider.dart';
 import 'providers/lesson_progress_provider.dart';
+import 'providers/learning_progress_provider.dart';
 import 'utils/theme_utils.dart';
 import 'utils/font_utils.dart'; // Import font utilities
 import 'services/logger.dart';
@@ -88,11 +89,13 @@ Future<void> main() async {
     final gameStatsProvider = serviceContainer.gameStatsProvider;
     final settingsProvider = serviceContainer.settingsProvider;
     final lessonProgressProvider = LessonProgressProvider();
+    final learningProgressProvider = LearningProgressProvider();
 
     // Set up sync listeners for real-time updates
     gameStatsProvider.setupSyncListener();
     settingsProvider.setupSyncListener();
     lessonProgressProvider.setupSyncListener();
+    learningProgressProvider.setupSyncListener();
 
     AppLogger.info('Starting Flutter app with service container...');
     runApp(
@@ -102,6 +105,7 @@ Future<void> main() async {
           ChangeNotifierProvider.value(value: settingsProvider),
           ChangeNotifierProvider.value(value: gameStatsProvider),
           ChangeNotifierProvider.value(value: lessonProgressProvider),
+          ChangeNotifierProvider.value(value: learningProgressProvider),
 
           // Service container access
           Provider.value(value: serviceContainer),

@@ -781,4 +781,39 @@ class AppStringsEn {
   static const String hoursAgo = 'h ago';
   static const String daysAgo = 'd ago';
   static const String noEmail = 'No email';
+
+  // Beginner Learning Path
+  static const String learningPath = 'Learning Path';
+  static const String beginnerMode = 'Beginner Mode';
+  static const String beginnerModeDescription = 'Learn the basics of the Bible with special learning modules';
+  static const String beginnerOnboardingTitle = 'New to the Bible?';
+  static const String beginnerOnboardingMessage = 'We have a special learning path for beginners! Learn step by step about the Bible with interactive lessons.';
+  static const String startLearningPath = 'Start Learning Path';
+  static const String skipForNow = 'Skip for Now';
+  static const String learningModules = 'Learning Modules';
+  static const String moduleComplete = 'Module Complete!';
+  static const String practiceQuiz = 'Practice Quiz';
+  static const String practiceQuizDescription = 'Test what you just learned';
+  static const String continueToQuiz = 'Continue to Quiz';
+  static const String backToModules = 'Back to Modules';
+  static const String nextModule = 'Next Module';
+  static const String learningObjective = 'What you\'ll learn';
+  static const String funFact = 'Fun Fact';
+  static const String keyPoints = 'Key Points';
+  static const String estimatedTime = 'Estimated time';
+  static const String minutesShort = 'min';
+  static const String modulesCompleted = 'Modules completed';
+  static const String learningStreak = 'Learning streak';
+  static const String achievements = 'Achievements';
+  static const String noAchievementsYet = 'No achievements yet';
+  static const String achievementUnlocked = 'Achievement Unlocked!';
+  static const String readyForRegularQuizzes = 'Ready for regular quizzes';
+  static const String readyForRegularQuizzesMessage = 'You\'ve learned enough to try the regular quizzes. Go for the challenge!';
+  static const String tryRegularQuizzes = 'Try Regular Quizzes';
+  // static const String continueLearning = 'Continue Learning'; // Already defined above
+  static const String accessLearningPath = 'Access Learning Path';
+  static const String accessLearningPathDescription = 'View the learning modules for beginners';
+  static const String quizFeedbackCorrect = 'Well done! That\'s correct.';
+  static const String quizFeedbackIncorrect = 'Not quite. The correct answer is:';
+  static const String retryQuestion = 'Retry Question';
 }
