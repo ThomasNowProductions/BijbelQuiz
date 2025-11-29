@@ -681,7 +681,7 @@ class _AnimatedNumberCard extends StatelessWidget {
   final IconData icon;
   final String label;
   final int target;
-  final String? suffix;
+  final String? suffix = null;
 
   const _AnimatedNumberCard({
     required this.icon,
