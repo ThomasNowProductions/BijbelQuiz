@@ -41,20 +41,12 @@ class LearningService {
   }
 
   /// Gets all available achievements.
+  /// Returns default achievements as the feature uses embedded defaults.
   Future<List<LearningAchievement>> getAchievements() async {
     if (_cachedAchievements != null) return _cachedAchievements!;
 
-    try {
-      final jsonString =
-          await rootBundle.loadString('assets/learning_achievements.json');
-      final List<dynamic> jsonList = json.decode(jsonString);
-      _cachedAchievements =
-          jsonList.map((e) => LearningAchievement.fromJson(e)).toList();
-      return _cachedAchievements!;
-    } catch (e) {
-      AppLogger.warning('Failed to load learning achievements: $e');
-      return _getDefaultAchievements();
-    }
+    _cachedAchievements = _getDefaultAchievements();
+    return _cachedAchievements!;
   }
 
   /// Default learning modules for fallback.

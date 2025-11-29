@@ -810,7 +810,6 @@ class AppStringsEn {
   static const String readyForRegularQuizzes = 'Ready for regular quizzes';
   static const String readyForRegularQuizzesMessage = 'You\'ve learned enough to try the regular quizzes. Go for the challenge!';
   static const String tryRegularQuizzes = 'Try Regular Quizzes';
-  // static const String continueLearning = 'Continue Learning'; // Already defined above
   static const String accessLearningPath = 'Access Learning Path';
   static const String accessLearningPathDescription = 'View the learning modules for beginners';
   static const String quizFeedbackCorrect = 'Well done! That\'s correct.';

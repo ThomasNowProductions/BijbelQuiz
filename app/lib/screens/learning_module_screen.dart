@@ -159,17 +159,12 @@ class _LearningModuleScreenState extends State<LearningModuleScreen> {
     if (!mounted) return;
 
     // Show completion dialog
-    final shouldTakeQuiz = await _showCompletionDialog();
+    await _showCompletionDialog();
 
     if (!mounted) return;
 
-    if (shouldTakeQuiz == true) {
-      // Navigate to practice quiz
-      // For now, just navigate back and let them take the regular quiz
-      Navigator.of(context).pop();
-    } else {
-      Navigator.of(context).pop();
-    }
+    // Navigate back to the learning path
+    Navigator.of(context).pop();
   }
 
   Future<bool?> _showCompletionDialog() {
