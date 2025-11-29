@@ -1,6 +1,7 @@
 import 'package:logging/logging.dart';
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 
 /// Provides logging functionality for the BijbelQuiz app.
 class AppLogger {
@@ -63,13 +64,13 @@ class AppLogger {
         }
 
         // Actually print the log message to console
-        print(buffer.toString());
+        debugPrint(buffer.toString());
       } catch (e) {
         // Fallback logging if sanitization or printing fails
-        print('[LOGGER ERROR] Failed to log message: $e');
-        print('[LOGGER ERROR] Original message: ${record.message}');
+        debugPrint('[LOGGER ERROR] Failed to log message: $e');
+        debugPrint('[LOGGER ERROR] Original message: ${record.message}');
         if (record.error != null) {
-          print('[LOGGER ERROR] Original error: ${record.error}');
+          debugPrint('[LOGGER ERROR] Original error: ${record.error}');
         }
       }
     });

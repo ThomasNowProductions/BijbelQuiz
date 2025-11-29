@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../config/supabase_config.dart';
 import 'logger.dart';
 import 'connection_service.dart';
@@ -18,7 +17,6 @@ class SyncService {
   String? _currentUserId;
   RealtimeChannel? _channel;
   final Map<String, Function(Map<String, dynamic>)> _listeners = {};
-  SharedPreferences? _prefs;
   bool _isListening = false;
 
   // Concurrency protection
@@ -39,7 +37,6 @@ class SyncService {
 
   /// Initializes the service
   Future<void> initialize() async {
-    _prefs = await SharedPreferences.getInstance();
     await _connectionService.initialize();
     _setupAuthListener();
   }

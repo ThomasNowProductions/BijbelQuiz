@@ -286,12 +286,11 @@ class _QuizScreenState extends State<QuizScreen>
   Future<void> _showTimeUpDialog() async {
     Provider.of<AnalyticsService>(context, listen: false)
         .capture(context, 'show_time_up_dialog');
-    final localContext = context;
-    if (ModalRoute.of(localContext)?.isCurrent != true) return;
+    if (ModalRoute.of(context)?.isCurrent != true) return;
 
-    final settings = Provider.of<SettingsProvider>(localContext, listen: false);
+    final settings = Provider.of<SettingsProvider>(context, listen: false);
     final gameStats =
-        Provider.of<GameStatsProvider>(localContext, listen: false);
+        Provider.of<GameStatsProvider>(context, listen: false);
 
     // Get dynamic retry price from database
     final priceHelper = QuizActionPriceHelper();
@@ -334,7 +333,7 @@ class _QuizScreenState extends State<QuizScreen>
       );
 
       if (tooltipEntry != null) {
-        Overlay.of(localContext).insert(tooltipEntry!);
+        Overlay.of(context).insert(tooltipEntry!);
       }
 
       Future.delayed(const Duration(seconds: 2), () {
@@ -343,18 +342,18 @@ class _QuizScreenState extends State<QuizScreen>
       });
     }
 
-    await showDialog(
-      context: localContext,
+    await showDialog( // ignore: use_build_context_synchronously
+      context: context,
       barrierDismissible: false,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
           title: Text(
             strings.AppStrings.timeUp,
-            style: Theme.of(context).textTheme.headlineSmall,
+            style: Theme.of(dialogContext).textTheme.headlineSmall,
           ),
           content: Text(
             strings.AppStrings.timeUpMessage,
-            style: Theme.of(context).textTheme.bodyLarge,
+            style: Theme.of(dialogContext).textTheme.bodyLarge,
           ),
           actions: [
             Builder(
@@ -362,11 +361,11 @@ class _QuizScreenState extends State<QuizScreen>
                 onPressed: hasEnoughPoints
                     ? () {
                         final analyticsService = Provider.of<AnalyticsService>(
-                            context,
+                            dialogContext,
                             listen: false);
-                        analyticsService.capture(context, 'retry_with_points');
+                        analyticsService.capture(dialogContext, 'retry_with_points');
                         analyticsService.trackFeatureAttempt(
-                            context, AnalyticsService.featureRetryWithPoints,
+                            dialogContext, AnalyticsService.featureRetryWithPoints,
                             additionalProperties: {
                               'time_remaining': 0, // Time is up
                               'current_streak': gameStats.currentStreak,
@@ -403,7 +402,7 @@ class _QuizScreenState extends State<QuizScreen>
                                 });
                                 if (mounted) {
                                   _timerManager.startTimer(
-                                      context: context, reset: true);
+                                      context: dialogContext, reset: true);
                                   _animationController.triggerTimeAnimation();
                                 }
                               }
@@ -435,8 +434,8 @@ class _QuizScreenState extends State<QuizScreen>
                       strings.AppStrings.retry,
                       style: TextStyle(
                         color: hasEnoughPoints
-                            ? Theme.of(localContext).colorScheme.primary
-                            : Theme.of(localContext).colorScheme.outline,
+                            ? Theme.of(dialogContext).colorScheme.primary
+                            : Theme.of(dialogContext).colorScheme.outline,
                         fontSize: 16,
                       ),
                     ),
@@ -445,15 +444,15 @@ class _QuizScreenState extends State<QuizScreen>
                       Icons.star,
                       size: 16,
                       color: hasEnoughPoints
-                          ? Theme.of(localContext).colorScheme.primary
-                          : Theme.of(localContext).colorScheme.outline,
+                          ? Theme.of(dialogContext).colorScheme.primary
+                          : Theme.of(dialogContext).colorScheme.outline,
                     ),
                     Text(
                       ' $retryPrice',
                       style: TextStyle(
                         color: hasEnoughPoints
-                            ? Theme.of(localContext).colorScheme.primary
-                            : Theme.of(localContext).colorScheme.outline,
+                            ? Theme.of(dialogContext).colorScheme.primary
+                            : Theme.of(dialogContext).colorScheme.outline,
                         fontSize: 16,
                       ),
                     ),
@@ -463,8 +462,8 @@ class _QuizScreenState extends State<QuizScreen>
             ),
             TextButton(
               onPressed: () {
-                Provider.of<AnalyticsService>(context, listen: false)
-                    .capture(context, 'next_question_from_time_up');
+                Provider.of<AnalyticsService>(dialogContext, listen: false)
+                    .capture(dialogContext, 'next_question_from_time_up');
                 Navigator.of(dialogContext).pop();
                 // For time up scenario, we call handleNextQuestion which will record the result
                 _handleNextQuestion(false, _quizState.currentDifficulty);
@@ -472,7 +471,7 @@ class _QuizScreenState extends State<QuizScreen>
               child: Text(
                 strings.AppStrings.next,
                 style: TextStyle(
-                  color: Theme.of(localContext).colorScheme.primary,
+                  color: Theme.of(dialogContext).colorScheme.primary,
                   fontSize: 16,
                 ),
               ),
@@ -482,8 +481,8 @@ class _QuizScreenState extends State<QuizScreen>
       },
     );
 
-    if (tooltipEntry != null && localContext.mounted) {
-      Overlay.of(localContext).insert(tooltipEntry!);
+    if (tooltipEntry != null && mounted) {
+      Overlay.of(context).insert(tooltipEntry!);
     }
   }
 

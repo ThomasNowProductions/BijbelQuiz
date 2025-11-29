@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:crypto/crypto.dart';
 import 'package:bijbelquiz/services/analytics_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -517,84 +518,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Widget _buildSection(
-    BuildContext context,
-    ColorScheme colorScheme,
-    bool isSmallScreen, {
-    required String title,
-    required IconData icon,
-    required List<_SettingItem> items,
-    String? searchQuery,
-  }) {
-    final filteredItems = searchQuery == null || searchQuery.isEmpty
-        ? items
-        : items
-            .where((item) =>
-                item.title.toLowerCase().contains(searchQuery) ||
-                (item.subtitle?.toLowerCase().contains(searchQuery) ?? false))
-            .toList();
-
-    if (filteredItems.isEmpty) {
-      return const SizedBox.shrink();
-    }
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.only(
-            left: isSmallScreen ? 4 : 8,
-            top: 24,
-            bottom: 12,
-          ),
-          child: Row(
-            children: [
-              Icon(
-                icon,
-                size: 20,
-                color: colorScheme.primary,
-              ),
-              const SizedBox(width: 8),
-              Text(
-                title,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: colorScheme.onSurface,
-                    ),
-              ),
-            ],
-          ),
-        ),
-        Card(
-          elevation: 0,
-          color: colorScheme.surfaceContainerHighest,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Column(
-            children: filteredItems.asMap().entries.map((entry) {
-              final index = entry.key;
-              final item = entry.value;
-              final isLast = index == filteredItems.length - 1;
-
-              return Column(
-                children: [
-                  _buildSettingRow(context, item, colorScheme),
-                  if (!isLast)
-                    Divider(
-                      height: 1,
-                      thickness: 1,
-                      color: colorScheme.outline.withValues(alpha: 0.12),
-                      indent: 56,
-                    ),
-                ],
-              );
-            }).toList(),
-          ),
-        ),
-      ],
-    );
-  }
 
   Widget _buildSettingRow(
       BuildContext context, _SettingItem item, ColorScheme colorScheme) {
@@ -1271,8 +1194,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
     analytics.capture(context, 'share_stats');
 
     try {
-      await Clipboard.setData(
-          ClipboardData(text: 'https://bijbelquiz.app/score.html'));
+      final gameStats = Provider.of<GameStatsProvider>(context, listen: false);
+
+      // Calculate total questions and correct percentage
+      final totalQuestions = gameStats.score + gameStats.incorrectAnswers;
+      final correctPercentage = totalQuestions > 0 ? ((gameStats.score / totalQuestions) * 100).round() : 0;
+
+      // Create compact stats string: score:currentStreak:longestStreak:incorrectAnswers:totalQuestions:correctPercentage
+      final statsString = '${gameStats.score}:${gameStats.currentStreak}:${gameStats.longestStreak}:${gameStats.incorrectAnswers}:$totalQuestions:$correctPercentage';
+
+      // Generate hash (first 16 chars of SHA-256)
+      final statsHash = await _generateStatsHash(statsString);
+
+      // Create the full URL
+      final statsUrl = 'https://bijbelquiz.app/score.html?s=$statsString&h=$statsHash';
+
+      await Clipboard.setData(ClipboardData(text: statsUrl));
       if (context.mounted) {
         showTopSnackBar(context, strings.AppStrings.statsLinkCopied,
             style: TopSnackBarStyle.success);
@@ -1282,6 +1219,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
         showTopSnackBar(context, 'Error copying link: $e',
             style: TopSnackBarStyle.error);
       }
+    }
+  }
+
+  /// Generate SHA-256 hash for stats verification (first 16 characters)
+  Future<String> _generateStatsHash(String statsString) async {
+    try {
+      final bytes = utf8.encode(statsString);
+      final digest = sha256.convert(bytes);
+      return digest.toString().substring(0, 16);
+    } catch (e) {
+      // Fallback hash if crypto fails
+      return statsString.hashCode.toRadixString(16).padLeft(16, '0').substring(0, 16);
     }
   }
 
