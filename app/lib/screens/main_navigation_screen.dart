@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:bijbelquiz/services/analytics_service.dart';
 import 'package:bijbelquiz/providers/settings_provider.dart';
 import 'package:bijbelquiz/providers/messages_provider.dart';
+import 'package:bijbelquiz/providers/store_provider.dart';
 
 import '../screens/lesson_select_screen.dart';
 import '../screens/store_screen.dart';
@@ -122,6 +123,62 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     );
   }
 
+  /// Builds the store destination with activity indicator for active discounts
+  NavigationDestination _buildStoreDestination() {
+    final storeProvider = Provider.of<StoreProvider>(context);
+    final hasActiveDiscount = storeProvider.hasActiveDiscount;
+
+    return NavigationDestination(
+      icon: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          const Icon(Icons.store_outlined),
+          if (hasActiveDiscount)
+            Positioned(
+              right: -2,
+              top: -2,
+              child: Container(
+                width: 8,
+                height: 8,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.error,
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Theme.of(context).colorScheme.surface,
+                    width: 1,
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
+      selectedIcon: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          const Icon(Icons.store),
+          if (hasActiveDiscount)
+            Positioned(
+              right: -2,
+              top: -2,
+              child: Container(
+                width: 8,
+                height: 8,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.error,
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Theme.of(context).colorScheme.surface,
+                    width: 1,
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
+      label: strings.AppStrings.store,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -150,11 +207,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             selectedIcon: const Icon(Icons.menu_book),
             label: strings.AppStrings.lessons,
           ),
-          NavigationDestination(
-            icon: const Icon(Icons.store_outlined),
-            selectedIcon: const Icon(Icons.store),
-            label: strings.AppStrings.store,
-          ),
+          _buildStoreDestination(),
           _buildSocialDestination(),
           NavigationDestination(
             icon: const Icon(Icons.settings_outlined),
