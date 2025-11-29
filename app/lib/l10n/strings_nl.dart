@@ -634,7 +634,7 @@ class AppStrings {
   static String get clearQuestionCacheDesc => _language == 'en' ? AppStringsEn.clearQuestionCacheDesc : 'Verwijder gecachte vragen om opslagruimte vrij te maken';
   static String get followOnSocialMediaDesc => _language == 'en' ? AppStringsEn.followOnSocialMediaDesc : 'Verbind met ons op social media platforms';
   static String get inviteFriendDesc => _language == 'en' ? AppStringsEn.inviteFriendDesc : 'Deel een gepersonaliseerde uitnodigingslink met vrienden';
-  static String get bugReport => _language == 'en' ? AppStringsEn.bugReport : 'Bug Rapport';
+  static String get bugReport => _language == 'en' ? AppStringsEn.bugReport : 'Rapporteer een probleem';
   static String get bugReportDesc => _language == 'en' ? AppStringsEn.bugReportDesc : 'Rapporteer bugs en problemen met de app';
 
   // Automatic Bug Reporting
