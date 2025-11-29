@@ -207,6 +207,22 @@ class AppStrings {
   static String get orangeThemeName => _language == 'en' ? AppStringsEn.orangeThemeName : 'Oranje thema';
   static String get orangeThemeDesc => _language == 'en' ? AppStringsEn.orangeThemeDesc : 'Ontgrendel een levendig oranje thema';
 
+  // Coupons
+  static String get couponTitle => _language == 'en' ? AppStringsEn.couponTitle : 'Heb je een coupon code?';
+  static String get couponDescription => _language == 'en' ? AppStringsEn.couponDescription : 'Wissel hem hier in voor beloningen';
+  static String get couponRedeem => _language == 'en' ? AppStringsEn.couponRedeem : 'Inwisselen';
+  static String get couponDialogTitle => _language == 'en' ? AppStringsEn.couponDialogTitle : 'Coupon inwisselen';
+  static String get couponCodeLabel => _language == 'en' ? AppStringsEn.couponCodeLabel : 'Coupon code';
+  static String get couponCodeHint => _language == 'en' ? AppStringsEn.couponCodeHint : 'Coupon hier...';
+  static String get couponSuccessTitle => _language == 'en' ? AppStringsEn.couponSuccessTitle : 'Gefeliciteerd!';
+  static String get couponStarsReceived => _language == 'en' ? AppStringsEn.couponStarsReceived : 'Je hebt {amount} sterren ontvangen!';
+  static String get couponThemeUnlocked => _language == 'en' ? AppStringsEn.couponThemeUnlocked : 'Je hebt een nieuw thema ontgrendeld!';
+  static String get couponErrorTitle => _language == 'en' ? AppStringsEn.couponErrorTitle : 'Fout';
+  static String get couponInvalid => _language == 'en' ? AppStringsEn.couponInvalid : 'Ongeldige coupon code';
+  static String get couponExpired => _language == 'en' ? AppStringsEn.couponExpired : 'Deze coupon is verlopen';
+  static String get couponMaxUsed => _language == 'en' ? AppStringsEn.couponMaxUsed : 'Deze coupon is niet meer geldig (maximaal aantal keer gebruikt)';
+
+
   // Settings screen
   static String get supportUsTitle => _language == 'en' ? AppStringsEn.supportUsTitle : 'Ondersteun ons';
   static String get errorLoadingSettings => _language == 'en' ? AppStringsEn.errorLoadingSettings : 'Fout bij het laden van instellingen';

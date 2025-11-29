@@ -220,6 +220,22 @@ class AppStringsEn {
   static const String orangeThemeName = 'Orange Theme';
   static const String orangeThemeDesc = 'Unlock a vibrant orange theme';
 
+  // Coupons
+  static const String couponTitle = 'Have a coupon code?';
+  static const String couponDescription = 'Redeem it here for rewards';
+  static const String couponRedeem = 'Redeem';
+  static const String couponDialogTitle = 'Redeem Coupon';
+  static const String couponCodeLabel = 'Coupon code';
+  static const String couponCodeHint = 'e.g. SUMMER2023';
+  static const String couponSuccessTitle = 'Congratulations!';
+  static const String couponStarsReceived = 'You received {amount} stars!';
+  static const String couponThemeUnlocked = 'You unlocked a new theme!';
+  static const String couponErrorTitle = 'Error';
+  static const String couponInvalid = 'Invalid coupon code';
+  static const String couponExpired = 'This coupon has expired';
+  static const String couponMaxUsed = 'This coupon is no longer valid (maximum uses reached)';
+
+
   // Settings screen
   static const String supportUsTitle = 'Support Us';
   static const String errorLoadingSettings = 'Error loading settings';

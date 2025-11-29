@@ -14,6 +14,7 @@ import '../utils/automatic_error_reporter.dart';
 import '../services/store_service.dart';
 import '../services/connection_service.dart';
 import '../models/store_item.dart';
+import '../services/coupon_service.dart';
 
 class StoreScreen extends StatefulWidget {
   const StoreScreen({super.key});
@@ -499,6 +500,15 @@ class _StoreScreenState extends State<StoreScreen> {
 
                     SizedBox(height: isDesktop ? 32 : 24),
 
+                    _buildCouponCard(
+                      context,
+                      isDesktop: isDesktop,
+                      colorScheme: colorScheme,
+                      textTheme: textTheme,
+                    ),
+
+                    SizedBox(height: isDesktop ? 32 : 24),
+
                     // Power-ups section
                     _buildSectionHeader(
                       context,
@@ -704,6 +714,8 @@ class _StoreScreenState extends State<StoreScreen> {
                       gameStats: gameStats,
                       isDesktop: isDesktop,
                     ),
+
+                    SizedBox(height: isDesktop ? 32 : 24),
 
                     SizedBox(height: isDesktop ? 32 : 24),
                   ],
@@ -1593,5 +1605,171 @@ class _StoreScreenState extends State<StoreScreen> {
         ),
       ),
     );
+  }
+  Widget _buildCouponCard(
+    BuildContext context, {
+    required bool isDesktop,
+    required ColorScheme colorScheme,
+    required TextTheme textTheme,
+  }) {
+    return Row(
+      children: [
+        Container(
+          padding: EdgeInsets.all(isDesktop ? 12 : 10),
+          decoration: BoxDecoration(
+            color: Colors.teal.withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Icon(
+            Icons.confirmation_number_rounded,
+            color: Colors.teal,
+            size: getResponsiveFontSize(context, 20),
+          ),
+        ),
+        SizedBox(width: isDesktop ? 16 : 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                strings.AppStrings.couponTitle,
+                style: textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: colorScheme.onSurface,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                strings.AppStrings.couponDescription,
+                style: textTheme.bodyMedium?.copyWith(
+                  color: colorScheme.onSurface.withValues(alpha: 0.6),
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(width: isDesktop ? 16 : 12),
+        FilledButton.icon(
+          onPressed: () => _showCouponDialog(context),
+          icon: const Icon(Icons.redeem_rounded, size: 20),
+          label: Text(strings.AppStrings.couponRedeem),
+          style: FilledButton.styleFrom(
+            backgroundColor: Colors.teal,
+            foregroundColor: Colors.white,
+            padding: EdgeInsets.symmetric(
+              horizontal: isDesktop ? 24 : 20,
+              vertical: isDesktop ? 14 : 12,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _showCouponDialog(BuildContext context) {
+    final controller = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(strings.AppStrings.couponDialogTitle),
+        content: TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            labelText: strings.AppStrings.couponCodeLabel,
+            hintText: strings.AppStrings.couponCodeHint,
+            border: const OutlineInputBorder(),
+          ),
+          textCapitalization: TextCapitalization.characters,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(strings.AppStrings.cancel),
+          ),
+          FilledButton(
+            onPressed: () {
+              Navigator.pop(context);
+              if (controller.text.isNotEmpty) {
+                _redeemCoupon(controller.text.trim());
+              }
+            },
+            child: Text(strings.AppStrings.couponRedeem),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _redeemCoupon(String code) async {
+    // Show loading
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(child: CircularProgressIndicator()),
+    );
+
+    try {
+      final couponService = CouponService();
+      final reward = await couponService.redeemCoupon(code);
+
+      // Apply reward
+      if (!mounted) return;
+      Navigator.pop(context); // Dismiss loading
+
+      String message = '';
+      if (reward.type == 'stars') {
+        final amount = reward.value as int;
+        Provider.of<GameStatsProvider>(context, listen: false).addStars(amount);
+        message = strings.AppStrings.couponStarsReceived.replaceAll('{amount}', amount.toString());
+      } else if (reward.type == 'theme') {
+        final themeId = reward.value as String;
+        await Provider.of<SettingsProvider>(context, listen: false).unlockTheme(themeId);
+        message = strings.AppStrings.couponThemeUnlocked;
+      }
+
+      if (!mounted) return;
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(strings.AppStrings.couponSuccessTitle),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.celebration, size: 48, color: Colors.orange),
+              const SizedBox(height: 16),
+              Text(message),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(strings.AppStrings.ok),
+            ),
+          ],
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      Navigator.pop(context); // Dismiss loading
+      
+      String errorMessage = e.toString();
+      if (errorMessage.startsWith('Exception: ')) {
+        errorMessage = errorMessage.substring(11);
+      }
+
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(strings.AppStrings.couponErrorTitle),
+          content: Text(errorMessage),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(strings.AppStrings.ok),
+            ),
+          ],
+        ),
+      );
+    }
   }
 }
