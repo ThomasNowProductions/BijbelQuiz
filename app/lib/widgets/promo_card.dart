@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../constants/urls.dart';
 import '../l10n/strings_nl.dart' as strings;
 
 class PromoCard extends StatefulWidget {

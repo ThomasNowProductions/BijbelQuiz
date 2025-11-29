@@ -687,7 +687,6 @@ class _AnimatedNumberCard extends StatelessWidget {
     required this.icon,
     required this.label,
     required this.target,
-    this.suffix,
   });
 
   @override

@@ -64,7 +64,7 @@ class AppLogger {
 
         // Actually print the log message to console
         print(buffer.toString());
-      } catch (e, stackTrace) {
+      } catch (e) {
         // Fallback logging if sanitization or printing fails
         print('[LOGGER ERROR] Failed to log message: $e');
         print('[LOGGER ERROR] Original message: ${record.message}');

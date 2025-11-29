@@ -4,11 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../providers/settings_provider.dart';
 
-import 'dart:io' show Platform;
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:url_launcher/url_launcher.dart';
 import '../services/logger.dart';
-import '../widgets/quiz_skeleton.dart';
 import '../widgets/top_snackbar.dart';
 import '../widgets/auth_view.dart';
 import '../constants/urls.dart';
