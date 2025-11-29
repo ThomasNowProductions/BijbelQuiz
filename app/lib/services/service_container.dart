@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:io' show Platform;
-import 'package:flutter/foundation.dart';
 import 'logger.dart';
 import 'analytics_service.dart';
 import 'performance_service.dart';
