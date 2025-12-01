@@ -5,6 +5,12 @@
 
 BijbelQuiz is a cross-platform Bible quiz app designed to test and improve your knowledge of the Bible. Built with Flutter, it features multiple question types, performance optimizations for low-end devices, and comprehensive offline capabilities.
 
+## 📱 Install BijbelQuiz
+
+- **Google Play Store**: [Install](https://bijbelquiz.app/playstore)
+- **Website**: [Play](https://bijbelquiz.app/play)
+- **APK**: [GitHub Releases](https://github.com/BijbelQuiz/BijbelQuiz/releases)
+
 ## 🚀 Getting Started
 
 ### Prerequisites
