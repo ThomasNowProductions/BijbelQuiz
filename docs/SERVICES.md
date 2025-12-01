@@ -107,18 +107,6 @@ await questionLoadingService.loadMoreQuestionsAdvanced(
 - Memory usage monitoring
 - Predictive loading candidate identification
 
-### NotificationService
-
-**Location:** `app/lib/services/notification_service.dart`
-
-**Purpose:** Local notification management for daily motivation reminders.
-
-**Key Features:**
-
-- Scheduled daily notifications
-- Platform-specific notification handling
-- User preference integration
-- Time zone support
 
 ### ProgressiveQuestionSelector
 

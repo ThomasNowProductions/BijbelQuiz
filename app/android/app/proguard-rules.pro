@@ -57,16 +57,6 @@
 -keep class com.statsig.** { *; }
 -keep class io.statsig.** { *; }
 
-# Keep notification classes
--keep class com.dexterous.** { *; }
-
-# Gson specific rules for flutter_local_notifications_plus
-# Keep the TypeToken class and its subclasses
--keep class com.google.gson.reflect.TypeToken { *; }
--keep class * extends com.google.gson.reflect.TypeToken
-
-# Keep the ScheduledNotification class and its members used by the plugin for serialization
--keep class com.dexterous.flutterlocalnotifications.models.ScheduledNotification { *; }
 
 # Keep all parameterized types (including those used for serialization)
 -keepattributes Signature

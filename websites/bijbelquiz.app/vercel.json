@@ -18,7 +18,7 @@
     },
     {
       "source": "/email",
-      "destination": "mailto:thomasnowprod@proton.me"
+      "destination": "/email.html"
     },
     {
       "source": "/kwebler",

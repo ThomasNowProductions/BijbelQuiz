@@ -13,6 +13,7 @@ import 'providers/settings_provider.dart';
 import 'providers/game_stats_provider.dart';
 import 'providers/messages_provider.dart';
 import 'providers/lesson_progress_provider.dart';
+import 'providers/store_provider.dart';
 import 'utils/theme_utils.dart';
 import 'utils/font_utils.dart'; // Import font utilities
 import 'services/logger.dart';
@@ -94,6 +95,10 @@ Future<void> main() async {
     settingsProvider.setupSyncListener();
     lessonProgressProvider.setupSyncListener();
 
+    // Initialize store provider
+    final storeProvider = StoreProvider();
+    await storeProvider.loadStoreItems();
+
     AppLogger.info('Starting Flutter app with service container...');
     runApp(
       MultiProvider(
@@ -102,6 +107,9 @@ Future<void> main() async {
           ChangeNotifierProvider.value(value: settingsProvider),
           ChangeNotifierProvider.value(value: gameStatsProvider),
           ChangeNotifierProvider.value(value: lessonProgressProvider),
+
+          // Store provider
+          ChangeNotifierProvider.value(value: storeProvider),
 
           // Service container access
           Provider.value(value: serviceContainer),
@@ -116,7 +124,6 @@ Future<void> main() async {
           Provider.value(value: serviceContainer.geminiService),
           Provider.value(value: serviceContainer.starTransactionService),
           Provider.value(value: serviceContainer.messagingService),
-          Provider.value(value: serviceContainer.notificationService),
 
           // Messaging service and provider
           Provider(

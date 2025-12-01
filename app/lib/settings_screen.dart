@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:crypto/crypto.dart';
 import 'package:bijbelquiz/services/analytics_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +10,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'screens/guide_screen.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb, kDebugMode;
-import 'services/notification_service.dart';
 import 'services/api_service.dart';
 import 'widgets/top_snackbar.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -49,12 +49,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     analyticsService.trackFeatureStart(
         context, AnalyticsService.featureSettings);
 
-    NotificationService.onError = (message) {
-      AppLogger.error('Notification service error: $message');
-      if (mounted) {
-        showTopSnackBar(context, message, style: TopSnackBarStyle.error);
-      }
-    };
   }
 
   @override
@@ -246,379 +240,270 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ColorScheme colorScheme, bool isSmallScreen) {
     final searchQuery = _searchController.text.toLowerCase().trim();
 
+    // Temporarily disable export functionality (not JSON)
+    const bool exportDisabled = true;
+
+    final allItems = <_SettingItem>[
+      // Bug report
+      _SettingItem(
+        title: strings.AppStrings.bugReport,
+        subtitle: strings.AppStrings.bugReportDesc,
+        child: BugReportWidget(),
+      ),
+      // Appearance
+      _SettingItem(
+        title: strings.AppStrings.language,
+        subtitle: settings.language == 'nl' ? 'Nederlands' : 'English',
+        child: _buildLanguageDropdown(settings, colorScheme, isSmallScreen),
+      ),
+      _SettingItem(
+        title: strings.AppStrings.theme,
+        subtitle: strings.AppStrings.chooseTheme,
+        child: _buildThemeDropdown(settings, colorScheme, isSmallScreen),
+      ),
+      _SettingItem(
+        title: strings.AppStrings.showNavigationLabels,
+        subtitle: strings.AppStrings.showNavigationLabelsDesc,
+        child: _buildSwitch(
+          settings.showNavigationLabels,
+          (value) => _updateSetting(settings, 'toggle_navigation_labels',
+              () => settings.setShowNavigationLabels(value)),
+          colorScheme,
+        ),
+      ),
+      _SettingItem(
+        title: strings.AppStrings.lessonLayoutSettings,
+        subtitle: strings.AppStrings.chooseLessonLayoutDesc,
+        child: _buildLayoutDropdown(settings, colorScheme, isSmallScreen),
+      ),
+      _SettingItem(
+        title: strings.AppStrings.colorfulMode,
+        subtitle: strings.AppStrings.colorfulModeDesc,
+        child: _buildSwitch(
+          settings.colorfulMode,
+          (value) => _updateSetting(settings, 'toggle_colorful_mode',
+              () => settings.setColorfulMode(value)),
+          colorScheme,
+        ),
+      ),
+      _SettingItem(
+        title: strings.AppStrings.hidePopup,
+        subtitle: strings.AppStrings.hidePopupDesc,
+        child: _buildSwitch(
+          settings.hidePromoCard,
+          (value) => _updateSetting(settings, 'toggle_hide_promo_card',
+              () => settings.setHidePromoCard(value)),
+          colorScheme,
+        ),
+      ),
+      // Game
+      _SettingItem(
+        title: strings.AppStrings.gameSpeed,
+        subtitle: strings.AppStrings.chooseGameSpeed,
+        child: _buildGameSpeedDropdown(settings, colorScheme, isSmallScreen),
+      ),
+      _SettingItem(
+        title: strings.AppStrings.muteSoundEffects,
+        subtitle: strings.AppStrings.muteSoundEffectsDesc,
+        child: _buildSwitch(
+          settings.mute,
+          (value) => _updateSetting(
+              settings, 'toggle_mute', () => settings.setMute(value)),
+          colorScheme,
+        ),
+      ),
+      // Privacy
+      _SettingItem(
+        title: strings.AppStrings.analytics,
+        subtitle: strings.AppStrings.analyticsDescription,
+        child: _buildSwitch(
+          settings.analyticsEnabled,
+          (value) => _updateAnalyticsSetting(settings, value),
+          colorScheme,
+        ),
+      ),
+      _SettingItem(
+        title: strings.AppStrings.automaticBugReports,
+        subtitle: strings.AppStrings.automaticBugReportsDesc,
+        child: _buildSwitch(
+          settings.automaticBugReporting,
+          (value) => _updateSetting(
+              settings,
+              'toggle_automatic_bug_reporting',
+              () => settings.setAutomaticBugReporting(value)),
+          colorScheme,
+        ),
+      ),
+      if (settings.apiEnabled) ...[
+        _SettingItem(
+          title: strings.AppStrings.apiKey,
+          subtitle: settings.apiKey.isEmpty
+              ? strings.AppStrings.generateApiKey
+              : _formatApiKey(settings.apiKey),
+          child: _buildApiKeyControls(context, settings, colorScheme),
+        ),
+        _SettingItem(
+          title: strings.AppStrings.apiPort,
+          subtitle:
+              '${strings.AppStrings.apiPortDesc} (${settings.apiPort})',
+          child: _buildApiPortControl(settings),
+        ),
+        _SettingItem(
+          title: strings.AppStrings.apiStatus,
+          subtitle: strings.AppStrings.apiStatusDesc,
+          child: _buildApiStatusIndicator(settings),
+        ),
+      ],
+      // Actions
+      _SettingItem(
+        title: strings.AppStrings.donateButton,
+        subtitle: strings.AppStrings.supportUsTitle,
+        onTap: () => _showDonateDialog(context),
+        child: _buildActionButton(
+          context,
+          icon: Icons.favorite,
+        ),
+      ),
+      _SettingItem(
+        title: strings.AppStrings.showIntroduction,
+        subtitle: strings.AppStrings.showIntroductionDesc,
+        onTap: () => _showIntroduction(context),
+        child: _buildActionButton(
+          context,
+          icon: Icons.help_outline,
+        ),
+      ),
+      if (!exportDisabled) _SettingItem(
+        title: strings.AppStrings.exportStats,
+        subtitle: strings.AppStrings.exportStatsDesc,
+        onTap: () => _exportStats(context),
+        child: _buildActionButton(
+          context,
+          icon: Icons.download,
+        ),
+      ),
+      _SettingItem(
+        title: strings.AppStrings.importStats,
+        subtitle: strings.AppStrings.importStatsDesc,
+        onTap: () => _importStats(context),
+        child: _buildActionButton(
+          context,
+          icon: Icons.upload,
+        ),
+      ),
+      _SettingItem(
+        title: strings.AppStrings.exportAllDataJson,
+        subtitle: strings.AppStrings.exportAllDataJsonDesc,
+        onTap: () => _exportAllDataJson(context),
+        child: _buildActionButton(
+          context,
+          icon: Icons.download,
+        ),
+      ),
+      _SettingItem(
+        title: strings.AppStrings.clearQuestionCache,
+        subtitle: strings.AppStrings.clearQuestionCacheDesc,
+        onTap: () => _clearCache(context),
+        child: _buildActionButton(
+          context,
+          icon: Icons.delete_sweep,
+        ),
+      ),
+      _SettingItem(
+        title: strings.AppStrings.followOnSocialMedia,
+        subtitle: strings.AppStrings.followOnSocialMediaDesc,
+        onTap: () => _showSocialMediaDialog(context),
+        child: _buildActionButton(
+          context,
+          icon: Icons.share,
+        ),
+      ),
+      _SettingItem(
+        title: strings.AppStrings.inviteFriend,
+        subtitle: strings.AppStrings.inviteFriendDesc,
+        onTap: () => _showInviteDialog(context),
+        child: _buildActionButton(
+          context,
+          icon: Icons.person_add,
+        ),
+      ),
+      _SettingItem(
+        title: strings.AppStrings.shareYourStats,
+        subtitle: strings.AppStrings.copyStatsLinkToClipboard,
+        onTap: () => _shareStats(context),
+        child: _buildActionButton(
+          context,
+          icon: Icons.bar_chart,
+        ),
+      ),
+      if (BijbelQuizGenPeriod.isGenPeriod() || kDebugMode)
+        _SettingItem(
+          title: strings.AppStrings.bijbelquizGenTitle,
+          subtitle:
+              '${strings.AppStrings.bijbelquizGenSubtitle}${BijbelQuizGenPeriod.getStatsYear()}',
+          onTap: () => _showBijbelQuizGen(context),
+          child: _buildActionButton(
+            context,
+            icon: Icons.auto_awesome,
+          ),
+        ),
+      _SettingItem(
+        title: strings.AppStrings.resetAndLogout,
+        subtitle: strings.AppStrings.resetAndLogoutDesc,
+        onTap: () => _showResetAndLogoutDialog(context, settings),
+        child: _buildActionButton(
+          context,
+          icon: Icons.logout,
+        ),
+      ),
+      // About
+      _SettingItem(
+        title: strings.AppStrings.serverStatus,
+        subtitle: strings.AppStrings.checkServiceStatus,
+        child: IconButton(
+          icon: Icon(Icons.open_in_new,
+              color: Theme.of(context).colorScheme.primary),
+          onPressed: _openStatusPage,
+          tooltip: strings.AppStrings.openStatusPage,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+      ),
+      if (!(kIsWeb || Platform.isAndroid))
+        _SettingItem(
+          title: strings.AppStrings.checkForUpdates,
+          subtitle: strings.AppStrings.checkForUpdatesDescription,
+          child: IconButton(
+            icon: Icon(Icons.refresh,
+                color: Theme.of(context).colorScheme.primary),
+            onPressed: () => _checkForUpdates(context, settings),
+            tooltip: strings.AppStrings.checkForUpdatesTooltip,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        ),
+      _SettingItem(
+        title: strings.AppStrings.privacyPolicy,
+        subtitle: strings.AppStrings.privacyPolicyDescription,
+        child: IconButton(
+          icon: Icon(Icons.open_in_new,
+              color: Theme.of(context).colorScheme.primary),
+          onPressed: () => _openPrivacyPolicy(context),
+          tooltip: strings.AppStrings.openPrivacyPolicyTooltip,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+      ),
+    ];
+
+    final filteredItems = searchQuery.isEmpty
+        ? allItems
+        : allItems.where((item) =>
+            item.title.toLowerCase().contains(searchQuery) ||
+            (item.subtitle?.toLowerCase().contains(searchQuery) ?? false)).toList();
+
     return ListView(
       padding: EdgeInsets.symmetric(horizontal: isSmallScreen ? 16.0 : 24.0),
       cacheExtent: 1000,
       physics: const ClampingScrollPhysics(),
       children: [
-        // Appearance Section
-        _buildSection(
-          context,
-          colorScheme,
-          isSmallScreen,
-          title: strings.AppStrings.display,
-          icon: Icons.palette_rounded,
-          items: [
-            _SettingItem(
-              title: strings.AppStrings.language,
-              subtitle: settings.language == 'nl' ? 'Nederlands' : 'English',
-              child: _buildLanguageDropdown(settings, colorScheme, isSmallScreen),
-            ),
-            _SettingItem(
-              title: strings.AppStrings.theme,
-              subtitle: strings.AppStrings.chooseTheme,
-              child: _buildThemeDropdown(settings, colorScheme, isSmallScreen),
-            ),
-            _SettingItem(
-              title: strings.AppStrings.showNavigationLabels,
-              subtitle: strings.AppStrings.showNavigationLabelsDesc,
-              child: _buildSwitch(
-                settings.showNavigationLabels,
-                (value) => _updateSetting(settings, 'toggle_navigation_labels',
-                    () => settings.setShowNavigationLabels(value)),
-                colorScheme,
-              ),
-            ),
-            _SettingItem(
-              title: strings.AppStrings.lessonLayoutSettings,
-              subtitle: strings.AppStrings.chooseLessonLayoutDesc,
-              child: _buildLayoutDropdown(settings, colorScheme, isSmallScreen),
-            ),
-            _SettingItem(
-              title: strings.AppStrings.colorfulMode,
-              subtitle: strings.AppStrings.colorfulModeDesc,
-              child: _buildSwitch(
-                settings.colorfulMode,
-                (value) => _updateSetting(settings, 'toggle_colorful_mode',
-                    () => settings.setColorfulMode(value)),
-                colorScheme,
-              ),
-            ),
-            _SettingItem(
-              title: strings.AppStrings.hidePopup,
-              subtitle: strings.AppStrings.hidePopupDesc,
-              child: _buildSwitch(
-                settings.hidePromoCard,
-                (value) => _updateSetting(settings, 'toggle_hide_promo_card',
-                    () => settings.setHidePromoCard(value)),
-                colorScheme,
-              ),
-            ),
-          ],
-          searchQuery: searchQuery,
-        ),
-
-        // Game Section
-        _buildSection(
-          context,
-          colorScheme,
-          isSmallScreen,
-          title: strings.AppStrings.gameSettings,
-          icon: Icons.games_rounded,
-          items: [
-            _SettingItem(
-              title: strings.AppStrings.gameSpeed,
-              subtitle: strings.AppStrings.chooseGameSpeed,
-              child:
-                  _buildGameSpeedDropdown(settings, colorScheme, isSmallScreen),
-            ),
-            _SettingItem(
-              title: strings.AppStrings.muteSoundEffects,
-              subtitle: strings.AppStrings.muteSoundEffectsDesc,
-              child: _buildSwitch(
-                settings.mute,
-                (value) => _updateSetting(
-                    settings, 'toggle_mute', () => settings.setMute(value)),
-                colorScheme,
-              ),
-            ),
-            if (!(kIsWeb || Platform.isLinux))
-              _SettingItem(
-                title: strings.AppStrings.motivationNotifications,
-                subtitle: strings.AppStrings.motivationNotificationsDesc,
-                child: _buildSwitch(
-                  settings.notificationEnabled,
-                  (value) => _toggleNotifications(context, settings, value),
-                  colorScheme,
-                ),
-              ),
-          ],
-          searchQuery: searchQuery,
-        ),
-
-        // Privacy Section
-        _buildSection(
-          context,
-          colorScheme,
-          isSmallScreen,
-          title: strings.AppStrings.privacyAndAnalytics,
-          icon: Icons.privacy_tip_rounded,
-          items: [
-            _SettingItem(
-              title: strings.AppStrings.analytics,
-              subtitle: strings.AppStrings.analyticsDescription,
-              child: _buildSwitch(
-                settings.analyticsEnabled,
-                (value) => _updateAnalyticsSetting(settings, value),
-                colorScheme,
-              ),
-            ),
-            _SettingItem(
-              title: strings.AppStrings.automaticBugReports,
-              subtitle: strings.AppStrings.automaticBugReportsDesc,
-              child: _buildSwitch(
-                settings.automaticBugReporting,
-                (value) => _updateSetting(
-                    settings,
-                    'toggle_automatic_bug_reporting',
-                    () => settings.setAutomaticBugReporting(value)),
-                colorScheme,
-              ),
-            ),
-            if (settings.apiEnabled) ...[
-              _SettingItem(
-                title: strings.AppStrings.apiKey,
-                subtitle: settings.apiKey.isEmpty
-                    ? strings.AppStrings.generateApiKey
-                    : _formatApiKey(settings.apiKey),
-                child: _buildApiKeyControls(context, settings, colorScheme),
-              ),
-              _SettingItem(
-                title: strings.AppStrings.apiPort,
-                subtitle:
-                    '${strings.AppStrings.apiPortDesc} (${settings.apiPort})',
-                child: _buildApiPortControl(settings),
-              ),
-              _SettingItem(
-                title: strings.AppStrings.apiStatus,
-                subtitle: strings.AppStrings.apiStatusDesc,
-                child: _buildApiStatusIndicator(settings),
-              ),
-            ],
-          ],
-          searchQuery: searchQuery,
-        ),
-
-        // Actions Section
-        _buildSection(
-          context,
-          colorScheme,
-          isSmallScreen,
-          title: strings.AppStrings.actions,
-          icon: Icons.build_rounded,
-          items: [
-            _SettingItem(
-              title: strings.AppStrings.donateButton,
-              subtitle: strings.AppStrings.supportUsTitle,
-              onTap: () => _showDonateDialog(context),
-              child: _buildActionButton(
-                context,
-                icon: Icons.favorite,
-              ),
-            ),
-            _SettingItem(
-              title: strings.AppStrings.showIntroduction,
-              subtitle: strings.AppStrings.showIntroductionDesc,
-              onTap: () => _showIntroduction(context),
-              child: _buildActionButton(
-                context,
-                icon: Icons.help_outline,
-              ),
-            ),
-            _SettingItem(
-              title: strings.AppStrings.exportStats,
-              subtitle: strings.AppStrings.exportStatsDesc,
-              onTap: () => _exportStats(context),
-              child: _buildActionButton(
-                context,
-                icon: Icons.download,
-              ),
-            ),
-            _SettingItem(
-              title: strings.AppStrings.importStats,
-              subtitle: strings.AppStrings.importStatsDesc,
-              onTap: () => _importStats(context),
-              child: _buildActionButton(
-                context,
-                icon: Icons.upload,
-              ),
-            ),
-            _SettingItem(
-              title: strings.AppStrings.exportAllDataJson,
-              subtitle: strings.AppStrings.exportAllDataJsonDesc,
-              onTap: () => _exportAllDataJson(context),
-              child: _buildActionButton(
-                context,
-                icon: Icons.download,
-              ),
-            ),
-            _SettingItem(
-              title: strings.AppStrings.clearQuestionCache,
-              subtitle: strings.AppStrings.clearQuestionCacheDesc,
-              onTap: () => _clearCache(context),
-              child: _buildActionButton(
-                context,
-                icon: Icons.delete_sweep,
-              ),
-            ),
-            _SettingItem(
-              title: strings.AppStrings.followOnSocialMedia,
-              subtitle: strings.AppStrings.followOnSocialMediaDesc,
-              onTap: () => _showSocialMediaDialog(context),
-              child: _buildActionButton(
-                context,
-                icon: Icons.share,
-              ),
-            ),
-            _SettingItem(
-              title: strings.AppStrings.inviteFriend,
-              subtitle: strings.AppStrings.inviteFriendDesc,
-              onTap: () => _showInviteDialog(context),
-              child: _buildActionButton(
-                context,
-                icon: Icons.person_add,
-              ),
-            ),
-            _SettingItem(
-              title: strings.AppStrings.shareYourStats,
-              subtitle: strings.AppStrings.copyStatsLinkToClipboard,
-              onTap: () => _shareStats(context),
-              child: _buildActionButton(
-                context,
-                icon: Icons.bar_chart,
-              ),
-            ),
-            if (BijbelQuizGenPeriod.isGenPeriod() || kDebugMode)
-              _SettingItem(
-                title: strings.AppStrings.bijbelquizGenTitle,
-                subtitle:
-                    '${strings.AppStrings.bijbelquizGenSubtitle}${BijbelQuizGenPeriod.getStatsYear()}',
-                onTap: () => _showBijbelQuizGen(context),
-                child: _buildActionButton(
-                  context,
-                  icon: Icons.auto_awesome,
-                ),
-              ),
-            _SettingItem(
-              title: strings.AppStrings.resetAndLogout,
-              subtitle: strings.AppStrings.resetAndLogoutDesc,
-              onTap: () => _showResetAndLogoutDialog(context, settings),
-              child: _buildActionButton(
-                context,
-                icon: Icons.logout,
-              ),
-            ),
-          ],
-          searchQuery: searchQuery,
-        ),
-
-        // About Section
-        _buildSection(
-          context,
-          colorScheme,
-          isSmallScreen,
-          title: strings.AppStrings.about,
-          icon: Icons.info_rounded,
-          items: [
-            _SettingItem(
-              title: strings.AppStrings.serverStatus,
-              subtitle: strings.AppStrings.checkServiceStatus,
-              child: IconButton(
-                icon: Icon(Icons.open_in_new,
-                    color: Theme.of(context).colorScheme.primary),
-                onPressed: _openStatusPage,
-                tooltip: strings.AppStrings.openStatusPage,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
-            if (!(kIsWeb || Platform.isAndroid))
-              _SettingItem(
-                title: strings.AppStrings.checkForUpdates,
-                subtitle: strings.AppStrings.checkForUpdatesDescription,
-                child: IconButton(
-                  icon: Icon(Icons.refresh,
-                      color: Theme.of(context).colorScheme.primary),
-                  onPressed: () => _checkForUpdates(context, settings),
-                  tooltip: strings.AppStrings.checkForUpdatesTooltip,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
-            _SettingItem(
-              title: strings.AppStrings.privacyPolicy,
-              subtitle: strings.AppStrings.privacyPolicyDescription,
-              child: IconButton(
-                icon: Icon(Icons.open_in_new,
-                    color: Theme.of(context).colorScheme.primary),
-                onPressed: () => _openPrivacyPolicy(context),
-                tooltip: strings.AppStrings.openPrivacyPolicyTooltip,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
-            _SettingItem(
-              title: strings.AppStrings.bugReport,
-              subtitle: strings.AppStrings.bugReportDesc,
-              child: BugReportWidget(),
-            ),
-          ],
-          searchQuery: searchQuery,
-        ),
-
-        // Version Info
-        const SizedBox(height: 24),
-        _buildVersionInfo(),
-        const SizedBox(height: 16),
-      ],
-    );
-  }
-
-  Widget _buildSection(
-    BuildContext context,
-    ColorScheme colorScheme,
-    bool isSmallScreen, {
-    required String title,
-    required IconData icon,
-    required List<_SettingItem> items,
-    String? searchQuery,
-  }) {
-    final filteredItems = searchQuery == null || searchQuery.isEmpty
-        ? items
-        : items
-            .where((item) =>
-                item.title.toLowerCase().contains(searchQuery) ||
-                (item.subtitle?.toLowerCase().contains(searchQuery) ?? false))
-            .toList();
-
-    if (filteredItems.isEmpty) {
-      return const SizedBox.shrink();
-    }
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.only(
-            left: isSmallScreen ? 4 : 8,
-            top: 24,
-            bottom: 12,
-          ),
-          child: Row(
-            children: [
-              Icon(
-                icon,
-                size: 20,
-                color: colorScheme.primary,
-              ),
-              const SizedBox(width: 8),
-              Text(
-                title,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: colorScheme.onSurface,
-                    ),
-              ),
-            ],
-          ),
-        ),
         Card(
           elevation: 0,
           color: colorScheme.surfaceContainerHighest,
@@ -626,29 +511,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
             borderRadius: BorderRadius.circular(12),
           ),
           child: Column(
-            children: filteredItems.asMap().entries.map((entry) {
-              final index = entry.key;
-              final item = entry.value;
-              final isLast = index == filteredItems.length - 1;
-
-              return Column(
-                children: [
-                  _buildSettingRow(context, item, colorScheme),
-                  if (!isLast)
-                    Divider(
-                      height: 1,
-                      thickness: 1,
-                      color: colorScheme.outline.withValues(alpha: 0.12),
-                      indent: 56,
-                    ),
-                ],
-              );
-            }).toList(),
+            children: filteredItems.map((item) => _buildSettingRow(context, item, colorScheme)).toList(),
           ),
         ),
+        const SizedBox(height: 24),
+        _buildVersionInfo(),
+        const SizedBox(height: 16),
       ],
     );
   }
+
 
   Widget _buildSettingRow(
       BuildContext context, _SettingItem item, ColorScheme colorScheme) {
@@ -1116,26 +988,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     settings.setAnalyticsEnabled(value);
   }
 
-  Future<void> _toggleNotifications(
-      BuildContext context, SettingsProvider settings, bool value) async {
-    final analytics = Provider.of<AnalyticsService>(context, listen: false);
-    analytics.capture(context, 'toggle_notifications',
-        properties: {'enabled': value});
-    analytics.trackFeatureSuccess(context, AnalyticsService.featureSettings,
-        additionalProperties: {
-          'setting': 'notifications',
-          'value': value,
-        });
-    await settings.setNotificationEnabled(value);
-    if (value) {
-      final granted = await NotificationService.requestNotificationPermission();
-      if (granted) {
-        await NotificationService().scheduleDailyMotivationNotifications();
-      }
-    } else {
-      await NotificationService().cancelAllNotifications();
-    }
-  }
 
   // Dialog and navigation methods (simplified implementations)
   void _showDonateDialog(BuildContext context) async {
@@ -1345,8 +1197,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
     analytics.capture(context, 'share_stats');
 
     try {
-      await Clipboard.setData(
-          ClipboardData(text: 'https://bijbelquiz.app/score.html'));
+      final gameStats = Provider.of<GameStatsProvider>(context, listen: false);
+
+      // Calculate total questions and correct percentage
+      final totalQuestions = gameStats.score + gameStats.incorrectAnswers;
+      final correctPercentage = totalQuestions > 0 ? ((gameStats.score / totalQuestions) * 100).round() : 0;
+
+      // Create compact stats string: score:currentStreak:longestStreak:incorrectAnswers:totalQuestions:correctPercentage
+      final statsString = '${gameStats.score}:${gameStats.currentStreak}:${gameStats.longestStreak}:${gameStats.incorrectAnswers}:$totalQuestions:$correctPercentage';
+
+      // Generate hash (first 16 chars of SHA-256)
+      final statsHash = await _generateStatsHash(statsString);
+
+      // Create the full URL
+      final statsUrl = 'https://bijbelquiz.app/score.html?s=$statsString&h=$statsHash';
+
+      await Clipboard.setData(ClipboardData(text: statsUrl));
       if (context.mounted) {
         showTopSnackBar(context, strings.AppStrings.statsLinkCopied,
             style: TopSnackBarStyle.success);
@@ -1356,6 +1222,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
         showTopSnackBar(context, 'Error copying link: $e',
             style: TopSnackBarStyle.error);
       }
+    }
+  }
+
+  /// Generate SHA-256 hash for stats verification (first 16 characters)
+  Future<String> _generateStatsHash(String statsString) async {
+    try {
+      final bytes = utf8.encode(statsString);
+      final digest = sha256.convert(bytes);
+      return digest.toString().substring(0, 16);
+    } catch (e) {
+      // Fallback hash if crypto fails
+      return statsString.hashCode.toRadixString(16).padLeft(16, '0').substring(0, 16);
     }
   }
 
@@ -1399,7 +1277,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         .resetAll();
                   }
                   await QuestionCacheService(ConnectionService()).clearCache();
-                  await NotificationService().cancelAllNotifications();
                   final prefs = await SharedPreferences.getInstance();
                   await prefs.clear();
                   await settings.reloadSettings();
@@ -1669,12 +1546,35 @@ class _ImportStatsScreenState extends State<ImportStatsScreen> {
                 const SizedBox(width: 16),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () {
-                      if (context.mounted) {
-                        Navigator.pop(context);
-                        showTopSnackBar(context,
-                            strings.AppStrings.statsImportedSuccessfully,
-                            style: TopSnackBarStyle.success);
+                    onPressed: () async {
+                      final input = _controller.text.trim();
+                      if (input.isEmpty) {
+                        showTopSnackBar(context, 'Please enter data to import',
+                            style: TopSnackBarStyle.error);
+                        return;
+                      }
+                      try {
+                        final data = json.decode(input);
+                        // Import JSON data
+                        final settings = Provider.of<SettingsProvider>(context, listen: false);
+                        final gameStats = Provider.of<GameStatsProvider>(context, listen: false);
+                        final lessonProgress = Provider.of<LessonProgressProvider>(context, listen: false);
+
+                        await settings.loadImportData(data['settings']);
+                        await gameStats.loadImportData(data['gameStats']);
+                        await lessonProgress.loadImportData(data['lessonProgress']);
+
+                        if (context.mounted) {
+                          Navigator.pop(context);
+                          showTopSnackBar(context,
+                              strings.AppStrings.statsImportedSuccessfully,
+                              style: TopSnackBarStyle.success);
+                        }
+                      } catch (e) {
+                        if (context.mounted) {
+                          showTopSnackBar(context, 'Import failed: $e',
+                              style: TopSnackBarStyle.error);
+                        }
                       }
                     },
                     child: Text(strings.AppStrings.importButton),

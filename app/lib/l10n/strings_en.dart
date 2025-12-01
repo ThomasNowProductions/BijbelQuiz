@@ -25,7 +25,6 @@ class AppStringsEn {
   // Settings
   static const String settings = 'Settings';
   static const String sound = 'Sound';
-  static const String notifications = 'Notifications';
   static const String language = 'Language';
   static const String theme = 'Theme';
   static const String darkMode = 'Dark Mode';
@@ -148,12 +147,6 @@ class AppStringsEn {
   static const String howToPlayTitle = 'How to Play?';
   static const String howToPlayDescription =
       'Answer questions about the Bible and earn points. The faster you answer, the more points you earn!';
-  static const String notificationsTitle = 'Stay Updated';
-  static const String notificationsDescription =
-      'Receive reminders and challenges to improve your Bible knowledge.';
-  static const String enableNotifications = 'Enable Notifications';
-  static const String notificationsEnabled = 'Notifications Enabled';
-  static const String continueText = 'Continue';
   static const String trackProgressTitle = 'Track Your Progress';
   static const String trackProgressDescription =
       'Keep track of your scores and improve yourself over time.';
@@ -227,6 +220,25 @@ class AppStringsEn {
   static const String orangeThemeName = 'Orange Theme';
   static const String orangeThemeDesc = 'Unlock a vibrant orange theme';
 
+  // Coupons
+  static const String couponTitle = 'Have a coupon code?';
+  static const String couponDescription = 'Redeem it here for rewards';
+  static const String couponRedeem = 'Redeem';
+  static const String couponDialogTitle = 'Redeem Coupon';
+  static const String couponCodeLabel = 'Coupon code';
+  static const String couponCodeHint = 'e.g. SUMMER2023';
+  static const String couponSuccessTitle = 'Congratulations!';
+  static const String couponStarsReceived = 'You received {amount} stars!';
+  static const String couponThemeUnlocked = 'You unlocked a new theme!';
+  static const String couponErrorTitle = 'Error';
+  static const String couponInvalid = 'Invalid coupon code';
+  static const String couponExpired = 'This coupon has expired';
+  static const String couponMaxUsed = 'This coupon is no longer valid (maximum uses reached)';
+  static const String qrCode = 'QR-code';
+  static const String qrCodeDescription = 'Point the camera at the QR code';
+  static const String qrScannerMobileOnly = 'QR Scanner only available on mobile';
+
+
   // Settings screen
   static const String supportUsTitle = 'Support Us';
   static const String errorLoadingSettings = 'Error loading settings';
@@ -246,10 +258,6 @@ class AppStringsEn {
   static const String openStatusPage = 'Open Status Page';
 
   // Notifications
-  static const String motivationNotifications =
-      'Motivation Notifications (Beta)';
-  static const String motivationNotificationsDesc =
-      'Receive daily reminders for BibleQuiz';
 
   // Actions
   static const String actions = 'Actions';
@@ -312,17 +320,11 @@ class AppStringsEn {
   static const String copyStatsLinkToClipboard =
       'Copy your statistics link to the clipboard';
   static const String importButton = 'Import';
-  static const String couldNotScheduleAnyNotifications =
-      'Could not schedule any notifications. Check notification permissions in app settings.';
-  static const String couldNotScheduleSomeNotificationsTemplate =
-      'Could only schedule {successCount} of {total} notifications.';
-  static const String couldNotScheduleNotificationsError =
-      'Could not schedule notifications: ';
 
   // Popups
   static const String followUs = 'Follow Us';
   static const String followUsMessage =
-      'Follow us on Mastodon, Pixelfed, Kwebler, Signal, Discord, Bluesky and Nooki for updates and community!';
+      'Follow us on social media for updates and community!';
   static const String followMastodon = 'Follow Mastodon';
   static const String followPixelfed = 'Follow Pixelfed';
   static const String followKwebler = 'Follow Kwebler';
@@ -353,6 +355,12 @@ class AppStringsEn {
   static const String difficultyGood = 'Good';
   static const String difficultyTooEasy = 'Too easy';
 
+  // Account Creation
+  static const String createAccount = 'Create Account';
+  static const String createAccountMessage =
+      'Create an account to unlock social features and sync your progress across devices!';
+  static const String createAccountButton = 'Create Account';
+
   // Quiz Screen
   static const String skip = 'Skip';
   static const String overslaan = 'Skip';
@@ -365,8 +373,6 @@ class AppStringsEn {
   // Guide Screen
   static const String donationError =
       'An error occurred while opening the donation page';
-  static const String notificationPermissionDenied =
-      'Notification permission denied.';
   static const String soundEffectsDescription = 'Turn game sounds on or off';
 
   // Store Screen
@@ -487,8 +493,6 @@ class AppStringsEn {
       'Could not reset guide status:';
   static const String failedToResetCheckForUpdateStatus =
       'Could not reset check for update status:';
-  static const String failedToSaveNotificationSetting =
-      'Could not save notification setting:';
 
   // Export/Import Stats
   static const String exportStatsTitle = 'Export Statistics';

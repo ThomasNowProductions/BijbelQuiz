@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'dart:math';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:bijbelquiz/services/analytics_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,6 +14,7 @@ import '../services/lesson_service.dart';
 import '../screens/quiz_screen.dart';
 import '../screens/guide_screen.dart';
 import '../screens/multiplayer_game_setup_screen.dart';
+import '../screens/social_screen.dart';
 import '../widgets/top_snackbar.dart';
 import '../l10n/strings_nl.dart' as strings;
 import '../constants/urls.dart';
@@ -41,6 +43,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
    bool _isDonationPromo = true; // true for donation, false for follow
    bool _isSatisfactionPromo = false; // true for satisfaction survey
    bool _isDifficultyPromo = false; // true for difficulty feedback
+   bool _isAccountCreationPromo = false; // true for account creation
    String? _socialMediaType; // for individual social media popups
    // Search and filters removed for simplified UI
 
@@ -290,64 +293,49 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
           // Show promo card occasionally (20% chance) with new logic for different popup types
           _showPromoCard = _shouldShowPromoCard(settings);
           if (_showPromoCard) {
-            // Determine which type of promo to show
-            final rand = Random().nextDouble();
-            if (rand < 0.125) {
-              _isDonationPromo = true;
+            // Check if user is not logged in
+            final isLoggedIn = Supabase.instance.client.auth.currentUser != null;
+            if (!isLoggedIn) {
+              _isDonationPromo = false;
               _isSatisfactionPromo = false;
               _isDifficultyPromo = false;
+              _isAccountCreationPromo = true;
               _socialMediaType = null;
-            } else if (rand < 0.25) {
-              _isDonationPromo = false;
-              _isSatisfactionPromo = false;
-              _isDifficultyPromo = true;
-              _socialMediaType = null;
-            } else if (rand < 0.375) {
-              _isDonationPromo = false;
-              _isSatisfactionPromo = true;
-              _isDifficultyPromo = false;
-              _socialMediaType = null;
-            } else if (rand < 0.5) {
-              _isDonationPromo = false;
-              _isSatisfactionPromo = false;
-              _isDifficultyPromo = false;
-              _socialMediaType = 'mastodon';
-            } else if (rand < 0.625) {
-              _isDonationPromo = false;
-              _isSatisfactionPromo = false;
-              _isDifficultyPromo = false;
-              _socialMediaType = 'pixelfed';
-            } else if (rand < 0.75) {
-              _isDonationPromo = false;
-              _isSatisfactionPromo = false;
-              _isDifficultyPromo = false;
-              _socialMediaType = 'kwebler';
-            } else if (rand < 0.875) {
-              _isDonationPromo = false;
-              _isSatisfactionPromo = false;
-              _isDifficultyPromo = false;
-              _socialMediaType = 'signal';
-            } else if (rand < 0.9375) {
-              _isDonationPromo = false;
-              _isSatisfactionPromo = false;
-              _isDifficultyPromo = false;
-              _socialMediaType = 'discord';
-            } else if (rand < 0.96875) {
-              _isDonationPromo = false;
-              _isSatisfactionPromo = false;
-              _isDifficultyPromo = false;
-              _socialMediaType = 'bluesky';
             } else {
-              _isDonationPromo = false;
-              _isSatisfactionPromo = false;
-              _isDifficultyPromo = false;
-              _socialMediaType = 'nooki';
+              // Determine which type of promo to show
+              final rand = Random().nextDouble();
+              if (rand < 0.125) {
+                _isDonationPromo = true;
+                _isSatisfactionPromo = false;
+                _isDifficultyPromo = false;
+                _isAccountCreationPromo = false;
+                _socialMediaType = null;
+              } else if (rand < 0.25) {
+                _isDonationPromo = false;
+                _isSatisfactionPromo = false;
+                _isDifficultyPromo = true;
+                _isAccountCreationPromo = false;
+                _socialMediaType = null;
+              } else if (rand < 0.375) {
+                _isDonationPromo = false;
+                _isSatisfactionPromo = true;
+                _isDifficultyPromo = false;
+                _isAccountCreationPromo = false;
+                _socialMediaType = null;
+              } else {
+                _isDonationPromo = false;
+                _isSatisfactionPromo = false;
+                _isDifficultyPromo = false;
+                _isAccountCreationPromo = false;
+                _socialMediaType = 'follow';
+              }
             }
             Provider.of<AnalyticsService>(context, listen: false)
                 .capture(context, 'show_promo_card', properties: {
               'is_donation': _isDonationPromo,
               'is_satisfaction': _isSatisfactionPromo,
               'is_difficulty': _isDifficultyPromo,
+              'is_account_creation': _isAccountCreationPromo,
               'social_media_type': _socialMediaType ?? '',
             });
           }
@@ -868,6 +856,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                                     isDonation: _isDonationPromo,
                                     isSatisfaction: _isSatisfactionPromo,
                                     isDifficulty: _isDifficultyPromo,
+                                    isAccountCreation: _isAccountCreationPromo,
                                     socialMediaType: _socialMediaType,
                                     onDismiss: () {
                                       final analyticsService =
@@ -885,8 +874,10 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                                                     ? 'satisfaction'
                                                     : (_isDifficultyPromo
                                                         ? 'difficulty'
-                                                        : (_socialMediaType ??
-                                                            'follow'))),
+                                                        : (_isAccountCreationPromo
+                                                            ? 'account_creation'
+                                                            : (_socialMediaType ??
+                                                                'follow')))),
                                           });
                                       setState(() {
                                         _showPromoCard = false;
@@ -908,8 +899,10 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                                                     ? 'satisfaction'
                                                     : (_isDifficultyPromo
                                                         ? 'difficulty'
-                                                        : (_socialMediaType ??
-                                                            'follow'))),
+                                                        : (_isAccountCreationPromo
+                                                            ? 'account_creation'
+                                                            : (_socialMediaType ??
+                                                                'follow')))),
                                           });
                                     },
                                     onAction: (url) async {
@@ -987,6 +980,19 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                                         setState(() {
                                           _showPromoCard = false;
                                         });
+                                      } else if (_isAccountCreationPromo) {
+                                        final analyticsService =
+                                            Provider.of<AnalyticsService>(
+                                                context,
+                                                listen: false);
+                                        analyticsService.capture(
+                                            context, 'tap_create_account_promo');
+                                        // Navigate to social screen which will handle auth
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) => const SocialScreen(),
+                                          ),
+                                        );
                                       } else {
                                         Provider.of<AnalyticsService>(context,
                                                 listen: false)

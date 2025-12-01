@@ -1,4 +1,3 @@
-import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -17,7 +16,6 @@ class TrackingService {
   factory TrackingService() => _instance;
   TrackingService._internal();
 
-  static final Logger _logger = Logger('TrackingService');
   static bool _isInitialized = false;
 
   /// Initializes the tracking service with PostHog

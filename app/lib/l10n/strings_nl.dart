@@ -35,7 +35,6 @@ class AppStrings {
   // Settings
   static String get settings => _language == 'en' ? AppStringsEn.settings : 'Instellingen';
   static String get sound => _language == 'en' ? AppStringsEn.sound : 'Geluid';
-  static String get notifications => _language == 'en' ? AppStringsEn.notifications : 'Meldingen';
   static String get language => _language == 'en' ? AppStringsEn.language : 'Taal';
   static String get theme => _language == 'en' ? AppStringsEn.theme : 'Thema';
   static String get darkMode => _language == 'en' ? AppStringsEn.darkMode : 'Donkere modus';
@@ -148,11 +147,6 @@ class AppStrings {
   static String get welcomeDescription => _language == 'en' ? AppStringsEn.welcomeDescription : 'Ontdek de Bijbel op een leuke en interactieve manier met uitdagende vragen en lessen.';
   static String get howToPlayTitle => _language == 'en' ? AppStringsEn.howToPlayTitle : 'Hoe speel je?';
   static String get howToPlayDescription => _language == 'en' ? AppStringsEn.howToPlayDescription : 'Beantwoord vragen over de Bijbel en verdien punten. Hoe sneller je antwoordt, hoe meer punten je verdient!';
-  static String get notificationsTitle => _language == 'en' ? AppStringsEn.notificationsTitle : 'Blijf op de hoogte';
-  static String get notificationsDescription => _language == 'en' ? AppStringsEn.notificationsDescription : 'Ontvang herinneringen en uitdagingen om je Bijbelkennis te verbeteren.';
-  static String get enableNotifications => _language == 'en' ? AppStringsEn.enableNotifications : 'Meldingen inschakelen';
-  static String get notificationsEnabled => _language == 'en' ? AppStringsEn.notificationsEnabled : 'Meldingen ingeschakeld';
-  static String get continueText => _language == 'en' ? AppStringsEn.continueText : 'Doorgaan';
   static String get trackProgressTitle => _language == 'en' ? AppStringsEn.trackProgressTitle : 'Volg Je Voortgang';
   static String get trackProgressDescription => _language == 'en' ? AppStringsEn.trackProgressDescription : 'Houd je scores bij en verbeter jezelf in de loop van de tijd.';
   static String get customizeExperienceTitle => _language == 'en' ? AppStringsEn.customizeExperienceTitle : 'Pas Je Ervaring Aan';
@@ -213,6 +207,25 @@ class AppStrings {
   static String get orangeThemeName => _language == 'en' ? AppStringsEn.orangeThemeName : 'Oranje thema';
   static String get orangeThemeDesc => _language == 'en' ? AppStringsEn.orangeThemeDesc : 'Ontgrendel een levendig oranje thema';
 
+  // Coupons
+  static String get couponTitle => _language == 'en' ? AppStringsEn.couponTitle : 'Heb je een coupon code?';
+  static String get couponDescription => _language == 'en' ? AppStringsEn.couponDescription : 'Wissel hem hier in voor beloningen';
+  static String get couponRedeem => _language == 'en' ? AppStringsEn.couponRedeem : 'Inwisselen';
+  static String get couponDialogTitle => _language == 'en' ? AppStringsEn.couponDialogTitle : 'Coupon inwisselen';
+  static String get couponCodeLabel => _language == 'en' ? AppStringsEn.couponCodeLabel : 'Coupon code';
+  static String get couponCodeHint => _language == 'en' ? AppStringsEn.couponCodeHint : 'Coupon hier...';
+  static String get couponSuccessTitle => _language == 'en' ? AppStringsEn.couponSuccessTitle : 'Gefeliciteerd!';
+  static String get couponStarsReceived => _language == 'en' ? AppStringsEn.couponStarsReceived : 'Je hebt {amount} sterren ontvangen!';
+  static String get couponThemeUnlocked => _language == 'en' ? AppStringsEn.couponThemeUnlocked : 'Je hebt een nieuw thema ontgrendeld!';
+  static String get couponErrorTitle => _language == 'en' ? AppStringsEn.couponErrorTitle : 'Fout';
+  static String get couponInvalid => _language == 'en' ? AppStringsEn.couponInvalid : 'Ongeldige coupon code';
+  static String get couponExpired => _language == 'en' ? AppStringsEn.couponExpired : 'Deze coupon is verlopen';
+  static String get couponMaxUsed => _language == 'en' ? AppStringsEn.couponMaxUsed : 'Deze coupon is niet meer geldig (maximaal aantal keer gebruikt)';
+  static String get qrCode => _language == 'en' ? AppStringsEn.qrCode : 'QR-code';
+  static String get qrCodeDescription => _language == 'en' ? AppStringsEn.qrCodeDescription : 'Richt de camera op de QR-code';
+  static String get qrScannerMobileOnly => _language == 'en' ? AppStringsEn.qrScannerMobileOnly : 'QR-scanner alleen beschikbaar op mobiel';
+
+
   // Settings screen
   static String get supportUsTitle => _language == 'en' ? AppStringsEn.supportUsTitle : 'Ondersteun ons';
   static String get errorLoadingSettings => _language == 'en' ? AppStringsEn.errorLoadingSettings : 'Fout bij het laden van instellingen';
@@ -232,8 +245,6 @@ class AppStrings {
   static String get openStatusPage => _language == 'en' ? AppStringsEn.openStatusPage : 'Open statuspagina';
 
   // Notifications
-  static String get motivationNotifications => _language == 'en' ? AppStringsEn.motivationNotifications : 'Motivatie-meldingen (Béta)';
-  static String get motivationNotificationsDesc => _language == 'en' ? AppStringsEn.motivationNotificationsDesc : 'Ontvang dagelijkse herinneringen voor BijbelQuiz';
 
   // Actions
   static String get actions => _language == 'en' ? AppStringsEn.actions : 'Acties';
@@ -292,13 +303,10 @@ class AppStrings {
   static String get statsLinkCopied => _language == 'en' ? AppStringsEn.statsLinkCopied : 'Statistieken link gekopieerd naar klembord!';
   static String get copyStatsLinkToClipboard => _language == 'en' ? AppStringsEn.copyStatsLinkToClipboard : 'Kopieer je statistieken link naar het klembord';
   static String get importButton => _language == 'en' ? AppStringsEn.importButton : 'Importeren';
-  static String get couldNotScheduleAnyNotifications => _language == 'en' ? AppStringsEn.couldNotScheduleAnyNotifications : 'Kon geen enkele melding plannen. Controleer de toestemmingen voor meldingen in de app-instellingen.';
-  static String get couldNotScheduleSomeNotificationsTemplate => _language == 'en' ? AppStringsEn.couldNotScheduleSomeNotificationsTemplate : 'Kon slechts {successCount} van de {total} meldingen plannen.';
-  static String get couldNotScheduleNotificationsError => _language == 'en' ? AppStringsEn.couldNotScheduleNotificationsError : 'Kon meldingen niet plannen: ';
 
   // Popups
   static String get followUs => _language == 'en' ? AppStringsEn.followUs : 'Volg ons';
-  static String get followUsMessage => _language == 'en' ? AppStringsEn.followUsMessage : 'Volg ons op Mastodon, Pixelfed, Kwebler, Signal, Discord, Bluesky en Nooki voor updates en community!';
+  static String get followUsMessage => _language == 'en' ? AppStringsEn.followUsMessage : 'Volg ons op social media voor updates en community!';
   static String get followMastodon => _language == 'en' ? AppStringsEn.followMastodon : 'Volg Mastodon';
   static String get followPixelfed => _language == 'en' ? AppStringsEn.followPixelfed : 'Volg Pixelfed';
   static String get followKwebler => _language == 'en' ? AppStringsEn.followKwebler : 'Volg Kwebler';
@@ -326,6 +334,11 @@ class AppStrings {
   static String get difficultyGood => _language == 'en' ? AppStringsEn.difficultyGood : 'Goed';
   static String get difficultyTooEasy => _language == 'en' ? AppStringsEn.difficultyTooEasy : 'Te makkelijk';
 
+  // Account Creation
+  static String get createAccount => _language == 'en' ? AppStringsEn.createAccount : 'Account aanmaken';
+  static String get createAccountMessage => _language == 'en' ? AppStringsEn.createAccountMessage : 'Maak een account aan om sociale functies te ontgrendelen en je voortgang over apparaten te synchroniseren!';
+  static String get createAccountButton => _language == 'en' ? AppStringsEn.createAccountButton : 'Account aanmaken';
+
   // Quiz Screen
   static String get skip => _language == 'en' ? AppStringsEn.skip : 'Skip';
   static String get overslaan => _language == 'en' ? AppStringsEn.overslaan : 'Overslaan';
@@ -336,7 +349,6 @@ class AppStrings {
 
   // Guide Screen
   static String get donationError => _language == 'en' ? AppStringsEn.donationError : 'Er is een fout opgetreden bij het openen van de donatiepagina';
-  static String get notificationPermissionDenied => _language == 'en' ? AppStringsEn.notificationPermissionDenied : 'Meldingstoestemming geweigerd.';
   static String get soundEffectsDescription => _language == 'en' ? AppStringsEn.soundEffectsDescription : 'Schakel alle spelgeluiden in of uit';
 
   // Store Screen
@@ -439,7 +451,6 @@ class AppStrings {
   static String get failedToSaveGuideStatus => _language == 'en' ? AppStringsEn.failedToSaveGuideStatus : 'Kon gidsstatus niet opslaan:';
   static String get failedToResetGuideStatus => _language == 'en' ? AppStringsEn.failedToResetGuideStatus : 'Kon gidsstatus niet resetten:';
   static String get failedToResetCheckForUpdateStatus => _language == 'en' ? AppStringsEn.failedToResetCheckForUpdateStatus : 'Kon update-controle status niet resetten:';
-  static String get failedToSaveNotificationSetting => _language == 'en' ? AppStringsEn.failedToSaveNotificationSetting : 'Kon meldingsinstelling niet opslaan:';
 
   // Export/Import Stats
   static String get exportStatsTitle => _language == 'en' ? AppStringsEn.exportStatsTitle : 'Statistieken exporteren';
@@ -626,7 +637,7 @@ class AppStrings {
   static String get clearQuestionCacheDesc => _language == 'en' ? AppStringsEn.clearQuestionCacheDesc : 'Verwijder gecachte vragen om opslagruimte vrij te maken';
   static String get followOnSocialMediaDesc => _language == 'en' ? AppStringsEn.followOnSocialMediaDesc : 'Verbind met ons op social media platforms';
   static String get inviteFriendDesc => _language == 'en' ? AppStringsEn.inviteFriendDesc : 'Deel een gepersonaliseerde uitnodigingslink met vrienden';
-  static String get bugReport => _language == 'en' ? AppStringsEn.bugReport : 'Bug Rapport';
+  static String get bugReport => _language == 'en' ? AppStringsEn.bugReport : 'Rapporteer een probleem';
   static String get bugReportDesc => _language == 'en' ? AppStringsEn.bugReportDesc : 'Rapporteer bugs en problemen met de app';
 
   // Automatic Bug Reporting

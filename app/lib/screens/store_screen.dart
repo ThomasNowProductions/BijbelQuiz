@@ -4,16 +4,17 @@ import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
 import '../providers/game_stats_provider.dart';
 import '../providers/settings_provider.dart';
+import '../providers/store_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/top_snackbar.dart';
 import '../l10n/strings_nl.dart' as strings;
 import '../screens/quiz_screen.dart';
 import '../screens/ai_theme_designer_screen.dart';
+import '../screens/coupon_redeem_screen.dart';
 import '../services/logger.dart';
 import '../utils/automatic_error_reporter.dart';
-import '../services/store_service.dart';
-import '../services/connection_service.dart';
 import '../models/store_item.dart';
+import '../services/connection_service.dart';
 
 class StoreScreen extends StatefulWidget {
   const StoreScreen({super.key});
@@ -29,17 +30,14 @@ enum StoreErrorType {
 }
 
 class _StoreScreenState extends State<StoreScreen> {
-  List<StoreItem> _storeItems = [];
-  bool _isLoadingItems = true;
-  StoreErrorType? _errorType;
-  String? _errorMessage;
   late ConnectionService _connectionService;
 
   @override
   void initState() {
     super.initState();
-    AppLogger.info('StoreScreen initialized');
     _connectionService = ConnectionService();
+    _connectionService.initialize();
+    AppLogger.info('StoreScreen initialized');
     final analyticsService =
         Provider.of<AnalyticsService>(context, listen: false);
     analyticsService.screen(context, 'StoreScreen');
@@ -49,73 +47,17 @@ class _StoreScreenState extends State<StoreScreen> {
         context, AnalyticsService.featureThemePurchases);
 
     // Load store items from Supabase
-    _loadStoreItems();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final storeProvider = Provider.of<StoreProvider>(context, listen: false);
+      storeProvider.loadStoreItems();
+    });
   }
 
-  Future<void> _loadStoreItems() async {
-    try {
-      setState(() {
-        _isLoadingItems = true;
-        _errorType = null;
-        _errorMessage = null;
-      });
-
-      final storeService = StoreService();
-      final items = await storeService.getStoreItems();
-
-      setState(() {
-        _storeItems = items;
-        _isLoadingItems = false;
-      });
-
-      AppLogger.info('Loaded ${items.length} store items from database');
-    } catch (e) {
-      final errorString = e.toString().toLowerCase();
-      StoreErrorType errorType;
-      String userMessage;
-
-      // First check actual connectivity status
-      await _connectionService.checkConnection();
-
-      if (!_connectionService.isConnected) {
-        errorType = StoreErrorType.network;
-        userMessage =
-            'Geen internetverbinding beschikbaar. Controleer je Wi-Fi of mobiele data en probeer het opnieuw.';
-      } else if (errorString.contains('network') ||
-          errorString.contains('connection') ||
-          errorString.contains('timeout') ||
-          errorString.contains('socket') ||
-          errorString.contains('dns')) {
-        errorType = StoreErrorType.network;
-        userMessage =
-            'Geen internetverbinding beschikbaar. Controleer je netwerk en probeer het opnieuw.';
-      } else if (errorString.contains('server') ||
-          errorString.contains('500') ||
-          errorString.contains('502') ||
-          errorString.contains('503') ||
-          errorString.contains('504')) {
-        errorType = StoreErrorType.server;
-        userMessage =
-            'De server is tijdelijk niet beschikbaar. Probeer het later opnieuw.';
-      } else {
-        errorType = StoreErrorType.unknown;
-        userMessage =
-            'Er is een fout opgetreden bij het laden van de winkel. Probeer het opnieuw.';
-      }
-
-      setState(() {
-        _isLoadingItems = false;
-        _errorType = errorType;
-        _errorMessage = userMessage;
-      });
-
-      AppLogger.error('Error loading store items: $e');
-    }
-  }
 
   // Helper methods to get item prices by key
-  int _getPriceByKey(String key) {
-    final item = _storeItems.firstWhere((item) => item.itemKey == key,
+  int _getPriceByKey(BuildContext context, String key) {
+    final storeProvider = Provider.of<StoreProvider>(context, listen: false);
+    final item = storeProvider.storeItems.firstWhere((item) => item.itemKey == key,
         orElse: () => StoreItem(
               itemKey: key,
               itemName: '',
@@ -133,8 +75,9 @@ class _StoreScreenState extends State<StoreScreen> {
     return item.currentPrice;
   }
 
-  bool _isDiscountedByKey(String key) {
-    final item = _storeItems.firstWhere((item) => item.itemKey == key,
+  bool _isDiscountedByKey(BuildContext context, String key) {
+    final storeProvider = Provider.of<StoreProvider>(context, listen: false);
+    final item = storeProvider.storeItems.firstWhere((item) => item.itemKey == key,
         orElse: () => StoreItem(
               itemKey: key,
               itemName: '',
@@ -153,8 +96,9 @@ class _StoreScreenState extends State<StoreScreen> {
     return item.isCurrentlyDiscounted;
   }
 
-  int _getDiscountAmountByKey(String key) {
-    final item = _storeItems.firstWhere((item) => item.itemKey == key,
+  int _getDiscountAmountByKey(BuildContext context, String key) {
+    final storeProvider = Provider.of<StoreProvider>(context, listen: false);
+    final item = storeProvider.storeItems.firstWhere((item) => item.itemKey == key,
         orElse: () => StoreItem(
               itemKey: key,
               itemName: '',
@@ -179,6 +123,7 @@ class _StoreScreenState extends State<StoreScreen> {
     final textTheme = theme.textTheme;
     final gameStats = Provider.of<GameStatsProvider>(context);
     final settings = Provider.of<SettingsProvider>(context);
+    final storeProvider = Provider.of<StoreProvider>(context);
     final unlocked = settings.unlockedThemes;
     final isDev = kDebugMode;
 
@@ -187,8 +132,126 @@ class _StoreScreenState extends State<StoreScreen> {
     final isDesktop = size.width > 800;
     final isTablet = size.width > 600 && size.width <= 800;
 
+    // Show offline error screen if not connected
+    if (!_connectionService.isConnected) {
+      return Scaffold(
+        backgroundColor: colorScheme.surface,
+        appBar: AppBar(
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: colorScheme.primary.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(
+                  Icons.store_rounded,
+                  color: colorScheme.primary,
+                  size: 20,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Text(
+                strings.AppStrings.store,
+                style: textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: colorScheme.onSurface.withValues(alpha: 0.7),
+                ),
+              ),
+            ],
+          ),
+          backgroundColor: colorScheme.surface,
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          centerTitle: true,
+        ),
+        body: SafeArea(
+          child: Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: isDesktop ? 600 : double.infinity,
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(isDesktop ? 32 : 24),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Error icon with background
+                    Container(
+                      padding: EdgeInsets.all(isDesktop ? 32 : 24),
+                      decoration: BoxDecoration(
+                        color: colorScheme.error.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(24),
+                        border: Border.all(
+                          color: colorScheme.error.withValues(alpha: 0.2),
+                          width: 2,
+                        ),
+                      ),
+                      child: Icon(
+                        Icons.wifi_off_rounded,
+                        size:
+                            getResponsiveFontSize(context, isDesktop ? 80 : 64),
+                        color: colorScheme.error,
+                      ),
+                    ),
+                    SizedBox(height: isDesktop ? 32 : 24),
+                    Text(
+                      'Geen internetverbinding',
+                      style: textTheme.headlineMedium?.copyWith(
+                        fontWeight: FontWeight.w700,
+                        color: colorScheme.error,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: isDesktop ? 16 : 12),
+                    Text(
+                      'Controleer je internetverbinding en probeer het opnieuw',
+                      style: textTheme.bodyLarge?.copyWith(
+                        color: colorScheme.onSurface.withValues(alpha: 0.7),
+                        height: 1.5,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: isDesktop ? 40 : 32),
+                    // Action buttons
+                    Column(
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed: () async {
+                            final storeProvider = Provider.of<StoreProvider>(context, listen: false);
+                            await _connectionService.checkConnection();
+                            if (_connectionService.isConnected) {
+                              storeProvider.loadStoreItems();
+                            }
+                            setState(() {});
+                          },
+                          icon: const Icon(Icons.refresh_rounded),
+                          label: const Text('Opnieuw proberen'),
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: isDesktop ? 32 : 24,
+                              vertical: isDesktop ? 16 : 12,
+                            ),
+                            textStyle: textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
     // Show loading screen while fetching store items
-    if (_isLoadingItems) {
+    if (storeProvider.isLoading) {
       return Scaffold(
         backgroundColor: colorScheme.surface,
         appBar: AppBar(
@@ -229,28 +292,10 @@ class _StoreScreenState extends State<StoreScreen> {
     }
 
     // Show error if loading failed
-    if (_errorType != null) {
-      IconData errorIcon;
-      String errorTitle;
-      Color errorColor;
-
-      switch (_errorType!) {
-        case StoreErrorType.network:
-          errorIcon = Icons.wifi_off_rounded;
-          errorTitle = 'Geen internetverbinding';
-          errorColor = Colors.orange[700]!;
-          break;
-        case StoreErrorType.server:
-          errorIcon = Icons.cloud_off_rounded;
-          errorTitle = 'Server niet beschikbaar';
-          errorColor = Colors.red[700]!;
-          break;
-        case StoreErrorType.unknown:
-          errorIcon = Icons.error_outline_rounded;
-          errorTitle = 'Fout bij laden winkel';
-          errorColor = colorScheme.error;
-          break;
-      }
+    if (storeProvider.error != null) {
+      IconData errorIcon = Icons.error_outline_rounded;
+      String errorTitle = 'Fout bij laden winkel';
+      Color errorColor = colorScheme.error;
 
       return Scaffold(
         backgroundColor: colorScheme.surface,
@@ -325,7 +370,7 @@ class _StoreScreenState extends State<StoreScreen> {
                     ),
                     SizedBox(height: isDesktop ? 16 : 12),
                     Text(
-                      _errorMessage!,
+                      storeProvider.error!,
                       style: textTheme.bodyLarge?.copyWith(
                         color: colorScheme.onSurface.withValues(alpha: 0.7),
                         height: 1.5,
@@ -337,7 +382,10 @@ class _StoreScreenState extends State<StoreScreen> {
                     Column(
                       children: [
                         ElevatedButton.icon(
-                          onPressed: _loadStoreItems,
+                          onPressed: () {
+                            final storeProvider = Provider.of<StoreProvider>(context, listen: false);
+                            storeProvider.loadStoreItems();
+                          },
                           icon: const Icon(Icons.refresh_rounded),
                           label: const Text('Opnieuw proberen'),
                           style: ElevatedButton.styleFrom(
@@ -350,40 +398,6 @@ class _StoreScreenState extends State<StoreScreen> {
                             ),
                           ),
                         ),
-                        if (_errorType == StoreErrorType.network) ...[
-                          SizedBox(height: isDesktop ? 16 : 12),
-                          TextButton.icon(
-                            onPressed: () async {
-                              // Check connection again and show status
-                              await _connectionService.checkConnection();
-                              final isNowConnected =
-                                  _connectionService.isConnected;
-
-                              String message;
-                              if (isNowConnected) {
-                                message =
-                                    'Verbinding hersteld! Probeer de winkel te laden.';
-                              } else {
-                                message =
-                                    'Nog steeds geen verbinding. Controleer je Wi-Fi of mobiele data.';
-                              }
-
-                              if (!context.mounted) return;
-                              showTopSnackBar(
-                                context,
-                                message,
-                                style: isNowConnected
-                                    ? TopSnackBarStyle.success
-                                    : TopSnackBarStyle.info,
-                              );
-                            },
-                            icon: const Icon(Icons.wifi_find_rounded),
-                            label: const Text('Controleer verbinding'),
-                            style: TextButton.styleFrom(
-                              foregroundColor: colorScheme.primary,
-                            ),
-                          ),
-                        ],
                       ],
                     ),
                   ],
@@ -429,7 +443,10 @@ class _StoreScreenState extends State<StoreScreen> {
         centerTitle: true,
       ),
       body: RefreshIndicator(
-        onRefresh: _loadStoreItems,
+        onRefresh: () async {
+          final storeProvider = Provider.of<StoreProvider>(context, listen: false);
+          await storeProvider.loadStoreItems();
+        },
         child: SafeArea(
           child: Center(
             child: ConstrainedBox(
@@ -499,6 +516,15 @@ class _StoreScreenState extends State<StoreScreen> {
 
                     SizedBox(height: isDesktop ? 32 : 24),
 
+                    _buildCouponCard(
+                      context,
+                      isDesktop: isDesktop,
+                      colorScheme: colorScheme,
+                      textTheme: textTheme,
+                    ),
+
+                    SizedBox(height: isDesktop ? 32 : 24),
+
                     // Power-ups section
                     _buildSectionHeader(
                       context,
@@ -516,11 +542,11 @@ class _StoreScreenState extends State<StoreScreen> {
                       description: strings.AppStrings.doubleStars5QuestionsDesc,
                       icon: Icons.flash_on_rounded,
                       iconColor: colorScheme.primary,
-                      cost: _getPriceByKey('double_stars_5_questions'),
+                      cost: _getPriceByKey(context, 'double_stars_5_questions'),
                       isDiscounted:
-                          _isDiscountedByKey('double_stars_5_questions'),
+                          _isDiscountedByKey(context, 'double_stars_5_questions'),
                       discountAmount:
-                          _getDiscountAmountByKey('double_stars_5_questions'),
+                          _getDiscountAmountByKey(context, 'double_stars_5_questions'),
                       isDev: isDev,
                       gameStats: gameStats,
                       isDesktop: isDesktop,
@@ -538,11 +564,11 @@ class _StoreScreenState extends State<StoreScreen> {
                       description: strings.AppStrings.tripleStars5QuestionsDesc,
                       icon: Icons.flash_on_rounded,
                       iconColor: Colors.deepOrange,
-                      cost: _getPriceByKey('triple_stars_5_questions'),
+                      cost: _getPriceByKey(context, 'triple_stars_5_questions'),
                       isDiscounted:
-                          _isDiscountedByKey('triple_stars_5_questions'),
+                          _isDiscountedByKey(context, 'triple_stars_5_questions'),
                       discountAmount:
-                          _getDiscountAmountByKey('triple_stars_5_questions'),
+                          _getDiscountAmountByKey(context, 'triple_stars_5_questions'),
                       isDev: isDev,
                       gameStats: gameStats,
                       isDesktop: isDesktop,
@@ -561,10 +587,10 @@ class _StoreScreenState extends State<StoreScreen> {
                           strings.AppStrings.fiveTimesStars5QuestionsDesc,
                       icon: Icons.flash_on_rounded,
                       iconColor: Colors.redAccent,
-                      cost: _getPriceByKey('five_times_stars_5_questions'),
+                      cost: _getPriceByKey(context, 'five_times_stars_5_questions'),
                       isDiscounted:
-                          _isDiscountedByKey('five_times_stars_5_questions'),
-                      discountAmount: _getDiscountAmountByKey(
+                          _isDiscountedByKey(context, 'five_times_stars_5_questions'),
+                      discountAmount: _getDiscountAmountByKey(context,
                           'five_times_stars_5_questions'),
                       isDev: isDev,
                       gameStats: gameStats,
@@ -583,11 +609,11 @@ class _StoreScreenState extends State<StoreScreen> {
                       description: strings.AppStrings.doubleStars60SecondsDesc,
                       icon: Icons.timer_rounded,
                       iconColor: Colors.orangeAccent,
-                      cost: _getPriceByKey('double_stars_60_seconds'),
+                      cost: _getPriceByKey(context, 'double_stars_60_seconds'),
                       isDiscounted:
-                          _isDiscountedByKey('double_stars_60_seconds'),
+                          _isDiscountedByKey(context, 'double_stars_60_seconds'),
                       discountAmount:
-                          _getDiscountAmountByKey('double_stars_60_seconds'),
+                          _getDiscountAmountByKey(context, 'double_stars_60_seconds'),
                       isDev: isDev,
                       gameStats: gameStats,
                       isDesktop: isDesktop,
@@ -617,9 +643,9 @@ class _StoreScreenState extends State<StoreScreen> {
                       description: strings.AppStrings.oledThemeDesc,
                       icon: Icons.nights_stay_rounded,
                       iconColor: Colors.black,
-                      cost: _getPriceByKey('oled_theme'),
-                      isDiscounted: _isDiscountedByKey('oled_theme'),
-                      discountAmount: _getDiscountAmountByKey('oled_theme'),
+                      cost: _getPriceByKey(context, 'oled_theme'),
+                      isDiscounted: _isDiscountedByKey(context, 'oled_theme'),
+                      discountAmount: _getDiscountAmountByKey(context, 'oled_theme'),
                       isDev: isDev,
                       gameStats: gameStats,
                       settings: settings,
@@ -636,9 +662,9 @@ class _StoreScreenState extends State<StoreScreen> {
                       description: strings.AppStrings.greenThemeDesc,
                       icon: Icons.eco_rounded,
                       iconColor: Colors.green[700]!,
-                      cost: _getPriceByKey('green_theme'),
-                      isDiscounted: _isDiscountedByKey('green_theme'),
-                      discountAmount: _getDiscountAmountByKey('green_theme'),
+                      cost: _getPriceByKey(context, 'green_theme'),
+                      isDiscounted: _isDiscountedByKey(context, 'green_theme'),
+                      discountAmount: _getDiscountAmountByKey(context, 'green_theme'),
                       isDev: isDev,
                       gameStats: gameStats,
                       settings: settings,
@@ -655,9 +681,9 @@ class _StoreScreenState extends State<StoreScreen> {
                       description: strings.AppStrings.orangeThemeDesc,
                       icon: Icons.circle_rounded,
                       iconColor: Colors.orange[700]!,
-                      cost: _getPriceByKey('orange_theme'),
-                      isDiscounted: _isDiscountedByKey('orange_theme'),
-                      discountAmount: _getDiscountAmountByKey('orange_theme'),
+                      cost: _getPriceByKey(context, 'orange_theme'),
+                      isDiscounted: _isDiscountedByKey(context, 'orange_theme'),
+                      discountAmount: _getDiscountAmountByKey(context, 'orange_theme'),
                       isDev: isDev,
                       gameStats: gameStats,
                       settings: settings,
@@ -675,10 +701,10 @@ class _StoreScreenState extends State<StoreScreen> {
                           'Een feestelijk kerstthema met rode en groene kleuren',
                       icon: Icons.card_giftcard_rounded,
                       iconColor: Colors.red[700]!,
-                      cost: _getPriceByKey('christmas_theme'),
-                      isDiscounted: _isDiscountedByKey('christmas_theme'),
+                      cost: _getPriceByKey(context, 'christmas_theme'),
+                      isDiscounted: _isDiscountedByKey(context, 'christmas_theme'),
                       discountAmount:
-                          _getDiscountAmountByKey('christmas_theme'),
+                          _getDiscountAmountByKey(context, 'christmas_theme'),
                       isDev: isDev,
                       gameStats: gameStats,
                       settings: settings,
@@ -696,14 +722,16 @@ class _StoreScreenState extends State<StoreScreen> {
                           strings.AppStrings.aiThemeGeneratorDescription,
                       icon: Icons.smart_toy_rounded,
                       iconColor: Colors.purple,
-                      cost: _getPriceByKey('ai_theme_generator'),
-                      isDiscounted: _isDiscountedByKey('ai_theme_generator'),
+                      cost: _getPriceByKey(context, 'ai_theme_generator'),
+                      isDiscounted: _isDiscountedByKey(context, 'ai_theme_generator'),
                       discountAmount:
-                          _getDiscountAmountByKey('ai_theme_generator'),
+                          _getDiscountAmountByKey(context, 'ai_theme_generator'),
                       isDev: isDev,
                       gameStats: gameStats,
                       isDesktop: isDesktop,
                     ),
+
+                    SizedBox(height: isDesktop ? 32 : 24),
 
                     SizedBox(height: isDesktop ? 32 : 24),
                   ],
@@ -1594,4 +1622,66 @@ class _StoreScreenState extends State<StoreScreen> {
       ),
     );
   }
+  Widget _buildCouponCard(
+    BuildContext context, {
+    required bool isDesktop,
+    required ColorScheme colorScheme,
+    required TextTheme textTheme,
+  }) {
+    return Row(
+      children: [
+        Container(
+          padding: EdgeInsets.all(isDesktop ? 12 : 10),
+          decoration: BoxDecoration(
+            color: Colors.teal.withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Icon(
+            Icons.confirmation_number_rounded,
+            color: Colors.teal,
+            size: getResponsiveFontSize(context, 20),
+          ),
+        ),
+        SizedBox(width: isDesktop ? 16 : 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                strings.AppStrings.couponTitle,
+                style: textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: colorScheme.onSurface,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                strings.AppStrings.couponDescription,
+                style: textTheme.bodyMedium?.copyWith(
+                  color: colorScheme.onSurface.withValues(alpha: 0.6),
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(width: isDesktop ? 16 : 12),
+        FilledButton.icon(
+          onPressed: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const CouponRedeemScreen()),
+          ),
+          icon: const Icon(Icons.redeem_rounded, size: 20),
+          label: Text(strings.AppStrings.couponRedeem),
+          style: FilledButton.styleFrom(
+            backgroundColor: Colors.teal,
+            foregroundColor: Colors.white,
+            padding: EdgeInsets.symmetric(
+              horizontal: isDesktop ? 24 : 20,
+              vertical: isDesktop ? 14 : 12,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
 }
