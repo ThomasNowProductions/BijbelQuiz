@@ -14,6 +14,7 @@ import '../screens/coupon_redeem_screen.dart';
 import '../services/logger.dart';
 import '../utils/automatic_error_reporter.dart';
 import '../models/store_item.dart';
+import '../services/connection_service.dart';
 
 class StoreScreen extends StatefulWidget {
   const StoreScreen({super.key});
@@ -29,9 +30,13 @@ enum StoreErrorType {
 }
 
 class _StoreScreenState extends State<StoreScreen> {
+  late ConnectionService _connectionService;
+
   @override
   void initState() {
     super.initState();
+    _connectionService = ConnectionService();
+    _connectionService.initialize();
     AppLogger.info('StoreScreen initialized');
     final analyticsService =
         Provider.of<AnalyticsService>(context, listen: false);
@@ -126,6 +131,124 @@ class _StoreScreenState extends State<StoreScreen> {
     final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 800;
     final isTablet = size.width > 600 && size.width <= 800;
+
+    // Show offline error screen if not connected
+    if (!_connectionService.isConnected) {
+      return Scaffold(
+        backgroundColor: colorScheme.surface,
+        appBar: AppBar(
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: colorScheme.primary.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(
+                  Icons.store_rounded,
+                  color: colorScheme.primary,
+                  size: 20,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Text(
+                strings.AppStrings.store,
+                style: textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: colorScheme.onSurface.withValues(alpha: 0.7),
+                ),
+              ),
+            ],
+          ),
+          backgroundColor: colorScheme.surface,
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          centerTitle: true,
+        ),
+        body: SafeArea(
+          child: Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: isDesktop ? 600 : double.infinity,
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(isDesktop ? 32 : 24),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Error icon with background
+                    Container(
+                      padding: EdgeInsets.all(isDesktop ? 32 : 24),
+                      decoration: BoxDecoration(
+                        color: colorScheme.error.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(24),
+                        border: Border.all(
+                          color: colorScheme.error.withValues(alpha: 0.2),
+                          width: 2,
+                        ),
+                      ),
+                      child: Icon(
+                        Icons.wifi_off_rounded,
+                        size:
+                            getResponsiveFontSize(context, isDesktop ? 80 : 64),
+                        color: colorScheme.error,
+                      ),
+                    ),
+                    SizedBox(height: isDesktop ? 32 : 24),
+                    Text(
+                      'Geen internetverbinding',
+                      style: textTheme.headlineMedium?.copyWith(
+                        fontWeight: FontWeight.w700,
+                        color: colorScheme.error,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: isDesktop ? 16 : 12),
+                    Text(
+                      'Controleer je internetverbinding en probeer het opnieuw',
+                      style: textTheme.bodyLarge?.copyWith(
+                        color: colorScheme.onSurface.withValues(alpha: 0.7),
+                        height: 1.5,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: isDesktop ? 40 : 32),
+                    // Action buttons
+                    Column(
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed: () async {
+                            final storeProvider = Provider.of<StoreProvider>(context, listen: false);
+                            await _connectionService.checkConnection();
+                            if (_connectionService.isConnected) {
+                              storeProvider.loadStoreItems();
+                            }
+                            setState(() {});
+                          },
+                          icon: const Icon(Icons.refresh_rounded),
+                          label: const Text('Opnieuw proberen'),
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: isDesktop ? 32 : 24,
+                              vertical: isDesktop ? 16 : 12,
+                            ),
+                            textStyle: textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
 
     // Show loading screen while fetching store items
     if (storeProvider.isLoading) {
