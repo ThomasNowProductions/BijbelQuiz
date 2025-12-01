@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../providers/game_stats_provider.dart';
 import '../providers/settings_provider.dart';
 import '../services/coupon_service.dart';
@@ -194,40 +196,152 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> {
   Widget _buildQRCodeView(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final textTheme = theme.textTheme;
+    
+    // Check if platform is supported (Android or iOS)
+    final isMobile = Theme.of(context).platform == TargetPlatform.android || 
+                     Theme.of(context).platform == TargetPlatform.iOS;
 
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+    if (!isMobile) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.mobile_off_rounded,
+              size: 64,
+              color: colorScheme.onSurface.withValues(alpha: 0.3),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              strings.AppStrings.qrScannerMobileOnly,
+              style: theme.textTheme.titleMedium?.copyWith(
+                color: colorScheme.onSurface.withValues(alpha: 0.6),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: Stack(
         children: [
-          Icon(
-            Icons.qr_code_scanner_rounded,
-            size: 80,
-            color: colorScheme.onSurface.withValues(alpha: 0.3),
+          MobileScanner(
+            onDetect: (capture) {
+              final List<Barcode> barcodes = capture.barcodes;
+              for (final barcode in barcodes) {
+                final String? code = barcode.rawValue;
+                if (code != null) {
+                  _handleScannedCode(code);
+                  break; // Only handle the first valid code
+                }
+              }
+            },
           ),
-          const SizedBox(height: 24),
-          Text(
-            strings.AppStrings.comingSoon,
-            style: textTheme.headlineMedium?.copyWith(
-              fontWeight: FontWeight.w700,
-              color: colorScheme.onSurface.withValues(alpha: 0.6),
+          // Overlay
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.teal.withValues(alpha: 0.5),
+                width: 2,
+              ),
+              borderRadius: BorderRadius.circular(16),
             ),
           ),
-          const SizedBox(height: 8),
-          Text(
-            strings.AppStrings.qrCodeDescription,
-            style: textTheme.bodyLarge?.copyWith(
-              color: colorScheme.onSurface.withValues(alpha: 0.5),
+          // Scanner line animation or overlay could go here
+          Center(
+            child: Container(
+              width: 200,
+              height: 200,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.white.withValues(alpha: 0.8),
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(12),
+              ),
             ),
-            textAlign: TextAlign.center,
+          ),
+          Positioned(
+            bottom: 16,
+            left: 0,
+            right: 0,
+            child: Text(
+              strings.AppStrings.qrCodeDescription,
+              textAlign: TextAlign.center,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: Colors.white,
+                shadows: [
+                  Shadow(
+                    offset: const Offset(0, 1),
+                    blurRadius: 3.0,
+                    color: Colors.black.withValues(alpha: 0.5),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),
     );
   }
 
+  bool _isScanning = true;
+
+  void _handleScannedCode(String code) {
+    if (!_isScanning) return;
+
+    // Validate URL format: bijbelquiz.app?coupon=CODE
+    final uri = Uri.tryParse(code);
+    if (uri == null) return;
+
+    // Check host (allow www. and without) and scheme
+    final isValidHost = uri.host == 'bijbelquiz.app' || uri.host == 'www.bijbelquiz.app';
+    if (!isValidHost) return;
+
+    final couponCode = uri.queryParameters['coupon'];
+    if (couponCode != null && couponCode.isNotEmpty) {
+      setState(() {
+        _isScanning = false;
+      });
+      _redeemCoupon(couponCode).then((_) {
+        // Resume scanning after dialog is closed if needed, 
+        // but usually we might want to stay on the success/error screen or go back.
+        // For now, let's allow re-scanning if they stay on this tab.
+        if (mounted) {
+          setState(() {
+            _isScanning = true;
+          });
+        }
+      });
+    }
+  }
+
   Future<void> _redeemCoupon(String code) async {
     final localContext = context;
+
+    // Anticheat checks
+    final prefs = await SharedPreferences.getInstance();
+    final normalizedCode = code.trim().toUpperCase();
+    final redeemedCodes = prefs.getStringList('redeemed_coupons') ?? [];
+    final today = DateTime.now().toIso8601String().substring(0, 10);
+    final storedDate = prefs.getString('coupon_redemption_date') ?? '';
+    int count = prefs.getInt('coupon_redemption_count') ?? 0;
+
+    if (storedDate != today) {
+      count = 0;
+      await prefs.setString('coupon_redemption_date', today);
+      await prefs.setInt('coupon_redemption_count', 0);
+    }
+
+    if (redeemedCodes.contains(normalizedCode)) {
+      throw Exception('This coupon has already been redeemed');
+    }
+
+    if (count >= 5) {
+      throw Exception('Maximum of 5 coupons can be redeemed per day');
+    }
 
     // Show loading
     showDialog(
@@ -254,6 +368,11 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> {
         await Provider.of<SettingsProvider>(localContext, listen: false).unlockTheme(themeId);
         message = strings.AppStrings.couponThemeUnlocked;
       }
+
+      // Update anticheat data
+      redeemedCodes.add(normalizedCode);
+      await prefs.setStringList('redeemed_coupons', redeemedCodes);
+      await prefs.setInt('coupon_redemption_count', count + 1);
 
       if (!mounted) return;
       showDialog(

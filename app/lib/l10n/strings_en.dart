@@ -235,7 +235,8 @@ class AppStringsEn {
   static const String couponExpired = 'This coupon has expired';
   static const String couponMaxUsed = 'This coupon is no longer valid (maximum uses reached)';
   static const String qrCode = 'QR-code';
-  static const String qrCodeDescription = 'QR-code redemption will be available in a future update.';
+  static const String qrCodeDescription = 'Point the camera at the QR code';
+  static const String qrScannerMobileOnly = 'QR Scanner only available on mobile';
 
 
   // Settings screen

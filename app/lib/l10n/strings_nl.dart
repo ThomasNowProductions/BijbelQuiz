@@ -222,7 +222,8 @@ class AppStrings {
   static String get couponExpired => _language == 'en' ? AppStringsEn.couponExpired : 'Deze coupon is verlopen';
   static String get couponMaxUsed => _language == 'en' ? AppStringsEn.couponMaxUsed : 'Deze coupon is niet meer geldig (maximaal aantal keer gebruikt)';
   static String get qrCode => _language == 'en' ? AppStringsEn.qrCode : 'QR-code';
-  static String get qrCodeDescription => _language == 'en' ? AppStringsEn.qrCodeDescription : 'QR-code inwisseling zal beschikbaar zijn in een toekomstige update.';
+  static String get qrCodeDescription => _language == 'en' ? AppStringsEn.qrCodeDescription : 'Richt de camera op de QR-code';
+  static String get qrScannerMobileOnly => _language == 'en' ? AppStringsEn.qrScannerMobileOnly : 'QR-scanner alleen beschikbaar op mobiel';
 
 
   // Settings screen

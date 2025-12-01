@@ -308,5 +308,16 @@
                 });
         });
     </script>
+    <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('coupon')) {
+        const couponDiv = document.createElement('div');
+        couponDiv.innerHTML = '<p>Scan de URL opnieuw in de BijbelQuiz app in het Winkel scherm > inwisselen > QR code</p>';
+        const h1 = document.querySelector('h1');
+        if (h1) {
+            h1.insertAdjacentElement('afterend', couponDiv);
+        }
+    }
+    </script>
 </body>
 </html>
