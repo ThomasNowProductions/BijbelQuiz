@@ -13,10 +13,6 @@
       "destination": "https://buymeacoffee.com/bijbelquiz"
     },
     {
-      "source": "/donate.html",
-      "destination": "https://bijbelquiz.app/donate"
-    },
-    {
       "source": "/email",
       "destination": "/email.html"
     },
@@ -39,10 +35,6 @@
     {
       "source": "/signal-contact",
       "destination": "https://signal.me/#eu/Rpr6fijw3iLLP8smdhgesdKIFuFc4H0D8svTZLPbKTBVaTwB3AJEWKcivAERvuzj"
-    },
-    {
-      "source": "/signal.html",
-      "destination": "https://bijbelquiz.app/signal-contact"
     },
     {
       "source": "/signal-group",
@@ -99,6 +91,10 @@
     {
       "source": "/speel",
       "destination": "https://play.bijbelquiz.app"
+    }
+    {
+      "source": "/github",
+      "destination": "https://github.com/BijbelQuiz/BijbelQuiz"
     }
   ],
   "headers": [
