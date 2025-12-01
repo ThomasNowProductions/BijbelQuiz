@@ -6,7 +6,6 @@ import '../providers/game_stats_provider.dart';
 import '../providers/settings_provider.dart';
 import '../services/coupon_service.dart';
 import '../l10n/strings_nl.dart' as strings;
-import '../widgets/top_snackbar.dart';
 
 class CouponRedeemScreen extends StatefulWidget {
   const CouponRedeemScreen({super.key});
@@ -291,6 +290,47 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> {
 
   bool _isScanning = true;
 
+  void _showResultDialog(BuildContext context, String message, {bool isSuccess = true, VoidCallback? onDismiss}) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => Dialog(
+        insetPadding: EdgeInsets.zero,
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          color: Theme.of(context).colorScheme.surface,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  isSuccess ? Icons.check_circle : Icons.error,
+                  size: 64,
+                  color: isSuccess ? Colors.green : Colors.red,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  message,
+                  style: Theme.of(context).textTheme.headlineSmall,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 32),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    onDismiss?.call();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   void _handleScannedCode(String code) {
     if (!_isScanning) return;
 
@@ -344,7 +384,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> {
 
   void _showInvalidQRMessage() {
     if (!mounted) return;
-    showTopSnackBar(context, strings.AppStrings.invalidQRCode, style: TopSnackBarStyle.error);
+    _showResultDialog(context, strings.AppStrings.invalidQRCode, isSuccess: false);
   }
 
   Future<void> _redeemCoupon(String code) async {
@@ -366,7 +406,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> {
 
     if (redeemedCodes.contains(normalizedCode)) {
       if (!mounted) return;
-      showTopSnackBar(localContext, strings.AppStrings.couponAlreadyRedeemed, style: TopSnackBarStyle.error);
+      _showResultDialog(localContext, strings.AppStrings.couponAlreadyRedeemed, isSuccess: false);
       return;
     }
 
@@ -406,12 +446,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> {
       await prefs.setInt('coupon_redemption_count', count + 1);
 
       if (!mounted) return;
-      showTopSnackBar(localContext, message, style: TopSnackBarStyle.success);
-      Future.delayed(const Duration(seconds: 3), () {
-        if (mounted) {
-          Navigator.pop(localContext); // Go back to store screen
-        }
-      });
+      _showResultDialog(localContext, message, isSuccess: true, onDismiss: () => Navigator.pop(localContext));
     } catch (e) {
       if (!mounted) return;
       Navigator.pop(localContext); // Dismiss loading
@@ -434,14 +469,13 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> {
         errorMessage = strings.AppStrings.couponMaxPerDay;
       }
 
-      showTopSnackBar(localContext, errorMessage, style: TopSnackBarStyle.error);
-
-      // Resume scanning after error dialog
-      if (mounted) {
-        setState(() {
-          _isScanning = true;
-        });
-      }
+      _showResultDialog(localContext, errorMessage, isSuccess: false, onDismiss: () {
+        if (mounted) {
+          setState(() {
+            _isScanning = true;
+          });
+        }
+      });
     }
   }
 }
