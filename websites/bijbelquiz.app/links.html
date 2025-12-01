@@ -8,6 +8,7 @@
     <meta name="keywords" content="social media, BijbelQuiz, Discord, Mastodon, Bluesky, Pixelfed, bijbelquiz social, bijbel quiz links">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#4CAF50">
+    <meta name="msapplication-TileColor" content="#4CAF50">
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://bijbelquiz.app/links.html">
@@ -17,11 +18,35 @@
     <meta property="og:url" content="https://bijbelquiz.app/links.html">
     <meta property="og:title" content="BijbelQuiz - Social Media">
     <meta property="og:description" content="Volg BijbelQuiz op social media - Discord, Mastodon, Bluesky, Pixelfed en meer platforms.">
+    <meta property="og:image" content="https://bijbelquiz.app/og-image.png">
+    <meta property="og:image:alt" content="BijbelQuiz Social Media">
     <meta property="og:site_name" content="BijbelQuiz">
     <meta property="og:locale" content="nl_NL">
 
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://bijbelquiz.app/links.html">
+    <meta property="twitter:title" content="BijbelQuiz - Social Media">
+    <meta property="twitter:description" content="Volg BijbelQuiz op social media - Discord, Mastodon, Bluesky, Pixelfed en meer platforms.">
+    <meta property="twitter:image" content="https://bijbelquiz.app/og-image.png">
+    <meta property="twitter:image:alt" content="BijbelQuiz Social Media">
+
+    <!-- Additional SEO -->
+    <meta name="application-name" content="BijbelQuiz">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="BijbelQuiz">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="theme.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Social Media Verification -->
+    <a rel="me" href="https://toot.community/@BijbelQuiz" style="display: none;">Mastodon</a>
 
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -39,128 +64,135 @@
       }
     }
     </script>
+
+    <!-- BreadcrumbList structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bijbelquiz.app/"
+      }, {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Social Media",
+        "item": "https://bijbelquiz.app/links.html"
+      }]
+    }
+    </script>
+
+    <!-- Organization structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "BijbelQuiz",
+      "url": "https://bijbelquiz.app/",
+      "description": "Educatieve bijbel quiz app om bijbelkennis te testen en te verbeteren",
+      "sameAs": [
+        "https://toot.community/@BijbelQuiz"
+      ]
+    }
+    </script>
 </head>
 <body class="center-screen fade-in">
-    <div class="container card">
-        <i class="material-icons icon-large">link</i>
-        <h1>BijbelQuiz Social Media</h1>
-        <p>Volg BijbelQuiz op al onze social media platforms</p>
+    <div class="container hero-container">
+        <div class="hero-layout">
+            <!-- Left Column: Content -->
+            <div class="hero-content">
+                <div class="hero-text">
+                    <i class="material-icons icon-large">link</i>
+                    <h1>BijbelQuiz Social Media</h1>
+                    <p class="hero-description">Volg BijbelQuiz op al onze social media platforms. Chat met andere spelers en blijf op de hoogte!</p>
 
-        <!-- Social Media Links Only -->
-        <div class="links-container">
-            <div class="link-card discord">
-                <div class="platform-header">
-                    <div class="platform-icon">
-                        <i class="material-icons">forum</i>
+                    <div class="cta-buttons">
+                        <a href="https://bijbelquiz.app/discord" class="btn primary btn-large" target="_blank" rel="noopener">
+                            <i class="material-icons">forum</i>
+                            Discord
+                        </a>
+
+                        <a href="https://bijbelquiz.app/mastodon" class="btn primary btn-large" target="_blank" rel="noopener">
+                            <i class="material-icons">account_circle</i>
+                            Mastodon
+                        </a>
+
+                        <a href="https://bijbelquiz.app/bluesky" class="btn primary btn-large" target="_blank" rel="noopener">
+                            <i class="material-icons">cloud</i>
+                            Bluesky
+                        </a>
+
+                        <a href="https://bijbelquiz.app/pixelfed" class="btn primary btn-large" target="_blank" rel="noopener">
+                            <i class="material-icons">photo_camera</i>
+                            Pixelfed
+                        </a>
+
+                        <a href="https://bijbelquiz.app/kwebler" class="btn primary btn-large" target="_blank" rel="noopener">
+                            <i class="material-icons">star</i>
+                            Kwebler
+                        </a>
+
+                        <a href="https://bijbelquiz.app/nooki" class="btn primary btn-large" target="_blank" rel="noopener">
+                            <i class="material-icons">group</i>
+                            Nooki
+                        </a>
                     </div>
-                    <div class="platform-info">
-                        <h3>Discord</h3>
-                        <p>Chat met andere spelers</p>
-                    </div>
-                </div>
-                <div class="platform-actions">
-                    <a href="https://bijbelquiz.app/discord" class="btn primary" target="_blank" rel="noopener">
-                        <i class="material-icons" style="font-size: 18px; margin-right: 4px;">forum</i>
-                        Join
-                    </a>
                 </div>
             </div>
 
-            <div class="link-card mastodon">
-                <div class="platform-header">
-                    <div class="platform-icon">
-                        <i class="material-icons">account_circle</i>
+            <!-- Right Column: Phone Screenshot -->
+            <div class="hero-image">
+                <div class="phone-mockup">
+                    <div class="phone-frame">
+                        <div class="phone-screen">
+                            <img src="screenshot.png" alt="BijbelQuiz App Screenshot" class="app-screenshot">
+                        </div>
                     </div>
-                    <div class="platform-info">
-                        <h3>Mastodon</h3>
-                        <p>Volg voor updates</p>
-                    </div>
-                </div>
-                <div class="platform-actions">
-                    <a href="https://bijbelquiz.app/mastodon" class="btn primary" target="_blank" rel="noopener">
-                        <i class="material-icons" style="font-size: 18px; margin-right: 4px;">account_circle</i>
-                        Volg
-                    </a>
                 </div>
             </div>
-
-            <div class="link-card bluesky">
-                <div class="platform-header">
-                    <div class="platform-icon">
-                        <i class="material-icons">cloud</i>
-                    </div>
-                    <div class="platform-info">
-                        <h3>Bluesky</h3>
-                        <p>Updates en nieuws</p>
-                    </div>
-                </div>
-                <div class="platform-actions">
-                    <a href="https://bijbelquiz.app/bluesky" class="btn primary" target="_blank" rel="noopener">
-                        <i class="material-icons" style="font-size: 18px; margin-right: 4px;">cloud</i>
-                        Volg
-                    </a>
-                </div>
-            </div>
-
-            <div class="link-card pixelfed">
-                <div class="platform-header">
-                    <div class="platform-icon">
-                        <i class="material-icons">photo_camera</i>
-                    </div>
-                    <div class="platform-info">
-                        <h3>Pixelfed</h3>
-                        <p>Foto's en behind-the-scenes</p>
-                    </div>
-                </div>
-                <div class="platform-actions">
-                    <a href="https://bijbelquiz.app/pixelfed" class="btn primary" target="_blank" rel="noopener">
-                        <i class="material-icons" style="font-size: 18px; margin-right: 4px;">photo_camera</i>
-                        Bekijk
-                    </a>
-                </div>
-            </div>
-
-            <div class="link-card kwebler">
-                <div class="platform-header">
-                    <div class="platform-icon">
-                        <i class="material-icons">star</i>
-                    </div>
-                    <div class="platform-info">
-                        <h3>Kwebler</h3>
-                        <p>Nederlands social platform</p>
-                    </div>
-                </div>
-                <div class="platform-actions">
-                    <a href="https://bijbelquiz.app/kwebler" class="btn primary" target="_blank" rel="noopener">
-                        <i class="material-icons" style="font-size: 18px; margin-right: 4px;">star</i>
-                        Bezoek
-                    </a>
-                </div>
-            </div>
-
-            <div class="link-card nooki">
-                <div class="platform-header">
-                    <div class="platform-icon">
-                        <i class="material-icons">group</i>
-                    </div>
-                    <div class="platform-info">
-                        <h3>Nooki</h3>
-                        <p>Community platform</p>
-                    </div>
-                </div>
-                <div class="platform-actions">
-                    <a href="https://bijbelquiz.app/nooki" class="btn primary" target="_blank" rel="noopener">
-                        <i class="material-icons" style="font-size: 18px; margin-right: 4px;">group</i>
-                        Bezoek
-                    </a>
-                </div>
-            </div>
-
         </div>
-
-        <footer id="main-footer"></footer>
     </div>
 
+    <footer id="main-footer"></footer>
+
+    <!-- JavaScript for scroll reveal -->
+    <script>
+        // Intersection Observer for scroll-triggered animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all scroll sections
+        document.querySelectorAll('.scroll-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Smooth scrolling for anchor links (if any)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+
+    <!-- Additional CSS for scroll sections (inline for simplicity) -->
     <style>
         .links-container {
             display: flex;
