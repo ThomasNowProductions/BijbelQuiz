@@ -365,7 +365,9 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> {
     }
 
     if (redeemedCodes.contains(normalizedCode)) {
-      throw Exception('This coupon has already been redeemed');
+      if (!mounted) return;
+      showTopSnackBar(localContext, strings.AppStrings.couponAlreadyRedeemed, style: TopSnackBarStyle.error);
+      return;
     }
 
     if (count >= 5) {
