@@ -17,6 +17,8 @@ class CouponRedeemScreen extends StatefulWidget {
 
 class _CouponRedeemScreenState extends State<CouponRedeemScreen> {
   int _selectedIndex = 0; // 0 for Coupon code, 1 for QR-code
+  DateTime? _lastScanTime;
+  String? _lastProcessedCode;
 
   @override
   Widget build(BuildContext context) {
@@ -291,6 +293,16 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> {
 
   void _handleScannedCode(String code) {
     if (!_isScanning) return;
+
+    // Debouncing: prevent rapid successive scans
+    final now = DateTime.now();
+    if (_lastScanTime != null && now.difference(_lastScanTime!) < const Duration(seconds: 2)) {
+      return;
+    }
+    if (code == _lastProcessedCode) return;
+
+    _lastScanTime = now;
+    _lastProcessedCode = code;
 
     // Validate URL format: bijbelquiz.app?coupon=CODE
     String urlToParse = code;
