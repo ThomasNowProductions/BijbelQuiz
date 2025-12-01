@@ -10,10 +10,10 @@ import '../widgets/top_snackbar.dart';
 import '../l10n/strings_nl.dart' as strings;
 import '../screens/quiz_screen.dart';
 import '../screens/ai_theme_designer_screen.dart';
+import '../screens/coupon_redeem_screen.dart';
 import '../services/logger.dart';
 import '../utils/automatic_error_reporter.dart';
 import '../models/store_item.dart';
-import '../services/coupon_service.dart';
 
 class StoreScreen extends StatefulWidget {
   const StoreScreen({super.key});
@@ -1543,7 +1543,9 @@ class _StoreScreenState extends State<StoreScreen> {
         ),
         SizedBox(width: isDesktop ? 16 : 12),
         FilledButton.icon(
-          onPressed: () => _showCouponDialog(context),
+          onPressed: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const CouponRedeemScreen()),
+          ),
           icon: const Icon(Icons.redeem_rounded, size: 20),
           label: Text(strings.AppStrings.couponRedeem),
           style: FilledButton.styleFrom(
@@ -1559,110 +1561,4 @@ class _StoreScreenState extends State<StoreScreen> {
     );
   }
 
-  void _showCouponDialog(BuildContext context) {
-    final controller = TextEditingController();
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(strings.AppStrings.couponDialogTitle),
-        content: TextField(
-          controller: controller,
-          decoration: InputDecoration(
-            labelText: strings.AppStrings.couponCodeLabel,
-            hintText: strings.AppStrings.couponCodeHint,
-            border: const OutlineInputBorder(),
-          ),
-          textCapitalization: TextCapitalization.characters,
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(strings.AppStrings.cancel),
-          ),
-          FilledButton(
-            onPressed: () {
-              Navigator.pop(context);
-              if (controller.text.isNotEmpty) {
-                _redeemCoupon(controller.text.trim());
-              }
-            },
-            child: Text(strings.AppStrings.couponRedeem),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<void> _redeemCoupon(String code) async {
-    // Show loading
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => const Center(child: CircularProgressIndicator()),
-    );
-
-    try {
-      final couponService = CouponService();
-      final reward = await couponService.redeemCoupon(code);
-
-      // Apply reward
-      if (!mounted) return;
-      Navigator.pop(context); // Dismiss loading
-
-      String message = '';
-      if (reward.type == 'stars') {
-        final amount = reward.value as int;
-        Provider.of<GameStatsProvider>(context, listen: false).addStars(amount);
-        message = strings.AppStrings.couponStarsReceived.replaceAll('{amount}', amount.toString());
-      } else if (reward.type == 'theme') {
-        final themeId = reward.value as String;
-        await Provider.of<SettingsProvider>(context, listen: false).unlockTheme(themeId);
-        message = strings.AppStrings.couponThemeUnlocked;
-      }
-
-      if (!mounted) return;
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text(strings.AppStrings.couponSuccessTitle),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(Icons.celebration, size: 48, color: Colors.orange),
-              const SizedBox(height: 16),
-              Text(message),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text(strings.AppStrings.ok),
-            ),
-          ],
-        ),
-      );
-    } catch (e) {
-      if (!mounted) return;
-      Navigator.pop(context); // Dismiss loading
-      
-      String errorMessage = e.toString();
-      if (errorMessage.startsWith('Exception: ')) {
-        errorMessage = errorMessage.substring(11);
-      }
-
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text(strings.AppStrings.couponErrorTitle),
-          content: Text(errorMessage),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text(strings.AppStrings.ok),
-            ),
-          ],
-        ),
-      );
-    }
-  }
 }
