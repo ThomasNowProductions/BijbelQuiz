@@ -221,9 +221,12 @@ class AppStrings {
   static String get couponInvalid => _language == 'en' ? AppStringsEn.couponInvalid : 'Ongeldige coupon code';
   static String get couponExpired => _language == 'en' ? AppStringsEn.couponExpired : 'Deze coupon is verlopen';
   static String get couponMaxUsed => _language == 'en' ? AppStringsEn.couponMaxUsed : 'Deze coupon is niet meer geldig (maximaal aantal keer gebruikt)';
+  static String get couponAlreadyRedeemed => _language == 'en' ? AppStringsEn.couponAlreadyRedeemed : 'Deze coupon is al ingewisseld';
+  static String get couponMaxPerDay => _language == 'en' ? AppStringsEn.couponMaxPerDay : 'Maximaal 5 coupons kunnen per dag worden ingewisseld';
   static String get qrCode => _language == 'en' ? AppStringsEn.qrCode : 'QR-code';
   static String get qrCodeDescription => _language == 'en' ? AppStringsEn.qrCodeDescription : 'Richt de camera op de QR-code';
   static String get qrScannerMobileOnly => _language == 'en' ? AppStringsEn.qrScannerMobileOnly : 'QR-scanner alleen beschikbaar op mobiel';
+  static String get invalidQRCode => _language == 'en' ? AppStringsEn.invalidQRCode : 'Ongeldige QR-code';
 
 
   // Settings screen
@@ -606,32 +609,32 @@ class AppStrings {
 
   // Additional hardcoded strings found in codebase
   static String get apiErrorPrefix => _language == 'en' ? AppStringsEn.apiErrorPrefix : 'API Fout: ';
-  static String get grid => _language == 'en' ? AppStringsEn.grid : 'Grid';
+  static String get grid => _language == 'en' ? AppStringsEn.grid : 'Raster';
   static String get list => _language == 'en' ? AppStringsEn.list : 'Lijst';
-  static String get compactGrid => _language == 'en' ? AppStringsEn.compactGrid : 'Compacte grid';
-  static String get useTheme => _language == 'en' ? AppStringsEn.useTheme : 'Gebruik Thema';
+  static String get compactGrid => _language == 'en' ? AppStringsEn.compactGrid : 'Compact raster';
+  static String get useTheme => _language == 'en' ? AppStringsEn.useTheme : 'Gebruik thema';
   static String get failedToRemoveDevice => _language == 'en' ? AppStringsEn.failedToRemoveDevice : 'Kon apparaat niet verwijderen';
   static String get errorRemovingDevice => _language == 'en' ? AppStringsEn.errorRemovingDevice : 'Fout bij verwijderen apparaat: ';
-  static String get sharedStats => _language == 'en' ? AppStringsEn.sharedStats : 'Gedeelde Statistieken';
+  static String get sharedStats => _language == 'en' ? AppStringsEn.sharedStats : 'Gedeelde statistieken';
   static String get newGame => _language == 'en' ? AppStringsEn.newGame : 'Nieuw spel';
   static String get loadingMessages => _language == 'en' ? AppStringsEn.loadingMessages : 'Berichten laden...';
   static String get errorLoadingUsernames => _language == 'en' ? AppStringsEn.errorLoadingUsernames : 'Fout bij laden gebruikersnamen: ';
   static String get urlCopiedToClipboard => _language == 'en' ? AppStringsEn.urlCopiedToClipboard : 'URL gekopieerd naar klembord!';
-  static String get tryAgainButton => _language == 'en' ? AppStringsEn.tryAgainButton : 'Probeer Opnieuw';
-  static String get checkConnection => _language == 'en' ? AppStringsEn.checkConnection : 'Controleer Verbinding';
-  static String get goToQuiz => _language == 'en' ? AppStringsEn.goToQuiz : 'Naar de Quiz';
+  static String get tryAgainButton => _language == 'en' ? AppStringsEn.tryAgainButton : 'Probeer opnieuw';
+  static String get checkConnection => _language == 'en' ? AppStringsEn.checkConnection : 'Controleer verbinding';
+  static String get goToQuiz => _language == 'en' ? AppStringsEn.goToQuiz : 'Naar de quiz';
   static String get errorLoadingAnalytics => _language == 'en' ? AppStringsEn.errorLoadingAnalytics : 'Fout bij laden analytics';
   static String get bibleReferenceCopied => _language == 'en' ? AppStringsEn.bibleReferenceCopied : 'Bijbelverwijzing gekopieerd: ';
   static String get bibleReferenceCopiedForSharing => _language == 'en' ? AppStringsEn.bibleReferenceCopiedForSharing : 'Bijbelverwijzing gekopieerd voor delen';
-  static String get errorHandlingTest => _language == 'en' ? AppStringsEn.errorHandlingTest : 'Foutafhandeling Test';
+  static String get errorHandlingTest => _language == 'en' ? AppStringsEn.errorHandlingTest : 'Foutafhandeling test';
   static String get errorHandlingTestDescription => _language == 'en' ? AppStringsEn.errorHandlingTestDescription : 'Dit scherm demonstreert het nieuwe foutafhandelingssysteem';
-  static String get testErrorHandling => _language == 'en' ? AppStringsEn.testErrorHandling : 'Test Foutafhandeling';
-  static String get testErrorDialog => _language == 'en' ? AppStringsEn.testErrorDialog : 'Test Foutdialoog';
-  static String get retryButton => _language == 'en' ? AppStringsEn.retryButton : 'Opnieuw Proberen';
+  static String get testErrorHandling => _language == 'en' ? AppStringsEn.testErrorHandling : 'Test foutafhandeling';
+  static String get testErrorDialog => _language == 'en' ? AppStringsEn.testErrorDialog : 'Test foutdialoog';
+  static String get retryButton => _language == 'en' ? AppStringsEn.retryButton : 'Opnieuw proberen';
 
   // Settings Screen - Additional hardcoded strings
   static String get searchSettings => _language == 'en' ? AppStringsEn.searchSettings : 'Zoek instellingen...';
-  static String get lessonLayoutSettings => _language == 'en' ? AppStringsEn.lessonLayoutSettings : 'Leslay-out';
+  static String get lessonLayoutSettings => _language == 'en' ? AppStringsEn.lessonLayoutSettings : 'Lesindeling';
   static String get chooseLessonLayoutDesc => _language == 'en' ? AppStringsEn.chooseLessonLayoutDesc : 'Kies hoe lessen worden weergegeven';
   static String get showIntroductionDesc => _language == 'en' ? AppStringsEn.showIntroductionDesc : 'Bekijk de app-introductie en tutorial';
   static String get clearQuestionCacheDesc => _language == 'en' ? AppStringsEn.clearQuestionCacheDesc : 'Verwijder gecachte vragen om opslagruimte vrij te maken';
@@ -642,7 +645,7 @@ class AppStrings {
 
   // Automatic Bug Reporting
   static String get automaticBugReports => _language == 'en' ? AppStringsEn.automaticBugReports : 'Automatisch problemen melden';
-  static String get automaticBugReportsDesc => _language == 'en' ? AppStringsEn.automaticBugReportsDesc : 'Automatisch bug rapporten verzenden wanneer er fouten optreden (aanbevolen)';
+  static String get automaticBugReportsDesc => _language == 'en' ? AppStringsEn.automaticBugReportsDesc : 'Automatisch bugrapporten verzenden wanneer er fouten optreden (aanbevolen)';
 
   // Sync Screen
   static String get dataSuccessfullySynchronized => _language == 'en' ? AppStringsEn.dataSuccessfullySynchronized : 'Gegevens succesvol gesynchroniseerd';

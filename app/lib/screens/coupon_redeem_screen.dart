@@ -6,7 +6,7 @@ import '../providers/game_stats_provider.dart';
 import '../providers/settings_provider.dart';
 import '../services/coupon_service.dart';
 import '../l10n/strings_nl.dart' as strings;
-import '../theme/app_theme.dart';
+import '../widgets/top_snackbar.dart';
 
 class CouponRedeemScreen extends StatefulWidget {
   const CouponRedeemScreen({super.key});
@@ -293,12 +293,22 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> {
     if (!_isScanning) return;
 
     // Validate URL format: bijbelquiz.app?coupon=CODE
-    final uri = Uri.tryParse(code);
-    if (uri == null) return;
+    String urlToParse = code;
+    if (!urlToParse.contains('://')) {
+      urlToParse = 'https://$urlToParse';
+    }
+    final uri = Uri.tryParse(urlToParse);
+    if (uri == null) {
+      _showInvalidQRMessage();
+      return;
+    }
 
-    // Check host (allow www. and without) and scheme
+    // Check host (allow www. and without)
     final isValidHost = uri.host == 'bijbelquiz.app' || uri.host == 'www.bijbelquiz.app';
-    if (!isValidHost) return;
+    if (!isValidHost) {
+      _showInvalidQRMessage();
+      return;
+    }
 
     final couponCode = uri.queryParameters['coupon'];
     if (couponCode != null && couponCode.isNotEmpty) {
@@ -306,7 +316,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> {
         _isScanning = false;
       });
       _redeemCoupon(couponCode).then((_) {
-        // Resume scanning after dialog is closed if needed, 
+        // Resume scanning after dialog is closed if needed,
         // but usually we might want to stay on the success/error screen or go back.
         // For now, let's allow re-scanning if they stay on this tab.
         if (mounted) {
@@ -315,7 +325,14 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> {
           });
         }
       });
+    } else {
+      _showInvalidQRMessage();
     }
+  }
+
+  void _showInvalidQRMessage() {
+    if (!mounted) return;
+    showTopSnackBar(context, strings.AppStrings.invalidQRCode, style: TopSnackBarStyle.error);
   }
 
   Future<void> _redeemCoupon(String code) async {
@@ -375,29 +392,12 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> {
       await prefs.setInt('coupon_redemption_count', count + 1);
 
       if (!mounted) return;
-      showDialog(
-        context: localContext,
-        builder: (dialogContext) => AlertDialog(
-          title: Text(strings.AppStrings.couponSuccessTitle),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(Icons.celebration, size: 48, color: Colors.orange),
-              const SizedBox(height: 16),
-              Text(message),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(dialogContext); // Dismiss success dialog
-                Navigator.pop(localContext); // Go back to store screen
-              },
-              child: Text(strings.AppStrings.ok),
-            ),
-          ],
-        ),
-      );
+      showTopSnackBar(localContext, message, style: TopSnackBarStyle.success);
+      Future.delayed(const Duration(seconds: 3), () {
+        if (mounted) {
+          Navigator.pop(localContext); // Go back to store screen
+        }
+      });
     } catch (e) {
       if (!mounted) return;
       Navigator.pop(localContext); // Dismiss loading
@@ -407,19 +407,27 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> {
         errorMessage = errorMessage.substring(11);
       }
 
-      showDialog(
-        context: localContext,
-        builder: (context) => AlertDialog(
-          title: Text(strings.AppStrings.couponErrorTitle),
-          content: Text(errorMessage),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text(strings.AppStrings.ok),
-            ),
-          ],
-        ),
-      );
+      // Map to localized messages
+      if (errorMessage == 'Invalid coupon code') {
+        errorMessage = strings.AppStrings.couponInvalid;
+      } else if (errorMessage == 'This coupon has expired') {
+        errorMessage = strings.AppStrings.couponExpired;
+      } else if (errorMessage == 'This coupon is no longer valid (maximum uses reached)') {
+        errorMessage = strings.AppStrings.couponMaxUsed;
+      } else if (errorMessage == 'This coupon has already been redeemed') {
+        errorMessage = strings.AppStrings.couponAlreadyRedeemed;
+      } else if (errorMessage == 'Maximum of 5 coupons can be redeemed per day') {
+        errorMessage = strings.AppStrings.couponMaxPerDay;
+      }
+
+      showTopSnackBar(localContext, errorMessage, style: TopSnackBarStyle.error);
+
+      // Resume scanning after error dialog
+      if (mounted) {
+        setState(() {
+          _isScanning = true;
+        });
+      }
     }
   }
 }

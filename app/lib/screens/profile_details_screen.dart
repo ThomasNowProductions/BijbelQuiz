@@ -4,6 +4,7 @@ import '../l10n/strings_nl.dart' as strings;
 import '../providers/game_stats_provider.dart';
 import '../services/analytics_service.dart';
 import '../services/logger.dart';
+import '../widgets/top_snackbar.dart';
 
 class ProfileDetailsScreen extends StatefulWidget {
   final String userId;
@@ -120,21 +121,11 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
             _isFollowing = !_isFollowing;
           });
           
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(_isFollowing
-                  ? '${strings.AppStrings.follow} $username' // "Following username" would be better but using available strings
-                  : '${strings.AppStrings.unfollow} $username'),
-              backgroundColor: Theme.of(context).colorScheme.primary,
-            ),
-          );
+          showTopSnackBar(context, _isFollowing
+              ? '${strings.AppStrings.follow} $username'
+              : '${strings.AppStrings.unfollow} $username', style: TopSnackBarStyle.success);
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(strings.AppStrings.error),
-              backgroundColor: Theme.of(context).colorScheme.error,
-            ),
-          );
+          showTopSnackBar(context, strings.AppStrings.error, style: TopSnackBarStyle.error);
         }
       }
     } catch (e) {
