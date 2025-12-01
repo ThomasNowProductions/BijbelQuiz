@@ -27,14 +27,18 @@ INSERT INTO store_items (item_key, item_name, item_description, item_type, icon,
 ('double_stars_60_seconds', 'Dubbele Sterren (60s)', 'Verdubbel je score voor de volgende 60 seconden', 'powerup', 'Icons.timer_rounded', 120, 120, FALSE, 0, TRUE, 'powerups'),
 ('skip_question', 'Vraag Overslaan', 'Sla de huidige vraag over zonder straf', 'feature', 'Icons.skip_next_rounded', 35, 35, FALSE, 0, TRUE, 'quiz_actions'),
 ('unlock_biblical_reference', 'Bijbelse Referentie Ontgrendelen', 'Ontgrendel de bijbelse referentie voor de huidige vraag', 'feature', 'Icons.book_rounded', 10, 10, FALSE, 0, TRUE, 'quiz_actions'),
-('oled_theme', 'OLED Thema', 'Optimaliseer voor OLED schermen met pure zwarte achtergronden', 'theme', 'Icons.nights_stay_rounded', 150, 150, FALSE, 0, TRUE, 'themes'),
-('green_theme', 'Groen Thema', 'Een kalmerend groen thema voor een rustige ervaring', 'theme', 'Icons.eco_rounded', 120, 120, FALSE, 0, TRUE, 'themes'),
-('orange_theme', 'Oranje Thema', 'Een levendig oranje thema voor een energieke ervaring', 'theme', 'Icons.circle_rounded', 120, 120, FALSE, 0, TRUE, 'themes'),
-('ai_theme_generator', 'AI Thema Generator', 'Genereer je eigen unieke thema met AI-technologie', 'feature', 'Icons.smart_toy_rounded', 200, 200, FALSE, 0, TRUE, 'features');
+('oled_theme', 'OLED', 'Optimaliseer voor OLED schermen met pure zwarte achtergronden', 'theme', 'Icons.nights_stay_rounded', 150, 150, FALSE, 0, TRUE, 'themes'),
+('green_theme', 'Groen', 'Een kalmerend groen thema voor een rustige ervaring', 'theme', 'Icons.eco_rounded', 120, 120, FALSE, 0, TRUE, 'themes'),
+('orange_theme', 'Oranje', 'Een levendig oranje thema voor een energieke ervaring', 'theme', 'Icons.circle_rounded', 120, 120, FALSE, 0, TRUE, 'themes'),
+('terminal_green_theme', 'Terminal Green', 'Een klassiek terminal thema met groene tekst op zwarte achtergrond', 'theme', 'Icons.code_rounded', 50, 50, FALSE, 0, TRUE, 'themes'),
+('ocean_blue_theme', 'Ocean Blue', 'Een helder oceaanblauw thema voor een frisse look', 'theme', 'Icons.waves_rounded', 50, 50, FALSE, 0, TRUE, 'themes'),
+('rose_white_theme', 'Rose White', 'Een elegant roze en wit thema', 'theme', 'Icons.favorite_rounded', 50, 50, FALSE, 0, TRUE, 'themes'),
+('dark_wood_theme', 'Dark Wood', 'Een warm donker hout thema', 'theme', 'Icons.forest_rounded', 50, 50, FALSE, 0, TRUE, 'themes'),
+('ai_theme_generator', 'AI Generator', 'Genereer je eigen unieke thema met AI-technologie', 'feature', 'Icons.smart_toy_rounded', 200, 200, FALSE, 0, TRUE, 'features');
 
 -- Update base prices to match current store prices
-UPDATE store_items SET 
-    base_price = CASE 
+UPDATE store_items SET
+    base_price = CASE
         WHEN item_key = 'double_stars_5_questions' THEN 100
         WHEN item_key = 'triple_stars_5_questions' THEN 180
         WHEN item_key = 'five_times_stars_5_questions' THEN 350
@@ -42,10 +46,14 @@ UPDATE store_items SET
         WHEN item_key = 'oled_theme' THEN 150
         WHEN item_key = 'green_theme' THEN 120
         WHEN item_key = 'orange_theme' THEN 120
+        WHEN item_key = 'terminal_green_theme' THEN 50
+        WHEN item_key = 'ocean_blue_theme' THEN 50
+        WHEN item_key = 'rose_white_theme' THEN 50
+        WHEN item_key = 'dark_wood_theme' THEN 50
         WHEN item_key = 'ai_theme_generator' THEN 200
         ELSE base_price
     END,
-    current_price = CASE 
+    current_price = CASE
         WHEN item_key = 'double_stars_5_questions' THEN 100
         WHEN item_key = 'triple_stars_5_questions' THEN 180
         WHEN item_key = 'five_times_stars_5_questions' THEN 350
@@ -53,17 +61,25 @@ UPDATE store_items SET
         WHEN item_key = 'oled_theme' THEN 150
         WHEN item_key = 'green_theme' THEN 120
         WHEN item_key = 'orange_theme' THEN 120
+        WHEN item_key = 'terminal_green_theme' THEN 50
+        WHEN item_key = 'ocean_blue_theme' THEN 50
+        WHEN item_key = 'rose_white_theme' THEN 50
+        WHEN item_key = 'dark_wood_theme' THEN 50
         WHEN item_key = 'ai_theme_generator' THEN 200
         ELSE current_price
     END
 WHERE item_key IN (
     'double_stars_5_questions',
-    'triple_stars_5_questions', 
+    'triple_stars_5_questions',
     'five_times_stars_5_questions',
     'double_stars_60_seconds',
     'oled_theme',
     'green_theme',
     'orange_theme',
+    'terminal_green_theme',
+    'ocean_blue_theme',
+    'rose_white_theme',
+    'dark_wood_theme',
     'ai_theme_generator'
 );
 

@@ -1446,17 +1446,24 @@ class ResponsiveLayout extends StatelessWidget {
 String _getThemeDropdownValue(SettingsProvider settings) {
   final custom = settings.selectedCustomThemeKey;
   if (custom != null) {
-    if (settings.hasAITheme(custom)) {
-      return custom;
+    // Migrate old theme keys to new ones
+    String migratedCustom = custom;
+    if (custom == 'terminal') migratedCustom = 'terminal_green';
+    if (custom == 'light_blue') migratedCustom = 'ocean_blue';
+    if (custom == 'pink_white') migratedCustom = 'rose_white';
+    // dark_wood remains the same
+
+    if (settings.hasAITheme(migratedCustom)) {
+      return migratedCustom;
     }
-    final themeDef = ThemeManager().getThemeDefinition(custom);
+    final themeDef = ThemeManager().getThemeDefinition(migratedCustom);
     if (themeDef != null) {
-      return custom;
+      return migratedCustom;
     }
-    if (settings.unlockedThemes.contains(custom) ||
-        custom == 'grey' ||
-        custom == 'christmas') {
-      return custom;
+    if (settings.unlockedThemes.contains(migratedCustom) ||
+        migratedCustom == 'grey' ||
+        migratedCustom == 'christmas') {
+      return migratedCustom;
     }
   }
   final mode = settings.themeMode;

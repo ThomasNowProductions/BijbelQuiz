@@ -731,6 +731,426 @@
         }
       },
       "pageTransitionsTheme": {}
+    },
+    "terminal_green": {
+      "id": "terminal_green",
+      "name": "Terminal Green",
+      "type": "dark",
+      "colors": {
+        "primary": "#00FF00",
+        "secondary": "#FFFFFF",
+        "tertiary": "#FFFF00",
+        "surface": "#000000",
+        "surfaceContainerHighest": "#111111",
+        "onSurface": "#00FF00",
+        "outline": "#333333",
+        "outlineVariant": "#666666",
+        "shadow": "#000000",
+        "scaffoldBackgroundColor": "#000000"
+      },
+      "textTheme": {
+        "headlineLarge": {
+          "fontSize": 32,
+          "fontWeight": "w700",
+          "letterSpacing": -0.5,
+          "color": "#00FF00"
+        },
+        "headlineMedium": {
+          "fontSize": 28,
+          "fontWeight": "w600",
+          "letterSpacing": -0.3,
+          "color": "#00FF00"
+        },
+        "headlineSmall": {
+          "fontSize": 24,
+          "fontWeight": "w600",
+          "letterSpacing": -0.2,
+          "color": "#00FF00"
+        },
+        "titleLarge": {
+          "fontSize": 22,
+          "fontWeight": "w600",
+          "letterSpacing": -0.1,
+          "color": "#00FF00"
+        },
+        "titleMedium": {
+          "fontSize": 18,
+          "fontWeight": "w600",
+          "letterSpacing": 0,
+          "color": "#00FF00"
+        },
+        "titleSmall": {
+          "fontSize": 16,
+          "fontWeight": "w600",
+          "letterSpacing": 0.1,
+          "color": "#00FF00"
+        },
+        "bodyLarge": {
+          "fontSize": 16,
+          "fontWeight": "w400",
+          "letterSpacing": 0.1,
+          "color": "#00FF00"
+        },
+        "bodyMedium": {
+          "fontSize": 14,
+          "fontWeight": "w400",
+          "letterSpacing": 0.1,
+          "color": "#FFFFFF"
+        },
+        "labelLarge": {
+          "fontSize": 14,
+          "fontWeight": "w600",
+          "letterSpacing": 0.5,
+          "color": "#00FF00"
+        }
+      },
+      "buttonTheme": {
+        "padding": {"horizontal": 24, "vertical": 16},
+        "borderRadius": 16,
+        "elevation": 2,
+        "backgroundColor": "#00FF00",
+        "foregroundColor": "#000000",
+        "textStyle": {
+          "fontSize": 16,
+          "fontWeight": "w600",
+          "letterSpacing": 0.1
+        }
+      },
+      "cardTheme": {
+        "elevation": 2,
+        "borderRadius": 20,
+        "color": "#111111",
+        "surfaceTintColor": "#00000000"
+      },
+      "appBarTheme": {
+        "centerTitle": true,
+        "elevation": 0,
+        "scrolledUnderElevation": 0,
+        "backgroundColor": "#000000",
+        "foregroundColor": "#00FF00",
+        "titleTextStyle": {
+          "fontSize": 18,
+          "fontWeight": "w600",
+          "color": "#00FF00",
+          "letterSpacing": -0.1
+        }
+      },
+      "pageTransitionsTheme": {}
+    },
+    "ocean_blue": {
+      "id": "ocean_blue",
+      "name": "Ocean Blue",
+      "type": "light",
+      "colors": {
+        "primary": "#0EA5E9",
+        "secondary": "#0284C7",
+        "tertiary": "#0369A1",
+        "surface": "#F0F9FF",
+        "surfaceContainerHighest": "#E0F2FE",
+        "onSurface": "#0C4A6E",
+        "outline": "#7DD3FC",
+        "outlineVariant": "#38BDF8",
+        "shadow": "#0C4A6E",
+        "scaffoldBackgroundColor": "#F0F9FF"
+      },
+      "textTheme": {
+        "headlineLarge": {
+          "fontSize": 32,
+          "fontWeight": "w700",
+          "letterSpacing": -0.5,
+          "color": "#0C4A6E"
+        },
+        "headlineMedium": {
+          "fontSize": 28,
+          "fontWeight": "w600",
+          "letterSpacing": -0.3,
+          "color": "#0C4A6E"
+        },
+        "headlineSmall": {
+          "fontSize": 24,
+          "fontWeight": "w600",
+          "letterSpacing": -0.2,
+          "color": "#0C4A6E"
+        },
+        "titleLarge": {
+          "fontSize": 22,
+          "fontWeight": "w600",
+          "letterSpacing": -0.1,
+          "color": "#0C4A6E"
+        },
+        "titleMedium": {
+          "fontSize": 18,
+          "fontWeight": "w600",
+          "letterSpacing": 0,
+          "color": "#0C4A6E"
+        },
+        "titleSmall": {
+          "fontSize": 16,
+          "fontWeight": "w600",
+          "letterSpacing": 0.1,
+          "color": "#0C4A6E"
+        },
+        "bodyLarge": {
+          "fontSize": 16,
+          "fontWeight": "w400",
+          "letterSpacing": 0.1,
+          "color": "#075985"
+        },
+        "bodyMedium": {
+          "fontSize": 14,
+          "fontWeight": "w400",
+          "letterSpacing": 0.1,
+          "color": "#0C4A6E"
+        },
+        "labelLarge": {
+          "fontSize": 14,
+          "fontWeight": "w600",
+          "letterSpacing": 0.5,
+          "color": "#0C4A6E"
+        }
+      },
+      "buttonTheme": {
+        "padding": {"horizontal": 24, "vertical": 16},
+        "borderRadius": 16,
+        "elevation": 2,
+        "backgroundColor": "#0EA5E9",
+        "foregroundColor": "#FFFFFF",
+        "textStyle": {
+          "fontSize": 16,
+          "fontWeight": "w600",
+          "letterSpacing": 0.1
+        }
+      },
+      "cardTheme": {
+        "elevation": 2,
+        "borderRadius": 20,
+        "color": "#FFFFFF",
+        "surfaceTintColor": "#00000000"
+      },
+      "appBarTheme": {
+        "centerTitle": true,
+        "elevation": 0,
+        "scrolledUnderElevation": 0,
+        "backgroundColor": "#0EA5E9",
+        "foregroundColor": "#FFFFFF",
+        "titleTextStyle": {
+          "fontSize": 18,
+          "fontWeight": "w600",
+          "color": "#FFFFFF",
+          "letterSpacing": -0.1
+        }
+      },
+      "pageTransitionsTheme": {}
+    },
+    "rose_white": {
+      "id": "rose_white",
+      "name": "Rose White",
+      "type": "light",
+      "colors": {
+        "primary": "#EC4899",
+        "secondary": "#DB2777",
+        "tertiary": "#BE185D",
+        "surface": "#FFFFFF",
+        "surfaceContainerHighest": "#FCF7F8",
+        "onSurface": "#831843",
+        "outline": "#F9A8D4",
+        "outlineVariant": "#F472B6",
+        "shadow": "#831843",
+        "scaffoldBackgroundColor": "#FFFFFF"
+      },
+      "textTheme": {
+        "headlineLarge": {
+          "fontSize": 32,
+          "fontWeight": "w700",
+          "letterSpacing": -0.5,
+          "color": "#831843"
+        },
+        "headlineMedium": {
+          "fontSize": 28,
+          "fontWeight": "w600",
+          "letterSpacing": -0.3,
+          "color": "#831843"
+        },
+        "headlineSmall": {
+          "fontSize": 24,
+          "fontWeight": "w600",
+          "letterSpacing": -0.2,
+          "color": "#831843"
+        },
+        "titleLarge": {
+          "fontSize": 22,
+          "fontWeight": "w600",
+          "letterSpacing": -0.1,
+          "color": "#831843"
+        },
+        "titleMedium": {
+          "fontSize": 18,
+          "fontWeight": "w600",
+          "letterSpacing": 0,
+          "color": "#831843"
+        },
+        "titleSmall": {
+          "fontSize": 16,
+          "fontWeight": "w600",
+          "letterSpacing": 0.1,
+          "color": "#831843"
+        },
+        "bodyLarge": {
+          "fontSize": 16,
+          "fontWeight": "w400",
+          "letterSpacing": 0.1,
+          "color": "#BE185D"
+        },
+        "bodyMedium": {
+          "fontSize": 14,
+          "fontWeight": "w400",
+          "letterSpacing": 0.1,
+          "color": "#DB2777"
+        },
+        "labelLarge": {
+          "fontSize": 14,
+          "fontWeight": "w600",
+          "letterSpacing": 0.5,
+          "color": "#831843"
+        }
+      },
+      "buttonTheme": {
+        "padding": {"horizontal": 24, "vertical": 16},
+        "borderRadius": 16,
+        "elevation": 2,
+        "backgroundColor": "#EC4899",
+        "foregroundColor": "#FFFFFF",
+        "textStyle": {
+          "fontSize": 16,
+          "fontWeight": "w600",
+          "letterSpacing": 0.1
+        }
+      },
+      "cardTheme": {
+        "elevation": 2,
+        "borderRadius": 20,
+        "color": "#FFFFFF",
+        "surfaceTintColor": "#00000000"
+      },
+      "appBarTheme": {
+        "centerTitle": true,
+        "elevation": 0,
+        "scrolledUnderElevation": 0,
+        "backgroundColor": "#EC4899",
+        "foregroundColor": "#FFFFFF",
+        "titleTextStyle": {
+          "fontSize": 18,
+          "fontWeight": "w600",
+          "color": "#FFFFFF",
+          "letterSpacing": -0.1
+        }
+      },
+      "pageTransitionsTheme": {}
+    },
+    "dark_wood": {
+      "id": "dark_wood",
+      "name": "Donker Hout",
+      "type": "dark",
+      "colors": {
+        "primary": "#92400E",
+        "secondary": "#A16207",
+        "tertiary": "#78350F",
+        "surface": "#1C1917",
+        "surfaceContainerHighest": "#292524",
+        "onSurface": "#F5F5F4",
+        "outline": "#A8A29E",
+        "outlineVariant": "#78716C",
+        "shadow": "#000000",
+        "scaffoldBackgroundColor": "#1C1917"
+      },
+      "textTheme": {
+        "headlineLarge": {
+          "fontSize": 32,
+          "fontWeight": "w700",
+          "letterSpacing": -0.5,
+          "color": "#F5F5F4"
+        },
+        "headlineMedium": {
+          "fontSize": 28,
+          "fontWeight": "w600",
+          "letterSpacing": -0.3,
+          "color": "#F5F5F4"
+        },
+        "headlineSmall": {
+          "fontSize": 24,
+          "fontWeight": "w600",
+          "letterSpacing": -0.2,
+          "color": "#F5F5F4"
+        },
+        "titleLarge": {
+          "fontSize": 22,
+          "fontWeight": "w600",
+          "letterSpacing": -0.1,
+          "color": "#F5F5F4"
+        },
+        "titleMedium": {
+          "fontSize": 18,
+          "fontWeight": "w600",
+          "letterSpacing": 0,
+          "color": "#F5F5F4"
+        },
+        "titleSmall": {
+          "fontSize": 16,
+          "fontWeight": "w600",
+          "letterSpacing": 0.1,
+          "color": "#F5F5F4"
+        },
+        "bodyLarge": {
+          "fontSize": 16,
+          "fontWeight": "w400",
+          "letterSpacing": 0.1,
+          "color": "#E7E5E4"
+        },
+        "bodyMedium": {
+          "fontSize": 14,
+          "fontWeight": "w400",
+          "letterSpacing": 0.1,
+          "color": "#D6D3D1"
+        },
+        "labelLarge": {
+          "fontSize": 14,
+          "fontWeight": "w600",
+          "letterSpacing": 0.5,
+          "color": "#F5F5F4"
+        }
+      },
+      "buttonTheme": {
+        "padding": {"horizontal": 24, "vertical": 16},
+        "borderRadius": 16,
+        "elevation": 2,
+        "backgroundColor": "#92400E",
+        "foregroundColor": "#F5F5F4",
+        "textStyle": {
+          "fontSize": 16,
+          "fontWeight": "w600",
+          "letterSpacing": 0.1
+        }
+      },
+      "cardTheme": {
+        "elevation": 2,
+        "borderRadius": 20,
+        "color": "#292524",
+        "surfaceTintColor": "#00000000"
+      },
+      "appBarTheme": {
+        "centerTitle": true,
+        "elevation": 0,
+        "scrolledUnderElevation": 0,
+        "backgroundColor": "#1C1917",
+        "foregroundColor": "#F5F5F4",
+        "titleTextStyle": {
+          "fontSize": 18,
+          "fontWeight": "w600",
+          "color": "#F5F5F4",
+          "letterSpacing": -0.1
+        }
+      },
+      "pageTransitionsTheme": {}
     }
   }
 }
