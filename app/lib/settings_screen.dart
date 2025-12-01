@@ -240,6 +240,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ColorScheme colorScheme, bool isSmallScreen) {
     final searchQuery = _searchController.text.toLowerCase().trim();
 
+    // Temporarily disable export functionality (not JSON)
+    const bool exportDisabled = true;
+
     final allItems = <_SettingItem>[
       // Bug report
       _SettingItem(
@@ -370,7 +373,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           icon: Icons.help_outline,
         ),
       ),
-      _SettingItem(
+      if (!exportDisabled) _SettingItem(
         title: strings.AppStrings.exportStats,
         subtitle: strings.AppStrings.exportStatsDesc,
         onTap: () => _exportStats(context),
@@ -1543,12 +1546,35 @@ class _ImportStatsScreenState extends State<ImportStatsScreen> {
                 const SizedBox(width: 16),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () {
-                      if (context.mounted) {
-                        Navigator.pop(context);
-                        showTopSnackBar(context,
-                            strings.AppStrings.statsImportedSuccessfully,
-                            style: TopSnackBarStyle.success);
+                    onPressed: () async {
+                      final input = _controller.text.trim();
+                      if (input.isEmpty) {
+                        showTopSnackBar(context, 'Please enter data to import',
+                            style: TopSnackBarStyle.error);
+                        return;
+                      }
+                      try {
+                        final data = json.decode(input);
+                        // Import JSON data
+                        final settings = Provider.of<SettingsProvider>(context, listen: false);
+                        final gameStats = Provider.of<GameStatsProvider>(context, listen: false);
+                        final lessonProgress = Provider.of<LessonProgressProvider>(context, listen: false);
+
+                        await settings.loadImportData(data['settings']);
+                        await gameStats.loadImportData(data['gameStats']);
+                        await lessonProgress.loadImportData(data['lessonProgress']);
+
+                        if (context.mounted) {
+                          Navigator.pop(context);
+                          showTopSnackBar(context,
+                              strings.AppStrings.statsImportedSuccessfully,
+                              style: TopSnackBarStyle.success);
+                        }
+                      } catch (e) {
+                        if (context.mounted) {
+                          showTopSnackBar(context, 'Import failed: $e',
+                              style: TopSnackBarStyle.error);
+                        }
                       }
                     },
                     child: Text(strings.AppStrings.importButton),
