@@ -91,7 +91,7 @@
     {
       "source": "/speel",
       "destination": "https://play.bijbelquiz.app"
-    }
+    },
     {
       "source": "/github",
       "destination": "https://github.com/BijbelQuiz/BijbelQuiz"
