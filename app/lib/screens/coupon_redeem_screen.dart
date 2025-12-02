@@ -18,7 +18,7 @@ class CouponRedeemScreen extends StatefulWidget {
   State<CouponRedeemScreen> createState() => _CouponRedeemScreenState();
 }
 
-class _CouponRedeemScreenState extends State<CouponRedeemScreen> with SingleTickerProviderStateMixin {
+class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProviderStateMixin {
   int _selectedIndex = 0; // 0 for Coupon code, 1 for QR-code
   DateTime? _lastScanTime;
   String? _lastProcessedCode;
@@ -846,9 +846,9 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with SingleTick
 
     final List<Barcode> barcodes = capture.barcodes;
     for (final barcode in barcodes) {
-      final String? code = barcode.rawValue;
-      if (code != null && code.isNotEmpty) {
-        _handleScannedCode(code);
+      final String? rawCode = barcode.rawValue;
+      if (rawCode != null && rawCode.trim().isNotEmpty) {
+        _handleScannedCode(rawCode.trim());
         break; // Only handle the first valid code
       }
     }
@@ -875,22 +875,38 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with SingleTick
     }
 
     final uri = Uri.tryParse(urlToParse);
-    if (uri == null) {
-      _showInvalidQRMessage();
-      _isProcessing = false;
-      return;
+    String? couponCode;
+
+    if (uri != null) {
+      // Check host (allow www. and without)
+      final isValidHost = uri.host == 'bijbelquiz.app' || uri.host == 'www.bijbelquiz.app';
+      if (isValidHost) {
+        couponCode = uri.queryParameters['coupon'];
+
+        // Also support /coupon/COUPON_CODE format
+        if (couponCode == null && uri.pathSegments.length >= 2 && uri.pathSegments[0] == 'coupon') {
+          couponCode = uri.pathSegments[1];
+        }
+      }
     }
 
-    // Check host (allow www. and without)
-    final isValidHost = uri.host == 'bijbelquiz.app' || uri.host == 'www.bijbelquiz.app';
-    if (!isValidHost) {
-      _showInvalidQRMessage();
-      _isProcessing = false;
-      return;
+    // If not a valid URL or no coupon found, treat the entire code as coupon code
+    if (couponCode == null || couponCode.isEmpty) {
+      couponCode = code;
     }
 
-    final couponCode = uri.queryParameters['coupon'];
-    if (couponCode != null && couponCode.isNotEmpty) {
+    // Debug prints
+    debugPrint('Scanned code: "$code"');
+    debugPrint('urlToParse: "$urlToParse"');
+    debugPrint('uri: $uri');
+    if (uri != null) {
+      debugPrint('host: "${uri.host}"');
+      debugPrint('queryParameters: ${uri.queryParameters}');
+      debugPrint('pathSegments: ${uri.pathSegments}');
+    }
+    debugPrint('couponCode: "$couponCode"');
+
+    if (couponCode.isNotEmpty) {
       setState(() {
         _isScanning = false;
       });
