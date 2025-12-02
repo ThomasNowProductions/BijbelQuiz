@@ -665,4 +665,53 @@ class SyncService {
     }
   }
 
+  /// Gets top users for leaderboard based on game stats
+  Future<List<Map<String, dynamic>>> getTopUsersForLeaderboard({int limit = 5}) async {
+    try {
+      // Get all user profiles (excluding deleted users)
+      final profilesResponse = await _client
+          .from('user_profiles')
+          .select('user_id, username, display_name')
+          .filter('deleted_at', 'is', null);
+
+      if (profilesResponse.isEmpty) {
+        return [];
+      }
+
+      final List<Map<String, dynamic>> usersWithScores = [];
+
+      // Get game stats for each user and calculate their score
+      for (final profile in profilesResponse) {
+        final userId = profile['user_id'] as String;
+        final username = profile['username'] as String?;
+        final displayName = profile['display_name'] as String? ?? username;
+
+        if (username == null) continue;
+
+        try {
+          final stats = await getGameStatsForUser(userId);
+          final score = stats?['score'] ?? 0;
+
+          usersWithScores.add({
+            'userId': userId,
+            'username': username,
+            'displayName': displayName,
+            'score': score,
+          });
+        } catch (e) {
+          AppLogger.error('Failed to get stats for user $userId', e);
+          continue;
+        }
+      }
+
+      // Sort by score (descending) and take top N
+      usersWithScores.sort((a, b) => (b['score'] as int).compareTo(a['score'] as int));
+
+      return usersWithScores.take(limit).toList();
+    } catch (e) {
+      AppLogger.error('Failed to get top users for leaderboard', e);
+      return [];
+    }
+  }
+
 }

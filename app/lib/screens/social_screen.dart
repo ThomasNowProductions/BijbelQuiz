@@ -38,6 +38,9 @@ class _SocialScreenState extends State<SocialScreen> {
     // Social features enabled since feature flags removed
     _socialFeaturesEnabled = true;
 
+    // Set up sync callback to refresh leaderboard when game stats are synced
+    _setupSyncCallbacks();
+
     // Navigate to sync screen immediately if not authenticated
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_currentUser == null) {
@@ -58,6 +61,26 @@ class _SocialScreenState extends State<SocialScreen> {
     _analyticsService.screen(context, 'SocialScreen');
     _analyticsService.trackFeatureUsage(
         context, 'social_features', 'screen_accessed');
+  }
+
+  /// Sets up sync callbacks to refresh leaderboard when data is synced
+  void _setupSyncCallbacks() {
+    final gameStatsProvider =
+        Provider.of<GameStatsProvider>(context, listen: false);
+    final syncService = gameStatsProvider.syncService;
+
+    // Set up callback for successful sync operations
+    syncService.setCallbacks(
+      onSyncSuccess: (key) {
+        if (key == 'game_stats' && mounted) {
+          // Refresh leaderboard when game stats are synced
+          setState(() {
+            _analyticsService.trackFeatureUsage(
+                context, 'leaderboard', 'auto_refresh_on_sync');
+          });
+        }
+      },
+    );
   }
 
   @override
@@ -279,6 +302,9 @@ class _SocialScreenState extends State<SocialScreen> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _buildSocialFeatureButtons(colorScheme, textTheme, isLargeScreen),
+        const SizedBox(height: 24),
+        _buildLeaderboardSection(colorScheme, textTheme, isLargeScreen),
+        const SizedBox(height: 24),
         _buildFollowedUsersScores(colorScheme, textTheme, isLargeScreen),
       ],
     );
@@ -388,6 +414,217 @@ class _SocialScreenState extends State<SocialScreen> {
           ),
         ],
       );
+    }
+  }
+
+  /// Builds the leaderboard section
+  Widget _buildLeaderboardSection(
+      ColorScheme colorScheme, TextTheme textTheme, bool isLargeScreen) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        strings.AppStrings.leaderboard,
+                        style: textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: colorScheme.onSurface,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(left: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 6, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: colorScheme.secondaryContainer,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        strings.AppStrings.beta,
+                        style: textTheme.labelSmall?.copyWith(
+                          color: colorScheme.onSecondaryContainer,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.refresh),
+                onPressed: () {
+                  setState(() {}); // Trigger a rebuild to refresh leaderboard
+                },
+              ),
+            ],
+          ),
+        ),
+        FutureBuilder<List<Map<String, dynamic>>>(
+          future: _getTopUsersForLeaderboard(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
+
+            if (snapshot.hasError || !snapshot.hasData || snapshot.data!.isEmpty) {
+              return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Center(
+                  child: Text(
+                    strings.AppStrings.noLeaderboardData,
+                    style: textTheme.bodyMedium?.copyWith(
+                      color: colorScheme.onSurface.withValues(alpha: 0.7),
+                    ),
+                  ),
+                ),
+              );
+            }
+
+            final topUsers = snapshot.data!;
+
+            return Column(
+              children: [
+                ...topUsers.asMap().entries.map(
+                  (entry) {
+                    final index = entry.key;
+                    final user = entry.value;
+                    return Card(
+                      color: colorScheme.surface,
+                      elevation: 1,
+                      margin: const EdgeInsets.only(bottom: 8),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ProfileDetailsScreen(
+                                userId: user['userId'],
+                                initialUsername: user['username'],
+                                initialDisplayName: user['displayName'],
+                              ),
+                            ),
+                          );
+                        },
+                        borderRadius: BorderRadius.circular(12),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: Row(
+                            children: [
+                              // Rank indicator
+                              Container(
+                                width: 40,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: index < 3
+                                      ? [colorScheme.primary, Colors.grey[600]!, Colors.amber][index]
+                                      : colorScheme.surfaceContainer,
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: colorScheme.outline.withValues(alpha: 0.2),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    '${index + 1}',
+                                    style: textTheme.titleMedium?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: index < 3
+                                          ? colorScheme.onPrimary
+                                          : colorScheme.onSurface,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      user['displayName'] ?? user['username'] ??
+                                          strings.AppStrings.unknownUser,
+                                      style: textTheme.titleMedium?.copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        color: colorScheme.onSurface,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      '${strings.AppStrings.score}: ${user['score'] ?? 0}',
+                                      style: textTheme.bodyMedium?.copyWith(
+                                        color: colorScheme.onSurfaceVariant,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 6),
+                                decoration: BoxDecoration(
+                                  color: colorScheme.primaryContainer,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      Icons.star,
+                                      size: 16,
+                                      color: colorScheme.onPrimaryContainer,
+                                    ),
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      '${user['score'] ?? 0}',
+                                      style: TextStyle(
+                                        color: colorScheme.onPrimaryContainer,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  /// Gets top users for leaderboard
+  Future<List<Map<String, dynamic>>> _getTopUsersForLeaderboard() async {
+    try {
+      final gameStatsProvider =
+          Provider.of<GameStatsProvider>(context, listen: false);
+      final syncService = gameStatsProvider.syncService;
+
+      return await syncService.getTopUsersForLeaderboard();
+    } catch (e) {
+      AppLogger.error('Error getting top users for leaderboard', e);
+      return [];
     }
   }
 
@@ -780,5 +1017,26 @@ class _SocialScreenState extends State<SocialScreen> {
         ),
       );
     }
+  }
+
+  @override
+  void dispose() {
+    // Clean up sync callbacks to prevent memory leaks
+    try {
+      final gameStatsProvider =
+          Provider.of<GameStatsProvider>(context, listen: false);
+      final syncService = gameStatsProvider.syncService;
+
+      // Remove callbacks to prevent memory leaks
+      syncService.setCallbacks(
+        onSyncSuccess: null,
+        onSyncError: null,
+      );
+    } catch (e) {
+      // Silently handle any errors during cleanup
+      AppLogger.debug('Error during social screen cleanup: $e');
+    }
+
+    super.dispose();
   }
 }

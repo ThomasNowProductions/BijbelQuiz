@@ -699,4 +699,6 @@ class AppStrings {
   static String get hoursAgo => _language == 'en' ? AppStringsEn.hoursAgo : 'u geleden';
   static String get daysAgo => _language == 'en' ? AppStringsEn.daysAgo : 'd geleden';
   static String get noEmail => _language == 'en' ? AppStringsEn.noEmail : 'Geen email';
+  static String get leaderboard => _language == 'en' ? AppStringsEn.leaderboard : 'Leaderboard';
+  static String get noLeaderboardData => _language == 'en' ? AppStringsEn.noLeaderboardData : 'Geen leaderboard gegevens beschikbaar';
 }

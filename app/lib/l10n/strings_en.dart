@@ -782,4 +782,6 @@ class AppStringsEn {
   static const String hoursAgo = 'h ago';
   static const String daysAgo = 'd ago';
   static const String noEmail = 'No email';
+  static const String leaderboard = 'Leaderboard';
+  static const String noLeaderboardData = 'No leaderboard data available';
 }
