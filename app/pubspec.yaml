@@ -67,6 +67,7 @@ dependencies:
   uuid: ^4.4.0
   posthog_flutter: ^5.0.0
   mobile_scanner: ^6.0.4
+  permission_handler: ^11.3.1
 
 dev_dependencies:
   flutter_test:
@@ -78,6 +79,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
+  mockito: ^5.4.4
+  build_runner: ^2.4.9
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
