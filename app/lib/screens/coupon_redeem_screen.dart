@@ -8,8 +8,6 @@ import '../providers/game_stats_provider.dart';
 import '../providers/settings_provider.dart';
 import '../services/coupon_service.dart';
 import '../l10n/strings_nl.dart' as strings;
-import '../utils/theme_utils.dart';
-import '../widgets/common_widgets.dart';
 
 class CouponRedeemScreen extends StatefulWidget {
   const CouponRedeemScreen({super.key});
