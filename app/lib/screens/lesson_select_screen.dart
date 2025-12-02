@@ -290,10 +290,10 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
       if (mounted && !append) {
         setState(() {
           _loading = false;
-          // Show promo card occasionally (20% chance) with new logic for different popup types
+          // Show promo card with new logic for different popup types
           _showPromoCard = _shouldShowPromoCard(settings);
           if (_showPromoCard) {
-            // Check if user is not logged in
+            // Check if user is not logged in - always show account creation promo
             final isLoggedIn = Supabase.instance.client.auth.currentUser != null;
             if (!isLoggedIn) {
               _isDonationPromo = false;
@@ -302,7 +302,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
               _isAccountCreationPromo = true;
               _socialMediaType = null;
             } else {
-              // Determine which type of promo to show
+              // For logged-in users, determine which type of promo to show
               final rand = Random().nextDouble();
               if (rand < 0.125) {
                 _isDonationPromo = true;
@@ -361,7 +361,13 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
       return false;
     }
 
-    // 10% chance to show a popup
+    // Check if user is not logged in - if so, always show account creation promo
+    final isLoggedIn = Supabase.instance.client.auth.currentUser != null;
+    if (!isLoggedIn) {
+      return true;
+    }
+
+    // 10% chance to show a popup (only for logged-in users)
     if (Random().nextInt(10) != 0) {
       return false;
     }
