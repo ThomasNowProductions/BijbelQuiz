@@ -182,6 +182,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                         color: Colors.black,
                         fontWeight: FontWeight.w500,
                       ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                     ),
                   ),
                 ),
@@ -285,6 +287,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   color: Colors.black,
                 ),
             textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
           ),
           const SizedBox(height: 8),
           Text(
@@ -293,6 +297,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   color: Colors.black,
                 ),
             textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
           ),
           const SizedBox(height: 40),
           Text(
@@ -301,6 +307,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   color: Colors.black,
                 ),
             textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 3,
           ),
         ],
       ),
@@ -328,6 +336,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   color: Colors.black,
                 ),
             textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
           ),
           const SizedBox(height: 8),
           Text(
@@ -336,6 +346,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   color: Colors.black,
                 ),
             textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
           ),
           const SizedBox(height: 24),
           AnimatedCounter(
@@ -370,6 +382,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   color: Colors.black,
                 ),
             textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
           ),
           const SizedBox(height: 8),
           Text(
@@ -378,6 +392,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   color: Colors.black,
                 ),
             textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
           ),
           const SizedBox(height: 24),
           AnimatedCounter(
@@ -413,6 +429,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   color: Colors.black,
                 ),
             textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
           ),
           const SizedBox(height: 8),
           Text(
@@ -421,6 +439,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   color: Colors.black,
                 ),
             textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
           ),
           const SizedBox(height: 24),
           Text(
@@ -430,6 +450,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   color: Colors.black,
                 ),
             textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
           ),
           const SizedBox(height: 8),
           AnimatedCounter(
@@ -466,6 +488,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   color: Colors.black,
                 ),
             textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
           ),
           const SizedBox(height: 8),
           Text(
@@ -474,6 +498,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   color: Colors.black,
                 ),
             textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
           ),
           const SizedBox(height: 24),
           AnimatedCounter(
@@ -514,6 +540,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   color: Colors.black,
                 ),
             textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
           ),
           const SizedBox(height: 8),
           Text(
@@ -522,13 +550,15 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   color: Colors.black,
                 ),
             textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
           ),
           const SizedBox(height: 24),
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.transparent,
+              color: Colors.white.withValues(alpha: 0.8),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
                 color: Colors.black,
@@ -615,6 +645,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   style: TextStyle(
                     color: Colors.black,
                   ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
                 ),
                 style: OutlinedButton.styleFrom(
                   side: BorderSide(
@@ -638,6 +670,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   style: TextStyle(
                     color: Colors.black,
                   ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
                 ),
                 style: OutlinedButton.styleFrom(
                   side: BorderSide(
@@ -667,6 +701,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   color: Colors.black,
                 ),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
           ),
           valueWidget,
         ],
@@ -693,6 +729,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   color: Colors.black,
                 ),
             textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
           ),
           const SizedBox(height: 8),
           Text(
@@ -701,6 +739,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   color: Colors.black,
                 ),
             textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
           ),
         ],
       ),
@@ -726,6 +766,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   color: Colors.black,
                 ),
             textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
           ),
           const SizedBox(height: 8),
           Text(
@@ -734,6 +776,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   color: Colors.black,
                 ),
             textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
           ),
           const SizedBox(height: 40),
           OutlinedButton.icon(
@@ -754,6 +798,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
               style: TextStyle(
                 color: Colors.black,
               ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
             ),
             style: OutlinedButton.styleFrom(
               side: BorderSide(

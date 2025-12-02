@@ -124,8 +124,9 @@ class TimeTrackingService {
       if (_sessionStartTime != null) {
         final currentSessionTime =
             DateTime.now().difference(_sessionStartTime!);
-        final totalWithCurrent = _totalTimeSpent + currentSessionTime.inSeconds;
-        _prefs?.setInt(_totalTimeKey, totalWithCurrent);
+        // Only save the current session time, not add it to total
+        // The total will be calculated when session ends
+        _prefs?.setInt(_totalTimeKey, _totalTimeSpent);
       }
     });
   }
