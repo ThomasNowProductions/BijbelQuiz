@@ -198,7 +198,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
             Text(strings.AppStrings.qrCode),
             const SizedBox(height: 8),
             Text(
-              'Camera toegang is vereist om QR-codes te scannen. Je kunt dit inschakelen in de app-instellingen.',
+              strings.AppStrings.cameraAccessDescription,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],
@@ -343,14 +343,6 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
                                         : colorScheme.onSurface.withValues(alpha: 0.6),
                                   ),
                                 ),
-                                if (!_hasCameraPermission) ...[
-                                  const SizedBox(width: 4),
-                                  Icon(
-                                    Icons.lock_rounded,
-                                    size: 14,
-                                    color: colorScheme.onSurface.withValues(alpha: 0.6),
-                                  ),
-                                ],
                               ],
                             ),
                           ),
@@ -482,7 +474,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
           ),
           const SizedBox(height: 24),
           Text(
-            'Camera toegang vereist',
+            strings.AppStrings.cameraAccessRequired,
             style: theme.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.w700,
               color: colorScheme.onSurface,
@@ -492,7 +484,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32),
             child: Text(
-              'Om QR-codes te kunnen scannen, heeft de app toegang nodig tot je camera. Deze toestemming wordt alleen gebruikt voor het scannen van coupons.',
+              strings.AppStrings.cameraAccessDescription,
               textAlign: TextAlign.center,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: colorScheme.onSurface.withValues(alpha: 0.7),
@@ -502,14 +494,14 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
           const SizedBox(height: 32),
           FilledButton(
             onPressed: _requestCameraPermissionWithRationale,
-            child: const Text('Camera toestemming verlenen'),
+            child: Text(strings.AppStrings.grantCameraPermission),
           ),
           if (_showPermissionRationale) ...[
             const SizedBox(height: 16),
             TextButton(
               onPressed: _showPermissionSettingsDialog,
               child: Text(
-                'Instellingen openen',
+                strings.AppStrings.openSettings,
                 style: TextStyle(color: colorScheme.primary),
               ),
             ),
@@ -708,7 +700,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
                       const SizedBox(height: 8),
                       if (_showScannerTutorial)
                         Text(
-                          'Houd de QR-code binnen het kader voor automatische detectie',
+                          strings.AppStrings.qrCodeTutorial,
                           textAlign: TextAlign.center,
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: Colors.white.withValues(alpha: 0.8),
@@ -725,27 +717,6 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
                   ),
                 ),
 
-                // Flashlight toggle (for future implementation)
-                Positioned(
-                  top: 16,
-                  right: 16,
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.flash_off_rounded,
-                      color: Colors.white.withValues(alpha: 0.8),
-                      size: 24,
-                    ),
-                    onPressed: () {
-                      // TODO: Implement flashlight toggle
-                    },
-                    style: IconButton.styleFrom(
-                      backgroundColor: Colors.black.withValues(alpha: 0.3),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                    ),
-                  ),
-                ),
               ],
             ),
           ),
@@ -789,7 +760,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
           ),
           const SizedBox(height: 16),
           Text(
-            'Camera fout',
+            strings.AppStrings.cameraError,
             style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.w600,
               color: colorScheme.onSurface,
@@ -799,7 +770,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32),
             child: Text(
-              'Er is een fout opgetreden bij het initialiseren van de camera: ${error.toString()}',
+              '${strings.AppStrings.cameraInitializationError}${error.toString()}',
               textAlign: TextAlign.center,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: colorScheme.onSurface.withValues(alpha: 0.7),
@@ -814,7 +785,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
               });
               _checkCameraPermission();
             },
-            child: const Text('Opnieuw proberen'),
+            child: Text(strings.AppStrings.tryAgain),
           ),
         ],
       ),
@@ -829,7 +800,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
           const CircularProgressIndicator(),
           const SizedBox(height: 16),
           Text(
-            'Camera initialiseren...',
+            strings.AppStrings.initializingCamera,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ],
@@ -987,7 +958,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
                     Navigator.of(context).pop();
                     onDismiss?.call();
                   },
-                  child: const Text('OK'),
+                  child: Text(strings.AppStrings.ok),
                 ),
               ],
             ),

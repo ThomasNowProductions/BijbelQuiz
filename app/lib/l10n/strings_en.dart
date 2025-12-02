@@ -240,6 +240,14 @@ class AppStringsEn {
   static const String qrCodeDescription = 'Point the camera at the QR code';
   static const String qrScannerMobileOnly = 'QR Scanner only available on mobile';
   static const String invalidQRCode = 'Invalid QR code';
+  static const String cameraAccessRequired = 'Camera access required';
+  static const String cameraAccessDescription = 'To scan QR codes, the app needs access to your camera. This permission is only used for scanning coupons.';
+  static const String grantCameraPermission = 'Grant camera permission';
+  static const String openSettings = 'Open settings';
+  static const String cameraError = 'Camera error';
+  static const String cameraInitializationError = 'An error occurred while initializing the camera: ';
+  static const String initializingCamera = 'Initializing camera...';
+  static const String qrCodeTutorial = 'Hold the QR code within the frame for automatic detection';
 
 
   // Settings screen

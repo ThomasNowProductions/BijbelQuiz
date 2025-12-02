@@ -227,6 +227,14 @@ class AppStrings {
   static String get qrCodeDescription => _language == 'en' ? AppStringsEn.qrCodeDescription : 'Richt de camera op de QR-code';
   static String get qrScannerMobileOnly => _language == 'en' ? AppStringsEn.qrScannerMobileOnly : 'QR-scanner alleen beschikbaar op mobiel';
   static String get invalidQRCode => _language == 'en' ? AppStringsEn.invalidQRCode : 'Ongeldige QR-code';
+  static String get cameraAccessRequired => _language == 'en' ? AppStringsEn.cameraAccessRequired : 'Camera toegang vereist';
+  static String get cameraAccessDescription => _language == 'en' ? AppStringsEn.cameraAccessDescription : 'Om QR-codes te kunnen scannen, heeft de app toegang nodig tot je camera. Deze toestemming wordt alleen gebruikt voor het scannen van coupons.';
+  static String get grantCameraPermission => _language == 'en' ? AppStringsEn.grantCameraPermission : 'Camera toestemming verlenen';
+  static String get openSettings => _language == 'en' ? AppStringsEn.openSettings : 'Instellingen openen';
+  static String get cameraError => _language == 'en' ? AppStringsEn.cameraError : 'Camera fout';
+  static String get cameraInitializationError => _language == 'en' ? AppStringsEn.cameraInitializationError : 'Er is een fout opgetreden bij het initialiseren van de camera: ';
+  static String get initializingCamera => _language == 'en' ? AppStringsEn.initializingCamera : 'Camera initialiseren...';
+  static String get qrCodeTutorial => _language == 'en' ? AppStringsEn.qrCodeTutorial : 'Houd de QR-code binnen het kader voor automatische detectie';
 
 
   // Settings screen
