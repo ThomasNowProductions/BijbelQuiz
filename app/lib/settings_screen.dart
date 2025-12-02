@@ -502,7 +502,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return ListView(
       padding: EdgeInsets.symmetric(horizontal: isSmallScreen ? 16.0 : 24.0),
       cacheExtent: 1000,
-      physics: const ClampingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       children: [
         Card(
           elevation: 0,
