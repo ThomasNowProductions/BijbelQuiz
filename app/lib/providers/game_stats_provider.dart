@@ -26,7 +26,7 @@ class GameStatsProvider extends ChangeNotifier {
   String? _error;
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   void Function(String message)? onError;
-  late SyncService syncService;
+  SyncService get syncService => SyncService.instance;
 
   Powerup? _activePowerup;
   DateTime? _powerupActivatedAt;
@@ -90,7 +90,6 @@ class GameStatsProvider extends ChangeNotifier {
   }
 
   GameStatsProvider() {
-    syncService = SyncService();
     _initializeSyncService();
     _loadStats();
   }
@@ -98,7 +97,8 @@ class GameStatsProvider extends ChangeNotifier {
   Future<void> _initializeSyncService() async {
     await syncService.initialize();
     // Set up error callbacks for user notifications
-    syncService.setCallbacks(
+    syncService.registerCallbacks(
+      'game_stats',
       onSyncError: (key, error) {
         if (key == 'game_stats') {
           onError?.call('Synchronisatie mislukt: $error');
@@ -268,6 +268,9 @@ class GameStatsProvider extends ChangeNotifier {
       await _prefs?.setInt(_scoreKey, _score);
       await _prefs?.setInt(_currentStreakKey, _currentStreak);
       notifyListeners();
+      
+      // Trigger sync
+      triggerSync();
     } catch (e) {
       // Use the new error handling system
       final appError = ErrorHandler().fromException(
@@ -297,6 +300,9 @@ class GameStatsProvider extends ChangeNotifier {
       await _prefs?.setInt(_incorrectAnswersKey, _incorrectAnswers);
       notifyListeners();
       AppLogger.info('Game stats reset');
+      
+      // Trigger sync
+      triggerSync();
     } catch (e) {
       // Use the new error handling system
       final appError = ErrorHandler().fromException(
@@ -556,19 +562,8 @@ class GameStatsProvider extends ChangeNotifier {
 
   /// Triggers immediate sync of game stats to server
   Future<void> triggerSync() async {
-    if (!syncService.isAuthenticated) {
-      AppLogger.debug('Skipping game stats sync: user not authenticated');
-      return;
-    }
-    
-    // Check connection before attempting sync
-    if (!syncService.isConnected) {
-      AppLogger.debug('Skipping game stats sync: device is offline');
-      return;
-    }
-    
     AppLogger.info('Triggering game stats sync');
-    await syncService.syncDataImmediate('game_stats', getExportData());
+    await syncService.syncData('game_stats', getExportData());
   }
 
   /// Cleans up resources and listeners

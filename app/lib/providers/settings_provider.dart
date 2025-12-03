@@ -72,7 +72,7 @@ class SettingsProvider extends ChangeNotifier {
   // Navigation settings
   bool _showNavigationLabels = true;
 
-  late SyncService syncService;
+  SyncService get syncService => SyncService.instance;
 
   // Layout type enum
   static const String layoutGrid = 'grid';
@@ -91,7 +91,6 @@ class SettingsProvider extends ChangeNotifier {
       true; // default to true (automatically send bug reports)
 
   SettingsProvider() {
-    syncService = SyncService();
     _initializeSyncService();
     AppLogger.info('SettingsProvider initializing...');
     // Settings will be loaded later
@@ -100,7 +99,8 @@ class SettingsProvider extends ChangeNotifier {
   Future<void> _initializeSyncService() async {
     await syncService.initialize();
     // Set up error callbacks for user notifications
-    syncService.setCallbacks(
+    syncService.registerCallbacks(
+      'settings',
       onSyncError: (key, error) {
         if (key == 'settings') {
           _error = 'Synchronisatie mislukt: $error';
@@ -241,7 +241,7 @@ class SettingsProvider extends ChangeNotifier {
         
         // Sync settings after save
         if (syncService.isAuthenticated) {
-          await syncService.syncDataImmediate('settings', getExportData());
+          await syncService.syncData('settings', getExportData());
         }
       },
       errorMessage: 'Failed to save AI theme',
@@ -264,7 +264,7 @@ class SettingsProvider extends ChangeNotifier {
         
         // Sync settings after removal
         if (syncService.isAuthenticated) {
-          await syncService.syncDataImmediate('settings', getExportData());
+          await syncService.syncData('settings', getExportData());
         }
       },
       errorMessage: 'Failed to remove AI theme',
@@ -385,8 +385,9 @@ class SettingsProvider extends ChangeNotifier {
     }
 
     // Sync data immediately if user is authenticated (settings changes should sync right away)
+    // SyncService now handles queuing if offline
     if (syncService.isAuthenticated) {
-      await syncService.syncDataImmediate('settings', getExportData());
+      await syncService.syncData('settings', getExportData());
     }
   }
 
@@ -529,7 +530,7 @@ class SettingsProvider extends ChangeNotifier {
         
         // Sync settings immediately
         if (syncService.isAuthenticated) {
-          await syncService.syncDataImmediate('settings', getExportData());
+          await syncService.syncData('settings', getExportData());
         }
       },
       errorMessage: 'Failed to save language setting',
@@ -547,7 +548,7 @@ class SettingsProvider extends ChangeNotifier {
         
         // Sync settings immediately
         if (syncService.isAuthenticated) {
-          await syncService.syncDataImmediate('settings', getExportData());
+          await syncService.syncData('settings', getExportData());
         }
       },
       errorMessage: 'Failed to save theme setting',
@@ -581,7 +582,7 @@ class SettingsProvider extends ChangeNotifier {
         
         // Sync settings immediately
         if (syncService.isAuthenticated) {
-          await syncService.syncDataImmediate('settings', getExportData());
+          await syncService.syncData('settings', getExportData());
         }
       },
       errorMessage: 'Failed to save game speed setting',
@@ -599,7 +600,7 @@ class SettingsProvider extends ChangeNotifier {
         
         // Sync settings immediately
         if (syncService.isAuthenticated) {
-          await syncService.syncDataImmediate('settings', getExportData());
+          await syncService.syncData('settings', getExportData());
         }
       },
       errorMessage: 'Failed to save mute setting',

@@ -23,14 +23,13 @@ class LessonProgressProvider extends ChangeNotifier {
 
   /// Map: lessonId -> bestStars (0..3)
   final Map<String, int> _bestStarsByLesson = {};
-  late SyncService syncService;
+  SyncService get syncService => SyncService.instance;
 
   bool get isLoading => _isLoading;
   String? get error => _error;
   int get unlockedCount => _unlockedCount;
 
   LessonProgressProvider() {
-    syncService = SyncService();
     _initializeSyncService();
     _load();
   }
@@ -38,7 +37,8 @@ class LessonProgressProvider extends ChangeNotifier {
   Future<void> _initializeSyncService() async {
     await syncService.initialize();
     // Set up error callbacks for user notifications
-    syncService.setCallbacks(
+    syncService.registerCallbacks(
+      'lesson_progress',
       onSyncError: (key, error) {
         if (key == 'lesson_progress') {
           _error = 'Synchronisatie mislukt: $error';
@@ -159,6 +159,9 @@ class LessonProgressProvider extends ChangeNotifier {
 
     await _persist();
     notifyListeners();
+    
+    // Trigger sync
+    triggerSync();
   }
 
   /// Ensures at least [count] lessons are unlocked (used when lesson list shorter/longer changes).
@@ -176,6 +179,9 @@ class LessonProgressProvider extends ChangeNotifier {
     _bestStarsByLesson.clear();
     await _persist();
     notifyListeners();
+    
+    // Trigger sync
+    triggerSync();
   }
 
   /// Stars rubric
@@ -226,19 +232,8 @@ class LessonProgressProvider extends ChangeNotifier {
 
   /// Triggers immediate sync of lesson progress to server
   Future<void> triggerSync() async {
-    if (!syncService.isAuthenticated) {
-      AppLogger.debug('Skipping lesson progress sync: user not authenticated');
-      return;
-    }
-    
-    // Check connection before attempting sync
-    if (!syncService.isConnected) {
-      AppLogger.debug('Skipping lesson progress sync: device is offline');
-      return;
-    }
-    
     AppLogger.info('Triggering lesson progress sync');
-    await syncService.syncDataImmediate('lesson_progress', getExportData());
+    await syncService.syncData('lesson_progress', getExportData());
   }
 
   /// Cleans up resources and listeners

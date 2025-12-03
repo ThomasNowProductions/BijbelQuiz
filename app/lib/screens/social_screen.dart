@@ -70,7 +70,8 @@ class _SocialScreenState extends State<SocialScreen> {
     final syncService = gameStatsProvider.syncService;
 
     // Set up callback for successful sync operations
-    syncService.setCallbacks(
+    syncService.registerCallbacks(
+      'game_stats',
       onSyncSuccess: (key) {
         if (key == 'game_stats' && mounted) {
           // Refresh leaderboard when game stats are synced
@@ -1028,7 +1029,8 @@ class _SocialScreenState extends State<SocialScreen> {
       final syncService = gameStatsProvider.syncService;
 
       // Remove callbacks to prevent memory leaks
-      syncService.setCallbacks(
+      syncService.registerCallbacks(
+        'game_stats',
         onSyncSuccess: null,
         onSyncError: null,
       );

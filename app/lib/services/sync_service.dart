@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../config/supabase_config.dart';
 import 'logger.dart';
@@ -9,7 +11,11 @@ import '../utils/automatic_error_reporter.dart';
 import 'sync/conflict_resolver.dart';
 
 class SyncService {
+  static final SyncService _instance = SyncService._internal();
+  static SyncService get instance => _instance;
+
   static const String _tableName = 'user_sync_data';
+  static const String _queueKey = 'sync_service_queue';
   
   late final SupabaseClient _client;
   late final ConnectionService _connectionService;
@@ -18,41 +24,94 @@ class SyncService {
   RealtimeChannel? _channel;
   final Map<String, Function(Map<String, dynamic>)> _listeners = {};
   bool _isListening = false;
+  bool _isInitialized = false;
 
   // Concurrency protection
   final Map<String, bool> _syncInProgress = {}; // Track ongoing sync operations per key
   final Map<String, bool> _realtimeUpdateInProgress = {}; // Track real-time updates per key
 
-  // Error handling callbacks
-  Function(String, String)? _onSyncError;
-  Function(String)? _onSyncSuccess;
+  // Offline queue
+  final Map<String, Map<String, dynamic>> _pendingSyncs = {};
+  Timer? _queueProcessingTimer;
+
+  // Error handling callbacks - now supports multiple listeners
+  final Map<String, Function(String, String)> _errorCallbacks = {};
+  final Map<String, Function(String)> _successCallbacks = {};
 
   /// Public getter for connection status
   bool get isConnected => _connectionService.isConnected;
 
-  SyncService() {
+  factory SyncService() {
+    return _instance;
+  }
+
+  SyncService._internal() {
     _client = SupabaseConfig.client;
     _connectionService = ConnectionService();
   }
 
   /// Initializes the service
   Future<void> initialize() async {
+    if (_isInitialized) return;
+    
     await _connectionService.initialize();
     _setupAuthListener();
+    _setupConnectionListener();
+    await _loadQueue();
+    _isInitialized = true;
+    AppLogger.info('SyncService initialized (Singleton)');
   }
 
-  /// Sets error and success callbacks for user notifications
-  void setCallbacks({
+  /// Registers callbacks for a specific data type
+  void registerCallbacks(String dataType, {
     Function(String, String)? onSyncError,
     Function(String)? onSyncSuccess,
   }) {
-    _onSyncError = onSyncError;
-    _onSyncSuccess = onSyncSuccess;
+    if (onSyncError != null) {
+      _errorCallbacks[dataType] = onSyncError;
+    }
+    if (onSyncSuccess != null) {
+      _successCallbacks[dataType] = onSyncSuccess;
+    }
   }
 
-  /// Syncs data to the server immediately
+  /// Called when app resumes
+  Future<void> syncOnAppResume() async {
+    AppLogger.info('App resumed - triggering sync check');
+    if (_currentUserId != null && _connectionService.isConnected) {
+      await fetchAllData();
+      _processQueue();
+    }
+  }
+
+  /// Called when app pauses
+  Future<void> syncOnAppPause() async {
+    AppLogger.info('App paused - ensuring queue is saved');
+    await _saveQueue();
+  }
+
+
+
+
+  /// Syncs data to the server.
+  /// If online, attempts immediate sync.
+  /// If offline or fails, adds to queue for later retry.
+  Future<void> syncData(String key, Map<String, dynamic> data) async {
+    // Always add to pending queue first to ensure we have the latest version
+    _pendingSyncs[key] = data;
+    await _saveQueue();
+
+    if (_connectionService.isConnected && _currentUserId != null) {
+      // Try to sync immediately
+      _processQueue();
+    } else {
+      AppLogger.info('Offline or not logged in, added $key to sync queue');
+    }
+  }
+
+  /// Syncs data to the server immediately (Legacy method, use syncData instead)
   Future<void> syncDataImmediate(String key, Map<String, dynamic> data) async {
-    await _performSync(key, data);
+    await syncData(key, data);
   }
 
   /// Sets up auth state listener to handle user login/logout
@@ -63,10 +122,22 @@ class SyncService {
         _currentUserId = user.id;
         _startListening();
         AppLogger.info('User logged in, starting sync for user: ${user.id}');
+        // Process any pending items in the queue
+        _processQueue();
       } else {
         // User logged out - perform complete session cleanup
         _performSessionCleanup();
         AppLogger.info('User logged out, complete session cleanup performed');
+      }
+    });
+  }
+
+  /// Sets up connection listener to retry syncs when online
+  void _setupConnectionListener() {
+    _connectionService.setConnectionStatusCallback((isConnected, type) {
+      if (isConnected) {
+        AppLogger.info('Connection restored, processing sync queue...');
+        _processQueue();
       }
     });
   }
@@ -84,11 +155,63 @@ class SyncService {
     // Clear all listeners to prevent cross-user contamination
     _listeners.clear();
     _isListening = false;
+    
+    // Clear pending syncs as they belong to the previous user
+    _pendingSyncs.clear();
+    _saveQueue(); // Persist empty queue
 
     AppLogger.info('Complete session cleanup performed - all user data cleared');
   }
 
+  /// Loads the pending sync queue from persistent storage
+  Future<void> _loadQueue() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final queueJson = prefs.getString(_queueKey);
+      if (queueJson != null) {
+        final decoded = json.decode(queueJson) as Map<String, dynamic>;
+        _pendingSyncs.clear();
+        decoded.forEach((key, value) {
+          if (value is Map<String, dynamic>) {
+            _pendingSyncs[key] = value;
+          }
+        });
+        AppLogger.info('Loaded ${_pendingSyncs.length} pending syncs from storage');
+      }
+    } catch (e) {
+      AppLogger.error('Failed to load sync queue', e);
+    }
+  }
 
+  /// Saves the pending sync queue to persistent storage
+  Future<void> _saveQueue() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (_pendingSyncs.isEmpty) {
+        await prefs.remove(_queueKey);
+      } else {
+        await prefs.setString(_queueKey, json.encode(_pendingSyncs));
+      }
+    } catch (e) {
+      AppLogger.error('Failed to save sync queue', e);
+    }
+  }
+
+  /// Processes the pending sync queue
+  Future<void> _processQueue() async {
+    if (_pendingSyncs.isEmpty) return;
+    if (_currentUserId == null || !_connectionService.isConnected) return;
+
+    // Create a copy of keys to iterate safely
+    final keysToSync = List<String>.from(_pendingSyncs.keys);
+
+    for (final key in keysToSync) {
+      final data = _pendingSyncs[key];
+      if (data != null) {
+        await _performSync(key, data);
+      }
+    }
+  }
 
   /// Performs the actual sync operation with retry logic and error handling
   Future<void> _performSync(String key, Map<String, dynamic> data) async {
@@ -100,7 +223,9 @@ class SyncService {
     // Check network connectivity first
     if (!_connectionService.isConnected) {
       AppLogger.warning('Cannot sync data: no network connection');
-      _onSyncError?.call(key, 'No network connection');
+      if (_errorCallbacks.containsKey(key)) {
+        _errorCallbacks[key]!(key, 'No network connection');
+      }
       return;
     }
 
@@ -121,7 +246,9 @@ class SyncService {
       // Validate data integrity
       if (!_isValidSyncedData(key, data)) {
         AppLogger.error('Invalid $key data, skipping sync');
-        _onSyncError?.call(key, 'Invalid $key data');
+        if (_errorCallbacks.containsKey(key)) {
+          _errorCallbacks[key]!(key, 'Invalid $key data');
+        }
         await AutomaticErrorReporter.reportStorageError(
           message: 'Invalid sync data for key: $key',
           additionalInfo: {
@@ -130,6 +257,9 @@ class SyncService {
             'userId': _currentUserId,
           },
         );
+        // Remove from queue as it's invalid
+        _pendingSyncs.remove(key);
+        await _saveQueue();
         return;
       }
 
@@ -189,7 +319,14 @@ class SyncService {
       });
 
       AppLogger.info('Successfully synced data for key: $key for user: $_currentUserId');
-      _onSyncSuccess?.call(key);
+    if (_successCallbacks.containsKey(key)) {
+      _successCallbacks[key]!(key);
+    }
+    
+    // Remove from pending queue on success
+      _pendingSyncs.remove(key);
+      await _saveQueue();
+
     } catch (e) {
       final isNetworkError = e.toString().toLowerCase().contains('network') ||
                               e.toString().toLowerCase().contains('connection') ||
@@ -206,16 +343,21 @@ class SyncService {
            await _client.auth.refreshSession();
            // Retry once after refresh
            AppLogger.info('Session refreshed, retrying sync for key: $key');
-           await syncDataImmediate(key, data);
+           // Don't call syncDataImmediate here to avoid infinite recursion, 
+           // just let the next queue process handle it or retry logic
+           _syncInProgress[key] = false; // Reset flag before retry
+           await _performSync(key, data); 
            return;
          } catch (refreshError) {
            AppLogger.error('Failed to refresh session', refreshError);
          }
       }
 
-      _onSyncError?.call(key, 'Sync failed: ${e.toString()}');
-      
-      // Report error with appropriate categorization
+    if (_errorCallbacks.containsKey(key)) {
+      _errorCallbacks[key]!(key, 'Sync failed: ${e.toString()}');
+    }
+    
+    // Report error with appropriate categorization
       if (isNetworkError) {
         await AutomaticErrorReporter.reportNetworkError(
           message: 'Sync network failure for key: $key',
@@ -450,6 +592,7 @@ class SyncService {
   /// Disposes the service
   void dispose() {
     _stopListening();
+    _queueProcessingTimer?.cancel();
   }
 
   /// Gets the current user's profile, creating it if it doesn't exist

@@ -32,6 +32,7 @@ import 'screens/sync_screen.dart';
 import 'screens/stats_share_screen.dart';
 import 'l10n/strings_nl.dart' as strings;
 import 'config/supabase_config.dart';
+import 'services/sync_service.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -469,11 +470,15 @@ class _AppLifecycleObserver extends WidgetsBindingObserver {
         _parent._timeTrackingService.startSession();
         // Check for new messages when app is resumed
         _checkForMessagesOnAppResume();
+        // Trigger sync check
+        SyncService.instance.syncOnAppResume();
         break;
       case AppLifecycleState.paused:
         AppLogger.info('App lifecycle: paused');
         // End the current session when app is paused (sent to background)
         _parent._timeTrackingService.endSession();
+        // Ensure sync queue is saved
+        SyncService.instance.syncOnAppPause();
         break;
       case AppLifecycleState.inactive:
         AppLogger.info('App lifecycle: inactive');
