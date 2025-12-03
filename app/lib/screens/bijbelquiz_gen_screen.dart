@@ -123,17 +123,6 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
   Widget build(BuildContext context) {
     final gameStats = context.watch<GameStatsProvider>();
 
-    final pages = [
-      _buildWelcomePage(context),
-      _buildQuestionsAnsweredPage(context, gameStats),
-      _buildMistakesPage(context, gameStats),
-      _buildTimeSpentPage(context, gameStats),
-      _buildBestStreakPage(context, gameStats),
-      _buildYearInReviewPage(context, gameStats),
-      _buildThankYouPage(context),
-      _buildDonationPage(context),
-    ];
-
     return AnimatedBuilder(
       animation: _pageController,
       builder: (context, child) {
@@ -151,6 +140,17 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
           Colors.amber.shade200, // Year in review page - amber
           Colors.lightBlue.shade200, // Thank you page - light blue
           Colors.yellow.shade200, // Donation page - yellow
+        ];
+
+        final pages = [
+          _buildWelcomePage(context),
+          _buildQuestionsAnsweredPage(context, gameStats),
+          _buildMistakesPage(context, gameStats),
+          _buildTimeSpentPage(context, gameStats),
+          _buildBestStreakPage(context, gameStats),
+          _buildYearInReviewPage(context, gameStats),
+          _buildThankYouPage(context),
+          _buildDonationPage(context),
         ];
 
         return Scaffold(
@@ -572,7 +572,6 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
             width: double.infinity,
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.8),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
                 color: Colors.black,
