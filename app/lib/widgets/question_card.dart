@@ -284,7 +284,9 @@ class _QuestionCardState extends State<QuestionCard>
                                 }
                                 return Padding(
                                   padding: EdgeInsets.only(
-                                      bottom: isDesktop ? 14.0 : 12.0),
+                                      bottom: isDesktop
+                                          ? 10.0
+                                          : 8.0), // Reduced from 14/12 to 10/8 for more compact layout
                                   child: AnswerButton(
                                     onPressed: widget.isAnswering ||
                                             widget.selectedAnswerIndex != null
@@ -400,7 +402,9 @@ class _QuestionCardState extends State<QuestionCard>
                                 }
                                 return Padding(
                                   padding: EdgeInsets.only(
-                                      bottom: isDesktop ? 14.0 : 12.0),
+                                      bottom: isDesktop
+                                          ? 10.0
+                                          : 8.0), // Reduced from 14/12 to 10/8 for more compact layout
                                   child: AnswerButton(
                                     onPressed: widget.isAnswering ||
                                             widget.selectedAnswerIndex != null

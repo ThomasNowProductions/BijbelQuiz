@@ -144,28 +144,34 @@ class _AnswerButtonState extends State<AnswerButton>
         ? (isDesktop ? 16 : 8) // Less cramped on desktop for multiplayer
         : widget.isLarge
             ? (isDesktop ? 36 : 28)
-            : (isDesktop ? 18 : 16);
+            : (isDesktop
+                ? 14
+                : 12); // Reduced from 18/16 to 14/12 for more compact buttons
     final double fontSize = widget.isCompact
         ? (isDesktop
             ? 16
             : 12) // Less cramped font size on desktop for multiplayer
         : widget.isLarge
             ? (isDesktop ? 32 : 24)
-            : getResponsiveFontSize(context, 16);
+            : getResponsiveFontSize(
+                context, 14); // Reduced from 16 to 14 for more compact buttons
     final double iconSize = widget.isCompact
         ? (isDesktop
             ? 20
             : 14) // Less cramped icon size on desktop for multiplayer
         : widget.isLarge
             ? (isDesktop ? 48 : 36)
-            : getResponsiveFontSize(context, 16);
+            : getResponsiveFontSize(
+                context, 14); // Reduced from 16 to 14 for more compact buttons
     final double indicatorSize = widget.isCompact
         ? (isDesktop
             ? 32
             : 24) // Less cramped indicator size on desktop for multiplayer
         : widget.isLarge
             ? (isDesktop ? 56 : 48)
-            : (isDesktop ? 40 : 36);
+            : (isDesktop
+                ? 32
+                : 28); // Reduced from 40/36 to 32/28 for more compact buttons
 
     // Build semantic label based on feedback state
     String semanticLabel = widget.label;
@@ -236,7 +242,9 @@ class _AnswerButtonState extends State<AnswerButton>
                     padding: EdgeInsets.symmetric(
                       horizontal: widget.isCompact
                           ? (isDesktop ? 16 : 8)
-                          : (isDesktop ? 24 : 20),
+                          : (isDesktop
+                              ? 18
+                              : 16), // Reduced from 24/20 to 18/16 for more compact buttons
                       vertical: verticalPadding,
                     ),
                     decoration: BoxDecoration(
