@@ -534,11 +534,11 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
                 returnImage: false,
               ),
               onDetect: (capture) => _handleBarcodeDetection(capture),
-              errorBuilder: (context, error, child) {
+              errorBuilder: (context, error) {
                 return _buildScannerErrorView(context, error);
               },
-              placeholderBuilder: (context, child) {
-                return _buildScannerPlaceholderView(context, child);
+              placeholderBuilder: (context) {
+                return _buildScannerPlaceholderView(context, null);
               },
             ),
           ),
