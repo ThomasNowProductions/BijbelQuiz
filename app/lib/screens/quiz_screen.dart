@@ -10,6 +10,7 @@ import '../services/question_cache_service.dart';
 import '../services/performance_service.dart';
 import '../services/connection_service.dart';
 import '../services/platform_feedback_service.dart';
+import '../services/time_tracking_service.dart';
 import '../providers/settings_provider.dart';
 import '../providers/game_stats_provider.dart';
 import '../models/lesson.dart';
@@ -721,11 +722,15 @@ class _QuizScreenState extends State<QuizScreen>
     final gameStats =
         Provider.of<GameStatsProvider>(localContext, listen: false);
     final settings = Provider.of<SettingsProvider>(localContext, listen: false);
+    final timeTrackingService = Provider.of<TimeTrackingService>(localContext, listen: false);
 
     // Update game stats first
     await gameStats.updateStats(isCorrect: isCorrect);
     // Trigger animations for stats updates
     _animationController.triggerAllStatsAnimations();
+
+    // Record that a question was answered for time tracking
+    timeTrackingService.recordQuestionAnswered();
 
     // Update lesson session counters
     if (_lessonMode) {

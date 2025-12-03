@@ -95,25 +95,15 @@ class TimeTrackingService {
   /// End the current session and save the time
   void endSession() {
     if (_sessionStartTime != null) {
-      final sessionDuration = DateTime.now().difference(_sessionStartTime!);
-      final sessionDurationSeconds = sessionDuration.inSeconds;
-
-      // Only add significant session time (ignore sessions less than 10 seconds)
-      if (sessionDurationSeconds >= 10) {
-        _totalTimeSpent += sessionDurationSeconds;
-        _prefs?.setInt(_totalTimeKey, _totalTimeSpent);
-        AppLogger.info(
-            'Valid session ended. Added ${sessionDurationSeconds}s. Total time now: $_totalTimeSpent seconds');
-      } else {
-        AppLogger.info(
-            'Short session (${sessionDurationSeconds}s) ignored to prevent noise in tracking');
-      }
+      // With the new simplified timing mechanism, we don't add session-based time
+      // Time is now tracked exclusively through recordQuestionAnswered()
 
       // Clear session start time
       _prefs?.remove(_sessionStartTimeKey);
       _sessionStartTime = null;
 
       _stopTracking();
+      AppLogger.info('Session ended. Time tracking now uses question-based approach only.');
     }
   }
 
@@ -139,10 +129,8 @@ class TimeTrackingService {
 
   /// Get total time spent in seconds
   int getTotalTimeSpent() {
-    if (_sessionStartTime != null) {
-      final currentSessionTime = DateTime.now().difference(_sessionStartTime!);
-      return _totalTimeSpent + currentSessionTime.inSeconds;
-    }
+    // With the new simplified timing mechanism (5 seconds per question),
+    // we only return the question-based time tracking
     return _totalTimeSpent;
   }
 
@@ -190,6 +178,14 @@ class TimeTrackingService {
   void markGenAsShownThisPeriod() {
     _genShownThisPeriod = true;
     _prefs?.setBool(_genShownThisPeriodKey, true);
+  }
+
+  /// Record that a question was answered to track time spent
+  void recordQuestionAnswered() {
+    // Add 5 seconds per question answered
+    _totalTimeSpent += 5;
+    _prefs?.setInt(_totalTimeKey, _totalTimeSpent);
+    AppLogger.info('Recorded question answered. Added 5 seconds. Total time now: $_totalTimeSpent seconds');
   }
 
   /// Clean up resources

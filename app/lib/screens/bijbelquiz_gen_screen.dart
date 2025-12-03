@@ -4,7 +4,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:flutter/services.dart'; // For Clipboard
 import '../providers/game_stats_provider.dart';
-import '../services/time_tracking_service.dart';
 import '../utils/bijbelquiz_gen_utils.dart';
 import '../l10n/strings_nl.dart' as strings;
 import '../constants/urls.dart';
@@ -123,15 +122,14 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
   @override
   Widget build(BuildContext context) {
     final gameStats = context.watch<GameStatsProvider>();
-    final timeTrackingService = TimeTrackingService.instance;
 
     final pages = [
       _buildWelcomePage(context),
       _buildQuestionsAnsweredPage(context, gameStats),
       _buildMistakesPage(context, gameStats),
-      _buildTimeSpentPage(context, timeTrackingService),
+      _buildTimeSpentPage(context, gameStats),
       _buildBestStreakPage(context, gameStats),
-      _buildYearInReviewPage(context, gameStats, timeTrackingService),
+      _buildYearInReviewPage(context, gameStats),
       _buildThankYouPage(context),
       _buildDonationPage(context),
     ];
@@ -409,8 +407,24 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
     );
   }
 
+  // Simple time calculation: 5 seconds per question answered
+  String _calculateTimeSpentFormatted(GameStatsProvider gameStats) {
+    final totalQuestions = gameStats.score + gameStats.incorrectAnswers;
+    final totalSeconds = totalQuestions * 5;
+    final hours = totalSeconds ~/ 3600;
+    final minutes = (totalSeconds % 3600) ~/ 60;
+    final seconds = totalSeconds % 60;
+    return '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+  }
+
+  double _calculateTimeSpentInHours(GameStatsProvider gameStats) {
+    final totalQuestions = gameStats.score + gameStats.incorrectAnswers;
+    final totalSeconds = totalQuestions * 5;
+    return totalSeconds / 3600.0;
+  }
+
   Widget _buildTimeSpentPage(
-      BuildContext context, TimeTrackingService timeTracking) {
+      BuildContext context, GameStatsProvider gameStats) {
     return Container(
       padding: const EdgeInsets.all(24),
       child: Column(
@@ -444,7 +458,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
           ),
           const SizedBox(height: 24),
           Text(
-            timeTracking.getTotalTimeSpentFormatted(),
+            _calculateTimeSpentFormatted(gameStats),
             style: Theme.of(context).textTheme.displayLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
@@ -455,7 +469,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
           ),
           const SizedBox(height: 8),
           AnimatedCounter(
-            endNumber: timeTracking.getTotalTimeSpentInHours(),
+            endNumber: _calculateTimeSpentInHours(gameStats),
             decimalPlaces: 1,
             suffix: ' ${strings.AppStrings.hours}',
             duration: const Duration(milliseconds: 1500),
@@ -516,7 +530,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
   }
 
   Widget _buildYearInReviewPage(BuildContext context,
-      GameStatsProvider gameStats, TimeTrackingService timeTracking) {
+      GameStatsProvider gameStats) {
     final totalQuestions = gameStats.score + gameStats.incorrectAnswers;
     final correctPercentage = totalQuestions > 0
         ? (gameStats.score / totalQuestions * 100).round()
@@ -599,7 +613,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                 _buildStatRow(
                     context,
                     AnimatedCounter(
-                      endNumber: timeTracking.getTotalTimeSpentInHours(),
+                      endNumber: _calculateTimeSpentInHours(gameStats),
                       duration: const Duration(milliseconds: 1500),
                       decimalPlaces: 1,
                       suffix: ' ${strings.AppStrings.hours}',
@@ -633,7 +647,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               OutlinedButton.icon(
-                onPressed: () => _copyLink(context, gameStats, timeTracking),
+                onPressed: () => _copyLink(context, gameStats),
                 icon: Icon(
                   Icons.copy,
                   color: Colors.black,
@@ -658,7 +672,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                 ),
               ),
               OutlinedButton.icon(
-                onPressed: () => _shareStats(context, gameStats, timeTracking),
+                onPressed: () => _shareStats(context, gameStats),
                 icon: Icon(
                   Icons.share,
                   color: Colors.black,
@@ -815,8 +829,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
   }
 
   // Method to encode user stats into a shareable URL
-  String _encodeStatsToUrl(
-      GameStatsProvider gameStats, TimeTrackingService timeTracking) {
+  String _encodeStatsToUrl(GameStatsProvider gameStats) {
     final totalQuestions = gameStats.score + gameStats.incorrectAnswers;
     final correctPercentage = totalQuestions > 0
         ? (gameStats.score / totalQuestions * 100).round()
@@ -824,6 +837,9 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
 
     // Create a base URL (you may want to use your actual domain)
     final baseUrl = 'https://bijbelquiz.app/gen.html';
+
+    // Calculate time spent using simple formula: 5 seconds per question
+    final timeSpentHours = _calculateTimeSpentInHours(gameStats);
 
     // Encode stats as query parameters
     final encodedStats = {
@@ -833,7 +849,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
       'incorrect': gameStats.incorrectAnswers.toString(),
       'totalQuestions': totalQuestions.toString(),
       'accuracy': correctPercentage.toString(),
-      'hoursSpent': timeTracking.getTotalTimeSpentInHours().toString(),
+      'hoursSpent': timeSpentHours.toString(),
     };
 
     // Build query string
@@ -846,12 +862,14 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
   }
 
   // Method to handle sharing stats
-  void _shareStats(BuildContext context, GameStatsProvider gameStats,
-      TimeTrackingService timeTracking) async {
+  void _shareStats(BuildContext context, GameStatsProvider gameStats) async {
     final totalQuestions = gameStats.score + gameStats.incorrectAnswers;
     final correctPercentage = totalQuestions > 0
         ? (gameStats.score / totalQuestions * 100).round()
         : 0;
+
+    // Calculate time spent using simple formula: 5 seconds per question
+    final timeSpentHours = _calculateTimeSpentInHours(gameStats);
 
     final shareText =
         '''Dit is mijn BijbelQuiz Gen van ${BijbelQuizGenPeriod.getStatsYear()}:
@@ -860,7 +878,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
 🔥 ${strings.AppStrings.bestStreakShare}: ${gameStats.longestStreak}
 ❌ ${strings.AppStrings.mistakesShare}: ${gameStats.incorrectAnswers}
 📊 ${strings.AppStrings.accuracyShare}: $correctPercentage%
-⏱️ ${strings.AppStrings.timeSpentShare}: ${timeTracking.getTotalTimeSpentInHours().toStringAsFixed(1)} uur''';
+⏱️ ${strings.AppStrings.timeSpentShare}: ${timeSpentHours.toStringAsFixed(1)} uur''';
 
     await Share.share(
       shareText,
@@ -869,9 +887,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
   }
 
   // Method to copy the stats link to clipboard
-  void _copyLink(BuildContext context, GameStatsProvider gameStats,
-      TimeTrackingService timeTracking) async {
-    final shareUrl = _encodeStatsToUrl(gameStats, timeTracking);
+  void _copyLink(BuildContext context, GameStatsProvider gameStats) async {
+    final shareUrl = _encodeStatsToUrl(gameStats);
 
     // Copy the URL to clipboard
     await Clipboard.setData(ClipboardData(text: shareUrl));
