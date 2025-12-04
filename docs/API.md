@@ -2,7 +2,7 @@
 
 ## Overview
 
-The BijbelQuiz app includes a local HTTP API server that allows external applications to access quiz questions, user progress, and game statistics. This API is designed for integration with other apps, tools, or services that need access to BijbelQuiz data.
+The BijbelQuiz app includes a local HTTP API server that allows external applications to access quiz questions, user progress, game statistics, and other app functionalities. This API is designed for integration with other apps, tools, or services that need access to BijbelQuiz data.
 
 ## Features
 
@@ -16,6 +16,7 @@ The BijbelQuiz app includes a local HTTP API server that allows external applica
 - **Performance Monitoring**: Request timing and processing metrics
 - **Comprehensive Logging**: Detailed request/response logging for debugging
 - **Real-time Status**: Live API server status monitoring with uptime information
+- **Enhanced Data Access**: Additional endpoints for store, lessons, time tracking, and more
 
 ## Setup
 
@@ -198,6 +199,623 @@ Retrieve user's lesson progress and unlock status.
 ```bash
 curl -H "X-API-Key: your-api-key" \
      http://localhost:7777/v1/progress
+```
+
+### 5. Get Game Statistics
+**GET** `/v1/stats`
+
+Retrieve current game statistics and performance metrics.
+
+**Response:**
+```json
+{
+  "score": 1250,
+  "currentStreak": 7,
+  "longestStreak": 15,
+  "incorrectAnswers": 23,
+  "timestamp": "2025-10-20T16:45:49.539Z",
+  "processing_time_ms": 8
+}
+```
+
+**Usage:**
+```bash
+curl -H "X-API-Key: your-api-key" \
+     http://localhost:7777/v1/stats
+```
+
+### 6. Get App Settings
+**GET** `/v1/settings`
+
+Retrieve current app settings and preferences.
+
+**Response:**
+```json
+{
+  "themeMode": "dark",
+  "gameSpeed": "medium",
+  "mute": false,
+  "analyticsEnabled": true,
+  "timestamp": "2025-10-20T16:45:49.539Z",
+  "processing_time_ms": 15
+}
+```
+
+**Usage:**
+```bash
+curl -H "X-API-Key: your-api-key" \
+     http://localhost:7777/v1/settings
+```
+
+### 7. Get Star Balance
+**GET** `/v1/stars/balance`
+
+Retrieve the current star balance for the user.
+
+**Response:**
+```json
+{
+  "balance": 1250,
+  "timestamp": "2025-10-20T16:45:49.539Z",
+  "processing_time_ms": 8
+}
+```
+
+**Usage:**
+```bash
+curl -H "X-API-Key: your-api-key" \
+     http://localhost:7777/v1/stars/balance
+```
+
+### 8. Add Stars
+**POST** `/v1/stars/add`
+
+Add stars to the user's balance with transaction logging.
+
+**Request Body:**
+```json
+{
+  "amount": 10,
+  "reason": "Quiz completed",
+  "lessonId": "lesson_1"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "balance": 1260,
+  "amount_added": 10,
+  "reason": "Quiz completed",
+  "timestamp": "2025-10-20T16:45:49.539Z",
+  "processing_time_ms": 15
+}
+```
+
+**Usage:**
+```bash
+curl -X POST \
+     -H "Content-Type: application/json" \
+     -H "X-API-Key: your-api-key" \
+     -d '{"amount": 10, "reason": "Quiz completed", "lessonId": "lesson_1"}' \
+     http://localhost:7777/v1/stars/add
+```
+
+### 9. Spend Stars
+**POST** `/v1/stars/spend`
+
+Spend stars from the user's balance with validation for sufficient funds.
+
+**Request Body:**
+```json
+{
+  "amount": 5,
+  "reason": "Skip question",
+  "lessonId": "lesson_1"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "balance": 1255,
+  "amount_spent": 5,
+  "reason": "Skip question",
+  "timestamp": "2025-10-20T16:45:49.539Z",
+  "processing_time_ms": 12
+}
+```
+
+**Error Response (Insufficient Balance):**
+```json
+{
+  "error": "Insufficient stars",
+  "message": "Not enough stars in balance for this transaction",
+  "current_balance": 3,
+  "requested_amount": 10,
+  "timestamp": "2025-10-20T16:45:49.539Z"
+}
+```
+
+**Usage:**
+```bash
+curl -X POST \
+     -H "Content-Type: application/json" \
+     -H "X-API-Key: your-api-key" \
+     -d '{"amount": 5, "reason": "Skip question"}' \
+     http://localhost:7777/v1/stars/spend
+```
+
+### 10. Get Star Transactions
+**GET** `/v1/stars/transactions`
+
+Retrieve star transaction history with optional filtering.
+
+**Query Parameters:**
+- `limit` (optional): Number of transactions to return (default: 50, max: 1000)
+- `type` (optional): Filter by transaction type (`earned`, `spent`, `lesson_reward`, `refund`)
+- `lessonId` (optional): Filter by lesson ID
+
+**Response:**
+```json
+{
+  "transactions": [
+    {
+      "id": "1634748549539",
+      "timestamp": "2025-10-20T16:45:49.539Z",
+      "type": "earned",
+      "amount": 10,
+      "reason": "Quiz completed",
+      "lessonId": "lesson_1",
+      "metadata": null
+    },
+    {
+      "id": "1634748548547",
+      "timestamp": "2025-10-20T16:45:48.547Z",
+      "type": "spent",
+      "amount": -5,
+      "reason": "Skip question",
+      "lessonId": "lesson_1",
+      "metadata": null
+    }
+  ],
+  "count": 2,
+  "type_filter": null,
+  "lesson_filter": null,
+  "timestamp": "2025-10-20T16:45:49.539Z",
+  "processing_time_ms": 25
+}
+```
+
+**Examples:**
+```bash
+# Get last 20 transactions
+curl -H "X-API-Key: your-api-key" \
+     http://localhost:7777/v1/stars/transactions?limit=20
+
+# Get only earned stars transactions
+curl -H "X-API-Key: your-api-key" \
+     http://localhost:7777/v1/stars/transactions?type=earned&limit=50
+
+# Get transactions for specific lesson
+curl -H "X-API-Key: your-api-key" \
+     http://localhost:7777/v1/stars/transactions?lessonId=lesson_1
+```
+
+### 11. Get Star Statistics
+**GET** `/v1/stars/stats`
+
+Retrieve comprehensive star statistics and analytics.
+
+**Response:**
+```json
+{
+  "stats": {
+    "totalTransactions": 156,
+    "currentBalance": 1250,
+    "totalEarned": 1450,
+    "totalSpent": 200,
+    "netTotal": 1250,
+    "transactionsLast24h": 12,
+    "transactionsLast7d": 45,
+    "transactionsLast30d": 156,
+    "averageTransactionAmount": 8.97
+  },
+  "timestamp": "2025-10-20T16:45:49.539Z",
+  "processing_time_ms": 18
+}
+```
+
+**Usage:**
+```bash
+curl -H "X-API-Key: your-api-key" \
+     http://localhost:7777/v1/stars/stats
+```
+
+### 12. Get Store Items
+**GET** `/v1/store/items`
+
+Retrieve available store items with pricing and categories.
+
+**Query Parameters:**
+- `category` (optional): Filter by item category
+- `limit` (optional): Number of items to return (default: 20, max: 100)
+
+**Response:**
+```json
+{
+  "items": [
+    {
+      "itemKey": "theme_premium",
+      "itemName": "Premium Theme Pack",
+      "description": "Unlock all premium themes",
+      "category": "themes",
+      "price": 500,
+      "isActive": true,
+      "icon": "star",
+      "metadata": {
+        "themes": ["dark_blue", "golden", "neon"]
+      }
+    }
+  ],
+  "count": 1,
+  "category_filter": null,
+  "timestamp": "2025-10-20T16:45:49.539Z",
+  "processing_time_ms": 15
+}
+```
+
+**Examples:**
+```bash
+# Get all store items
+curl -H "X-API-Key: your-api-key" \
+     http://localhost:7777/v1/store/items
+
+# Get theme items only
+curl -H "X-API-Key: your-api-key" \
+     http://localhost:7777/v1/store/items?category=themes
+```
+
+### 13. Get Specific Store Item
+**GET** `/v1/store/items/{itemKey}`
+
+Get details for a specific store item.
+
+**Path Parameters:**
+- `itemKey`: The store item key
+
+**Response:**
+```json
+{
+  "itemKey": "theme_premium",
+  "itemName": "Premium Theme Pack",
+  "description": "Unlock all premium themes",
+  "category": "themes",
+  "price": 500,
+  "isActive": true,
+  "icon": "star",
+  "metadata": {
+    "themes": ["dark_blue", "golden", "neon"]
+  },
+  "timestamp": "2025-10-20T16:45:49.539Z",
+  "processing_time_ms": 10
+}
+```
+
+**Usage:**
+```bash
+curl -H "X-API-Key: your-api-key" \
+     http://localhost:7777/v1/store/items/theme_premium
+```
+
+### 14. Get Generated Lessons
+**GET** `/v1/lessons`
+
+Retrieve the list of generated lessons with metadata.
+
+**Query Parameters:**
+- `limit` (optional): Number of lessons to return (default: 10, max: 50)
+- `includeSpecial` (optional): Include special lessons (true/false, default: true)
+
+**Response:**
+```json
+{
+  "lessons": [
+    {
+      "id": "lesson_0001",
+      "title": "Les 1",
+      "category": "Algemeen",
+      "maxQuestions": 10,
+      "index": 0,
+      "description": "Beantwoord 10 vragen",
+      "iconHint": "menu_book",
+      "isSpecial": false
+    }
+  ],
+  "count": 1,
+  "timestamp": "2025-10-20T16:45:49.539Z",
+  "processing_time_ms": 20
+}
+```
+
+**Usage:**
+```bash
+# Get first 10 lessons
+curl -H "X-API-Key: your-api-key" \
+     http://localhost:7777/v1/lessons?limit=10
+
+# Get only regular lessons
+curl -H "X-API-Key: your-api-key" \
+     http://localhost:7777/v1/lessons?includeSpecial=false
+```
+
+### 15. Get Time Tracking Statistics
+**GET** `/v1/time/tracking`
+
+Retrieve user time spent statistics and analytics.
+
+**Response:**
+```json
+{
+  "totalTimeSpentSeconds": 1800,
+  "totalTimeSpentFormatted": "00:30:00",
+  "totalTimeSpentInHours": 0.5,
+  "totalTimeSpentInMinutes": 30,
+  "hasOngoingSession": false,
+  "timestamp": "2025-10-20T16:45:49.539Z",
+  "processing_time_ms": 12
+}
+```
+
+**Usage:**
+```bash
+curl -H "X-API-Key: your-api-key" \
+     http://localhost:7777/v1/time/tracking
+```
+
+### 16. Redeem Coupon
+**POST** `/v1/coupons/redeem`
+
+Redeem a coupon code for rewards.
+
+**Request Body:**
+```json
+{
+  "code": "FREESTARS2025"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "rewardType": "stars",
+  "rewardValue": 50,
+  "timestamp": "2025-10-20T16:45:49.539Z",
+  "processing_time_ms": 25
+}
+```
+
+**Error Response (Invalid Coupon):**
+```json
+{
+  "error": "Invalid coupon",
+  "message": "Coupon code is invalid or has expired",
+  "timestamp": "2025-10-20T16:45:49.539Z"
+}
+```
+
+**Usage:**
+```bash
+curl -X POST \
+     -H "Content-Type: application/json" \
+     -H "X-API-Key: your-api-key" \
+     -d '{"code": "FREESTARS2025"}' \
+     http://localhost:7777/v1/coupons/redeem
+```
+
+### 17. Get Active Messages
+**GET** `/v1/messages`
+
+Retrieve active admin messages with optional filtering.
+
+**Query Parameters:**
+- `limit` (optional): Number of messages to return (default: 20, max: 100)
+- `includeExpired` (optional): Include expired messages (true/false, default: false)
+
+**Response:**
+```json
+{
+  "messages": [
+    {
+      "id": "msg_001",
+      "title": "Welcome to BijbelQuiz",
+      "content": "Thank you for using our app!",
+      "expirationDate": null,
+      "createdAt": "2025-10-20T10:00:00.000Z",
+      "createdBy": "admin"
+    }
+  ],
+  "count": 1,
+  "timestamp": "2025-10-20T16:45:49.539Z",
+  "processing_time_ms": 18
+}
+```
+
+**Usage:**
+```bash
+# Get active messages
+curl -H "X-API-Key: your-api-key" \
+     http://localhost:7777/v1/messages
+
+# Include expired messages
+curl -H "X-API-Key: your-api-key" \
+     http://localhost:7777/v1/messages?includeExpired=true
+```
+
+### 18. Get Message Reactions
+**GET** `/v1/messages/{messageId}/reactions`
+
+Get reaction statistics for a specific message.
+
+**Path Parameters:**
+- `messageId`: The message ID
+
+**Response:**
+```json
+{
+  "reactions": [
+    {
+      "emoji": "👍",
+      "count": 5
+    },
+    {
+      "emoji": "❤️",
+      "count": 3
+    }
+  ],
+  "totalReactions": 8,
+  "messageId": "msg_001",
+  "timestamp": "2025-10-20T16:45:49.539Z",
+  "processing_time_ms": 15
+}
+```
+
+**Usage:**
+```bash
+curl -H "X-API-Key: your-api-key" \
+     http://localhost:7777/v1/messages/msg_001/reactions
+```
+
+### 19. Get Sync Status
+**GET** `/v1/sync/status`
+
+Retrieve current synchronization status and queue information.
+
+**Response:**
+```json
+{
+  "isAuthenticated": true,
+  "isConnected": true,
+  "isListening": true,
+  "pendingSyncsCount": 0,
+  "currentUserId": "user_123",
+  "timestamp": "2025-10-20T16:45:49.539Z",
+  "processing_time_ms": 10
+}
+```
+
+**Usage:**
+```bash
+curl -H "X-API-Key: your-api-key" \
+     http://localhost:7777/v1/sync/status
+```
+
+### 20. Get Feature Usage Statistics
+**GET** `/v1/analytics/features`
+
+Retrieve feature usage statistics and insights.
+
+**Query Parameters:**
+- `feature` (optional): Filter by specific feature name
+- `limit` (optional): Number of features to return (default: 20, max: 100)
+
+**Response:**
+```json
+{
+  "features": [
+    {
+      "feature": "quiz_gameplay",
+      "totalUsage": 42,
+      "lastUsed": "2025-10-20T16:00:00.000Z",
+      "firstUsed": "2025-10-15T10:00:00.000Z"
+    }
+  ],
+  "count": 1,
+  "timestamp": "2025-10-20T16:45:49.539Z",
+  "processing_time_ms": 20
+}
+```
+
+**Usage:**
+```bash
+# Get all feature usage stats
+curl -H "X-API-Key: your-api-key" \
+     http://localhost:7777/v1/analytics/features
+
+# Get stats for specific feature
+curl -H "X-API-Key: your-api-key" \
+     http://localhost:7777/v1/analytics/features?feature=quiz_gameplay
+```
+
+### 21. Get Bible Book Mapping
+**GET** `/v1/bible/books`
+
+Retrieve the mapping of Bible book names to their numerical identifiers.
+
+**Response:**
+```json
+{
+  "books": {
+    "Genesis": 1,
+    "Exodus": 2,
+    "Leviticus": 3,
+    "Numbers": 4,
+    "Deuteronomy": 5
+  },
+  "count": 5,
+  "timestamp": "2025-10-20T16:45:49.539Z",
+  "processing_time_ms": 8
+}
+```
+
+**Usage:**
+```bash
+curl -H "X-API-Key: your-api-key" \
+     http://localhost:7777/v1/bible/books
+```
+
+### 22. Get Available Themes
+**GET** `/v1/themes`
+
+Retrieve available themes with their configurations.
+
+**Query Parameters:**
+- `type` (optional): Filter by theme type (light/dark/all, default: all)
+- `limit` (optional): Number of themes to return (default: 20, max: 100)
+
+**Response:**
+```json
+{
+  "themes": [
+    {
+      "id": "default_light",
+      "name": "Default Light",
+      "type": "light",
+      "colors": {
+        "primary": "#6200EE",
+        "secondary": "#03DAC6",
+        "background": "#FFFFFF"
+      }
+    }
+  ],
+  "count": 1,
+  "timestamp": "2025-10-20T16:45:49.539Z",
+  "processing_time_ms": 12
+}
+```
+
+**Usage:**
+```bash
+# Get all themes
+curl -H "X-API-Key: your-api-key" \
+     http://localhost:7777/v1/themes
+
+# Get only dark themes
+curl -H "X-API-Key: your-api-key" \
+     http://localhost:7777/v1/themes?type=dark
 ```
 
 ### 5. Get Game Statistics
@@ -727,3 +1345,25 @@ For API-related issues:
 2. Verify your setup matches the documentation
 3. Test with simple `curl` commands first
 4. Check BijbelQuiz app logs for error details
+
+## New Endpoints Summary
+
+The enhanced API now includes these additional endpoints:
+
+### Data Access Endpoints
+- **Store Items**: `/v1/store/items` - Access store items and pricing
+- **Generated Lessons**: `/v1/lessons` - Get lesson metadata and structure
+- **Time Tracking**: `/v1/time/tracking` - User time spent statistics
+- **Bible Books**: `/v1/bible/books` - Bible book name to ID mapping
+- **Available Themes**: `/v1/themes` - Theme configurations
+
+### Action Endpoints
+- **Coupon Redemption**: `/v1/coupons/redeem` - Redeem coupon codes
+- **Message Reactions**: `/v1/messages/{id}/reactions` - Get message reactions
+
+### System Status Endpoints
+- **Sync Status**: `/v1/sync/status` - Synchronization status
+- **Feature Analytics**: `/v1/analytics/features` - Feature usage statistics
+- **Active Messages**: `/v1/messages` - Admin messages
+
+These new endpoints follow the same authentication, rate limiting, and error handling patterns as existing endpoints, ensuring consistency and security.
