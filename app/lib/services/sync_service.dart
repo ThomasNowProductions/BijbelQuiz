@@ -811,13 +811,78 @@ class SyncService {
   /// Gets top users for leaderboard based on game stats
   Future<List<Map<String, dynamic>>> getTopUsersForLeaderboard({int limit = 5}) async {
     try {
+      AppLogger.info('Starting getTopUsersForLeaderboard with limit: $limit');
+
+      // Use the secure database function to get leaderboard data
+      // This function uses SECURITY DEFINER to safely bypass RLS and returns ONLY the data needed for leaderboard
+      // It does NOT expose any sensitive data like API keys or other user sync data
+      final response = await _client
+          .rpc('get_public_leaderboard_data', params: {'limit_count': limit})
+          .select();
+
+      AppLogger.info('Secure leaderboard function response received');
+
+      if (response.isEmpty) {
+        AppLogger.info('No leaderboard data found - this might be expected for new installations');
+        return [];
+      }
+
+      // Convert the response to the expected format, with safety checks
+      final List<Map<String, dynamic>> usersWithScores = [];
+
+      for (final item in response) {
+        try {
+          // Validate and sanitize the data
+          final userId = item['user_id'] as String?;
+          final username = item['username'] as String?;
+          final displayName = item['display_name'] as String?;
+          final score = item['score'] as int? ?? 0;
+
+          // Only include valid entries
+          if (userId != null && username != null && username.isNotEmpty) {
+            usersWithScores.add({
+              'userId': userId,
+              'username': username,
+              'displayName': displayName?.isNotEmpty == true ? displayName : username,
+              'score': score,
+            });
+          }
+        } catch (e) {
+          AppLogger.error('Error processing leaderboard item', e);
+          continue;
+        }
+      }
+
+      AppLogger.info('Successfully processed ${usersWithScores.length} leaderboard entries');
+
+      // Sort by score (descending) to ensure proper ordering
+      usersWithScores.sort((a, b) => (b['score'] as int).compareTo(a['score'] as int));
+
+      return usersWithScores;
+    } catch (e) {
+      AppLogger.error('Failed to get top users for leaderboard via secure function', e);
+
+      // Fallback to the old method if the new function fails
+      AppLogger.info('Falling back to original leaderboard method (less secure)');
+      return await _getTopUsersForLeaderboardFallback(limit);
+    }
+  }
+
+  /// Fallback method using the original approach
+  Future<List<Map<String, dynamic>>> _getTopUsersForLeaderboardFallback(int limit) async {
+    try {
+      AppLogger.info('Using fallback method for getTopUsersForLeaderboard with limit: $limit');
+
       // Get all user profiles (excluding deleted users)
       final profilesResponse = await _client
           .from('user_profiles')
           .select('user_id, username, display_name')
           .filter('deleted_at', 'is', null);
 
+      AppLogger.info('Found ${profilesResponse.length} user profiles in fallback');
+
       if (profilesResponse.isEmpty) {
+        AppLogger.info('No user profiles found in fallback');
         return [];
       }
 
@@ -832,8 +897,11 @@ class SyncService {
         if (username == null) continue;
 
         try {
+          AppLogger.info('Getting game stats for user (fallback): $userId');
           final stats = await getGameStatsForUser(userId);
+          AppLogger.info('Game stats for user $userId (fallback): $stats');
           final score = stats?['score'] ?? 0;
+          AppLogger.info('User $userId score (fallback): $score');
 
           usersWithScores.add({
             'userId': userId,
@@ -842,17 +910,22 @@ class SyncService {
             'score': score,
           });
         } catch (e) {
-          AppLogger.error('Failed to get stats for user $userId', e);
+          AppLogger.error('Failed to get stats for user $userId (fallback)', e);
           continue;
         }
       }
 
+      AppLogger.info('Users with scores before sorting (fallback): ${usersWithScores.length}');
+      AppLogger.info('Users with scores data (fallback): $usersWithScores');
+
       // Sort by score (descending) and take top N
       usersWithScores.sort((a, b) => (b['score'] as int).compareTo(a['score'] as int));
 
+      AppLogger.info('Top users after sorting (fallback): ${usersWithScores.take(limit).toList()}');
+
       return usersWithScores.take(limit).toList();
     } catch (e) {
-      AppLogger.error('Failed to get top users for leaderboard', e);
+      AppLogger.error('Failed to get top users for leaderboard (fallback)', e);
       return [];
     }
   }
