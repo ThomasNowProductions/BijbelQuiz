@@ -28,30 +28,49 @@ class TrackingService {
     }
 
     AppLogger.info('Initializing PostHog tracking service...');
-    
+    final trackingInitStart = DateTime.now();
+
     try {
       // Ensure we have a persistent anonymous user ID
+      AppLogger.info('Ensuring persistent user ID...');
+      final userIdStart = DateTime.now();
       await _ensurePersistentUserId();
-      
+      final userIdDuration = DateTime.now().difference(userIdStart);
+      AppLogger.info('Persistent user ID ensured in ${userIdDuration.inMilliseconds}ms');
+
       // Load PostHog configuration from environment variables
+      AppLogger.info('Loading PostHog configuration...');
+      final configStart = DateTime.now();
       final apiKey = dotenv.env['POSTHOG_API_KEY'];
       final host = dotenv.env['POSTHOG_HOST'] ?? 'https://us.i.posthog.com';
-      
+      final configDuration = DateTime.now().difference(configStart);
+
       if (apiKey == null || apiKey.isEmpty || apiKey == 'YOUR_POSTHOG_API_KEY_HERE') {
         throw Exception('PostHog API key not found in environment variables. Please check your .env file.');
       }
-      
+
+      AppLogger.info('PostHog configuration loaded in ${configDuration.inMilliseconds}ms');
+
       // Configure PostHog
+      AppLogger.info('Configuring PostHog...');
+      final posthogConfigStart = DateTime.now();
       final config = PostHogConfig(apiKey);
       config.debug = kDebugMode; // Use debug mode in development
       config.captureApplicationLifecycleEvents = true;
       config.host = host;
-      
+      final posthogConfigDuration = DateTime.now().difference(posthogConfigStart);
+      AppLogger.info('PostHog configured in ${posthogConfigDuration.inMilliseconds}ms');
+
       // Setup PostHog
+      AppLogger.info('Setting up PostHog...');
+      final posthogSetupStart = DateTime.now();
       await Posthog().setup(config);
-      
+      final posthogSetupDuration = DateTime.now().difference(posthogSetupStart);
+      AppLogger.info('PostHog setup completed in ${posthogSetupDuration.inMilliseconds}ms');
+
       _isInitialized = true;
-      AppLogger.info('PostHog tracking service initialized successfully with API key: ${apiKey.substring(0, 8)}...');
+      final totalDuration = DateTime.now().difference(trackingInitStart);
+      AppLogger.info('PostHog tracking service initialized successfully in ${totalDuration.inMilliseconds}ms with API key: ${apiKey.substring(0, 8)}...');
     } catch (e) {
       AppLogger.error('Failed to initialize PostHog tracking service: $e', e);
       rethrow;

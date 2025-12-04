@@ -44,33 +44,48 @@ class ServiceContainer {
 
     try {
       // Analytics service (high priority)
+      final analyticsStart = DateTime.now();
       await _initializeService('analytics', () async {
         _analyticsService = AnalyticsService();
         await _analyticsService!.init();
       });
+      final analyticsDuration = DateTime.now().difference(analyticsStart);
+      AppLogger.info('Analytics service initialized in ${analyticsDuration.inMilliseconds}ms');
 
       // Theme manager (required for UI)
+      final themeStart = DateTime.now();
       await _initializeService('theme_manager', () async {
         _themeManager = ThemeManager();
         await _themeManager!.initialize();
       });
+      final themeDuration = DateTime.now().difference(themeStart);
+      AppLogger.info('Theme manager initialized in ${themeDuration.inMilliseconds}ms');
 
       // Settings provider (required for app configuration)
+      final settingsStart = DateTime.now();
       await _initializeService('settings_provider', () async {
         _settingsProvider = SettingsProvider();
         await _settingsProvider!.loadSettings();
       });
+      final settingsDuration = DateTime.now().difference(settingsStart);
+      AppLogger.info('Settings provider initialized in ${settingsDuration.inMilliseconds}ms');
 
       // Game stats provider (required for core functionality)
+      final gameStatsStart = DateTime.now();
       await _initializeService('game_stats_provider', () async {
         _gameStatsProvider = GameStatsProvider();
       });
+      final gameStatsDuration = DateTime.now().difference(gameStatsStart);
+      AppLogger.info('Game stats provider initialized in ${gameStatsDuration.inMilliseconds}ms');
 
       // Time tracking service (singleton)
+      final timeTrackingStart = DateTime.now();
       await _initializeService('time_tracking', () async {
         _timeTrackingService = TimeTrackingService.instance;
         await _timeTrackingService!.initialize();
       });
+      final timeTrackingDuration = DateTime.now().difference(timeTrackingStart);
+      AppLogger.info('Time tracking service initialized in ${timeTrackingDuration.inMilliseconds}ms');
 
       AppLogger.info('Critical services initialized successfully');
     } catch (e) {

@@ -7,20 +7,28 @@ class FontUtils {
   /// Ensures the Quicksand font is properly loaded
   static Future<void> ensureQuicksandFontLoaded() async {
     try {
+      AppLogger.info('Starting Quicksand font loading process...');
+      final fontLoadStart = DateTime.now();
+
       // Force font loading by creating a text style with the font
       final fontLoader = FontLoader('Quicksand');
-      
+
       // Add font assets to loader
+      AppLogger.info('Adding Quicksand-Regular font asset...');
       fontLoader.addFont(loadFontAsset('assets/fonts/Quicksand-Regular.ttf'));
+      AppLogger.info('Adding Quicksand-Bold font asset...');
       fontLoader.addFont(loadFontAsset('assets/fonts/Quicksand-Bold.ttf'));
+      AppLogger.info('Adding Quicksand-Medium font asset...');
       fontLoader.addFont(loadFontAsset('assets/fonts/Quicksand-Medium.ttf'));
-      
+
       // Load fonts
+      AppLogger.info('Loading fonts...');
       await fontLoader.load();
-      
-      AppLogger.info('Quicksand font loaded successfully');
+
+      final fontLoadDuration = DateTime.now().difference(fontLoadStart);
+      AppLogger.info('Quicksand font loaded successfully in ${fontLoadDuration.inMilliseconds}ms');
     } catch (e) {
-      AppLogger.warning('Failed to preload Quicksand font: $e');
+      AppLogger.error('Failed to preload Quicksand font: $e', e);
       // Continue anyway - Flutter will handle fallback
     }
   }
