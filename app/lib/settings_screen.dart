@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
+import 'package:cryptography/cryptography.dart';
 import 'package:bijbelquiz/services/analytics_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -1050,12 +1051,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
       'appVersion': '1.0.0', // You might want to get this from package_info
     };
 
-    final jsonString = json.encode(allData);
+    // Encrypt the data before export
+    final encryptedData = await _EncryptionService.encryptData(allData);
 
     if (context.mounted) {
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => ExportAllDataScreen(jsonData: jsonString),
+          builder: (context) => ExportAllDataScreen(jsonData: json.encode(encryptedData)),
         ),
       );
     }
@@ -1395,6 +1397,119 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 }
 
+/// Encryption service for secure data export/import operations
+class _EncryptionService {
+  static final _algorithm = AesGcm.with256bits();
+  static SecretKey? _secretKey;
+
+  /// Initialize encryption with a new secret key
+  static Future<void> _initializeEncryption() async {
+    _secretKey = await _algorithm.newSecretKey();
+  }
+
+  /// Get the current secret key, initializing if needed
+  static Future<SecretKey> _getSecretKey() async {
+    if (_secretKey == null) {
+      await _initializeEncryption();
+    }
+    return _secretKey!;
+  }
+
+  /// Encrypt data using AES-GCM
+  static Future<Map<String, dynamic>> encryptData(Map<String, dynamic> data) async {
+    try {
+      final secretKey = await _getSecretKey();
+      final jsonString = json.encode(data);
+
+      final secretBox = await _algorithm.encryptString(
+        jsonString,
+        secretKey: secretKey,
+      );
+
+      return {
+        'encryptedData': base64.encode(secretBox.concatenation()),
+        'encryptionInfo': {
+          'algorithm': 'AES-GCM-256',
+          'timestamp': DateTime.now().toIso8601String(),
+          'dataType': 'encryptedSettingsExport',
+        }
+      };
+    } catch (e) {
+      AppLogger.error('Encryption failed: $e');
+      // Fallback to unencrypted data if encryption fails
+      return {
+        'encryptedData': base64.encode(utf8.encode(json.encode(data))),
+        'encryptionInfo': {
+          'algorithm': 'none',
+          'timestamp': DateTime.now().toIso8601String(),
+          'error': 'Encryption failed: ${e.toString()}',
+        }
+      };
+    }
+  }
+
+  /// Decrypt data using AES-GCM
+  static Future<Map<String, dynamic>> decryptData(Map<String, dynamic> encryptedData) async {
+    try {
+      final secretKey = await _getSecretKey();
+
+      // Extract and decode the encrypted data
+      final encryptedBytes = base64.decode(encryptedData['encryptedData'] as String);
+      final secretBox = SecretBox.fromConcatenation(
+        encryptedBytes,
+        nonceLength: _algorithm.nonceLength,
+        macLength: _algorithm.macAlgorithm.macLength,
+      );
+
+      final decryptedString = await _algorithm.decryptString(
+        secretBox,
+        secretKey: secretKey,
+      );
+
+      return json.decode(decryptedString) as Map<String, dynamic>;
+    } catch (e) {
+      AppLogger.error('Decryption failed: $e');
+      // Try to handle unencrypted fallback data
+      try {
+        final fallbackData = base64.decode(encryptedData['encryptedData'] as String);
+        final fallbackString = utf8.decode(fallbackData);
+        return json.decode(fallbackString) as Map<String, dynamic>;
+      } catch (fallbackError) {
+        AppLogger.error('Fallback decryption also failed: $fallbackError');
+        throw Exception('Failed to decrypt data: ${e.toString()}. Fallback also failed: ${fallbackError.toString()}');
+      }
+    }
+  }
+
+  /// Generate a secure encryption key for user-specific encryption
+  static Future<String> generateUserEncryptionKey(String userId) async {
+    final keyMaterial = utf8.encode('bijbelquiz_${userId}_${DateTime.now().millisecondsSinceEpoch}');
+    final hash = sha256.convert(keyMaterial);
+    return hash.toString();
+  }
+
+  /// Handle import data with decryption
+  static Future<Map<String, dynamic>> handleImportData(Map<String, dynamic> parsedData) async {
+    try {
+      // Check if this is encrypted data
+      if (parsedData.containsKey('encryptedData') && parsedData.containsKey('encryptionInfo')) {
+        // This is encrypted data, decrypt it
+        return await decryptData(parsedData);
+      } else {
+        // This is unencrypted data, return as-is
+        return parsedData;
+      }
+    } catch (e) {
+      AppLogger.error('Error handling import data: $e');
+      // If decryption fails, try to handle as unencrypted data
+      if (parsedData.containsKey('settings') && parsedData.containsKey('gameStats') && parsedData.containsKey('lessonProgress')) {
+        return parsedData;
+      }
+      throw Exception('Invalid import data format: ${e.toString()}');
+    }
+  }
+}
+
 // Supporting classes
 class _SettingItem {
   final String title;
@@ -1561,15 +1676,17 @@ class _ImportStatsScreenState extends State<ImportStatsScreen> {
                         return;
                       }
                       try {
-                        final data = json.decode(input);
+                        // Handle import data with decryption
+                        final decryptedData = await _EncryptionService.handleImportData(json.decode(input));
+  
                         // Import JSON data
                         final settings = Provider.of<SettingsProvider>(context, listen: false);
                         final gameStats = Provider.of<GameStatsProvider>(context, listen: false);
                         final lessonProgress = Provider.of<LessonProgressProvider>(context, listen: false);
-
-                        await settings.loadImportData(data['settings']);
-                        await gameStats.loadImportData(data['gameStats']);
-                        await lessonProgress.loadImportData(data['lessonProgress']);
+  
+                        await settings.loadImportData(decryptedData['settings']);
+                        await gameStats.loadImportData(decryptedData['gameStats']);
+                        await lessonProgress.loadImportData(decryptedData['lessonProgress']);
 
                         if (context.mounted) {
                           Navigator.pop(context);
