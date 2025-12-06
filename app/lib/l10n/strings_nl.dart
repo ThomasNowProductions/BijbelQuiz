@@ -208,7 +208,7 @@ class AppStrings {
   static String get orangeThemeDesc => _language == 'en' ? AppStringsEn.orangeThemeDesc : 'Ontgrendel een levendig oranje thema';
 
   // Coupons
-  static String get couponTitle => _language == 'en' ? AppStringsEn.couponTitle : 'Heb je een coupon code?';
+  static String get couponTitle => _language == 'en' ? AppStringsEn.couponTitle : 'Coupon code';
   static String get couponDescription => _language == 'en' ? AppStringsEn.couponDescription : 'Wissel hem hier in voor beloningen';
   static String get couponRedeem => _language == 'en' ? AppStringsEn.couponRedeem : 'Inwisselen';
   static String get couponDialogTitle => _language == 'en' ? AppStringsEn.couponDialogTitle : 'Coupon inwisselen';
@@ -376,7 +376,7 @@ class AppStrings {
   static String get starsEarned => _language == 'en' ? AppStringsEn.starsEarned : 'sterren verdiend';
   static String get readyForNextChallenge => _language == 'en' ? AppStringsEn.readyForNextChallenge : 'Klaar voor je volgende uitdaging?';
   static String get continueLesson => _language == 'en' ? AppStringsEn.continueLesson : 'Ga verder:';
-  static String get freePractice => _language == 'en' ? AppStringsEn.freePractice : 'Vrij oefenen (random)';
+  static String get freePractice => _language == 'en' ? AppStringsEn.freePractice : 'Vrij oefenen';
   static String get lessonNumber => _language == 'en' ? AppStringsEn.lessonNumber : 'Les';
 
   // Biblical Reference Dialog

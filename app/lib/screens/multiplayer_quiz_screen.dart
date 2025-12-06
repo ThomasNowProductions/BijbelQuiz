@@ -704,29 +704,24 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
         ),
         // Only show bottom bar when not showing results
         if (!_showResults)
-          QuizBottomBar(
-            quizState: isPlayer1 ? _player1QuizState : _player2QuizState,
-            gameStats: Provider.of<GameStatsProvider>(context),
-            settings: Provider.of<SettingsProvider>(context),
-            questionId: isPlayer1
-                ? _player1QuizState.question.id
-                : _player2QuizState.question.id,
-            onSkipPressed: () => _handleSkipForPlayer(isPlayer1),
-            onUnlockPressed: () =>
-                _handleUnlockBiblicalReferenceForPlayer(isPlayer1),
-            onFlagPressed: () => _handleFlagForPlayer(isPlayer1),
-            isDesktop: false, // This is a mobile app screen
+          Transform.rotate(
+            angle: isMobile && !isPlayer1 ? 3.14159 : 0, // 180 degrees in radians
+            child: QuizBottomBar(
+              quizState: isPlayer1 ? _player1QuizState : _player2QuizState,
+              gameStats: Provider.of<GameStatsProvider>(context),
+              settings: Provider.of<SettingsProvider>(context),
+              questionId: isPlayer1
+                  ? _player1QuizState.question.id
+                  : _player2QuizState.question.id,
+              onSkipPressed: () => _handleSkipForPlayer(isPlayer1),
+              onUnlockPressed: () =>
+                  _handleUnlockBiblicalReferenceForPlayer(isPlayer1),
+              onFlagPressed: () => _handleFlagForPlayer(isPlayer1),
+              isDesktop: false, // This is a mobile app screen
+            ),
           ),
       ],
     );
-
-    // Apply rotation for Player 2 on mobile devices
-    if (isMobile && !isPlayer1) {
-      columnContent = Transform.rotate(
-        angle: 3.14159, // 180 degrees in radians
-        child: columnContent,
-      );
-    }
 
     return columnContent;
   }
@@ -780,33 +775,39 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
                       child: Padding(
                         padding: const EdgeInsets.all(8),
                         child: _showResults
-                            ? Center(
-                                child: _buildResultsWidget(
-                                    context, isPlayer1, isWinner, isTie),
+                            ? Transform.rotate(
+                                angle: isMobile && !isPlayer1 ? 3.14159 : 0,
+                                child: Center(
+                                  child: _buildResultsWidget(
+                                      context, isPlayer1, isWinner, isTie),
+                                ),
                               )
-                            : QuestionWidget(
-                                question: isPlayer1
-                                    ? _player1QuizState.question
-                                    : _player2QuizState.question,
-                                selectedAnswerIndex: isPlayer1
-                                    ? _player1QuizState.selectedAnswerIndex
-                                    : _player2QuizState.selectedAnswerIndex,
-                                isAnswering: isPlayer1
-                                    ? _player1QuizState.isAnswering
-                                    : _player2QuizState.isAnswering,
-                                isTransitioning: isPlayer1
-                                    ? _player1QuizState.isTransitioning
-                                    : _player2QuizState.isTransitioning,
-                                onAnswerSelected: (index) =>
-                                    _handleAnswer(index, isPlayer1),
-                                language: settings.language,
-                                performanceService: _performanceService,
-                                isCompact: true,
-                                customLetters: isMobile
-                                    ? ['A', 'B', 'C', 'D']
-                                    : (isPlayer1
-                                        ? ['A', 'S', 'D', 'F']
-                                        : ['H', 'J', 'K', 'L']),
+                            : Transform.rotate(
+                                angle: isMobile && !isPlayer1 ? 3.14159 : 0,
+                                child: QuestionWidget(
+                                    question: isPlayer1
+                                        ? _player1QuizState.question
+                                        : _player2QuizState.question,
+                                    selectedAnswerIndex: isPlayer1
+                                        ? _player1QuizState.selectedAnswerIndex
+                                        : _player2QuizState.selectedAnswerIndex,
+                                    isAnswering: isPlayer1
+                                        ? _player1QuizState.isAnswering
+                                        : _player2QuizState.isAnswering,
+                                    isTransitioning: isPlayer1
+                                        ? _player1QuizState.isTransitioning
+                                        : _player2QuizState.isTransitioning,
+                                    onAnswerSelected: (index) =>
+                                        _handleAnswer(index, isPlayer1),
+                                    language: settings.language,
+                                    performanceService: _performanceService,
+                                    isCompact: true,
+                                    customLetters: isMobile
+                                        ? ['A', 'B', 'C', 'D']
+                                        : (isPlayer1
+                                            ? ['A', 'S', 'D', 'F']
+                                            : ['H', 'J', 'K', 'L']),
+                                  ),
                               ),
                       ),
                     ),
