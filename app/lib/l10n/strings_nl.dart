@@ -146,9 +146,9 @@ class AppStrings {
   static String get welcomeTitle => _language == 'en' ? AppStringsEn.welcomeTitle : 'Welkom bij BijbelQuiz';
   static String get welcomeDescription => _language == 'en' ? AppStringsEn.welcomeDescription : 'Ontdek de Bijbel op een leuke en interactieve manier met uitdagende vragen en lessen.';
   static String get howToPlayTitle => _language == 'en' ? AppStringsEn.howToPlayTitle : 'Hoe speel je?';
-  static String get howToPlayDescription => _language == 'en' ? AppStringsEn.howToPlayDescription : 'Beantwoord vragen over de Bijbel en verdien punten. Hoe sneller je antwoordt, hoe meer punten je verdient!';
-  static String get trackProgressTitle => _language == 'en' ? AppStringsEn.trackProgressTitle : 'Volg Je Voortgang';
-  static String get trackProgressDescription => _language == 'en' ? AppStringsEn.trackProgressDescription : 'Houd je scores bij en verbeter jezelf in de loop van de tijd.';
+  static String get howToPlayDescription => _language == 'en' ? AppStringsEn.howToPlayDescription : 'Beantwoord vragen over de Bijbel. Hoe accurater je antwoord, hoe meer punten je verdient. Punten kun je later uitgeven in de winkel voor exclusieve thema\'s en power-ups.';
+  static String get trackProgressTitle => _language == 'en' ? AppStringsEn.trackProgressTitle : 'Speel alleen, met vrienden of familie';
+  static String get trackProgressDescription => _language == 'en' ? AppStringsEn.trackProgressDescription : 'Ga naar het "Sociaal" tabblad om vrienden te volgen of klik op Multiplayer Quiz om samen te spelen.';
   static String get customizeExperienceTitle => _language == 'en' ? AppStringsEn.customizeExperienceTitle : 'Pas Je Ervaring Aan';
   static final String customizeExperienceDescription =
       'Pas je thema, speelsnelheid en de geluidseffecten aan in de instellingen. Heeft u nog vragen of suggesties? We horen graag van je via ${AppUrls.contactEmail}';
@@ -712,4 +712,11 @@ class AppStrings {
 
   // ELIM50 Coupon
   static String get elim50CouponMessage => _language == 'en' ? AppStringsEn.elim50CouponMessage : 'Je hebt 50 punten gekregen en er is 50 cent gedoneerd voor de verbouwing van Elim!';
+
+  // Guide Screen Additional Strings
+  static String get guideAccount => _language == 'en' ? AppStringsEn.guideAccount : 'Account';
+  static String get guideAccountDescription => _language == 'en' ? AppStringsEn.guideAccountDescription : 'Maak een account aan of log in om je voortgang te bewaren en sociale functies te gebruiken.';
+  static String get couponRedeemDescription => _language == 'en' ? AppStringsEn.couponRedeemDescription : 'Je kunt couponcodes later verzilveren via het winkelmenu.';
+  static String get termsAgreementText => _language == 'en' ? AppStringsEn.termsAgreementText : 'Als u doorgaat gaat u akkoord met onze ';
+  static String get termsOfService => _language == 'en' ? AppStringsEn.termsOfService : 'algemene voorwaarden';
 }

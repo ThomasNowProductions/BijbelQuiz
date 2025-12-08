@@ -146,10 +146,10 @@ class AppStringsEn {
       'Discover the Bible in a fun and interactive way with challenging questions and lessons.';
   static const String howToPlayTitle = 'How to Play?';
   static const String howToPlayDescription =
-      'Answer questions about the Bible and earn points. The faster you answer, the more points you earn!';
-  static const String trackProgressTitle = 'Track Your Progress';
+      'Answer questions about the Bible. The more accurate your answer, the more points you earn. You can later spend points in the shop on exclusive themes and power-ups.';
+  static const String trackProgressTitle = 'Play alone, with friends or family';
   static const String trackProgressDescription =
-      'Keep track of your scores and improve yourself over time.';
+      'Go to the "Social" tab to follow friends or click on Multiplayer Quiz to play together.';
   static const String customizeExperienceTitle = 'Customize Your Experience';
   static final String customizeExperienceDescription =
       'Customize your theme, game speed, and sound effects in the settings. Do you have any questions or suggestions? We would love to hear from you at ${AppUrls.contactEmail}';
@@ -795,4 +795,11 @@ class AppStringsEn {
 
   // ELIM50 Coupon
   static const String elim50CouponMessage = 'You got 50 points and got 50 cents donated for the renovation of Elim!';
+
+  // Guide Screen Additional Strings
+  static const String guideAccount = 'Account';
+  static const String guideAccountDescription = 'Create an account or log in to save your progress and use social features.';
+  static const String couponRedeemDescription = 'You can redeem coupon codes later at the shop menu.';
+  static const String termsAgreementText = 'By continuing you agree to our ';
+  static const String termsOfService = 'terms of service';
 }

@@ -228,8 +228,8 @@ List<GuidePage> buildGuidePages(
   
   if (!isLoggedIn) {
     pages.add(GuidePage(
-      title: 'Account',
-      description: 'Maak een account aan of log in om je voortgang te bewaren en sociale functies te gebruiken.',
+      title: strings.AppStrings.guideAccount,
+      description: strings.AppStrings.guideAccountDescription,
       icon: Icons.account_circle,
       isAuthPage: true,
     ));
@@ -371,7 +371,7 @@ class _GuidePageViewState extends State<GuidePageView> {
               height: 1.4,
             ),
             children: [
-              const TextSpan(text: 'Als u doorgaat gaat u akkoord met onze '),
+              TextSpan(text: strings.AppStrings.termsAgreementText),
               WidgetSpan(
                 alignment: PlaceholderAlignment.baseline,
                 baseline: TextBaseline.alphabetic,
@@ -386,7 +386,7 @@ class _GuidePageViewState extends State<GuidePageView> {
                     }
                   },
                   child: Text(
-                    'algemene voorwaarden',
+                    strings.AppStrings.termsOfService,
                     style: TextStyle(
                       color: colorScheme.primary,
                       height: 1.4,
@@ -445,6 +445,8 @@ class _GuidePageViewState extends State<GuidePageView> {
                   isEmbedded: true,
                   onLoginSuccess: widget.onConsentComplete,
                 ),
+                const SizedBox(height: 24),
+                _buildTermsAgreementText(),
               ],
             ),
           ),
@@ -453,8 +455,8 @@ class _GuidePageViewState extends State<GuidePageView> {
     }
 
 
-    // Check if this is the "Pas Je Ervaring Aan" page
-    final isCustomizationPage = widget.page.title == 'Pas Je Ervaring Aan';
+    // Check if this is the customization page
+    final isCustomizationPage = widget.page.title == strings.AppStrings.customizeExperienceTitle;
 
     return Padding(
       padding: const EdgeInsets.all(24.0),
@@ -497,6 +499,103 @@ class _GuidePageViewState extends State<GuidePageView> {
                           builder: (context, settings, child) {
                         return Column(
                           children: [
+                            // Coupon Redeem (Text Only) - Now first option
+                            Container(
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                color: colorScheme.surfaceContainerHighest,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          strings.AppStrings.couponTitle,
+                                          style:
+                                              textTheme.titleMedium?.copyWith(
+                                            color: colorScheme.onSurface,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          strings.AppStrings.couponRedeemDescription,
+                                          style: textTheme.bodyMedium?.copyWith(
+                                            color: colorScheme.onSurface
+                                                .withValues(alpha: 0.7),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.confirmation_number,
+                                    color: colorScheme.primary,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            // Language Selection
+                            Container(
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                color: colorScheme.surfaceContainerHighest,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    strings.AppStrings.language,
+                                    style: textTheme.titleMedium?.copyWith(
+                                      color: colorScheme.onSurface,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 12),
+                                  DropdownButtonFormField<String>(
+                                    value: settings.language,
+                                    items: const [
+                                      DropdownMenuItem(
+                                        value: 'nl',
+                                        child: Text('Nederlands'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'en',
+                                        child: Text('English'),
+                                      ),
+                                    ],
+                                    onChanged: (String? value) {
+                                      if (value != null) {
+                                        final analytics =
+                                            Provider.of<AnalyticsService>(context,
+                                                listen: false);
+                                        analytics.capture(context, 'change_language');
+                                        analytics.trackFeatureSuccess(
+                                            context, AnalyticsService.featureSettings);
+                                        settings.setLanguage(value);
+                                      }
+                                    },
+                                    decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor: colorScheme.surface,
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 20),
                             // Game Speed Dropdown
                             Container(
                               padding: const EdgeInsets.all(16),
@@ -671,12 +770,6 @@ class _GuidePageViewState extends State<GuidePageView> {
                               horizontal: 24, vertical: 12),
                         ),
                       ),
-                    ],
-
-                    // Add terms agreement text on first page (welcome page)
-                    if (_isWelcomePage()) ...[
-                      const SizedBox(height: 24),
-                      _buildTermsAgreementText(),
                     ],
                   ],
                 ),
