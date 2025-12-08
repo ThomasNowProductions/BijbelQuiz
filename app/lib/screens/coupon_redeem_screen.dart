@@ -1011,14 +1011,25 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
       Navigator.pop(localContext); // Dismiss loading
 
       String message = '';
-      if (reward.type == 'stars') {
-        final amount = reward.value as int;
-        Provider.of<GameStatsProvider>(localContext, listen: false).addStars(amount);
-        message = strings.AppStrings.couponStarsReceived.replaceAll('{amount}', amount.toString());
-      } else if (reward.type == 'theme') {
-        final themeId = reward.value as String;
-        await Provider.of<SettingsProvider>(localContext, listen: false).unlockTheme(themeId);
-        message = strings.AppStrings.couponThemeUnlocked;
+      
+      // Check for special ELIM50 coupon code
+      if (normalizedCode == 'ELIM50') {
+        // Add 50 stars to the user's account
+        Provider.of<GameStatsProvider>(localContext, listen: false).addStars(50);
+        
+        // Show special message for ELIM50
+        message = strings.AppStrings.elim50CouponMessage;
+      } else {
+        // Apply normal reward
+        if (reward.type == 'stars') {
+          final amount = reward.value as int;
+          Provider.of<GameStatsProvider>(localContext, listen: false).addStars(amount);
+          message = strings.AppStrings.couponStarsReceived.replaceAll('{amount}', amount.toString());
+        } else if (reward.type == 'theme') {
+          final themeId = reward.value as String;
+          await Provider.of<SettingsProvider>(localContext, listen: false).unlockTheme(themeId);
+          message = strings.AppStrings.couponThemeUnlocked;
+        }
       }
 
       // Update anticheat data

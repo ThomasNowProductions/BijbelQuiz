@@ -709,4 +709,7 @@ class AppStrings {
   static String get noEmail => _language == 'en' ? AppStringsEn.noEmail : 'Geen email';
   static String get leaderboard => _language == 'en' ? AppStringsEn.leaderboard : 'Leaderboard';
   static String get noLeaderboardData => _language == 'en' ? AppStringsEn.noLeaderboardData : 'Geen leaderboard gegevens beschikbaar';
+
+  // ELIM50 Coupon
+  static String get elim50CouponMessage => _language == 'en' ? AppStringsEn.elim50CouponMessage : 'Je hebt 50 punten gekregen en er is 50 cent gedoneerd voor de verbouwing van Elim!';
 }

@@ -792,4 +792,7 @@ class AppStringsEn {
   static const String noEmail = 'No email';
   static const String leaderboard = 'Leaderboard';
   static const String noLeaderboardData = 'No leaderboard data available';
+
+  // ELIM50 Coupon
+  static const String elim50CouponMessage = 'You got 50 points and got 50 cents donated for the renovation of Elim!';
 }
