@@ -188,6 +188,7 @@ class AppStrings {
   static String get purchaseSuccess => _language == 'en' ? AppStringsEn.purchaseSuccess : 'Thema succesvol ontgrendeld!';
   static String get purchaseError => _language == 'en' ? AppStringsEn.purchaseError : 'Niet genoeg sterren om dit thema te ontgrendelen.';
   static String get couldNotOpenDownloadPage => _language == 'en' ? AppStringsEn.couldNotOpenDownloadPage : 'Kon de downloadpagina niet openen';
+  static String get themeUnlockedWithSwitchOption => _language == 'en' ? AppStringsEn.themeUnlockedWithSwitchOption : 'ontgrendeld! Je kunt altijd terugkeren naar het standaardthema in de instellingen.';
 
   // Power-ups
   static String get doubleStars5Questions => _language == 'en' ? AppStringsEn.doubleStars5Questions : 'Dubbele sterren (5 vragen)';

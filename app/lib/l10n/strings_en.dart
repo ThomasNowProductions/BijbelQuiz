@@ -196,6 +196,7 @@ class AppStringsEn {
   static const String purchaseSuccess = 'Theme successfully unlocked!';
   static const String purchaseError = 'Not enough stars to unlock this theme.';
   static const String couldNotOpenDownloadPage = 'Could not open download page';
+  static const String themeUnlockedWithSwitchOption = 'unlocked! You can always return to the default theme in settings.';
 
   // Power-ups
   static const String doubleStars5Questions = 'Double Stars (5 questions)';

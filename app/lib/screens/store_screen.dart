@@ -1234,11 +1234,14 @@ class _StoreScreenState extends State<StoreScreen> {
                 if (success) {
                   await localSettings.unlockTheme(themeKey);
                   
+                  // Apply the purchased theme immediately
+                  await localSettings.setCustomTheme(themeKey);
+                  
                   // Trigger sync after successful purchase
                   await localGameStats.triggerSync();
                   
                   if (!localContext.mounted) return;
-                  final message = '$title ontgrendeld!';
+                  final message = '$title ${strings.AppStrings.themeUnlockedWithSwitchOption}';
                   showTopSnackBar(localContext, message,
                       style: TopSnackBarStyle.success);
                 } else {
