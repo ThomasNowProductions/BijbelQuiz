@@ -72,9 +72,21 @@ Use the appropriate reporting method for different error types:
 - `AutomaticErrorReporter.reportQuestionError()` - For question-related issues
 - `AutomaticErrorReporter.reportNetworkError()` - For network/API errors
 - `AutomaticErrorReporter.reportStorageError()` - For storage-related errors
+- `AutomaticErrorReporter.reportAuthenticationError()` - For authentication/login issues
+- `AutomaticErrorReporter.reportAudioError()` - For sound/audio playback issues
+- `AutomaticErrorReporter.reportAnimationError()` - For animation controller issues
+- `AutomaticErrorReporter.reportPerformanceError()` - For performance monitoring issues
+- `AutomaticErrorReporter.reportConnectionError()` - For network connectivity issues
+- `AutomaticErrorReporter.reportPlatformFeedbackError()` - For platform-specific feedback issues
+- `AutomaticErrorReporter.reportUIRenderingError()` - For UI rendering/widget issues
+- `AutomaticErrorReporter.reportProviderError()` - For state management/provider issues
+- `AutomaticErrorReporter.reportThemeError()` - For theme loading/configuration issues
+- `AutomaticErrorReporter.reportServiceInitializationError()` - For service startup issues
 
 ### Error Reporting Best Practices
 - Include relevant context in the `additionalInfo` parameter
 - Use descriptive error messages that help with debugging
 - Always specify the `questionId` when available for question-related errors
-- Include specific details like URLs, status codes, or file paths where applicable
+- Include specific details like URLs, status codes, file paths, user IDs, or platform info where applicable
+- Use appropriate error types that match the AppErrorType enum when possible
+- Report errors early in catch blocks to ensure they're captured before other processing

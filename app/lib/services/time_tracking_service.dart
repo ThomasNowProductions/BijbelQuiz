@@ -2,6 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import '../services/logger.dart';
 import '../utils/bijbelquiz_gen_utils.dart';
+import '../utils/automatic_error_reporter.dart';
 
 /// Service to track time spent using the app for year-end statistics
 class TimeTrackingService {
@@ -25,13 +26,24 @@ class TimeTrackingService {
   }
 
   Future<void> initialize() async {
-    _prefs = await SharedPreferences.getInstance();
-    _totalTimeSpent = _prefs?.getInt(_totalTimeKey) ?? 0;
-    _loadSessionData();
+    try {
+      _prefs = await SharedPreferences.getInstance();
+      _totalTimeSpent = _prefs?.getInt(_totalTimeKey) ?? 0;
+      _loadSessionData();
 
-    // Start tracking if we have an active session from before
-    if (_sessionStartTime != null) {
-      _startTracking();
+      // Start tracking if we have an active session from before
+      if (_sessionStartTime != null) {
+        _startTracking();
+      }
+    } catch (e) {
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportServiceInitializationError(
+        message: 'Failed to initialize time tracking service: ${e.toString()}',
+        serviceName: 'TimeTrackingService',
+        initializationStep: 'shared_preferences_setup',
+      );
+      AppLogger.error('Error initializing TimeTrackingService', e);
+      // Continue with default values
     }
   }
 

@@ -1,5 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
+import '../utils/automatic_error_reporter.dart';
 
 /// Service to manage anonymous user identification
 /// Generates and stores a unique, persistent ID for anonymous users
@@ -10,22 +11,32 @@ class AnonymousUserService {
   /// Gets a unique persistent ID for the current anonymous user.
   /// If no ID exists, generates a new one and stores it locally.
   Future<String> getAnonymousUserId() async {
-    final prefs = await SharedPreferences.getInstance();
+    try {
+      final prefs = await SharedPreferences.getInstance();
 
-    // Check if we already have an ID stored
-    String? existingId = prefs.getString(_anonymousUserIdKey);
+      // Check if we already have an ID stored
+      String? existingId = prefs.getString(_anonymousUserIdKey);
 
-    if (existingId != null && existingId.isNotEmpty) {
-      return existingId;
+      if (existingId != null && existingId.isNotEmpty) {
+        return existingId;
+      }
+
+      // Generate a new unique ID
+      final newId = _generateUniqueId();
+
+      // Store it for future use
+      await prefs.setString(_anonymousUserIdKey, newId);
+
+      return newId;
+    } catch (e) {
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportAuthenticationError(
+        message: 'Failed to get or generate anonymous user ID: ${e.toString()}',
+        operation: 'get_anonymous_user_id',
+      );
+      // Return a fallback ID if everything fails
+      return 'fallback_${DateTime.now().millisecondsSinceEpoch}';
     }
-
-    // Generate a new unique ID
-    final newId = _generateUniqueId();
-
-    // Store it for future use
-    await prefs.setString(_anonymousUserIdKey, newId);
-
-    return newId;
   }
 
   /// Generates a unique anonymous user ID
@@ -47,7 +58,16 @@ class AnonymousUserService {
 
   /// Clears the anonymous user ID (useful for testing or reset scenarios)
   Future<void> clearAnonymousUserId() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_anonymousUserIdKey);
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.remove(_anonymousUserIdKey);
+    } catch (e) {
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportAuthenticationError(
+        message: 'Failed to clear anonymous user ID: ${e.toString()}',
+        operation: 'clear_anonymous_user_id',
+      );
+      // Don't rethrow - clearing is not critical
+    }
   }
 }

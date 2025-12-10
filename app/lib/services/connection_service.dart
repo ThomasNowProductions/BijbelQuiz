@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'logger.dart';
+import '../utils/automatic_error_reporter.dart';
 
 /// A service for monitoring network connectivity and optimizing for poor connections
 class ConnectionService {
@@ -38,17 +39,30 @@ class ConnectionService {
   Future<void> initialize() async {
     if (disableTimersForTest) return;
 
-    // Skip connection checking on web for now
-    if (kIsWeb) {
-      _isConnected = true;
-      _connectionType = ConnectionType.fast;
-      _isSlowConnection = false;
-      AppLogger.info('Connection service initialized for web platform');
-      return;
-    }
+    try {
+      // Skip connection checking on web for now
+      if (kIsWeb) {
+        _isConnected = true;
+        _connectionType = ConnectionType.fast;
+        _isSlowConnection = false;
+        AppLogger.info('Connection service initialized for web platform');
+        return;
+      }
 
-    await _checkConnection();
-    _startConnectionMonitoring();
+      await _checkConnection();
+      _startConnectionMonitoring();
+    } catch (e) {
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportServiceInitializationError(
+        message: 'Failed to initialize connection service: ${e.toString()}',
+        serviceName: 'ConnectionService',
+        initializationStep: 'connection_check_and_monitoring',
+      );
+      AppLogger.error('Error initializing ConnectionService', e);
+      // Continue with default disconnected state
+      _isConnected = false;
+      _connectionType = ConnectionType.none;
+    }
   }
 
   /// Check current connection status

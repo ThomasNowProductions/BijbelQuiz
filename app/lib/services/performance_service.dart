@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/scheduler.dart';
 import 'logger.dart';
+import '../utils/automatic_error_reporter.dart';
 
 /// Types of animations for optimized duration selection
 enum AnimationType {
@@ -40,11 +41,22 @@ class PerformanceService {
 
   /// Initialize the performance service
   Future<void> initialize() async {
-    await _detectDeviceCapabilities();
-    _detectRefreshRate();
-    AppLogger.info(
-        'PerformanceService initialized with refresh rate: ${_averageFrameRate}Hz');
-    // Don't start monitoring immediately - only when needed
+    try {
+      await _detectDeviceCapabilities();
+      _detectRefreshRate();
+      AppLogger.info(
+          'PerformanceService initialized with refresh rate: ${_averageFrameRate}Hz');
+      // Don't start monitoring immediately - only when needed
+    } catch (e) {
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportServiceInitializationError(
+        message: 'Failed to initialize performance service: ${e.toString()}',
+        serviceName: 'PerformanceService',
+        initializationStep: 'device_detection_and_refresh_rate',
+      );
+      AppLogger.error('Error initializing PerformanceService', e);
+      // Continue with default values
+    }
   }
 
   /// Detect the device's refresh rate
@@ -91,6 +103,11 @@ class PerformanceService {
       AppLogger.info(
           'Device capabilities: CPU cores: $processorCount, Low-end: $_isLowEndDevice');
     } catch (e) {
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportPerformanceError(
+        message: 'Failed to detect device capabilities: ${e.toString()}',
+        metric: 'device_capabilities',
+      );
       AppLogger.error('Error detecting device capabilities', e);
       _isLowEndDevice = false; // Default to standard device
     }

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'logger.dart';
+import '../utils/automatic_error_reporter.dart';
 
 /// A service for managing platform-specific visual feedback durations
 /// to ensure consistent user experience across Android and Linux platforms.
@@ -27,9 +28,22 @@ class PlatformFeedbackService {
 
   /// Initialize the platform feedback service
   Future<void> initialize() async {
-    _detectPlatform();
-    AppLogger.info(
-        'PlatformFeedbackService initialized for $_currentPlatform with multiplier $_platformMultiplier');
+    try {
+      _detectPlatform();
+      AppLogger.info(
+          'PlatformFeedbackService initialized for $_currentPlatform with multiplier $_platformMultiplier');
+    } catch (e) {
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportServiceInitializationError(
+        message: 'Failed to initialize platform feedback service: ${e.toString()}',
+        serviceName: 'PlatformFeedbackService',
+        initializationStep: 'platform_detection',
+      );
+      AppLogger.error('Error initializing PlatformFeedbackService', e);
+      // Continue with default values
+      _currentPlatform = 'unknown';
+      _platformMultiplier = 1.0;
+    }
   }
 
   /// Detect the current platform and set appropriate multiplier

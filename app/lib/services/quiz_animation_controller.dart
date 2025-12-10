@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/performance_service.dart';
+import '../utils/automatic_error_reporter.dart';
 
 /// Manages quiz-related animations for score, streak, and longest streak using a single controller
 class QuizAnimationController {
@@ -20,7 +21,18 @@ class QuizAnimationController {
     required TickerProvider vsync,
   })  : _performanceService = performanceService,
         _vsync = vsync {
-    _initializeAnimations();
+    try {
+      _initializeAnimations();
+    } catch (e) {
+      // Report error to automatic error tracking system
+      AutomaticErrorReporter.reportAnimationError(
+        message: 'Failed to initialize quiz animation controller: ${e.toString()}',
+        animationType: 'quiz_stats',
+        controllerName: 'QuizAnimationController',
+      );
+      // Re-throw to let caller handle it
+      rethrow;
+    }
   }
 
   void _initializeAnimations() {
@@ -103,10 +115,21 @@ class QuizAnimationController {
   }
 
   void dispose() {
-    // Dispose single animation controller safely
-    if (_statsAnimationController.isAnimating) {
-      _statsAnimationController.stop();
+    try {
+      // Dispose single animation controller safely
+      if (_statsAnimationController.isAnimating) {
+        _statsAnimationController.stop();
+      }
+      _statsAnimationController.dispose();
+    } catch (e) {
+      // Report error to automatic error tracking system
+      AutomaticErrorReporter.reportAnimationError(
+        message: 'Failed to dispose quiz animation controller: ${e.toString()}',
+        animationType: 'quiz_stats',
+        controllerName: 'QuizAnimationController',
+        additionalInfo: {'operation': 'dispose'},
+      );
+      // Don't re-throw dispose errors as they're not critical
     }
-    _statsAnimationController.dispose();
   }
 }

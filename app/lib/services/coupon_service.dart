@@ -1,6 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../config/supabase_config.dart';
 import '../services/logger.dart';
+import '../utils/automatic_error_reporter.dart';
 
 class CouponReward {
   final String type; // 'stars', 'theme'
@@ -15,8 +16,8 @@ class CouponService {
   CouponService() : _client = SupabaseConfig.getClient();
 
   Future<CouponReward> redeemCoupon(String code) async {
+    final normalizedCode = code.trim().toUpperCase();
     try {
-      final normalizedCode = code.trim().toUpperCase();
       AppLogger.info('Attempting to redeem coupon: $normalizedCode');
 
       // 1. Fetch coupon details
@@ -61,6 +62,11 @@ class CouponService {
         value: value,
       );
     } catch (e) {
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportNetworkError(
+        message: 'Failed to redeem coupon: ${e.toString()}',
+        additionalInfo: {'coupon_code': normalizedCode, 'operation': 'redeem_coupon'},
+      );
       AppLogger.error('Error redeeming coupon: $e');
       rethrow;
     }

@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_session/audio_session.dart';
 import 'logger.dart';
+import '../utils/automatic_error_reporter.dart';
 
 /// A robust, efficient, and cross-platform sound service for playing effects.
 class SoundService {
@@ -193,6 +194,19 @@ class SoundService {
       // Clean up
       await sub.cancel();
     } catch (e) {
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportAudioError(
+        message: 'Failed to play sound: $soundName',
+        soundType: soundName,
+        filePath: _soundFiles[soundName],
+        additionalInfo: {
+          'platform_supported': _isPlatformSupported(),
+          'platform': Platform.operatingSystem,
+          'is_enabled': _isEnabled,
+          'is_initialized': _isInitialized,
+        },
+      );
+
       AppLogger.error('Error playing sound: $soundName', e);
       onError?.call('Failed to play sound: $soundName');
 
@@ -259,6 +273,16 @@ class SoundService {
       // Ignore missing plugin exceptions during dispose
       AppLogger.warning('Audio plugin not available during dispose');
     } catch (e) {
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportAudioError(
+        message: 'Failed to dispose SoundService',
+        soundType: 'system',
+        additionalInfo: {
+          'operation': 'dispose',
+          'platform_supported': _isPlatformSupported(),
+          'platform': Platform.operatingSystem,
+        },
+      );
       AppLogger.error('Error disposing SoundService', e);
     } finally {
       _isInitialized = false;

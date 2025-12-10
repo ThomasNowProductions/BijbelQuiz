@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/services.dart';
 import 'logger.dart';
+import '../utils/automatic_error_reporter.dart';
 
 class GreetingService {
   static final GreetingService _instance = GreetingService._internal();
@@ -22,6 +23,12 @@ class GreetingService {
       _greetingsData = jsonData['greetings'] as Map<String, dynamic>;
       _isLoaded = true;
     } catch (e) {
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportStorageError(
+        message: 'Failed to load greetings from assets: ${e.toString()}',
+        filePath: 'assets/greetings.json',
+        operation: 'load_greetings',
+      );
       // Fallback to default greeting if loading fails
       _greetingsData = null;
       _isLoaded = true;
