@@ -69,46 +69,6 @@ BijbelQuiz is a cross-platform Bible quiz app designed to test and improve your 
     ```
 
 
-## 🏗️ Architecture
-
-### Project Structure
-
-```bash
-BijbelQuiz/
-├── app/                       # Main Flutter application
-│   ├── lib/                   # Dart source code
-│   │   ├── config/            # App configuration
-│   │   ├── constants/         # App constants and URLs
-│   │   ├── l10n/              # Localization strings
-│   │   ├── models/            # Data models
-│   │   ├── providers/         # State management using Provider pattern
-│   │   ├── services/          # Business logic and external integrations
-│   │   ├── screens/           # UI screens
-│   │   ├── widgets/           # Reusable UI components
-│   │   ├── theme/             # Theme definitions
-│   │   └── utils/             # Utility functions
-│   ├── android/               # Android platform code
-│   ├── ios/                   # iOS platform code
-│   ├── linux/                 # Linux platform code
-│   ├── macos/                 # macOS platform code
-│   ├── web/                   # Web platform code
-│   ├── windows/               # Windows platform code
-│   ├── assets/                # App assets (questions, fonts, sounds)
-│   ├── test/                  # Unit and integration tests
-│   └── build_all.sh           # Build script for all platforms
-├── docs/                      # Documentation (all .md files)
-└── websites/                  # Web assets and backend
-    ├── backend.bijbelquiz.app/ # Backend API and admin tools
-    │   ├── api/               # REST API endpoints
-    │   ├── question-editor/   # Web-based question management tool
-    │   └── README.md          # Backend documentation
-    ├── bijbelquiz.app/        # Main website
-    │   ├── blog/              # Blog posts
-    │   ├── downloads/         # Download links
-    │   └── instructie/        # Instructions and guides
-    └── play.bijbelquiz.app/   # Web app version (Flutter web build)
-```
-
 ## Features
 
 - **Multiple Question Types**: Multiple choice, fill-in-the-blank, and true/false questions
@@ -126,15 +86,15 @@ See [SECURITY_DOCS.md](SECURITY_DOCS.md) for details on security measures implem
 
 ## Asset Licenses
 
-See [ASSETS_LICENSES.md](ASSETS_LICENSES.md) for details on the licenses of fonts, images, and sounds used in this app.
+See [docs/ASSETS_LICENSES.md](docs/ASSETS_LICENSES.md) for details on the licenses of fonts, images, and sounds used in this app.
 
 ## Error Reporting
 
-The app includes a centralized error reporting system that allows users to report bugs directly from the settings screen. The reported errors are stored in a Supabase database for debugging and monitoring purposes. See [README-questions.md](README-questions.md) for more technical details about the error reporting system.
+The app includes a centralized error reporting system that allows users to report bugs directly from the settings screen. The reported errors are stored in a Supabase database for debugging and monitoring purposes. See [docs/README-questions.md](docs/README-questions.md) for more technical details about the error reporting system.
 
 ## License
 
-This project is licensed under the GNU General Public License v3.0 (GPL-3.0). See [LICENSE.md](LICENSE.md) for details.
+This project is licensed under the GNU General Public License v3.0 (GPL-3.0). See [docs/LICENSE.md](docs/LICENSE) for details.
 
 ## Contact
 

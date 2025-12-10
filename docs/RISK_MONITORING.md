@@ -1,19 +1,21 @@
-# API Inventory for BijbelQuiz Project
+# External services
 
-## Question Editor Interface (`/question-editor/*`)
+## Vercel
+### Risk level: High
+We use Vercel to host our promotional website and our online play website. If this goes down, we will not be able to promote our game or allow people to play it online.
 
-**VULNERABLE:** Public access to development interface, path traversal risks
+## Supabase
+### Risk level: High
+We use Supabase to store user data, game data and our store. If this goes down, we will not be able to store user data, game data and people will not be able to buy anything in our game.
 
-**IMPROVE:** Add authentication, implement file upload validation, add audit logging
+## Formbricks
 
-## Google Gemini AI API (external)
+## GitHub
 
-**VULNERABLE:** API key management, prompt injection risks
+## Spaceship
 
-**IMPROVE:** Implement secure key storage, add prompt filtering, add usage monitoring
+## Instatus
 
-## Online Bible API (external)
+## Google Play
 
-**VULNERABLE:** No authentication, search query exposure
-
-**IMPROVE:** Add input sanitization, implement content filtering, add privacy controls
+## PostHog
