@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import '../models/lesson.dart';
 import '../services/logger.dart';
+import '../utils/automatic_error_reporter.dart';
 
 /// Builds Duolingo-like lessons not tied to categories.
 /// Lessons are generic, numbered, and each pulls a capped set of random questions.
@@ -19,6 +20,19 @@ class LessonService {
       return _categories!;
     } catch (e) {
       AppLogger.error('Failed to load categories', e);
+      
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportStorageError(
+        message: 'Failed to load lesson categories from assets',
+        operation: 'load_categories',
+        filePath: 'assets/categories.json',
+        additionalInfo: {
+          'error': e.toString(),
+          'operation_type': 'asset_loading',
+          'fallback_used': true,
+        },
+      );
+      
       return ['Genesis', 'Exodus', 'Matteüs', 'Johannes']; // Fallback
     }
   }
@@ -92,6 +106,21 @@ class LessonService {
       return lessons;
     } catch (e) {
       AppLogger.error('Failed to generate lessons', e);
+      
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportQuestionError(
+        message: 'Failed to generate lessons',
+        questionId: 'lesson_generation_error',
+        additionalInfo: {
+          'language': language,
+          'max_lessons': maxLessons,
+          'max_questions_per_lesson': maxQuestionsPerLesson,
+          'error': e.toString(),
+          'operation_type': 'lesson_generation',
+          'fallback_used': true,
+        },
+      );
+      
       // Minimal fallback to keep UI functional
       return [
         Lesson(

@@ -1,6 +1,7 @@
 import '../config/supabase_config.dart';
 import '../models/store_item.dart';
 import '../services/logger.dart';
+import '../utils/automatic_error_reporter.dart';
 
 class StoreService {
   static final StoreService _instance = StoreService._internal();
@@ -23,6 +24,18 @@ class StoreService {
           .toList();
     } catch (e) {
       AppLogger.error('Error fetching store items from Supabase: $e');
+      
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportNetworkError(
+        message: 'Failed to fetch store items from Supabase',
+        url: 'store_items table',
+        additionalInfo: {
+          'error': e.toString(),
+          'operation': 'get_store_items',
+          'is_active_filter': true,
+        },
+      );
+      
       rethrow;
     }
   }
@@ -39,6 +52,18 @@ class StoreService {
       return StoreItem.fromJson(response);
     } catch (e) {
       AppLogger.error('Error fetching store item with key $itemKey: $e');
+      
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportNetworkError(
+        message: 'Failed to fetch store item by key',
+        url: 'store_items table',
+        additionalInfo: {
+          'item_key': itemKey,
+          'error': e.toString(),
+          'operation': 'get_store_item_by_key',
+        },
+      );
+      
       return null;
     }
   }
@@ -56,6 +81,18 @@ class StoreService {
       return true;
     } catch (e) {
       AppLogger.error('Error updating store item: $e');
+      
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportNetworkError(
+        message: 'Failed to update store item',
+        url: 'store_items table',
+        additionalInfo: {
+          'item_key': item.itemKey,
+          'error': e.toString(),
+          'operation': 'update_store_item',
+        },
+      );
+      
       return false;
     }
   }

@@ -5,6 +5,7 @@ import '../providers/game_stats_provider.dart';
 import '../providers/lesson_progress_provider.dart';
 import '../error/error_handler.dart';
 import '../error/error_types.dart';
+import '../utils/automatic_error_reporter.dart';
 
 /// Represents a star transaction record
 class StarTransaction {
@@ -99,8 +100,9 @@ class StarTransactionService {
 
   /// Load transaction history from persistent storage
   Future<void> _loadTransactionHistory() async {
+    final rawTransactions = _prefs?.getStringList(_transactionsKey) ?? [];
+    
     try {
-      final rawTransactions = _prefs?.getStringList(_transactionsKey) ?? [];
       _transactions.clear();
 
       for (final raw in rawTransactions) {
@@ -122,6 +124,17 @@ class StarTransactionService {
       AppLogger.info('Loaded ${_transactions.length} star transactions');
     } catch (e) {
       AppLogger.error('Error loading transaction history: $e');
+      
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportStorageError(
+        message: 'Failed to load star transaction history',
+        operation: 'load_transaction_history',
+        additionalInfo: {
+          'error': e.toString(),
+          'operation_type': 'shared_preferences_loading',
+          'raw_transactions_count': rawTransactions.length,
+        },
+      );
     }
   }
 
@@ -152,6 +165,20 @@ class StarTransactionService {
           'Saved star transaction: ${transaction.type} ${transaction.amount} stars - ${transaction.reason}');
     } catch (e) {
       AppLogger.error('Error saving transaction: $e');
+      
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportStorageError(
+        message: 'Failed to save star transaction',
+        operation: 'save_transaction',
+        additionalInfo: {
+          'transaction_id': transaction.id,
+          'transaction_type': transaction.type,
+          'amount': transaction.amount,
+          'reason': transaction.reason,
+          'error': e.toString(),
+          'operation_type': 'shared_preferences_saving',
+        },
+      );
     }
   }
 

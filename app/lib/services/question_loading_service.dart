@@ -4,6 +4,7 @@ import '../providers/settings_provider.dart';
 import '../services/question_cache_service.dart';
 import '../services/logger.dart';
 import 'dart:math';
+import '../utils/automatic_error_reporter.dart';
 
 /// Shared service for loading questions in background
 class QuestionLoadingService {
@@ -42,6 +43,18 @@ class QuestionLoadingService {
       }
     } catch (e) {
       AppLogger.error('Failed to load more questions in background', e);
+      
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportQuestionError(
+        message: 'Failed to load more questions in background',
+        questionId: 'background_question_loading',
+        additionalInfo: {
+          'lesson_mode': lessonMode,
+          'current_questions_count': questions.length,
+          'error': e.toString(),
+          'operation_type': 'background_loading',
+        },
+      );
     }
   }
 
@@ -85,6 +98,17 @@ class QuestionLoadingService {
       }
     } catch (e) {
       AppLogger.error('Failed to load more questions in background', e);
+      
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportQuestionError(
+        message: 'Failed to load more questions in advanced background loading',
+        questionId: 'advanced_background_question_loading',
+        additionalInfo: {
+          'current_questions_count': questions.length,
+          'error': e.toString(),
+          'operation_type': 'advanced_background_loading',
+        },
+      );
     }
   }
 

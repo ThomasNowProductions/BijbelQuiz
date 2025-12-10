@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'logger.dart';
 import '../utils/color_parser.dart';
+import '../utils/automatic_error_reporter.dart';
 
 /// Configuration for Gemini API service
 class GeminiConfig {
@@ -221,6 +222,18 @@ class GeminiService {
       AppLogger.info('Gemini API service initialized successfully');
     } catch (e) {
       AppLogger.error('Failed to initialize Gemini API service', e);
+      
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportNetworkError(
+        message: 'Failed to initialize Gemini API service',
+        url: 'https://generativelanguage.googleapis.com',
+        additionalInfo: {
+          'error': e.toString(),
+          'operation': 'service_initialization',
+          'api_key_configured': _apiKey.isNotEmpty,
+        },
+      );
+      
       _initialized = false;
       rethrow;
     }
@@ -279,6 +292,19 @@ class GeminiService {
       }
     } catch (e) {
       AppLogger.error('Failed to generate color palette', e);
+      
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportNetworkError(
+        message: 'Failed to generate color palette from Gemini API',
+        url: '${GeminiConfig.baseUrl}/models/gemini-flash-latest:generateContent',
+        additionalInfo: {
+          'description': description,
+          'error': e.toString(),
+          'operation': 'color_palette_generation',
+          'service_initialized': _initialized,
+        },
+      );
+      
       rethrow;
     }
   }

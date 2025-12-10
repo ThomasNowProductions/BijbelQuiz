@@ -19,6 +19,7 @@ import '../services/messaging_service.dart';
 import '../services/sync_service.dart';
 import '../theme/theme_manager.dart';
 import '../utils/bible_book_mapper.dart';
+import '../utils/automatic_error_reporter.dart';
 
 /// Service for running a local HTTP API server
 class ApiService {
@@ -441,11 +442,14 @@ class ApiService {
       QuestionCacheService questionCacheService) {
     return (Request request) async {
       final startTime = DateTime.now();
+      String? category;
+      String? limitParam;
+      String? difficulty;
 
       try {
-        final category = request.url.queryParameters['category'];
-        final limitParam = request.url.queryParameters['limit'] ?? '10';
-        final difficulty = request.url.queryParameters['difficulty'];
+        category = request.url.queryParameters['category'];
+        limitParam = request.url.queryParameters['limit'] ?? '10';
+        difficulty = request.url.queryParameters['difficulty'];
 
         // Validate and parse limit parameter
         final limit = int.tryParse(limitParam);
@@ -489,7 +493,7 @@ class ApiService {
         if (difficulty != null && difficulty.isNotEmpty) {
           questions = questions
               .where(
-                  (q) => q.difficulty.toLowerCase() == difficulty.toLowerCase())
+                  (q) => q.difficulty.toLowerCase() == difficulty!.toLowerCase())
               .toList();
         }
 
@@ -525,6 +529,22 @@ class ApiService {
         final duration = DateTime.now().difference(startTime);
         AppLogger.error(
             'Error in questions endpoint after ${duration.inMilliseconds}ms: $e');
+        
+        // Report error to automatic error tracking system
+        await AutomaticErrorReporter.reportQuestionError(
+          message: 'API questions endpoint failed after ${duration.inMilliseconds}ms',
+          questionId: 'api_questions_endpoint',
+          questionText: 'Questions loading via API failed',
+          additionalInfo: {
+            'endpoint': '/v1/questions',
+            'duration_ms': duration.inMilliseconds,
+            'error': e.toString(),
+            'category': category,
+            'limit': limitParam,
+            'difficulty': difficulty,
+          },
+        );
+        
         return Response.internalServerError(
             body: json.encode({
               'error': 'Failed to load questions',
@@ -543,9 +563,12 @@ class ApiService {
       QuestionCacheService questionCacheService) {
     return (Request request) async {
       final startTime = DateTime.now();
+      String? category;
+      String? limitParam;
+      String? difficulty;
 
       try {
-        final category = request.params['category'];
+        category = request.params['category'];
         if (category == null || category.isEmpty) {
           return Response.badRequest(
               body: json.encode({
@@ -556,8 +579,8 @@ class ApiService {
               headers: {'Content-Type': 'application/json'});
         }
 
-        final limitParam = request.url.queryParameters['limit'] ?? '10';
-        final difficulty = request.url.queryParameters['difficulty'];
+        limitParam = request.url.queryParameters['limit'] ?? '10';
+        difficulty = request.url.queryParameters['difficulty'];
 
         // Validate and parse limit parameter
         final limit = int.tryParse(limitParam);
@@ -594,7 +617,7 @@ class ApiService {
         final filteredQuestions = difficulty != null && difficulty.isNotEmpty
             ? questions
                 .where((q) =>
-                    q.difficulty.toLowerCase() == difficulty.toLowerCase())
+                    q.difficulty.toLowerCase() == difficulty!.toLowerCase())
                 .toList()
             : questions;
 
@@ -630,6 +653,22 @@ class ApiService {
         final duration = DateTime.now().difference(startTime);
         AppLogger.error(
             'Error in questions by category endpoint after ${duration.inMilliseconds}ms: $e');
+        
+        // Report error to automatic error tracking system
+        await AutomaticErrorReporter.reportQuestionError(
+          message: 'API questions by category endpoint failed after ${duration.inMilliseconds}ms',
+          questionId: 'api_questions_by_category_endpoint',
+          questionText: 'Questions loading by category via API failed',
+          additionalInfo: {
+            'endpoint': '/v1/questions/<category>',
+            'duration_ms': duration.inMilliseconds,
+            'error': e.toString(),
+            'category': category,
+            'limit': limitParam,
+            'difficulty': difficulty,
+          },
+        );
+        
         return Response.internalServerError(
             body: json.encode({
               'error': 'Failed to load questions for category',
@@ -1087,10 +1126,12 @@ class ApiService {
   Future<Response> Function(Request) _handleGetStoreItems() {
     return (Request request) async {
       final startTime = DateTime.now();
+      String? category;
+      String? limitParam;
 
       try {
-        final category = request.url.queryParameters['category'];
-        final limitParam = request.url.queryParameters['limit'] ?? '20';
+        category = request.url.queryParameters['category'];
+        limitParam = request.url.queryParameters['limit'] ?? '20';
 
         // Validate and parse limit parameter
         final limit = int.tryParse(limitParam);
@@ -1146,6 +1187,20 @@ class ApiService {
         final duration = DateTime.now().difference(startTime);
         AppLogger.error(
             'Error in store items endpoint after ${duration.inMilliseconds}ms: $e');
+        
+        // Report error to automatic error tracking system
+        await AutomaticErrorReporter.reportStorageError(
+          message: 'API store items endpoint failed after ${duration.inMilliseconds}ms',
+          operation: 'get_store_items',
+          additionalInfo: {
+            'endpoint': '/v1/store/items',
+            'duration_ms': duration.inMilliseconds,
+            'error': e.toString(),
+            'category': category,
+            'limit': limitParam,
+          },
+        );
+        
         return Response.internalServerError(
             body: json.encode({
               'error': 'Failed to get store items',

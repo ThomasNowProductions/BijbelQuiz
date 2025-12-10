@@ -7,6 +7,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'logger.dart';
 import '../config/supabase_config.dart';
 import 'connection_service.dart';
+import '../utils/automatic_error_reporter.dart';
 
 /// Simplified LRU cache for questions with proper memory management
 class QuestionCacheEntry {
@@ -470,6 +471,16 @@ class QuestionCacheService {
       AppLogger.info('Cache cleared successfully');
     } catch (e) {
       AppLogger.error('Failed to clear cache', e);
+      
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportStorageError(
+        message: 'Failed to clear question cache',
+        operation: 'clear_cache',
+        additionalInfo: {
+          'error': e.toString(),
+          'operation_type': 'cache_clearing',
+        },
+      );
     }
   }
 
@@ -530,6 +541,19 @@ class QuestionCacheService {
       return questions;
     } catch (e) {
       AppLogger.error('Failed to load questions from database', e);
+      
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportNetworkError(
+        message: 'Failed to load questions from database',
+        url: 'questions/questions_en tables',
+        additionalInfo: {
+          'language': language,
+          'indices': indices.toString(),
+          'error': e.toString(),
+          'operation': 'load_questions_from_database',
+        },
+      );
+      
       rethrow;
     }
   }
@@ -547,6 +571,7 @@ class QuestionCacheService {
     }
 
     final loadedQuestions = <QuizQuestion>[];
+    final parsingErrors = <String>[];
 
     for (final index in indices) {
       if (index < 0 || index >= data.length) continue;
@@ -557,7 +582,23 @@ class QuestionCacheService {
         loadedQuestions.add(question);
       } catch (e) {
         AppLogger.error('Error parsing question at index $index', e);
+        parsingErrors.add('Index $index: $e');
       }
+    }
+
+    // Report parsing errors if any occurred
+    if (parsingErrors.isNotEmpty) {
+      await AutomaticErrorReporter.reportQuestionError(
+        message: 'Failed to parse ${parsingErrors.length} questions from JSON file',
+        questionId: 'json_parsing_errors',
+        additionalInfo: {
+          'file': fileName,
+          'total_errors': parsingErrors.length,
+          'error_details': parsingErrors.take(5).toList(), // Report first 5 errors
+          'indices_processed': indices.length,
+          'questions_loaded': loadedQuestions.length,
+        },
+      );
     }
 
     return loadedQuestions;
@@ -597,6 +638,18 @@ class QuestionCacheService {
       return metadata;
     } catch (e) {
       AppLogger.error('Failed to load metadata from database', e);
+      
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportNetworkError(
+        message: 'Failed to load question metadata from database',
+        url: 'questions/questions_en tables',
+        additionalInfo: {
+          'language': language,
+          'error': e.toString(),
+          'operation': 'load_metadata_from_database',
+        },
+      );
+      
       rethrow;
     }
   }
@@ -614,9 +667,13 @@ class QuestionCacheService {
     }
 
     // Extract and store just the metadata (much smaller memory footprint)
-    final metadata = data.map<Map<String, dynamic>>((json) {
+    final metadata = <Map<String, dynamic>>[];
+    final parsingErrors = <String>[];
+    
+    for (int i = 0; i < data.length; i++) {
       try {
-        return {
+        final json = data[i];
+        metadata.add({
           'id': json['id'] ?? '',
           'difficulty': json['moeilijkheidsgraad']?.toString() ?? json['difficulty']?.toString() ?? '',
           'categories':
@@ -625,11 +682,27 @@ class QuestionCacheService {
           'biblicalReference': json['biblicalReference'] is String
               ? json['biblicalReference'] as String
               : null,
-        };
+        });
       } catch (e) {
-        throw Exception('Invalid question format: $e');
+        parsingErrors.add('Index $i: $e');
+        // Continue processing other items
       }
-    }).toList();
+    }
+
+    // Report parsing errors if any occurred
+    if (parsingErrors.isNotEmpty) {
+      await AutomaticErrorReporter.reportQuestionError(
+        message: 'Failed to parse ${parsingErrors.length} metadata entries from JSON file',
+        questionId: 'metadata_json_parsing_errors',
+        additionalInfo: {
+          'file': fileName,
+          'total_errors': parsingErrors.length,
+          'error_details': parsingErrors.take(5).toList(), // Report first 5 errors
+          'total_entries': data.length,
+          'successful_entries': metadata.length,
+        },
+      );
+    }
 
     return metadata;
   }
