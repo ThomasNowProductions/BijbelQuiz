@@ -60,7 +60,6 @@ ServiceContainer _createFallbackServiceContainer() {
   try {
     // Create minimal providers that won't block
     final settingsProvider = SettingsProvider();
-    final gameStatsProvider = GameStatsProvider();
     final timeTrackingService = TimeTrackingService.instance;
 
     // Use reflection to set the private fields (this is a fallback mechanism)
@@ -203,7 +202,6 @@ Future<void> main() async {
     // Initialize service container with critical services first
     try {
       serviceContainer = ServiceContainer();
-      final startTime = DateTime.now();
 
       AppLogger.info('Starting critical services initialization...');
       final criticalServicesStart = DateTime.now();
@@ -233,7 +231,7 @@ Future<void> main() async {
     AppLogger.info('- Font loaded: $fontLoaded');
     AppLogger.info('- Environment loaded: $envLoaded');
     AppLogger.info('- Supabase initialized: $supabaseInitialized');
-    AppLogger.info('- Critical services initialized: ${serviceContainer != null}');
+    AppLogger.info('- Critical services initialized: $serviceContainer');
 
     // Create providers for the app
     final gameStatsProvider = serviceContainer.gameStatsProvider;

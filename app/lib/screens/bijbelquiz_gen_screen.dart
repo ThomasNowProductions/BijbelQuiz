@@ -904,9 +904,11 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
 📊 ${strings.AppStrings.accuracyShare}: $correctPercentage%
 ⏱️ ${strings.AppStrings.timeSpentShare}: ${timeSpentHours.toStringAsFixed(1)} uur''';
 
-    await Share.share(
-      shareText,
-      subject: 'Mijn BijbelQuiz statistieken',
+    await SharePlus.instance.share(
+      ShareParams(
+        text: shareText,
+        subject: 'Mijn BijbelQuiz statistieken',
+      ),
     );
   }
 

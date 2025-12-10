@@ -351,10 +351,6 @@ class _GuidePageViewState extends State<GuidePageView> {
   }
 
 
-  bool _isWelcomePage() {
-    return widget.page.title == strings.AppStrings.welcomeTitle &&
-        widget.page.icon == Icons.church;
-  }
 
   Widget _buildTermsAgreementText() {
     final theme = Theme.of(context);
@@ -561,7 +557,7 @@ class _GuidePageViewState extends State<GuidePageView> {
                                   ),
                                   const SizedBox(height: 12),
                                   DropdownButtonFormField<String>(
-                                    value: settings.language,
+                                    initialValue: settings.language,
                                     items: const [
                                       DropdownMenuItem(
                                         value: 'nl',

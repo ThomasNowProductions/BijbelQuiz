@@ -112,8 +112,6 @@ class TimeTrackingService {
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 30), (timer) {
       if (_sessionStartTime != null) {
-        final currentSessionTime =
-            DateTime.now().difference(_sessionStartTime!);
         // Only save the current session time, not add it to total
         // The total will be calculated when session ends
         _prefs?.setInt(_totalTimeKey, _totalTimeSpent);

@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:bijbelquiz/services/logger.dart';
 
 void main() {
   group('Simple Time Calculation Tests', () {
@@ -8,8 +9,8 @@ void main() {
       final totalSeconds = totalQuestions * 5;
       final hours = totalSeconds / 3600.0;
 
-      print('Total seconds for 2006 questions: $totalSeconds');
-      print('Total hours for 2006 questions: $hours');
+      AppLogger.info('Total seconds for 2006 questions: $totalSeconds');
+      AppLogger.info('Total hours for 2006 questions: $hours');
 
       // Verify calculations: 2006 questions * 5 seconds = 10030 seconds = 2.786 hours
       expect(hours, closeTo(2.786, 0.01));
@@ -20,7 +21,7 @@ void main() {
       final formattedSeconds = (totalSeconds % 60).toString().padLeft(2, '0');
       final formattedTime = '$formattedHours:$formattedMinutes:$formattedSeconds';
 
-      print('Formatted time: $formattedTime');
+      AppLogger.info('Formatted time: $formattedTime');
       expect(formattedTime, '02:47:10'); // 10030 seconds = 2 hours, 47 minutes, 10 seconds
     });
 
@@ -55,8 +56,8 @@ void main() {
       final totalSeconds = totalQuestions * 5;
       final hours = totalSeconds / 3600.0;
 
-      print('User scenario - 2006 questions:');
-      print('Total hours: $hours');
+      AppLogger.info('User scenario - 2006 questions:');
+      AppLogger.info('Total hours: $hours');
 
       // Should be 2.786 hours, NOT 716.6 hours
       expect(hours, closeTo(2.786, 0.01));

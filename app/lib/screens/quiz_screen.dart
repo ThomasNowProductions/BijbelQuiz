@@ -343,7 +343,9 @@ class _QuizScreenState extends State<QuizScreen>
       });
     }
 
-    await showDialog( // ignore: use_build_context_synchronously
+    if (!mounted) return;
+
+    await showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext dialogContext) {

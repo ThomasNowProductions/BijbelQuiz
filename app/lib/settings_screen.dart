@@ -241,8 +241,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ColorScheme colorScheme, bool isSmallScreen) {
     final searchQuery = _searchController.text.toLowerCase().trim();
 
-    // Temporarily disable export functionality (not JSON)
-    const bool exportDisabled = true;
+    // Note: Export functionality is always enabled for JSON export
 
     final allItems = <_SettingItem>[
       // Bug report
@@ -372,15 +371,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: _buildActionButton(
           context,
           icon: Icons.help_outline,
-        ),
-      ),
-      if (!exportDisabled) _SettingItem(
-        title: strings.AppStrings.exportStats,
-        subtitle: strings.AppStrings.exportStatsDesc,
-        onTap: () => _exportStats(context),
-        child: _buildActionButton(
-          context,
-          icon: Icons.download,
         ),
       ),
       _SettingItem(
@@ -1021,20 +1011,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  void _exportStats(BuildContext context) async {
-    final analytics = Provider.of<AnalyticsService>(context, listen: false);
-    analytics.capture(context, 'export_stats');
-    // Simplified - navigate to export screen
-    if (context.mounted) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) =>
-              const ExportStatsScreen(exportString: 'mock_export'),
-        ),
-      );
-    }
-  }
-
   void _exportAllDataJson(BuildContext context) async {
     final analytics = Provider.of<AnalyticsService>(context, listen: false);
     analytics.capture(context, 'export_all_data_json');
@@ -1481,12 +1457,6 @@ class _EncryptionService {
     }
   }
 
-  /// Generate a secure encryption key for user-specific encryption
-  static Future<String> generateUserEncryptionKey(String userId) async {
-    final keyMaterial = utf8.encode('bijbelquiz_${userId}_${DateTime.now().millisecondsSinceEpoch}');
-    final hash = sha256.convert(keyMaterial);
-    return hash.toString();
-  }
 
   /// Handle import data with decryption
   static Future<Map<String, dynamic>> handleImportData(Map<String, dynamic> parsedData) async {
@@ -1680,6 +1650,7 @@ class _ImportStatsScreenState extends State<ImportStatsScreen> {
                         final decryptedData = await _EncryptionService.handleImportData(json.decode(input));
   
                         // Import JSON data
+                        if (!context.mounted) return;
                         final settings = Provider.of<SettingsProvider>(context, listen: false);
                         final gameStats = Provider.of<GameStatsProvider>(context, listen: false);
                         final lessonProgress = Provider.of<LessonProgressProvider>(context, listen: false);

@@ -1660,12 +1660,9 @@ class ApiService {
       final startTime = DateTime.now();
 
       try {
-        final bibleBookMapper = BibleBookMapper();
         final books = BibleBookMapper.getAllBookNames();
 
-        final booksData = Map.fromIterable(books,
-            key: (book) => book,
-            value: (book) => BibleBookMapper.getBookNumber(book) ?? 0);
+        final booksData = {for (final book in books) book: BibleBookMapper.getBookNumber(book) ?? 0};
 
         final response = {
           'books': booksData,
@@ -1768,37 +1765,5 @@ class ApiService {
             headers: {'Content-Type': 'application/json'});
       }
     };
-  }
-
-  /// Test method to validate all new endpoints are properly registered
-  Future<void> _testNewEndpoints() async {
-    try {
-      AppLogger.info('Testing new API endpoints...');
-
-      // Test that all new endpoints are registered
-      final testEndpoints = [
-        '/v1/store/items',
-        '/v1/store/items/test',
-        '/v1/lessons',
-        '/v1/time/tracking',
-        '/v1/coupons/redeem',
-        '/v1/messages',
-        '/v1/messages/test/reactions',
-        '/v1/sync/status',
-        '/v1/analytics/features',
-        '/v1/bible/books',
-        '/v1/themes',
-      ];
-
-      for (final endpoint in testEndpoints) {
-        AppLogger.info('Testing endpoint: $endpoint');
-        // In a real implementation, we would make actual requests here
-        // For now, we'll just log that the endpoints are registered
-      }
-
-      AppLogger.info('All new endpoints are properly registered and ready for use');
-    } catch (e) {
-      AppLogger.error('Error testing new endpoints: $e');
-    }
   }
 }

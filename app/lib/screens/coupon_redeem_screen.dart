@@ -32,14 +32,10 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
   late AnimationController _scanLineController;
   late Animation<double> _scanLineAnimation;
   late AnimationController _successAnimationController;
-  late Animation<double> _successAnimation;
   late AnimationController _errorAnimationController;
-  late Animation<double> _errorAnimation;
 
   // Scanner performance metrics
   int _scanAttempts = 0;
-  int _successfulScans = 0;
-  DateTime? _lastPerformanceReset;
 
   @override
   void initState() {
@@ -77,33 +73,17 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
       duration: const Duration(milliseconds: 500),
     );
 
-    _successAnimation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(
-        parent: _successAnimationController,
-        curve: Curves.easeInOut,
-      ),
-    );
-
     // Error animation
     _errorAnimationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
-
-    _errorAnimation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(
-        parent: _errorAnimationController,
-        curve: Curves.easeInOut,
-      ),
-    );
   }
 
   void _initializePerformanceTracking() {
-    _lastPerformanceReset = DateTime.now();
     // Reset metrics if it's been more than 24 hours
     if (_scanAttempts > 1000) {
       _scanAttempts = 0;
-      _successfulScans = 0;
     }
   }
 
@@ -513,9 +493,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
 
   Widget _buildScannerView(BuildContext context) {
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
     final screenSize = MediaQuery.of(context).size;
-    final isSmallScreen = screenSize.width < 400;
 
     // Calculate scanner size based on screen dimensions
     final scannerSize = min(screenSize.width * 0.8, screenSize.height * 0.4);
@@ -716,31 +694,10 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
                     ],
                   ),
                 ),
-
               ],
             ),
           ),
         ),
-
-        // Performance indicator (for debugging)
-        if (false) // Set to true for debugging
-          Positioned(
-            top: 16,
-            left: 16,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: Colors.black.withValues(alpha: 0.5),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Text(
-                'Scans: $_scanAttempts | Success: $_successfulScans',
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
       ],
     );
   }
@@ -881,7 +838,6 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
       });
 
       _redeemCoupon(couponCode).then((_) {
-        _successfulScans++;
         if (mounted) {
           setState(() {
             _isScanning = true;
@@ -969,8 +925,6 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
   }
 
   Future<void> _redeemCoupon(String code) async {
-    final localContext = context;
-
     // Anticheat checks
     final prefs = await SharedPreferences.getInstance();
     final normalizedCode = code.trim().toUpperCase();
@@ -987,7 +941,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
 
     if (redeemedCodes.contains(normalizedCode)) {
       if (!mounted) return;
-      _showResultDialog(localContext, strings.AppStrings.couponAlreadyRedeemed, isSuccess: false);
+      _showResultDialog(context, strings.AppStrings.couponAlreadyRedeemed, isSuccess: false);
       return;
     }
 
@@ -996,8 +950,9 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
     }
 
     // Show loading
+    if (!mounted) return;
     showDialog(
-      context: localContext,
+      context: context,
       barrierDismissible: false,
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
@@ -1008,14 +963,16 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
 
       // Apply reward
       if (!mounted) return;
-      Navigator.pop(localContext); // Dismiss loading
+      Navigator.pop(context); // Dismiss loading
 
       String message = '';
       
       // Check for special ELIM50 coupon code
       if (normalizedCode == 'ELIM50') {
         // Add 50 stars to the user's account
-        Provider.of<GameStatsProvider>(localContext, listen: false).addStars(50);
+        if (mounted) {
+          Provider.of<GameStatsProvider>(context, listen: false).addStars(50);
+        }
         
         // Show special message for ELIM50
         message = strings.AppStrings.elim50CouponMessage;
@@ -1023,11 +980,15 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
         // Apply normal reward
         if (reward.type == 'stars') {
           final amount = reward.value as int;
-          Provider.of<GameStatsProvider>(localContext, listen: false).addStars(amount);
+          if (mounted) {
+            Provider.of<GameStatsProvider>(context, listen: false).addStars(amount);
+          }
           message = strings.AppStrings.couponStarsReceived.replaceAll('{amount}', amount.toString());
         } else if (reward.type == 'theme') {
           final themeId = reward.value as String;
-          await Provider.of<SettingsProvider>(localContext, listen: false).unlockTheme(themeId);
+          if (mounted) {
+            await Provider.of<SettingsProvider>(context, listen: false).unlockTheme(themeId);
+          }
           message = strings.AppStrings.couponThemeUnlocked;
         }
       }
@@ -1038,10 +999,10 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
       await prefs.setInt('coupon_redemption_count', count + 1);
 
       if (!mounted) return;
-      _showResultDialog(localContext, message, isSuccess: true, onDismiss: () => Navigator.pop(localContext));
+      _showResultDialog(context, message, isSuccess: true, onDismiss: () => Navigator.pop(context));
     } catch (e) {
       if (!mounted) return;
-      Navigator.pop(localContext); // Dismiss loading
+      Navigator.pop(context); // Dismiss loading
 
       String errorMessage = e.toString();
       if (errorMessage.startsWith('Exception: ')) {
@@ -1061,7 +1022,8 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
         errorMessage = strings.AppStrings.couponMaxPerDay;
       }
 
-      _showResultDialog(localContext, errorMessage, isSuccess: false, onDismiss: () {
+      if (!mounted) return;
+      _showResultDialog(context, errorMessage, isSuccess: false, onDismiss: () {
         if (mounted) {
           setState(() {
             _isScanning = true;
