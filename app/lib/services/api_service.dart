@@ -706,6 +706,18 @@ class ApiService {
         final duration = DateTime.now().difference(startTime);
         AppLogger.error(
             'Error in progress endpoint after ${duration.inMilliseconds}ms: $e');
+        
+        // Report error to automatic error tracking system
+        await AutomaticErrorReporter.reportStorageError(
+          message: 'API progress endpoint failed after ${duration.inMilliseconds}ms',
+          operation: 'get_progress',
+          additionalInfo: {
+            'endpoint': '/v1/progress',
+            'duration_ms': duration.inMilliseconds,
+            'error': e.toString(),
+          },
+        );
+        
         return Response.internalServerError(
             body: json.encode({
               'error': 'Failed to get progress data',
@@ -744,6 +756,18 @@ class ApiService {
         final duration = DateTime.now().difference(startTime);
         AppLogger.error(
             'Error in stats endpoint after ${duration.inMilliseconds}ms: $e');
+        
+        // Report error to automatic error tracking system
+        await AutomaticErrorReporter.reportStorageError(
+          message: 'API stats endpoint failed after ${duration.inMilliseconds}ms',
+          operation: 'get_stats',
+          additionalInfo: {
+            'endpoint': '/v1/stats',
+            'duration_ms': duration.inMilliseconds,
+            'error': e.toString(),
+          },
+        );
+        
         return Response.internalServerError(
             body: json.encode({
               'error': 'Failed to get stats data',
@@ -782,6 +806,18 @@ class ApiService {
         final duration = DateTime.now().difference(startTime);
         AppLogger.error(
             'Error in settings endpoint after ${duration.inMilliseconds}ms: $e');
+        
+        // Report error to automatic error tracking system
+        await AutomaticErrorReporter.reportStorageError(
+          message: 'API settings endpoint failed after ${duration.inMilliseconds}ms',
+          operation: 'get_settings',
+          additionalInfo: {
+            'endpoint': '/v1/settings',
+            'duration_ms': duration.inMilliseconds,
+            'error': e.toString(),
+          },
+        );
+        
         return Response.internalServerError(
             body: json.encode({
               'error': 'Failed to get settings data',
@@ -818,6 +854,18 @@ class ApiService {
         final duration = DateTime.now().difference(startTime);
         AppLogger.error(
             'Error in star balance endpoint after ${duration.inMilliseconds}ms: $e');
+        
+        // Report error to automatic error tracking system
+        await AutomaticErrorReporter.reportStorageError(
+          message: 'API star balance endpoint failed after ${duration.inMilliseconds}ms',
+          operation: 'get_star_balance',
+          additionalInfo: {
+            'endpoint': '/v1/stars/balance',
+            'duration_ms': duration.inMilliseconds,
+            'error': e.toString(),
+          },
+        );
+        
         return Response.internalServerError(
             body: json.encode({
               'error': 'Failed to get star balance',
@@ -920,6 +968,18 @@ class ApiService {
         final duration = DateTime.now().difference(startTime);
         AppLogger.error(
             'Error in add stars endpoint after ${duration.inMilliseconds}ms: $e');
+        
+        // Report error to automatic error tracking system
+        await AutomaticErrorReporter.reportStorageError(
+          message: 'API add stars endpoint failed after ${duration.inMilliseconds}ms',
+          operation: 'add_stars',
+          additionalInfo: {
+            'endpoint': '/v1/stars/add',
+            'duration_ms': duration.inMilliseconds,
+            'error': e.toString(),
+          },
+        );
+        
         return Response.internalServerError(
             body: json.encode({
               'error': 'Failed to add stars',
@@ -1002,6 +1062,18 @@ class ApiService {
         final duration = DateTime.now().difference(startTime);
         AppLogger.error(
             'Error in spend stars endpoint after ${duration.inMilliseconds}ms: $e');
+        
+        // Report error to automatic error tracking system
+        await AutomaticErrorReporter.reportStorageError(
+          message: 'API spend stars endpoint failed after ${duration.inMilliseconds}ms',
+          operation: 'spend_stars',
+          additionalInfo: {
+            'endpoint': '/v1/stars/spend',
+            'duration_ms': duration.inMilliseconds,
+            'error': e.toString(),
+          },
+        );
+        
         return Response.internalServerError(
             body: json.encode({
               'error': 'Failed to spend stars',
@@ -1018,11 +1090,13 @@ class ApiService {
   Future<Response> Function(Request) _handleGetStarTransactions() {
     return (Request request) async {
       final startTime = DateTime.now();
+      String? capturedType;
+      String? capturedLessonId;
 
       try {
         final limitParam = request.url.queryParameters['limit'] ?? '50';
-        final type = request.url.queryParameters['type'];
-        final lessonId = request.url.queryParameters['lessonId'];
+        capturedType = request.url.queryParameters['type'];
+        capturedLessonId = request.url.queryParameters['lessonId'];
 
         // Validate and parse limit parameter
         final limit = int.tryParse(limitParam);
@@ -1040,12 +1114,12 @@ class ApiService {
         final starService = StarTransactionService.instance;
         List<StarTransaction> transactions;
 
-        if (type != null && type.isNotEmpty) {
+        if (capturedType != null && capturedType.isNotEmpty) {
           transactions =
-              starService.getTransactionsByType(type).take(limit).toList();
-        } else if (lessonId != null && lessonId.isNotEmpty) {
+              starService.getTransactionsByType(capturedType).take(limit).toList();
+        } else if (capturedLessonId != null && capturedLessonId.isNotEmpty) {
           transactions = starService
-              .getTransactionsForLesson(lessonId)
+              .getTransactionsForLesson(capturedLessonId)
               .take(limit)
               .toList();
         } else {
@@ -1057,8 +1131,8 @@ class ApiService {
         final response = {
           'transactions': transactionsData,
           'count': transactions.length,
-          'type_filter': type,
-          'lesson_filter': lessonId,
+          'type_filter': capturedType,
+          'lesson_filter': capturedLessonId,
           'timestamp': DateTime.now().toIso8601String(),
           'processing_time_ms':
               DateTime.now().difference(startTime).inMilliseconds,
@@ -1072,6 +1146,20 @@ class ApiService {
         final duration = DateTime.now().difference(startTime);
         AppLogger.error(
             'Error in star transactions endpoint after ${duration.inMilliseconds}ms: $e');
+        
+        // Report error to automatic error tracking system
+        await AutomaticErrorReporter.reportStorageError(
+          message: 'API star transactions endpoint failed after ${duration.inMilliseconds}ms',
+          operation: 'get_star_transactions',
+          additionalInfo: {
+            'endpoint': '/v1/stars/transactions',
+            'duration_ms': duration.inMilliseconds,
+            'error': e.toString(),
+            'type_filter': capturedType,
+            'lesson_filter': capturedLessonId,
+          },
+        );
+        
         return Response.internalServerError(
             body: json.encode({
               'error': 'Failed to get star transactions',
@@ -1109,6 +1197,18 @@ class ApiService {
         final duration = DateTime.now().difference(startTime);
         AppLogger.error(
             'Error in star stats endpoint after ${duration.inMilliseconds}ms: $e');
+        
+        // Report error to automatic error tracking system
+        await AutomaticErrorReporter.reportStorageError(
+          message: 'API star stats endpoint failed after ${duration.inMilliseconds}ms',
+          operation: 'get_star_stats',
+          additionalInfo: {
+            'endpoint': '/v1/stars/stats',
+            'duration_ms': duration.inMilliseconds,
+            'error': e.toString(),
+          },
+        );
+        
         return Response.internalServerError(
             body: json.encode({
               'error': 'Failed to get star statistics',
@@ -1269,6 +1369,19 @@ class ApiService {
         final duration = DateTime.now().difference(startTime);
         AppLogger.error(
             'Error in store item by key endpoint after ${duration.inMilliseconds}ms: $e');
+        
+        // Report error to automatic error tracking system
+        await AutomaticErrorReporter.reportNetworkError(
+          message: 'API store item by key endpoint failed after ${duration.inMilliseconds}ms',
+          url: 'store_items table',
+          additionalInfo: {
+            'endpoint': '/v1/store/items/<itemKey>',
+            'duration_ms': duration.inMilliseconds,
+            'error': e.toString(),
+            'item_key': request.params['itemKey'],
+          },
+        );
+        
         return Response.internalServerError(
             body: json.encode({
               'error': 'Failed to get store item',
@@ -1286,13 +1399,15 @@ class ApiService {
   Future<Response> Function(Request) _handleGetLessons() {
     return (Request request) async {
       final startTime = DateTime.now();
+      String? capturedLimitParam;
+      String? capturedIncludeSpecialParam;
 
       try {
-        final limitParam = request.url.queryParameters['limit'] ?? '10';
-        final includeSpecialParam = request.url.queryParameters['includeSpecial'] ?? 'true';
+        capturedLimitParam = request.url.queryParameters['limit'] ?? '10';
+        capturedIncludeSpecialParam = request.url.queryParameters['includeSpecial'] ?? 'true';
 
         // Validate and parse limit parameter
-        final limit = int.tryParse(limitParam);
+        final limit = int.tryParse(capturedLimitParam);
         if (limit == null || limit < 1 || limit > 50) {
           return Response.badRequest(
               body: json.encode({
@@ -1304,7 +1419,7 @@ class ApiService {
               headers: {'Content-Type': 'application/json'});
         }
 
-        final includeSpecial = includeSpecialParam.toLowerCase() == 'true';
+        final includeSpecial = capturedIncludeSpecialParam.toLowerCase() == 'true';
 
         final lessonService = LessonService();
         final lessons = await lessonService.generateLessons('nl',
@@ -1342,6 +1457,21 @@ class ApiService {
         final duration = DateTime.now().difference(startTime);
         AppLogger.error(
             'Error in lessons endpoint after ${duration.inMilliseconds}ms: $e');
+        
+        // Report error to automatic error tracking system
+        await AutomaticErrorReporter.reportQuestionError(
+          message: 'API lessons endpoint failed after ${duration.inMilliseconds}ms',
+          questionId: 'api_lessons_endpoint',
+          questionText: 'Lessons generation via API failed',
+          additionalInfo: {
+            'endpoint': '/v1/lessons',
+            'duration_ms': duration.inMilliseconds,
+            'error': e.toString(),
+            'limit': capturedLimitParam,
+            'include_special': capturedIncludeSpecialParam,
+          },
+        );
+        
         return Response.internalServerError(
             body: json.encode({
               'error': 'Failed to generate lessons',
@@ -1383,6 +1513,18 @@ class ApiService {
         final duration = DateTime.now().difference(startTime);
         AppLogger.error(
             'Error in time tracking endpoint after ${duration.inMilliseconds}ms: $e');
+        
+        // Report error to automatic error tracking system
+        await AutomaticErrorReporter.reportStorageError(
+          message: 'API time tracking endpoint failed after ${duration.inMilliseconds}ms',
+          operation: 'get_time_tracking',
+          additionalInfo: {
+            'endpoint': '/v1/time/tracking',
+            'duration_ms': duration.inMilliseconds,
+            'error': e.toString(),
+          },
+        );
+        
         return Response.internalServerError(
             body: json.encode({
               'error': 'Failed to get time tracking data',
@@ -1438,6 +1580,18 @@ class ApiService {
         AppLogger.error(
             'Error in coupon redemption endpoint after ${duration.inMilliseconds}ms: $e');
 
+        // Report error to automatic error tracking system
+        await AutomaticErrorReporter.reportStorageError(
+          message: 'API coupon redemption endpoint failed after ${duration.inMilliseconds}ms',
+          operation: 'redeem_coupon',
+          additionalInfo: {
+            'endpoint': '/v1/coupons/redeem',
+            'duration_ms': duration.inMilliseconds,
+            'error': e.toString(),
+            'coupon_code': (json.decode(await request.readAsString()) as Map<String, dynamic>?)?['code'],
+          },
+        );
+
         // Handle specific coupon errors
         if (e.toString().contains('expired')) {
           return Response.badRequest(
@@ -1472,13 +1626,15 @@ class ApiService {
   Future<Response> Function(Request) _handleGetMessages() {
     return (Request request) async {
       final startTime = DateTime.now();
+      String? capturedLimitParam;
+      String? capturedIncludeExpiredParam;
 
       try {
-        final limitParam = request.url.queryParameters['limit'] ?? '20';
-        final includeExpiredParam = request.url.queryParameters['includeExpired'] ?? 'false';
+        capturedLimitParam = request.url.queryParameters['limit'] ?? '20';
+        capturedIncludeExpiredParam = request.url.queryParameters['includeExpired'] ?? 'false';
 
         // Validate and parse limit parameter
-        final limit = int.tryParse(limitParam);
+        final limit = int.tryParse(capturedLimitParam);
         if (limit == null || limit < 1 || limit > 100) {
           return Response.badRequest(
               body: json.encode({
@@ -1490,7 +1646,7 @@ class ApiService {
               headers: {'Content-Type': 'application/json'});
         }
 
-        final includeExpired = includeExpiredParam.toLowerCase() == 'true';
+        final includeExpired = capturedIncludeExpiredParam.toLowerCase() == 'true';
 
         final messagingService = MessagingService();
         final messages = await messagingService.getActiveMessages();
@@ -1528,6 +1684,20 @@ class ApiService {
         final duration = DateTime.now().difference(startTime);
         AppLogger.error(
             'Error in messages endpoint after ${duration.inMilliseconds}ms: $e');
+        
+        // Report error to automatic error tracking system
+        await AutomaticErrorReporter.reportNetworkError(
+          message: 'API messages endpoint failed after ${duration.inMilliseconds}ms',
+          url: 'messages table',
+          additionalInfo: {
+            'endpoint': '/v1/messages',
+            'duration_ms': duration.inMilliseconds,
+            'error': e.toString(),
+            'limit': capturedLimitParam,
+            'include_expired': capturedIncludeExpiredParam,
+          },
+        );
+        
         return Response.internalServerError(
             body: json.encode({
               'error': 'Failed to get messages',
@@ -1583,6 +1753,19 @@ class ApiService {
         final duration = DateTime.now().difference(startTime);
         AppLogger.error(
             'Error in message reactions endpoint after ${duration.inMilliseconds}ms: $e');
+        
+        // Report error to automatic error tracking system
+        await AutomaticErrorReporter.reportNetworkError(
+          message: 'API message reactions endpoint failed after ${duration.inMilliseconds}ms',
+          url: 'messages table',
+          additionalInfo: {
+            'endpoint': '/v1/messages/<messageId>/reactions',
+            'duration_ms': duration.inMilliseconds,
+            'error': e.toString(),
+            'message_id': request.params['messageId'],
+          },
+        );
+        
         return Response.internalServerError(
             body: json.encode({
               'error': 'Failed to get message reactions',
@@ -1624,6 +1807,18 @@ class ApiService {
         final duration = DateTime.now().difference(startTime);
         AppLogger.error(
             'Error in sync status endpoint after ${duration.inMilliseconds}ms: $e');
+        
+        // Report error to automatic error tracking system
+        await AutomaticErrorReporter.reportNetworkError(
+          message: 'API sync status endpoint failed after ${duration.inMilliseconds}ms',
+          url: 'sync service',
+          additionalInfo: {
+            'endpoint': '/v1/sync/status',
+            'duration_ms': duration.inMilliseconds,
+            'error': e.toString(),
+          },
+        );
+        
         return Response.internalServerError(
             body: json.encode({
               'error': 'Failed to get sync status',
@@ -1641,13 +1836,15 @@ class ApiService {
   Future<Response> Function(Request) _handleGetFeatureAnalytics() {
     return (Request request) async {
       final startTime = DateTime.now();
+      String? capturedFeature;
+      String? capturedLimitParam;
 
       try {
-        final feature = request.url.queryParameters['feature'];
-        final limitParam = request.url.queryParameters['limit'] ?? '20';
+        capturedFeature = request.url.queryParameters['feature'];
+        capturedLimitParam = request.url.queryParameters['limit'] ?? '20';
 
         // Validate and parse limit parameter
-        final limit = int.tryParse(limitParam);
+        final limit = int.tryParse(capturedLimitParam);
         if (limit == null || limit < 1 || limit > 100) {
           return Response.badRequest(
               body: json.encode({
@@ -1673,8 +1870,8 @@ class ApiService {
         ];
 
         // Filter by feature if specified
-        final filteredFeatures = feature != null && feature.isNotEmpty
-            ? featuresData.where((f) => f['feature'] == feature).toList()
+        final filteredFeatures = capturedFeature != null && capturedFeature.isNotEmpty
+            ? featuresData.where((f) => f['feature'] == capturedFeature).toList()
             : featuresData;
 
         // Apply limit
@@ -1696,6 +1893,20 @@ class ApiService {
         final duration = DateTime.now().difference(startTime);
         AppLogger.error(
             'Error in feature analytics endpoint after ${duration.inMilliseconds}ms: $e');
+        
+        // Report error to automatic error tracking system
+        await AutomaticErrorReporter.reportStorageError(
+          message: 'API feature analytics endpoint failed after ${duration.inMilliseconds}ms',
+          operation: 'get_feature_analytics',
+          additionalInfo: {
+            'endpoint': '/v1/analytics/features',
+            'duration_ms': duration.inMilliseconds,
+            'error': e.toString(),
+            'feature_filter': capturedFeature,
+            'limit': capturedLimitParam,
+          },
+        );
+        
         return Response.internalServerError(
             body: json.encode({
               'error': 'Failed to get feature analytics',
@@ -1735,6 +1946,18 @@ class ApiService {
         final duration = DateTime.now().difference(startTime);
         AppLogger.error(
             'Error in Bible books endpoint after ${duration.inMilliseconds}ms: $e');
+        
+        // Report error to automatic error tracking system
+        await AutomaticErrorReporter.reportBiblicalReferenceError(
+          message: 'API Bible books endpoint failed after ${duration.inMilliseconds}ms',
+          reference: 'bible_books_list',
+          additionalInfo: {
+            'endpoint': '/v1/bible/books',
+            'duration_ms': duration.inMilliseconds,
+            'error': e.toString(),
+          },
+        );
+        
         return Response.internalServerError(
             body: json.encode({
               'error': 'Failed to get Bible books',
@@ -1752,13 +1975,15 @@ class ApiService {
   Future<Response> Function(Request) _handleGetThemes() {
     return (Request request) async {
       final startTime = DateTime.now();
+      String? capturedType;
+      String? capturedLimitParam;
 
       try {
-        final type = request.url.queryParameters['type']?.toLowerCase();
-        final limitParam = request.url.queryParameters['limit'] ?? '20';
+        capturedType = request.url.queryParameters['type']?.toLowerCase();
+        capturedLimitParam = request.url.queryParameters['limit'] ?? '20';
 
         // Validate and parse limit parameter
-        final limit = int.tryParse(limitParam);
+        final limit = int.tryParse(capturedLimitParam);
         if (limit == null || limit < 1 || limit > 100) {
           return Response.badRequest(
               body: json.encode({
@@ -1775,8 +2000,8 @@ class ApiService {
         final themes = themeManager.getAvailableThemes();
 
         // Filter by type if specified
-        final filteredThemes = type != null && type.isNotEmpty && type != 'all'
-            ? themes.values.where((theme) => theme.type == type).toList()
+        final filteredThemes = capturedType != null && capturedType.isNotEmpty && capturedType != 'all'
+            ? themes.values.where((theme) => theme.type == capturedType).toList()
             : themes.values.toList();
 
         // Apply limit
@@ -1809,6 +2034,20 @@ class ApiService {
         final duration = DateTime.now().difference(startTime);
         AppLogger.error(
             'Error in themes endpoint after ${duration.inMilliseconds}ms: $e');
+        
+        // Report error to automatic error tracking system
+        await AutomaticErrorReporter.reportStorageError(
+          message: 'API themes endpoint failed after ${duration.inMilliseconds}ms',
+          operation: 'get_themes',
+          additionalInfo: {
+            'endpoint': '/v1/themes',
+            'duration_ms': duration.inMilliseconds,
+            'error': e.toString(),
+            'type_filter': capturedType,
+            'limit': capturedLimitParam,
+          },
+        );
+        
         return Response.internalServerError(
             body: json.encode({
               'error': 'Failed to get themes',

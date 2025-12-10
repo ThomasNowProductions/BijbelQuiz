@@ -7,6 +7,7 @@ import '../services/logger.dart';
 import '../services/star_transaction_service.dart';
 import '../services/sync_service.dart';
 import '../services/analytics_service.dart';
+import '../utils/automatic_error_reporter.dart';
 import '../error/error_handler.dart';
 import '../error/error_types.dart';
 
@@ -195,6 +196,20 @@ class GameStatsProvider extends ChangeNotifier {
       onError?.call(_error!);
       // The error is now logged by the ErrorHandler, but we can add additional logging if needed
       AppLogger.error(_error!, e);
+      
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportStorageError(
+        message: 'Failed to load game stats from storage',
+        operation: 'load_game_stats',
+        additionalInfo: {
+          'error': e.toString(),
+          'operation': 'load_stats',
+          'score': _score,
+          'current_streak': _currentStreak,
+          'longest_streak': _longestStreak,
+          'incorrect_answers': _incorrectAnswers,
+        },
+      );
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -282,6 +297,21 @@ class GameStatsProvider extends ChangeNotifier {
       _error = appError.userMessage;
       notifyListeners();
       AppLogger.error(_error!, e);
+      
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportStorageError(
+        message: 'Failed to save game stats after answering question',
+        operation: 'save_game_stats',
+        additionalInfo: {
+          'error': e.toString(),
+          'operation': 'save_stats',
+          'is_correct': isCorrect,
+          'current_score': _score,
+          'current_streak': _currentStreak,
+          'active_powerup': _activePowerup?.multiplier,
+        },
+      );
+      
       rethrow;
     }
   }

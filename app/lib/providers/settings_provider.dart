@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../services/logger.dart';
 import '../models/ai_theme.dart';
 import '../services/sync_service.dart';
+import '../utils/automatic_error_reporter.dart';
 import '../error/error_handler.dart';
 import '../error/error_types.dart';
 import '../l10n/strings_nl.dart' as strings;
@@ -507,6 +508,22 @@ class SettingsProvider extends ChangeNotifier {
 
       // Load AI themes
       await _loadAIThemes();
+    } catch (e) {
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportStorageError(
+        message: 'Failed to load settings from storage',
+        operation: 'load_settings',
+        additionalInfo: {
+          'error': e.toString(),
+          'operation': 'load_settings',
+          'theme_mode': _themeMode.toString(),
+          'game_speed': _gameSpeed,
+          'language': _language,
+        },
+      );
+      
+      // Re-throw to maintain existing error handling
+      rethrow;
     } finally {
       _isLoading = false;
       AppLogger.info(

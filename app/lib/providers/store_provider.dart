@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import '../models/store_item.dart';
 import '../services/store_service.dart';
+import '../utils/automatic_error_reporter.dart';
 
 class StoreProvider with ChangeNotifier {
   List<StoreItem> _storeItems = [];
@@ -31,6 +32,17 @@ class StoreProvider with ChangeNotifier {
       _isLoading = false;
       _error = e.toString();
       notifyListeners();
+      
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportNetworkError(
+        message: 'Failed to load store items',
+        url: 'store_items table',
+        additionalInfo: {
+          'error': e.toString(),
+          'operation': 'load_store_items',
+          'items_count': _storeItems.length,
+        },
+      );
     }
   }
 

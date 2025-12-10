@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../providers/settings_provider.dart';
 import 'logger.dart';
 import 'tracking_service.dart';
+import '../utils/automatic_error_reporter.dart';
 import 'package:uuid/uuid.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
 
@@ -26,6 +27,17 @@ class AnalyticsService {
       AppLogger.info('In-house tracking service initialized successfully');
     } catch (e) {
       AppLogger.error('Failed to initialize in-house tracking service', e);
+      
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportStorageError(
+        message: 'Failed to initialize analytics tracking service',
+        operation: 'analytics_init',
+        additionalInfo: {
+          'error': e.toString(),
+          'service': 'tracking_service',
+        },
+      );
+      
       rethrow;
     }
   }
@@ -59,6 +71,18 @@ class AnalyticsService {
       AppLogger.info('Screen view tracked successfully: $screenName');
     } catch (e) {
       AppLogger.error('Failed to track screen view: $screenName', e);
+      
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportStorageError(
+        message: 'Failed to track screen view',
+        operation: 'screen_tracking',
+        additionalInfo: {
+          'screen_name': screenName,
+          'error': e.toString(),
+          'analytics_enabled': settings.analyticsEnabled,
+          'debug_mode': kDebugMode,
+        },
+      );
     }
   }
 
@@ -91,6 +115,19 @@ class AnalyticsService {
       AppLogger.info('Event tracked successfully: $eventName');
     } catch (e) {
       AppLogger.error('Failed to track event: $eventName', e);
+      
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportStorageError(
+        message: 'Failed to track event',
+        operation: 'event_tracking',
+        additionalInfo: {
+          'event_name': eventName,
+          'properties': properties?.toString(),
+          'error': e.toString(),
+          'analytics_enabled': settings.analyticsEnabled,
+          'debug_mode': kDebugMode,
+        },
+      );
     }
   }
 
@@ -245,11 +282,37 @@ class AnalyticsService {
 
   /// Disable analytics data collection
   Future<void> disableAnalytics() async {
-    await _trackingService.disableAnalytics();
+    try {
+      await _trackingService.disableAnalytics();
+    } catch (e) {
+      AppLogger.error('Failed to disable analytics', e);
+      
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportStorageError(
+        message: 'Failed to disable analytics',
+        operation: 'disable_analytics',
+        additionalInfo: {
+          'error': e.toString(),
+        },
+      );
+    }
   }
 
   /// Enable analytics data collection
   Future<void> enableAnalytics() async {
-    await _trackingService.enableAnalytics();
+    try {
+      await _trackingService.enableAnalytics();
+    } catch (e) {
+      AppLogger.error('Failed to enable analytics', e);
+      
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportStorageError(
+        message: 'Failed to enable analytics',
+        operation: 'enable_analytics',
+        additionalInfo: {
+          'error': e.toString(),
+        },
+      );
+    }
   }
 }
