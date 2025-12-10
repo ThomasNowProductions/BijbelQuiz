@@ -290,7 +290,7 @@ class AppStringsEn {
   static const String testAllFeatures = 'Test All Features';
 
   // Footer
-  static const String copyright = '© 2024-2025 ThomasNow Productions';
+  static const String copyright = '© 2024-2026 ThomasNow Productions';
   static const String version = 'Version';
 
   // Social

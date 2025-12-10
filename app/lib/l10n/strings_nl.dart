@@ -277,7 +277,7 @@ class AppStrings {
   static String get testAllFeatures => _language == 'en' ? AppStringsEn.testAllFeatures : 'Test Alle Functies';
 
   // Footer
-  static String get copyright => _language == 'en' ? AppStringsEn.copyright : '© 2024-2025 ThomasNow Productions';
+  static String get copyright => _language == 'en' ? AppStringsEn.copyright : '© 2024-2026 ThomasNow Productions';
   static String get version => _language == 'en' ? AppStringsEn.version : 'Versie';
 
   // Social
