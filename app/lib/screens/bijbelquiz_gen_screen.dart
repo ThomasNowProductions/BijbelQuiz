@@ -269,46 +269,49 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
   Widget _buildWelcomePage(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(24),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.auto_awesome,
-            size: 80,
-            color: Colors.black,
-          ),
-          const SizedBox(height: 24),
-          Text(
-            strings.AppStrings.bijbelquizGenTitle,
-            style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            '${strings.AppStrings.bijbelquizGenSubtitle} ${BijbelQuizGenPeriod.getStatsYear()}',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: Colors.black,
-                ),
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-          const SizedBox(height: 40),
-          Text(
-            strings.AppStrings.bijbelquizGenWelcomeText,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Colors.black,
-                ),
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 3,
-          ),
-        ],
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.auto_awesome,
+                    size: 80,
+                    color: Colors.black,
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    strings.AppStrings.bijbelquizGenTitle,
+                    style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    '${strings.AppStrings.bijbelquizGenSubtitle} ${BijbelQuizGenPeriod.getStatsYear()}',
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          color: Colors.black,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 40),
+                  Text(
+                    strings.AppStrings.bijbelquizGenWelcomeText,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: Colors.black,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -318,45 +321,50 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
     final totalQuestions = gameStats.score + gameStats.incorrectAnswers;
     return Container(
       padding: const EdgeInsets.all(24),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.question_answer,
-            size: 80,
-            color: Colors.black,
-          ),
-          const SizedBox(height: 24),
-          Text(
-            strings.AppStrings.questionsAnswered,
-            style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            strings.AppStrings.bijbelquizGenQuestionsSubtitle,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Colors.black,
-                ),
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-          const SizedBox(height: 24),
-          AnimatedCounter(
-            endNumber: totalQuestions,
-            duration: const Duration(milliseconds: 1500),
-            style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-          ),
-        ],
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.question_answer,
+                    size: 80,
+                    color: Colors.black,
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    strings.AppStrings.questionsAnswered,
+                    style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    strings.AppStrings.bijbelquizGenQuestionsSubtitle,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: Colors.black,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 24),
+                  AnimatedCounter(
+                    endNumber: totalQuestions,
+                    duration: const Duration(milliseconds: 1500),
+                    style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -427,57 +435,60 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
       BuildContext context, GameStatsProvider gameStats) {
     return Container(
       padding: const EdgeInsets.all(24),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.timer,
-            size: 80,
-            color: Colors.black,
-          ),
-          const SizedBox(height: 24),
-          Text(
-            strings.AppStrings.timeSpent,
-            style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            strings.AppStrings.bijbelquizGenTimeSubtitle,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Colors.black,
-                ),
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-          const SizedBox(height: 24),
-          Text(
-            _calculateTimeSpentFormatted(gameStats),
-            style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-          ),
-          const SizedBox(height: 8),
-          AnimatedCounter(
-            endNumber: _calculateTimeSpentInHours(gameStats),
-            decimalPlaces: 1,
-            suffix: ' ${strings.AppStrings.hours}',
-            duration: const Duration(milliseconds: 1500),
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: Colors.black,
-                ),
-          ),
-        ],
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.timer,
+                    size: 80,
+                    color: Colors.black,
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    strings.AppStrings.timeSpent,
+                    style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    strings.AppStrings.bijbelquizGenTimeSubtitle,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: Colors.black,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    _calculateTimeSpentFormatted(gameStats),
+                    style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  AnimatedCounter(
+                    endNumber: _calculateTimeSpentInHours(gameStats),
+                    decimalPlaces: 1,
+                    suffix: ' ${strings.AppStrings.hours}',
+                    duration: const Duration(milliseconds: 1500),
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          color: Colors.black,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -486,45 +497,50 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
       BuildContext context, GameStatsProvider gameStats) {
     return Container(
       padding: const EdgeInsets.all(24),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.local_fire_department,
-            size: 80,
-            color: Colors.black,
-          ),
-          const SizedBox(height: 24),
-          Text(
-            strings.AppStrings.bijbelquizGenBestStreak,
-            style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            strings.AppStrings.bijbelquizGenStreakSubtitle,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Colors.black,
-                ),
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-          const SizedBox(height: 24),
-          AnimatedCounter(
-            endNumber: gameStats.longestStreak,
-            duration: const Duration(milliseconds: 1500),
-            style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-          ),
-        ],
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.local_fire_department,
+                    size: 80,
+                    color: Colors.black,
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    strings.AppStrings.bijbelquizGenBestStreak,
+                    style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    strings.AppStrings.bijbelquizGenStreakSubtitle,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: Colors.black,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 24),
+                  AnimatedCounter(
+                    endNumber: gameStats.longestStreak,
+                    duration: const Duration(milliseconds: 1500),
+                    style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -538,166 +554,167 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
 
     return Container(
       padding: const EdgeInsets.all(24),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.star,
-            size: 80,
-            color: Colors.black,
-          ),
-          const SizedBox(height: 24),
-          Text(
-            strings.AppStrings.yearInReview,
-            style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            strings.AppStrings.bijbelquizGenYearReviewSubtitle,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Colors.black,
-                ),
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-          const SizedBox(height: 24),
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(
-                color: Colors.black,
-                width: 2.0,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.star,
+                    size: 80,
+                    color: Colors.black,
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    strings.AppStrings.yearInReview,
+                    style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    strings.AppStrings.bijbelquizGenYearReviewSubtitle,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: Colors.black,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 24),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: Colors.black,
+                        width: 2.0,
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        _buildStatRow(
+                            context,
+                            AnimatedCounter(
+                              endNumber: gameStats.score,
+                              duration: const Duration(milliseconds: 1500),
+                              style:
+                                  Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                            ),
+                            strings.AppStrings.correctAnswers,
+                            Colors.black),
+                        const Divider(height: 16, thickness: 1),
+                        _buildStatRow(
+                            context,
+                            AnimatedCounter(
+                              endNumber: correctPercentage,
+                              duration: const Duration(milliseconds: 1500),
+                              suffix: '%',
+                              style:
+                                  Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                            ),
+                            strings.AppStrings.accuracy,
+                            Colors.black),
+                        const Divider(height: 16, thickness: 1),
+                        _buildStatRow(
+                            context,
+                            AnimatedCounter(
+                              endNumber: _calculateTimeSpentInHours(gameStats),
+                              duration: const Duration(milliseconds: 1500),
+                              decimalPlaces: 1,
+                              suffix: ' ${strings.AppStrings.hours}',
+                              style:
+                                  Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                            ),
+                            strings.AppStrings.hours,
+                            Colors.black),
+                        const Divider(height: 16, thickness: 1),
+                        _buildStatRow(
+                            context,
+                            AnimatedCounter(
+                              endNumber: gameStats.currentStreak,
+                              duration: const Duration(milliseconds: 1500),
+                              style:
+                                  Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                            ),
+                            strings.AppStrings.currentStreak,
+                            Colors.black),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      OutlinedButton.icon(
+                        onPressed: () => _copyLink(context, gameStats),
+                        icon: Icon(
+                          Icons.copy,
+                          color: Colors.black,
+                          size: 18,
+                        ),
+                        label: Text(
+                          strings.AppStrings.copyLink,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                        style: OutlinedButton.styleFrom(
+                          side: BorderSide(
+                            color: Colors.black,
+                            width: 2,
+                          ),
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                        ),
+                      ),
+                      OutlinedButton.icon(
+                        onPressed: () => _shareStats(context, gameStats),
+                        icon: Icon(
+                          Icons.share,
+                          color: Colors.black,
+                          size: 18,
+                        ),
+                        label: Text(
+                          strings.AppStrings.shareResults,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                        style: OutlinedButton.styleFrom(
+                          side: BorderSide(
+                            color: Colors.black,
+                            width: 2,
+                          ),
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-            child: Column(
-              children: [
-                _buildStatRow(
-                    context,
-                    AnimatedCounter(
-                      endNumber: gameStats.score,
-                      duration: const Duration(milliseconds: 1500),
-                      style:
-                          Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                    ),
-                    strings.AppStrings.correctAnswers,
-                    Colors.black),
-                const Divider(height: 16, thickness: 1),
-                _buildStatRow(
-                    context,
-                    AnimatedCounter(
-                      endNumber: correctPercentage,
-                      duration: const Duration(milliseconds: 1500),
-                      suffix: '%',
-                      style:
-                          Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                    ),
-                    strings.AppStrings.accuracy,
-                    Colors.black),
-                const Divider(height: 16, thickness: 1),
-                _buildStatRow(
-                    context,
-                    AnimatedCounter(
-                      endNumber: _calculateTimeSpentInHours(gameStats),
-                      duration: const Duration(milliseconds: 1500),
-                      decimalPlaces: 1,
-                      suffix: ' ${strings.AppStrings.hours}',
-                      style:
-                          Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                    ),
-                    strings.AppStrings.hours,
-                    Colors.black),
-                const Divider(height: 16, thickness: 1),
-                _buildStatRow(
-                    context,
-                    AnimatedCounter(
-                      endNumber: gameStats.currentStreak,
-                      duration: const Duration(milliseconds: 1500),
-                      style:
-                          Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                    ),
-                    strings.AppStrings.currentStreak,
-                    Colors.black),
-              ],
-            ),
-          ),
-          const SizedBox(height: 24),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              OutlinedButton.icon(
-                onPressed: () => _copyLink(context, gameStats),
-                icon: Icon(
-                  Icons.copy,
-                  color: Colors.black,
-                  size: 18,
-                ),
-                label: Text(
-                  strings.AppStrings.copyLink,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-                style: OutlinedButton.styleFrom(
-                  side: BorderSide(
-                    color: Colors.black,
-                    width: 2,
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                ),
-              ),
-              OutlinedButton.icon(
-                onPressed: () => _shareStats(context, gameStats),
-                icon: Icon(
-                  Icons.share,
-                  color: Colors.black,
-                  size: 18,
-                ),
-                label: Text(
-                  strings.AppStrings.shareResults,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-                style: OutlinedButton.styleFrom(
-                  side: BorderSide(
-                    color: Colors.black,
-                    width: 2,
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                ),
-              ),
-            ],
-          ),
-        ],
+          );
+        },
       ),
     );
   }
@@ -726,36 +743,41 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
   Widget _buildThankYouPage(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(24),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.favorite,
-            size: 80,
-            color: Colors.black,
-          ),
-          const SizedBox(height: 24),
-          Text(
-            strings.AppStrings.thankYouForSupport,
-            style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            strings.AppStrings.bijbelquizGenThankYouText,
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: Colors.black,
-                ),
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-        ],
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.favorite,
+                    size: 80,
+                    color: Colors.black,
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    strings.AppStrings.thankYouForSupport,
+                    style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    strings.AppStrings.bijbelquizGenThankYouText,
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          color: Colors.black,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -763,66 +785,69 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
   Widget _buildDonationPage(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(24),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.monetization_on,
-            size: 80,
-            color: Colors.black,
-          ),
-          const SizedBox(height: 24),
-          Text(
-            strings.AppStrings.supportWithDonation,
-            style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            strings.AppStrings.bijbelquizGenDonationText,
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: Colors.black,
-                ),
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-          const SizedBox(height: 40),
-          OutlinedButton.icon(
-            onPressed: () async {
-              final Uri url = Uri.parse(AppUrls.donateUrl);
-              if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-                throw Exception('Could not launch ${AppUrls.donateUrl}');
-              }
-            },
-            icon: Icon(
-              Icons.favorite,
-              size: 18,
-              color: Colors.black,
-            ),
-            label: Text(
-              strings.AppStrings.bijbelquizGenDonateButton,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.black,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.monetization_on,
+                    size: 80,
+                    color: Colors.black,
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    strings.AppStrings.supportWithDonation,
+                    style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    strings.AppStrings.bijbelquizGenDonationText,
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          color: Colors.black,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 40),
+                  OutlinedButton.icon(
+                    onPressed: () async {
+                      final Uri url = Uri.parse(AppUrls.donateUrl);
+                      if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+                        throw Exception('Could not launch ${AppUrls.donateUrl}');
+                      }
+                    },
+                    icon: Icon(
+                      Icons.favorite,
+                      size: 18,
+                      color: Colors.black,
+                    ),
+                    label: Text(
+                      strings.AppStrings.bijbelquizGenDonateButton,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(
+                        color: Colors.black,
+                        width: 2,
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                    ),
+                  ),
+                ],
               ),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
             ),
-            style: OutlinedButton.styleFrom(
-              side: BorderSide(
-                color: Colors.black,
-                width: 2,
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-            ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
