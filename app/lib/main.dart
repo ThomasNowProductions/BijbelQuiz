@@ -23,6 +23,7 @@ import 'services/time_tracking_service.dart';
 import 'services/api_service.dart';
 import 'services/messaging_service.dart';
 import 'services/question_cache_service.dart';
+import 'services/motivational_notification_service.dart';
 import 'utils/bijbelquiz_gen_utils.dart';
 import 'screens/bijbelquiz_gen_screen.dart';
 import 'screens/store_screen.dart';
@@ -347,6 +348,9 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
     // Initialize Star Transaction Service with proper dependencies
     _initializeStarTransactionService();
 
+    // Initialize Motivational Notification Service
+    _initializeMotivationalNotifications();
+
     // Set up deep link handling
     _initDeepLinks();
 
@@ -368,6 +372,24 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
       );
     } catch (e) {
       AppLogger.warning('Failed to initialize star transaction service: $e');
+    }
+  }
+
+  /// Initialize Motivational Notification Service
+  Future<void> _initializeMotivationalNotifications() async {
+    try {
+      final settingsProvider =
+          Provider.of<SettingsProvider>(context, listen: false);
+
+      // Schedule notifications if enabled
+      if (settingsProvider.motivationalNotificationsEnabled) {
+        await motivationalNotificationService.scheduleDailyMotivationalNotifications();
+        AppLogger.info('Motivational notifications initialized and scheduled');
+      } else {
+        AppLogger.info('Motivational notifications are disabled');
+      }
+    } catch (e) {
+      AppLogger.warning('Failed to initialize motivational notifications: $e');
     }
   }
 

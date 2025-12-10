@@ -40,6 +40,8 @@ class AppStrings {
   static String get darkMode => _language == 'en' ? AppStringsEn.darkMode : 'Donkere modus';
   static String get lightMode => _language == 'en' ? AppStringsEn.lightMode : 'Lichte modus';
   static String get systemDefault => _language == 'en' ? AppStringsEn.systemDefault : 'Systeemstandaard';
+  static String get motivationalNotifications => _language == 'en' ? AppStringsEn.motivationalNotifications : 'Motivatiemeldingen';
+  static String get motivationalNotificationsDesc => _language == 'en' ? AppStringsEn.motivationalNotificationsDesc : 'Ontvang dagelijkse motiverende berichten om Bijbelstudie aan te moedigen';
 
   // Lessons
   static String get lessons => _language == 'en' ? AppStringsEn.lessons : 'Lessen';

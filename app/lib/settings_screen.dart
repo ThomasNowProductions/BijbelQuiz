@@ -27,6 +27,7 @@ import 'utils/bijbelquiz_gen_utils.dart';
 import 'screens/bijbelquiz_gen_screen.dart';
 import 'theme/theme_manager.dart';
 import 'widgets/bug_report_widget.dart';
+import 'services/motivational_notification_service.dart';
 
 /// Clean, simple, and responsive settings screen
 class SettingsScreen extends StatefulWidget {
@@ -309,6 +310,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
           settings.mute,
           (value) => _updateSetting(
               settings, 'toggle_mute', () => settings.setMute(value)),
+          colorScheme,
+        ),
+      ),
+      _SettingItem(
+        title: strings.AppStrings.motivationalNotifications,
+        subtitle: strings.AppStrings.motivationalNotificationsDesc,
+        child: _buildSwitch(
+          settings.motivationalNotificationsEnabled,
+          (value) => _updateMotivationalNotificationsSetting(settings, value),
           colorScheme,
         ),
       ),
@@ -977,6 +987,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
       analytics.disableAnalytics();
     }
     settings.setAnalyticsEnabled(value);
+  }
+
+  void _updateMotivationalNotificationsSetting(SettingsProvider settings, bool value) {
+    final analytics = Provider.of<AnalyticsService>(context, listen: false);
+    analytics.trackFeatureSuccess(
+        context, 'motivational_notifications',
+        additionalProperties: {
+          'enabled': value,
+        });
+    
+    // Update the setting
+    settings.setMotivationalNotifications(value);
   }
 
 

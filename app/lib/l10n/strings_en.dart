@@ -30,6 +30,8 @@ class AppStringsEn {
   static const String darkMode = 'Dark Mode';
   static const String lightMode = 'Light Mode';
   static const String systemDefault = 'System Default';
+  static const String motivationalNotifications = 'Motivational Notifications';
+  static const String motivationalNotificationsDesc = 'Receive daily motivational messages to encourage Bible study';
 
   // Lessons
   static const String lessons = 'Lessons';

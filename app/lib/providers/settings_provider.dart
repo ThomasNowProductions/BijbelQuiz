@@ -40,6 +40,7 @@ class SettingsProvider extends ChangeNotifier {
   static const String _colorfulModeKey = 'colorful_mode';
   static const String _hidePromoCardKey = 'hide_promo_card';
   static const String _automaticBugReportingKey = 'automatic_bug_reporting';
+  static const String _motivationalNotificationsKey = 'motivational_notifications_enabled';
 
   SharedPreferences? _prefs;
   String _language = 'nl';
@@ -90,6 +91,10 @@ class SettingsProvider extends ChangeNotifier {
   // Bug reporting settings
   bool _automaticBugReporting =
       true; // default to true (automatically send bug reports)
+
+  // Motivational notification settings
+  bool _motivationalNotificationsEnabled =
+      true; // default to true (enabled by default for new users)
 
   SettingsProvider() {
     _initializeSyncService();
@@ -196,6 +201,9 @@ class SettingsProvider extends ChangeNotifier {
 
   /// Whether automatic bug reporting is enabled
   bool get automaticBugReporting => _automaticBugReporting;
+
+  /// Whether motivational notifications are enabled
+  bool get motivationalNotificationsEnabled => _motivationalNotificationsEnabled;
 
   /// Static method to check automatic bug reporting setting without BuildContext
   /// Returns true by default to maintain backward compatibility
@@ -364,6 +372,18 @@ class SettingsProvider extends ChangeNotifier {
     }
   }
 
+  /// Set motivational notifications enabled/disabled
+  Future<void> setMotivationalNotifications(bool enabled) async {
+    await _saveSetting(
+      action: () async {
+        _motivationalNotificationsEnabled = enabled;
+        await _prefs?.setBool(_motivationalNotificationsKey, enabled);
+        AppLogger.info('Motivational notifications ${enabled ? 'enabled' : 'disabled'}');
+      },
+      errorMessage: 'Failed to save motivational notifications setting',
+    );
+  }
+
   /// Helper method to safely save settings with error handling
   Future<void> _saveSetting({
     required Future<void> Function() action,
@@ -492,6 +512,10 @@ class SettingsProvider extends ChangeNotifier {
       // Load automatic bug reporting setting
       _automaticBugReporting =
           _getBoolSetting(_automaticBugReportingKey, defaultValue: true);
+
+      // Load motivational notifications setting
+      _motivationalNotificationsEnabled =
+          _getBoolSetting(_motivationalNotificationsKey, defaultValue: true);
 
       final unlocked = _prefs?.getStringList(_unlockedThemesKey);
       if (unlocked != null) {
