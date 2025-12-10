@@ -9,7 +9,7 @@ BijbelQuiz is a cross-platform Bible quiz app designed to test and improve your 
 
 - **Google Play Store**: [Install](https://bijbelquiz.app/playstore)
 - **Website**: [Play](https://bijbelquiz.app/play)
-- **APK**: [GitHub Releases](https://github.com/BijbelQuiz/BijbelQuiz/releases)
+- **APK**: [GitHub Releases](https://github.com/ThomasNowProductions/BijbelQuiz/releases)
 
 ## 🚀 Getting Started
 
@@ -26,7 +26,7 @@ BijbelQuiz is a cross-platform Bible quiz app designed to test and improve your 
 1. **Clone the repository**:
 
     ```bash
-    git clone https://github.com/BijbelQuiz/BijbelQuiz
+    git clone https://github.com/ThomasNowProductions/BijbelQuiz
     cd BijbelQuiz
     ```
 
@@ -142,10 +142,10 @@ For questions, suggestions, or security issues, contact: [thomasnowprod@proton.m
 
 ## Star History
 
-<a href="https://www.star-history.com/#BijbelQuiz/BijbelQuiz&type=date&legend=top-left">
+<a href="https://www.star-history.com/#ThomasNowProductions/BijbelQuiz&type=date&legend=top-left">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=BijbelQuiz/BijbelQuiz&type=date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=BijbelQuiz/BijbelQuiz&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=BijbelQuiz/BijbelQuiz&type=date&legend=top-left" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=ThomasNowProductions/BijbelQuiz&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=ThomasNowProductions/BijbelQuiz&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=ThomasNowProductions/BijbelQuiz&type=date&legend=top-left" />
  </picture>
 </a>
