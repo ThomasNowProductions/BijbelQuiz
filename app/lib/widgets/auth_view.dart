@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:convert';
+import 'package:crypto/crypto.dart';
+import 'package:http/http.dart' as http;
 import '../services/logger.dart';
 import '../utils/automatic_error_reporter.dart';
+import '../l10n/strings_nl.dart';
 
 class AuthView extends StatefulWidget {
   final bool requiredForSocial;
@@ -34,51 +37,51 @@ class _AuthViewState extends State<AuthView> {
   /// Converts technical error messages to user-friendly messages
   String _getUserFriendlyErrorMessage(dynamic error) {
     final errorString = error.toString().toLowerCase();
-    
+
     // Network/connection errors
-    if (errorString.contains('failed to fetch') || 
+    if (errorString.contains('failed to fetch') ||
         errorString.contains('network error') ||
         errorString.contains('connection')) {
-      return 'Geen internetverbinding. Controleer je verbinding en probeer opnieuw.';
+      return AppStrings.connectionError + '. ' + AppStrings.connectionErrorMsg;
     }
-    
+
     // Authentication errors
     if (errorString.contains('invalid login credentials') ||
         errorString.contains('email not confirmed') ||
         errorString.contains('invalid email or password')) {
-      return 'Ongeldig email of wachtwoord. Controleer je gegevens en probeer opnieuw.';
+      return AppStrings.invalidEmailOrPassword;
     }
-    
+
     if (errorString.contains('email not confirmed')) {
-      return 'Je email is nog niet geverifieerd. Controleer je inbox en klik op de verificatielink.';
+      return AppStrings.emailNotConfirmed;
     }
-    
+
     if (errorString.contains('too many requests')) {
-      return 'Te veel pogingen. Wacht even voordat je opnieuw probeert.';
+      return AppStrings.tooManyRequests;
     }
-    
+
     if (errorString.contains('password should be at least')) {
-      return 'Wachtwoord moet minimaal 6 karakters bevatten.';
+      return AppStrings.passwordTooShortGeneric;
     }
-    
+
     if (errorString.contains('unable to validate email address')) {
-      return 'Ongeldig emailadres. Controleer of je een geldig emailadres hebt ingevoerd.';
+      return AppStrings.invalidEmailAddress;
     }
-    
+
     if (errorString.contains('user already registered')) {
-      return 'Er bestaat al een account met dit emailadres. Probeer in te loggen of gebruik een ander emailadres.';
+      return AppStrings.userAlreadyRegistered;
     }
-    
+
     if (errorString.contains('signup is disabled')) {
-      return 'Aanmelden is momenteel uitgeschakeld. Probeer het later opnieuw.';
+      return AppStrings.signupDisabled;
     }
-    
+
     if (errorString.contains('weak password')) {
-      return 'Wachtwoord is te zwak. Kies een sterker wachtwoord met meer karakters.';
+      return AppStrings.weakPassword;
     }
-    
+
     // Generic error fallback
-    return 'Er is iets misgegaan. Probeer het opnieuw of neem contact op als het probleem aanhoudt.';
+    return AppStrings.genericError;
   }
 
   @override
@@ -170,20 +173,48 @@ class _AuthViewState extends State<AuthView> {
     }
   }
 
+  Future<int> _checkPwned(String password) async {
+    try {
+      final sha1Hash = sha1.convert(utf8.encode(password)).toString().toUpperCase();
+      final prefix = sha1Hash.substring(0, 5);
+      final suffix = sha1Hash.substring(5);
+
+      final url = Uri.parse('https://api.pwnedpasswords.com/range/$prefix');
+      final response = await http.get(url);
+
+      if (response.statusCode != 200) {
+        AppLogger.error('Pwned API request failed with status: ${response.statusCode}');
+        return 0; // Assume not pwned on API error
+      }
+
+      final lines = response.body.split('\n');
+      for (final line in lines) {
+        final parts = line.split(':');
+        if (parts.length == 2 && parts[0] == suffix) {
+          return int.tryParse(parts[1].trim()) ?? 0;
+        }
+      }
+      return 0;
+    } catch (e) {
+      AppLogger.error('Error checking password against pwned database', e);
+      return 0; // Assume not pwned on error
+    }
+  }
+
   Future<void> _signIn() async {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
 
     if (email.isEmpty || password.isEmpty) {
       setState(() {
-        _error = 'Vul je email en wachtwoord in om door te gaan.';
+        _error = AppStrings.fillEmailAndPassword;
       });
       return;
     }
 
     if (!email.contains('@')) {
       setState(() {
-        _error = 'Voer een geldig emailadres in.';
+        _error = AppStrings.enterValidEmail;
       });
       return;
     }
@@ -226,42 +257,55 @@ class _AuthViewState extends State<AuthView> {
     // Enhanced field validation with specific messages
     if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty || username.isEmpty) {
       setState(() {
-        _error = 'Vul alle velden in om een account aan te maken.';
+        _error = AppStrings.fillAllFields;
       });
       return;
     }
 
     if (!email.contains('@')) {
       setState(() {
-        _error = 'Voer een geldig emailadres in.';
+        _error = AppStrings.enterValidEmail;
       });
       return;
     }
 
     if (password != confirmPassword) {
       setState(() {
-        _error = 'Wachtwoorden komen niet overeen. Controleer of je beide velden hetzelfde hebt ingevuld.';
+        _error = AppStrings.passwordsDoNotMatch;
       });
       return;
     }
 
     if (password.length < 6) {
       setState(() {
-        _error = 'Wachtwoord moet minimaal 6 karakters bevatten voor je veiligheid.';
+        _error = AppStrings.passwordTooShort;
+      });
+      return;
+    }
+
+    // Check if password has been pwned
+    setState(() {
+      _error = AppStrings.checkingPassword;
+    });
+
+    final pwnedCount = await _checkPwned(password);
+    if (pwnedCount > 0) {
+      setState(() {
+        _error = AppStrings.passwordCompromised;
       });
       return;
     }
 
     if (username.length < 3) {
       setState(() {
-        _error = 'Gebruikersnaam moet minimaal 3 karakters bevatten.';
+        _error = AppStrings.usernameTooShort;
       });
       return;
     }
 
     if (username.length > 20) {
       setState(() {
-        _error = 'Gebruikersnaam mag maximaal 20 karakters bevatten.';
+        _error = AppStrings.usernameSignupTooLong;
       });
       return;
     }
@@ -269,27 +313,27 @@ class _AuthViewState extends State<AuthView> {
     // Check for valid username characters
     if (!RegExp(r'^[a-zA-Z0-9_]+$').hasMatch(username)) {
       setState(() {
-        _error = 'Gebruikersnaam mag alleen letters, cijfers en underscores bevatten.';
+        _error = AppStrings.usernameInvalidChars;
       });
       return;
     }
 
     if (_isUsernameBlacklisted(username)) {
       setState(() {
-        _error = 'Deze gebruikersnaam is niet toegestaan. Kies een andere naam.';
+        _error = AppStrings.usernameNotAllowed;
       });
       return;
     }
 
     // Check if username is already taken
     setState(() {
-      _error = 'Beschikbaarheid van gebruikersnaam wordt gecontroleerd...';
+      _error = AppStrings.checkingUsername;
     });
-    
+
     final usernameTaken = await _isUsernameTaken(username);
     if (usernameTaken) {
       setState(() {
-        _error = 'Deze gebruikersnaam is al in gebruik. Kies een andere naam.';
+        _error = AppStrings.thisUsernameAlreadyTaken;
       });
       return;
     }
@@ -341,8 +385,8 @@ class _AuthViewState extends State<AuthView> {
             _usernameController.clear(); // Clear username field
           });
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Account aangemaakt! Controleer je email voor verificatie.'),
+            SnackBar(
+              content: Text(AppStrings.accountCreatedMessage),
               backgroundColor: Colors.green,
             ),
           );
@@ -421,7 +465,7 @@ class _AuthViewState extends State<AuthView> {
             Padding(
               padding: const EdgeInsets.only(bottom: 20),
               child: Text(
-                'Login met je BQID',
+                AppStrings.loginWithBqid,
                 style: theme.textTheme.displaySmall?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: colorScheme.primary,
@@ -449,7 +493,7 @@ class _AuthViewState extends State<AuthView> {
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(
-                      'Maak een account aan om sociale functies te gebruiken, zoals het zoeken naar gebruikers, vrienden maken en berichten versturen.',
+                      AppStrings.socialFeaturesMessage,
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: colorScheme.onSurface,
                         fontWeight: FontWeight.w500,
@@ -475,7 +519,7 @@ class _AuthViewState extends State<AuthView> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
-                      'Inloggen',
+                      AppStrings.login,
                       style: TextStyle(
                         color: _isLoginMode
                             ? colorScheme.primary
@@ -500,7 +544,7 @@ class _AuthViewState extends State<AuthView> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
-                      'Aanmelden',
+                      AppStrings.signup,
                       style: TextStyle(
                         color: !_isLoginMode
                             ? colorScheme.primary
@@ -520,8 +564,8 @@ class _AuthViewState extends State<AuthView> {
           TextField(
             controller: _emailController,
             decoration: InputDecoration(
-              labelText: 'Email',
-              hintText: 'jouw@email.com',
+              labelText: AppStrings.email,
+              hintText: AppStrings.emailHint,
               prefixIcon: const Icon(Icons.email_rounded),
               filled: true,
               border: OutlineInputBorder(
@@ -549,8 +593,8 @@ class _AuthViewState extends State<AuthView> {
             TextField(
               controller: _usernameController,
               decoration: InputDecoration(
-                labelText: 'Gebruikersnaam',
-                hintText: 'Kies een unieke naam',
+                labelText: AppStrings.username,
+                hintText: AppStrings.usernameSignupHint,
                 prefixIcon: const Icon(Icons.person_outline_rounded),
                 filled: true,
                 border: OutlineInputBorder(
@@ -577,8 +621,8 @@ class _AuthViewState extends State<AuthView> {
           TextField(
             controller: _passwordController,
             decoration: InputDecoration(
-              labelText: 'Wachtwoord',
-              hintText: 'Minimaal 6 karakters',
+              labelText: AppStrings.password,
+              hintText: AppStrings.passwordHint,
               prefixIcon: const Icon(Icons.lock_rounded),
               filled: true,
               border: OutlineInputBorder(
@@ -608,8 +652,8 @@ class _AuthViewState extends State<AuthView> {
             TextField(
               controller: _confirmPasswordController,
               decoration: InputDecoration(
-                labelText: 'Bevestig wachtwoord',
-                hintText: 'Herhaal je wachtwoord',
+                labelText: AppStrings.confirmPassword,
+                hintText: AppStrings.confirmPasswordHint,
                 prefixIcon: const Icon(Icons.lock_outline_rounded),
                 filled: true,
                 border: OutlineInputBorder(
@@ -660,7 +704,7 @@ class _AuthViewState extends State<AuthView> {
                       ),
                     )
                   : Text(
-                      _isLoginMode ? 'Inloggen' : 'Account aanmaken',
+                      _isLoginMode ? AppStrings.login : AppStrings.createAccount,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,

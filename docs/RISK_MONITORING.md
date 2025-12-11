@@ -31,3 +31,7 @@ We use Google Play to distribute our app. If this goes down, we will not be able
 ## PostHog
 ### Risk level: Medium
 We use PostHog to collect analytics. If this goes down, we will not be able to collect analytics.
+
+## Have I been pwned
+### Risk level: Low
+We use Have I been pwned to check if a password has been compromised before signup. If this goes down, we will not be able to check if a password has been compromised.

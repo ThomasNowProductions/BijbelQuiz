@@ -714,6 +714,42 @@ class AppStrings {
   // ELIM50 Coupon
   static String get elim50CouponMessage => _language == 'en' ? AppStringsEn.elim50CouponMessage : 'Je hebt 50 punten gekregen en er is 50 cent gedoneerd voor de verbouwing van Elim!';
 
+  // Auth View
+  static String get loginWithBqid => _language == 'en' ? AppStringsEn.loginWithBqid : 'Login met je BQID';
+  static String get socialFeaturesMessage => _language == 'en' ? AppStringsEn.socialFeaturesMessage : 'Maak een account aan om sociale functies te gebruiken, zoals het zoeken naar gebruikers, vrienden maken en berichten versturen.';
+  static String get login => _language == 'en' ? AppStringsEn.login : 'Inloggen';
+  static String get signup => _language == 'en' ? AppStringsEn.signup : 'Aanmelden';
+  static String get email => _language == 'en' ? AppStringsEn.email : 'Email';
+  static String get emailHint => _language == 'en' ? AppStringsEn.emailHint : 'jouw@email.com';
+  static String get usernameSignupHint => _language == 'en' ? AppStringsEn.usernameSignupHint : 'Kies een unieke naam';
+  static String get password => _language == 'en' ? AppStringsEn.password : 'Wachtwoord';
+  static String get passwordHint => _language == 'en' ? AppStringsEn.passwordHint : 'Minimaal 6 karakters';
+  static String get confirmPassword => _language == 'en' ? AppStringsEn.confirmPassword : 'Bevestig wachtwoord';
+  static String get confirmPasswordHint => _language == 'en' ? AppStringsEn.confirmPasswordHint : 'Herhaal je wachtwoord';
+  static String get accountCreatedMessage => _language == 'en' ? AppStringsEn.accountCreatedMessage : 'Account aangemaakt! Controleer je email voor verificatie.';
+
+  // Auth errors
+  static String get fillEmailAndPassword => _language == 'en' ? AppStringsEn.fillEmailAndPassword : 'Vul je email en wachtwoord in om door te gaan.';
+  static String get enterValidEmail => _language == 'en' ? AppStringsEn.enterValidEmail : 'Voer een geldig emailadres in.';
+  static String get fillAllFields => _language == 'en' ? AppStringsEn.fillAllFields : 'Vul alle velden in om een account aan te maken.';
+  static String get passwordsDoNotMatch => _language == 'en' ? AppStringsEn.passwordsDoNotMatch : 'Wachtwoorden komen niet overeen. Controleer of je beide velden hetzelfde hebt ingevuld.';
+  static String get passwordTooShort => _language == 'en' ? AppStringsEn.passwordTooShort : 'Wachtwoord moet minimaal 6 karakters bevatten voor je veiligheid.';
+  static String get checkingPassword => _language == 'en' ? AppStringsEn.checkingPassword : 'Wachtwoord wordt gecontroleerd op veiligheid...';
+  static String get passwordCompromised => _language == 'en' ? AppStringsEn.passwordCompromised : 'Dit wachtwoord is aangetroffen in datalekken. Kies een ander wachtwoord voor je veiligheid.';
+  static String get usernameTooShort => _language == 'en' ? AppStringsEn.usernameTooShort : 'Gebruikersnaam moet minimaal 3 karakters bevatten.';
+  static String get usernameSignupTooLong => _language == 'en' ? AppStringsEn.usernameSignupTooLong : 'Gebruikersnaam mag maximaal 20 karakters bevatten.';
+  static String get usernameInvalidChars => _language == 'en' ? AppStringsEn.usernameInvalidChars : 'Gebruikersnaam mag alleen letters, cijfers en underscores bevatten.';
+  static String get checkingUsername => _language == 'en' ? AppStringsEn.checkingUsername : 'Beschikbaarheid van gebruikersnaam wordt gecontroleerd...';
+  static String get invalidEmailOrPassword => _language == 'en' ? AppStringsEn.invalidEmailOrPassword : 'Ongeldig email of wachtwoord. Controleer je gegevens en probeer opnieuw.';
+  static String get emailNotConfirmed => _language == 'en' ? AppStringsEn.emailNotConfirmed : 'Je email is nog niet geverifieerd. Controleer je inbox en klik op de verificatielink.';
+  static String get tooManyRequests => _language == 'en' ? AppStringsEn.tooManyRequests : 'Te veel pogingen. Wacht even voordat je opnieuw probeert.';
+  static String get passwordTooShortGeneric => _language == 'en' ? AppStringsEn.passwordTooShortGeneric : 'Wachtwoord moet minimaal 6 karakters bevatten.';
+  static String get invalidEmailAddress => _language == 'en' ? AppStringsEn.invalidEmailAddress : 'Ongeldig emailadres. Controleer of je een geldig emailadres hebt ingevoerd.';
+  static String get userAlreadyRegistered => _language == 'en' ? AppStringsEn.userAlreadyRegistered : 'Er bestaat al een account met dit emailadres. Probeer in te loggen of gebruik een ander emailadres.';
+  static String get signupDisabled => _language == 'en' ? AppStringsEn.signupDisabled : 'Aanmelden is momenteel uitgeschakeld. Probeer het later opnieuw.';
+  static String get weakPassword => _language == 'en' ? AppStringsEn.weakPassword : 'Wachtwoord is te zwak. Kies een sterker wachtwoord met meer karakters.';
+  static String get genericError => _language == 'en' ? AppStringsEn.genericError : 'Er is iets misgegaan. Probeer het opnieuw of neem contact op als het probleem aanhoudt.';
+
   // Guide Screen Additional Strings
   static String get guideAccount => _language == 'en' ? AppStringsEn.guideAccount : 'Account';
   static String get guideAccountDescription => _language == 'en' ? AppStringsEn.guideAccountDescription : 'Maak een account aan of log in om je voortgang te bewaren en sociale functies te gebruiken.';

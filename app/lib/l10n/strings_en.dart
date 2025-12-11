@@ -797,6 +797,42 @@ class AppStringsEn {
   // ELIM50 Coupon
   static const String elim50CouponMessage = 'You got 50 points and got 50 cents donated for the renovation of Elim!';
 
+  // Auth View
+  static const String loginWithBqid = 'Login with your BQID';
+  static const String socialFeaturesMessage = 'Create an account to use social features, such as searching for users, making friends and sending messages.';
+  static const String login = 'Login';
+  static const String signup = 'Sign up';
+  static const String email = 'Email';
+  static const String emailHint = 'your@email.com';
+  static const String usernameSignupHint = 'Choose a unique name';
+  static const String password = 'Password';
+  static const String passwordHint = 'Minimum 6 characters';
+  static const String confirmPassword = 'Confirm password';
+  static const String confirmPasswordHint = 'Repeat your password';
+  static const String accountCreatedMessage = 'Account created! Check your email for verification.';
+
+  // Auth errors
+  static const String fillEmailAndPassword = 'Fill in your email and password to continue.';
+  static const String enterValidEmail = 'Enter a valid email address.';
+  static const String fillAllFields = 'Fill in all fields to create an account.';
+  static const String passwordsDoNotMatch = 'Passwords do not match. Check if you entered the same in both fields.';
+  static const String passwordTooShort = 'Password must contain at least 6 characters for your security.';
+  static const String checkingPassword = 'Password is being checked for security...';
+  static const String passwordCompromised = 'This password has been found in data breaches. Choose a different password for your security.';
+  static const String usernameTooShort = 'Username must contain at least 3 characters.';
+  static const String usernameSignupTooLong = 'Username may contain at most 20 characters.';
+  static const String usernameInvalidChars = 'Username may only contain letters, numbers and underscores.';
+  static const String checkingUsername = 'Username availability is being checked...';
+  static const String invalidEmailOrPassword = 'Invalid email or password. Check your details and try again.';
+  static const String emailNotConfirmed = 'Your email has not been verified. Check your inbox and click the verification link.';
+  static const String tooManyRequests = 'Too many attempts. Wait a moment before trying again.';
+  static const String passwordTooShortGeneric = 'Password should be at least 6 characters.';
+  static const String invalidEmailAddress = 'Invalid email address. Make sure you entered a valid email address.';
+  static const String userAlreadyRegistered = 'An account with this email address already exists. Try logging in or use a different email address.';
+  static const String signupDisabled = 'Sign up is currently disabled. Try again later.';
+  static const String weakPassword = 'Password is too weak. Choose a stronger password with more characters.';
+  static const String genericError = 'Something went wrong. Try again or contact support if the problem persists.';
+
   // Guide Screen Additional Strings
   static const String guideAccount = 'Account';
   static const String guideAccountDescription = 'Create an account or log in to save your progress and use social features.';
