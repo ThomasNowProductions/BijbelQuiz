@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/auth_view.dart';
+import '../l10n/strings_nl.dart';
 
 class AuthScreen extends StatelessWidget {
   final bool requiredForSocial;
@@ -15,7 +16,7 @@ class AuthScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Account'),
+        title: Text(AppStrings.account),
         centerTitle: true,
       ),
       body: SafeArea(
