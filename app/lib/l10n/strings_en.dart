@@ -75,12 +75,15 @@ class AppStringsEn {
   static const String multiplayerQuiz = 'Multiplayer Quiz';
   static const String chooseGameDuration = 'Choose game duration';
   static const String startMultiplayerQuiz = 'Start Multiplayer Quiz';
-  static const String multiplayerDescription = 'Play against each other on one phone! The phone is split in two - the top half rotates 180 degrees.';
+  static const String multiplayerDescription =
+      'Play against each other on one phone! The phone is split in two - the top half rotates 180 degrees.';
   static const String gameRules = 'Game rules:';
   static const String ruleBothPlayers = '• Both players answer Bible questions';
   static const String ruleCorrectAnswer = '• A correct answer gives points';
-  static const String ruleWinner = '• The one with the correct answers at the end wins';
-  static const String ruleScreenRotation = '• The top half of the screen rotates 180 degrees on mobile';
+  static const String ruleWinner =
+      '• The one with the correct answers at the end wins';
+  static const String ruleScreenRotation =
+      '• The top half of the screen rotates 180 degrees on mobile';
 
   // Time up dialog
   static const String timeUp = 'Time is up!';
@@ -96,7 +99,8 @@ class AppStringsEn {
   static const String nextLesson = 'Next Lesson';
   static const String backToLessons = 'Back to Lessons';
   static const String endScore = 'End Score';
-  static const String endScoreHint = 'Your total score in percentage on a speedometer';
+  static const String endScoreHint =
+      'Your total score in percentage on a speedometer';
 
   // Settings screen
   static const String display = 'Display';
@@ -196,7 +200,8 @@ class AppStringsEn {
   static const String purchaseSuccess = 'Theme successfully unlocked!';
   static const String purchaseError = 'Not enough stars to unlock this theme.';
   static const String couldNotOpenDownloadPage = 'Could not open download page';
-  static const String themeUnlockedWithSwitchOption = 'unlocked! You can always return to the default theme in settings.';
+  static const String themeUnlockedWithSwitchOption =
+      'unlocked! You can always return to the default theme in settings.';
 
   // Power-ups
   static const String doubleStars5Questions = 'Double Stars (5 questions)';
@@ -234,22 +239,28 @@ class AppStringsEn {
   static const String couponErrorTitle = 'Error';
   static const String couponInvalid = 'Invalid coupon code';
   static const String couponExpired = 'This coupon has expired';
-  static const String couponMaxUsed = 'This coupon is no longer valid (maximum uses reached)';
-  static const String couponAlreadyRedeemed = 'This coupon has already been redeemed';
-  static const String couponMaxPerDay = 'Maximum of 5 coupons can be redeemed per day';
+  static const String couponMaxUsed =
+      'This coupon is no longer valid (maximum uses reached)';
+  static const String couponAlreadyRedeemed =
+      'This coupon has already been redeemed';
+  static const String couponMaxPerDay =
+      'Maximum of 5 coupons can be redeemed per day';
   static const String qrCode = 'QR-code';
   static const String qrCodeDescription = 'Point the camera at the QR code';
-  static const String qrScannerMobileOnly = 'QR Scanner only available on mobile';
+  static const String qrScannerMobileOnly =
+      'QR Scanner only available on mobile';
   static const String invalidQRCode = 'Invalid QR code';
   static const String cameraAccessRequired = 'Camera access required';
-  static const String cameraAccessDescription = 'To scan QR codes, the app needs access to your camera. This permission is only used for scanning coupons.';
+  static const String cameraAccessDescription =
+      'To scan QR codes, the app needs access to your camera. This permission is only used for scanning coupons.';
   static const String grantCameraPermission = 'Grant camera permission';
   static const String openSettings = 'Open settings';
   static const String cameraError = 'Camera error';
-  static const String cameraInitializationError = 'An error occurred while initializing the camera: ';
+  static const String cameraInitializationError =
+      'An error occurred while initializing the camera: ';
   static const String initializingCamera = 'Initializing camera...';
-  static const String qrCodeTutorial = 'Hold the QR code within the frame for automatic detection';
-
+  static const String qrCodeTutorial =
+      'Hold the QR code within the frame for automatic detection';
 
   // Settings screen
   static const String supportUsTitle = 'Support Us';
@@ -407,7 +418,6 @@ class AppStringsEn {
   static const String readyForNextChallenge = 'Ready for your next challenge?';
   static const String continueLesson = 'Continue With:';
   static const String freePractice = 'Free Practice (random)';
-  static const String lessonNumber = 'Lesson';
 
   // Biblical Reference Dialog
   static const String invalidBiblicalReference = 'Invalid Bible reference';
@@ -679,7 +689,7 @@ class AppStringsEn {
   static const String checkConnection = 'Check Connection';
   static const String goToQuiz = 'Go to Quiz';
   static const String errorLoadingAnalytics = 'Error loading analytics';
-  static const String bibleReferenceCopied = 'Bible reference copied: ';
+
   static const String bibleReferenceCopiedForSharing =
       'Bible reference copied for sharing';
   static const String errorHandlingTest = 'Error Handling Test';
@@ -712,16 +722,19 @@ class AppStringsEn {
   static const String notAvailable = 'Unknown';
   static const String followedUsersScores = 'Scores of Followed Users';
   static const String thankYouForSupport = 'Thank you for your support!';
-  static const String thankYouForYourSupport = 'We appreciate you using BibleQuiz and participating in our community.';
+  static const String thankYouForYourSupport =
+      'We appreciate you using BibleQuiz and participating in our community.';
   static const String supportWithDonation = 'Support us with a donation';
-  static const String bijbelquizGenDonationText = 'Your donation helps us maintain and improve BibleQuiz for you and others.';
+  static const String bijbelquizGenDonationText =
+      'Your donation helps us maintain and improve BibleQuiz for you and others.';
   static const String noExpirationDate = 'No expiration date';
   static const String username = 'Username';
   static const String enterUsername = 'Enter username';
   static const String usernameHint = 'e.g. John2025';
   static const String saveUsername = 'Save username';
   static const String pleaseEnterUsername = 'Please enter a username';
-  static const String usernameTooLong = 'Username must be at most 30 characters';
+  static const String usernameTooLong =
+      'Username must be at most 30 characters';
   static const String usernameAlreadyTaken = 'Username is already taken';
   static const String usernameBlacklisted = 'This username is not allowed';
   static const String usernameSaved = 'Username saved!';
@@ -737,10 +750,12 @@ class AppStringsEn {
   static const String shareResults = 'Share your results';
   static const String copyLink = 'Copy link';
   static const String automaticBugReports = 'Automatic bug reporting';
-  static const String automaticBugReportsDesc = 'Automatically send bug reports when errors occur (recommended)';
+  static const String automaticBugReportsDesc =
+      'Automatically send bug reports when errors occur (recommended)';
 
   // Sync Screen
-  static const String dataSuccessfullySynchronized = 'Data successfully synchronized';
+  static const String dataSuccessfullySynchronized =
+      'Data successfully synchronized';
   static const String synchronizationFailed = 'Synchronization failed: ';
   static const String editProfile = 'Edit Profile';
   static const String adjustNameAndBio = 'Adjust name and bio';
@@ -762,19 +777,26 @@ class AppStringsEn {
   static const String confirmNewPassword = 'Confirm new password';
   static const String fillAllPasswordFields = 'Fill in all password fields';
   static const String newPasswordsDoNotMatch = 'New passwords do not match';
-  static const String newPasswordMin6Chars = 'New password must contain at least 6 characters';
+  static const String newPasswordMin6Chars =
+      'New password must contain at least 6 characters';
   static const String enterNewUsername = 'Enter a new username';
-  static const String usernameMin3Chars = 'Username must contain at least 3 characters';
-  static const String usernameMax20Chars = 'Username may contain at most 20 characters';
+  static const String usernameMin3Chars =
+      'Username must contain at least 3 characters';
+  static const String usernameMax20Chars =
+      'Username may contain at most 20 characters';
   static const String usernameNotAllowed = 'This username is not allowed';
-  static const String thisUsernameAlreadyTaken = 'This username is already taken';
-  static const String usernameSuccessfullyChanged = 'Username successfully changed';
+  static const String thisUsernameAlreadyTaken =
+      'This username is already taken';
+  static const String usernameSuccessfullyChanged =
+      'Username successfully changed';
   static const String failedToChangeUsername = 'Failed to change username';
   static const String displayNameRequired = 'Display name is required';
-  static const String profileSuccessfullyUpdated = 'Profile successfully updated';
+  static const String profileSuccessfullyUpdated =
+      'Profile successfully updated';
   static const String failedToUpdateProfile = 'Failed to update profile';
   static const String signOutFailed = 'Sign out failed';
-  static const String passwordSuccessfullyChanged = 'Password successfully changed';
+  static const String passwordSuccessfullyChanged =
+      'Password successfully changed';
   static const String failedToChangePassword = 'Failed to change password';
   static const String updated = 'Updated';
   static const String notUpdated = 'Not updated';
@@ -795,11 +817,13 @@ class AppStringsEn {
   static const String noLeaderboardData = 'No leaderboard data available';
 
   // ELIM50 Coupon
-  static const String elim50CouponMessage = 'You got 50 points and got 50 cents donated for the renovation of Elim!';
+  static const String elim50CouponMessage =
+      'You got 50 points and got 50 cents donated for the renovation of Elim!';
 
   // Auth View
   static const String loginWithBqid = 'Login with your BQID';
-  static const String socialFeaturesMessage = 'Create an account to use social features, such as searching for users, making friends and sending messages.';
+  static const String socialFeaturesMessage =
+      'Create an account to use social features, such as searching for users, making friends and sending messages.';
   static const String login = 'Login';
   static const String signup = 'Sign up';
   static const String email = 'Email';
@@ -809,34 +833,172 @@ class AppStringsEn {
   static const String passwordHint = 'Minimum 6 characters';
   static const String confirmPassword = 'Confirm password';
   static const String confirmPasswordHint = 'Repeat your password';
-  static const String accountCreatedMessage = 'Account created! Check your email for verification.';
+  static const String accountCreatedMessage =
+      'Account created! Check your email for verification.';
 
   // Auth errors
-  static const String fillEmailAndPassword = 'Fill in your email and password to continue.';
+  static const String fillEmailAndPassword =
+      'Fill in your email and password to continue.';
   static const String enterValidEmail = 'Enter a valid email address.';
-  static const String fillAllFields = 'Fill in all fields to create an account.';
-  static const String passwordsDoNotMatch = 'Passwords do not match. Check if you entered the same in both fields.';
-  static const String passwordTooShort = 'Password must contain at least 6 characters for your security.';
-  static const String checkingPassword = 'Password is being checked for security...';
-  static const String passwordCompromised = 'This password has been found in data breaches. Choose a different password for your security.';
-  static const String usernameTooShort = 'Username must contain at least 3 characters.';
-  static const String usernameSignupTooLong = 'Username may contain at most 20 characters.';
-  static const String usernameInvalidChars = 'Username may only contain letters, numbers and underscores.';
-  static const String checkingUsername = 'Username availability is being checked...';
-  static const String invalidEmailOrPassword = 'Invalid email or password. Check your details and try again.';
-  static const String emailNotConfirmed = 'Your email has not been verified. Check your inbox and click the verification link.';
-  static const String tooManyRequests = 'Too many attempts. Wait a moment before trying again.';
-  static const String passwordTooShortGeneric = 'Password should be at least 6 characters.';
-  static const String invalidEmailAddress = 'Invalid email address. Make sure you entered a valid email address.';
-  static const String userAlreadyRegistered = 'An account with this email address already exists. Try logging in or use a different email address.';
-  static const String signupDisabled = 'Sign up is currently disabled. Try again later.';
-  static const String weakPassword = 'Password is too weak. Choose a stronger password with more characters.';
-  static const String genericError = 'Something went wrong. Try again or contact support if the problem persists.';
+  static const String fillAllFields =
+      'Fill in all fields to create an account.';
+  static const String passwordsDoNotMatch =
+      'Passwords do not match. Check if you entered the same in both fields.';
+  static const String passwordTooShort =
+      'Password must contain at least 6 characters for your security.';
+  static const String checkingPassword =
+      'Password is being checked for security...';
+  static const String passwordCompromised =
+      'This password has been found in data breaches. Choose a different password for your security.';
+  static const String usernameTooShort =
+      'Username must contain at least 3 characters.';
+  static const String usernameSignupTooLong =
+      'Username may contain at most 20 characters.';
+  static const String usernameInvalidChars =
+      'Username may only contain letters, numbers and underscores.';
+  static const String checkingUsername =
+      'Username availability is being checked...';
+  static const String invalidEmailOrPassword =
+      'Invalid email or password. Check your details and try again.';
+  static const String emailNotConfirmed =
+      'Your email has not been verified. Check your inbox and click the verification link.';
+  static const String tooManyRequests =
+      'Too many attempts. Wait a moment before trying again.';
+  static const String passwordTooShortGeneric =
+      'Password should be at least 6 characters.';
+  static const String invalidEmailAddress =
+      'Invalid email address. Make sure you entered a valid email address.';
+  static const String userAlreadyRegistered =
+      'An account with this email address already exists. Try logging in or use a different email address.';
+  static const String signupDisabled =
+      'Sign up is currently disabled. Try again later.';
+  static const String weakPassword =
+      'Password is too weak. Choose a stronger password with more characters.';
+  static const String genericError =
+      'Something went wrong. Try again or contact support if the problem persists.';
 
   // Guide Screen Additional Strings
   static const String guideAccount = 'Account';
-  static const String guideAccountDescription = 'Create an account or log in to save your progress and use social features.';
-  static const String couponRedeemDescription = 'You can redeem coupon codes later at the shop menu.';
+  static const String guideAccountDescription =
+      'Create an account or log in to save your progress and use social features.';
+  static const String couponRedeemDescription =
+      'You can redeem coupon codes later at the shop menu.';
   static const String termsAgreementText = 'By continuing you agree to our ';
   static const String termsOfService = 'terms of service';
+
+  // Progress Header
+  static const String progressOverview = 'Progress overview';
+  static const String progressOverviewHint =
+      'Shows your current progress through lessons';
+  static const String lessonCompletionProgress = 'Lesson completion progress';
+  static String lessonsCompleted(int unlocked, int total) =>
+      '$unlocked out of $total lessons completed';
+  static String continueWithLesson(String lessonTitle) =>
+      'Continue with lesson: $lessonTitle';
+  static const String continueWithLessonHint =
+      'Start the next recommended lesson in your progress';
+  static const String practiceMode = 'Practice mode';
+  static const String practiceModeHint =
+      'Start a random practice quiz without affecting progress';
+  static const String multiplayerMode = 'Multiplayer mode';
+  static const String multiplayerModeHint = 'Start a multiplayer quiz game';
+  static const String startRandomPracticeQuiz = 'Start a random practice quiz';
+  static const String playButton = 'Play';
+  static String dailyStreakDescription(int streakDays) =>
+      'You have been using BibleQuiz for $streakDays ${streakDays == 1 ? "day" : "days"} in a row';
+
+  // Day abbreviations
+  static const String monday = 'Mon';
+  static const String tuesday = 'Tue';
+  static const String wednesday = 'Wed';
+  static const String thursday = 'Thu';
+  static const String friday = 'Fri';
+  static const String saturday = 'Sat';
+  static const String sunday = 'Sun';
+
+  // Quiz Screen
+  static const String questionReportedByUser = 'Question reported by user';
+  static const String invalidBiblicalReferenceInQuestion =
+      'Invalid biblical reference in question';
+
+  // Import/Export
+  static const String pleaseEnterDataToImport = 'Please enter data to import';
+  static const String importFailed = 'Import failed: ';
+
+  // Store Screen
+  static const String errorLoadingStore = 'Error loading store';
+  static const String purchaseFailed = 'Purchase failed, please try again';
+  static String purchaseErrorString(String error) =>
+      'Error during purchase: $error';
+  static const String christmasTheme = 'Christmas Theme';
+  static const String christmasThemeDescription =
+      'A festive Christmas theme with red and green colors';
+  static const String terminalGreenTheme = 'Terminal Green';
+  static const String terminalGreenThemeDescription =
+      'A classic terminal theme with green text on a black background';
+  static const String oceanBlueTheme = 'Ocean Blue';
+  static const String oceanBlueThemeDescription =
+      'A bright ocean blue theme for a fresh look';
+  static const String roseWhiteTheme = 'Rose White';
+  static const String roseWhiteThemeDescription =
+      'An elegant pink and white theme';
+  static const String darkWoodTheme = 'Dark Wood';
+  static const String darkWoodThemeDescription = 'A warm dark wood theme';
+  static String paymentError(String error) => 'Payment error: $error';
+  static const String errorOpeningAiThemeGenerator =
+      'Error opening AI theme generator';
+  static const String discount = 'Discount!';
+
+  // Bible Reference Widget
+  static String bibleReferenceCopied(String reference) =>
+      'Bible reference copied: $reference';
+  static const String share = 'Share';
+  static String shareBibleReference(String reference, String translation) =>
+      'Bible reference: $reference ($translation)';
+  // Lesson Tile
+  static String lessonLabel(int index, String title) =>
+      'Lesson ${index + 1}: $title';
+  static const String unlockedButNotPlayable = 'unlocked but not playable';
+  static const String lockedHint =
+      'This lesson is locked. Complete previous lessons to unlock it.';
+  static const String unlockedButNotPlayableHint =
+      'This lesson is unlocked but you can only play the most recent unlocked lesson.';
+  static const String tapToStart = 'Tap to start this lesson';
+  static String recommended(String label) => 'Recommended: $label';
+  static String lessonNumber(int index) => 'Lesson ${index + 1}';
+  static const String bookIconSemanticLabel =
+      'Book icon representing lesson content';
+  static const String lockedSpecialLessonSemanticLabel =
+      'Locked special lesson';
+  static const String lockedLessonSemanticLabel = 'Locked lesson';
+
+  // Question Card
+  static const String mcqLabel = 'Multiple choice question';
+  static const String mcqHint =
+      'Select the correct answer from the options below';
+  static const String answerOptionsLabel = 'Answer options';
+  static String answerOptionsHint(int count) =>
+      'Choose one of the $count options';
+  static const String fitbLabel = 'Fill in the blank question';
+  static const String fitbHint = 'Select the word that completes the sentence';
+  static const String fitbHint2 =
+      'Choose the correct word to fill in the blank';
+  static const String tfLabel = 'True or False question';
+  static const String tfHint = 'Select whether the statement is true or false';
+  static const String tfHint2 = 'Choose True or False';
+  static const String trueText = 'True';
+  static const String falseText = 'False';
+  static String questionLabel(String question) => 'Question: $question';
+  static const String blank = '______';
+
+  // Ad Widget
+  static const String recommendedAd = 'Recommended';
+  static const String moreInformation = 'More Information';
+
+  // Lesson Select Screen
+  static const String lessonLocked = 'Lesson is still locked';
+
+  // Languages
+  static const String languageNl = 'Dutch';
+  static const String languageEn = 'English';
 }

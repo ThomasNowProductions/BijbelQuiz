@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../l10n/strings_nl.dart';
 import '../models/lesson.dart';
 import '../providers/settings_provider.dart';
 
@@ -28,8 +29,7 @@ class LessonTile extends StatefulWidget {
   State<LessonTile> createState() => _LessonTileState();
 }
 
-class _LessonTileState extends State<LessonTile>
-    with TickerProviderStateMixin {
+class _LessonTileState extends State<LessonTile> with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
   late Animation<double> _shadowAnimation;
@@ -98,22 +98,21 @@ class _LessonTileState extends State<LessonTile>
             : _singleColorGradient(cs);
 
     String semanticLabel =
-        'Lesson ${widget.lesson.index + 1}: ${widget.lesson.title}';
+        AppStrings.lessonLabel(widget.lesson.index, widget.lesson.title);
     String hint = '';
 
     if (!widget.unlocked) {
-      semanticLabel = '$semanticLabel (locked)';
-      hint = 'This lesson is locked. Complete previous lessons to unlock it.';
+      semanticLabel = '$semanticLabel (${AppStrings.locked})';
+      hint = AppStrings.lockedHint;
     } else if (!widget.playable) {
-      semanticLabel = '$semanticLabel (unlocked but not playable)';
-      hint =
-          'This lesson is unlocked but you can only play the most recent unlocked lesson.';
+      semanticLabel = '$semanticLabel (${AppStrings.unlockedButNotPlayable})';
+      hint = AppStrings.unlockedButNotPlayableHint;
     } else {
-      hint = 'Tap to start this lesson';
+      hint = AppStrings.tapToStart;
     }
 
     if (widget.recommended) {
-      semanticLabel = 'Recommended: $semanticLabel';
+      semanticLabel = AppStrings.recommended(semanticLabel);
     }
 
     return Semantics(
@@ -183,7 +182,7 @@ class _LessonTileState extends State<LessonTile>
                           border: Border.all(color: cs.outlineVariant),
                         ),
                         child: Text(
-                          'Les ${widget.lesson.index + 1}',
+                          AppStrings.lessonNumber(widget.lesson.index),
                           style: Theme.of(context)
                               .textTheme
                               .labelLarge
@@ -201,8 +200,7 @@ class _LessonTileState extends State<LessonTile>
                             Icons.menu_book,
                             color: cs.primary,
                             size: 36,
-                            semanticLabel:
-                                'Book icon representing lesson content',
+                            semanticLabel: AppStrings.bookIconSemanticLabel,
                           ),
                         ),
                       ),
@@ -215,13 +213,18 @@ class _LessonTileState extends State<LessonTile>
                                 animation: _rainbowController,
                                 builder: (context, child) {
                                   // Create muted rainbow effect by cycling through HSV hue values
-                                  final hue = (_rainbowController.value * 360.0) % 360.0;
-                                  final rainbowColor = HSVColor.fromAHSV(1.0, hue, 0.7, 0.9).toColor();
+                                  final hue =
+                                      (_rainbowController.value * 360.0) %
+                                          360.0;
+                                  final rainbowColor =
+                                      HSVColor.fromAHSV(1.0, hue, 0.7, 0.9)
+                                          .toColor();
                                   return Icon(
                                     Icons.lock_rounded,
                                     color: rainbowColor,
                                     size: 40,
-                                    semanticLabel: 'Locked special lesson',
+                                    semanticLabel: AppStrings
+                                        .lockedSpecialLessonSemanticLabel,
                                   );
                                 },
                               )
@@ -229,7 +232,8 @@ class _LessonTileState extends State<LessonTile>
                                 Icons.lock_rounded,
                                 color: cs.onSurface.withValues(alpha: 0.7),
                                 size: 40,
-                                semanticLabel: 'Locked lesson',
+                                semanticLabel:
+                                    AppStrings.lockedLessonSemanticLabel,
                               ),
                       ),
                     ),

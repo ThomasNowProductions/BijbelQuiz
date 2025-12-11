@@ -31,29 +31,29 @@ class LessonSelectScreen extends StatefulWidget {
 }
 
 class _LessonSelectScreenState extends State<LessonSelectScreen> {
-   final LessonService _lessonService = LessonService();
-   final ScrollController _scrollController = ScrollController();
+  final LessonService _lessonService = LessonService();
+  final ScrollController _scrollController = ScrollController();
 
-   bool _loading = true;
-   bool _loadingMore = false;
-   String? _error;
-   List<Lesson> _lessons = const [];
-   bool _guideCheckCompleted = false; // Prevent multiple guide checks
-   bool _showPromoCard = false;
-   bool _isDonationPromo = true; // true for donation, false for follow
-   bool _isSatisfactionPromo = false; // true for satisfaction survey
-   bool _isDifficultyPromo = false; // true for difficulty feedback
-   bool _isAccountCreationPromo = false; // true for account creation
-   String? _socialMediaType; // for individual social media popups
-   // Search and filters removed for simplified UI
+  bool _loading = true;
+  bool _loadingMore = false;
+  String? _error;
+  List<Lesson> _lessons = const [];
+  bool _guideCheckCompleted = false; // Prevent multiple guide checks
+  bool _showPromoCard = false;
+  bool _isDonationPromo = true; // true for donation, false for follow
+  bool _isSatisfactionPromo = false; // true for satisfaction survey
+  bool _isDifficultyPromo = false; // true for difficulty feedback
+  bool _isAccountCreationPromo = false; // true for account creation
+  String? _socialMediaType; // for individual social media popups
+  // Search and filters removed for simplified UI
 
-   // Daily usage streak tracking (persisted locally)
-   static const String _activeDaysKey = 'daily_active_days_v1';
-   Set<String> _activeDays = {};
-   int _streakDays = 0;
+  // Daily usage streak tracking (persisted locally)
+  static const String _activeDaysKey = 'daily_active_days_v1';
+  Set<String> _activeDays = {};
+  int _streakDays = 0;
 
-   // Cached lessons
-   static const String _cachedLessonsKey = 'cached_lessons_v1';
+  // Cached lessons
+  static const String _cachedLessonsKey = 'cached_lessons_v1';
 
   @override
   void initState() {
@@ -80,7 +80,10 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
   }
 
   void _onScroll() {
-    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 500 && !_loadingMore && !_loading) {
+    if (_scrollController.position.pixels >=
+            _scrollController.position.maxScrollExtent - 500 &&
+        !_loadingMore &&
+        !_loading) {
       _loadMoreLessons();
     }
   }
@@ -253,7 +256,9 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
       // Always show at least (unlockedCount + buffer) lessons, with a floor.
       const int buffer = 12;
       const int minVisible = 36;
-      final int desired = append ? (maxLessons ?? _lessons.length + 20) : (progress.unlockedCount + buffer);
+      final int desired = append
+          ? (maxLessons ?? _lessons.length + 20)
+          : (progress.unlockedCount + buffer);
       final int visibleCount = desired < minVisible ? minVisible : desired;
 
       final lessons = await _lessonService.generateLessons(
@@ -294,7 +299,8 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
           _showPromoCard = _shouldShowPromoCard(settings);
           if (_showPromoCard) {
             // Check if user is not logged in - always show account creation promo
-            final isLoggedIn = Supabase.instance.client.auth.currentUser != null;
+            final isLoggedIn =
+                Supabase.instance.client.auth.currentUser != null;
             if (!isLoggedIn) {
               _isDonationPromo = false;
               _isSatisfactionPromo = false;
@@ -493,7 +499,8 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                           Provider.of<AnalyticsService>(context, listen: false)
                               .capture(context, 'tap_locked_lesson',
                                   properties: {'lesson_id': lesson.id});
-                          showTopSnackBar(context, 'Les is nog vergrendeld',
+                          showTopSnackBar(
+                              context, strings.AppStrings.lessonLocked,
                               style: TopSnackBarStyle.warning);
                           return;
                         }
@@ -585,7 +592,8 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                         Provider.of<AnalyticsService>(context, listen: false)
                             .capture(context, 'tap_locked_lesson',
                                 properties: {'lesson_id': lesson.id});
-                        showTopSnackBar(context, 'Les is nog vergrendeld',
+                        showTopSnackBar(
+                            context, strings.AppStrings.lessonLocked,
                             style: TopSnackBarStyle.warning);
                         return;
                       }
@@ -677,7 +685,8 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                         Provider.of<AnalyticsService>(context, listen: false)
                             .capture(context, 'tap_locked_lesson',
                                 properties: {'lesson_id': lesson.id});
-                        showTopSnackBar(context, 'Les is nog vergrendeld',
+                        showTopSnackBar(
+                            context, strings.AppStrings.lessonLocked,
                             style: TopSnackBarStyle.warning);
                         return;
                       }
@@ -802,7 +811,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
             ),
             const SizedBox(width: 12),
             Text(
-              'Lessen',
+              strings.AppStrings.lessons,
               style: textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w700,
                 color: colorScheme.onSurface.withValues(alpha: 0.7),
@@ -828,7 +837,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                       const SizedBox(height: 12),
                       ElevatedButton(
                         onPressed: _loadLessons,
-                        child: const Text('Opnieuw proberen'),
+                        child: Text(strings.AppStrings.tryAgain),
                       ),
                     ],
                   ),
@@ -991,12 +1000,13 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                                             Provider.of<AnalyticsService>(
                                                 context,
                                                 listen: false);
-                                        analyticsService.capture(
-                                            context, 'tap_create_account_promo');
+                                        analyticsService.capture(context,
+                                            'tap_create_account_promo');
                                         // Navigate to social screen which will handle auth
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
-                                            builder: (context) => const SocialScreen(),
+                                            builder: (context) =>
+                                                const SocialScreen(),
                                           ),
                                         );
                                       } else {

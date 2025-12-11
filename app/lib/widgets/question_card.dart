@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import '../l10n/strings_nl.dart';
 import '../models/quiz_question.dart';
 import '../theme/app_theme.dart';
 import '../utils/responsive_utils.dart';
@@ -177,8 +178,8 @@ class _QuestionCardState extends State<QuestionCard>
             children: [
               // Enhanced question card with professional design
               Semantics(
-                label: 'Multiple choice question',
-                hint: 'Select the correct answer from the options below',
+                label: AppStrings.mcqLabel,
+                hint: AppStrings.mcqHint,
                 child: Container(
                   decoration: BoxDecoration(
                     color: colorScheme.surface,
@@ -227,7 +228,8 @@ class _QuestionCardState extends State<QuestionCard>
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 4.0),
                               child: Semantics(
-                                label: 'Question: ${widget.question.question}',
+                                label: AppStrings.questionLabel(
+                                    widget.question.question),
                                 child: Text(
                                   widget.question.question,
                                   textAlign: TextAlign.center,
@@ -263,8 +265,8 @@ class _QuestionCardState extends State<QuestionCard>
                         SizedBox(height: isDesktop ? 36 : 32),
                         // Answer options with improved spacing
                         Semantics(
-                          label: 'Answer options',
-                          hint: 'Choose one of the ${options.length} options',
+                          label: AppStrings.answerOptionsLabel,
+                          hint: AppStrings.answerOptionsHint(options.length),
                           child: Column(
                             children: List.generate(
                               options.length,
@@ -325,8 +327,8 @@ class _QuestionCardState extends State<QuestionCard>
           child: Column(
             children: [
               Semantics(
-                label: 'Fill in the blank question',
-                hint: 'Select the word that completes the sentence',
+                label: AppStrings.fitbLabel,
+                hint: AppStrings.fitbHint,
                 child: Container(
                   decoration: BoxDecoration(
                     color: colorScheme.surface,
@@ -381,8 +383,8 @@ class _QuestionCardState extends State<QuestionCard>
                         SizedBox(height: isDesktop ? 36 : 32),
                         // Answer options with improved spacing (like MC)
                         Semantics(
-                          label: 'Answer options',
-                          hint: 'Choose the correct word to fill in the blank',
+                          label: AppStrings.answerOptionsLabel,
+                          hint: AppStrings.fitbHint2,
                           child: Column(
                             children: List.generate(
                               options.length,
@@ -437,8 +439,8 @@ class _QuestionCardState extends State<QuestionCard>
         break;
       case QuestionType.tf:
         final tfOptions = [
-          'Goed',
-          'Fout',
+          AppStrings.trueText,
+          AppStrings.falseText,
         ];
         // Determine correct index based on the actual correct answer
         final lcCorrect = widget.question.correctAnswer.toLowerCase();
@@ -453,8 +455,8 @@ class _QuestionCardState extends State<QuestionCard>
           child: Column(
             children: [
               Semantics(
-                label: 'True or False question',
-                hint: 'Select whether the statement is true or false',
+                label: AppStrings.tfLabel,
+                hint: AppStrings.tfHint,
                 child: Container(
                   decoration: BoxDecoration(
                     color: colorScheme.surface,
@@ -497,7 +499,8 @@ class _QuestionCardState extends State<QuestionCard>
                           padding: EdgeInsets.symmetric(
                               horizontal: isDesktop ? 12 : 8),
                           child: Semantics(
-                            label: 'Question: ${widget.question.question}',
+                            label: AppStrings.questionLabel(
+                                widget.question.question),
                             child: Text(
                               widget.question.question,
                               textAlign: TextAlign.center,
@@ -522,8 +525,8 @@ class _QuestionCardState extends State<QuestionCard>
                         ),
                         SizedBox(height: isDesktop ? 48 : 36),
                         Semantics(
-                          label: 'Answer options',
-                          hint: 'Choose True or False',
+                          label: AppStrings.answerOptionsLabel,
+                          hint: AppStrings.tfHint2,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: List.generate(2, (index) {
@@ -719,7 +722,7 @@ class _FitbAnimatedBlankRowState extends State<_FitbAnimatedBlankRow>
             ? const Color(0xFF10B981)
             : const Color(0xFFEF4444);
     final blankText = widget.selectedAnswerIndex == null
-        ? '______'
+        ? AppStrings.blank
         : widget.options[widget.selectedAnswerIndex!];
     // Handle both '...' and '_____' as blank indicators
     final questionText = widget.question.question;
@@ -819,7 +822,7 @@ class _FitbAnimatedBlankRowState extends State<_FitbAnimatedBlankRow>
                   return Transform.scale(
                     scale: _scaleAnimation.value,
                     child: Text(
-                      i == 0 ? blankText : '______',
+                      i == 0 ? blankText : AppStrings.blank,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style:

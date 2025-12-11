@@ -38,7 +38,7 @@ class _GuideScreenState extends State<GuideScreen> {
         context, AnalyticsService.featureOnboarding);
 
     AppLogger.info('GuideScreen loaded');
-    
+
     final isLoggedIn = Supabase.instance.client.auth.currentUser != null;
 
     _pages = buildGuidePages(
@@ -61,8 +61,6 @@ class _GuideScreenState extends State<GuideScreen> {
     });
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -78,8 +76,8 @@ class _GuideScreenState extends State<GuideScreen> {
           children: [
             Expanded(
               child: PageView.builder(
-                physics: pages[_currentPage].isAuthPage 
-                    ? const NeverScrollableScrollPhysics() 
+                physics: pages[_currentPage].isAuthPage
+                    ? const NeverScrollableScrollPhysics()
                     : const BouncingScrollPhysics(),
                 controller: _pageController,
                 onPageChanged: _onPageChanged,
@@ -225,7 +223,7 @@ class GuidePage {
 List<GuidePage> buildGuidePages(
     {required BuildContext context, required bool isLoggedIn}) {
   final pages = <GuidePage>[];
-  
+
   if (!isLoggedIn) {
     pages.add(GuidePage(
       title: strings.AppStrings.guideAccount,
@@ -257,7 +255,6 @@ List<GuidePage> buildGuidePages(
       icon: Icons.settings,
     ),
   ]);
-
 
   // Only add donation page if user hasn't donated yet
   final settings = Provider.of<SettingsProvider>(context, listen: false);
@@ -337,7 +334,7 @@ class _GuidePageViewState extends State<GuidePageView> {
       if (safeContext != null && safeContext.mounted) {
         showTopSnackBar(
           safeContext,
-          'Er is een fout opgetreden bij het openen van de donatiepagina',
+          strings.AppStrings.donationError,
           style: TopSnackBarStyle.error,
         );
       }
@@ -349,8 +346,6 @@ class _GuidePageViewState extends State<GuidePageView> {
       }
     }
   }
-
-
 
   Widget _buildTermsAgreementText() {
     final theme = Theme.of(context);
@@ -396,9 +391,6 @@ class _GuidePageViewState extends State<GuidePageView> {
       ),
     );
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -450,9 +442,9 @@ class _GuidePageViewState extends State<GuidePageView> {
       );
     }
 
-
     // Check if this is the customization page
-    final isCustomizationPage = widget.page.title == strings.AppStrings.customizeExperienceTitle;
+    final isCustomizationPage =
+        widget.page.title == strings.AppStrings.customizeExperienceTitle;
 
     return Padding(
       padding: const EdgeInsets.all(24.0),
@@ -521,7 +513,8 @@ class _GuidePageViewState extends State<GuidePageView> {
                                         ),
                                         const SizedBox(height: 4),
                                         Text(
-                                          strings.AppStrings.couponRedeemDescription,
+                                          strings.AppStrings
+                                              .couponRedeemDescription,
                                           style: textTheme.bodyMedium?.copyWith(
                                             color: colorScheme.onSurface
                                                 .withValues(alpha: 0.7),
@@ -558,24 +551,28 @@ class _GuidePageViewState extends State<GuidePageView> {
                                   const SizedBox(height: 12),
                                   DropdownButtonFormField<String>(
                                     initialValue: settings.language,
-                                    items: const [
+                                    items: [
                                       DropdownMenuItem(
                                         value: 'nl',
-                                        child: Text('Nederlands'),
+                                        child: Text(
+                                            strings.AppStrings.languageNl),
                                       ),
                                       DropdownMenuItem(
                                         value: 'en',
-                                        child: Text('English'),
+                                        child: Text(
+                                            strings.AppStrings.languageEn),
                                       ),
                                     ],
                                     onChanged: (String? value) {
                                       if (value != null) {
                                         final analytics =
-                                            Provider.of<AnalyticsService>(context,
+                                            Provider.of<AnalyticsService>(
+                                                context,
                                                 listen: false);
-                                        analytics.capture(context, 'change_language');
-                                        analytics.trackFeatureSuccess(
-                                            context, AnalyticsService.featureSettings);
+                                        analytics.capture(
+                                            context, 'change_language');
+                                        analytics.trackFeatureSuccess(context,
+                                            AnalyticsService.featureSettings);
                                         settings.setLanguage(value);
                                       }
                                     },

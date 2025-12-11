@@ -157,7 +157,7 @@ class QuizMetricsDisplay extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                'Schermgrootte niet ondersteund',
+                strings.AppStrings.screenSizeNotSupported,
                 style: TextStyle(
                   color: colorScheme.error,
                   fontWeight: FontWeight.bold,
@@ -234,7 +234,7 @@ class QuizMetricsDisplay extends StatelessWidget {
               child: MetricItem(
                 icon: Icons.timer_rounded,
                 value: previousTime.toString(),
-                label: 'Tijd',
+                label: strings.AppStrings.time,
                 colorScheme: colorScheme,
                 color: timeColorAnimation.value ?? const Color(0xFF10B981),
                 animation: timeAnimation,
