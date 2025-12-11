@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../l10n/strings_nl.dart';
 import '../models/bible_reference.dart';
 import '../services/logger.dart';
 
@@ -298,13 +299,13 @@ class _BibleReferenceWidgetState extends State<BibleReferenceWidget>
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Bible reference copied: $referenceText'),
+          content: Text(AppStrings.bibleReferenceCopied(referenceText)),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(Radius.circular(12)),
           ),
           action: SnackBarAction(
-            label: 'Share',
+            label: AppStrings.share,
             onPressed: _shareReference,
           ),
         ),
@@ -314,8 +315,8 @@ class _BibleReferenceWidgetState extends State<BibleReferenceWidget>
 
   void _shareReference() {
     final referenceText = widget.reference.fullReference;
-    final shareText =
-        'Bible reference: $referenceText (${widget.reference.displayString})';
+    final shareText = AppStrings.shareBibleReference(
+        referenceText, widget.reference.displayString);
 
     // In a real implementation, you would use share_plus package
     AppLogger.info('Sharing Bible reference: $shareText');
@@ -324,11 +325,11 @@ class _BibleReferenceWidgetState extends State<BibleReferenceWidget>
 
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Bible reference copied for sharing'),
+        SnackBar(
+          content: Text(AppStrings.bibleReferenceCopiedForSharing),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
+            borderRadius: const BorderRadius.all(Radius.circular(12)),
           ),
         ),
       );

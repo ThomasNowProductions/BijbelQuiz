@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../l10n/strings_nl.dart';
 import '../models/ad.dart';
 import '../services/analytics_service.dart';
 
@@ -141,7 +142,7 @@ class _AdWidgetState extends State<AdWidget> {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'Aanbevolen',
+                  AppStrings.recommendedAd,
                   style: textTheme.labelMedium?.copyWith(
                     color: cs.primary,
                     fontWeight: FontWeight.w700,
@@ -214,7 +215,7 @@ class _AdWidgetState extends State<AdWidget> {
                   ),
                 ),
                 icon: const Icon(Icons.open_in_new_rounded, size: 22),
-                label: const Text('Meer informatie'),
+                label: Text(AppStrings.moreInformation),
               ),
             ),
             const SizedBox(height: 12),
@@ -252,7 +253,7 @@ class _AdWidgetState extends State<AdWidget> {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                child: Text('Sluiten',
+                child: Text(AppStrings.close,
                     style: TextStyle(
                       color: cs.onSurface.withValues(alpha: 0.85),
                     )),

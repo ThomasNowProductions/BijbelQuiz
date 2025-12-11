@@ -42,7 +42,7 @@ class _ProgressHeaderState extends State<ProgressHeader>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _progressAnimation;
-  String _greeting = 'Jouw voortgang'; // Default fallback
+  String _greeting = strings.AppStrings.yourProgress; // Default fallback
   final GreetingService _greetingService = GreetingService();
 
   @override
@@ -75,7 +75,7 @@ class _ProgressHeaderState extends State<ProgressHeader>
       AppLogger.warning('Error loading greeting: $e');
       if (mounted) {
         setState(() {
-          _greeting = 'Jouw voortgang'; // Keep fallback
+          _greeting = strings.AppStrings.yourProgress; // Keep fallback
         });
       }
     }
@@ -96,8 +96,8 @@ class _ProgressHeaderState extends State<ProgressHeader>
     final percent = total > 0 ? unlocked / total : 0.0;
 
     return Semantics(
-      label: 'Progress overview',
-      hint: 'Shows your current progress through lessons',
+      label: strings.AppStrings.progressOverview,
+      hint: strings.AppStrings.progressOverviewHint,
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
@@ -122,8 +122,8 @@ class _ProgressHeaderState extends State<ProgressHeader>
                     ?.copyWith(fontWeight: FontWeight.w800)),
             const SizedBox(height: 8),
             Semantics(
-              label: 'Lesson completion progress',
-              hint: '$unlocked out of $total lessons completed',
+              label: strings.AppStrings.lessonCompletionProgress,
+              hint: strings.AppStrings.lessonsCompleted(unlocked, total),
               child: Row(
                 children: [
                   Expanded(
@@ -192,7 +192,8 @@ class _ProgressHeaderState extends State<ProgressHeader>
                                     ),
                               ),
                               Text(
-                                'Je gebruikt ${strings.AppStrings.appName} al ${widget.streakDays} ${widget.streakDays == 1 ? "dag" : "dagen"} op rij',
+                                strings.AppStrings.dailyStreakDescription(
+                                    widget.streakDays),
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium
@@ -304,9 +305,9 @@ class _ProgressHeaderState extends State<ProgressHeader>
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Semantics(
-                    label:
-                        'Continue with lesson: ${widget.continueLesson!.title}',
-                    hint: 'Start the next recommended lesson in your progress',
+                    label: strings.AppStrings.continueWithLesson(
+                        widget.continueLesson!.title),
+                    hint: strings.AppStrings.continueWithLessonHint,
                     button: true,
                     child: _AnimatedButton(
                       onPressed: () async {
@@ -334,9 +335,8 @@ class _ProgressHeaderState extends State<ProgressHeader>
                   ),
                   const SizedBox(height: 8),
                   Semantics(
-                    label: 'Practice mode',
-                    hint:
-                        'Start a random practice quiz without affecting progress',
+                    label: strings.AppStrings.practiceMode,
+                    hint: strings.AppStrings.practiceModeHint,
                     button: true,
                     child: _AnimatedButton(
                       onPressed: () {
@@ -355,8 +355,8 @@ class _ProgressHeaderState extends State<ProgressHeader>
                   if (widget.onMultiplayerPressed != null) ...[
                     const SizedBox(height: 8),
                     Semantics(
-                      label: 'Multiplayer mode',
-                      hint: 'Start a multiplayer quiz game',
+                      label: strings.AppStrings.multiplayerMode,
+                      hint: strings.AppStrings.multiplayerModeHint,
                       button: true,
                       child: _AnimatedButton(
                         onPressed: () {
@@ -376,8 +376,8 @@ class _ProgressHeaderState extends State<ProgressHeader>
               ),
             ] else ...[
               Semantics(
-                label: 'Practice mode',
-                hint: 'Start a random practice quiz',
+                label: strings.AppStrings.practiceMode,
+                hint: strings.AppStrings.startRandomPracticeQuiz,
                 button: true,
                 child: _AnimatedButton(
                   onPressed: () {
@@ -394,8 +394,8 @@ class _ProgressHeaderState extends State<ProgressHeader>
               if (widget.onMultiplayerPressed != null) ...[
                 const SizedBox(height: 8),
                 Semantics(
-                  label: 'Multiplayer mode',
-                  hint: 'Start a multiplayer quiz game',
+                  label: strings.AppStrings.multiplayerMode,
+                  hint: strings.AppStrings.multiplayerModeHint,
                   button: true,
                   child: _AnimatedButton(
                     onPressed: () {
@@ -429,19 +429,19 @@ String _getDayAbbreviation(DateTime date) {
   // Get the day of the week as an abbreviation
   switch (date.weekday) {
     case DateTime.monday:
-      return 'Ma';
+      return strings.AppStrings.monday;
     case DateTime.tuesday:
-      return 'Di';
+      return strings.AppStrings.tuesday;
     case DateTime.wednesday:
-      return 'Wo';
+      return strings.AppStrings.wednesday;
     case DateTime.thursday:
-      return 'Do';
+      return strings.AppStrings.thursday;
     case DateTime.friday:
-      return 'Vr';
+      return strings.AppStrings.friday;
     case DateTime.saturday:
-      return 'Za';
+      return strings.AppStrings.saturday;
     case DateTime.sunday:
-      return 'Zo';
+      return strings.AppStrings.sunday;
     default:
       return '';
   }
@@ -613,7 +613,9 @@ class _AnimatedButtonState extends State<_AnimatedButton>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(widget.icon,
-                  color: widget.textColor, size: 20, semanticLabel: 'Play'),
+                  color: widget.textColor,
+                  size: 20,
+                  semanticLabel: strings.AppStrings.playButton),
               const SizedBox(width: 8),
               Text(
                 widget.label,

@@ -53,65 +53,67 @@ class _StoreScreenState extends State<StoreScreen> {
     });
   }
 
-
   // Helper methods to get item prices by key
   int _getPriceByKey(BuildContext context, String key) {
     final storeProvider = Provider.of<StoreProvider>(context, listen: false);
-    final item = storeProvider.storeItems.firstWhere((item) => item.itemKey == key,
-        orElse: () => StoreItem(
-              itemKey: key,
-              itemName: key,
-              itemDescription: '',
-              itemType: 'theme',
-              basePrice: 50,
-              currentPrice: 50,
-              isDiscounted: false,
-              discountPercentage: 0,
-              isActive: true,
-              discountStart: null,
-              discountEnd: null,
-            ));
+    final item =
+        storeProvider.storeItems.firstWhere((item) => item.itemKey == key,
+            orElse: () => StoreItem(
+                  itemKey: key,
+                  itemName: key,
+                  itemDescription: '',
+                  itemType: 'theme',
+                  basePrice: 50,
+                  currentPrice: 50,
+                  isDiscounted: false,
+                  discountPercentage: 0,
+                  isActive: true,
+                  discountStart: null,
+                  discountEnd: null,
+                ));
 
     return item.currentPrice;
   }
 
   bool _isDiscountedByKey(BuildContext context, String key) {
     final storeProvider = Provider.of<StoreProvider>(context, listen: false);
-    final item = storeProvider.storeItems.firstWhere((item) => item.itemKey == key,
-        orElse: () => StoreItem(
-              itemKey: key,
-              itemName: key,
-              itemDescription: '',
-              itemType: 'theme',
-              basePrice: 50,
-              currentPrice: 50,
-              isDiscounted: false,
-              discountPercentage: 0,
-              isActive: true,
-              discountStart:
-                  null, // Add these to ensure isCurrentlyDiscounted works properly
-              discountEnd: null,
-            ));
+    final item =
+        storeProvider.storeItems.firstWhere((item) => item.itemKey == key,
+            orElse: () => StoreItem(
+                  itemKey: key,
+                  itemName: key,
+                  itemDescription: '',
+                  itemType: 'theme',
+                  basePrice: 50,
+                  currentPrice: 50,
+                  isDiscounted: false,
+                  discountPercentage: 0,
+                  isActive: true,
+                  discountStart:
+                      null, // Add these to ensure isCurrentlyDiscounted works properly
+                  discountEnd: null,
+                ));
 
     return item.isCurrentlyDiscounted;
   }
 
   int _getDiscountAmountByKey(BuildContext context, String key) {
     final storeProvider = Provider.of<StoreProvider>(context, listen: false);
-    final item = storeProvider.storeItems.firstWhere((item) => item.itemKey == key,
-        orElse: () => StoreItem(
-              itemKey: key,
-              itemName: key,
-              itemDescription: '',
-              itemType: 'theme',
-              basePrice: 50,
-              currentPrice: 50,
-              isDiscounted: false,
-              discountPercentage: 0,
-              isActive: true,
-              discountStart: null,
-              discountEnd: null,
-            ));
+    final item =
+        storeProvider.storeItems.firstWhere((item) => item.itemKey == key,
+            orElse: () => StoreItem(
+                  itemKey: key,
+                  itemName: key,
+                  itemDescription: '',
+                  itemType: 'theme',
+                  basePrice: 50,
+                  currentPrice: 50,
+                  isDiscounted: false,
+                  discountPercentage: 0,
+                  isActive: true,
+                  discountStart: null,
+                  discountEnd: null,
+                ));
 
     return item.basePrice - item.currentPrice;
   }
@@ -198,7 +200,7 @@ class _StoreScreenState extends State<StoreScreen> {
                     ),
                     SizedBox(height: isDesktop ? 32 : 24),
                     Text(
-                      'Geen internetverbinding',
+                      strings.AppStrings.connectionError,
                       style: textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.w700,
                         color: colorScheme.error,
@@ -207,7 +209,7 @@ class _StoreScreenState extends State<StoreScreen> {
                     ),
                     SizedBox(height: isDesktop ? 16 : 12),
                     Text(
-                      'Controleer je internetverbinding en probeer het opnieuw',
+                      strings.AppStrings.connectionErrorMsg,
                       style: textTheme.bodyLarge?.copyWith(
                         color: colorScheme.onSurface.withValues(alpha: 0.7),
                         height: 1.5,
@@ -220,7 +222,9 @@ class _StoreScreenState extends State<StoreScreen> {
                       children: [
                         ElevatedButton.icon(
                           onPressed: () async {
-                            final storeProvider = Provider.of<StoreProvider>(context, listen: false);
+                            final storeProvider = Provider.of<StoreProvider>(
+                                context,
+                                listen: false);
                             await _connectionService.checkConnection();
                             if (_connectionService.isConnected) {
                               storeProvider.loadStoreItems();
@@ -228,7 +232,7 @@ class _StoreScreenState extends State<StoreScreen> {
                             setState(() {});
                           },
                           icon: const Icon(Icons.refresh_rounded),
-                          label: const Text('Opnieuw proberen'),
+                          label: Text(strings.AppStrings.tryAgain),
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(
                               horizontal: isDesktop ? 32 : 24,
@@ -294,7 +298,7 @@ class _StoreScreenState extends State<StoreScreen> {
     // Show error if loading failed
     if (storeProvider.error != null) {
       IconData errorIcon = Icons.error_outline_rounded;
-      String errorTitle = 'Fout bij laden winkel';
+      String errorTitle = strings.AppStrings.errorLoadingStore;
       Color errorColor = colorScheme.error;
 
       return Scaffold(
@@ -383,11 +387,13 @@ class _StoreScreenState extends State<StoreScreen> {
                       children: [
                         ElevatedButton.icon(
                           onPressed: () {
-                            final storeProvider = Provider.of<StoreProvider>(context, listen: false);
+                            final storeProvider = Provider.of<StoreProvider>(
+                                context,
+                                listen: false);
                             storeProvider.loadStoreItems();
                           },
                           icon: const Icon(Icons.refresh_rounded),
-                          label: const Text('Opnieuw proberen'),
+                          label: Text(strings.AppStrings.tryAgain),
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(
                               horizontal: isDesktop ? 32 : 24,
@@ -444,7 +450,8 @@ class _StoreScreenState extends State<StoreScreen> {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          final storeProvider = Provider.of<StoreProvider>(context, listen: false);
+          final storeProvider =
+              Provider.of<StoreProvider>(context, listen: false);
           await storeProvider.loadStoreItems();
         },
         child: SafeArea(
@@ -543,16 +550,16 @@ class _StoreScreenState extends State<StoreScreen> {
                       icon: Icons.flash_on_rounded,
                       iconColor: colorScheme.primary,
                       cost: _getPriceByKey(context, 'double_stars_5_questions'),
-                      isDiscounted:
-                          _isDiscountedByKey(context, 'double_stars_5_questions'),
-                      discountAmount:
-                          _getDiscountAmountByKey(context, 'double_stars_5_questions'),
+                      isDiscounted: _isDiscountedByKey(
+                          context, 'double_stars_5_questions'),
+                      discountAmount: _getDiscountAmountByKey(
+                          context, 'double_stars_5_questions'),
                       isDev: isDev,
                       gameStats: gameStats,
                       isDesktop: isDesktop,
                       onPurchase: () {
                         gameStats.activatePowerup(multiplier: 2, questions: 5);
-                        return 'Dubbele Sterren geactiveerd voor 5 vragen!';
+                        return strings.AppStrings.doubleStarsActivated;
                       },
                     ),
 
@@ -565,16 +572,16 @@ class _StoreScreenState extends State<StoreScreen> {
                       icon: Icons.flash_on_rounded,
                       iconColor: Colors.deepOrange,
                       cost: _getPriceByKey(context, 'triple_stars_5_questions'),
-                      isDiscounted:
-                          _isDiscountedByKey(context, 'triple_stars_5_questions'),
-                      discountAmount:
-                          _getDiscountAmountByKey(context, 'triple_stars_5_questions'),
+                      isDiscounted: _isDiscountedByKey(
+                          context, 'triple_stars_5_questions'),
+                      discountAmount: _getDiscountAmountByKey(
+                          context, 'triple_stars_5_questions'),
                       isDev: isDev,
                       gameStats: gameStats,
                       isDesktop: isDesktop,
                       onPurchase: () {
                         gameStats.activatePowerup(multiplier: 3, questions: 5);
-                        return 'Driedubbele Sterren geactiveerd voor 5 vragen!';
+                        return strings.AppStrings.tripleStarsActivated;
                       },
                     ),
 
@@ -587,17 +594,18 @@ class _StoreScreenState extends State<StoreScreen> {
                           strings.AppStrings.fiveTimesStars5QuestionsDesc,
                       icon: Icons.flash_on_rounded,
                       iconColor: Colors.redAccent,
-                      cost: _getPriceByKey(context, 'five_times_stars_5_questions'),
-                      isDiscounted:
-                          _isDiscountedByKey(context, 'five_times_stars_5_questions'),
-                      discountAmount: _getDiscountAmountByKey(context,
-                          'five_times_stars_5_questions'),
+                      cost: _getPriceByKey(
+                          context, 'five_times_stars_5_questions'),
+                      isDiscounted: _isDiscountedByKey(
+                          context, 'five_times_stars_5_questions'),
+                      discountAmount: _getDiscountAmountByKey(
+                          context, 'five_times_stars_5_questions'),
                       isDev: isDev,
                       gameStats: gameStats,
                       isDesktop: isDesktop,
                       onPurchase: () {
                         gameStats.activatePowerup(multiplier: 5, questions: 5);
-                        return '5x Sterren geactiveerd voor 5 vragen!';
+                        return strings.AppStrings.fiveTimesStarsActivated;
                       },
                     ),
 
@@ -610,17 +618,17 @@ class _StoreScreenState extends State<StoreScreen> {
                       icon: Icons.timer_rounded,
                       iconColor: Colors.orangeAccent,
                       cost: _getPriceByKey(context, 'double_stars_60_seconds'),
-                      isDiscounted:
-                          _isDiscountedByKey(context, 'double_stars_60_seconds'),
-                      discountAmount:
-                          _getDiscountAmountByKey(context, 'double_stars_60_seconds'),
+                      isDiscounted: _isDiscountedByKey(
+                          context, 'double_stars_60_seconds'),
+                      discountAmount: _getDiscountAmountByKey(
+                          context, 'double_stars_60_seconds'),
                       isDev: isDev,
                       gameStats: gameStats,
                       isDesktop: isDesktop,
                       onPurchase: () {
                         gameStats.activatePowerup(
                             multiplier: 2, time: Duration(seconds: 60));
-                        return 'Dubbele Sterren geactiveerd voor 60 seconden!';
+                        return strings.AppStrings.doubleStars60SecondsActivated;
                       },
                     ),
 
@@ -645,7 +653,8 @@ class _StoreScreenState extends State<StoreScreen> {
                       iconColor: Colors.black,
                       cost: _getPriceByKey(context, 'oled_theme'),
                       isDiscounted: _isDiscountedByKey(context, 'oled_theme'),
-                      discountAmount: _getDiscountAmountByKey(context, 'oled_theme'),
+                      discountAmount:
+                          _getDiscountAmountByKey(context, 'oled_theme'),
                       isDev: isDev,
                       gameStats: gameStats,
                       settings: settings,
@@ -664,7 +673,8 @@ class _StoreScreenState extends State<StoreScreen> {
                       iconColor: Colors.green[700]!,
                       cost: _getPriceByKey(context, 'green_theme'),
                       isDiscounted: _isDiscountedByKey(context, 'green_theme'),
-                      discountAmount: _getDiscountAmountByKey(context, 'green_theme'),
+                      discountAmount:
+                          _getDiscountAmountByKey(context, 'green_theme'),
                       isDev: isDev,
                       gameStats: gameStats,
                       settings: settings,
@@ -683,7 +693,8 @@ class _StoreScreenState extends State<StoreScreen> {
                       iconColor: Colors.orange[700]!,
                       cost: _getPriceByKey(context, 'orange_theme'),
                       isDiscounted: _isDiscountedByKey(context, 'orange_theme'),
-                      discountAmount: _getDiscountAmountByKey(context, 'orange_theme'),
+                      discountAmount:
+                          _getDiscountAmountByKey(context, 'orange_theme'),
                       isDev: isDev,
                       gameStats: gameStats,
                       settings: settings,
@@ -696,13 +707,13 @@ class _StoreScreenState extends State<StoreScreen> {
 
                     _buildThemeCard(
                       context,
-                      title: 'Kerst Thema',
-                      description:
-                          'Een feestelijk kerstthema met rode en groene kleuren',
+                      title: strings.AppStrings.christmasTheme,
+                      description: strings.AppStrings.christmasThemeDescription,
                       icon: Icons.card_giftcard_rounded,
                       iconColor: Colors.red[700]!,
                       cost: _getPriceByKey(context, 'christmas_theme'),
-                      isDiscounted: _isDiscountedByKey(context, 'christmas_theme'),
+                      isDiscounted:
+                          _isDiscountedByKey(context, 'christmas_theme'),
                       discountAmount:
                           _getDiscountAmountByKey(context, 'christmas_theme'),
                       isDev: isDev,
@@ -717,13 +728,16 @@ class _StoreScreenState extends State<StoreScreen> {
 
                     _buildThemeCard(
                       context,
-                      title: 'Terminal Green',
-                      description: 'Een klassiek terminal thema met groene tekst op zwarte achtergrond',
+                      title: strings.AppStrings.terminalGreenTheme,
+                      description:
+                          strings.AppStrings.terminalGreenThemeDescription,
                       icon: Icons.code_rounded,
                       iconColor: Colors.green[700]!,
                       cost: _getPriceByKey(context, 'terminal_green_theme'),
-                      isDiscounted: _isDiscountedByKey(context, 'terminal_green_theme'),
-                      discountAmount: _getDiscountAmountByKey(context, 'terminal_green_theme'),
+                      isDiscounted:
+                          _isDiscountedByKey(context, 'terminal_green_theme'),
+                      discountAmount: _getDiscountAmountByKey(
+                          context, 'terminal_green_theme'),
                       isDev: isDev,
                       gameStats: gameStats,
                       settings: settings,
@@ -736,13 +750,15 @@ class _StoreScreenState extends State<StoreScreen> {
 
                     _buildThemeCard(
                       context,
-                      title: 'Ocean Blue',
-                      description: 'Een helder oceaanblauw thema voor een frisse look',
+                      title: strings.AppStrings.oceanBlueTheme,
+                      description: strings.AppStrings.oceanBlueThemeDescription,
                       icon: Icons.waves_rounded,
                       iconColor: Colors.blue[400]!,
                       cost: _getPriceByKey(context, 'ocean_blue_theme'),
-                      isDiscounted: _isDiscountedByKey(context, 'ocean_blue_theme'),
-                      discountAmount: _getDiscountAmountByKey(context, 'ocean_blue_theme'),
+                      isDiscounted:
+                          _isDiscountedByKey(context, 'ocean_blue_theme'),
+                      discountAmount:
+                          _getDiscountAmountByKey(context, 'ocean_blue_theme'),
                       isDev: isDev,
                       gameStats: gameStats,
                       settings: settings,
@@ -755,13 +771,15 @@ class _StoreScreenState extends State<StoreScreen> {
 
                     _buildThemeCard(
                       context,
-                      title: 'Rose White',
-                      description: 'Een elegant roze en wit thema',
+                      title: strings.AppStrings.roseWhiteTheme,
+                      description: strings.AppStrings.roseWhiteThemeDescription,
                       icon: Icons.favorite_rounded,
                       iconColor: Colors.pink[400]!,
                       cost: _getPriceByKey(context, 'rose_white_theme'),
-                      isDiscounted: _isDiscountedByKey(context, 'rose_white_theme'),
-                      discountAmount: _getDiscountAmountByKey(context, 'rose_white_theme'),
+                      isDiscounted:
+                          _isDiscountedByKey(context, 'rose_white_theme'),
+                      discountAmount:
+                          _getDiscountAmountByKey(context, 'rose_white_theme'),
                       isDev: isDev,
                       gameStats: gameStats,
                       settings: settings,
@@ -774,13 +792,15 @@ class _StoreScreenState extends State<StoreScreen> {
 
                     _buildThemeCard(
                       context,
-                      title: 'Dark Wood',
-                      description: 'Een warm donker hout thema',
+                      title: strings.AppStrings.darkWoodTheme,
+                      description: strings.AppStrings.darkWoodThemeDescription,
                       icon: Icons.forest_rounded,
                       iconColor: Colors.brown[700]!,
                       cost: _getPriceByKey(context, 'dark_wood_theme'),
-                      isDiscounted: _isDiscountedByKey(context, 'dark_wood_theme'),
-                      discountAmount: _getDiscountAmountByKey(context, 'dark_wood_theme'),
+                      isDiscounted:
+                          _isDiscountedByKey(context, 'dark_wood_theme'),
+                      discountAmount:
+                          _getDiscountAmountByKey(context, 'dark_wood_theme'),
                       isDev: isDev,
                       gameStats: gameStats,
                       settings: settings,
@@ -799,9 +819,10 @@ class _StoreScreenState extends State<StoreScreen> {
                       icon: Icons.smart_toy_rounded,
                       iconColor: Colors.purple,
                       cost: _getPriceByKey(context, 'ai_theme_generator'),
-                      isDiscounted: _isDiscountedByKey(context, 'ai_theme_generator'),
-                      discountAmount:
-                          _getDiscountAmountByKey(context, 'ai_theme_generator'),
+                      isDiscounted:
+                          _isDiscountedByKey(context, 'ai_theme_generator'),
+                      discountAmount: _getDiscountAmountByKey(
+                          context, 'ai_theme_generator'),
                       isDev: isDev,
                       gameStats: gameStats,
                       isDesktop: isDesktop,
@@ -923,10 +944,10 @@ class _StoreScreenState extends State<StoreScreen> {
                       );
                 if (success) {
                   final message = onPurchase();
-                  
+
                   // Trigger sync after successful purchase
                   await localGameStats.triggerSync();
-                  
+
                   if (!localContext.mounted) return;
 
                   // Show confirmation dialog
@@ -950,7 +971,7 @@ class _StoreScreenState extends State<StoreScreen> {
                               const SizedBox(width: 12),
                               Expanded(
                                 child: Text(
-                                  'Power-up Geactiveerd!',
+                                  strings.AppStrings.powerupActivated,
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 2,
                                 ),
@@ -970,7 +991,7 @@ class _StoreScreenState extends State<StoreScreen> {
                                 ),
                               );
                             },
-                            child: Text('Naar de quiz',
+                            child: Text(strings.AppStrings.goToQuiz,
                                 style: TextStyle(color: colorScheme.primary)),
                           ),
                         ],
@@ -991,7 +1012,7 @@ class _StoreScreenState extends State<StoreScreen> {
                   );
                   if (localContext.mounted) {
                     showTopSnackBar(
-                        localContext, 'Aankoop mislukt, probeer het opnieuw',
+                        localContext, strings.AppStrings.purchaseFailed,
                         style: TopSnackBarStyle.error);
                   }
                 }
@@ -1010,13 +1031,13 @@ class _StoreScreenState extends State<StoreScreen> {
                   },
                 );
                 if (localContext.mounted) {
-                  showTopSnackBar(
-                      localContext, 'Fout bij aankoop: ${e.toString()}',
+                  showTopSnackBar(localContext,
+                      strings.AppStrings.purchaseErrorString(e.toString()),
                       style: TopSnackBarStyle.error);
                 }
               }
             } else {
-              showTopSnackBar(localContext, 'Niet genoeg sterren!',
+              showTopSnackBar(localContext, strings.AppStrings.notEnoughStars,
                   style: TopSnackBarStyle.error);
             }
           },
@@ -1081,7 +1102,7 @@ class _StoreScreenState extends State<StoreScreen> {
                                   ),
                                   SizedBox(width: isDesktop ? 2 : 1),
                                   Text(
-                                    'Korting!',
+                                    strings.AppStrings.discount,
                                     style: textTheme.labelSmall?.copyWith(
                                       fontWeight: FontWeight.w600,
                                       color: Colors.green[700],
@@ -1131,7 +1152,7 @@ class _StoreScreenState extends State<StoreScreen> {
                           ),
                           SizedBox(width: isDesktop ? 6 : 4),
                           Text(
-                            isDev ? 'Gratis' : '$cost',
+                            isDev ? strings.AppStrings.free : '$cost',
                             style: textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.w600,
                               color: colorScheme.primary,
@@ -1233,15 +1254,16 @@ class _StoreScreenState extends State<StoreScreen> {
                       );
                 if (success) {
                   await localSettings.unlockTheme(themeKey);
-                  
+
                   // Apply the purchased theme immediately
                   await localSettings.setCustomTheme(themeKey);
-                  
+
                   // Trigger sync after successful purchase
                   await localGameStats.triggerSync();
-                  
+
                   if (!localContext.mounted) return;
-                  final message = '$title ${strings.AppStrings.themeUnlockedWithSwitchOption}';
+                  final message =
+                      '$title ${strings.AppStrings.themeUnlockedWithSwitchOption}';
                   showTopSnackBar(localContext, message,
                       style: TopSnackBarStyle.success);
                 } else {
@@ -1260,7 +1282,7 @@ class _StoreScreenState extends State<StoreScreen> {
                   );
                   if (localContext.mounted) {
                     showTopSnackBar(
-                        localContext, 'Aankoop mislukt, probeer het opnieuw',
+                        localContext, strings.AppStrings.purchaseFailed,
                         style: TopSnackBarStyle.error);
                   }
                 }
@@ -1279,13 +1301,13 @@ class _StoreScreenState extends State<StoreScreen> {
                   },
                 );
                 if (localContext.mounted) {
-                  showTopSnackBar(
-                      localContext, 'Fout bij aankoop: ${e.toString()}',
+                  showTopSnackBar(localContext,
+                      strings.AppStrings.purchaseErrorString(e.toString()),
                       style: TopSnackBarStyle.error);
                 }
               }
             } else {
-              showTopSnackBar(localContext, 'Niet genoeg sterren!',
+              showTopSnackBar(localContext, strings.AppStrings.notEnoughStars,
                   style: TopSnackBarStyle.error);
             }
           },
@@ -1350,7 +1372,7 @@ class _StoreScreenState extends State<StoreScreen> {
                                   ),
                                   SizedBox(width: isDesktop ? 2 : 1),
                                   Text(
-                                    'Korting!',
+                                    strings.AppStrings.discount,
                                     style: textTheme.labelSmall?.copyWith(
                                       fontWeight: FontWeight.w600,
                                       color: Colors.green[700],
@@ -1414,7 +1436,7 @@ class _StoreScreenState extends State<StoreScreen> {
                                 ),
                                 SizedBox(width: isDesktop ? 6 : 4),
                                 Text(
-                                  isDev ? 'Gratis' : '$cost',
+                                  isDev ? strings.AppStrings.free : '$cost',
                                   style: textTheme.titleSmall?.copyWith(
                                     fontWeight: FontWeight.w600,
                                     color: colorScheme.primary,
@@ -1514,7 +1536,7 @@ class _StoreScreenState extends State<StoreScreen> {
                   );
                   if (localContext.mounted) {
                     showTopSnackBar(
-                        localContext, 'Aankoop mislukt, probeer het opnieuw',
+                        localContext, strings.AppStrings.purchaseFailed,
                         style: TopSnackBarStyle.error);
                   }
                   return;
@@ -1532,8 +1554,8 @@ class _StoreScreenState extends State<StoreScreen> {
                   },
                 );
                 if (localContext.mounted) {
-                  showTopSnackBar(
-                      localContext, 'Fout bij betaling: ${e.toString()}',
+                  showTopSnackBar(localContext,
+                      strings.AppStrings.paymentError(e.toString()),
                       style: TopSnackBarStyle.error);
                 }
                 return;
@@ -1562,13 +1584,13 @@ class _StoreScreenState extends State<StoreScreen> {
                   },
                 );
                 if (localContext.mounted) {
-                  showTopSnackBar(
-                      localContext, 'Fout bij openen van AI thema generator',
+                  showTopSnackBar(localContext,
+                      strings.AppStrings.errorOpeningAiThemeGenerator,
                       style: TopSnackBarStyle.error);
                 }
               }
             } else {
-              showTopSnackBar(localContext, 'Niet genoeg sterren!',
+              showTopSnackBar(localContext, strings.AppStrings.notEnoughStars,
                   style: TopSnackBarStyle.error);
             }
           },
@@ -1633,7 +1655,7 @@ class _StoreScreenState extends State<StoreScreen> {
                                   ),
                                   SizedBox(width: isDesktop ? 2 : 1),
                                   Text(
-                                    'Korting!',
+                                    strings.AppStrings.discount,
                                     style: textTheme.labelSmall?.copyWith(
                                       fontWeight: FontWeight.w600,
                                       color: Colors.green[700],
@@ -1683,7 +1705,7 @@ class _StoreScreenState extends State<StoreScreen> {
                           ),
                           SizedBox(width: isDesktop ? 6 : 4),
                           Text(
-                            isDev ? 'Gratis' : '$cost',
+                            isDev ? strings.AppStrings.free : '$cost',
                             style: textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.w600,
                               color: colorScheme.primary,
@@ -1701,6 +1723,7 @@ class _StoreScreenState extends State<StoreScreen> {
       ),
     );
   }
+
   Widget _buildCouponCard(
     BuildContext context, {
     required bool isDesktop,
@@ -1762,5 +1785,4 @@ class _StoreScreenState extends State<StoreScreen> {
       ],
     );
   }
-
 }

@@ -1063,7 +1063,7 @@ class _QuizScreenState extends State<QuizScreen>
         Provider.of<LessonProgressProvider>(context, listen: false);
     await progress.markCompleted(
         lesson: lesson, correct: correct, total: total);
-    
+
     // Trigger sync after lesson completion
     await progress.triggerSync();
 
@@ -1104,7 +1104,7 @@ class _QuizScreenState extends State<QuizScreen>
           Provider.of<GameStatsProvider>(context, listen: false);
       await AutomaticErrorReporter.reportQuestionError(
         message: 'User reported issue with question',
-        userMessage: 'Question reported by user',
+        userMessage: strings.AppStrings.questionReportedByUser,
         questionId: questionId,
         questionText: question.question,
         additionalInfo: {
@@ -1248,7 +1248,7 @@ class _QuizScreenState extends State<QuizScreen>
       // Report this error automatically since it indicates issues with question data
       await AutomaticErrorReporter.reportBiblicalReferenceError(
         message: 'Could not parse biblical reference',
-        userMessage: 'Invalid biblical reference in question',
+        userMessage: strings.AppStrings.invalidBiblicalReferenceInQuestion,
         reference: question.biblicalReference ?? 'null',
         questionId: question.id,
         additionalInfo: {

@@ -49,7 +49,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     analyticsService.screen(context, 'SettingsScreen');
     analyticsService.trackFeatureStart(
         context, AnalyticsService.featureSettings);
-
   }
 
   @override
@@ -327,9 +326,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         subtitle: strings.AppStrings.automaticBugReportsDesc,
         child: _buildSwitch(
           settings.automaticBugReporting,
-          (value) => _updateSetting(
-              settings,
-              'toggle_automatic_bug_reporting',
+          (value) => _updateSetting(settings, 'toggle_automatic_bug_reporting',
               () => settings.setAutomaticBugReporting(value)),
           colorScheme,
         ),
@@ -344,8 +341,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
         _SettingItem(
           title: strings.AppStrings.apiPort,
-          subtitle:
-              '${strings.AppStrings.apiPortDesc} (${settings.apiPort})',
+          subtitle: '${strings.AppStrings.apiPortDesc} (${settings.apiPort})',
           child: _buildApiPortControl(settings),
         ),
         _SettingItem(
@@ -486,9 +482,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     final filteredItems = searchQuery.isEmpty
         ? allItems
-        : allItems.where((item) =>
-            item.title.toLowerCase().contains(searchQuery) ||
-            (item.subtitle?.toLowerCase().contains(searchQuery) ?? false)).toList();
+        : allItems
+            .where((item) =>
+                item.title.toLowerCase().contains(searchQuery) ||
+                (item.subtitle?.toLowerCase().contains(searchQuery) ?? false))
+            .toList();
 
     return ListView(
       padding: EdgeInsets.symmetric(horizontal: isSmallScreen ? 16.0 : 24.0),
@@ -502,7 +500,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
             borderRadius: BorderRadius.circular(12),
           ),
           child: Column(
-            children: filteredItems.map((item) => _buildSettingRow(context, item, colorScheme)).toList(),
+            children: filteredItems
+                .map((item) => _buildSettingRow(context, item, colorScheme))
+                .toList(),
           ),
         ),
         const SizedBox(height: 24),
@@ -511,7 +511,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ],
     );
   }
-
 
   Widget _buildSettingRow(
       BuildContext context, _SettingItem item, ColorScheme colorScheme) {
@@ -662,20 +661,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
       SettingsProvider settings, ColorScheme colorScheme, bool isSmallScreen) {
     return DropdownButton<String>(
       value: settings.language,
-      items: const [
+      items: [
         DropdownMenuItem(
           value: 'nl',
-          child: Text('Nederlands'),
+          child: Text(strings.AppStrings.languageNl),
         ),
         DropdownMenuItem(
           value: 'en',
-          child: Text('English'),
+          child: Text(strings.AppStrings.languageEn),
         ),
       ],
       onChanged: (String? value) {
         if (value != null) {
-          _updateSetting(settings, 'change_language',
-              () => settings.setLanguage(value));
+          _updateSetting(
+              settings, 'change_language', () => settings.setLanguage(value));
         }
       },
       style: TextStyle(
@@ -979,7 +978,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     settings.setAnalyticsEnabled(value);
   }
 
-
   // Dialog and navigation methods (simplified implementations)
   void _showDonateDialog(BuildContext context) async {
     final analytics = Provider.of<AnalyticsService>(context, listen: false);
@@ -1017,7 +1015,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     final settings = Provider.of<SettingsProvider>(context, listen: false);
     final gameStats = Provider.of<GameStatsProvider>(context, listen: false);
-    final lessonProgress = Provider.of<LessonProgressProvider>(context, listen: false);
+    final lessonProgress =
+        Provider.of<LessonProgressProvider>(context, listen: false);
 
     final allData = {
       'settings': settings.getExportData(),
@@ -1033,7 +1032,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (context.mounted) {
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => ExportAllDataScreen(jsonData: json.encode(encryptedData)),
+          builder: (context) =>
+              ExportAllDataScreen(jsonData: json.encode(encryptedData)),
         ),
       );
     }
@@ -1178,26 +1178,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
       final gameStats = Provider.of<GameStatsProvider>(context, listen: false);
 
       // Calculate total questions and correct percentage
+
       final totalQuestions = gameStats.score + gameStats.incorrectAnswers;
-      final correctPercentage = totalQuestions > 0 ? ((gameStats.score / totalQuestions) * 100).round() : 0;
+
+      final correctPercentage = totalQuestions > 0
+          ? ((gameStats.score / totalQuestions) * 100).round()
+          : 0;
 
       // Create compact stats string: score:currentStreak:longestStreak:incorrectAnswers:totalQuestions:correctPercentage
-      final statsString = '${gameStats.score}:${gameStats.currentStreak}:${gameStats.longestStreak}:${gameStats.incorrectAnswers}:$totalQuestions:$correctPercentage';
+
+      final statsString =
+          '${gameStats.score}:${gameStats.currentStreak}:${gameStats.longestStreak}:${gameStats.incorrectAnswers}:$totalQuestions:$correctPercentage';
 
       // Generate hash (first 16 chars of SHA-256)
+
       final statsHash = await _generateStatsHash(statsString);
 
       // Create the full URL
-      final statsUrl = 'https://bijbelquiz.app/score.html?s=$statsString&h=$statsHash';
+
+      final statsUrl =
+          'https://bijbelquiz.app/score.html?s=$statsString&h=$statsHash';
 
       await Clipboard.setData(ClipboardData(text: statsUrl));
+
       if (context.mounted) {
         showTopSnackBar(context, strings.AppStrings.statsLinkCopied,
             style: TopSnackBarStyle.success);
       }
     } catch (e) {
       if (context.mounted) {
-        showTopSnackBar(context, 'Error copying link: $e',
+        showTopSnackBar(context, strings.AppStrings.errorCopyingLink,
             style: TopSnackBarStyle.error);
       }
     }
@@ -1211,7 +1221,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
       return digest.toString().substring(0, 16);
     } catch (e) {
       // Fallback hash if crypto fails
-      return statsString.hashCode.toRadixString(16).padLeft(16, '0').substring(0, 16);
+      return statsString.hashCode
+          .toRadixString(16)
+          .padLeft(16, '0')
+          .substring(0, 16);
     }
   }
 
@@ -1392,7 +1405,8 @@ class _EncryptionService {
   }
 
   /// Encrypt data using AES-GCM
-  static Future<Map<String, dynamic>> encryptData(Map<String, dynamic> data) async {
+  static Future<Map<String, dynamic>> encryptData(
+      Map<String, dynamic> data) async {
     try {
       final secretKey = await _getSecretKey();
       final jsonString = json.encode(data);
@@ -1425,12 +1439,14 @@ class _EncryptionService {
   }
 
   /// Decrypt data using AES-GCM
-  static Future<Map<String, dynamic>> decryptData(Map<String, dynamic> encryptedData) async {
+  static Future<Map<String, dynamic>> decryptData(
+      Map<String, dynamic> encryptedData) async {
     try {
       final secretKey = await _getSecretKey();
 
       // Extract and decode the encrypted data
-      final encryptedBytes = base64.decode(encryptedData['encryptedData'] as String);
+      final encryptedBytes =
+          base64.decode(encryptedData['encryptedData'] as String);
       final secretBox = SecretBox.fromConcatenation(
         encryptedBytes,
         nonceLength: _algorithm.nonceLength,
@@ -1447,22 +1463,25 @@ class _EncryptionService {
       AppLogger.error('Decryption failed: $e');
       // Try to handle unencrypted fallback data
       try {
-        final fallbackData = base64.decode(encryptedData['encryptedData'] as String);
+        final fallbackData =
+            base64.decode(encryptedData['encryptedData'] as String);
         final fallbackString = utf8.decode(fallbackData);
         return json.decode(fallbackString) as Map<String, dynamic>;
       } catch (fallbackError) {
         AppLogger.error('Fallback decryption also failed: $fallbackError');
-        throw Exception('Failed to decrypt data: ${e.toString()}. Fallback also failed: ${fallbackError.toString()}');
+        throw Exception(
+            'Failed to decrypt data: ${e.toString()}. Fallback also failed: ${fallbackError.toString()}');
       }
     }
   }
 
-
   /// Handle import data with decryption
-  static Future<Map<String, dynamic>> handleImportData(Map<String, dynamic> parsedData) async {
+  static Future<Map<String, dynamic>> handleImportData(
+      Map<String, dynamic> parsedData) async {
     try {
       // Check if this is encrypted data
-      if (parsedData.containsKey('encryptedData') && parsedData.containsKey('encryptionInfo')) {
+      if (parsedData.containsKey('encryptedData') &&
+          parsedData.containsKey('encryptionInfo')) {
         // This is encrypted data, decrypt it
         return await decryptData(parsedData);
       } else {
@@ -1472,7 +1491,9 @@ class _EncryptionService {
     } catch (e) {
       AppLogger.error('Error handling import data: $e');
       // If decryption fails, try to handle as unencrypted data
-      if (parsedData.containsKey('settings') && parsedData.containsKey('gameStats') && parsedData.containsKey('lessonProgress')) {
+      if (parsedData.containsKey('settings') &&
+          parsedData.containsKey('gameStats') &&
+          parsedData.containsKey('lessonProgress')) {
         return parsedData;
       }
       throw Exception('Invalid import data format: ${e.toString()}');
@@ -1641,23 +1662,34 @@ class _ImportStatsScreenState extends State<ImportStatsScreen> {
                     onPressed: () async {
                       final input = _controller.text.trim();
                       if (input.isEmpty) {
-                        showTopSnackBar(context, 'Please enter data to import',
+                        showTopSnackBar(
+                            context, strings.AppStrings.pleaseEnterDataToImport,
                             style: TopSnackBarStyle.error);
                         return;
                       }
                       try {
                         // Handle import data with decryption
-                        final decryptedData = await _EncryptionService.handleImportData(json.decode(input));
-  
+                        final decryptedData =
+                            await _EncryptionService.handleImportData(
+                                json.decode(input));
+
                         // Import JSON data
                         if (!context.mounted) return;
-                        final settings = Provider.of<SettingsProvider>(context, listen: false);
-                        final gameStats = Provider.of<GameStatsProvider>(context, listen: false);
-                        final lessonProgress = Provider.of<LessonProgressProvider>(context, listen: false);
-  
-                        await settings.loadImportData(decryptedData['settings']);
-                        await gameStats.loadImportData(decryptedData['gameStats']);
-                        await lessonProgress.loadImportData(decryptedData['lessonProgress']);
+                        final settings = Provider.of<SettingsProvider>(context,
+                            listen: false);
+                        final gameStats = Provider.of<GameStatsProvider>(
+                            context,
+                            listen: false);
+                        final lessonProgress =
+                            Provider.of<LessonProgressProvider>(context,
+                                listen: false);
+
+                        await settings
+                            .loadImportData(decryptedData['settings']);
+                        await gameStats
+                            .loadImportData(decryptedData['gameStats']);
+                        await lessonProgress
+                            .loadImportData(decryptedData['lessonProgress']);
 
                         if (context.mounted) {
                           Navigator.pop(context);
@@ -1667,7 +1699,8 @@ class _ImportStatsScreenState extends State<ImportStatsScreen> {
                         }
                       } catch (e) {
                         if (context.mounted) {
-                          showTopSnackBar(context, 'Import failed: $e',
+                          showTopSnackBar(context,
+                              strings.AppStrings.importFailed + e.toString(),
                               style: TopSnackBarStyle.error);
                         }
                       }
@@ -1712,7 +1745,8 @@ class ExportAllDataScreen extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: SelectableText(
                     jsonData,
-                    style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
+                    style:
+                        const TextStyle(fontFamily: 'monospace', fontSize: 12),
                   ),
                 ),
               ),
@@ -1725,7 +1759,8 @@ class ExportAllDataScreen extends StatelessWidget {
                     onPressed: () async {
                       await Clipboard.setData(ClipboardData(text: jsonData));
                       if (context.mounted) {
-                        showTopSnackBar(context, strings.AppStrings.jsonDataCopied,
+                        showTopSnackBar(
+                            context, strings.AppStrings.jsonDataCopied,
                             style: TopSnackBarStyle.success);
                       }
                     },
