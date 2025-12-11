@@ -42,7 +42,7 @@ class _AuthViewState extends State<AuthView> {
     if (errorString.contains('failed to fetch') ||
         errorString.contains('network error') ||
         errorString.contains('connection')) {
-      return AppStrings.connectionError + '. ' + AppStrings.connectionErrorMsg;
+      return '${AppStrings.connectionError}. ${AppStrings.connectionErrorMsg}';
     }
 
     // Authentication errors
