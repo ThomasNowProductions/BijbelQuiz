@@ -33,6 +33,7 @@ import 'screens/stats_share_screen.dart';
 import 'l10n/strings_nl.dart' as strings;
 import 'config/supabase_config.dart';
 import 'services/sync_service.dart';
+import 'services/motivational_notification_service.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -246,6 +247,16 @@ Future<void> main() async {
     // Initialize store provider
     final storeProvider = StoreProvider();
     await storeProvider.loadStoreItems();
+
+    // Initialize motivational notification service
+    try {
+      final notificationService = MotivationalNotificationService();
+      await notificationService.initialize(languageCode: settingsProvider.language);
+      AppLogger.info('Motivational notification service initialized');
+    } catch (e) {
+      AppLogger.error('Failed to initialize motivational notification service', e);
+      // Continue without notifications - they're not critical for app functionality
+    }
 
     AppLogger.info('Starting Flutter app with service container...');
     runApp(

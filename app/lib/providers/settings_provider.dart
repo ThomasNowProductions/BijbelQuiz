@@ -40,6 +40,7 @@ class SettingsProvider extends ChangeNotifier {
   static const String _colorfulModeKey = 'colorful_mode';
   static const String _hidePromoCardKey = 'hide_promo_card';
   static const String _automaticBugReportingKey = 'automatic_bug_reporting';
+  static const String _motivationalNotificationsKey = 'motivational_notifications_enabled';
 
   SharedPreferences? _prefs;
   String _language = 'nl';
@@ -90,6 +91,9 @@ class SettingsProvider extends ChangeNotifier {
   // Bug reporting settings
   bool _automaticBugReporting =
       true; // default to true (automatically send bug reports)
+
+  // Notification settings
+  bool _motivationalNotificationsEnabled = true; // default to true
 
   SettingsProvider() {
     _initializeSyncService();
@@ -196,6 +200,9 @@ class SettingsProvider extends ChangeNotifier {
 
   /// Whether automatic bug reporting is enabled
   bool get automaticBugReporting => _automaticBugReporting;
+
+  /// Whether motivational notifications are enabled
+  bool get motivationalNotificationsEnabled => _motivationalNotificationsEnabled;
 
   /// Static method to check automatic bug reporting setting without BuildContext
   /// Returns true by default to maintain backward compatibility
@@ -492,6 +499,10 @@ class SettingsProvider extends ChangeNotifier {
       // Load automatic bug reporting setting
       _automaticBugReporting =
           _getBoolSetting(_automaticBugReportingKey, defaultValue: true);
+
+      // Load motivational notifications setting
+      _motivationalNotificationsEnabled =
+          _getBoolSetting(_motivationalNotificationsKey, defaultValue: true);
 
       final unlocked = _prefs?.getStringList(_unlockedThemesKey);
       if (unlocked != null) {
@@ -934,6 +945,21 @@ class SettingsProvider extends ChangeNotifier {
     );
   }
 
+  /// Updates the motivational notifications setting
+  Future<void> setMotivationalNotificationsEnabled(bool enabled) async {
+    AppLogger.info(
+        'Changing motivational notifications setting from $_motivationalNotificationsEnabled to $enabled');
+    await _saveSetting(
+      action: () async {
+        _motivationalNotificationsEnabled = enabled;
+        await _prefs?.setBool(_motivationalNotificationsKey, enabled);
+        AppLogger.info(
+            'Motivational notifications setting saved successfully: $enabled');
+      },
+      errorMessage: 'Failed to save motivational notifications setting',
+    );
+  }
+
   // Helper method to safely get a boolean setting with type checking
   bool _getBoolSetting(String key, {required bool defaultValue}) {
     try {
@@ -983,6 +1009,7 @@ class SettingsProvider extends ChangeNotifier {
       'colorfulMode': _colorfulMode,
       'hidePromoCard': _hidePromoCard,
       'automaticBugReporting': _automaticBugReporting,
+      'motivationalNotificationsEnabled': _motivationalNotificationsEnabled,
       'aiThemes': _aiThemes.map((key, value) => MapEntry(key, value.toJson())),
     };
   }
@@ -1035,6 +1062,7 @@ class SettingsProvider extends ChangeNotifier {
     _colorfulMode = data['colorfulMode'] ?? false;
     _hidePromoCard = data['hidePromoCard'] ?? false;
     _automaticBugReporting = data['automaticBugReporting'] ?? true;
+    _motivationalNotificationsEnabled = data['motivationalNotificationsEnabled'] ?? true;
 
     final lastDifficultyPopupMs = data['lastDifficultyPopup'];
     _lastDifficultyPopup = lastDifficultyPopupMs != null

@@ -803,4 +803,12 @@ class AppStringsEn {
   static const String couponRedeemDescription = 'You can redeem coupon codes later at the shop menu.';
   static const String termsAgreementText = 'By continuing you agree to our ';
   static const String termsOfService = 'terms of service';
+
+  // Motivational Notifications
+  static const String motivationalNotifications = 'Motivational Notifications';
+  static const String motivationalNotificationsDesc = 'Receive daily motivational messages to inspire your Bible learning journey';
+  static const String notificationTitle = 'BibleQuiz Inspiration';
+  static const String enabled = 'enabled';
+  static const String disabled = 'disabled';
+  static const String errorUpdatingMotivationalNotifications = 'Failed to update motivational notifications';
 }

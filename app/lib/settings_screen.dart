@@ -12,6 +12,7 @@ import 'screens/guide_screen.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb, kDebugMode;
 import 'services/api_service.dart';
+import 'services/motivational_notification_service.dart';
 import 'widgets/top_snackbar.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:flutter/services.dart';
@@ -331,6 +332,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
               settings,
               'toggle_automatic_bug_reporting',
               () => settings.setAutomaticBugReporting(value)),
+          colorScheme,
+        ),
+      ),
+      _SettingItem(
+        title: strings.AppStrings.motivationalNotifications,
+        subtitle: strings.AppStrings.motivationalNotificationsDesc,
+        child: _buildSwitch(
+          settings.motivationalNotificationsEnabled,
+          (value) => _updateMotivationalNotificationsSetting(settings, value),
           colorScheme,
         ),
       ),
@@ -979,6 +989,43 @@ class _SettingsScreenState extends State<SettingsScreen> {
     settings.setAnalyticsEnabled(value);
   }
 
+  Future<void> _updateMotivationalNotificationsSetting(SettingsProvider settings, bool value) async {
+    final analytics = Provider.of<AnalyticsService>(context, listen: false);
+    analytics.trackFeatureSuccess(
+        context, AnalyticsService.featureSettings,
+        additionalProperties: {
+          'feature': 'motivational_notifications',
+          'enabled': value,
+        });
+    
+    try {
+      final notificationService = MotivationalNotificationService();
+      await notificationService.setEnabled(value, languageCode: settings.language);
+      await settings.setMotivationalNotificationsEnabled(value);
+      
+      if (mounted) {
+        final message = value
+            ? '${strings.AppStrings.motivationalNotifications} ${strings.AppStrings.enabled}'
+            : '${strings.AppStrings.motivationalNotifications} ${strings.AppStrings.disabled}';
+        // ignore: use_build_context_synchronously
+        showTopSnackBar(
+          context,
+          message,
+          style: TopSnackBarStyle.success,
+        );
+      }
+    } catch (e) {
+      AppLogger.error('Failed to update motivational notifications setting', e);
+      if (mounted) {
+        // ignore: use_build_context_synchronously
+        showTopSnackBar(
+          context,
+          strings.AppStrings.errorUpdatingMotivationalNotifications,
+          style: TopSnackBarStyle.error,
+        );
+      }
+    }
+  }
 
   // Dialog and navigation methods (simplified implementations)
   void _showDonateDialog(BuildContext context) async {

@@ -720,4 +720,12 @@ class AppStrings {
   static String get couponRedeemDescription => _language == 'en' ? AppStringsEn.couponRedeemDescription : 'Je kunt couponcodes later verzilveren via het winkelmenu.';
   static String get termsAgreementText => _language == 'en' ? AppStringsEn.termsAgreementText : 'Als u doorgaat gaat u akkoord met onze ';
   static String get termsOfService => _language == 'en' ? AppStringsEn.termsOfService : 'algemene voorwaarden';
-}
+
+  // Motivational Notifications
+  static String get motivationalNotifications => _language == 'en' ? AppStringsEn.motivationalNotifications : 'Motiverende meldingen';
+  static String get motivationalNotificationsDesc => _language == 'en' ? AppStringsEn.motivationalNotificationsDesc : 'Ontvang dagelijks motiverende berichten om je Bijbel-leerpad te inspireren';
+  static String get notificationTitle => _language == 'en' ? AppStringsEn.notificationTitle : 'BijbelQuiz Inspiratie';
+  static String get enabled => _language == 'en' ? AppStringsEn.enabled : 'ingeschakeld';
+  static String get disabled => _language == 'en' ? AppStringsEn.disabled : 'uitgeschakeld';
+  static String get errorUpdatingMotivationalNotifications => _language == 'en' ? AppStringsEn.errorUpdatingMotivationalNotifications : 'Fout bij het bijwerken van motiverende meldingen';
+  }
