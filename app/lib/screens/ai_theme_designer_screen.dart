@@ -2,6 +2,7 @@ import 'package:bijbelquiz/services/analytics_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../providers/game_stats_provider.dart';
 import '../providers/settings_provider.dart';
 import '../theme/app_theme.dart';
@@ -13,6 +14,8 @@ import '../models/ai_theme.dart';
 import '../utils/automatic_error_reporter.dart';
 import '../services/store_service.dart';
 import '../models/store_item.dart';
+import 'auth_screen.dart';
+import 'main_navigation_screen.dart';
 
 class AIThemeDesignerScreen extends StatefulWidget {
   const AIThemeDesignerScreen({super.key});
@@ -27,11 +30,17 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
   String _generationStatus = '';
   int _cost = 200; // Default cost
   bool _isLoadingCost = true;
+  final bool _requiresAuthentication = true; // Set to true to require account
+  User? _currentUser;
 
   @override
   void initState() {
     super.initState();
     AppLogger.info('AIThemeDesignerScreen initialized');
+
+    // Check authentication first
+    _checkAuthState();
+
     final analyticsService =
         Provider.of<AnalyticsService>(context, listen: false);
     analyticsService.screen(context, 'AIThemeDesignerScreen');
@@ -42,6 +51,41 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
 
     // Load the current price from store
     _loadCost();
+
+    // Navigate to auth screen immediately if not authenticated and authentication is required
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_requiresAuthentication && _currentUser == null) {
+        _navigateToAuthScreen();
+      }
+    });
+  }
+
+  void _checkAuthState() {
+    final user = Supabase.instance.client.auth.currentUser;
+    setState(() {
+      _currentUser = user;
+    });
+  }
+
+  /// Navigates to the auth screen for authentication.
+  void _navigateToAuthScreen() {
+    final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+    analyticsService.capture(context, 'open_auth_screen_from_ai_theme');
+
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => AuthScreen(
+          requiredForSocial: true,
+          onLoginSuccess: () {
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                  builder: (_) => MainNavigationScreen(initialIndex: 3)), // Index 3 for AI theme screen
+              (route) => false,
+            );
+          },
+        ),
+      ),
+    );
   }
 
   Future<void> _loadCost() async {
@@ -80,6 +124,13 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Check auth state when dependencies change
+    _checkAuthState();
+  }
+
+  @override
   void dispose() {
     _themeController.dispose();
     super.dispose();
@@ -88,6 +139,55 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+
+    // If authentication is required and user is not authenticated, show loading state
+    if (_requiresAuthentication && _currentUser == null) {
+      return Scaffold(
+        backgroundColor: colorScheme.surface,
+        appBar: AppBar(
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: colorScheme.primaryContainer,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(
+                  Icons.smart_toy_rounded,
+                  color: colorScheme.onPrimaryContainer,
+                  size: 20,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Text(
+                strings.AppStrings.aiThemeGenerator,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: colorScheme.onSurface,
+                    ),
+              ),
+            ],
+          ),
+          backgroundColor: colorScheme.surface,
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          centerTitle: true,
+        ),
+        body: const Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 24),
+              Text('Verificatie van account...'),
+            ],
+          ),
+        ),
+      );
+    }
+
     final gameStats = Provider.of<GameStatsProvider>(context);
     // final settings = Provider.of<SettingsProvider>(context); // Not used in this method
     final isDev = kDebugMode; // Use kDebugMode to enable dev mode
