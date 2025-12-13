@@ -20,6 +20,8 @@ import '../services/sync_service.dart';
 import '../theme/theme_manager.dart';
 import '../utils/bible_book_mapper.dart';
 import '../utils/automatic_error_reporter.dart';
+import '../models/api_key.dart';
+import '../services/api_key_manager.dart';
 
 /// Service for running a local HTTP API server
 class ApiService {
@@ -33,6 +35,7 @@ class ApiService {
   bool _isRunning = false;
   final Map<String, List<DateTime>> _requestLog = {};
   final Map<String, int> _dailyStarsAdded = {}; // date -> total stars added
+  final ApiKeyManager _apiKeyManager = ApiKeyManager();
 
   /// Whether the API server is currently running
   bool get isRunning => _isRunning;
@@ -84,7 +87,6 @@ class ApiService {
   /// Starts the API server on the specified port with authentication
   Future<void> startServer({
     required int port,
-    required String apiKey,
     required SettingsProvider settingsProvider,
     required GameStatsProvider gameStatsProvider,
     required LessonProgressProvider lessonProgressProvider,
@@ -128,11 +130,11 @@ class ApiService {
       final handler = const Pipeline()
           .addMiddleware(_createSecurityHeadersMiddleware())
           .addMiddleware(_createRateLimitingMiddleware())
-          .addMiddleware(_createPublicEndpointMiddleware(apiKey))
           .addMiddleware(_createAprilFoolsMiddleware())
           .addMiddleware(_createCorsMiddleware())
           .addMiddleware(_createValidationMiddleware())
           .addMiddleware(_createLoggingMiddleware())
+          .addMiddleware(_createAuthenticationMiddleware())
           .addHandler(app.call);
 
       _server = await shelf_io.serve(handler, _defaultBindAddress, port);
@@ -204,7 +206,7 @@ class ApiService {
   }
 
   /// Middleware for API key authentication (allows public access to /health)
-  Middleware _createPublicEndpointMiddleware(String expectedApiKey) {
+  Middleware _createAuthenticationMiddleware() {
     return (Handler innerHandler) {
       return (Request request) async {
         // Allow public access to health endpoint
@@ -212,7 +214,7 @@ class ApiService {
           return await innerHandler(request);
         }
 
-        // Require authentication for all other endpoints
+        // Extract provided API key from headers
         final authHeader = request.headers['authorization'];
         final apiKeyHeader = request.headers['x-api-key'];
 
@@ -224,9 +226,9 @@ class ApiService {
           providedKey = apiKeyHeader;
         }
 
-        if (providedKey == null || providedKey != expectedApiKey) {
+        if (providedKey == null) {
           AppLogger.warning(
-              'API authentication failed from ${request.headers['x-forwarded-for'] ?? request.headers['x-real-ip'] ?? 'unknown IP'}');
+              'API authentication failed: No API key provided from ${request.headers['x-forwarded-for'] ?? request.headers['x-real-ip'] ?? 'unknown IP'}');
           return Response.forbidden(
               json.encode({
                 'error': 'Invalid or missing API key',
@@ -236,6 +238,24 @@ class ApiService {
               }),
               headers: {'Content-Type': 'application/json'});
         }
+
+        // Find the API key in the stored keys
+        final apiKey = await _apiKeyManager.findApiKey(providedKey);
+        if (apiKey == null || !apiKey.isActive) {
+          AppLogger.warning(
+              'API authentication failed: Invalid or inactive API key from ${request.headers['x-forwarded-for'] ?? request.headers['x-real-ip'] ?? 'unknown IP'}');
+          return Response.forbidden(
+              json.encode({
+                'error': 'Invalid or inactive API key',
+                'message':
+                    'The provided API key is invalid or has been deactivated',
+                'timestamp': DateTime.now().toIso8601String(),
+              }),
+              headers: {'Content-Type': 'application/json'});
+        }
+
+        // Increment the request count for the API key
+        await _apiKeyManager.incrementRequestCount(apiKey.id);
 
         return await innerHandler(request);
       };

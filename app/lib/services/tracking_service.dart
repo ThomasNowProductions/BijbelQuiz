@@ -216,6 +216,7 @@ class TrackingService {
   static const String featureSatisfactionSurveys = 'satisfaction_surveys';
   static const String featureDifficultyFeedback = 'difficulty_feedback';
   static const String featureMultiplayerGame = 'multiplayer_game';
+  static const String FEATURE_API_MANAGEMENT = 'api_management';
 
   /// Standardized action names for consistent tracking
   static const String actionAccessed = 'accessed';
@@ -493,6 +494,47 @@ class TrackingService {
   /// Track when user engages with streak tracking
   Future<void> trackStreakFeatureUsed(BuildContext context) async {
     await trackFeatureUsage(context, featureStreakTracking, actionUsed);
+  }
+
+  /// Track when user accesses API key management screen
+  Future<void> trackApiKeyManagementAccess(BuildContext context) async {
+    await trackFeatureUsage(context, FEATURE_API_MANAGEMENT, actionAccessed);
+  }
+
+  /// Track when user creates a new API key
+  Future<void> trackApiKeyCreated(BuildContext context) async {
+    await trackFeatureUsage(context, FEATURE_API_MANAGEMENT, actionUsed,
+        additionalProperties: {'api_key_action': 'created'});
+  }
+
+  /// Track when user edits/renames an API key
+  Future<void> trackApiKeyEdited(BuildContext context) async {
+    await trackFeatureUsage(context, FEATURE_API_MANAGEMENT, actionUsed,
+        additionalProperties: {'api_key_action': 'edited'});
+  }
+
+  /// Track when user revokes an API key
+  Future<void> trackApiKeyRevoked(BuildContext context) async {
+    await trackFeatureUsage(context, FEATURE_API_MANAGEMENT, actionUsed,
+        additionalProperties: {'api_key_action': 'revoked'});
+  }
+
+  /// Track when user activates an API key
+  Future<void> trackApiKeyActivated(BuildContext context) async {
+    await trackFeatureUsage(context, FEATURE_API_MANAGEMENT, actionUsed,
+        additionalProperties: {'api_key_action': 'activated'});
+  }
+
+  /// Track when user deletes an API key
+  Future<void> trackApiKeyDeleted(BuildContext context) async {
+    await trackFeatureUsage(context, FEATURE_API_MANAGEMENT, actionUsed,
+        additionalProperties: {'api_key_action': 'deleted'});
+  }
+
+  /// Track when user copies an API key
+  Future<void> trackApiKeyCopied(BuildContext context) async {
+    await trackFeatureUsage(context, FEATURE_API_MANAGEMENT, actionUsed,
+        additionalProperties: {'api_key_action': 'copied'});
   }
 
   /// ===== POSTHOG-SPECIFIC METHODS =====
