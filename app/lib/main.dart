@@ -495,7 +495,6 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
 
           await apiService.startServer(
             port: settings.apiPort,
-            apiKey: settings.apiKey,
             settingsProvider: settings,
             gameStatsProvider: gameStatsProvider,
             lessonProgressProvider: lessonProgressProvider,

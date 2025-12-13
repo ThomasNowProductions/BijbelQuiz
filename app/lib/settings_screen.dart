@@ -27,6 +27,9 @@ import 'utils/bijbelquiz_gen_utils.dart';
 import 'screens/bijbelquiz_gen_screen.dart';
 import 'theme/theme_manager.dart';
 import 'widgets/bug_report_widget.dart';
+import 'screens/api_key_management_screen.dart';
+import 'services/api_key_manager.dart';
+import 'services/tracking_service.dart';
 
 /// Clean, simple, and responsive settings screen
 class SettingsScreen extends StatefulWidget {
@@ -44,11 +47,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void initState() {
     super.initState();
     AppLogger.info('SettingsScreen initialized');
-    final analyticsService =
-        Provider.of<AnalyticsService>(context, listen: false);
-    analyticsService.screen(context, 'SettingsScreen');
-    analyticsService.trackFeatureStart(
-        context, AnalyticsService.featureSettings);
+    final trackingService = TrackingService();
+    trackingService.screen(context, 'SettingsScreen');
+    trackingService.trackFeatureStart(context, TrackingService.featureSettings);
   }
 
   @override
@@ -57,9 +58,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
     super.dispose();
   }
 
+  void _openApiKeyManagementScreen(BuildContext context) async {
+    final trackingService = TrackingService();
+    trackingService.capture(context, 'open_api_key_management');
+    trackingService.trackFeatureUsage(context, TrackingService.FEATURE_API_MANAGEMENT,
+        TrackingService.actionAccessed);
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const ApiKeyManagementScreen(),
+      ),
+    );
+  }
+
   void _openStatusPage() async {
-    Provider.of<AnalyticsService>(context, listen: false)
-        .capture(context, 'open_status_page');
+    TrackingService().capture(context, 'open_status_page');
     final Uri url = Uri.parse(AppUrls.statusPageUrl);
     if (!await launchUrl(url)) {
       if (mounted) {
@@ -331,25 +343,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
           colorScheme,
         ),
       ),
-      if (settings.apiEnabled) ...[
-        _SettingItem(
-          title: strings.AppStrings.apiKey,
-          subtitle: settings.apiKey.isEmpty
-              ? strings.AppStrings.generateApiKey
-              : _formatApiKey(settings.apiKey),
-          child: _buildApiKeyControls(context, settings, colorScheme),
+      _SettingItem(
+        title: strings.AppStrings.apiKeyManagement,
+        subtitle: strings.AppStrings.apiKeyManagementDesc,
+        onTap: () => _openApiKeyManagementScreen(context),
+        child: _buildActionButton(
+          context,
+          icon: Icons.key,
         ),
-        _SettingItem(
-          title: strings.AppStrings.apiPort,
-          subtitle: '${strings.AppStrings.apiPortDesc} (${settings.apiPort})',
-          child: _buildApiPortControl(settings),
-        ),
-        _SettingItem(
-          title: strings.AppStrings.apiStatus,
-          subtitle: strings.AppStrings.apiStatusDesc,
-          child: _buildApiStatusIndicator(settings),
-        ),
-      ],
+      ),
+      _SettingItem(
+        title: strings.AppStrings.apiPort,
+        subtitle: '${strings.AppStrings.apiPortDesc} (${settings.apiPort})',
+        child: _buildApiPortControl(settings),
+      ),
+      _SettingItem(
+        title: strings.AppStrings.apiStatus,
+        subtitle: strings.AppStrings.apiStatusDesc,
+        child: _buildApiStatusIndicator(settings),
+      ),
       // Actions
       _SettingItem(
         title: strings.AppStrings.donateButton,

@@ -871,6 +871,80 @@ class AppStrings {
       ? AppStringsEn.apiKeyGenerated
       : 'Nieuwe API-sleutel gegenereerd';
 
+  // API Key Management
+  static String get createNewApiKey =>
+      _language == 'en' ? AppStringsEn.createNewApiKey : 'Nieuwe API-sleutel aanmaken';
+  static String get keyName =>
+      _language == 'en' ? AppStringsEn.keyName : 'Sleutelnaam';
+  static String get enterKeyName =>
+      _language == 'en' ? AppStringsEn.enterKeyName : 'Voer een naam in om deze sleutel te identificeren';
+  static String get revokeApiKey =>
+      _language == 'en' ? AppStringsEn.revokeApiKey : 'API-sleutel intrekken';
+  static String get revokeApiKeyMessage => _language == 'en'
+      ? AppStringsEn.revokeApiKeyMessage
+      : 'Weet je zeker dat je deze API-sleutel wilt intrekken? Hiermee wordt deze gedeactiveerd en kan deze niet meer worden gebruikt.';
+  static String get deleteApiKey =>
+      _language == 'en' ? AppStringsEn.deleteApiKey : 'API-sleutel verwijderen';
+  static String get deleteApiKeyMessage => _language == 'en'
+      ? AppStringsEn.deleteApiKeyMessage
+      : 'Weet je zeker dat je deze API-sleutel wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.';
+  static String get renameApiKey =>
+      _language == 'en' ? AppStringsEn.renameApiKey : 'API-sleutel hernoemen';
+  static String get apiKeyCreatedOn =>
+      _language == 'en' ? AppStringsEn.apiKeyCreatedOn : 'Aangemaakt op';
+  static String get lastUsed =>
+      _language == 'en' ? AppStringsEn.lastUsed : 'Laatst gebruikt';
+  static String get requests =>
+      _language == 'en' ? AppStringsEn.requests : 'verzoeken';
+  static String get revoke =>
+      _language == 'en' ? AppStringsEn.revoke : 'Intrekken';
+  static String get activate =>
+      _language == 'en' ? AppStringsEn.activate : 'Activeren';
+  static String get rename =>
+      _language == 'en' ? AppStringsEn.rename : 'Hernoemen';
+  static String get delete =>
+      _language == 'en' ? AppStringsEn.delete : 'Verwijderen';
+  static String get noApiKeysCreated =>
+      _language == 'en' ? AppStringsEn.noApiKeysCreated : 'Nog geen API-sleutels aangemaakt';
+  static String get createFirstApiKey => _language == 'en'
+      ? AppStringsEn.createFirstApiKey
+      : 'Maak je eerste API-sleutel aan om aan de slag te gaan';
+  static String get apiKeys =>
+      _language == 'en' ? AppStringsEn.apiKeys : 'Sleutels';
+  static String get apiKeyCreatedSuccessfully => _language == 'en'
+      ? AppStringsEn.apiKeyCreatedSuccessfully
+      : 'API-sleutel succesvol aangemaakt!';
+  static String get apiKeyRenamedSuccessfully => _language == 'en'
+      ? AppStringsEn.apiKeyRenamedSuccessfully
+      : 'API-sleutel succesvol hernoemd!';
+  static String get apiKeyRevokedSuccessfully => _language == 'en'
+      ? AppStringsEn.apiKeyRevokedSuccessfully
+      : 'API-sleutel succesvol ingetrokken!';
+  static String get apiKeyActivatedSuccessfully => _language == 'en'
+      ? AppStringsEn.apiKeyActivatedSuccessfully
+      : 'API-sleutel succesvol geactiveerd!';
+  static String get apiKeyDeletedSuccessfully => _language == 'en'
+      ? AppStringsEn.apiKeyDeletedSuccessfully
+      : 'API-sleutel succesvol verwijderd!';
+  static String get failedToCreateApiKey => _language == 'en'
+      ? AppStringsEn.failedToCreateApiKey
+      : 'Kon API-sleutel niet aanmaken';
+  static String get failedToRenameApiKey => _language == 'en'
+      ? AppStringsEn.failedToRenameApiKey
+      : 'Kon API-sleutel niet hernoemen';
+  static String get failedToRevokeApiKey => _language == 'en'
+      ? AppStringsEn.failedToRevokeApiKey
+      : 'Kon API-sleutel niet intrekken';
+  static String get failedToActivateApiKey => _language == 'en'
+      ? AppStringsEn.failedToActivateApiKey
+      : 'Kon API-sleutel niet activeren';
+  static String get failedToDeleteApiKey => _language == 'en'
+      ? AppStringsEn.failedToDeleteApiKey
+      : 'Kon API-sleutel niet verwijderen';
+  static String get apiKeyCopiedToClipboard => _language == 'en'
+      ? AppStringsEn.apiKeyCopiedToClipboard
+      : 'API-sleutel gekopieerd naar klembord!';
+
   // Social Media
   static String get followOnSocialMedia => _language == 'en'
       ? AppStringsEn.followOnSocialMedia
@@ -1814,4 +1888,10 @@ class AppStrings {
       _language == 'en' ? AppStringsEn.languageNl : 'Nederlands';
   static String get languageEn =>
       _language == 'en' ? AppStringsEn.languageEn : 'English';
+
+  // API Key Management
+  static String get apiKeyManagement =>
+      _language == 'en' ? AppStringsEn.apiKeyManagement : 'API-sleutelbeheer';
+  static String get apiKeyManagementDesc =>
+      _language == 'en' ? AppStringsEn.apiKeyManagementDesc : 'Beheer je API-sleutels';
 }

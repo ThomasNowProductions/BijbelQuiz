@@ -477,6 +477,37 @@ class AppStringsEn {
   static const String generateKey = 'Generate Key';
   static const String apiKeyGenerated = 'New API key generated';
 
+  // API Key Management
+  static const String createNewApiKey = 'Create New API Key';
+  static const String keyName = 'Key Name';
+  static const String enterKeyName = 'Enter a name to identify this key';
+  static const String revokeApiKey = 'Revoke API Key';
+  static const String revokeApiKeyMessage = 'Are you sure you want to revoke this API key? This will deactivate it and prevent further use.';
+  static const String deleteApiKey = 'Delete API Key';
+  static const String deleteApiKeyMessage = 'Are you sure you want to delete this API key? This action cannot be undone.';
+  static const String renameApiKey = 'Rename API Key';
+  static const String apiKeyCreatedOn = 'Created on';
+  static const String lastUsed = 'Last Used';
+  static const String requests = 'requests';
+  static const String revoke = 'Revoke';
+  static const String activate = 'Activate';
+  static const String rename = 'Rename';
+  static const String delete = 'Delete';
+  static const String noApiKeysCreated = 'No API keys created yet';
+  static const String createFirstApiKey = 'Create your first API key to get started';
+  static const String apiKeys = 'Keys';
+  static const String apiKeyCreatedSuccessfully = 'API key created successfully!';
+  static const String apiKeyRenamedSuccessfully = 'API key renamed successfully!';
+  static const String apiKeyRevokedSuccessfully = 'API key revoked successfully!';
+  static const String apiKeyActivatedSuccessfully = 'API key activated successfully!';
+  static const String apiKeyDeletedSuccessfully = 'API key deleted successfully!';
+  static const String failedToCreateApiKey = 'Failed to create API key';
+  static const String failedToRenameApiKey = 'Failed to rename API key';
+  static const String failedToRevokeApiKey = 'Failed to revoke API key';
+  static const String failedToActivateApiKey = 'Failed to activate API key';
+  static const String failedToDeleteApiKey = 'Failed to delete API key';
+  static const String apiKeyCopiedToClipboard = 'API key copied to clipboard!';
+
   // Social Media
   static const String followOnSocialMedia = 'Follow on social media';
   static const String followUsOnSocialMedia = 'Follow us on social media';
@@ -1001,4 +1032,8 @@ class AppStringsEn {
   // Languages
   static const String languageNl = 'Dutch';
   static const String languageEn = 'English';
+
+  // API Key Management
+  static const String apiKeyManagement = 'API Key Management';
+  static const String apiKeyManagementDesc = 'Manage your API keys';
 }
