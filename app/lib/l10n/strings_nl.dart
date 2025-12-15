@@ -674,7 +674,7 @@ class AppStrings {
       : 'Help ons te verbeteren';
   static String get satisfactionSurveyMessage => _language == 'en'
       ? AppStringsEn.satisfactionSurveyMessage
-      : 'Neem een paar minuten om ons te helpen de app te verbeteren. Uw feedback is belangrijk!';
+      : 'Neem een paar minuten om ons te helpen de app te verbeteren. Uw feedback is belangrijk! U ontvangt 25 gratis punten als bedankje.';
   static String get satisfactionSurveyButton => _language == 'en'
       ? AppStringsEn.satisfactionSurveyButton
       : 'Vul enquête in';

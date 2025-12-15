@@ -65,11 +65,6 @@ class _PromoCardState extends State<PromoCard> {
         cs.primary.withValues(alpha: 0.14),
         cs.primary.withValues(alpha: 0.06)
       ];
-    } else if (widget.socialMediaType != null) {
-      gradientColors = [
-        cs.primary.withValues(alpha: 0.14),
-        cs.primary.withValues(alpha: 0.06)
-      ];
     } else {
       gradientColors = [
         cs.primary.withValues(alpha: 0.14),
@@ -112,25 +107,8 @@ class _PromoCardState extends State<PromoCard> {
                             ? Icons.tune_rounded
                             : widget.isAccountCreation
                                 ? Icons.person_add_rounded
-                                : widget.socialMediaType == 'mastodon'
-                                    ? Icons.alternate_email
-                                    : widget.socialMediaType == 'pixelfed'
-                                        ? Icons.camera_alt
-                                        : widget.socialMediaType == 'kwebler'
-                                            ? Icons.group
-                                            : widget.socialMediaType == 'signal'
-                                                ? Icons.message
-                                                : widget.socialMediaType ==
-                                                        'discord'
-                                                    ? Icons.discord
-                                                    : widget.socialMediaType ==
-                                                            'bluesky'
-                                                        ? Icons.cloud
-                                                        : widget.socialMediaType ==
-                                                                'nooki'
-                                                            ? Icons.group
-                                                            : Icons
-                                                                .group_add_rounded,
+                                : Icons
+                                    .group_add_rounded,
                 color: cs.onSurface.withValues(alpha: 0.7),
                 size: 20,
               ),
@@ -145,28 +123,8 @@ class _PromoCardState extends State<PromoCard> {
                               ? strings.AppStrings.difficultyFeedbackTitle
                               : widget.isAccountCreation
                                   ? strings.AppStrings.createAccount
-                                  : widget.socialMediaType == 'mastodon'
-                                      ? strings.AppStrings.followMastodon
-                                      : widget.socialMediaType == 'pixelfed'
-                                          ? strings.AppStrings.followPixelfed
-                                          : widget.socialMediaType == 'kwebler'
-                                              ? strings.AppStrings.followKwebler
-                                              : widget.socialMediaType == 'signal'
-                                                  ? strings.AppStrings.followSignal
-                                                  : widget.socialMediaType ==
-                                                          'discord'
-                                                      ? strings
-                                                          .AppStrings.followDiscord
-                                                      : widget.socialMediaType ==
-                                                              'bluesky'
-                                                          ? strings.AppStrings
-                                                              .followBluesky
-                                                          : widget.socialMediaType ==
-                                                                  'nooki'
-                                                              ? strings.AppStrings
-                                                                  .followNooki
-                                                              : strings.AppStrings
-                                                                  .followUs,
+                                  : strings.AppStrings
+                                      .followUs,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w800,
                         color: cs.onSurface,
@@ -304,7 +262,7 @@ class _PromoCardState extends State<PromoCard> {
               children: [
                 Expanded(
                   child: ElevatedButton.icon(
-                    onPressed: () => widget.onAction('https://bijbelquiz.app/links'),
+                    onPressed: () => widget.onAction('social_media'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: cs.primary,
                       foregroundColor: cs.onPrimary,

@@ -366,7 +366,7 @@ class AppStringsEn {
   // Satisfaction Survey
   static const String satisfactionSurvey = 'Help Us Improve';
   static const String satisfactionSurveyMessage =
-      'Take a few minutes to help us improve the app. Your feedback is important!';
+      'Take a few minutes to help us improve the app. Your feedback is important! You will receive 25 free points as a thank you.';
   static const String satisfactionSurveyButton = 'Fill out survey';
 
   // Difficulty Feedback
