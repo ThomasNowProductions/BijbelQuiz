@@ -95,6 +95,10 @@
     {
       "source": "/github",
       "destination": "https://github.com/ThomasNowProductions/BijbelQuiz"
+    },
+    {
+      "source": "/vragenlijst",
+      "destination": "https://app.youform.com/forms/bir6movc"
     }
   ],
   "headers": [
