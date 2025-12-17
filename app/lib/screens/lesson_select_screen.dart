@@ -22,6 +22,7 @@ import '../widgets/progress_header.dart';
 import '../widgets/lesson_tile.dart';
 import '../widgets/promo_card.dart';
 import '../widgets/lesson_grid_skeleton.dart';
+import '../utils/streak_calculator.dart' as streak_utils;
 
 class LessonSelectScreen extends StatefulWidget {
   const LessonSelectScreen({super.key});
@@ -34,12 +35,25 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
   final LessonService _lessonService = LessonService();
   final ScrollController _scrollController = ScrollController();
 
-  bool _loading = true;
-  bool _loadingMore = false;
+  /// Whether lessons are currently loading
+  bool _isLoading = true;
+
+  /// Whether more lessons are currently loading
+  bool _isLoadingMore = false;
+
+  /// Error message if loading failed
   String? _error;
+
+  /// List of loaded lessons
   List<Lesson> _lessons = const [];
-  bool _guideCheckCompleted = false; // Prevent multiple guide checks
+
+  /// Flag to prevent multiple guide checks
+  bool _guideCheckCompleted = false;
+
+  /// Whether to show the promotional card
   bool _showPromoCard = false;
+
+  /// Which type of promo to show
   bool _isDonationPromo = true; // true for donation, false for follow
   bool _isSatisfactionPromo = false; // true for satisfaction survey
   bool _isDifficultyPromo = false; // true for difficulty feedback
@@ -82,8 +96,8 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
   void _onScroll() {
     if (_scrollController.position.pixels >=
             _scrollController.position.maxScrollExtent - 500 &&
-        !_loadingMore &&
-        !_loading) {
+        !_isLoadingMore &&
+        !_isLoading) {
       _loadMoreLessons();
     }
   }
@@ -120,6 +134,31 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
     _guideCheckCompleted = true;
   }
 
+  /// Helper method to track lesson selection analytics
+  void _trackLessonSelection(Lesson lesson, bool unlocked) {
+    final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+
+    // Track lesson system usage
+    analyticsService.trackFeatureSuccess(
+        context, AnalyticsService.featureLessonSystem,
+        additionalProperties: {
+          'lesson_id': lesson.id,
+          'lesson_category': lesson.category,
+          'lesson_unlocked': unlocked,
+        });
+
+    // Track streak feature if this contributes to streak
+    if (_streakDays > 0) {
+      analyticsService.trackFeatureUsage(
+          context,
+          AnalyticsService.featureStreakTracking,
+          AnalyticsService.actionUsed,
+          additionalProperties: {
+            'current_streak': _streakDays,
+          });
+    }
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -137,23 +176,17 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
     super.dispose();
   }
 
-  // --- Daily streak helpers ---
-  String _fmtDate(DateTime d) {
-    // yyyy-MM-dd
-    return '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
-  }
-
-  bool _isSunday(DateTime d) => d.weekday == DateTime.sunday;
-
   Future<void> _loadStreakData() async {
     try {
       final prefs = await SharedPreferences.getInstance();
       final list = prefs.getStringList(_activeDaysKey) ?? <String>[];
       _activeDays = list.toSet();
 
-      _recomputeStreak();
-    } catch (_) {
-      // Ignore streak errors silently
+      // Calculate streak using the utility class
+      _streakDays = streak_utils.StreakCalculator.calculateCurrentStreak(_activeDays);
+    } catch (e) {
+      // Log error but continue gracefully
+      debugPrint('Error loading streak data: $e');
     }
     if (mounted) setState(() {});
   }
@@ -170,8 +203,9 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
         final List<dynamic> jsonList = json.decode(jsonString);
         _lessons = jsonList.map((e) => Lesson.fromJson(e)).toList();
       }
-    } catch (_) {
-      // Ignore errors
+    } catch (e) {
+      // Log error but continue gracefully
+      debugPrint('Error loading cached lessons: $e');
     }
     if (mounted) setState(() {});
   }
@@ -181,61 +215,29 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
       final prefs = await SharedPreferences.getInstance();
       final jsonString = json.encode(_lessons.map((l) => l.toJson()).toList());
       await prefs.setString(_cachedLessonsKey, jsonString);
-    } catch (_) {
-      // Ignore errors
+    } catch (e) {
+      // Log error but continue gracefully
+      debugPrint('Error saving cached lessons: $e');
     }
-  }
-
-  void _recomputeStreak() {
-    int streak = 0;
-    DateTime now = DateTime.now();
-    DateTime cursor = DateTime(now.year, now.month, now.day);
-    while (true) {
-      if (_isSunday(cursor)) {
-        // Sunday is a free day, does not break or add to streak
-        cursor = cursor.subtract(const Duration(days: 1));
-        continue;
-      }
-      final dayStr = _fmtDate(cursor);
-      if (_activeDays.contains(dayStr)) {
-        streak += 1;
-        cursor = cursor.subtract(const Duration(days: 1));
-      } else {
-        break;
-      }
-    }
-    _streakDays = streak;
   }
 
   List<DayIndicator> _getFiveDayWindow() {
-    final List<DayIndicator> out = [];
-    final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
-    for (int offset = -2; offset <= 2; offset++) {
-      final day = today.add(Duration(days: offset));
-      final isFuture = day.isAfter(today);
-      final dayStr = _fmtDate(day);
+    final streakDayIndicators = streak_utils.StreakCalculator.getFiveDayWindow(_activeDays);
+    // Convert from streak_utils.DayIndicator to progress_header.DayIndicator
+    return streakDayIndicators.map((streakDayIndicator) {
       DayState state;
-      if (isFuture) {
-        state = DayState.future;
-      } else if (_isSunday(day)) {
-        // Sunday streak freeze only applies to non-future days
-        state = DayState.freeze;
-      } else if (_activeDays.contains(dayStr)) {
-        state = DayState.success;
-      } else {
-        // For the current day, show fail state only after the day is completely over
-        if (day.isAtSameMomentAs(today)) {
-          // Current day not done yet, use fail state for now (this will be handled in the UI with orange)
+      switch (streakDayIndicator.state) {
+        case streak_utils.DayState.success:
+          state = DayState.success;
+        case streak_utils.DayState.fail:
           state = DayState.fail;
-        } else {
-          // Past day without activity
-          state = DayState.fail;
-        }
+        case streak_utils.DayState.freeze:
+          state = DayState.freeze;
+        case streak_utils.DayState.future:
+          state = DayState.future;
       }
-      out.add(DayIndicator(date: day, state: state));
-    }
-    return out;
+      return DayIndicator(date: streakDayIndicator.date, state: state);
+    }).toList();
   }
 
   Future<void> _loadLessons({int? maxLessons, bool append = false}) async {
@@ -247,7 +249,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
     try {
       if (!append) {
         setState(() {
-          _loading = true;
+          _isLoading = true;
           _error = null;
         });
       }
@@ -294,7 +296,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
     } finally {
       if (mounted && !append) {
         setState(() {
-          _loading = false;
+          _isLoading = false;
           // Show promo card with new logic for different popup types
           _showPromoCard = _shouldShowPromoCard(settings);
           if (_showPromoCard) {
@@ -351,12 +353,12 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
   }
 
   Future<void> _loadMoreLessons() async {
-    if (_loadingMore || _loading) return;
-    setState(() => _loadingMore = true);
+    if (_isLoadingMore || _isLoading) return;
+    setState(() => _isLoadingMore = true);
     try {
       await _loadLessons(maxLessons: _lessons.length + 20, append: true);
     } finally {
-      if (mounted) setState(() => _loadingMore = false);
+      if (mounted) setState(() => _isLoadingMore = false);
     }
   }
 
@@ -378,59 +380,51 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
       return false;
     }
 
-    // Check if user has clicked links recently - if so, don't show until next month
-    final now = DateTime.now();
-
     // For donation popup
-    if (settings.hasClickedDonationLink && settings.lastDonationPopup != null) {
-      final lastPopup = settings.lastDonationPopup!;
-      final nextAllowed = DateTime(
-          lastPopup.year, lastPopup.month + 1, 1); // First of next month
-      if (now.isBefore(nextAllowed)) {
-        // Don't show donation popup
-      }
+    if (_shouldHidePromo(settings.lastDonationPopup, settings.hasClickedDonationLink)) {
+      return false;
     }
 
     // For follow popup
-    if (settings.hasClickedFollowLink && settings.lastFollowPopup != null) {
-      final lastPopup = settings.lastFollowPopup!;
-      final nextAllowed = DateTime(
-          lastPopup.year, lastPopup.month + 1, 1); // First of next month
-      if (now.isBefore(nextAllowed)) {
-        // Don't show follow popup
-      }
+    if (_shouldHidePromo(settings.lastFollowPopup, settings.hasClickedFollowLink)) {
+      return false;
     }
 
     // For satisfaction popup
-    if (settings.hasClickedSatisfactionLink &&
-        settings.lastSatisfactionPopup != null) {
-      final lastPopup = settings.lastSatisfactionPopup!;
-      final nextAllowed = DateTime(
-          lastPopup.year, lastPopup.month + 1, 1); // First of next month
-      if (now.isBefore(nextAllowed)) {
-        // Don't show satisfaction popup
-      }
+    if (_shouldHidePromo(settings.lastSatisfactionPopup, settings.hasClickedSatisfactionLink)) {
+      return false;
     }
 
     // For difficulty feedback popup
-    if (settings.hasClickedDifficultyLink &&
-        settings.lastDifficultyPopup != null) {
-      final lastPopup = settings.lastDifficultyPopup!;
-      final nextAllowed = DateTime(
-          lastPopup.year, lastPopup.month + 1, 1); // First of next month
-      if (now.isBefore(nextAllowed)) {
-        // Don't show difficulty popup
-      }
+    if (_shouldHidePromo(settings.lastDifficultyPopup, settings.hasClickedDifficultyLink)) {
+      return false;
     }
 
     // If we get here, we can show a popup
     return true;
   }
 
+  /// Checks if a specific promo should be hidden based on last popup date and click status
+  bool _shouldHidePromo(DateTime? lastPopup, bool hasClickedLink) {
+    if (!hasClickedLink || lastPopup == null) {
+      return false; // Don't hide if not clicked or no previous popup date
+    }
+
+    final now = DateTime.now();
+    final nextAllowed = DateTime(lastPopup.year, lastPopup.month + 1, 1); // First of next month
+    return now.isBefore(nextAllowed);
+  }
+
   Future<void> _launchUrl(String url) async {
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
+    try {
+      final uri = Uri.parse(url);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri);
+      } else {
+        debugPrint('Could not launch URL: $url');
+      }
+    } catch (e) {
+      debugPrint('Error launching URL: $e');
     }
   }
 
@@ -457,6 +451,32 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
     await settings.setDifficultyPreference(feedback);
   }
 
+  /// Helper method to handle analytics for locked lesson taps
+  void _handleLockedLessonTap(String lessonId) {
+    final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+    analyticsService.capture(context, 'tap_locked_lesson',
+        properties: {'lesson_id': lessonId});
+    showTopSnackBar(
+        context, strings.AppStrings.lessonLocked,
+        style: TopSnackBarStyle.warning);
+  }
+
+  /// Helper method to handle navigation to quiz screen
+  Future<void> _navigateToQuiz(Lesson lesson) async {
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => QuizScreen(
+            lesson: lesson,
+            sessionLimit: lesson.maxQuestions),
+      ),
+    );
+
+    // After returning from the quiz, refresh streak data and reload lessons if needed.
+    if (!mounted) return;
+    await _refreshStreakData();
+    await _loadLessons();
+  }
+
   /// Builds the lesson layout based on the selected layout type
   Widget _buildLessonLayout(
       String layoutType,
@@ -466,6 +486,42 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
       int continueIdx,
       double tileMaxExtent,
       double gridAspect) {
+    // Create a common lesson tile with unified tap handler
+    Widget createLessonTile(int index) {
+      final realIndex = filteredIndices[index];
+      final lesson = _lessons[realIndex];
+      final unlocked = progress.isLessonUnlocked(realIndex);
+      final stars = progress.bestStarsFor(lesson.id);
+      final recommended = totalLessons > 0 && realIndex == continueIdx;
+      final playable = unlocked;
+
+      return LessonTile(
+        lesson: lesson,
+        index: realIndex,
+        unlocked: unlocked,
+        playable: playable,
+        stars: stars,
+        recommended: unlocked && recommended,
+        onTap: () async {
+          if (!unlocked) {
+            _handleLockedLessonTap(lesson.id);
+            return;
+          }
+
+          // Track lesson selection
+          _trackLessonSelection(lesson, unlocked);
+
+          // Capture tap event
+          Provider.of<AnalyticsService>(context, listen: false)
+              .capture(context, 'tap_lesson',
+                  properties: {'lesson_id': lesson.id});
+
+          // Navigate to quiz
+          await _navigateToQuiz(lesson);
+        },
+      );
+    }
+
     switch (layoutType) {
       case SettingsProvider.layoutList:
         // List view layout
@@ -474,78 +530,11 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
           sliver: SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                final realIndex = filteredIndices[index];
-                final lesson = _lessons[realIndex];
-                final unlocked = progress.isLessonUnlocked(realIndex);
-                final stars = progress.bestStarsFor(lesson.id);
-                final recommended =
-                    totalLessons > 0 && realIndex == continueIdx;
-
-                final playable = unlocked;
-
                 return Container(
                   height: 120, // Fixed height for list items
                   margin: const EdgeInsets.only(bottom: 8.0),
                   child: RepaintBoundary(
-                    child: LessonTile(
-                      lesson: lesson,
-                      index: realIndex,
-                      unlocked: unlocked,
-                      playable: playable,
-                      stars: stars,
-                      recommended: unlocked && recommended,
-                      onTap: () async {
-                        if (!unlocked) {
-                          Provider.of<AnalyticsService>(context, listen: false)
-                              .capture(context, 'tap_locked_lesson',
-                                  properties: {'lesson_id': lesson.id});
-                          showTopSnackBar(
-                              context, strings.AppStrings.lessonLocked,
-                              style: TopSnackBarStyle.warning);
-                          return;
-                        }
-
-                        // Track lesson selection
-                        final analyticsService = Provider.of<AnalyticsService>(
-                            context,
-                            listen: false);
-
-                        // Track lesson system usage
-                        analyticsService.trackFeatureSuccess(
-                            context, AnalyticsService.featureLessonSystem,
-                            additionalProperties: {
-                              'lesson_id': lesson.id,
-                              'lesson_category': lesson.category,
-                              'lesson_unlocked': unlocked,
-                            });
-
-                        // Track streak feature if this contributes to streak
-                        if (_streakDays > 0) {
-                          analyticsService.trackFeatureUsage(
-                              context,
-                              AnalyticsService.featureStreakTracking,
-                              AnalyticsService.actionUsed,
-                              additionalProperties: {
-                                'current_streak': _streakDays,
-                              });
-                        }
-
-                        Provider.of<AnalyticsService>(context, listen: false)
-                            .capture(context, 'tap_lesson',
-                                properties: {'lesson_id': lesson.id});
-                        await Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => QuizScreen(
-                                lesson: lesson,
-                                sessionLimit: lesson.maxQuestions),
-                          ),
-                        );
-                        // After returning from the quiz, refresh streak data and reload lessons if needed.
-                        if (!mounted) return;
-                        await _refreshStreakData();
-                        await _loadLessons();
-                      },
-                    ),
+                    child: createLessonTile(index),
                   ),
                 );
               },
@@ -570,74 +559,8 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
             ),
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                final realIndex = filteredIndices[index];
-                final lesson = _lessons[realIndex];
-                final unlocked = progress.isLessonUnlocked(realIndex);
-                final stars = progress.bestStarsFor(lesson.id);
-                final recommended =
-                    totalLessons > 0 && realIndex == continueIdx;
-
-                final playable = unlocked;
-
                 return RepaintBoundary(
-                  child: LessonTile(
-                    lesson: lesson,
-                    index: realIndex,
-                    unlocked: unlocked,
-                    playable: playable,
-                    stars: stars,
-                    recommended: unlocked && recommended,
-                    onTap: () async {
-                      if (!unlocked) {
-                        Provider.of<AnalyticsService>(context, listen: false)
-                            .capture(context, 'tap_locked_lesson',
-                                properties: {'lesson_id': lesson.id});
-                        showTopSnackBar(
-                            context, strings.AppStrings.lessonLocked,
-                            style: TopSnackBarStyle.warning);
-                        return;
-                      }
-
-                      // Track lesson selection
-                      final analyticsService =
-                          Provider.of<AnalyticsService>(context, listen: false);
-
-                      // Track lesson system usage
-                      analyticsService.trackFeatureSuccess(
-                          context, AnalyticsService.featureLessonSystem,
-                          additionalProperties: {
-                            'lesson_id': lesson.id,
-                            'lesson_category': lesson.category,
-                            'lesson_unlocked': unlocked,
-                          });
-
-                      // Track streak feature if this contributes to streak
-                      if (_streakDays > 0) {
-                        analyticsService.trackFeatureUsage(
-                            context,
-                            AnalyticsService.featureStreakTracking,
-                            AnalyticsService.actionUsed,
-                            additionalProperties: {
-                              'current_streak': _streakDays,
-                            });
-                      }
-
-                      Provider.of<AnalyticsService>(context, listen: false)
-                          .capture(context, 'tap_lesson',
-                              properties: {'lesson_id': lesson.id});
-                      await Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => QuizScreen(
-                              lesson: lesson,
-                              sessionLimit: lesson.maxQuestions),
-                        ),
-                      );
-                      // After returning from the quiz, refresh streak data and reload lessons if needed.
-                      if (!mounted) return;
-                      await _refreshStreakData();
-                      await _loadLessons();
-                    },
-                  ),
+                  child: createLessonTile(index),
                 );
               },
               childCount: filteredIndices.length,
@@ -663,74 +586,8 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
             ),
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                final realIndex = filteredIndices[index];
-                final lesson = _lessons[realIndex];
-                final unlocked = progress.isLessonUnlocked(realIndex);
-                final stars = progress.bestStarsFor(lesson.id);
-                final recommended =
-                    totalLessons > 0 && realIndex == continueIdx;
-
-                final playable = unlocked;
-
                 return RepaintBoundary(
-                  child: LessonTile(
-                    lesson: lesson,
-                    index: realIndex,
-                    unlocked: unlocked,
-                    playable: playable,
-                    stars: stars,
-                    recommended: unlocked && recommended,
-                    onTap: () async {
-                      if (!unlocked) {
-                        Provider.of<AnalyticsService>(context, listen: false)
-                            .capture(context, 'tap_locked_lesson',
-                                properties: {'lesson_id': lesson.id});
-                        showTopSnackBar(
-                            context, strings.AppStrings.lessonLocked,
-                            style: TopSnackBarStyle.warning);
-                        return;
-                      }
-
-                      // Track lesson selection
-                      final analyticsService =
-                          Provider.of<AnalyticsService>(context, listen: false);
-
-                      // Track lesson system usage
-                      analyticsService.trackFeatureSuccess(
-                          context, AnalyticsService.featureLessonSystem,
-                          additionalProperties: {
-                            'lesson_id': lesson.id,
-                            'lesson_category': lesson.category,
-                            'lesson_unlocked': unlocked,
-                          });
-
-                      // Track streak feature if this contributes to streak
-                      if (_streakDays > 0) {
-                        analyticsService.trackFeatureUsage(
-                            context,
-                            AnalyticsService.featureStreakTracking,
-                            AnalyticsService.actionUsed,
-                            additionalProperties: {
-                              'current_streak': _streakDays,
-                            });
-                      }
-
-                      Provider.of<AnalyticsService>(context, listen: false)
-                          .capture(context, 'tap_lesson',
-                              properties: {'lesson_id': lesson.id});
-                      await Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => QuizScreen(
-                              lesson: lesson,
-                              sessionLimit: lesson.maxQuestions),
-                        ),
-                      );
-                      // After returning from the quiz, refresh streak data and reload lessons if needed.
-                      if (!mounted) return;
-                      await _refreshStreakData();
-                      await _loadLessons();
-                    },
-                  ),
+                  child: createLessonTile(index),
                 );
               },
               childCount: filteredIndices.length,
@@ -824,7 +681,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
         scrolledUnderElevation: 0,
         centerTitle: true,
       ),
-      body: _loading
+      body: _isLoading
           ? const LessonGridSkeleton()
           : _error != null
               ? Center(
