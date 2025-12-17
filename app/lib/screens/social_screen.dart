@@ -14,8 +14,12 @@ import '../providers/messages_provider.dart';
 import '../services/logger.dart';
 import 'profile_details_screen.dart';
 import 'main_navigation_screen.dart';
+import '../utils/social_data_processor.dart';
 
 /// Screen displaying social features of the app.
+///
+/// This screen provides social functionality including user search,
+/// following/follower lists, messaging, and leaderboards.
 class SocialScreen extends StatefulWidget {
   const SocialScreen({super.key});
 
@@ -24,9 +28,16 @@ class SocialScreen extends StatefulWidget {
 }
 
 class _SocialScreenState extends State<SocialScreen> {
+  /// Whether social features are enabled in the app
   bool _socialFeaturesEnabled = false;
+
+  /// Analytics service for tracking user interactions
   late AnalyticsService _analyticsService;
+
+  /// Cache for user scores to avoid repeated API calls
   Map<String, Map<String, dynamic>>? _cachedUserScores;
+
+  /// Current authenticated user
   User? _currentUser;
 
   @override
@@ -50,10 +61,17 @@ class _SocialScreenState extends State<SocialScreen> {
   }
 
   void _checkAuthState() {
-    final user = Supabase.instance.client.auth.currentUser;
-    setState(() {
-      _currentUser = user;
-    });
+    try {
+      final user = Supabase.instance.client.auth.currentUser;
+      setState(() {
+        _currentUser = user;
+      });
+    } catch (e) {
+      AppLogger.error('Error checking auth state', e);
+      setState(() {
+        _currentUser = null;
+      });
+    }
   }
 
   /// Track screen access and feature usage.
@@ -63,25 +81,34 @@ class _SocialScreenState extends State<SocialScreen> {
         context, 'social_features', 'screen_accessed');
   }
 
+  /// Helper method to track navigation events
+  void _trackNavigation(String screenName) {
+    _analyticsService.capture(context, '${screenName}_opened');
+  }
+
   /// Sets up sync callbacks to refresh leaderboard when data is synced
   void _setupSyncCallbacks() {
-    final gameStatsProvider =
-        Provider.of<GameStatsProvider>(context, listen: false);
-    final syncService = gameStatsProvider.syncService;
+    try {
+      final gameStatsProvider =
+          Provider.of<GameStatsProvider>(context, listen: false);
+      final syncService = gameStatsProvider.syncService;
 
-    // Set up callback for successful sync operations
-    syncService.registerCallbacks(
-      'game_stats',
-      onSyncSuccess: (key) {
-        if (key == 'game_stats' && mounted) {
-          // Refresh leaderboard when game stats are synced
-          setState(() {
-            _analyticsService.trackFeatureUsage(
-                context, 'leaderboard', 'auto_refresh_on_sync');
-          });
-        }
-      },
-    );
+      // Set up callback for successful sync operations
+      syncService.registerCallbacks(
+        'game_stats',
+        onSyncSuccess: (key) {
+          if (key == 'game_stats' && mounted) {
+            // Refresh leaderboard when game stats are synced
+            setState(() {
+              _analyticsService.trackFeatureUsage(
+                  context, 'leaderboard', 'auto_refresh_on_sync');
+            });
+          }
+        },
+      );
+    } catch (e) {
+      AppLogger.error('Error setting up sync callbacks', e);
+    }
   }
 
   @override
@@ -501,112 +528,16 @@ class _SocialScreenState extends State<SocialScreen> {
 
             return Column(
               children: [
-                ...topUsers.asMap().entries.map(
-                  (entry) {
-                    final index = entry.key;
-                    final user = entry.value;
-                    return Card(
-                      color: colorScheme.surface,
-                      elevation: 1,
-                      margin: const EdgeInsets.only(bottom: 8),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => ProfileDetailsScreen(
-                                userId: user['userId'],
-                                initialUsername: user['username'],
-                                initialDisplayName: user['displayName'],
-                              ),
-                            ),
-                          );
-                        },
-                        borderRadius: BorderRadius.circular(12),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Row(
-                            children: [
-                              // Rank indicator
-                              Container(
-                                width: 40,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  color: index < 3
-                                      ? [colorScheme.primary, Colors.grey[600]!, Colors.amber][index]
-                                      : colorScheme.surfaceContainer,
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: colorScheme.outline.withValues(alpha: 0.2),
-                                  ),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    '${index + 1}',
-                                    style: textTheme.titleMedium?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      color: index < 3
-                                          ? colorScheme.onPrimary
-                                          : colorScheme.onSurface,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      user['displayName'] ?? user['username'] ??
-                                          strings.AppStrings.unknownUser,
-                                      style: textTheme.titleMedium?.copyWith(
-                                        fontWeight: FontWeight.w500,
-                                        color: colorScheme.onSurface,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      '${strings.AppStrings.score}: ${user['score'] ?? 0}',
-                                      style: textTheme.bodyMedium?.copyWith(
-                                        color: colorScheme.onSurfaceVariant,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12, vertical: 6),
-                                decoration: BoxDecoration(
-                                  color: colorScheme.primaryContainer,
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(
-                                      Icons.star,
-                                      size: 16,
-                                      color: colorScheme.onPrimaryContainer,
-                                    ),
-                                    const SizedBox(width: 4),
-                                    Text(
-                                      '${user['score'] ?? 0}',
-                                      style: TextStyle(
-                                        color: colorScheme.onPrimaryContainer,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
+                ...topUsers.asMap().entries.map((entry) {
+                  final index = entry.key;
+                  final user = entry.value;
+                  return _buildLeaderboardUserCard(
+                    user: user,
+                    index: index,
+                    colorScheme: colorScheme,
+                    textTheme: textTheme,
+                  );
+                }),
               ],
             );
           },
@@ -617,16 +548,11 @@ class _SocialScreenState extends State<SocialScreen> {
 
   /// Gets top users for leaderboard
   Future<List<Map<String, dynamic>>> _getTopUsersForLeaderboard() async {
-    try {
-      final gameStatsProvider =
-          Provider.of<GameStatsProvider>(context, listen: false);
-      final syncService = gameStatsProvider.syncService;
+    final gameStatsProvider =
+        Provider.of<GameStatsProvider>(context, listen: false);
+    final syncService = gameStatsProvider.syncService;
 
-      return await syncService.getTopUsersForLeaderboard();
-    } catch (e) {
-      AppLogger.error('Error getting top users for leaderboard', e);
-      return [];
-    }
+    return await SocialDataProcessor.getTopUsersForLeaderboard(syncService);
   }
 
   /// Builds the followed users scores section
@@ -706,82 +632,11 @@ class _SocialScreenState extends State<SocialScreen> {
 
             return Column(
               children: [
-                ...followedUsers.map(
-                  (user) => Card(
-                    color: colorScheme.surface,
-                    elevation: 1,
-                    margin: const EdgeInsets.only(bottom: 8),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => ProfileDetailsScreen(
-                              userId: user['userId'],
-                              initialUsername: user['username'],
-                              initialDisplayName: user['displayName'],
-                            ),
-                          ),
-                        );
-                      },
-                      borderRadius: BorderRadius.circular(12),
-                      child: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    user['displayName'] ?? user['username'] ??
-                                        strings.AppStrings.unknownUser,
-                                    style: textTheme.titleMedium?.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      color: colorScheme.onSurface,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    '${strings.AppStrings.lastScore} ${user['score'] ?? strings.AppStrings.notAvailable}',
-                                    style: textTheme.bodyMedium?.copyWith(
-                                      color: colorScheme.onSurfaceVariant,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 6),
-                              decoration: BoxDecoration(
-                                color: colorScheme.primaryContainer,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icon(
-                                    Icons.star,
-                                    size: 16,
-                                    color: colorScheme.onPrimaryContainer,
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    '${user['stars'] ?? 0}',
-                                    style: TextStyle(
-                                      color: colorScheme.onPrimaryContainer,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                ...followedUsers.map((user) => _buildFollowedUserCard(
+                      user: user,
+                      colorScheme: colorScheme,
+                      textTheme: textTheme,
+                    )),
               ],
             );
           },
@@ -792,87 +647,217 @@ class _SocialScreenState extends State<SocialScreen> {
 
   /// Gets followed users and their scores
   Future<List<Map<String, dynamic>>> _getFollowedUsersScores() async {
-    try {
-      final gameStatsProvider =
-          Provider.of<GameStatsProvider>(context, listen: false);
-      final syncService = gameStatsProvider.syncService;
+    final gameStatsProvider =
+        Provider.of<GameStatsProvider>(context, listen: false);
+    final syncService = gameStatsProvider.syncService;
 
-      final followingList = await syncService.getFollowingList();
-      if (followingList == null || followingList.isEmpty) {
-        return [];
-      }
+    final result = await SocialDataProcessor.getFollowedUsersScores(
+      syncService,
+      _cachedUserScores,
+    );
 
-      // Use cached scores if available, otherwise fetch fresh data
-      Map<String, Map<String, dynamic>> userScores;
-      if (_cachedUserScores != null) {
-        userScores = _cachedUserScores!;
-      } else {
-        userScores = <String, Map<String, dynamic>>{};
-      }
-
-      final usersWithScores = <Map<String, dynamic>>[];
-
-      for (final userId in followingList) {
-        // Get user profile
-        Map<String, dynamic>? userProfile;
-        try {
-          userProfile = await syncService.getUserProfile(userId);
-        } catch (e) {
-          AppLogger.error('Error getting user profile for $userId', e);
-          userProfile = null;
-        }
-
-        if (userProfile == null) {
-          continue; // Skip users without profiles
-        }
-
-        final username = userProfile['username'] as String?;
-        final displayName = userProfile['display_name'] as String? ?? username;
-
-        if (username == null) {
-          continue; // Skip users without usernames
-        }
-
-        // Check if we have cached data for this user
-        Map<String, dynamic>? stats;
-        if (userScores.containsKey(userId)) {
-          stats = userScores[userId];
-        } else {
-          // Fetch fresh stats from the database
-          try {
-            stats = await syncService.getGameStatsForUser(userId);
-            // Cache the result
-            userScores[userId] = stats ?? <String, dynamic>{};
-          } catch (e) {
-            AppLogger.error(
-                'Error fetching game stats for user $userId', e);
-            // Use empty stats on error
-            stats = <String, dynamic>{};
-          }
-        }
-
-        // Extract score and stars from fetched stats
-        final score = stats?['score'] ?? 0;
-
-        usersWithScores.add({
-          'username': username,
-          'displayName': displayName,
-          'userId': userId,
-          'score': score,
-          'stars': score, // Stars are represented by the score field
-        });
-      }
-
-      // Update cache with the latest fetched data
-      _cachedUserScores = userScores;
-
-      return usersWithScores;
-    } catch (e) {
-      AppLogger.error('Error getting followed users scores', e);
-      return [];
+    // Update cache with the latest fetched data
+    _cachedUserScores = <String, Map<String, dynamic>>{};
+    for (final user in result) {
+      final userId = user['userId'] as String;
+      final score = user['score'];
+      _cachedUserScores![userId] = {'score': score};
     }
+
+    return result;
   }
 
+
+  /// Builds a single leaderboard user card
+  Widget _buildLeaderboardUserCard({
+    required Map<String, dynamic> user,
+    required int index,
+    required ColorScheme colorScheme,
+    required TextTheme textTheme,
+  }) {
+    return Card(
+      color: colorScheme.surface,
+      elevation: 1,
+      margin: const EdgeInsets.only(bottom: 8),
+      child: InkWell(
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => ProfileDetailsScreen(
+                userId: user['userId'],
+                initialUsername: user['username'],
+                initialDisplayName: user['displayName'],
+              ),
+            ),
+          );
+        },
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Row(
+            children: [
+              // Rank indicator
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: index < 3
+                      ? [colorScheme.primary, Colors.grey[600]!, Colors.amber][index]
+                      : colorScheme.surfaceContainer,
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: colorScheme.outline.withValues(alpha: 0.2),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    '${index + 1}',
+                    style: textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: index < 3
+                          ? colorScheme.onPrimary
+                          : colorScheme.onSurface,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      user['displayName'] ?? user['username'] ??
+                          strings.AppStrings.unknownUser,
+                      style: textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: colorScheme.onSurface,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      '${strings.AppStrings.score}: ${user['score'] ?? 0}',
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: colorScheme.primaryContainer,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.star,
+                      size: 16,
+                      color: colorScheme.onPrimaryContainer,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      '${user['score'] ?? 0}',
+                      style: TextStyle(
+                        color: colorScheme.onPrimaryContainer,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Builds a single followed user card
+  Widget _buildFollowedUserCard({
+    required Map<String, dynamic> user,
+    required ColorScheme colorScheme,
+    required TextTheme textTheme,
+  }) {
+    return Card(
+      color: colorScheme.surface,
+      elevation: 1,
+      margin: const EdgeInsets.only(bottom: 8),
+      child: InkWell(
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => ProfileDetailsScreen(
+                userId: user['userId'],
+                initialUsername: user['username'],
+                initialDisplayName: user['displayName'],
+              ),
+            ),
+          );
+        },
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      user['displayName'] ?? user['username'] ??
+                          strings.AppStrings.unknownUser,
+                      style: textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: colorScheme.onSurface,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      '${strings.AppStrings.lastScore} ${user['score'] ?? strings.AppStrings.notAvailable}',
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: colorScheme.primaryContainer,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.star,
+                      size: 16,
+                      color: colorScheme.onPrimaryContainer,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      '${user['stars'] ?? 0}',
+                      style: TextStyle(
+                        color: colorScheme.onPrimaryContainer,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
   /// Builds a single feature button with responsive sizing
   Widget _buildFeatureButton({
@@ -974,7 +959,7 @@ class _SocialScreenState extends State<SocialScreen> {
 
   /// Navigate to user search screen
   void _navigateToUserSearchScreen() {
-    _analyticsService.capture(context, 'user_search_screen_opened');
+    _trackNavigation('user_search_screen');
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const UserSearchScreen(),
@@ -984,7 +969,7 @@ class _SocialScreenState extends State<SocialScreen> {
 
   /// Navigate to following list screen
   void _navigateToFollowingList() {
-    _analyticsService.capture(context, 'following_list_opened');
+    _trackNavigation('following_list');
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const FollowingListScreen(),
@@ -994,7 +979,7 @@ class _SocialScreenState extends State<SocialScreen> {
 
   /// Navigate to followers list screen
   void _navigateToFollowersList() {
-    _analyticsService.capture(context, 'followers_list_opened');
+    _trackNavigation('followers_list');
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const FollowersListScreen(),
@@ -1004,12 +989,17 @@ class _SocialScreenState extends State<SocialScreen> {
 
   /// Navigate to messages screen
   Future<void> _navigateToMessagesScreen() async {
-    _analyticsService.capture(context, 'messages_screen_opened');
+    _trackNavigation('messages_screen');
 
-    // Mark messages as viewed when navigating to messages screen
-    final messagesProvider =
-        Provider.of<MessagesProvider>(context, listen: false);
-    await messagesProvider.markAllMessagesAsViewed();
+    try {
+      // Mark messages as viewed when navigating to messages screen
+      final messagesProvider =
+          Provider.of<MessagesProvider>(context, listen: false);
+      await messagesProvider.markAllMessagesAsViewed();
+    } catch (e) {
+      AppLogger.error('Error marking messages as viewed', e);
+      // Continue with navigation even if this fails
+    }
 
     if (mounted) {
       Navigator.of(context).push(
