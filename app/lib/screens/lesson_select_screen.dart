@@ -20,8 +20,8 @@ import '../l10n/strings_nl.dart' as strings;
 import '../constants/urls.dart';
 import '../widgets/progress_header.dart';
 import '../widgets/lesson_tile.dart';
+import '../widgets/lesson_skeleton.dart';
 import '../widgets/promo_card.dart';
-import '../widgets/lesson_grid_skeleton.dart';
 import '../utils/streak_calculator.dart' as streak_utils;
 
 class LessonSelectScreen extends StatefulWidget {
@@ -35,11 +35,17 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
   final LessonService _lessonService = LessonService();
   final ScrollController _scrollController = ScrollController();
 
+  /// Whether lessons are currently loading for the first time
+  bool _isInitialLoading = true;
+
   /// Whether lessons are currently loading
-  bool _isLoading = true;
+  bool _isLoading = false;
 
   /// Whether more lessons are currently loading
   bool _isLoadingMore = false;
+
+  /// Whether to show skeleton loaders while loading
+  bool _showSkeletons = true;
 
   /// Error message if loading failed
   String? _error;
@@ -201,7 +207,18 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
       final jsonString = prefs.getString(_cachedLessonsKey);
       if (jsonString != null) {
         final List<dynamic> jsonList = json.decode(jsonString);
-        _lessons = jsonList.map((e) => Lesson.fromJson(e)).toList();
+        final cachedLessons = jsonList.map((e) => Lesson.fromJson(e)).toList();
+
+        // If we have cached lessons, show them while we load fresh data
+        if (cachedLessons.isNotEmpty) {
+          if (mounted) {
+            setState(() {
+              _lessons = cachedLessons;
+              _showSkeletons = false;
+              _isInitialLoading = false;
+            });
+          }
+        }
       }
     } catch (e) {
       // Log error but continue gracefully
@@ -251,6 +268,11 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
         setState(() {
           _isLoading = true;
           _error = null;
+
+          // Show skeletons during loading if we don't have cached lessons yet
+          if (_lessons.isEmpty) {
+            _showSkeletons = true;
+          }
         });
       }
 
@@ -276,6 +298,10 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
         } else {
           _lessons = lessons;
         }
+
+        // Stop showing skeletons once we have lessons
+        _showSkeletons = false;
+        _isInitialLoading = false;
       });
 
       // Save cached lessons
@@ -292,6 +318,8 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
           properties: {'error': e.toString()});
       setState(() {
         _error = strings.AppStrings.couldNotLoadLessons;
+        _showSkeletons = false;
+        _isInitialLoading = false;
       });
     } finally {
       if (mounted && !append) {
@@ -522,6 +550,93 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
       );
     }
 
+    // Create a skeleton tile for loading states
+    Widget createSkeletonTile(int index) {
+      return LessonTileSkeleton(
+        layoutType: layoutType,
+        isDesktop: MediaQuery.of(context).size.width > 1200,
+        isTablet: MediaQuery.of(context).size.width > 600 &&
+                 MediaQuery.of(context).size.width <= 1200,
+        isSmallPhone: MediaQuery.of(context).size.width < 400,
+      );
+    }
+
+    if (_showSkeletons) {
+      switch (layoutType) {
+        case SettingsProvider.layoutList:
+          // List view layout with skeletons
+          return SliverPadding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+            sliver: SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  return Container(
+                    height: 120, // Fixed height for list items
+                    margin: const EdgeInsets.only(bottom: 8.0),
+                    child: RepaintBoundary(
+                      child: createSkeletonTile(index),
+                    ),
+                  );
+                },
+                childCount: 10, // Show 10 skeleton items
+                addAutomaticKeepAlives: false,
+                addSemanticIndexes: false,
+                addRepaintBoundaries: true,
+              ),
+            ),
+          );
+        case SettingsProvider.layoutCompactGrid:
+          // Compact grid layout with skeletons
+          return SliverPadding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+            sliver: SliverGrid(
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: tileMaxExtent * 0.8, // 80% of normal size
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                childAspectRatio: gridAspect * 0.9, // Slightly more square
+              ),
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  return RepaintBoundary(
+                    child: createSkeletonTile(index),
+                  );
+                },
+                childCount: 12, // Show 12 skeleton items for compact grid
+                addAutomaticKeepAlives: false,
+                addSemanticIndexes: false,
+                addRepaintBoundaries: true,
+              ),
+            ),
+          );
+        case SettingsProvider.layoutGrid:
+        default:
+          // Original grid layout with skeletons
+          return SliverPadding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+            sliver: SliverGrid(
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: tileMaxExtent,
+                mainAxisSpacing: 14,
+                crossAxisSpacing: 14,
+                childAspectRatio: gridAspect,
+              ),
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  return RepaintBoundary(
+                    child: createSkeletonTile(index),
+                  );
+                },
+                childCount: 12, // Show 12 skeleton items for grid
+                addAutomaticKeepAlives: false,
+                addSemanticIndexes: false,
+                addRepaintBoundaries: true,
+              ),
+            ),
+          );
+      }
+    }
+
     switch (layoutType) {
       case SettingsProvider.layoutList:
         // List view layout
@@ -681,8 +796,17 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
         scrolledUnderElevation: 0,
         centerTitle: true,
       ),
-      body: _isLoading
-          ? const LessonGridSkeleton()
+      body: _isInitialLoading && _showSkeletons
+          ? Center(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+              ),
+            )
           : _error != null
               ? Center(
                   child: Column(
