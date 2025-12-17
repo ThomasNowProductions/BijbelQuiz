@@ -30,7 +30,7 @@ import 'screens/main_navigation_screen.dart';
 import 'settings_screen.dart';
 import 'screens/sync_screen.dart';
 import 'screens/stats_share_screen.dart';
-import 'l10n/strings_nl.dart' as strings;
+import 'l10n/app_localizations.dart';
 import 'config/supabase_config.dart';
 import 'services/sync_service.dart';
 
@@ -541,6 +541,7 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
+        AppLocalizations.delegate,
       ],
       supportedLocales: const [
         Locale('nl', ''), // Dutch

@@ -21,7 +21,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/lesson_select_screen.dart';
 import 'widgets/quiz_skeleton.dart';
 import 'constants/urls.dart';
-import 'l10n/strings_nl.dart' as strings;
+import 'l10n/app_localizations.dart';
 import 'services/logger.dart';
 import 'utils/bijbelquiz_gen_utils.dart';
 import 'screens/bijbelquiz_gen_screen.dart';
@@ -63,7 +63,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final Uri url = Uri.parse(AppUrls.statusPageUrl);
     if (!await launchUrl(url)) {
       if (mounted) {
-        showTopSnackBar(context, strings.AppStrings.couldNotOpenStatusPage,
+        showTopSnackBar(context, AppLocalizations.of(context)!.couldNotOpenStatusPage,
             style: TopSnackBarStyle.error);
       }
     }
@@ -84,14 +84,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
         await launchUrl(url, mode: LaunchMode.externalApplication);
       } else {
         if (context.mounted) {
-          showTopSnackBar(context, strings.AppStrings.couldNotOpenUpdatePage,
+          showTopSnackBar(context, AppLocalizations.of(context)!.couldNotOpenUpdatePage,
               style: TopSnackBarStyle.error);
         }
       }
     } catch (e) {
       if (context.mounted) {
         showTopSnackBar(context,
-            '${strings.AppStrings.errorOpeningUpdatePage}${e.toString()}',
+            '${AppLocalizations.of(context)!.errorOpeningUpdatePage}${e.toString()}',
             style: TopSnackBarStyle.error);
       }
     }
@@ -127,7 +127,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             const SizedBox(width: 12),
             Text(
-              strings.AppStrings.settings,
+              AppLocalizations.of(context)!.settings,
               style: textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w700,
                 color: colorScheme.onSurface.withValues(alpha: 0.7),
@@ -212,7 +212,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       child: TextField(
         controller: _searchController,
         decoration: InputDecoration(
-          hintText: strings.AppStrings.searchSettings,
+          hintText: AppLocalizations.of(context)!.searchSettings,
           prefixIcon: Icon(Icons.search,
               color: colorScheme.onSurface.withValues(alpha: 0.6)),
           suffixIcon: _searchController.text.isNotEmpty
@@ -245,24 +245,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final allItems = <_SettingItem>[
       // Bug report
       _SettingItem(
-        title: strings.AppStrings.bugReport,
-        subtitle: strings.AppStrings.bugReportDesc,
+        title: AppLocalizations.of(context)!.bugReport,
+        subtitle: AppLocalizations.of(context)!.bugReportDesc,
         child: BugReportWidget(),
       ),
       // Appearance
       _SettingItem(
-        title: strings.AppStrings.language,
-        subtitle: settings.language == 'nl' ? 'Nederlands' : 'English',
+        title: AppLocalizations.of(context)!.language,
+        subtitle: settings.language == 'nl' ? AppLocalizations.of(context)!.languageNl : AppLocalizations.of(context)!.languageEn,
         child: _buildLanguageDropdown(settings, colorScheme, isSmallScreen),
       ),
       _SettingItem(
-        title: strings.AppStrings.theme,
-        subtitle: strings.AppStrings.chooseTheme,
+        title: AppLocalizations.of(context)!.theme,
+        subtitle: AppLocalizations.of(context)!.chooseTheme,
         child: _buildThemeDropdown(settings, colorScheme, isSmallScreen),
       ),
       _SettingItem(
-        title: strings.AppStrings.showNavigationLabels,
-        subtitle: strings.AppStrings.showNavigationLabelsDesc,
+        title: AppLocalizations.of(context)!.showNavigationLabels,
+        subtitle: AppLocalizations.of(context)!.showNavigationLabelsDesc,
         child: _buildSwitch(
           settings.showNavigationLabels,
           (value) => _updateSetting(settings, 'toggle_navigation_labels',
@@ -271,13 +271,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       ),
       _SettingItem(
-        title: strings.AppStrings.lessonLayoutSettings,
-        subtitle: strings.AppStrings.chooseLessonLayoutDesc,
+        title: AppLocalizations.of(context)!.lessonLayoutSettings,
+        subtitle: AppLocalizations.of(context)!.chooseLessonLayoutDesc,
         child: _buildLayoutDropdown(settings, colorScheme, isSmallScreen),
       ),
       _SettingItem(
-        title: strings.AppStrings.colorfulMode,
-        subtitle: strings.AppStrings.colorfulModeDesc,
+        title: AppLocalizations.of(context)!.colorfulMode,
+        subtitle: AppLocalizations.of(context)!.colorfulModeDesc,
         child: _buildSwitch(
           settings.colorfulMode,
           (value) => _updateSetting(settings, 'toggle_colorful_mode',
@@ -286,8 +286,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       ),
       _SettingItem(
-        title: strings.AppStrings.hidePopup,
-        subtitle: strings.AppStrings.hidePopupDesc,
+        title: AppLocalizations.of(context)!.hidePopup,
+        subtitle: AppLocalizations.of(context)!.hidePopupDesc,
         child: _buildSwitch(
           settings.hidePromoCard,
           (value) => _updateSetting(settings, 'toggle_hide_promo_card',
@@ -297,13 +297,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       // Game
       _SettingItem(
-        title: strings.AppStrings.gameSpeed,
-        subtitle: strings.AppStrings.chooseGameSpeed,
+        title: AppLocalizations.of(context)!.gameSpeed,
+        subtitle: AppLocalizations.of(context)!.chooseGameSpeed,
         child: _buildGameSpeedDropdown(settings, colorScheme, isSmallScreen),
       ),
       _SettingItem(
-        title: strings.AppStrings.muteSoundEffects,
-        subtitle: strings.AppStrings.muteSoundEffectsDesc,
+        title: AppLocalizations.of(context)!.muteSoundEffects,
+        subtitle: AppLocalizations.of(context)!.muteSoundEffectsDesc,
         child: _buildSwitch(
           settings.mute,
           (value) => _updateSetting(
@@ -313,8 +313,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       // Privacy
       _SettingItem(
-        title: strings.AppStrings.analytics,
-        subtitle: strings.AppStrings.analyticsDescription,
+        title: AppLocalizations.of(context)!.analytics,
+        subtitle: AppLocalizations.of(context)!.analyticsDescription,
         child: _buildSwitch(
           settings.analyticsEnabled,
           (value) => _updateAnalyticsSetting(settings, value),
@@ -322,8 +322,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       ),
       _SettingItem(
-        title: strings.AppStrings.automaticBugReports,
-        subtitle: strings.AppStrings.automaticBugReportsDesc,
+        title: AppLocalizations.of(context)!.automaticBugReports,
+        subtitle: AppLocalizations.of(context)!.automaticBugReportsDesc,
         child: _buildSwitch(
           settings.automaticBugReporting,
           (value) => _updateSetting(settings, 'toggle_automatic_bug_reporting',
@@ -333,27 +333,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       if (settings.apiEnabled) ...[
         _SettingItem(
-          title: strings.AppStrings.apiKey,
+          title: AppLocalizations.of(context)!.apiKey,
           subtitle: settings.apiKey.isEmpty
-              ? strings.AppStrings.generateApiKey
+              ? AppLocalizations.of(context)!.generateApiKey
               : _formatApiKey(settings.apiKey),
           child: _buildApiKeyControls(context, settings, colorScheme),
         ),
         _SettingItem(
-          title: strings.AppStrings.apiPort,
-          subtitle: '${strings.AppStrings.apiPortDesc} (${settings.apiPort})',
+          title: AppLocalizations.of(context)!.apiPort,
+          subtitle: '${AppLocalizations.of(context)!.apiPortDesc} (${settings.apiPort})',
           child: _buildApiPortControl(settings),
         ),
         _SettingItem(
-          title: strings.AppStrings.apiStatus,
-          subtitle: strings.AppStrings.apiStatusDesc,
+          title: AppLocalizations.of(context)!.apiStatus,
+          subtitle: AppLocalizations.of(context)!.apiStatusDesc,
           child: _buildApiStatusIndicator(settings),
         ),
       ],
       // Actions
       _SettingItem(
-        title: strings.AppStrings.donateButton,
-        subtitle: strings.AppStrings.supportUsTitle,
+        title: AppLocalizations.of(context)!.donateButton,
+        subtitle: AppLocalizations.of(context)!.supportUsTitle,
         onTap: () => _showDonateDialog(context),
         child: _buildActionButton(
           context,
@@ -361,8 +361,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       ),
       _SettingItem(
-        title: strings.AppStrings.showIntroduction,
-        subtitle: strings.AppStrings.showIntroductionDesc,
+        title: AppLocalizations.of(context)!.showIntroduction,
+        subtitle: AppLocalizations.of(context)!.showIntroductionDesc,
         onTap: () => _showIntroduction(context),
         child: _buildActionButton(
           context,
@@ -370,8 +370,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       ),
       _SettingItem(
-        title: strings.AppStrings.importStats,
-        subtitle: strings.AppStrings.importStatsDesc,
+        title: AppLocalizations.of(context)!.importStats,
+        subtitle: AppLocalizations.of(context)!.importStatsDesc,
         onTap: () => _importStats(context),
         child: _buildActionButton(
           context,
@@ -379,8 +379,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       ),
       _SettingItem(
-        title: strings.AppStrings.exportAllDataJson,
-        subtitle: strings.AppStrings.exportAllDataJsonDesc,
+        title: AppLocalizations.of(context)!.exportAllDataJson,
+        subtitle: AppLocalizations.of(context)!.exportAllDataJsonDesc,
         onTap: () => _exportAllDataJson(context),
         child: _buildActionButton(
           context,
@@ -388,8 +388,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       ),
       _SettingItem(
-        title: strings.AppStrings.clearQuestionCache,
-        subtitle: strings.AppStrings.clearQuestionCacheDesc,
+        title: AppLocalizations.of(context)!.clearQuestionCache,
+        subtitle: AppLocalizations.of(context)!.clearQuestionCacheDesc,
         onTap: () => _clearCache(context),
         child: _buildActionButton(
           context,
@@ -397,8 +397,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       ),
       _SettingItem(
-        title: strings.AppStrings.followOnSocialMedia,
-        subtitle: strings.AppStrings.followOnSocialMediaDesc,
+        title: AppLocalizations.of(context)!.followOnSocialMedia,
+        subtitle: AppLocalizations.of(context)!.followOnSocialMediaDesc,
         onTap: () => _showSocialMediaDialog(context),
         child: _buildActionButton(
           context,
@@ -406,8 +406,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       ),
       _SettingItem(
-        title: strings.AppStrings.inviteFriend,
-        subtitle: strings.AppStrings.inviteFriendDesc,
+        title: AppLocalizations.of(context)!.inviteFriend,
+        subtitle: AppLocalizations.of(context)!.inviteFriendDesc,
         onTap: () => _showInviteDialog(context),
         child: _buildActionButton(
           context,
@@ -415,8 +415,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       ),
       _SettingItem(
-        title: strings.AppStrings.shareYourStats,
-        subtitle: strings.AppStrings.copyStatsLinkToClipboard,
+        title: AppLocalizations.of(context)!.shareYourStats,
+        subtitle: AppLocalizations.of(context)!.copyStatsLinkToClipboard,
         onTap: () => _shareStats(context),
         child: _buildActionButton(
           context,
@@ -425,9 +425,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       if (BijbelQuizGenPeriod.isGenPeriod() || kDebugMode)
         _SettingItem(
-          title: strings.AppStrings.bijbelquizGenTitle,
+          title: AppLocalizations.of(context)!.bijbelquizGenTitle,
           subtitle:
-              '${strings.AppStrings.bijbelquizGenSubtitle}${BijbelQuizGenPeriod.getStatsYear()}',
+              '${AppLocalizations.of(context)!.bijbelquizGenSubtitle}${BijbelQuizGenPeriod.getStatsYear()}',
           onTap: () => _showBijbelQuizGen(context),
           child: _buildActionButton(
             context,
@@ -435,8 +435,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         ),
       _SettingItem(
-        title: strings.AppStrings.resetAndLogout,
-        subtitle: strings.AppStrings.resetAndLogoutDesc,
+        title: AppLocalizations.of(context)!.resetAndLogout,
+        subtitle: AppLocalizations.of(context)!.resetAndLogoutDesc,
         onTap: () => _showResetAndLogoutDialog(context, settings),
         child: _buildActionButton(
           context,
@@ -445,36 +445,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       // About
       _SettingItem(
-        title: strings.AppStrings.serverStatus,
-        subtitle: strings.AppStrings.checkServiceStatus,
+        title: AppLocalizations.of(context)!.serverStatus,
+        subtitle: AppLocalizations.of(context)!.checkServiceStatus,
         child: IconButton(
           icon: Icon(Icons.open_in_new,
               color: Theme.of(context).colorScheme.primary),
           onPressed: _openStatusPage,
-          tooltip: strings.AppStrings.openStatusPage,
+          tooltip: AppLocalizations.of(context)!.openStatusPage,
           color: Theme.of(context).colorScheme.primary,
         ),
       ),
       if (!(kIsWeb || Platform.isAndroid))
         _SettingItem(
-          title: strings.AppStrings.checkForUpdates,
-          subtitle: strings.AppStrings.checkForUpdatesDescription,
+          title: AppLocalizations.of(context)!.checkForUpdates,
+          subtitle: AppLocalizations.of(context)!.checkForUpdatesDescription,
           child: IconButton(
             icon: Icon(Icons.refresh,
                 color: Theme.of(context).colorScheme.primary),
             onPressed: () => _checkForUpdates(context, settings),
-            tooltip: strings.AppStrings.checkForUpdatesTooltip,
+            tooltip: AppLocalizations.of(context)!.checkForUpdatesTooltip,
             color: Theme.of(context).colorScheme.primary,
           ),
         ),
       _SettingItem(
-        title: strings.AppStrings.privacyPolicy,
-        subtitle: strings.AppStrings.privacyPolicyDescription,
+        title: AppLocalizations.of(context)!.privacyPolicy,
+        subtitle: AppLocalizations.of(context)!.privacyPolicyDescription,
         child: IconButton(
           icon: Icon(Icons.open_in_new,
               color: Theme.of(context).colorScheme.primary),
           onPressed: () => _openPrivacyPolicy(context),
-          tooltip: strings.AppStrings.openPrivacyPolicyTooltip,
+          tooltip: AppLocalizations.of(context)!.openPrivacyPolicyTooltip,
           color: Theme.of(context).colorScheme.primary,
         ),
       ),
@@ -615,9 +615,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       SettingsProvider settings, ColorScheme colorScheme, bool isSmallScreen) {
     final Map<String, String> themeDisplayNames = <String, String>{};
 
-    themeDisplayNames[ThemeMode.light.name] = strings.AppStrings.lightTheme;
-    themeDisplayNames[ThemeMode.system.name] = strings.AppStrings.systemTheme;
-    themeDisplayNames[ThemeMode.dark.name] = strings.AppStrings.darkTheme;
+    themeDisplayNames[ThemeMode.light.name] = AppLocalizations.of(context)!.lightTheme;
+    themeDisplayNames[ThemeMode.system.name] = AppLocalizations.of(context)!.systemTheme;
+    themeDisplayNames[ThemeMode.dark.name] = AppLocalizations.of(context)!.darkTheme;
 
     final availableThemes = ThemeManager().getAvailableThemes();
     for (final entry in availableThemes.entries) {
@@ -629,7 +629,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     for (final themeId in settings.getAIThemeIds()) {
       final aiTheme = settings.getAITheme(themeId);
       themeDisplayNames[themeId] =
-          aiTheme?.name ?? strings.AppStrings.aiThemeFallback;
+          aiTheme?.name ?? AppLocalizations.of(context)!.aiThemeFallback;
     }
 
     String value = _getThemeDropdownValue(settings);
@@ -664,11 +664,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
       items: [
         DropdownMenuItem(
           value: 'nl',
-          child: Text(strings.AppStrings.languageNl),
+          child: Text(AppLocalizations.of(context)!.languageNl),
         ),
         DropdownMenuItem(
           value: 'en',
-          child: Text(strings.AppStrings.languageEn),
+          child: Text(AppLocalizations.of(context)!.languageEn),
         ),
       ],
       onChanged: (String? value) {
@@ -694,15 +694,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
       items: [
         DropdownMenuItem(
           value: SettingsProvider.layoutGrid,
-          child: Text(strings.AppStrings.grid, overflow: TextOverflow.ellipsis),
+          child: Text(AppLocalizations.of(context)!.grid, overflow: TextOverflow.ellipsis),
         ),
         DropdownMenuItem(
           value: SettingsProvider.layoutList,
-          child: Text(strings.AppStrings.list, overflow: TextOverflow.ellipsis),
+          child: Text(AppLocalizations.of(context)!.list, overflow: TextOverflow.ellipsis),
         ),
         DropdownMenuItem(
           value: SettingsProvider.layoutCompactGrid,
-          child: Text(strings.AppStrings.compactGrid,
+          child: Text(AppLocalizations.of(context)!.compactGrid,
               overflow: TextOverflow.ellipsis),
         ),
       ],
@@ -729,16 +729,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
       items: [
         DropdownMenuItem(
           value: 'slow',
-          child: Text(strings.AppStrings.slow, overflow: TextOverflow.ellipsis),
+          child: Text(AppLocalizations.of(context)!.slow, overflow: TextOverflow.ellipsis),
         ),
         DropdownMenuItem(
           value: 'medium',
           child:
-              Text(strings.AppStrings.medium, overflow: TextOverflow.ellipsis),
+              Text(AppLocalizations.of(context)!.medium, overflow: TextOverflow.ellipsis),
         ),
         DropdownMenuItem(
           value: 'fast',
-          child: Text(strings.AppStrings.fast, overflow: TextOverflow.ellipsis),
+          child: Text(AppLocalizations.of(context)!.fast, overflow: TextOverflow.ellipsis),
         ),
       ],
       onChanged: (String? value) {
@@ -791,7 +791,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           IconButton(
             onPressed: () => _copyApiKeyToClipboard(context, settings.apiKey),
             icon: Icon(Icons.copy, size: 20, color: colorScheme.primary),
-            tooltip: strings.AppStrings.copyApiKey,
+            tooltip: AppLocalizations.of(context)!.copyApiKey,
             style: IconButton.styleFrom(
               backgroundColor: colorScheme.primary.withValues(alpha: 0.1),
               foregroundColor: colorScheme.primary,
@@ -807,7 +807,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               }
             },
             icon: Icon(Icons.refresh, size: 20, color: colorScheme.primary),
-            tooltip: strings.AppStrings.regenerateApiKey,
+            tooltip: AppLocalizations.of(context)!.regenerateApiKey,
             style: IconButton.styleFrom(
               backgroundColor: colorScheme.primary.withValues(alpha: 0.1),
               foregroundColor: colorScheme.primary,
@@ -849,13 +849,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
         String statusText;
         if (!isApiEnabled) {
           statusColor = Colors.grey;
-          statusText = strings.AppStrings.apiDisabled;
+          statusText = AppLocalizations.of(context)!.apiDisabled;
         } else if (isRunning) {
           statusColor = Colors.green;
-          statusText = strings.AppStrings.apiRunning;
+          statusText = AppLocalizations.of(context)!.apiRunning;
         } else {
           statusColor = Colors.orange;
-          statusText = strings.AppStrings.apiStarting;
+          statusText = AppLocalizations.of(context)!.apiStarting;
         }
 
         return Row(
@@ -891,7 +891,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         return Column(
           children: [
             Text(
-              strings.AppStrings.copyright,
+              AppLocalizations.of(context)!.copyright,
               style: TextStyle(
                 fontSize: 12,
                 color: Theme.of(context)
@@ -902,7 +902,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             const SizedBox(height: 4),
             Text(
-              '${strings.AppStrings.version} $version',
+              '${AppLocalizations.of(context)!.version} $version',
               style: TextStyle(
                 fontSize: 12,
                 color: Theme.of(context)
@@ -1071,21 +1071,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
       context: context,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
-          title: Text(strings.AppStrings.followUsOnSocialMedia),
+          title: Text(AppLocalizations.of(context)!.followUsOnSocialMedia),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                _buildSocialMediaButton(context, strings.AppStrings.mastodon,
+                _buildSocialMediaButton(context, AppLocalizations.of(context)!.mastodon,
                     Icons.alternate_email, AppUrls.mastodonUrl, colorScheme),
                 const SizedBox(height: 8),
-                _buildSocialMediaButton(context, strings.AppStrings.pixelfed,
+                _buildSocialMediaButton(context, AppLocalizations.of(context)!.pixelfed,
                     Icons.camera_alt, AppUrls.pixelfedUrl, colorScheme),
                 const SizedBox(height: 8),
-                _buildSocialMediaButton(context, strings.AppStrings.discord,
+                _buildSocialMediaButton(context, AppLocalizations.of(context)!.discord,
                     Icons.forum, AppUrls.discordUrl, colorScheme),
                 const SizedBox(height: 8),
-                _buildSocialMediaButton(context, strings.AppStrings.signal,
+                _buildSocialMediaButton(context, AppLocalizations.of(context)!.signal,
                     Icons.message, AppUrls.signalUrl, colorScheme),
               ],
             ),
@@ -1093,7 +1093,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(),
-              child: Text(strings.AppStrings.close),
+              child: Text(AppLocalizations.of(context)!.close),
             ),
           ],
         );
@@ -1109,14 +1109,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
       context: context,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
-          title: Text(strings.AppStrings.customizeInvite),
+          title: Text(AppLocalizations.of(context)!.customizeInvite),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: yourNameController,
                 decoration: InputDecoration(
-                  labelText: strings.AppStrings.enterYourName,
+                  labelText: AppLocalizations.of(context)!.enterYourName,
                   border: const OutlineInputBorder(),
                 ),
               ),
@@ -1124,7 +1124,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               TextField(
                 controller: friendNameController,
                 decoration: InputDecoration(
-                  labelText: strings.AppStrings.enterFriendName,
+                  labelText: AppLocalizations.of(context)!.enterFriendName,
                   border: const OutlineInputBorder(),
                 ),
               ),
@@ -1133,7 +1133,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(),
-              child: Text(strings.AppStrings.cancel),
+              child: Text(AppLocalizations.of(context)!.cancel),
             ),
             TextButton(
               onPressed: () async {
@@ -1157,12 +1157,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                 if (dialogContext.mounted) {
                   showTopSnackBar(
-                      dialogContext, strings.AppStrings.inviteLinkCopied,
+                      dialogContext, AppLocalizations.of(context)!.inviteLinkCopied,
                       style: TopSnackBarStyle.success);
                   Navigator.of(dialogContext).pop();
                 }
               },
-              child: Text(strings.AppStrings.sendInvite),
+              child: Text(AppLocalizations.of(context)!.sendInvite),
             ),
           ],
         );
@@ -1202,12 +1202,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
       await Clipboard.setData(ClipboardData(text: statsUrl));
 
       if (context.mounted) {
-        showTopSnackBar(context, strings.AppStrings.statsLinkCopied,
+        showTopSnackBar(context, AppLocalizations.of(context)!.statsLinkCopied,
             style: TopSnackBarStyle.success);
       }
     } catch (e) {
       if (context.mounted) {
-        showTopSnackBar(context, strings.AppStrings.errorCopyingLink,
+        showTopSnackBar(context, AppLocalizations.of(context)!.errorCopyingLink,
             style: TopSnackBarStyle.error);
       }
     }
@@ -1247,12 +1247,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
       context: context,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
-          title: Text(strings.AppStrings.resetAndLogout),
-          content: Text(strings.AppStrings.resetAndLogoutConfirmation),
+          title: Text(AppLocalizations.of(context)!.resetAndLogout),
+          content: Text(AppLocalizations.of(context)!.resetAndLogoutConfirmation),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(),
-              child: Text(strings.AppStrings.cancel),
+              child: Text(AppLocalizations.of(context)!.cancel),
             ),
             TextButton(
               onPressed: () async {
@@ -1289,7 +1289,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               style: TextButton.styleFrom(
                 foregroundColor: Theme.of(dialogContext).colorScheme.error,
               ),
-              child: Text(strings.AppStrings.resetAndLogout),
+              child: Text(AppLocalizations.of(context)!.resetAndLogout),
             ),
           ],
         );
@@ -1301,7 +1301,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final Uri url = Uri.parse(AppUrls.privacyUrl);
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       if (context.mounted) {
-        showTopSnackBar(context, strings.AppStrings.couldNotOpenPrivacyPolicy,
+        showTopSnackBar(context, AppLocalizations.of(context)!.couldNotOpenPrivacyPolicy,
             style: TopSnackBarStyle.error);
       }
     }
@@ -1317,12 +1317,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     try {
       await Clipboard.setData(ClipboardData(text: apiKey));
       if (context.mounted) {
-        showTopSnackBar(context, strings.AppStrings.apiKeyCopied,
+        showTopSnackBar(context, AppLocalizations.of(context)!.apiKeyCopied,
             style: TopSnackBarStyle.success);
       }
     } catch (e) {
       if (context.mounted) {
-        showTopSnackBar(context, strings.AppStrings.apiKeyCopyFailed,
+        showTopSnackBar(context, AppLocalizations.of(context)!.apiKeyCopyFailed,
             style: TopSnackBarStyle.error);
       }
     }
@@ -1333,12 +1333,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
       context: context,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
-          title: Text(strings.AppStrings.regenerateApiKeyTitle),
-          content: Text(strings.AppStrings.regenerateApiKeyMessage),
+          title: Text(AppLocalizations.of(context)!.regenerateApiKeyTitle),
+          content: Text(AppLocalizations.of(context)!.regenerateApiKeyMessage),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(),
-              child: Text(strings.AppStrings.cancel),
+              child: Text(AppLocalizations.of(context)!.cancel),
             ),
             TextButton(
               onPressed: () async {
@@ -1346,14 +1346,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 if (dialogContext.mounted) {
                   Navigator.of(dialogContext).pop();
                   showTopSnackBar(
-                      dialogContext, strings.AppStrings.apiKeyGenerated,
+                      dialogContext, AppLocalizations.of(context)!.apiKeyGenerated,
                       style: TopSnackBarStyle.success);
                 }
               },
               style: TextButton.styleFrom(
                 foregroundColor: Theme.of(dialogContext).colorScheme.error,
               ),
-              child: Text(strings.AppStrings.regenerateApiKey),
+              child: Text(AppLocalizations.of(context)!.regenerateApiKey),
             ),
           ],
         );
@@ -1376,7 +1376,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           if (context.mounted) {
             showTopSnackBar(
                 context,
-                strings.AppStrings.couldNotOpenPlatform
+                AppLocalizations.of(context)!.couldNotOpenPlatform
                     .replaceAll('{platform}', platform),
                 style: TopSnackBarStyle.error);
           }
@@ -1590,12 +1590,12 @@ class ExportStatsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(strings.AppStrings.exportStatsTitle)),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.exportStatsTitle)),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Text(strings.AppStrings.exportStatsMessage),
+            Text(AppLocalizations.of(context)!.exportStatsMessage),
             const SizedBox(height: 16),
             Expanded(
               child: Container(
@@ -1629,12 +1629,12 @@ class _ImportStatsScreenState extends State<ImportStatsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(strings.AppStrings.importStatsTitle)),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.importStatsTitle)),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Text(strings.AppStrings.importStatsMessage),
+            Text(AppLocalizations.of(context)!.importStatsMessage),
             const SizedBox(height: 16),
             Expanded(
               child: TextField(
@@ -1643,7 +1643,7 @@ class _ImportStatsScreenState extends State<ImportStatsScreen> {
                 expands: true,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
-                  hintText: strings.AppStrings.importStatsHint,
+                  hintText: AppLocalizations.of(context)!.importStatsHint,
                 ),
               ),
             ),
@@ -1653,7 +1653,7 @@ class _ImportStatsScreenState extends State<ImportStatsScreen> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    child: Text(strings.AppStrings.cancel),
+                    child: Text(AppLocalizations.of(context)!.cancel),
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -1663,7 +1663,7 @@ class _ImportStatsScreenState extends State<ImportStatsScreen> {
                       final input = _controller.text.trim();
                       if (input.isEmpty) {
                         showTopSnackBar(
-                            context, strings.AppStrings.pleaseEnterDataToImport,
+                            context, AppLocalizations.of(context)!.pleaseEnterDataToImport,
                             style: TopSnackBarStyle.error);
                         return;
                       }
@@ -1694,18 +1694,18 @@ class _ImportStatsScreenState extends State<ImportStatsScreen> {
                         if (context.mounted) {
                           Navigator.pop(context);
                           showTopSnackBar(context,
-                              strings.AppStrings.statsImportedSuccessfully,
+                              AppLocalizations.of(context)!.statsImportedSuccessfully,
                               style: TopSnackBarStyle.success);
                         }
                       } catch (e) {
                         if (context.mounted) {
                           showTopSnackBar(context,
-                              strings.AppStrings.importFailed + e.toString(),
+                              AppLocalizations.of(context)!.importFailed + e.toString(),
                               style: TopSnackBarStyle.error);
                         }
                       }
                     },
-                    child: Text(strings.AppStrings.importButton),
+                    child: Text(AppLocalizations.of(context)!.importButton),
                   ),
                 ),
               ],
@@ -1725,13 +1725,13 @@ class ExportAllDataScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(strings.AppStrings.exportAllDataJsonTitle)),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.exportAllDataJsonTitle)),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             Text(
-              strings.AppStrings.exportAllDataJsonMessage,
+              AppLocalizations.of(context)!.exportAllDataJsonMessage,
               style: const TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 16),
@@ -1760,19 +1760,19 @@ class ExportAllDataScreen extends StatelessWidget {
                       await Clipboard.setData(ClipboardData(text: jsonData));
                       if (context.mounted) {
                         showTopSnackBar(
-                            context, strings.AppStrings.jsonDataCopied,
+                            context, AppLocalizations.of(context)!.jsonDataCopied,
                             style: TopSnackBarStyle.success);
                       }
                     },
                     icon: const Icon(Icons.copy),
-                    label: Text(strings.AppStrings.copyToClipboard),
+                    label: Text(AppLocalizations.of(context)!.copyToClipboard),
                   ),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    child: Text(strings.AppStrings.close),
+                    child: Text(AppLocalizations.of(context)!.close),
                   ),
                 ),
               ],
