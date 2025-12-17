@@ -4,19 +4,20 @@
 
 :root {
   /* Dark mode colors as default (light mode disabled) */
-  --primary: #3b82f6;
-  --secondary: #8b5cf6;
-  --tertiary: #ef4444;
+  --primary: #66BB6A;
+  --secondary: #81C784;
+  --tertiary: #4CAF50;
   --error: #ef4444;
   --success: #10b981;
 
-  --surface: #0f172a;
-  --surface-highest: #1e293b;
-  --on-surface: #f8fafc;
-  --outline: #334155;
+  --surface: #121212;
+  --surface-highest: #2D2D2D;
+  --on-surface: #E8F5E9;
+  --outline: #4A4A4A;
+  --outline-variant: #2E7D32;
 
   --text: var(--on-surface);
-  --text-secondary: #94a3b8;
+  --text-secondary: #B9E4C9;
 
   --radius-lg: 20px;
   --radius-md: 16px;
@@ -25,7 +26,7 @@
   --font-family: "Quicksand", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
   --transition-base: 200ms ease;
-  
+
   /* Responsive typography */
   --base-font-size: 16px;
   --scale: 1.2;
@@ -34,14 +35,14 @@
   --h3: calc(var(--base-font-size) * var(--scale));
   --body: var(--base-font-size);
   --small: calc(var(--base-font-size) / var(--scale));
-  
+
   /* Breakpoints */
   --breakpoint-mobile: 480px;
   --breakpoint-tablet: 768px;
   --breakpoint-desktop: 1024px;
   --breakpoint-wide: 1200px;
   --breakpoint-ultra-wide: 1440px;
-  
+
   /* Spacing */
   --space-xxs: 0.25rem;
   --space-xs: 0.5rem;

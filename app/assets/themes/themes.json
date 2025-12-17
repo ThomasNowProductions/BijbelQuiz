@@ -2,81 +2,80 @@
   "themes": {
     "light": {
       "id": "light",
-      "name": "Licht",
+      "name": "Groen",
       "type": "light",
       "colors": {
-        "primary": "#2563EB",
-        "secondary": "#7C3AED",
-        "tertiary": "#DC2626",
-        "surface": "#FAFAFA",
-        "surfaceContainerHighest": "#F8FAFC",
-        "onSurface": "#0F172A",
-        "outline": "#E2E8F0",
-        "outlineVariant": "#F1F5F9",
-        "shadow": "#0F172A",
-        "scaffoldBackgroundColor": "#FAFAFA"
+        "primary": "#1B5E20",
+        "secondary": "#2E7D32",
+        "tertiary": "#0D4F1F",
+        "surface": "#E8F5E9",
+        "surfaceContainerHighest": "#C8E6C9",
+        "onSurface": "#1B5E20",
+        "outline": "#A5D6A7",
+        "outlineVariant": "#81C784",
+        "scaffoldBackgroundColor": "#E8F5E9"
       },
       "textTheme": {
         "headlineLarge": {
           "fontSize": 32,
           "fontWeight": "w700",
           "letterSpacing": -0.5,
-          "color": "#0F172A"
+          "color": "#2E7D32"
         },
         "headlineMedium": {
           "fontSize": 28,
           "fontWeight": "w600",
           "letterSpacing": -0.3,
-          "color": "#0F172A"
+          "color": "#2E7D32"
         },
         "headlineSmall": {
           "fontSize": 24,
           "fontWeight": "w600",
           "letterSpacing": -0.2,
-          "color": "#0F172A"
+          "color": "#2E7D32"
         },
         "titleLarge": {
           "fontSize": 22,
           "fontWeight": "w600",
           "letterSpacing": -0.1,
-          "color": "#0F172A"
+          "color": "#2E7D32"
         },
         "titleMedium": {
           "fontSize": 18,
           "fontWeight": "w600",
           "letterSpacing": 0,
-          "color": "#0F172A"
+          "color": "#2E7D32"
         },
         "titleSmall": {
           "fontSize": 16,
           "fontWeight": "w600",
           "letterSpacing": 0.1,
-          "color": "#0F172A"
+          "color": "#2E7D32"
         },
         "bodyLarge": {
           "fontSize": 16,
           "fontWeight": "w400",
           "letterSpacing": 0.1,
-          "color": "#334155"
+          "color": "#388E3C"
         },
         "bodyMedium": {
           "fontSize": 14,
           "fontWeight": "w400",
           "letterSpacing": 0.1,
-          "color": "#475569"
+          "color": "#66BB6A"
         },
         "labelLarge": {
           "fontSize": 14,
           "fontWeight": "w600",
           "letterSpacing": 0.5,
-          "color": "#0F172A"
+          "color": "#1B5E20"
         }
       },
       "buttonTheme": {
         "padding": {"horizontal": 24, "vertical": 16},
         "borderRadius": 16,
         "elevation": 2,
-        "backgroundColor": "#2563EB",
+        "backgroundColor": "#1B5E20",
         "foregroundColor": "#FFFFFF",
         "textStyle": {
           "fontSize": 16,
@@ -94,12 +93,12 @@
         "centerTitle": true,
         "elevation": 0,
         "scrolledUnderElevation": 0,
-        "backgroundColor": "#FFFFFF",
-        "foregroundColor": "#0F172A",
+        "backgroundColor": "#1B5E20",
+        "foregroundColor": "#FFFFFF",
         "titleTextStyle": {
           "fontSize": 18,
           "fontWeight": "w600",
-          "color": "#0F172A",
+          "color": "#FFFFFF",
           "letterSpacing": -0.1
         }
       },
@@ -107,82 +106,81 @@
     },
     "dark": {
       "id": "dark",
-      "name": "Donker",
+      "name": "Groen Dark",
       "type": "dark",
       "colors": {
-        "primary": "#60A5FA",
-        "secondary": "#A78BFA",
-        "tertiary": "#F87171",
-        "surface": "#0F172A",
-        "surfaceContainerHighest": "#1E293B",
-        "onSurface": "#F8FAFC",
-        "outline": "#475569",
-        "outlineVariant": "#334155",
-        "shadow": "#000000",
-        "scaffoldBackgroundColor": "#0F172A"
+        "primary": "#66BB6A",
+        "secondary": "#81C784",
+        "tertiary": "#4CAF50",
+        "surface": "#121212",
+        "surfaceContainerHighest": "#2D2D2D",
+        "onSurface": "#E8F5E9",
+        "outline": "#4A4A4A",
+        "outlineVariant": "#2E7D32",
+        "scaffoldBackgroundColor": "#0D0D0D"
       },
       "textTheme": {
         "headlineLarge": {
           "fontSize": 32,
           "fontWeight": "w700",
           "letterSpacing": -0.5,
-          "color": "#F8FAFC"
+          "color": "#A5D6A7"
         },
         "headlineMedium": {
           "fontSize": 28,
           "fontWeight": "w600",
           "letterSpacing": -0.3,
-          "color": "#F8FAFC"
+          "color": "#A5D6A7"
         },
         "headlineSmall": {
           "fontSize": 24,
           "fontWeight": "w600",
           "letterSpacing": -0.2,
-          "color": "#F8FAFC"
+          "color": "#A5D6A7"
         },
         "titleLarge": {
           "fontSize": 22,
           "fontWeight": "w600",
           "letterSpacing": -0.1,
-          "color": "#F8FAFC"
+          "color": "#C8E6C9"
         },
         "titleMedium": {
           "fontSize": 18,
           "fontWeight": "w600",
           "letterSpacing": 0,
-          "color": "#F8FAFC"
+          "color": "#C8E6C9"
         },
         "titleSmall": {
           "fontSize": 16,
           "fontWeight": "w600",
           "letterSpacing": 0.1,
-          "color": "#F8FAFC"
+          "color": "#C8E6C9"
         },
         "bodyLarge": {
           "fontSize": 16,
           "fontWeight": "w400",
           "letterSpacing": 0.1,
-          "color": "#CBD5E1"
+          "color": "#E8F5E9"
         },
         "bodyMedium": {
           "fontSize": 14,
           "fontWeight": "w400",
           "letterSpacing": 0.1,
-          "color": "#94A3B8"
+          "color": "#B9E4C9"
         },
         "labelLarge": {
           "fontSize": 14,
           "fontWeight": "w600",
           "letterSpacing": 0.5,
-          "color": "#F8FAFC"
+          "color": "#66BB6A"
         }
       },
       "buttonTheme": {
         "padding": {"horizontal": 24, "vertical": 16},
         "borderRadius": 16,
-        "elevation": 2,
-        "backgroundColor": "#60A5FA",
-        "foregroundColor": "#0F172A",
+        "elevation": 1,
+        "backgroundColor": "#2E7D32",
+        "foregroundColor": "#E8F5E9",
         "textStyle": {
           "fontSize": 16,
           "fontWeight": "w600",
@@ -190,21 +188,21 @@
         }
       },
       "cardTheme": {
-        "elevation": 2,
+        "elevation": 1,
         "borderRadius": 20,
-        "color": "#1E293B",
+        "color": "#1C1C1C",
         "surfaceTintColor": "#00000000"
       },
       "appBarTheme": {
         "centerTitle": true,
         "elevation": 0,
         "scrolledUnderElevation": 0,
-        "backgroundColor": "#0F172A",
-        "foregroundColor": "#F8FAFC",
+        "backgroundColor": "#121212",
+        "foregroundColor": "#E8F5E9",
         "titleTextStyle": {
           "fontSize": 18,
           "fontWeight": "w600",
-          "color": "#F8FAFC",
+          "color": "#E8F5E9",
           "letterSpacing": -0.1
         }
       },
@@ -215,14 +213,14 @@
       "name": "OLED",
       "type": "dark",
       "colors": {
-        "primary": "#FFFFFF",
-        "secondary": "#000000",
+        "primary": "#66BB6A",
+        "secondary": "#81C784",
+        "tertiary": "#4CAF50",
         "surface": "#000000",
-        "onPrimary": "#000000",
-        "onSecondary": "#FFFFFF",
-        "onSurface": "#FFFFFF",
-        "error": "#FF0000",
-        "onError": "#FFFFFF",
+        "surfaceContainerHighest": "#121212",
+        "onSurface": "#E8F5E9",
+        "outline": "#4A4A4A",
+        "outlineVariant": "#2E7D32",
         "scaffoldBackgroundColor": "#000000"
       },
       "textTheme": {
@@ -230,63 +228,63 @@
           "fontSize": 32,
           "fontWeight": "w700",
           "letterSpacing": -0.5,
-          "color": "#FFFFFF"
+          "color": "#A5D6A7"
         },
         "headlineMedium": {
           "fontSize": 28,
           "fontWeight": "w600",
           "letterSpacing": -0.3,
-          "color": "#FFFFFF"
+          "color": "#A5D6A7"
         },
         "headlineSmall": {
           "fontSize": 24,
           "fontWeight": "w600",
           "letterSpacing": -0.2,
-          "color": "#FFFFFF"
+          "color": "#A5D6A7"
         },
         "titleLarge": {
           "fontSize": 22,
           "fontWeight": "w600",
           "letterSpacing": -0.1,
-          "color": "#FFFFFF"
+          "color": "#C8E6C9"
         },
         "titleMedium": {
           "fontSize": 18,
           "fontWeight": "w600",
           "letterSpacing": 0,
-          "color": "#FFFFFF"
+          "color": "#C8E6C9"
         },
         "titleSmall": {
           "fontSize": 16,
           "fontWeight": "w600",
           "letterSpacing": 0.1,
-          "color": "#FFFFFF"
+          "color": "#C8E6C9"
         },
         "bodyLarge": {
           "fontSize": 16,
           "fontWeight": "w400",
           "letterSpacing": 0.1,
-          "color": "#FFFFFF"
+          "color": "#E8F5E9"
         },
         "bodyMedium": {
           "fontSize": 14,
           "fontWeight": "w400",
           "letterSpacing": 0.1,
-          "color": "#FFFFFF"
+          "color": "#B9E4C9"
         },
         "labelLarge": {
           "fontSize": 14,
           "fontWeight": "w600",
           "letterSpacing": 0.5,
-          "color": "#FFFFFF"
+          "color": "#66BB6A"
         }
       },
       "buttonTheme": {
         "padding": {"horizontal": 24, "vertical": 16},
         "borderRadius": 16,
-        "elevation": 2,
-        "backgroundColor": "#FFFFFF",
-        "foregroundColor": "#000000",
+        "elevation": 1,
+        "backgroundColor": "#2E7D32",
+        "foregroundColor": "#E8F5E9",
         "textStyle": {
           "fontSize": 16,
           "fontWeight": "w600",
@@ -294,21 +292,21 @@
         }
       },
       "cardTheme": {
-        "elevation": 2,
+        "elevation": 1,
         "borderRadius": 20,
         "color": "#000000",
         "surfaceTintColor": "#00000000"
       },
       "appBarTheme": {
-        "backgroundColor": "#000000",
-        "foregroundColor": "#FFFFFF",
-        "elevation": 0,
         "centerTitle": true,
+        "elevation": 0,
         "scrolledUnderElevation": 0,
+        "backgroundColor": "#000000",
+        "foregroundColor": "#E8F5E9",
         "titleTextStyle": {
           "fontSize": 18,
           "fontWeight": "w600",
-          "color": "#FFFFFF",
+          "color": "#E8F5E9",
           "letterSpacing": -0.1
         }
       },
@@ -316,7 +314,7 @@
     },
     "green": {
       "id": "green",
-      "name": "Groen",
+      "name": "Licht Groen",
       "type": "light",
       "colors": {
         "primary": "#1B5E20",
