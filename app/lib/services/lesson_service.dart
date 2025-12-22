@@ -55,26 +55,11 @@ class LessonService {
         final id = 'lesson_${i.toString().padLeft(4, '0')}';
         final lessonNumber = i + 1;
 
-        // Check if this should be a special lesson (every 7-10 lessons)
-        final isSpecial = lessonNumber > 1 && (lessonNumber - 1) % (7 + (i % 4)) == 0;
-
-        String category;
-        String title;
-        String description;
-        bool special = false;
-
-        if (isSpecial) {
-          // Special lesson: pick a random category from categories.json
-          category = categories[i % categories.length];
-          title = 'Speciale Les $lessonNumber - $category';
-          description = 'Beantwoord $maxQuestionsPerLesson vragen uit $category';
-          special = true;
-        } else {
-          // Regular lesson
-          category = 'Algemeen';
-          title = 'Les $lessonNumber';
-          description = 'Beantwoord $maxQuestionsPerLesson vragen';
-        }
+        // All lessons are now regular lessons
+        final category = 'Algemeen';
+        final title = 'Les $lessonNumber';
+        final description = 'Beantwoord $maxQuestionsPerLesson vragen';
+        final special = false;
 
         lessons.add(Lesson(
           id: id,
