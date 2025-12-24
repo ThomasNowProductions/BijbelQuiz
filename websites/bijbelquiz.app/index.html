@@ -297,6 +297,40 @@
     </script>
     <script src="/js/status.js"></script>
     <script>
+    // Function to detect if the user is on Android
+    function isAndroid() {
+        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        return /android/i.test(userAgent);
+    }
+
+    // Function to reorder buttons based on platform
+    function reorderButtons() {
+        const ctaButtons = document.querySelector('.cta-buttons');
+        if (!ctaButtons) return;
+
+        const googlePlayBtn = document.getElementById('googlePlayBtn');
+        const playWebBtn = document.getElementById('playWebBtn');
+
+        if (!googlePlayBtn || !playWebBtn) return;
+
+        if (isAndroid()) {
+            // On Android: Android button first (primary), web button second (secondary)
+            googlePlayBtn.className = 'btn primary btn-large';
+            playWebBtn.className = 'btn secondary btn-large';
+            ctaButtons.insertBefore(googlePlayBtn, playWebBtn);
+        } else {
+            // On other platforms: web button first (primary), Android button second (secondary)
+            playWebBtn.className = 'btn primary btn-large';
+            googlePlayBtn.className = 'btn secondary btn-large';
+            ctaButtons.insertBefore(playWebBtn, googlePlayBtn);
+        }
+    }
+
+    // Run the reordering when the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        reorderButtons();
+    });
+
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has('coupon')) {
         const couponDiv = document.createElement('div');
