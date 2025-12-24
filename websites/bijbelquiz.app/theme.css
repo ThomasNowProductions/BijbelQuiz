@@ -1147,6 +1147,23 @@ footer {
   text-decoration: underline;
 }
 
+/* Service Status - Inline with footer links */
+.service-status {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: normal;
+  display: inline;
+}
+
+#service-status-link {
+  text-decoration: none;
+}
+
+#service-status-link:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
 /* Hero Container */
 .hero-container {
   padding: 2rem 1rem;
