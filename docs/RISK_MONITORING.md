@@ -2,15 +2,15 @@
 
 ## Vercel
 ### Risk level: High
-We use Vercel to host our promotional website and our online play website. If this goes down, we will not be able to promote our game or allow people to play it online.
+We use Vercel to host our websites. If this goes down, our websites will not be accessible anymore.
 
 ## Supabase
 ### Risk level: High
 We use Supabase to store user data, game data and our store. If this goes down, we will not be able to store user data, game data and people will not be able to buy anything in our game.
 
-## Formbricks
+## Youform
 ### Risk level: Low
-We use Formbricks to collect user feedback. If this goes down, we will not be able to collect user feedback.
+We use Youform to collect user feedback via forms. If this goes down, we will not be able to collect user feedback.
 
 ## GitHub
 ### Risk level: High
@@ -26,7 +26,7 @@ We use Instatus to display our status page. If this goes down, we will not be ab
 
 ## Google Play
 ### Risk level: High
-We use Google Play to distribute our app. If this goes down, we will not be able to distribute our app.
+We use Google Play to distribute our app. If this goes down, we will not be able to distribute our android app.
 
 ## PostHog
 ### Risk level: Medium
