@@ -23,45 +23,103 @@ class MainNavigationScreen extends StatefulWidget {
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   late int _currentIndex;
+  bool _isSupabaseReachable = true;
 
   @override
   void initState() {
     super.initState();
     _currentIndex = widget.initialIndex;
+    _checkSupabaseConnectivity();
+  }
+
+  Future<void> _checkSupabaseConnectivity() async {
+    try {
+      await Supabase.instance.client
+          .from('user_profiles')
+          .select('id')
+          .limit(1);
+      if (mounted) {
+        setState(() {
+          _isSupabaseReachable = true;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _isSupabaseReachable = false;
+        });
+      }
+      if (_currentIndex == 1 || _currentIndex == 2) {
+        _currentIndex = 0;
+      }
+    }
   }
 
   List<Widget> _getScreens() {
-    return [
-      const LessonSelectScreen(),
-      const StoreScreen(),
-      const SocialScreen(),
-      const SettingsScreen(),
-    ];
+    if (_isSupabaseReachable) {
+      return [
+        const LessonSelectScreen(),
+        const StoreScreen(),
+        const SocialScreen(),
+        const SettingsScreen(),
+      ];
+    } else {
+      return [
+        const LessonSelectScreen(),
+        const SettingsScreen(),
+      ];
+    }
   }
 
   void _onItemTapped(int index) {
     setState(() {
       _currentIndex = index;
 
-      // Track screen view in analytics
-      final screenNames = [
-        'LessonSelectScreen',
-        'StoreScreen',
-        'SocialScreen',
-        'SettingsScreen'
-      ];
+      String screenName;
+      String? featureName;
+
+      if (_isSupabaseReachable) {
+        switch (index) {
+          case 0:
+            screenName = 'LessonSelectScreen';
+            featureName = AnalyticsService.featureLessonSystem;
+            break;
+          case 1:
+            screenName = 'StoreScreen';
+            featureName = AnalyticsService.featureThemePurchases;
+            break;
+          case 2:
+            screenName = 'SocialScreen';
+            featureName = AnalyticsService.featureSocialFeatures;
+            break;
+          case 3:
+            screenName = 'SettingsScreen';
+            featureName = AnalyticsService.featureSettings;
+            break;
+          default:
+            screenName = 'Unknown';
+        }
+      } else {
+        switch (index) {
+          case 0:
+            screenName = 'LessonSelectScreen';
+            featureName = AnalyticsService.featureLessonSystem;
+            break;
+          case 1:
+            screenName = 'SettingsScreen';
+            featureName = AnalyticsService.featureSettings;
+            break;
+          default:
+            screenName = 'Unknown';
+        }
+      }
+
       final analyticsService =
           Provider.of<AnalyticsService>(context, listen: false);
-      analyticsService.screen(context, screenNames[index]);
-
-      // Track feature usage for main navigation
-      final featureNames = [
-        AnalyticsService.featureLessonSystem,
-        AnalyticsService.featureThemePurchases,
-        AnalyticsService.featureSocialFeatures,
-        AnalyticsService.featureSettings
-      ];
-      analyticsService.trackFeatureStart(context, featureNames[index]);
+      analyticsService.screen(context, screenName);
+      if (featureName != null) {
+        analyticsService.trackFeatureStart(context, featureName);
+      }
     });
   }
 
@@ -192,30 +250,39 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         selectedIndex: _currentIndex,
         onDestinationSelected: _onItemTapped,
         elevation: 10,
-        height: settings.showNavigationLabels
-            ? 80
-            : 60, // Reduce height when labels are hidden
+        height: settings.showNavigationLabels ? 80 : 60,
         backgroundColor: colorScheme.surface,
         indicatorColor: colorScheme.primary.withValues(alpha: 0.1),
         labelBehavior: settings.showNavigationLabels
             ? NavigationDestinationLabelBehavior.alwaysShow
-            : NavigationDestinationLabelBehavior
-                .alwaysHide, // Properly hide labels
-        destinations: [
-          NavigationDestination(
-            icon: const Icon(Icons.menu_book_outlined),
-            selectedIcon: const Icon(Icons.menu_book),
-            label: strings.AppStrings.lessons,
-          ),
-          _buildStoreDestination(),
-          _buildSocialDestination(),
-          NavigationDestination(
-            icon: const Icon(Icons.settings_outlined),
-            selectedIcon: const Icon(Icons.settings),
-            label: strings.AppStrings.settings,
-          ),
-        ],
+            : NavigationDestinationLabelBehavior.alwaysHide,
+        destinations: _buildDestinations(),
       ),
     );
+  }
+
+  List<NavigationDestination> _buildDestinations() {
+    final destinations = <NavigationDestination>[
+      NavigationDestination(
+        icon: const Icon(Icons.menu_book_outlined),
+        selectedIcon: const Icon(Icons.menu_book),
+        label: strings.AppStrings.lessons,
+      ),
+    ];
+
+    if (_isSupabaseReachable) {
+      destinations.add(_buildStoreDestination());
+      destinations.add(_buildSocialDestination());
+    }
+
+    destinations.add(
+      NavigationDestination(
+        icon: const Icon(Icons.settings_outlined),
+        selectedIcon: const Icon(Icons.settings),
+        label: strings.AppStrings.settings,
+      ),
+    );
+
+    return destinations;
   }
 }
