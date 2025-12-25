@@ -99,6 +99,10 @@
     {
       "source": "/vragenlijst",
       "destination": "https://app.youform.com/forms/bir6movc"
+    },
+    {
+      "source": "/faq",
+      "destination": "https://bijbelquiz.app/faq.html"
     }
   ],
   "headers": [
