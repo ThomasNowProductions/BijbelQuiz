@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:bijbelquiz/services/analytics_service.dart';
+import 'package:bijbelquiz/services/connection_service.dart';
 import 'package:bijbelquiz/providers/settings_provider.dart';
 import 'package:bijbelquiz/providers/messages_provider.dart';
 import 'package:bijbelquiz/providers/store_provider.dart';
@@ -23,40 +24,27 @@ class MainNavigationScreen extends StatefulWidget {
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   late int _currentIndex;
-  bool _isSupabaseReachable = true;
+  late ConnectionService _connectionService;
+  bool _isOnline = true;
 
   @override
   void initState() {
     super.initState();
     _currentIndex = widget.initialIndex;
-    _checkSupabaseConnectivity();
-  }
-
-  Future<void> _checkSupabaseConnectivity() async {
-    try {
-      await Supabase.instance.client
-          .from('user_profiles')
-          .select('id')
-          .limit(1);
+    _connectionService = ConnectionService();
+    _connectionService.initialize();
+    _connectionService
+        .setConnectionStatusCallback((isConnected, connectionType) {
       if (mounted) {
         setState(() {
-          _isSupabaseReachable = true;
+          _isOnline = isConnected;
         });
       }
-    } catch (e) {
-      if (mounted) {
-        setState(() {
-          _isSupabaseReachable = false;
-        });
-      }
-      if (_currentIndex == 1 || _currentIndex == 2) {
-        _currentIndex = 0;
-      }
-    }
+    });
   }
 
   List<Widget> _getScreens() {
-    if (_isSupabaseReachable) {
+    if (_isOnline) {
       return [
         const LessonSelectScreen(),
         const StoreScreen(),
@@ -78,7 +66,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       String screenName;
       String? featureName;
 
-      if (_isSupabaseReachable) {
+      if (_isOnline) {
         switch (index) {
           case 0:
             screenName = 'LessonSelectScreen';
@@ -270,7 +258,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       ),
     ];
 
-    if (_isSupabaseReachable) {
+    if (_isOnline) {
       destinations.add(_buildStoreDestination());
       destinations.add(_buildSocialDestination());
     }
