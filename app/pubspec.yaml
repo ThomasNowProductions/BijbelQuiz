@@ -7,6 +7,12 @@ description: "Test je Bijbelkennis"
 # Package name configuration - Update this when licensing to third parties
 package_name: app.bijbelquiz.play
 
+# Localization configuration
+generate: true
+
+arb-dir: lib/l10n
+template-arb-file: lib/l10n/app_en.arb
+
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.73
 # followed by an optional build number separated by a +.
@@ -90,9 +96,11 @@ dev_dependencies:
 flutter:
 
   # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
+  # included with your application, so that you can use tos in
+  # material Icons class.
   uses-material-design: true
+
+  generate: true
 
   # To add assets to your application, add an assets section, like this:
   assets:

@@ -47,7 +47,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
           ),
           const SizedBox(width: 12),
           Text(
-            strings.AppStrings.appName,
+            AppLocalizations.of(context).appName,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.w700,
                   color: colorScheme.onSurface.withAlpha((0.7 * 255).round()),

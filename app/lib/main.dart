@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:async';
 import 'dart:io' show Platform;
 import 'package:app_links/app_links.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:logging/logging.dart' show Level, Logger;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -15,7 +14,7 @@ import 'providers/messages_provider.dart';
 import 'providers/lesson_progress_provider.dart';
 import 'providers/store_provider.dart';
 import 'utils/theme_utils.dart';
-import 'utils/font_utils.dart'; // Import font utilities
+import 'utils/font_utils.dart';
 import 'services/logger.dart';
 import 'services/service_container.dart';
 import 'services/analytics_service.dart';
@@ -30,9 +29,9 @@ import 'screens/main_navigation_screen.dart';
 import 'settings_screen.dart';
 import 'screens/sync_screen.dart';
 import 'screens/stats_share_screen.dart';
-import 'l10n/strings_nl.dart' as strings;
 import 'config/supabase_config.dart';
 import 'services/sync_service.dart';
+import 'l10n/app_localizations.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -46,7 +45,7 @@ void _checkInitializationTimeout(
     AppLogger.error(
         'App initialization is taking too long. This may indicate a blocking operation.');
     AppLogger.error('Current elapsed time: ${elapsed.inMilliseconds}ms');
-    // Continue execution but with a warning - don't throw as we want the app to continue
+    // Continue execution but with a warning - don't throw as we want app to continue
   } else {
     AppLogger.debug(
         'Initialization phase "$phase" completed in ${elapsed.inMilliseconds}ms (timeout: ${timeout.inSeconds}s)');
@@ -67,7 +66,7 @@ ServiceContainer _createFallbackServiceContainer() {
     final settingsProvider = SettingsProvider();
     final timeTrackingService = TimeTrackingService.instance;
 
-    // Use reflection to set the private fields (this is a fallback mechanism)
+    // Use reflection to set private fields (this is a fallback mechanism)
     // Note: This is not ideal but necessary for recovery
     try {
       // Initialize time tracking service (most critical for basic functionality)
@@ -86,7 +85,7 @@ ServiceContainer _createFallbackServiceContainer() {
       return fallbackContainer;
     } catch (e) {
       AppLogger.error('Failed to create even minimal fallback services', e);
-      // Return the container anyway - it will have limited functionality
+      // Return container anyway - it will have limited functionality
       return fallbackContainer;
     }
   } catch (e) {
@@ -96,9 +95,9 @@ ServiceContainer _createFallbackServiceContainer() {
   }
 }
 
-/// The main entry point of the BijbelQuiz application with simplified service initialization.
+/// The main entry point of BijbelQuiz application with simplified service initialization.
 Future<void> main() async {
-  // Ensure that the Flutter binding is initialized before running the app.
+  // Ensure that Flutter binding is initialized before running app.
   WidgetsFlutterBinding.ensureInitialized();
 
   // Set up a safety timeout to prevent app from hanging indefinitely
@@ -258,7 +257,7 @@ Future<void> main() async {
     AppLogger.info('- Supabase initialized: $supabaseInitialized');
     AppLogger.info('- Critical services initialized: $serviceContainer');
 
-    // Create providers for the app
+    // Create providers for app
     final gameStatsProvider = serviceContainer.gameStatsProvider;
     final settingsProvider = serviceContainer.settingsProvider;
     final lessonProgressProvider = LessonProgressProvider();
@@ -434,12 +433,12 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
         uri.queryParameters.containsKey('score')) {
       final params = <String, String>{};
 
-      // Add all query parameters to the map
+      // Add all query parameters to map
       uri.queryParameters.forEach((key, value) {
         params[key] = value;
       });
 
-      // If we have the necessary parameters to show stats, navigate to the stats share screen
+      // If we have necessary parameters to show stats, navigate to stats share screen
       if (params.containsKey('score') || params.containsKey('currentStreak')) {
         // Use a callback to navigate once the app is fully built
         WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -546,8 +545,8 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content:
-                Text('${strings.AppStrings.apiErrorPrefix}${e.toString()}'),
+            content: Text(
+                '${AppLocalizations.of(context).apiErrorPrefix}${e.toString()}'),
             backgroundColor: Colors.red,
           ),
         );
@@ -555,27 +554,20 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
     }
   }
 
-  /// Builds the MaterialApp with theme configuration
+  /// Builds MaterialApp with theme configuration
   Widget _buildMaterialApp(SettingsProvider settings) {
     final analyticsService = _serviceContainer.analyticsService;
 
     return MaterialApp(
       navigatorKey: navigatorKey,
       navigatorObservers: [analyticsService.getObserver()],
-      title: strings.AppStrings.appName,
+      title: AppLocalizations.of(context).appName,
       debugShowCheckedModeBanner: false,
       theme: ThemeUtils.getLightTheme(settings),
       darkTheme: ThemeUtils.getDarkTheme(settings),
       themeMode: ThemeUtils.getThemeMode(settings),
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('nl', ''), // Dutch
-        Locale('en', ''), // English
-      ],
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       locale: Locale(settings.language, ''),
       routes: {
         '/store': (context) => const StoreScreen(),
@@ -657,35 +649,35 @@ class _AppLifecycleObserver extends WidgetsBindingObserver {
     switch (state) {
       case AppLifecycleState.resumed:
         AppLogger.info('App lifecycle: resumed');
-        // Start a new session when app is resumed (brought to foreground)
+        // Start a new session when the app is resumed (brought to foreground)
         _parent._timeTrackingService.startSession();
-        // Check for new messages when app is resumed
+        // Check for new messages when the app is resumed
         _checkForMessagesOnAppResume();
         // Trigger sync check
         SyncService.instance.syncOnAppResume();
         break;
       case AppLifecycleState.paused:
         AppLogger.info('App lifecycle: paused');
-        // End the current session when app is paused (sent to background)
+        // End the current session when the app is paused (sent to background)
         _parent._timeTrackingService.endSession();
         // Ensure sync queue is saved
         SyncService.instance.syncOnAppPause();
         break;
       case AppLifecycleState.inactive:
         AppLogger.info('App lifecycle: inactive');
-        // End session when app becomes inactive (e.g., phone call, notification overlay)
+        // End session when the app becomes inactive (e.g., phone call, notification overlay)
         if (_parent._timeTrackingService.hasOngoingSession()) {
           _parent._timeTrackingService.endSession();
         }
         break;
       case AppLifecycleState.detached:
         AppLogger.info('App lifecycle: detached');
-        // End session when app is detached
+        // End session when the app is detached
         _parent._timeTrackingService.endSession();
         break;
       case AppLifecycleState.hidden:
         AppLogger.info('App lifecycle: hidden');
-        // End session when app is hidden (e.g., app moved to background)
+        // End session when the app is hidden (e.g., app moved to background)
         if (_parent._timeTrackingService.hasOngoingSession()) {
           _parent._timeTrackingService.endSession();
         }
