@@ -37,21 +37,26 @@ import 'services/sync_service.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 /// Timeout check function to prevent app from hanging indefinitely
-void _checkInitializationTimeout(DateTime startTime, Duration timeout, String phase) {
+void _checkInitializationTimeout(
+    DateTime startTime, Duration timeout, String phase) {
   final elapsed = DateTime.now().difference(startTime);
   if (elapsed > timeout) {
-    AppLogger.error('INITIALIZATION TIMEOUT: $phase took longer than ${timeout.inSeconds} seconds');
-    AppLogger.error('App initialization is taking too long. This may indicate a blocking operation.');
+    AppLogger.error(
+        'INITIALIZATION TIMEOUT: $phase took longer than ${timeout.inSeconds} seconds');
+    AppLogger.error(
+        'App initialization is taking too long. This may indicate a blocking operation.');
     AppLogger.error('Current elapsed time: ${elapsed.inMilliseconds}ms');
     // Continue execution but with a warning - don't throw as we want the app to continue
   } else {
-    AppLogger.debug('Initialization phase "$phase" completed in ${elapsed.inMilliseconds}ms (timeout: ${timeout.inSeconds}s)');
+    AppLogger.debug(
+        'Initialization phase "$phase" completed in ${elapsed.inMilliseconds}ms (timeout: ${timeout.inSeconds}s)');
   }
 }
 
 /// Create a fallback service container with minimal functionality
 ServiceContainer _createFallbackServiceContainer() {
-  AppLogger.info('Creating fallback service container with minimal functionality...');
+  AppLogger.info(
+      'Creating fallback service container with minimal functionality...');
 
   // Create a new service container instance
   final fallbackContainer = ServiceContainer();
@@ -67,7 +72,8 @@ ServiceContainer _createFallbackServiceContainer() {
     try {
       // Initialize time tracking service (most critical for basic functionality)
       unawaited(timeTrackingService.initialize().catchError((e) {
-        AppLogger.error('Failed to initialize time tracking in fallback mode', e);
+        AppLogger.error(
+            'Failed to initialize time tracking in fallback mode', e);
       }));
 
       // Load settings asynchronously
@@ -75,7 +81,8 @@ ServiceContainer _createFallbackServiceContainer() {
         AppLogger.error('Failed to load settings in fallback mode', e);
       }));
 
-      AppLogger.info('Fallback service container created with basic functionality');
+      AppLogger.info(
+          'Fallback service container created with basic functionality');
       return fallbackContainer;
     } catch (e) {
       AppLogger.error('Failed to create even minimal fallback services', e);
@@ -128,20 +135,24 @@ Future<void> main() async {
       await FontUtils.ensureQuicksandFontLoaded().timeout(
         Duration(seconds: 10),
         onTimeout: () {
-          AppLogger.error('FONT LOADING TIMEOUT: Quicksand font loading took too long');
+          AppLogger.error(
+              'FONT LOADING TIMEOUT: Quicksand font loading took too long');
           return Future.value(); // Continue without font
         },
       );
       final fontLoadDuration = DateTime.now().difference(fontLoadStart);
-      AppLogger.info('Quicksand font loaded successfully in ${fontLoadDuration.inMilliseconds}ms');
+      AppLogger.info(
+          'Quicksand font loaded successfully in ${fontLoadDuration.inMilliseconds}ms');
       fontLoaded = true;
     } catch (e) {
-      AppLogger.error('Failed to load Quicksand font, continuing with fallback', e);
+      AppLogger.error(
+          'Failed to load Quicksand font, continuing with fallback', e);
       fontLoaded = false;
     }
 
     // Check timeout after font loading
-    _checkInitializationTimeout(initializationStart, initializationTimeout, 'font loading');
+    _checkInitializationTimeout(
+        initializationStart, initializationTimeout, 'font loading');
 
     try {
       // Load environment variables
@@ -150,12 +161,14 @@ Future<void> main() async {
       await dotenv.load(fileName: "assets/.env").timeout(
         Duration(seconds: 5),
         onTimeout: () {
-          AppLogger.error('ENVIRONMENT LOADING TIMEOUT: Environment variables loading took too long');
+          AppLogger.error(
+              'ENVIRONMENT LOADING TIMEOUT: Environment variables loading took too long');
           throw TimeoutException('Environment loading timeout');
         },
       );
       final envLoadDuration = DateTime.now().difference(envLoadStart);
-      AppLogger.info('Environment variables loaded successfully in ${envLoadDuration.inMilliseconds}ms');
+      AppLogger.info(
+          'Environment variables loaded successfully in ${envLoadDuration.inMilliseconds}ms');
       envLoaded = true;
     } catch (e) {
       AppLogger.error('Failed to load environment variables', e);
@@ -164,32 +177,38 @@ Future<void> main() async {
     }
 
     // Check timeout after environment loading
-    _checkInitializationTimeout(initializationStart, initializationTimeout, 'environment loading');
+    _checkInitializationTimeout(
+        initializationStart, initializationTimeout, 'environment loading');
 
     try {
       // Initialize Supabase
       AppLogger.info('Initializing Supabase...');
       final supabaseInitStart = DateTime.now();
       await SupabaseConfig.initialize().timeout(
-        Duration(seconds: 15),
+        Duration(seconds: 3),
         onTimeout: () {
-          AppLogger.error('SUPABASE INITIALIZATION TIMEOUT: Supabase initialization took too long');
+          AppLogger.error(
+              'SUPABASE INITIALIZATION TIMEOUT: Supabase initialization took too long');
           throw TimeoutException('Supabase initialization timeout');
         },
       );
       final supabaseInitDuration = DateTime.now().difference(supabaseInitStart);
       // Restore our desired log level after Supabase changes it
       Logger.root.level = isProduction ? Level.INFO : Level.ALL;
-      AppLogger.info('Supabase initialized successfully in ${supabaseInitDuration.inMilliseconds}ms');
+      AppLogger.info(
+          'Supabase initialized successfully in ${supabaseInitDuration.inMilliseconds}ms');
       supabaseInitialized = true;
     } catch (e) {
-      AppLogger.error('Failed to initialize Supabase, continuing with limited functionality', e);
+      AppLogger.error(
+          'Failed to initialize Supabase, continuing with limited functionality',
+          e);
       supabaseInitialized = false;
       // Continue without Supabase - app will have limited functionality
     }
 
     // Check timeout after Supabase initialization
-    _checkInitializationTimeout(initializationStart, initializationTimeout, 'Supabase initialization');
+    _checkInitializationTimeout(
+        initializationStart, initializationTimeout, 'Supabase initialization');
 
     // Set preferred screen orientations. On web, this helps maintain a consistent layout.
     if (kIsWeb) {
@@ -208,12 +227,15 @@ Future<void> main() async {
       await serviceContainer.initializeCriticalServices().timeout(
         Duration(seconds: 20),
         onTimeout: () {
-          AppLogger.error('CRITICAL SERVICES TIMEOUT: Critical services initialization took too long');
+          AppLogger.error(
+              'CRITICAL SERVICES TIMEOUT: Critical services initialization took too long');
           throw TimeoutException('Critical services initialization timeout');
         },
       );
-      final criticalServicesDuration = DateTime.now().difference(criticalServicesStart);
-      AppLogger.info('Critical services initialized in ${criticalServicesDuration.inMilliseconds}ms');
+      final criticalServicesDuration =
+          DateTime.now().difference(criticalServicesStart);
+      AppLogger.info(
+          'Critical services initialized in ${criticalServicesDuration.inMilliseconds}ms');
     } catch (e) {
       AppLogger.error('Failed to initialize critical services', e);
       // Create a fallback service container for minimal functionality
@@ -221,10 +243,13 @@ Future<void> main() async {
     }
 
     // Check timeout after critical services initialization
-    _checkInitializationTimeout(initializationStart, initializationTimeout, 'critical services initialization');
+    _checkInitializationTimeout(initializationStart, initializationTimeout,
+        'critical services initialization');
 
-    final totalCriticalInitDuration = DateTime.now().difference(criticalInitStart);
-    AppLogger.info('Total critical initialization completed in ${totalCriticalInitDuration.inMilliseconds}ms');
+    final totalCriticalInitDuration =
+        DateTime.now().difference(criticalInitStart);
+    AppLogger.info(
+        'Total critical initialization completed in ${totalCriticalInitDuration.inMilliseconds}ms');
 
     // Log initialization summary
     AppLogger.info('Initialization Summary:');
@@ -297,8 +322,10 @@ Future<void> main() async {
     AppLogger.info('Starting optional services initialization...');
     final optionalServicesStart = DateTime.now();
     serviceContainer.initializeOptionalServices();
-    final optionalServicesDuration = DateTime.now().difference(optionalServicesStart);
-    AppLogger.info('Optional services initialization started in ${optionalServicesDuration.inMilliseconds}ms');
+    final optionalServicesDuration =
+        DateTime.now().difference(optionalServicesStart);
+    AppLogger.info(
+        'Optional services initialization started in ${optionalServicesDuration.inMilliseconds}ms');
 
     // Track app launch performance
     WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -316,9 +343,12 @@ Future<void> main() async {
     // Final timeout check
     final totalElapsed = DateTime.now().difference(initializationStart);
     if (totalElapsed > initializationTimeout) {
-      AppLogger.error('CRITICAL: App initialization exceeded timeout of ${initializationTimeout.inSeconds} seconds');
-      AppLogger.error('Total initialization time: ${totalElapsed.inMilliseconds}ms');
-      AppLogger.error('This indicates a severe blocking operation that needs immediate attention');
+      AppLogger.error(
+          'CRITICAL: App initialization exceeded timeout of ${initializationTimeout.inSeconds} seconds');
+      AppLogger.error(
+          'Total initialization time: ${totalElapsed.inMilliseconds}ms');
+      AppLogger.error(
+          'This indicates a severe blocking operation that needs immediate attention');
     }
 
     // Re-run with minimal error handling if needed

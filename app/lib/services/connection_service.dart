@@ -83,9 +83,10 @@ class ConnectionService {
       } catch (e) {
         // This is a common issue on some Linux environments (DBus error).
         // We log it as debug to avoid spamming the user, as we have a fallback.
-        AppLogger.debug('Connectivity platform check failed (likely DBus error), falling back to ping: $e');
+        AppLogger.debug(
+            'Connectivity platform check failed (likely DBus error), falling back to ping: $e');
         // Default to wifi/ethernet assumption if we can't check, but rely on ping to confirm
-        connectivityResult = ConnectivityResult.wifi; 
+        connectivityResult = ConnectivityResult.wifi;
       }
 
       if (connectivityResult == ConnectivityResult.none) {
@@ -93,18 +94,19 @@ class ConnectionService {
         // But usually 'none' is reliable. The issue is when it throws.
         _isConnected = false;
         _connectionType = ConnectionType.none;
-        AppLogger.info('Connection checked: not connected (platform reported none)');
+        AppLogger.info(
+            'Connection checked: not connected (platform reported none)');
       } else {
         // Test connection with a simple ping
         try {
           final result = await InternetAddress.lookup('google.com')
-              .timeout(_connectionTimeout);
+              .timeout(const Duration(seconds: 2));
 
           if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
             _isConnected = true;
-            
+
             // Determine connection type based on connectivity result
-            if (connectivityResult == ConnectivityResult.wifi || 
+            if (connectivityResult == ConnectivityResult.wifi ||
                 connectivityResult == ConnectivityResult.ethernet) {
               _connectionType = ConnectionType.fast;
               _isSlowConnection = false;
@@ -119,9 +121,10 @@ class ConnectionService {
             AppLogger.info('Connection checked: not connected (ping failed)');
           }
         } catch (e) {
-           _isConnected = false;
-           _connectionType = ConnectionType.none;
-           AppLogger.info('Connection checked: not connected (ping threw exception)');
+          _isConnected = false;
+          _connectionType = ConnectionType.none;
+          AppLogger.info(
+              'Connection checked: not connected (ping threw exception)');
         }
       }
     } catch (e) {
@@ -151,7 +154,7 @@ class ConnectionService {
       final stopwatch = Stopwatch()..start();
 
       final socket = await Socket.connect('google.com', 80)
-          .timeout(const Duration(seconds: 3));
+          .timeout(const Duration(seconds: 1));
       await socket.close();
 
       stopwatch.stop();
