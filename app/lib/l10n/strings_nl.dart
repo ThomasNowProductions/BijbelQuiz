@@ -1234,8 +1234,6 @@ class AppStrings {
       : 'Fout bij melden van vraag';
 
   // Additional hardcoded strings found in codebase
-  static String get apiErrorPrefix =>
-      _language == 'en' ? AppStringsEn.apiErrorPrefix : 'API Fout: ';
   static String get grid => _language == 'en' ? AppStringsEn.grid : 'Raster';
   static String get list => _language == 'en' ? AppStringsEn.list : 'Lijst';
   static String get compactGrid =>

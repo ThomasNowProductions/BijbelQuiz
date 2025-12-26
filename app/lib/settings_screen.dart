@@ -11,7 +11,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'screens/guide_screen.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb, kDebugMode;
-import 'services/api_service.dart';
 import 'widgets/top_snackbar.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:flutter/services.dart';
@@ -762,8 +761,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-
-
   Widget _buildVersionInfo() {
     return FutureBuilder<PackageInfo>(
       future: PackageInfo.fromPlatform(),
@@ -1187,7 +1184,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
       }
     }
   }
-
 
   Widget _buildSocialMediaButton(BuildContext context, String platform,
       IconData icon, String url, ColorScheme colorScheme) {
