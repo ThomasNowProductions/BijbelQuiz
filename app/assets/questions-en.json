@@ -2003,5 +2003,3085 @@
     "categories": [],
     "biblicalReference": "Luke 17:11-19",
     "id": "000128"
+  },
+  {
+    "question": "Who was king when Daniel was thrown into the lion's den?",
+    "correctAnswer": "Darius",
+    "incorrectAnswers": [
+      "Nebuchadnezzar",
+      "Belshazzar",
+      "Cyrus"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "Daniel"
+    ],
+    "biblicalReference": "Daniel 6",
+    "id": "000129"
+  },
+  {
+    "question": "Peter's mother-in-law was healed of fever. In which place was this?",
+    "correctAnswer": "Capernaum",
+    "incorrectAnswers": [
+      "Cana",
+      "Nain",
+      "Jericho"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "Matthew 8:14",
+    "id": "000130"
+  },
+  {
+    "question": "The inhabitants of the Ten-Tribe Kingdom were taken to ...",
+    "correctAnswer": "Assyria",
+    "incorrectAnswers": [
+      "Babylon",
+      "Persia",
+      "Egypt"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "2 Kings"
+    ],
+    "biblicalReference": "2 Kings 17:6",
+    "id": "000131"
+  },
+  {
+    "question": "From which 2 tribes did the Two-Tribe Kingdom consist?",
+    "correctAnswer": "Judah and Benjamin",
+    "incorrectAnswers": [
+      "Levi and Judah",
+      "Joseph and Benjamin",
+      "Judah and Levi"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "1 Kings"
+    ],
+    "biblicalReference": "1 Kings 12:21",
+    "id": "000132"
+  },
+  {
+    "question": "3 names are for the same lake/sea. Which one doesn't belong?",
+    "correctAnswer": "The Dead Sea",
+    "incorrectAnswers": [
+      "Sea of Galilee",
+      "Sea of Gennesaret",
+      "Sea of Tiberias"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": null,
+    "id": "000133"
+  },
+  {
+    "question": "A new apostle was chosen instead of Judas. Who was that?",
+    "correctAnswer": "Matthias",
+    "incorrectAnswers": [
+      "Justus",
+      "Philip",
+      "Nathanael"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "Acts"
+    ],
+    "biblicalReference": "Acts 1:26",
+    "id": "000134"
+  },
+  {
+    "question": "What do we think of at Easter?",
+    "correctAnswer": "The resurrection of Jesus",
+    "incorrectAnswers": [
+      "The birth of Jesus",
+      "The death of Jesus",
+      "The ascension of Jesus"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "Mark 16",
+    "id": "000135"
+  },
+  {
+    "question": "Daniel received a Babylonian name. Which one?",
+    "correctAnswer": "Belteshazzar",
+    "incorrectAnswers": [
+      "Belshazzar",
+      "Shadrach",
+      "Meshach"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "Daniel"
+    ],
+    "biblicalReference": "Daniel 1:7",
+    "id": "000136"
+  },
+  {
+    "question": "The blind man had to wash in ... to become seeing.",
+    "correctAnswer": "the pool of Siloam",
+    "incorrectAnswers": [
+      "the pool of Bethesda",
+      "the Jordan",
+      "the pool of cleansing"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "John"
+    ],
+    "biblicalReference": "John 9: 1-7",
+    "id": "000137"
+  },
+  {
+    "question": "In the battle against Egypt, king ... of Judah fell.",
+    "correctAnswer": "Josiah",
+    "incorrectAnswers": [
+      "Amon",
+      "Manasseh",
+      "Ahaz"
+    ],
+    "difficulty": 5,
+    "type": "fitb",
+    "categories": [
+      "2 Chronicles"
+    ],
+    "biblicalReference": "2 Chronicles 35: 20-24",
+    "id": "000138"
+  },
+  {
+    "question": "Where did the first Christian church arise?",
+    "correctAnswer": "Jerusalem",
+    "incorrectAnswers": [
+      "Antioch",
+      "Philippi",
+      "Corinth"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "Acts"
+    ],
+    "biblicalReference": "Acts 2:40-41",
+    "id": "000139"
+  },
+  {
+    "question": "Who were the third and fourth disciples of Jesus?",
+    "correctAnswer": "John and James",
+    "incorrectAnswers": [
+      "Simon and Andrew",
+      "Simon and James",
+      "John and Andrew"
+    ],
+    "difficulty": 5,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "Mark 1: 16-20",
+    "id": "000140"
+  },
+  {
+    "question": "Elijah, Ahab and the people went to offer on Mount ...",
+    "correctAnswer": "Carmel",
+    "incorrectAnswers": [
+      "Horeb",
+      "Sinai",
+      "Tabor"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "1 Kings"
+    ],
+    "biblicalReference": "1 Kings 18: 20 -40",
+    "id": "000141"
+  },
+  {
+    "question": "What is the last word in the Bible?",
+    "correctAnswer": "Amen",
+    "incorrectAnswers": [
+      "Come",
+      "Thanks be to God",
+      "Blessing"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "Revelation"
+    ],
+    "biblicalReference": "Revelation 22:21",
+    "id": "000142"
+  },
+  {
+    "question": "Who heard a Great Voice from Heaven say: 'Behold, the tabernacle of God is with the people and He will dwell with them'?",
+    "correctAnswer": "John",
+    "incorrectAnswers": [
+      "Peter",
+      "James",
+      "Jesus Himself"
+    ],
+    "difficulty": 5,
+    "type": "mc",
+    "categories": [
+      "Revelation"
+    ],
+    "biblicalReference": "Revelation 21:3",
+    "id": "000143"
+  },
+  {
+    "question": "What is the Rider on the white horse called in Revelation?",
+    "correctAnswer": "Faithful and True",
+    "incorrectAnswers": [
+      "Savior",
+      "Christ Jesus",
+      "Firm and certain"
+    ],
+    "difficulty": 5,
+    "type": "mc",
+    "categories": [
+      "Revelation"
+    ],
+    "biblicalReference": "Revelation 19:11",
+    "id": "000144"
+  },
+  {
+    "question": "Complete the sentence: Woe, woe, the great city ... , the strong city",
+    "correctAnswer": "Babylon",
+    "incorrectAnswers": [
+      "Jericho",
+      "Jerusalem",
+      "Nineveh"
+    ],
+    "difficulty": 5,
+    "type": "fitb",
+    "categories": [
+      "Revelation"
+    ],
+    "biblicalReference": "Revelation 18:10",
+    "id": "000145"
+  },
+  {
+    "question": "How often was the trumpet blown in Revelation?",
+    "correctAnswer": "7 times",
+    "incorrectAnswers": [
+      "7 times 70 times",
+      "70 times",
+      "700 times"
+    ],
+    "difficulty": 5,
+    "type": "mc",
+    "categories": [
+      "Revelation"
+    ],
+    "biblicalReference": "Revelation 8, 9, 10, 11",
+    "id": "000146"
+  },
+  {
+    "question": "How many seals are opened in Revelation?",
+    "correctAnswer": "7",
+    "incorrectAnswers": [
+      "8",
+      "6",
+      "3"
+    ],
+    "difficulty": 5,
+    "type": "mc",
+    "categories": [
+      "Revelation"
+    ],
+    "biblicalReference": "Revelation 6, 7, 8",
+    "id": "000147"
+  },
+  {
+    "question": "Who alone could open the book with the 7 seals?",
+    "correctAnswer": "The Lamb",
+    "incorrectAnswers": [
+      "The Rock",
+      "The beast with 7 eyes",
+      "No one"
+    ],
+    "difficulty": 5,
+    "type": "mc",
+    "categories": [
+      "Revelation"
+    ],
+    "biblicalReference": "Revelation 5",
+    "id": "000148"
+  },
+  {
+    "question": "What was in the Letter of Christ to Sardis?",
+    "correctAnswer": "You have a name that you live, and you are dead",
+    "incorrectAnswers": [
+      "Woe to you",
+      "The rules that church had to follow",
+      "To you is Eternal Life"
+    ],
+    "difficulty": 5,
+    "type": "mc",
+    "categories": [
+      "Revelation"
+    ],
+    "biblicalReference": "Revelation 3:1",
+    "id": "000149"
+  },
+  {
+    "question": "Where did John write the biblical book of Revelation?",
+    "correctAnswer": "On the island of Patmos",
+    "incorrectAnswers": [
+      "In prison",
+      "John didn't write Revelation",
+      "In the wilderness"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "Revelation"
+    ],
+    "biblicalReference": "Revelation 1:9",
+    "id": "000150"
+  },
+  {
+    "question": "What did Jude warn against in his biblical book?",
+    "correctAnswer": "Against false teachers",
+    "incorrectAnswers": [
+      "Against the devil",
+      "Against sin",
+      "Against the world"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "Jude"
+    ],
+    "biblicalReference": "Jude 1",
+    "id": "000151"
+  },
+  {
+    "question": "To whom did John write his letter, 3 John?",
+    "correctAnswer": "Gaius",
+    "incorrectAnswers": [
+      "The church of Laodicea",
+      "To no one specific",
+      "To Diotrephes"
+    ],
+    "difficulty": 5,
+    "type": "mc",
+    "categories": [
+      "3 John"
+    ],
+    "biblicalReference": "3 John 1:1",
+    "id": "000152"
+  },
+  {
+    "question": "From which place did John write his letter, 2 John?",
+    "correctAnswer": "From Ephesus",
+    "incorrectAnswers": [
+      "From Corinth",
+      "From Asia Minor",
+      "That is unknown"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "John"
+    ],
+    "biblicalReference": "2 John",
+    "id": "000153"
+  },
+  {
+    "question": "Which prophet told King Hezekiah that he had to die?",
+    "correctAnswer": "Isaiah",
+    "incorrectAnswers": [
+      "Jeremiah",
+      "Micah",
+      "Amos"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "Isaiah"
+    ],
+    "biblicalReference": "Isaiah 38:1",
+    "id": "000154"
+  },
+  {
+    "question": "From whom did Peter cut off the ear?",
+    "correctAnswer": "Malchus",
+    "incorrectAnswers": [
+      "Matthew",
+      "Maltus",
+      "Caiaphas"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "John"
+    ],
+    "biblicalReference": "John 18:10",
+    "id": "000155"
+  },
+  {
+    "question": "What did the Macedonian man ask in Paul's dream?",
+    "correctAnswer": "'Come over to Macedonia and help us'",
+    "incorrectAnswers": [
+      "'Come over and help us'",
+      "'Come and see'",
+      "'Come over to Macedonia and preach the gospel'"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "Acts"
+    ],
+    "biblicalReference": "Acts 16:9",
+    "id": "000156"
+  },
+  {
+    "question": "Which punishment did the prophet Elijah announce to King Ahab?",
+    "correctAnswer": "There shall be no dew or rain",
+    "incorrectAnswers": [
+      "There shall be no more rain",
+      "Famine will come",
+      "Many people will die"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "1 Kings"
+    ],
+    "biblicalReference": "1 Kings 17:1",
+    "id": "000157"
+  },
+  {
+    "question": "Who was the father of Samuel?",
+    "correctAnswer": "Elkanah",
+    "incorrectAnswers": [
+      "Elihu",
+      "Elam",
+      "Jeroboam"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "1 Samuel"
+    ],
+    "biblicalReference": "1 Samuel 1:1",
+    "id": "000158"
+  },
+  {
+    "question": "In which city did Paul speak about the unknown God?",
+    "correctAnswer": "In Athens",
+    "incorrectAnswers": [
+      "In Corinth",
+      "In Philippi",
+      "In Thyatira"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "Acts",
+      "Romans"
+    ],
+    "biblicalReference": "Acts 17:23",
+    "id": "000159"
+  },
+  {
+    "question": "Who went along on Paul and Barnabas's first missionary journey?",
+    "correctAnswer": "John Mark",
+    "incorrectAnswers": [
+      "Mark",
+      "John",
+      "Peter"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "Acts"
+    ],
+    "biblicalReference": "Acts 13",
+    "id": "000160"
+  },
+  {
+    "question": "Who were the sons of Zebedee?",
+    "correctAnswer": "James and John",
+    "incorrectAnswers": [
+      "John and Andrew",
+      "Andrew and Peter",
+      "James and Peter"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "Mark 1: 19 , 20",
+    "id": "000161"
+  },
+  {
+    "question": "In which place was David proclaimed king?",
+    "correctAnswer": "Hebron",
+    "incorrectAnswers": [
+      "Jerusalem",
+      "Judah",
+      "Gilead"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "2 Kings"
+    ],
+    "biblicalReference": "2 Kings 2:4",
+    "id": "000162"
+  },
+  {
+    "question": "Who said: 'You almost persuade me to become a Christian'?",
+    "correctAnswer": "King Agrippa",
+    "incorrectAnswers": [
+      "Silas",
+      "Governor Felix",
+      "King David"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "Acts"
+    ],
+    "biblicalReference": "Acts 26:28",
+    "id": "000163"
+  },
+  {
+    "question": "During the wilderness journey the water was bitter at ...",
+    "correctAnswer": "Mara",
+    "incorrectAnswers": [
+      "Elim",
+      "Rephidim",
+      "Kadesh Barnea"
+    ],
+    "difficulty": 1,
+    "type": "fitb",
+    "categories": [],
+    "biblicalReference": "Exodus 15:23",
+    "id": "000164"
+  },
+  {
+    "question": "Which idolatry did King Jeroboam introduce?",
+    "correctAnswer": "The service of the golden calves",
+    "incorrectAnswers": [
+      "The service of Baal",
+      "The service of Ashtoreth",
+      "The service of the stars"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "1 Kings"
+    ],
+    "biblicalReference": "1 Kings 12: 25-33",
+    "id": "000165"
+  },
+  {
+    "question": "How many missionary journeys did Paul make?",
+    "correctAnswer": "3",
+    "incorrectAnswers": [
+      "2",
+      "4",
+      "5"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "Acts"
+    ],
+    "biblicalReference": "Acts",
+    "id": "000166"
+  },
+  {
+    "question": "On which mountain was the Ascension of Jesus?",
+    "correctAnswer": "Mount of Olives",
+    "incorrectAnswers": [
+      "Horeb",
+      "Moriah",
+      "Nebo"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "Acts"
+    ],
+    "biblicalReference": "Acts 1: 9-12",
+    "id": "000167"
+  },
+  {
+    "question": "Where did Jesus's mother live?",
+    "correctAnswer": "Nazareth",
+    "incorrectAnswers": [
+      "Bethlehem",
+      "Jerusalem",
+      "That is unknown"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "Luke"
+    ],
+    "biblicalReference": "Luke 1:26",
+    "id": "000168"
+  },
+  {
+    "question": "How many days are there between Ascension and Pentecost?",
+    "correctAnswer": "10",
+    "incorrectAnswers": [
+      "40",
+      "3",
+      "12"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "Pentecost",
+      "Ascension"
+    ],
+    "biblicalReference": "Acts 1 and 2",
+    "id": "000169"
+  },
+  {
+    "question": "Who was the first Christian to die for his faith?",
+    "correctAnswer": "Stephen",
+    "incorrectAnswers": [
+      "Peter",
+      "James",
+      "Philip"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "Acts"
+    ],
+    "biblicalReference": "Acts 7: 54-60",
+    "id": "000170"
+  },
+  {
+    "question": "Blessed is the man who does not ... in the counsel of the wicked",
+    "correctAnswer": "walk",
+    "incorrectAnswers": [
+      "walk",
+      "stand",
+      "go"
+    ],
+    "difficulty": 1,
+    "type": "fitb",
+    "categories": [
+      "Psalms"
+    ],
+    "biblicalReference": "Psalms 1:1",
+    "id": "000171"
+  },
+  {
+    "question": "What was the name of Aaron's wife?",
+    "correctAnswer": "Elisheba",
+    "difficulty": 5,
+    "type": "mc",
+    "categories": [
+      "Exodus"
+    ],
+    "incorrectAnswers": [
+      "Zipporah",
+      "Jehosheba",
+      "Elizabeth"
+    ],
+    "biblicalReference": "Exodus 6:22",
+    "id": "000172"
+  },
+  {
+    "question": "How did the people react when the law was read aloud by Ezra?",
+    "correctAnswer": "They wept",
+    "difficulty": 5,
+    "type": "mc",
+    "categories": [
+      "Nehemiah"
+    ],
+    "incorrectAnswers": [
+      "They rejoiced",
+      "They left the city",
+      "They rebelled"
+    ],
+    "biblicalReference": "Nehemiah 8:9",
+    "id": "000173"
+  },
+  {
+    "question": "What was Nehemiah's function at the court of the king of Persia?",
+    "correctAnswer": "Cupbearer",
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "Nehemiah"
+    ],
+    "incorrectAnswers": [
+      "Head of the guards",
+      "Herald",
+      "Bookkeeper"
+    ],
+    "biblicalReference": "Nehemiah 1:11",
+    "id": "000174"
+  },
+  {
+    "question": "What was Ezra's main task when he came to Jerusalem?",
+    "correctAnswer": "Teach the people in the Law of the Lord",
+    "difficulty": 5,
+    "type": "mc",
+    "categories": [
+      "Ezra"
+    ],
+    "incorrectAnswers": [
+      "Rebuild the city",
+      "Restore the walls",
+      "Cleanse the temple"
+    ],
+    "biblicalReference": "Ezra 7:10",
+    "id": "000175"
+  },
+  {
+    "question": "What happened to King Uzziah when he wanted to perform the priestly office?",
+    "correctAnswer": "He got leprosy",
+    "difficulty": 5,
+    "type": "mc",
+    "categories": [
+      "2 Chronicles"
+    ],
+    "incorrectAnswers": [
+      "He was blessed",
+      "He became king over all tribes",
+      "He was expelled from Jerusalem"
+    ],
+    "biblicalReference": "2 Chronicles 26: 16-21",
+    "id": "000176"
+  },
+  {
+    "question": "What did Solomon do after he completed the temple?",
+    "correctAnswer": "He prayed",
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "1 Kings"
+    ],
+    "incorrectAnswers": [
+      "He left Jerusalem",
+      "He destroyed the high places",
+      "He hid the ark"
+    ],
+    "biblicalReference": "1 Kings 8: 22, 23",
+    "id": "000177"
+  },
+  {
+    "question": "Who brought the ark of God to Jerusalem, after it had first failed?",
+    "correctAnswer": "David",
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [],
+    "incorrectAnswers": [
+      "Moses",
+      "Saul",
+      "Joab"
+    ],
+    "biblicalReference": "2 Samuel 6: 12-15",
+    "id": "000178"
+  },
+  {
+    "question": "What did Elisha do to make the bitter water of Jericho healthy?",
+    "correctAnswer": "He threw salt into the spring",
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "2 Kings"
+    ],
+    "incorrectAnswers": [
+      "He prayed to God",
+      "He struck the water with his cloak",
+      "He commanded the water to stand still"
+    ],
+    "biblicalReference": "2 Kings 2:21",
+    "id": "000179"
+  },
+  {
+    "question": "What happened at the dedication of the temple that Solomon built?",
+    "correctAnswer": "The cloud filled the house of the Lord",
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "1 Kings"
+    ],
+    "incorrectAnswers": [
+      "Fire came from heaven",
+      "The ark disappeared",
+      "The priests went into the sanctuary"
+    ],
+    "biblicalReference": "1 Kings 8: 10, 11",
+    "id": "000180"
+  },
+  {
+    "question": "What did David do when he heard of the death of Absalom?",
+    "correctAnswer": "He wept and mourned",
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "2 Samuel"
+    ],
+    "incorrectAnswers": [
+      "He celebrated",
+      "He fled",
+      "He stoned himself"
+    ],
+    "biblicalReference": "2 Samuel 18:33",
+    "id": "000181"
+  },
+  {
+    "question": "With how many men did Gideon defeat the army of Midian?",
+    "correctAnswer": "300",
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "Judges"
+    ],
+    "incorrectAnswers": [
+      "30",
+      "1000",
+      "3000"
+    ],
+    "biblicalReference": "Judges 7:6",
+    "id": "000182"
+  },
+  {
+    "question": "Who was the only female judge of Israel?",
+    "correctAnswer": "Deborah",
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "Judges"
+    ],
+    "incorrectAnswers": [
+      "Hannah",
+      "Ruth",
+      "Jael"
+    ],
+    "biblicalReference": "Judges 4:4-5",
+    "id": "000183"
+  },
+  {
+    "question": "What did Joshua say to the people in his farewell speech?",
+    "correctAnswer": "But as for me and my house, we will serve the Lord",
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "Joshua"
+    ],
+    "incorrectAnswers": [
+      "Leave this land, for it is unclean",
+      "Seek for yourself another god this day",
+      "Let us return to Egypt"
+    ],
+    "biblicalReference": "Joshua 24:15",
+    "id": "000184"
+  },
+  {
+    "question": "What did Moses have to do to get water from the rock at Meribah?",
+    "correctAnswer": "Strike the rock with his staff",
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "Genesis",
+      "Exodus"
+    ],
+    "incorrectAnswers": [
+      "Speak to the rock",
+      "Pray to the Lord",
+      "Sprinkle the rock with blood"
+    ],
+    "biblicalReference": "Exodus 17:1-7",
+    "id": "000185"
+  },
+  {
+    "question": "What did the priest have to do with the blood of the guilt offering?",
+    "correctAnswer": "Put it on the horns of the altar",
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "Exodus"
+    ],
+    "incorrectAnswers": [
+      "Put it on the ark",
+      "Put it on the west side of the sanctuary of the holy ones",
+      "Mix it with incense"
+    ],
+    "biblicalReference": "Exodus 29:12",
+    "id": "000186"
+  },
+  {
+    "question": "What did God say to Moses from the burning bush?",
+    "correctAnswer": "I am the God of your fathers",
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "Genesis",
+      "Exodus"
+    ],
+    "incorrectAnswers": [
+      "Go to Nineveh",
+      "You are chosen above all nations",
+      "I am your God"
+    ],
+    "biblicalReference": "Exodus 3:6",
+    "id": "000187"
+  },
+  {
+    "question": "What did Noah build first after the flood?",
+    "correctAnswer": "An altar",
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "Genesis"
+    ],
+    "incorrectAnswers": [
+      "A city",
+      "A ship",
+      "A tower"
+    ],
+    "biblicalReference": "Genesis 8:20",
+    "id": "000188"
+  },
+  {
+    "question": "What did God say to the serpent after the fall of Adam and Eve?",
+    "correctAnswer": "\"Cursed are you above all livestock\"",
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "Genesis"
+    ],
+    "incorrectAnswers": [
+      "\"You shall return to dust\"",
+      "\"You shall leave your wife\"",
+      "\"I will be gracious to you\""
+    ],
+    "biblicalReference": "Genesis 3:14",
+    "id": "000189"
+  },
+  {
+    "question": "What was the name of the disciple Matthew first?",
+    "correctAnswer": "Levi",
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "Matthew"
+    ],
+    "incorrectAnswers": [
+      "Simon",
+      "Mark",
+      "Lazarus"
+    ],
+    "biblicalReference": "Mark 9:9",
+    "id": "000190"
+  },
+  {
+    "question": "With whom did Mary, the mother of the Lord Jesus, live after Jesus' death?",
+    "correctAnswer": "With John",
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "John"
+    ],
+    "incorrectAnswers": [
+      "With Martha",
+      "With Peter",
+      "With her sister"
+    ],
+    "biblicalReference": "John 19: 26, 27",
+    "id": "000191"
+  },
+  {
+    "question": "Where was the Lord Jesus led by the Spirit after his baptism in the Jordan?",
+    "correctAnswer": "Into the wilderness",
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "Matthew"
+    ],
+    "incorrectAnswers": [
+      "To Galilee",
+      "To Capernaum",
+      "To his disciples"
+    ],
+    "biblicalReference": "Matthew 4 : 1-3",
+    "id": "000192"
+  },
+  {
+    "question": "How does the Sermon on the Mount begin in Matthew 5?",
+    "correctAnswer": "With the Beatitudes",
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "Matthew"
+    ],
+    "incorrectAnswers": [
+      "With the Lord's Prayer",
+      "With the parables of the seed",
+      "With the commandment of love"
+    ],
+    "biblicalReference": "Matthew 5: 1-12",
+    "id": "000193"
+  },
+  {
+    "question": "What is the first miracle of Jesus, mentioned in the biblical book of Mark?",
+    "correctAnswer": "Casting out an unclean spirit",
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "Matthew",
+      "Mark",
+      "Luke"
+    ],
+    "incorrectAnswers": [
+      "Turning water into wine",
+      "Peter walks on the water",
+      "Jesus calms the storm"
+    ],
+    "biblicalReference": "Mark 1:21-28",
+    "id": "000194"
+  },
+  {
+    "question": "Who is first mentioned in Matthew in the genealogy of Jesus?",
+    "correctAnswer": "Abraham",
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "Matthew"
+    ],
+    "incorrectAnswers": [
+      "Jacob",
+      "Adam",
+      "Moses"
+    ],
+    "biblicalReference": "Matthew 1:1",
+    "id": "000195"
+  },
+  {
+    "question": "What was the first message that Jesus preached in Mark 1?",
+    "correctAnswer": "Repent and believe the Gospel",
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [],
+    "incorrectAnswers": [
+      "Love one another",
+      "Go into the whole world",
+      "Watch and pray"
+    ],
+    "biblicalReference": "Mark 1:15",
+    "id": "000196"
+  },
+  {
+    "question": "To whom is the Gospel of Luke addressed?",
+    "correctAnswer": "Theophilus",
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "Luke"
+    ],
+    "incorrectAnswers": [
+      "Timothy",
+      "Titus",
+      "Silas"
+    ],
+    "biblicalReference": "Luke 1:3",
+    "id": "000197"
+  },
+  {
+    "question": "Who saw Jesus first after His resurrection?",
+    "correctAnswer": "The Emmaus travelers",
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "Luke"
+    ],
+    "incorrectAnswers": [
+      "Peter",
+      "Mary Magdalene",
+      "John"
+    ],
+    "biblicalReference": "Luke 24:15",
+    "id": "000198"
+  },
+  {
+    "question": "Where does the biblical book of Luke end?",
+    "correctAnswer": "At the ascension of Jesus",
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [],
+    "incorrectAnswers": [
+      "At the crucifixion",
+      "At Pentecost in Jerusalem",
+      "At the announcement of the second coming"
+    ],
+    "biblicalReference": "Luke 24: 50-53",
+    "id": "000199"
+  },
+  {
+    "question": "With what words does John 1 begin?",
+    "correctAnswer": "In the beginning was the Word",
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [],
+    "incorrectAnswers": [
+      "In the beginning God created",
+      "And it came to pass",
+      "This is the book of generations"
+    ],
+    "biblicalReference": "John 1: 1",
+    "id": "000200"
+  },
+  {
+    "question": "Who was the woman at the well?",
+    "correctAnswer": "A Samaritan woman",
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "John"
+    ],
+    "incorrectAnswers": [
+      "A Jewess",
+      "A Roman woman",
+      "A Philistine woman"
+    ],
+    "biblicalReference": "John 4:7",
+    "id": "000201"
+  },
+  {
+    "question": "Who took the place of Judas as apostle?",
+    "correctAnswer": "Matthias",
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "Acts"
+    ],
+    "incorrectAnswers": [
+      "Barnabas",
+      "Paul",
+      "Silas"
+    ],
+    "biblicalReference": "Acts 1: 15-26",
+    "id": "000202"
+  },
+  {
+    "question": "What did Peter do after Pentecost?",
+    "correctAnswer": "He preached",
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "Acts"
+    ],
+    "incorrectAnswers": [
+      "He was silent",
+      "He prayed in silence",
+      "He fled"
+    ],
+    "biblicalReference": "Acts 2:14-41",
+    "id": "000203"
+  },
+  {
+    "question": "Who converted on the road to Damascus?",
+    "correctAnswer": "Saul",
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "Acts"
+    ],
+    "incorrectAnswers": [
+      "Peter",
+      "Barnabas",
+      "Timothy"
+    ],
+    "biblicalReference": "Acts 9: 1-6",
+    "id": "000204"
+  },
+  {
+    "question": "How does the book of Acts end?",
+    "correctAnswer": "With Paul's stay in Rome",
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "Acts"
+    ],
+    "incorrectAnswers": [
+      "With Paul's death",
+      "With the destruction of Jerusalem",
+      "With Pentecost"
+    ],
+    "biblicalReference": "Acts 28",
+    "id": "000205"
+  },
+  {
+    "question": "How does Paul describe himself in Romans 1:1?",
+    "correctAnswer": "A servant of Jesus Christ",
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "Romans"
+    ],
+    "incorrectAnswers": [
+      "A prophet of Jesus Christ",
+      "A servant of men",
+      "An apostle of John"
+    ],
+    "biblicalReference": "Romans 1:1",
+    "id": "000206"
+  },
+  {
+    "question": "Who are the true children of Abraham?",
+    "correctAnswer": "Those who are of faith",
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "Romans"
+    ],
+    "incorrectAnswers": [
+      "Those who are of the Spirit",
+      "Those born in Israel",
+      "Those who are of the flesh"
+    ],
+    "biblicalReference": "Romans 4:16",
+    "id": "000207"
+  },
+  {
+    "question": "What does Paul say that we must do with our bodies?",
+    "correctAnswer": "Present them as a living, holy and pleasing sacrifice to God",
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "Romans"
+    ],
+    "incorrectAnswers": [
+      "Subject them to the law",
+      "Use them for good works",
+      "Offer them as sacrifices"
+    ],
+    "biblicalReference": "Romans 12: 1",
+    "id": "000208"
+  },
+  {
+    "question": "What is the summary of the law?",
+    "correctAnswer": "Love",
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "Romans"
+    ],
+    "incorrectAnswers": [
+      "Faith",
+      "Obedience",
+      "Hope"
+    ],
+    "biblicalReference": "Romans 13: 8-14",
+    "id": "000209"
+  },
+  {
+    "question": "What is the problem in the church at Corinth?",
+    "correctAnswer": "Strife and division",
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "1 Corinthians"
+    ],
+    "incorrectAnswers": [
+      "Persecution",
+      "Lack of faith",
+      "Lack of love"
+    ],
+    "biblicalReference": "1 Corinthians 1:10-13",
+    "id": "000210"
+  },
+  {
+    "question": "What is the body of a believer?",
+    "correctAnswer": "A temple of the Holy Spirit",
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "1 Corinthians"
+    ],
+    "incorrectAnswers": [
+      "Dust of the earth",
+      "A sinful vessel",
+      "A temporary tent"
+    ],
+    "biblicalReference": "1 Corinthians 6 and 20",
+    "id": "000211"
+  },
+  {
+    "question": "How many letters did Paul write to the Corinthians that have been preserved?",
+    "correctAnswer": "Two",
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "1 Corinthians"
+    ],
+    "incorrectAnswers": [
+      "One",
+      "Three",
+      "Four"
+    ],
+    "biblicalReference": null,
+    "id": "000212"
+  },
+  {
+    "question": "What does Paul say about weakness?",
+    "correctAnswer": "My power is made perfect in weakness",
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "2 Corinthians"
+    ],
+    "incorrectAnswers": [
+      "Weakness is a sin",
+      "Avoid weakness at all times",
+      "Faith overcomes weakness"
+    ],
+    "biblicalReference": "2 Corinthians 12:9",
+    "id": "000213"
+  },
+  {
+    "question": "What is the ministry that God has given to us?",
+    "correctAnswer": "Ministry of reconciliation",
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "2 Corinthians"
+    ],
+    "incorrectAnswers": [
+      "Ministry of judgment",
+      "Ministry of grace",
+      "Ministry of the commandments"
+    ],
+    "biblicalReference": "2 Corinthians 5:18",
+    "id": "000214"
+  },
+  {
+    "question": "What surprises Paul?",
+    "correctAnswer": "That they quickly turn to another gospel",
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [],
+    "incorrectAnswers": [
+      "That the Galatians are devout",
+      "That they fast much",
+      "That they pray much"
+    ],
+    "biblicalReference": "Galatians 1:6",
+    "id": "000215"
+  },
+  {
+    "question": "What does Paul say about the law?",
+    "correctAnswer": "It is a tutor to Christ",
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "Galatians"
+    ],
+    "incorrectAnswers": [
+      "It justifies",
+      "It leads away from sins",
+      "It is fulfilled in Christ"
+    ],
+    "biblicalReference": "Galatians 3:24",
+    "id": "000216"
+  },
+  {
+    "question": "Through what are we made righteous?",
+    "correctAnswer": "Through faith, by grace",
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "Galatians"
+    ],
+    "incorrectAnswers": [
+      "Through the works of the law",
+      "Through keeping the law",
+      "Through prayer and fasting"
+    ],
+    "biblicalReference": "Galatians 2:16",
+    "id": "000217"
+  },
+  {
+    "question": "What must children do?",
+    "correctAnswer": "Be obedient to their parents",
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [],
+    "incorrectAnswers": [
+      "Be silent",
+      "Work",
+      "Pray"
+    ],
+    "biblicalReference": "Ephesians 6:1-3",
+    "id": "000218"
+  },
+  {
+    "question": "What is life for Paul?",
+    "correctAnswer": "Christ",
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "Philippians"
+    ],
+    "incorrectAnswers": [
+      "Suffering",
+      "Struggle",
+      "Hope"
+    ],
+    "biblicalReference": "Philippians 1:21",
+    "id": "000219"
+  },
+  {
+    "question": "Who is mentioned as Paul's brother and fellow worker?",
+    "correctAnswer": "Epaphroditus",
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "Philippians"
+    ],
+    "incorrectAnswers": [
+      "Barnabas",
+      "Silas",
+      "Timothy"
+    ],
+    "biblicalReference": "Philippians 2:25",
+    "id": "000220"
+  },
+  {
+    "question": "Who wrote the letter to the Colossians?",
+    "correctAnswer": "Paul",
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "Colossians"
+    ],
+    "incorrectAnswers": [
+      "Colossians",
+      "Silas",
+      "Timotheus"
+    ],
+    "biblicalReference": "Colossians 1:1-2",
+    "id": "000221"
+  },
+  {
+    "question": "Who wrote the letter to the Thessalonians?",
+    "correctAnswer": "Paul, Silvanus and Timothy",
+    "difficulty": 5,
+    "type": "mc",
+    "categories": [],
+    "incorrectAnswers": [
+      "Paul",
+      "Paul and Timothy",
+      "Paul and Barnabas"
+    ],
+    "biblicalReference": "1 Thessalonians 1:1",
+    "id": "000222"
+  },
+  {
+    "question": "What did Christ do that it was done?",
+    "correctAnswer": "The angel of the Lord",
+    "incorrectAnswers": [
+      "Moses",
+      "The angel of the Lord",
+      "The Holy Spirit"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "Colossians"
+    ],
+    "biblicalReference": "Colossians 1:15",
+    "id": "000223"
+  },
+  {
+    "question": "What happens to the dead in Christ at His coming?",
+    "correctAnswer": "They shall rise first",
+    "incorrectAnswers": [
+      "They shall be judged",
+      "They return with Jesus",
+      "They shall rise last"
+    ],
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "1 Thessalonians 4:16",
+    "id": "000224"
+  },
+  {
+    "question": "What must happen first before the day of the Lord comes?",
+    "correctAnswer": "The falling away from the faith and the revealing of the man of sin",
+    "incorrectAnswers": [
+      "The coming",
+      "The resurrection from the dead",
+      "The oppression"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "2 Thessalonians 2",
+    "id": "000225"
+  },
+  {
+    "question": "How is the \"man of sin\" also called?",
+    "correctAnswer": "The son of perdition",
+    "incorrectAnswers": [
+      "The antichrist",
+      "The dragon",
+      "The ruler of darkness"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "2 Thessalonians 2:3",
+    "id": "000226"
+  },
+  {
+    "question": "What is Paul's blessing at the end of Thessalonians?",
+    "correctAnswer": "The grace of our Lord Jesus Christ be with you all. Amen.",
+    "incorrectAnswers": [
+      "Grace and peace be with you all. Amen.",
+      "The love of God and the fellowship of the Holy Spirit be with you all, Amen.",
+      "The peace of God be with you all. Amen."
+    ],
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "2 Thessalonians 3:18",
+    "id": "000227"
+  },
+  {
+    "question": "What does Paul say about women in the worship service?",
+    "correctAnswer": "That they should be in silence",
+    "incorrectAnswers": [
+      "That they should prophesy",
+      "That they should teach the people",
+      "That they should preach to the people"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "1 Timothy 2:11",
+    "id": "000228"
+  },
+  {
+    "question": "What is God not?",
+    "correctAnswer": "A spirit of fear",
+    "incorrectAnswers": [
+      "A consuming fire",
+      "A God of judgment",
+      "A God of strife"
+    ],
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "2 Timothy 1:7",
+    "id": "000229"
+  },
+  {
+    "question": "Which parable does Paul use for the life of a believer?",
+    "correctAnswer": "Soldier, athlete, farmer",
+    "incorrectAnswers": [
+      "Prophet, priest, king",
+      "Redemption, pilgrimage, traveler",
+      "Fisherman, farmer, soldier"
+    ],
+    "difficulty": 5,
+    "type": "mc",
+    "categories": [
+      "2 Timothy"
+    ],
+    "biblicalReference": "2 Timothy 2",
+    "id": "000230"
+  },
+  {
+    "question": "Who has Paul left, having loved the present world?",
+    "correctAnswer": "Demas",
+    "incorrectAnswers": [
+      "Timothy"
+    ],
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "Romans"
+    ],
+    "biblicalReference": "2 Timothy 4:10",
+    "id": "000231"
+  },
+  {
+    "question": "What did Titus have to do on Crete?",
+    "correctAnswer": "Appoint elders in every city",
+    "incorrectAnswers": [
+      "Convince the Romans",
+      "Appoint deacons in every city",
+      "Establish a church"
+    ],
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "Titus"
+    ],
+    "biblicalReference": "Titus 1:5",
+    "id": "000232"
+  },
+  {
+    "question": "What does Paul say about the saving grace of God?",
+    "correctAnswer": "It has appeared to all men",
+    "incorrectAnswers": [
+      "It has come to Israel",
+      "It has come for the chosen ones",
+      "It teaches us to know Christ through the law"
+    ],
+    "difficulty": 5,
+    "type": "mc",
+    "categories": [
+      "Titus"
+    ],
+    "biblicalReference": "Titus 2:11",
+    "id": "000233"
+  },
+  {
+    "question": "Who was Onesimus?",
+    "correctAnswer": "A runaway slave",
+    "incorrectAnswers": [
+      "A Roman soldier",
+      "An elder",
+      "A deacon"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "Philemon"
+    ],
+    "biblicalReference": "Philemon 1:16",
+    "id": "000234"
+  },
+  {
+    "question": "Who was Melchizedek?",
+    "correctAnswer": "A priest without genealogy",
+    "incorrectAnswers": [
+      "A priest from the line of David",
+      "A descendant of Abraham",
+      "A descendant of Moses"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "Hebrews"
+    ],
+    "biblicalReference": "Hebrews 7:3",
+    "id": "000235"
+  },
+  {
+    "question": "Who are mentioned in Hebrews 11 as examples of faith?",
+    "correctAnswer": "Noah, Abraham, Moses",
+    "incorrectAnswers": [
+      "David, Elijah, Isaiah",
+      "John, Peter, Andrew",
+      "Paul, Timothy, Titus"
+    ],
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "Hebrews"
+    ],
+    "biblicalReference": "Hebrews 11",
+    "id": "000236"
+  },
+  {
+    "question": "What is the origin of reconciliation?",
+    "correctAnswer": "Self-will",
+    "incorrectAnswers": [
+      "The devil",
+      "The self-will",
+      "The world"
+    ],
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "James"
+    ],
+    "biblicalReference": "James 1:14",
+    "id": "000237"
+  },
+  {
+    "question": "Who must pray for the sick?",
+    "correctAnswer": "The elders of the church",
+    "incorrectAnswers": [
+      "The deacons of the church",
+      "The preachers of the church",
+      "The believing physicians from the church"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "James"
+    ],
+    "biblicalReference": "James 5:14-15",
+    "id": "000238"
+  },
+  {
+    "question": "God created the heaven and earth in six days",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 1,
+    "type": "tf",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Genesis 2:2",
+    "id": "000239"
+  },
+  {
+    "question": "Cain killed his brother Abel",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 1,
+    "type": "tf",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Genesis 4:8",
+    "id": "000240"
+  },
+  {
+    "question": "Aaron was the father of Moses",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 1,
+    "type": "tf",
+    "categories": [],
+    "biblicalReference": "Exodus 6:19",
+    "id": "000241"
+  },
+  {
+    "question": "The law of the jubilee year is set out in Leviticus",
+    "correctAnswer": "True",
+    "incorrectAnswers": [
+      "Not true"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Leviticus"
+    ],
+    "biblicalReference": "Leviticus 25: 8-55",
+    "id": "000242"
+  },
+  {
+    "question": "Leviticus is primarily addressed to the tribe of Judah",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "Leviticus"
+    ],
+    "biblicalReference": "Leviticus",
+    "id": "000243"
+  },
+  {
+    "question": "Balaam's donkey spoke to him",
+    "correctAnswer": "True",
+    "incorrectAnswers": [
+      "Not true"
+    ],
+    "difficulty": 1,
+    "type": "tf",
+    "categories": [
+      "Numbers"
+    ],
+    "biblicalReference": "Numbers 22:28",
+    "id": "000244"
+  },
+  {
+    "question": "Deuteronomy means \"restoration of the law\"",
+    "correctAnswer": "True",
+    "incorrectAnswers": [
+      "Not true"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "Deuteronomy"
+    ],
+    "biblicalReference": "Deuteronomy",
+    "id": "000245"
+  },
+  {
+    "question": "Deuteronomy describes Moses' last speech",
+    "correctAnswer": "True",
+    "incorrectAnswers": [
+      "Not true"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Deuteronomy"
+    ],
+    "biblicalReference": "Deuteronomy 32 and 33",
+    "id": "000246"
+  },
+  {
+    "question": "Joshua was the nephew of Nun",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 2,
+    "type": "tf",
+    "categories": [
+      "Joshua"
+    ],
+    "biblicalReference": "Joshua 1:1",
+    "id": "000247"
+  },
+  {
+    "question": "The sun stood still during a battle under Joshua's leadership",
+    "correctAnswer": "True",
+    "incorrectAnswers": [
+      "Not true"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Joshua"
+    ],
+    "biblicalReference": "Joshua 10:12-14",
+    "id": "000248"
+  },
+  {
+    "question": "The book Joshua ends with the death of Moses",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Joshua"
+    ],
+    "biblicalReference": "Joshua 24",
+    "id": "000249"
+  },
+  {
+    "question": "The book Judges ends with the words: 'In those days there was no king in Israel, everyone did what was right in his eyes'",
+    "correctAnswer": "True",
+    "incorrectAnswers": [
+      "Not true"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "Judges"
+    ],
+    "biblicalReference": "Judges 21",
+    "id": "000250"
+  },
+  {
+    "question": "Samson was a judge in Israel",
+    "correctAnswer": "True",
+    "incorrectAnswers": [
+      "Not true"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Judges"
+    ],
+    "biblicalReference": "Judges 13",
+    "id": "000251"
+  },
+  {
+    "question": "Ruth became the grandmother of King Solomon",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Ruth"
+    ],
+    "biblicalReference": "Ruth 4",
+    "id": "000252"
+  },
+  {
+    "question": "Samuel was raised in the holiness in Jerusalem",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "1 Samuel"
+    ],
+    "biblicalReference": "1 Samuel 1:3",
+    "id": "000253"
+  },
+  {
+    "question": "Saul was the first king of Israel",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 2,
+    "type": "tf",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "1 Samuel 10:1",
+    "id": "000254"
+  },
+  {
+    "question": "Uzzah died when he touched the ark of God",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Exodus"
+    ],
+    "biblicalReference": "2 Samuel 6:6, 7",
+    "id": "000255"
+  },
+  {
+    "question": "Absalom, David's son, rose in rebellion against David",
+    "correctAnswer": "True",
+    "incorrectAnswers": [
+      "Not true"
+    ],
+    "difficulty": 1,
+    "type": "tf",
+    "categories": [
+      "2 Samuel"
+    ],
+    "biblicalReference": "2 Samuel 13 - 18",
+    "id": "000256"
+  },
+  {
+    "question": "Elijah slaughtered the Baal priests on Mount Carmel",
+    "correctAnswer": "True",
+    "incorrectAnswers": [
+      "Not true"
+    ],
+    "difficulty": 2,
+    "type": "tf",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "1 Kings 18",
+    "id": "000257"
+  },
+  {
+    "question": "After Solomon the kingdom remained intact",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "1 Kings"
+    ],
+    "biblicalReference": "1 Kings 12",
+    "id": "000258"
+  },
+  {
+    "question": "Elisha received a double portion of Elijah's spirit",
+    "correctAnswer": "True",
+    "incorrectAnswers": [
+      "Not true"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "Revelation"
+    ],
+    "biblicalReference": "2 Kings 2:9, 10",
+    "id": "000259"
+  },
+  {
+    "question": "David brought the ark to Jerusalem",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [],
+    "biblicalReference": "1 Chronicles 15",
+    "id": "000260"
+  },
+  {
+    "question": "David built the temple in Jerusalem",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 2,
+    "type": "tf",
+    "categories": [
+      "2 Chronicles"
+    ],
+    "biblicalReference": "2 Chronicles 2:1",
+    "id": "000261"
+  },
+  {
+    "question": "Josiah found the book of the law in the temple",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "1 Chronicles"
+    ],
+    "biblicalReference": "2 Chronicles 34",
+    "id": "000262"
+  },
+  {
+    "question": "Cyrus was the king of the Medes",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Daniel"
+    ],
+    "biblicalReference": "Ezra 1:1",
+    "id": "000263"
+  },
+  {
+    "question": "Ezra led the first group of exiles back to Jerusalem",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 5,
+    "type": "tf",
+    "categories": [
+      "Ezra"
+    ],
+    "biblicalReference": "Ezra 2:1, 2",
+    "id": "000264"
+  },
+  {
+    "question": "Ezra was a priest and scribe",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "Ezra"
+    ],
+    "biblicalReference": "Ezra 7:6, 11",
+    "id": "000265"
+  },
+  {
+    "question": "The temple was rebuilt during the time of Ezra",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "Ezra"
+    ],
+    "biblicalReference": "Ezra 5 and 6",
+    "id": "000266"
+  },
+  {
+    "question": "The rebuilding of the temple was never completed",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 2,
+    "type": "tf",
+    "categories": [
+      "Ezra"
+    ],
+    "biblicalReference": "Ezra 4: 1-5",
+    "id": "000267"
+  },
+  {
+    "question": "Nehemiah was cupbearer to the court of the king of Babylon",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "Nehemiah"
+    ],
+    "biblicalReference": "Nehemiah 1:11",
+    "id": "000268"
+  },
+  {
+    "question": "Nehemiah led the rebuilding of the walls of Jerusalem",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Nehemiah"
+    ],
+    "biblicalReference": "Nehemiah 2 and 18",
+    "id": "000269"
+  },
+  {
+    "question": "Mordecai was the father of Esther",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 1,
+    "type": "tf",
+    "categories": [
+      "Esther"
+    ],
+    "biblicalReference": "Esther 2:7",
+    "id": "000270"
+  },
+  {
+    "question": "The book Esther never mentions the name of God",
+    "correctAnswer": "True",
+    "incorrectAnswers": [
+      "Not true"
+    ],
+    "difficulty": 1,
+    "type": "tf",
+    "categories": [
+      "Esther"
+    ],
+    "biblicalReference": "Esther 1",
+    "id": "000271"
+  },
+  {
+    "question": "Job was a rich man from the land of Uz",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Job"
+    ],
+    "biblicalReference": "Job 1:1",
+    "id": "000272"
+  },
+  {
+    "question": "The wife of Job said: 'Bless God and die'",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 2,
+    "type": "tf",
+    "categories": [
+      "Job"
+    ],
+    "biblicalReference": "Job 2:9",
+    "id": "000273"
+  },
+  {
+    "question": "The Psalms contain both praises and complaints",
+    "correctAnswer": "True",
+    "incorrectAnswers": [
+      "Not true"
+    ],
+    "difficulty": 1,
+    "type": "tf",
+    "categories": [
+      "Psalms"
+    ],
+    "biblicalReference": "Psalms",
+    "id": "000274"
+  },
+  {
+    "question": "David was the writer of the Biblical book Psalms",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 2,
+    "type": "tf",
+    "categories": [
+      "Psalms"
+    ],
+    "biblicalReference": "Psalms",
+    "id": "000275"
+  },
+  {
+    "question": "Solomon is the most important writer of the Biblical book Proverbs",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 2,
+    "type": "tf",
+    "categories": [
+      "Proverbs"
+    ],
+    "biblicalReference": "Proverbs 1:1",
+    "id": "000276"
+  },
+  {
+    "question": "Wickedness does the monkey tricks",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Proverbs"
+    ],
+    "biblicalReference": "Proverbs",
+    "id": "000277"
+  },
+  {
+    "question": "Prophet is addressed to Solomon",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Proverbs"
+    ],
+    "biblicalReference": "Proverbs 1:1 and 12",
+    "id": "000278"
+  },
+  {
+    "question": "False teachers are deceiving",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Proverbs"
+    ],
+    "biblicalReference": "Proverbs",
+    "id": "000279"
+  },
+  {
+    "question": "The king has made a chariot of wood from Jerusalem",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 2,
+    "type": "tf",
+    "categories": [
+      "Haggai"
+    ],
+    "biblicalReference": "Haggai 3:9",
+    "id": "000280"
+  },
+  {
+    "question": "Draw me, we will leave you",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 1,
+    "type": "tf",
+    "categories": [
+      "Haggai"
+    ],
+    "biblicalReference": "Haggai 1:4",
+    "id": "000281"
+  },
+  {
+    "question": "Isaiah prophesied about the coming of the Messiah",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 1,
+    "type": "tf",
+    "categories": [
+      "Isaiah"
+    ],
+    "biblicalReference": "Isaiah 7, 9, 11, 53",
+    "id": "000282"
+  },
+  {
+    "question": "The Bible Isaiah has 66 chapters",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Isaiah"
+    ],
+    "biblicalReference": "Isaiah 66",
+    "id": "000283"
+  },
+  {
+    "question": "Jeremiah wrote a book to the exiles in Babylon",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Jeremiah"
+    ],
+    "biblicalReference": "Jeremiah 29:1",
+    "id": "000284"
+  },
+  {
+    "question": "Jeremiah says: Ah, LORD GOD, behold, I cannot speak",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "Jeremiah"
+    ],
+    "biblicalReference": "Jeremiah 1:6",
+    "id": "000285"
+  },
+  {
+    "question": "Lamentations was written after the destruction of Jerusalem",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 5,
+    "type": "tf",
+    "categories": [
+      "Lamentations"
+    ],
+    "biblicalReference": "Lamentations 1",
+    "id": "000286"
+  },
+  {
+    "question": "In Lamentations comes no single hope for you",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Lamentations"
+    ],
+    "biblicalReference": "Lamentations 3: 21-23",
+    "id": "000287"
+  },
+  {
+    "question": "Ezekiel prophesied in Babylon, went from Jerusalem",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Ezekiel"
+    ],
+    "biblicalReference": "Ezekiel 1:1-3",
+    "id": "000288"
+  },
+  {
+    "question": "Ezekiel ends with: and I was already there",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 5,
+    "type": "tf",
+    "categories": [
+      "Ezekiel"
+    ],
+    "biblicalReference": "Ezekiel 48:35",
+    "id": "000289"
+  },
+  {
+    "question": "Daniel worked at the court of former kings in Babylon",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 2,
+    "type": "tf",
+    "categories": [
+      "Daniel"
+    ],
+    "biblicalReference": "Daniel",
+    "id": "000290"
+  },
+  {
+    "question": "King Nebuchadnezzar made a statue of gold, the height was 60 cubits",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Daniel"
+    ],
+    "biblicalReference": "Daniel 3:1",
+    "id": "000291"
+  },
+  {
+    "question": "Hosea called the people to return to the Lord",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 2,
+    "type": "tf",
+    "categories": [
+      "Hosea"
+    ],
+    "biblicalReference": "Hosea 6:1",
+    "id": "000292"
+  },
+  {
+    "question": "Hosea preached only about love and forgiveness",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Hosea"
+    ],
+    "biblicalReference": "Hosea",
+    "id": "000293"
+  },
+  {
+    "question": "Joel describes a plague as judgment",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 5,
+    "type": "tf",
+    "categories": [
+      "Joel"
+    ],
+    "biblicalReference": "Joel 1",
+    "id": "000294"
+  },
+  {
+    "question": "Egypt and Edom will be saved, despite that they have turned against God",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "Joel"
+    ],
+    "biblicalReference": "Joel 3:19",
+    "id": "000295"
+  },
+  {
+    "question": "Amos was a shepherd from Tekoa",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 2,
+    "type": "tf",
+    "categories": [
+      "Amos"
+    ],
+    "biblicalReference": "Amos 1:1",
+    "id": "000296"
+  },
+  {
+    "question": "Amos saw in a vision a basket of summer fruit",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Amos"
+    ],
+    "biblicalReference": "Amos 8:1",
+    "id": "000297"
+  },
+  {
+    "question": "Obadiah is the shortest Bible book from the Old Testament",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Obadiah"
+    ],
+    "biblicalReference": "Obadiah 1",
+    "id": "000298"
+  },
+  {
+    "question": "Obadiah's prophecy is directed against Israel",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "Obadiah"
+    ],
+    "biblicalReference": "Obadiah 1:1",
+    "id": "000299"
+  },
+  {
+    "question": "Jonah was happy with God's compassion for Nineveh",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Jonah"
+    ],
+    "biblicalReference": "Jonah 4",
+    "id": "000300"
+  },
+  {
+    "question": "Jonah was swallowed by God to go to Nineveh",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 1,
+    "type": "tf",
+    "categories": [
+      "Jonah"
+    ],
+    "biblicalReference": "Jonah 1:2",
+    "id": "000301"
+  },
+  {
+    "question": "Micah foretold the birthplace of the Messiah",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Micah"
+    ],
+    "biblicalReference": "Micah 5:1",
+    "id": "000302"
+  },
+  {
+    "question": "Micah lived in the time of King Ahab",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "Micah"
+    ],
+    "biblicalReference": "Micah 1:1",
+    "id": "000303"
+  },
+  {
+    "question": "Nahum prophesied against the city Nineveh",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Nahum"
+    ],
+    "biblicalReference": "Nahum 1, 2, 3",
+    "id": "000304"
+  },
+  {
+    "question": "In Nahum it says: four your times, O Jerusalem, pay your vows",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 5,
+    "type": "tf",
+    "categories": [
+      "Nahum"
+    ],
+    "biblicalReference": "Nahum",
+    "id": "000305"
+  },
+  {
+    "question": "Habakkuk says: \"the righteous shall live by his faith\"",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "Habakkuk"
+    ],
+    "biblicalReference": "Habakkuk 2:4",
+    "id": "000306"
+  },
+  {
+    "question": "Habakkuk is shaken by God because of his doubts",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "Habakkuk"
+    ],
+    "biblicalReference": "Habakkuk",
+    "id": "000307"
+  },
+  {
+    "question": "Zephaniah prophesied about the overthrow of Jerusalem",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 5,
+    "type": "tf",
+    "categories": [
+      "Zephaniah"
+    ],
+    "biblicalReference": "Zephaniah 1",
+    "id": "000308"
+  },
+  {
+    "question": "In Zephaniah comes no single hope for you",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Zephaniah"
+    ],
+    "biblicalReference": "Zephaniah 3: 21-23",
+    "id": "000309"
+  },
+  {
+    "question": "Ezekiel prophesied in Babylon, went from Jerusalem",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Ezekiel"
+    ],
+    "biblicalReference": "Ezekiel 1:1-3",
+    "id": "000310"
+  },
+  {
+    "question": "Ezekiel ends with: and I was already there",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 5,
+    "type": "tf",
+    "categories": [
+      "Ezekiel"
+    ],
+    "biblicalReference": "Ezekiel 48:35",
+    "id": "000311"
+  },
+  {
+    "question": "Daniel worked at the court of former kings in Babylon",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 2,
+    "type": "tf",
+    "categories": [
+      "Daniel"
+    ],
+    "biblicalReference": "Daniel",
+    "id": "000312"
+  },
+  {
+    "question": "King Nebuchadnezzar made a statue of gold, the height was 60 cubits",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Daniel"
+    ],
+    "biblicalReference": "Daniel 3:1",
+    "id": "000313"
+  },
+  {
+    "question": "Hosea called the people to return to the Lord",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 2,
+    "type": "tf",
+    "categories": [
+      "Hosea"
+    ],
+    "biblicalReference": "Hosea 6:1",
+    "id": "000314"
+  },
+  {
+    "question": "Hosea preached only about love and forgiveness",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Hosea"
+    ],
+    "biblicalReference": "Hosea",
+    "id": "000315"
+  },
+  {
+    "question": "Joel describes a plague as judgment",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 5,
+    "type": "tf",
+    "categories": [
+      "Joel"
+    ],
+    "biblicalReference": "Joel 1",
+    "id": "000316"
+  },
+  {
+    "question": "Egypt and Edom will be saved, despite that they have turned against God",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "Joel"
+    ],
+    "biblicalReference": "Joel 3:19",
+    "id": "000317"
+  },
+  {
+    "question": "Amos was a shepherd from Tekoa",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 2,
+    "type": "tf",
+    "categories": [
+      "Amos"
+    ],
+    "biblicalReference": "Amos 1:1",
+    "id": "000318"
+  },
+  {
+    "question": "Amos saw in a vision a basket of summer fruit",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Amos"
+    ],
+    "biblicalReference": "Amos 8:1",
+    "id": "000319"
+  },
+  {
+    "question": "Obadiah is the shortest Bible book from the Old Testament",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Obadiah"
+    ],
+    "biblicalReference": "Obadiah 1",
+    "id": "000320"
+  },
+  {
+    "question": "Obadiah's prophecy is directed against Israel",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "Obadiah"
+    ],
+    "biblicalReference": "Obadiah 1:1",
+    "id": "000321"
+  },
+  {
+    "question": "Jonah was happy with God's compassion for Nineveh",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Jonah"
+    ],
+    "biblicalReference": "Jonah 4",
+    "id": "000322"
+  },
+  {
+    "question": "Jonah was swallowed by God to go to Nineveh",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 1,
+    "type": "tf",
+    "categories": [
+      "Jonah"
+    ],
+    "biblicalReference": "Jonah 1:2",
+    "id": "000323"
+  },
+  {
+    "question": "Micah foretold the birthplace of the Messiah",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Micah"
+    ],
+    "biblicalReference": "Micah 5:1",
+    "id": "000324"
+  },
+  {
+    "question": "Micah lived in the time of King Ahab",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "Micah"
+    ],
+    "biblicalReference": "Micah 1:1",
+    "id": "000325"
+  },
+  {
+    "question": "Nahum prophesied against the city Nineveh",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Nahum"
+    ],
+    "biblicalReference": "Nahum 1, 2, 3",
+    "id": "000326"
+  },
+  {
+    "question": "In Nahum it says: four your times, O Jerusalem, pay your vows",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 5,
+    "type": "tf",
+    "categories": [
+      "Nahum"
+    ],
+    "biblicalReference": "Nahum",
+    "id": "000327"
+  },
+  {
+    "question": "Habakkuk says: \"the righteous shall live by his faith\"",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "Habakkuk"
+    ],
+    "biblicalReference": "Habakkuk 2:4",
+    "id": "000328"
+  },
+  {
+    "question": "Habakkuk is shaken by God because of his doubts",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "Habakkuk"
+    ],
+    "biblicalReference": "Habakkuk",
+    "id": "000329"
+  },
+  {
+    "question": "Zephaniah prophesied about the overthrow of Jerusalem",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 5,
+    "type": "tf",
+    "categories": [
+      "Zephaniah"
+    ],
+    "biblicalReference": "Zephaniah 1",
+    "id": "000330"
+  },
+  {
+    "question": "Zephaniah was written after the destruction of Jerusalem",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 5,
+    "type": "tf",
+    "categories": [
+      "Zephaniah"
+    ],
+    "biblicalReference": "Zephaniah 1",
+    "id": "000331"
+  },
+  {
+    "question": "Ezekiel prophesied in Babylon, went from Jerusalem",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Ezekiel"
+    ],
+    "biblicalReference": "Ezekiel 1:1-3",
+    "id": "000332"
+  },
+  {
+    "question": "Ezekiel ends with: and I was already there",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 5,
+    "type": "tf",
+    "categories": [
+      "Ezekiel"
+    ],
+    "biblicalReference": "Ezekiel 48:35",
+    "id": "000333"
+  },
+  {
+    "question": "Daniel worked at the court of former kings in Babylon",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 2,
+    "type": "tf",
+    "categories": [
+      "Daniel"
+    ],
+    "biblicalReference": "Daniel",
+    "id": "000334"
+  },
+  {
+    "question": "King Nebuchadnezzar made a statue of gold, the height was 60 cubits",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Daniel"
+    ],
+    "biblicalReference": "Daniel 3:1",
+    "id": "000335"
   }
 ]

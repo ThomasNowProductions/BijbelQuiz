@@ -1,6 +1,6 @@
 -- SQL INSERT statements for nl questions table
 -- Generated from questions-nl-sv.json
--- Generated on: 1764248186.3890219
+-- Generated on: 1766784198.8416033
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
 VALUES ('000001', 'Hoeveel Bijbelboeken heeft het Nieuwe Testament?', '27', ARRAY['26','66','39'], 3, 'mc', '{}', NULL)
@@ -2643,7 +2643,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000221', 'Wie schreef de brief aan de Kolossenzen?', 'Paulus', ARRAY['Kolossenzen','Silas','Timotheus'], 1, 'mc', ARRAY['Kerst','Pasen','Pinksteren','Hemelvaart','Goede Vrijdag','Stille Zaterdag','Paasmaandag','Pinkstermaandag','Kolossenzen'], 'Kolossenzen 1:1-2')
+VALUES ('000221', 'Wie schreef de brief aan de Kolossenzen?', 'Paulus', ARRAY['Kolossenzen','Silas','Timotheus'], 1, 'mc', ARRAY['Kolossenzen'], 'Kolossenzen 1:1-2')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,

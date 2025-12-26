@@ -30,8 +30,8 @@ def array_to_sql(arr):
 def main():
     parser = argparse.ArgumentParser(description='Convert questions JSON to SQL statements')
     parser.add_argument('--output', '-o', 
-                       default='database_supabase/questions_data.sql',
-                       help='Output SQL file path (default: database_supabase/questions_data.sql)')
+                       default=None,
+                       help='Output SQL file path')
     parser.add_argument('--json-file', '-j',
                        default=None,
                        help='Path to JSON file (default: app/assets/questions-nl-sv.json)')
@@ -42,6 +42,15 @@ def main():
                        help='Language of the questions (nl or en). Default: nl')
     
     args = parser.parse_args()
+    
+    # Set default output path based on language if not specified
+    if args.output is None:
+        if args.language == 'en':
+            args.output = Path(__file__).parent.parent / 'database' / 'questions-en.sql'
+        else:
+            args.output = Path(__file__).parent.parent / 'database' / 'questions-nl-sv.sql'
+    else:
+        args.output = Path(args.output)
     
     # Determine JSON file path
     if args.json_file:
