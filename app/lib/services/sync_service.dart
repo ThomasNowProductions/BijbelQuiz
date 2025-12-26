@@ -16,10 +16,10 @@ class SyncService {
 
   static const String _tableName = 'user_sync_data';
   static const String _queueKey = 'sync_service_queue';
-  
+
   late final SupabaseClient _client;
   late final ConnectionService _connectionService;
-  
+
   String? _currentUserId;
   RealtimeChannel? _channel;
   final Map<String, Function(Map<String, dynamic>)> _listeners = {};
@@ -27,8 +27,10 @@ class SyncService {
   bool _isInitialized = false;
 
   // Concurrency protection
-  final Map<String, bool> _syncInProgress = {}; // Track ongoing sync operations per key
-  final Map<String, bool> _realtimeUpdateInProgress = {}; // Track real-time updates per key
+  final Map<String, bool> _syncInProgress =
+      {}; // Track ongoing sync operations per key
+  final Map<String, bool> _realtimeUpdateInProgress =
+      {}; // Track real-time updates per key
 
   // Offline queue
   final Map<String, Map<String, dynamic>> _pendingSyncs = {};
@@ -53,7 +55,7 @@ class SyncService {
   /// Initializes the service
   Future<void> initialize() async {
     if (_isInitialized) return;
-    
+
     await _connectionService.initialize();
     _setupAuthListener();
     _setupConnectionListener();
@@ -63,7 +65,8 @@ class SyncService {
   }
 
   /// Registers callbacks for a specific data type
-  void registerCallbacks(String dataType, {
+  void registerCallbacks(
+    String dataType, {
     Function(String, String)? onSyncError,
     Function(String)? onSyncSuccess,
   }) {
@@ -89,9 +92,6 @@ class SyncService {
     AppLogger.info('App paused - ensuring queue is saved');
     await _saveQueue();
   }
-
-
-
 
   /// Syncs data to the server.
   /// If online, attempts immediate sync.
@@ -155,12 +155,13 @@ class SyncService {
     // Clear all listeners to prevent cross-user contamination
     _listeners.clear();
     _isListening = false;
-    
+
     // Clear pending syncs as they belong to the previous user
     _pendingSyncs.clear();
     _saveQueue(); // Persist empty queue
 
-    AppLogger.info('Complete session cleanup performed - all user data cleared');
+    AppLogger.info(
+        'Complete session cleanup performed - all user data cleared');
   }
 
   /// Loads the pending sync queue from persistent storage
@@ -176,7 +177,8 @@ class SyncService {
             _pendingSyncs[key] = value;
           }
         });
-        AppLogger.info('Loaded ${_pendingSyncs.length} pending syncs from storage');
+        AppLogger.info(
+            'Loaded ${_pendingSyncs.length} pending syncs from storage');
       }
     } catch (e) {
       AppLogger.error('Failed to load sync queue', e);
@@ -263,7 +265,8 @@ class SyncService {
         return;
       }
 
-      AppLogger.info('Starting sync for key: $key, user: $_currentUserId, data keys: ${data.keys.toList()}');
+      AppLogger.info(
+          'Starting sync for key: $key, user: $_currentUserId, data keys: ${data.keys.toList()}');
 
       // Get current user data or create new record
       final userDataResponse = await _client
@@ -275,40 +278,29 @@ class SyncService {
       final currentData = Map<String, dynamic>.from(
           userDataResponse?['data'] as Map<String, dynamic>? ?? {});
 
-      // Check for potential conflicts using ConflictResolver
+      // Always merge with existing data using ConflictResolver
       final existingEntry = currentData[key] as Map<String, dynamic>?;
       final now = DateTime.now();
-      
-      if (existingEntry != null) {
-        final existingTimestamp = DateTime.parse(existingEntry['timestamp'] as String);
-        final existingValue = existingEntry['value'] as Map<String, dynamic>;
-        
-        final timeDifference = now.difference(existingTimestamp);
-        final shouldMerge = timeDifference.inSeconds < 60;
 
-        if (shouldMerge) {
-           final resolver = ConflictResolverFactory.getResolver(key);
-           final mergedData = resolver.resolve(existingValue, data);
-           
-           currentData[key] = {
-             'value': mergedData,
-             'timestamp': now.toIso8601String(),
-           };
-           AppLogger.info('Merged $key data due to recent conflict');
-        } else {
-          // Old data, just overwrite
-          currentData[key] = {
-            'value': data,
-            'timestamp': now.toIso8601String(),
-          };
-          AppLogger.info('Overwriting old data for key $key');
-        }
+      if (existingEntry != null) {
+        final existingValue = existingEntry['value'] as Map<String, dynamic>;
+
+        // Always merge using conflict resolver - it handles smart merging
+        final resolver = ConflictResolverFactory.getResolver(key);
+        final mergedData = resolver.resolve(existingValue, data);
+
+        currentData[key] = {
+          'value': mergedData,
+          'timestamp': now.toIso8601String(),
+        };
+        AppLogger.info('Merged $key data with existing data');
       } else {
         // No existing data, just set it
         currentData[key] = {
           'value': data,
           'timestamp': now.toIso8601String(),
         };
+        AppLogger.info('Set new data for key $key');
       }
 
       // Upsert the user data
@@ -318,46 +310,47 @@ class SyncService {
         'updated_at': now.toIso8601String(),
       });
 
-      AppLogger.info('Successfully synced data for key: $key for user: $_currentUserId');
-    if (_successCallbacks.containsKey(key)) {
-      _successCallbacks[key]!(key);
-    }
-    
-    // Remove from pending queue on success
-      _pendingSyncs.remove(key);
-      await _saveQueue();
-
-    } catch (e) {
-      final isNetworkError = e.toString().toLowerCase().contains('network') ||
-                              e.toString().toLowerCase().contains('connection') ||
-                              e.toString().toLowerCase().contains('timeout');
-      final isAuthError = e.toString().contains('JWT') || 
-                          e.toString().toLowerCase().contains('unauthorized') ||
-                          e.toString().toLowerCase().contains('expired');
-
-      AppLogger.error('Failed to sync data for key: $key', e);
-      
-      if (isAuthError) {
-         AppLogger.warning('Auth error detected during sync, attempting to refresh session...');
-         try {
-           await _client.auth.refreshSession();
-           // Retry once after refresh
-           AppLogger.info('Session refreshed, retrying sync for key: $key');
-           // Don't call syncDataImmediate here to avoid infinite recursion, 
-           // just let the next queue process handle it or retry logic
-           _syncInProgress[key] = false; // Reset flag before retry
-           await _performSync(key, data); 
-           return;
-         } catch (refreshError) {
-           AppLogger.error('Failed to refresh session', refreshError);
-         }
+      AppLogger.info(
+          'Successfully synced data for key: $key for user: $_currentUserId');
+      if (_successCallbacks.containsKey(key)) {
+        _successCallbacks[key]!(key);
       }
 
-    if (_errorCallbacks.containsKey(key)) {
-      _errorCallbacks[key]!(key, 'Sync failed: ${e.toString()}');
-    }
-    
-    // Report error with appropriate categorization
+      // Remove from pending queue on success
+      _pendingSyncs.remove(key);
+      await _saveQueue();
+    } catch (e) {
+      final isNetworkError = e.toString().toLowerCase().contains('network') ||
+          e.toString().toLowerCase().contains('connection') ||
+          e.toString().toLowerCase().contains('timeout');
+      final isAuthError = e.toString().contains('JWT') ||
+          e.toString().toLowerCase().contains('unauthorized') ||
+          e.toString().toLowerCase().contains('expired');
+
+      AppLogger.error('Failed to sync data for key: $key', e);
+
+      if (isAuthError) {
+        AppLogger.warning(
+            'Auth error detected during sync, attempting to refresh session...');
+        try {
+          await _client.auth.refreshSession();
+          // Retry once after refresh
+          AppLogger.info('Session refreshed, retrying sync for key: $key');
+          // Don't call syncDataImmediate here to avoid infinite recursion,
+          // just let the next queue process handle it or retry logic
+          _syncInProgress[key] = false; // Reset flag before retry
+          await _performSync(key, data);
+          return;
+        } catch (refreshError) {
+          AppLogger.error('Failed to refresh session', refreshError);
+        }
+      }
+
+      if (_errorCallbacks.containsKey(key)) {
+        _errorCallbacks[key]!(key, 'Sync failed: ${e.toString()}');
+      }
+
+      // Report error with appropriate categorization
       if (isNetworkError) {
         await AutomaticErrorReporter.reportNetworkError(
           message: 'Sync network failure for key: $key',
@@ -404,61 +397,71 @@ class SyncService {
     // Unsubscribe from any existing channel
     _stopListening();
 
-    AppLogger.info('Starting real-time sync listening for user: $_currentUserId');
+    AppLogger.info(
+        'Starting real-time sync listening for user: $_currentUserId');
     _isListening = true;
 
     _channel = _client
         .channel('user_sync_$_currentUserId')
         .onPostgresChanges(
-           event: PostgresChangeEvent.update,
-           schema: 'public',
-           table: _tableName,
-           filter: PostgresChangeFilter(
-             type: PostgresChangeFilterType.eq,
-             column: 'user_id',
-             value: _currentUserId,
-           ),
-           callback: (payload) {
-             AppLogger.info('Received real-time sync update for user: $_currentUserId');
-             final newRecord = payload.newRecord as Map<String, dynamic>? ?? {};
-             final newData = newRecord['data'] as Map<String, dynamic>? ?? {};
-             AppLogger.debug('Real-time update data keys: ${newData.keys.toList()}');
-             _notifyListeners(newData);
-           },
-         )
-         .subscribe((status, error) async {
-           if (status == RealtimeSubscribeStatus.subscribed) {
-             AppLogger.info('Real-time sync channel subscribed successfully for user: $_currentUserId');
-           } else if (status == RealtimeSubscribeStatus.closed) {
-             AppLogger.info('Real-time sync channel closed for user: $_currentUserId');
-             // Attempt to reconnect if we are still authenticated
-             if (_currentUserId != null) {
-               AppLogger.info('Attempting to reconnect real-time sync channel...');
-               // Add a small delay to avoid rapid loops
-               Future.delayed(const Duration(seconds: 5), () {
-                 if (_currentUserId != null && _channel == null) { // Check if still relevant
-                    _startListening();
-                 }
-               });
-             }
-           } else if (status == RealtimeSubscribeStatus.timedOut) {
-             AppLogger.error('Real-time sync channel timed out for user: $_currentUserId');
-           } else if (status == RealtimeSubscribeStatus.channelError) {
-             AppLogger.error('Real-time sync channel error for user: $_currentUserId: $error');
-             
-             // Check for auth error in channel
-             if (error.toString().contains('JWT') || error.toString().contains('expired')) {
-               AppLogger.warning('JWT expired in realtime channel, attempting refresh...');
-               try {
-                 await _client.auth.refreshSession();
-                 // Re-subscribe after refresh
-                 _startListening();
-               } catch (e) {
-                 AppLogger.error('Failed to refresh session for realtime', e);
-               }
-             }
-           }
-         });
+          event: PostgresChangeEvent.update,
+          schema: 'public',
+          table: _tableName,
+          filter: PostgresChangeFilter(
+            type: PostgresChangeFilterType.eq,
+            column: 'user_id',
+            value: _currentUserId,
+          ),
+          callback: (payload) {
+            AppLogger.info(
+                'Received real-time sync update for user: $_currentUserId');
+            final newRecord = payload.newRecord as Map<String, dynamic>? ?? {};
+            final newData = newRecord['data'] as Map<String, dynamic>? ?? {};
+            AppLogger.debug(
+                'Real-time update data keys: ${newData.keys.toList()}');
+            _notifyListeners(newData);
+          },
+        )
+        .subscribe((status, error) async {
+      if (status == RealtimeSubscribeStatus.subscribed) {
+        AppLogger.info(
+            'Real-time sync channel subscribed successfully for user: $_currentUserId');
+      } else if (status == RealtimeSubscribeStatus.closed) {
+        AppLogger.info(
+            'Real-time sync channel closed for user: $_currentUserId');
+        // Attempt to reconnect if we are still authenticated
+        if (_currentUserId != null) {
+          AppLogger.info('Attempting to reconnect real-time sync channel...');
+          // Add a small delay to avoid rapid loops
+          Future.delayed(const Duration(seconds: 5), () {
+            if (_currentUserId != null && _channel == null) {
+              // Check if still relevant
+              _startListening();
+            }
+          });
+        }
+      } else if (status == RealtimeSubscribeStatus.timedOut) {
+        AppLogger.error(
+            'Real-time sync channel timed out for user: $_currentUserId');
+      } else if (status == RealtimeSubscribeStatus.channelError) {
+        AppLogger.error(
+            'Real-time sync channel error for user: $_currentUserId: $error');
+
+        // Check for auth error in channel
+        if (error.toString().contains('JWT') ||
+            error.toString().contains('expired')) {
+          AppLogger.warning(
+              'JWT expired in realtime channel, attempting refresh...');
+          try {
+            await _client.auth.refreshSession();
+            // Re-subscribe after refresh
+            _startListening();
+          } catch (e) {
+            AppLogger.error('Failed to refresh session for realtime', e);
+          }
+        }
+      }
+    });
   }
 
   /// Stops listening for updates
@@ -473,17 +476,18 @@ class SyncService {
   /// Notifies all listeners of data changes
   Future<void> _notifyListeners(Map<String, dynamic> data) async {
     AppLogger.debug('Notifying listeners for ${data.length} data keys');
-    
+
     for (final entry in data.entries) {
       final key = entry.key;
       final value = entry.value;
-      
+
       // Skip if sync is in progress for this key
       if (_syncInProgress[key] == true) {
-        AppLogger.debug('Skipping real-time notification for key $key - sync in progress');
+        AppLogger.debug(
+            'Skipping real-time notification for key $key - sync in progress');
         continue;
       }
-      
+
       final listener = _listeners[key];
       if (listener != null && value is Map<String, dynamic>) {
         // Mark that real-time update is in progress
@@ -531,8 +535,9 @@ class SyncService {
     }
 
     try {
-      AppLogger.info('Fetching all user data from server for user: $_currentUserId');
-      
+      AppLogger.info(
+          'Fetching all user data from server for user: $_currentUserId');
+
       final response = await _client
           .from(_tableName)
           .select('data')
@@ -557,7 +562,8 @@ class SyncService {
         }
       }
 
-      AppLogger.info('Fetched data for ${result.length} keys: ${result.keys.toList()}');
+      AppLogger.info(
+          'Fetched data for ${result.length} keys: ${result.keys.toList()}');
       return result;
     } catch (e) {
       AppLogger.error('Failed to fetch user data', e);
@@ -574,16 +580,13 @@ class SyncService {
     }
   }
 
-
-
-
-
   /// Validates synced data before applying
   bool _isValidSyncedData(String key, Map<String, dynamic> data) {
     // Basic validation - we rely on ConflictResolvers to handle data integrity during merge
     // but we can do some high-level checks here.
-    if (data.isEmpty && key != 'settings') return false; // Settings can be empty?
-    
+    if (data.isEmpty && key != 'settings')
+      return false; // Settings can be empty?
+
     // We could delegate to specific validators if needed, but for now we trust the source
     // as we are moving towards a more robust conflict resolution strategy.
     return true;
@@ -612,7 +615,8 @@ class SyncService {
       }
 
       // Profile doesn't exist, create a default one
-      AppLogger.info('User profile not found, creating default profile for user: $_currentUserId');
+      AppLogger.info(
+          'User profile not found, creating default profile for user: $_currentUserId');
 
       final user = Supabase.instance.client.auth.currentUser;
       if (user == null) return null;

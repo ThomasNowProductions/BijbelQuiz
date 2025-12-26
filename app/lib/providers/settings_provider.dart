@@ -224,11 +224,6 @@ class SettingsProvider extends ChangeNotifier {
         _aiThemes[theme.id] = theme;
         await _saveAIThemesToStorage();
         AppLogger.info('AI theme saved: ${theme.name} (${theme.id})');
-
-        // Sync settings after save
-        if (syncService.isAuthenticated) {
-          await syncService.syncData('settings', getExportData());
-        }
       },
       errorMessage: 'Failed to save AI theme',
     );
@@ -247,11 +242,6 @@ class SettingsProvider extends ChangeNotifier {
         }
 
         AppLogger.info('AI theme removed: $themeId');
-
-        // Sync settings after removal
-        if (syncService.isAuthenticated) {
-          await syncService.syncData('settings', getExportData());
-        }
       },
       errorMessage: 'Failed to remove AI theme',
     );
@@ -378,9 +368,14 @@ class SettingsProvider extends ChangeNotifier {
   }
 
   Future<void> setCustomTheme(String? key) async {
-    _selectedCustomThemeKey = key;
-    await _prefs?.setString(_customThemeKey, key ?? '');
-    notifyListeners();
+    await _saveSetting(
+      action: () async {
+        _selectedCustomThemeKey = key;
+        await _prefs?.setString(_customThemeKey, key ?? '');
+        AppLogger.info('Custom theme saved: $key');
+      },
+      errorMessage: 'Failed to save custom theme',
+    );
   }
 
   /// Loads settings from persistent storage
@@ -456,7 +451,6 @@ class SettingsProvider extends ChangeNotifier {
       _hasClickedSatisfactionLink =
           _getBoolSetting(_hasClickedSatisfactionLinkKey, defaultValue: false);
 
-
       // Load navigation settings
       _showNavigationLabels =
           _getBoolSetting(_showNavigationLabelsKey, defaultValue: true);
@@ -489,6 +483,76 @@ class SettingsProvider extends ChangeNotifier {
 
       // Load AI themes
       await _loadAIThemes();
+
+      // Check for synced data and merge if available (AFTER loading all local data)
+      if (syncService.isAuthenticated) {
+        AppLogger.info(
+            'User authenticated, fetching synced settings from server');
+        final allData = await syncService.fetchAllData();
+
+        AppLogger.info('fetchAllData returned: $allData');
+
+        if (allData != null && allData.containsKey('settings')) {
+          final syncedSettings = allData['settings'];
+          AppLogger.info('Found synced settings: $syncedSettings');
+
+          if (syncedSettings != null) {
+            AppLogger.info('Merging synced settings with local data');
+
+            // Merge unlocked themes (union of local and synced)
+            final syncedThemesList =
+                syncedSettings['unlockedThemes'] as List<dynamic>?;
+            if (syncedThemesList != null) {
+              final syncedThemes = syncedThemesList.cast<String>().toSet();
+              _unlockedThemes.addAll(syncedThemes);
+              // Save merged themes back to local storage
+              await _prefs?.setStringList(
+                  _unlockedThemesKey, _unlockedThemes.toList());
+              AppLogger.info(
+                  'Merged unlocked themes: ${_unlockedThemes.length} total');
+            }
+
+            // Merge AI themes (add themes that don't exist locally)
+            final syncedAIThemes =
+                syncedSettings['aiThemes'] as Map<String, dynamic>?;
+            if (syncedAIThemes != null) {
+              for (final entry in syncedAIThemes.entries) {
+                final themeId = entry.key;
+                final themeData = entry.value as Map<String, dynamic>;
+
+                // Only add if not already present locally
+                if (!_aiThemes.containsKey(themeId)) {
+                  final lightTheme = AIThemeBuilder.createLightThemeFromPalette(
+                      Map<String, dynamic>.from(
+                          themeData['colorPalette'] as Map<String, dynamic>? ??
+                              {}));
+
+                  final darkTheme = themeData['hasDarkTheme'] == true
+                      ? AIThemeBuilder.createDarkThemeFromPalette(
+                          Map<String, dynamic>.from(themeData['colorPalette']
+                                  as Map<String, dynamic>? ??
+                              {}))
+                      : null;
+
+                  final aiTheme = AITheme.fromJson(themeData, lightTheme,
+                      darkTheme: darkTheme);
+                  _aiThemes[themeId] = aiTheme;
+                  AppLogger.info('Added synced AI theme: $themeId');
+                }
+              }
+              // Save merged AI themes back to local storage
+              await _saveAIThemesToStorage();
+              AppLogger.info('Merged AI themes: ${_aiThemes.length} total');
+            }
+
+            // For other settings, we could implement more sophisticated logic
+            // For now, local settings take precedence to preserve device-specific preferences
+            // This is intentional as users may have different preferences per device
+          }
+        } else {
+          AppLogger.info('No synced settings found in response');
+        }
+      }
     } catch (e) {
       // Report error to automatic error tracking system
       await AutomaticErrorReporter.reportStorageError(
@@ -792,7 +856,6 @@ class SettingsProvider extends ChangeNotifier {
     );
   }
 
-
   /// Updates the show navigation labels setting
   Future<void> setShowNavigationLabels(bool show) async {
     await _saveSetting(
@@ -919,7 +982,8 @@ class SettingsProvider extends ChangeNotifier {
   }
 
   /// Loads settings data from import
-  Future<void> loadImportData(Map<String, dynamic> data) async {
+  Future<void> loadImportData(Map<String, dynamic> data,
+      {bool mergeWithLocal = false}) async {
     _themeMode = ThemeMode.values[data['themeMode'] ?? 0];
     _gameSpeed = data['gameSpeed'] ?? 'medium';
     _hasSeenGuide = data['hasSeenGuide'] ?? false;
@@ -928,7 +992,14 @@ class SettingsProvider extends ChangeNotifier {
     _hasCheckedForUpdate = data['hasCheckedForUpdate'] ?? false;
     _analyticsEnabled = data['analyticsEnabled'] ?? true;
     _selectedCustomThemeKey = data['selectedCustomThemeKey'];
-    _unlockedThemes = Set<String>.from(data['unlockedThemes'] ?? []);
+
+    // Merge unlocked themes instead of replacing
+    final syncedThemes = Set<String>.from(data['unlockedThemes'] ?? []);
+    if (mergeWithLocal) {
+      _unlockedThemes.addAll(syncedThemes);
+    } else {
+      _unlockedThemes = syncedThemes;
+    }
 
     // Load popup tracking data
     final lastDonationPopupMs = data['lastDonationPopup'];
@@ -972,24 +1043,47 @@ class SettingsProvider extends ChangeNotifier {
     // Load AI themes
     final aiThemesData = data['aiThemes'] as Map<String, dynamic>?;
     if (aiThemesData != null) {
-      _aiThemes.clear();
-      for (final entry in aiThemesData.entries) {
-        final themeId = entry.key;
-        final themeData = entry.value as Map<String, dynamic>;
+      if (mergeWithLocal) {
+        // Merge AI themes instead of replacing
+        for (final entry in aiThemesData.entries) {
+          final themeId = entry.key;
+          final themeData = entry.value as Map<String, dynamic>;
 
-        final lightTheme = AIThemeBuilder.createLightThemeFromPalette(
-            Map<String, dynamic>.from(
-                themeData['colorPalette'] as Map<String, dynamic>? ?? {}));
+          final lightTheme = AIThemeBuilder.createLightThemeFromPalette(
+              Map<String, dynamic>.from(
+                  themeData['colorPalette'] as Map<String, dynamic>? ?? {}));
 
-        final darkTheme = themeData['hasDarkTheme'] == true
-            ? AIThemeBuilder.createDarkThemeFromPalette(
-                Map<String, dynamic>.from(
-                    themeData['colorPalette'] as Map<String, dynamic>? ?? {}))
-            : null;
+          final darkTheme = themeData['hasDarkTheme'] == true
+              ? AIThemeBuilder.createDarkThemeFromPalette(
+                  Map<String, dynamic>.from(
+                      themeData['colorPalette'] as Map<String, dynamic>? ?? {}))
+              : null;
 
-        final aiTheme =
-            AITheme.fromJson(themeData, lightTheme, darkTheme: darkTheme);
-        _aiThemes[themeId] = aiTheme;
+          final aiTheme =
+              AITheme.fromJson(themeData, lightTheme, darkTheme: darkTheme);
+          _aiThemes[themeId] = aiTheme;
+        }
+      } else {
+        // Replace all AI themes
+        _aiThemes.clear();
+        for (final entry in aiThemesData.entries) {
+          final themeId = entry.key;
+          final themeData = entry.value as Map<String, dynamic>;
+
+          final lightTheme = AIThemeBuilder.createLightThemeFromPalette(
+              Map<String, dynamic>.from(
+                  themeData['colorPalette'] as Map<String, dynamic>? ?? {}));
+
+          final darkTheme = themeData['hasDarkTheme'] == true
+              ? AIThemeBuilder.createDarkThemeFromPalette(
+                  Map<String, dynamic>.from(
+                      themeData['colorPalette'] as Map<String, dynamic>? ?? {}))
+              : null;
+
+          final aiTheme =
+              AITheme.fromJson(themeData, lightTheme, darkTheme: darkTheme);
+          _aiThemes[themeId] = aiTheme;
+        }
       }
     }
 
@@ -1049,6 +1143,7 @@ class SettingsProvider extends ChangeNotifier {
           _lastDifficultyPopup!.millisecondsSinceEpoch);
     }
 
+    AppLogger.info('Settings import completed');
     notifyListeners();
   }
 

@@ -150,27 +150,34 @@ class GameStatsProvider extends ChangeNotifier {
       if (syncService.isAuthenticated) {
         AppLogger.info('User authenticated, fetching synced data from server');
         final allData = await syncService.fetchAllData();
-        
+
         AppLogger.info('fetchAllData returned: $allData');
-        
+
         if (allData != null && allData.containsKey('game_stats')) {
           final syncedStats = allData['game_stats'];
           AppLogger.info('Found synced game stats: $syncedStats');
-          
+
           if (syncedStats != null) {
-            AppLogger.info('Local score: $_score, Server score: ${syncedStats['score']}');
-            
-            // Merge local and synced data, taking the maximum values
-            final mergedStats = {
-              'score': (_score > (syncedStats['score'] as int? ?? 0)) ? _score : syncedStats['score'],
-              'currentStreak': (_currentStreak > (syncedStats['currentStreak'] as int? ?? 0)) ? _currentStreak : syncedStats['currentStreak'],
-              'longestStreak': (_longestStreak > (syncedStats['longestStreak'] as int? ?? 0)) ? _longestStreak : syncedStats['longestStreak'],
-              'incorrectAnswers': _incorrectAnswers + (syncedStats['incorrectAnswers'] as int? ?? 0),
-            };
-            _score = mergedStats['score'];
-            _currentStreak = mergedStats['currentStreak'];
-            _longestStreak = mergedStats['longestStreak'];
-            _incorrectAnswers = mergedStats['incorrectAnswers'];
+            AppLogger.info(
+                'Local score: $_score, Server score: ${syncedStats['score']}');
+
+            // Merge local and synced data using same logic as conflict resolver
+            final syncedScore = syncedStats['score'] as int? ?? 0;
+            final syncedCurrentStreak =
+                syncedStats['currentStreak'] as int? ?? 0;
+            final syncedLongestStreak =
+                syncedStats['longestStreak'] as int? ?? 0;
+            final syncedIncorrectAnswers =
+                syncedStats['incorrectAnswers'] as int? ?? 0;
+
+            _score = _score > syncedScore ? _score : syncedScore;
+            _currentStreak = _currentStreak > syncedCurrentStreak
+                ? _currentStreak
+                : syncedCurrentStreak;
+            _longestStreak = _longestStreak > syncedLongestStreak
+                ? _longestStreak
+                : syncedLongestStreak;
+            _incorrectAnswers = _incorrectAnswers + syncedIncorrectAnswers;
 
             // Save merged data to local storage
             await _prefs?.setInt(_scoreKey, _score);
@@ -178,7 +185,8 @@ class GameStatsProvider extends ChangeNotifier {
             await _prefs?.setInt(_longestStreakKey, _longestStreak);
             await _prefs?.setInt(_incorrectAnswersKey, _incorrectAnswers);
 
-            AppLogger.info('Merged local and synced game stats: score=$_score, streak=$_currentStreak');
+            AppLogger.info(
+                'Merged local and synced game stats: score=$_score, streak=$_currentStreak');
           }
         } else {
           AppLogger.info('No synced game stats found in response');
@@ -196,7 +204,7 @@ class GameStatsProvider extends ChangeNotifier {
       onError?.call(_error!);
       // The error is now logged by the ErrorHandler, but we can add additional logging if needed
       AppLogger.error(_error!, e);
-      
+
       // Report error to automatic error tracking system
       await AutomaticErrorReporter.reportStorageError(
         message: 'Failed to load game stats from storage',
@@ -283,7 +291,7 @@ class GameStatsProvider extends ChangeNotifier {
       await _prefs?.setInt(_scoreKey, _score);
       await _prefs?.setInt(_currentStreakKey, _currentStreak);
       notifyListeners();
-      
+
       // Trigger sync
       triggerSync();
     } catch (e) {
@@ -297,7 +305,7 @@ class GameStatsProvider extends ChangeNotifier {
       _error = appError.userMessage;
       notifyListeners();
       AppLogger.error(_error!, e);
-      
+
       // Report error to automatic error tracking system
       await AutomaticErrorReporter.reportStorageError(
         message: 'Failed to save game stats after answering question',
@@ -311,7 +319,7 @@ class GameStatsProvider extends ChangeNotifier {
           'active_powerup': _activePowerup?.multiplier,
         },
       );
-      
+
       rethrow;
     }
   }
@@ -330,7 +338,7 @@ class GameStatsProvider extends ChangeNotifier {
       await _prefs?.setInt(_incorrectAnswersKey, _incorrectAnswers);
       notifyListeners();
       AppLogger.info('Game stats reset');
-      
+
       // Trigger sync
       triggerSync();
     } catch (e) {
@@ -572,7 +580,8 @@ class GameStatsProvider extends ChangeNotifier {
     _longestStreak = data['longestStreak'] ?? 0;
     _incorrectAnswers = data['incorrectAnswers'] ?? 0;
 
-    AppLogger.info('Loading synced game stats: score $_score (was $oldScore), streak $_currentStreak (was $oldStreak)');
+    AppLogger.info(
+        'Loading synced game stats: score $_score (was $oldScore), streak $_currentStreak (was $oldStreak)');
 
     await _prefs?.setInt(_scoreKey, _score);
     await _prefs?.setInt(_currentStreakKey, _currentStreak);
@@ -585,7 +594,8 @@ class GameStatsProvider extends ChangeNotifier {
   void setupSyncListener() {
     AppLogger.info('Setting up game stats sync listener');
     syncService.addListener('game_stats', (data) {
-      AppLogger.info('Received synced game stats update: ${data.keys.toList()}');
+      AppLogger.info(
+          'Received synced game stats update: ${data.keys.toList()}');
       loadImportData(data);
     });
   }

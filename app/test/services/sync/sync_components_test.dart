@@ -26,7 +26,8 @@ void main() {
       expect(merged['score'], 150);
       expect(merged['currentStreak'], 5); // Max of 5 and 2
       expect(merged['longestStreak'], 12); // Max of 10 and 12
-      expect(merged['incorrectAnswers'], 2); // Max of 2 and 1
+      expect(merged['incorrectAnswers'],
+          3); // Sum of 2 and 1 (total mistakes across devices)
     });
 
     test('SettingsConflictResolver merges AI themes', () {
