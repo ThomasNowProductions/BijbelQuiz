@@ -32,9 +32,6 @@ class SettingsProvider extends ChangeNotifier {
   static const String _difficultyPreferenceKey = 'difficulty_preference';
   static const String _analyticsEnabledKey = 'analytics_enabled';
   static const String _aiThemesKey = 'ai_themes';
-  static const String _apiEnabledKey = 'api_enabled';
-  static const String _apiKeyKey = 'api_key';
-  static const String _apiPortKey = 'api_port';
   static const String _showNavigationLabelsKey = 'show_navigation_labels';
   static const String _layoutTypeKey = 'layout_type';
   static const String _colorfulModeKey = 'colorful_mode';
@@ -66,9 +63,6 @@ class SettingsProvider extends ChangeNotifier {
   final Map<String, AITheme> _aiThemes = {};
 
   // API settings
-  bool _apiEnabled = false;
-  String _apiKey = '';
-  int _apiPort = 7777;
 
   // Navigation settings
   bool _showNavigationLabels = true;
@@ -170,15 +164,6 @@ class SettingsProvider extends ChangeNotifier {
   /// Whether analytics are enabled
   bool get analyticsEnabled => _analyticsEnabled;
 
-  /// Whether the local API is enabled
-  bool get apiEnabled => _apiEnabled;
-
-  /// The API key for authentication
-  String get apiKey => _apiKey;
-
-  /// The port for the local API server
-  int get apiPort => _apiPort;
-
   /// Whether to show labels in the navigation bar
   bool get showNavigationLabels => _showNavigationLabels;
 
@@ -239,7 +224,7 @@ class SettingsProvider extends ChangeNotifier {
         _aiThemes[theme.id] = theme;
         await _saveAIThemesToStorage();
         AppLogger.info('AI theme saved: ${theme.name} (${theme.id})');
-        
+
         // Sync settings after save
         if (syncService.isAuthenticated) {
           await syncService.syncData('settings', getExportData());
@@ -262,7 +247,7 @@ class SettingsProvider extends ChangeNotifier {
         }
 
         AppLogger.info('AI theme removed: $themeId');
-        
+
         // Sync settings after removal
         if (syncService.isAuthenticated) {
           await syncService.syncData('settings', getExportData());
@@ -471,10 +456,6 @@ class SettingsProvider extends ChangeNotifier {
       _hasClickedSatisfactionLink =
           _getBoolSetting(_hasClickedSatisfactionLinkKey, defaultValue: false);
 
-      // Load API settings
-      _apiEnabled = _getBoolSetting(_apiEnabledKey, defaultValue: false);
-      _apiKey = _prefs?.getString(_apiKeyKey) ?? '';
-      _apiPort = _prefs?.getInt(_apiPortKey) ?? 7777;
 
       // Load navigation settings
       _showNavigationLabels =
@@ -521,7 +502,7 @@ class SettingsProvider extends ChangeNotifier {
           'language': _language,
         },
       );
-      
+
       // Re-throw to maintain existing error handling
       rethrow;
     } finally {
@@ -537,14 +518,14 @@ class SettingsProvider extends ChangeNotifier {
     if (language != 'nl' && language != 'en') {
       throw ArgumentError('Taal moet "nl" of "en" zijn');
     }
-    
+
     await _saveSetting(
       action: () async {
         _language = language;
         strings.AppStrings.setLanguage(language);
         await _prefs?.setString('language', language);
         AppLogger.info('Language saved successfully: $language');
-        
+
         // Sync settings immediately
         if (syncService.isAuthenticated) {
           await syncService.syncData('settings', getExportData());
@@ -562,7 +543,7 @@ class SettingsProvider extends ChangeNotifier {
         _themeMode = mode;
         await _prefs?.setInt(_themeModeKey, mode.index);
         AppLogger.info('Theme mode saved successfully: $mode');
-        
+
         // Sync settings immediately
         if (syncService.isAuthenticated) {
           await syncService.syncData('settings', getExportData());
@@ -596,7 +577,7 @@ class SettingsProvider extends ChangeNotifier {
         _gameSpeed = speed;
         await _prefs?.setString(_slowModeKey, speed);
         AppLogger.info('Game speed saved successfully: $speed');
-        
+
         // Sync settings immediately
         if (syncService.isAuthenticated) {
           await syncService.syncData('settings', getExportData());
@@ -614,7 +595,7 @@ class SettingsProvider extends ChangeNotifier {
         _mute = enabled;
         await _prefs?.setBool(_muteKey, enabled);
         AppLogger.info('Mute setting saved successfully: $enabled');
-        
+
         // Sync settings immediately
         if (syncService.isAuthenticated) {
           await syncService.syncData('settings', getExportData());
@@ -800,7 +781,6 @@ class SettingsProvider extends ChangeNotifier {
     );
   }
 
-
   /// Updates the analytics enabled setting
   Future<void> setAnalyticsEnabled(bool enabled) async {
     await _saveSetting(
@@ -812,52 +792,6 @@ class SettingsProvider extends ChangeNotifier {
     );
   }
 
-  /// Updates the API enabled setting
-  Future<void> setApiEnabled(bool enabled) async {
-    await _saveSetting(
-      action: () async {
-        _apiEnabled = enabled;
-        await _prefs?.setBool(_apiEnabledKey, enabled);
-      },
-      errorMessage: 'Failed to save API enabled setting',
-    );
-  }
-
-  /// Updates the API key
-  Future<void> setApiKey(String key) async {
-    await _saveSetting(
-      action: () async {
-        _apiKey = key;
-        await _prefs?.setString(_apiKeyKey, key);
-      },
-      errorMessage: 'Failed to save API key',
-    );
-  }
-
-  /// Updates the API port
-  Future<void> setApiPort(int port) async {
-    if (port < 1024 || port > 65535) {
-      throw ArgumentError('Port must be between 1024 and 65535');
-    }
-    await _saveSetting(
-      action: () async {
-        _apiPort = port;
-        await _prefs?.setInt(_apiPortKey, port);
-      },
-      errorMessage: 'Failed to save API port',
-    );
-  }
-
-  /// Generates a new API key
-  Future<void> generateNewApiKey() async {
-    final timestamp = DateTime.now().millisecondsSinceEpoch.toString();
-    final hashString = timestamp.hashCode
-        .toString()
-        .replaceAll('-', ''); // Remove negative signs
-    final paddedHash = hashString.padRight(16, '0'); // Pad with zeros if needed
-    final key = 'bq_${paddedHash.substring(0, 16)}';
-    await setApiKey(key);
-  }
 
   /// Updates the show navigation labels setting
   Future<void> setShowNavigationLabels(bool show) async {
@@ -975,9 +909,6 @@ class SettingsProvider extends ChangeNotifier {
       'hasClickedDifficultyLink': _hasClickedDifficultyLink,
       'difficultyPreference': _difficultyPreference,
       'analyticsEnabled': _analyticsEnabled,
-      'apiEnabled': _apiEnabled,
-      'apiKey': _apiKey,
-      'apiPort': _apiPort,
       'showNavigationLabels': _showNavigationLabels,
       'layoutType': _layoutType,
       'colorfulMode': _colorfulMode,
@@ -1022,9 +953,6 @@ class SettingsProvider extends ChangeNotifier {
     _difficultyPreference = data['difficultyPreference'];
 
     // Load API settings
-    _apiEnabled = data['apiEnabled'] ?? false;
-    _apiKey = data['apiKey'] ?? '';
-    _apiPort = data['apiPort'] ?? 7777;
 
     // Load navigation settings
     _showNavigationLabels = data['showNavigationLabels'] ?? true;
@@ -1099,9 +1027,6 @@ class SettingsProvider extends ChangeNotifier {
     }
 
     // Save API settings
-    await _prefs?.setBool(_apiEnabledKey, _apiEnabled);
-    await _prefs?.setString(_apiKeyKey, _apiKey);
-    await _prefs?.setInt(_apiPortKey, _apiPort);
 
     // Save navigation settings
     await _prefs?.setBool(_showNavigationLabelsKey, _showNavigationLabels);

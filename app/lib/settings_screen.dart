@@ -331,25 +331,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
           colorScheme,
         ),
       ),
-      if (settings.apiEnabled) ...[
-        _SettingItem(
-          title: strings.AppStrings.apiKey,
-          subtitle: settings.apiKey.isEmpty
-              ? strings.AppStrings.generateApiKey
-              : _formatApiKey(settings.apiKey),
-          child: _buildApiKeyControls(context, settings, colorScheme),
-        ),
-        _SettingItem(
-          title: strings.AppStrings.apiPort,
-          subtitle: '${strings.AppStrings.apiPortDesc} (${settings.apiPort})',
-          child: _buildApiPortControl(settings),
-        ),
-        _SettingItem(
-          title: strings.AppStrings.apiStatus,
-          subtitle: strings.AppStrings.apiStatusDesc,
-          child: _buildApiStatusIndicator(settings),
-        ),
-      ],
       // Actions
       _SettingItem(
         title: strings.AppStrings.donateButton,
@@ -781,107 +762,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Widget _buildApiKeyControls(BuildContext context, SettingsProvider settings,
-      ColorScheme colorScheme) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        if (settings.apiKey.isNotEmpty) ...[
-          IconButton(
-            onPressed: () => _copyApiKeyToClipboard(context, settings.apiKey),
-            icon: Icon(Icons.copy, size: 20, color: colorScheme.primary),
-            tooltip: strings.AppStrings.copyApiKey,
-            style: IconButton.styleFrom(
-              backgroundColor: colorScheme.primary.withValues(alpha: 0.1),
-              foregroundColor: colorScheme.primary,
-            ),
-          ),
-          const SizedBox(width: 4),
-          IconButton(
-            onPressed: () async {
-              if (settings.apiKey.isEmpty) {
-                await settings.generateNewApiKey();
-              } else {
-                _showApiKeyDialog(context, settings);
-              }
-            },
-            icon: Icon(Icons.refresh, size: 20, color: colorScheme.primary),
-            tooltip: strings.AppStrings.regenerateApiKey,
-            style: IconButton.styleFrom(
-              backgroundColor: colorScheme.primary.withValues(alpha: 0.1),
-              foregroundColor: colorScheme.primary,
-            ),
-          ),
-        ],
-      ],
-    );
-  }
 
-  Widget _buildApiPortControl(SettingsProvider settings) {
-    return SizedBox(
-      width: 80,
-      child: TextField(
-        keyboardType: TextInputType.number,
-        textAlign: TextAlign.center,
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-        ),
-        controller: TextEditingController(text: settings.apiPort.toString()),
-        onSubmitted: (value) {
-          final port = int.tryParse(value);
-          if (port != null && port >= 1024 && port <= 65535) {
-            settings.setApiPort(port);
-          }
-        },
-      ),
-    );
-  }
-
-  Widget _buildApiStatusIndicator(SettingsProvider settings) {
-    return Consumer<ApiService?>(
-      builder: (context, apiService, child) {
-        final isApiEnabled = settings.apiEnabled;
-        final isRunning = apiService?.isRunning ?? false;
-
-        Color statusColor;
-        String statusText;
-        if (!isApiEnabled) {
-          statusColor = Colors.grey;
-          statusText = strings.AppStrings.apiDisabled;
-        } else if (isRunning) {
-          statusColor = Colors.green;
-          statusText = strings.AppStrings.apiRunning;
-        } else {
-          statusColor = Colors.orange;
-          statusText = strings.AppStrings.apiStarting;
-        }
-
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 8,
-              height: 8,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: statusColor,
-              ),
-            ),
-            const SizedBox(width: 8),
-            Text(
-              statusText,
-              style: TextStyle(
-                color: statusColor,
-                fontSize: 12,
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   Widget _buildVersionInfo() {
     return FutureBuilder<PackageInfo>(
@@ -1307,59 +1188,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
-  String _formatApiKey(String apiKey) {
-    if (apiKey.length <= 10) return apiKey;
-    return '${apiKey.substring(0, 6)}...${apiKey.substring(apiKey.length - 4)}';
-  }
-
-  Future<void> _copyApiKeyToClipboard(
-      BuildContext context, String apiKey) async {
-    try {
-      await Clipboard.setData(ClipboardData(text: apiKey));
-      if (context.mounted) {
-        showTopSnackBar(context, strings.AppStrings.apiKeyCopied,
-            style: TopSnackBarStyle.success);
-      }
-    } catch (e) {
-      if (context.mounted) {
-        showTopSnackBar(context, strings.AppStrings.apiKeyCopyFailed,
-            style: TopSnackBarStyle.error);
-      }
-    }
-  }
-
-  void _showApiKeyDialog(BuildContext context, SettingsProvider settings) {
-    showDialog(
-      context: context,
-      builder: (BuildContext dialogContext) {
-        return AlertDialog(
-          title: Text(strings.AppStrings.regenerateApiKeyTitle),
-          content: Text(strings.AppStrings.regenerateApiKeyMessage),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(dialogContext).pop(),
-              child: Text(strings.AppStrings.cancel),
-            ),
-            TextButton(
-              onPressed: () async {
-                await settings.generateNewApiKey();
-                if (dialogContext.mounted) {
-                  Navigator.of(dialogContext).pop();
-                  showTopSnackBar(
-                      dialogContext, strings.AppStrings.apiKeyGenerated,
-                      style: TopSnackBarStyle.success);
-                }
-              },
-              style: TextButton.styleFrom(
-                foregroundColor: Theme.of(dialogContext).colorScheme.error,
-              ),
-              child: Text(strings.AppStrings.regenerateApiKey),
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   Widget _buildSocialMediaButton(BuildContext context, String platform,
       IconData icon, String url, ColorScheme colorScheme) {

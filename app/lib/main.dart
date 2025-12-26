@@ -20,7 +20,6 @@ import 'services/logger.dart';
 import 'services/service_container.dart';
 import 'services/analytics_service.dart';
 import 'services/time_tracking_service.dart';
-import 'services/api_service.dart';
 import 'services/messaging_service.dart';
 import 'services/question_cache_service.dart';
 import 'utils/bijbelquiz_gen_utils.dart';
@@ -493,66 +492,6 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
         });
       }
     });
-
-    // Handle API server lifecycle based on settings
-    _handleApiServerLifecycle();
-  }
-
-  /// Handle API server lifecycle based on settings changes
-  void _handleApiServerLifecycle() {
-    WidgetsBinding.instance
-        .addPostFrameCallback(_handleApiServerLifecycleAsync);
-  }
-
-  Future<void> _handleApiServerLifecycleAsync(Duration timestamp) async {
-    if (!mounted) return;
-
-    try {
-      final settings = Provider.of<SettingsProvider>(context, listen: false);
-      final apiService = Provider.of<ApiService?>(context, listen: false);
-      final questionCacheService =
-          Provider.of<QuestionCacheService?>(context, listen: false);
-
-      if (apiService == null || questionCacheService == null) return;
-
-      if (settings.apiEnabled && settings.apiKey.isNotEmpty) {
-        // Start API server if not already running
-        if (!apiService.isRunning) {
-          final gameStatsProvider =
-              Provider.of<GameStatsProvider>(context, listen: false);
-          final lessonProgressProvider =
-              Provider.of<LessonProgressProvider>(context, listen: false);
-
-          await apiService.startServer(
-            port: settings.apiPort,
-            apiKey: settings.apiKey,
-            settingsProvider: settings,
-            gameStatsProvider: gameStatsProvider,
-            lessonProgressProvider: lessonProgressProvider,
-            questionCacheService: questionCacheService,
-          );
-          AppLogger.info('API server started via settings change');
-        }
-      } else {
-        // Stop API server if running
-        if (apiService.isRunning) {
-          await apiService.stopServer();
-          AppLogger.info('API server stopped via settings change');
-        }
-      }
-    } catch (e) {
-      AppLogger.error('Error managing API server lifecycle: $e');
-      // Show user-friendly error message
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content:
-                Text('${strings.AppStrings.apiErrorPrefix}${e.toString()}'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    }
   }
 
   /// Builds the MaterialApp with theme configuration
@@ -615,14 +554,6 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
   @override
   void dispose() {
     AppLogger.info('BijbelQuizApp disposing...');
-
-    // Stop API server if running
-    final apiService = Provider.of<ApiService?>(context, listen: false);
-    apiService?.stopServer().then((_) {
-      AppLogger.info('API server stopped during app disposal');
-    }).catchError((e) {
-      AppLogger.error('Error stopping API server during disposal: $e');
-    });
 
     // Dispose service container
     _serviceContainer.dispose();

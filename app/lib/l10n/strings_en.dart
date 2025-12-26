@@ -453,29 +453,6 @@ class AppStringsEn {
   static const String analyticsDescription =
       'Help us improve the app by sending anonymous usage data';
 
-  // Local API Settings
-  static const String localApi = 'Local API';
-  static const String enableLocalApi = 'Enable Local API';
-  static const String enableLocalApiDesc =
-      'Allow external apps to access quiz data';
-  static const String apiKey = 'API Key';
-  static const String generateApiKey = 'Generate a key for API access';
-  static const String apiPort = 'API Port';
-  static const String apiPortDesc = 'Port for local API server';
-  static const String apiStatus = 'API Status';
-  static const String apiStatusDesc = 'Shows if the API server is running';
-  static const String apiDisabled = 'Disabled';
-  static const String apiRunning = 'Running';
-  static const String apiStarting = 'Starting...';
-  static const String copyApiKey = 'Copy API Key';
-  static const String regenerateApiKey = 'Regenerate API Key';
-  static const String regenerateApiKeyTitle = 'Regenerate API Key';
-  static const String regenerateApiKeyMessage =
-      'This will generate a new API key and invalidate the current one. Continue?';
-  static const String apiKeyCopied = 'API key copied to clipboard';
-  static const String apiKeyCopyFailed = 'Could not copy API key';
-  static const String generateKey = 'Generate Key';
-  static const String apiKeyGenerated = 'New API key generated';
 
   // Social Media
   static const String followOnSocialMedia = 'Follow on social media';
@@ -673,7 +650,6 @@ class AppStringsEn {
   static const String errorReportingQuestion = 'Error reporting question';
 
   // Additional hardcoded strings found in codebase
-  static const String apiErrorPrefix = 'API Error: ';
   static const String grid = 'Grid';
   static const String list = 'List';
   static const String compactGrid = 'Compact Grid';

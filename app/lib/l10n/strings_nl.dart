@@ -819,57 +819,6 @@ class AppStrings {
       : 'Help ons de app te verbeteren door anonieme gebruiksgegevens te verzenden';
 
   // Local API Settings
-  static String get localApi =>
-      _language == 'en' ? AppStringsEn.localApi : 'Lokale API';
-  static String get enableLocalApi => _language == 'en'
-      ? AppStringsEn.enableLocalApi
-      : 'Lokale API inschakelen';
-  static String get enableLocalApiDesc => _language == 'en'
-      ? AppStringsEn.enableLocalApiDesc
-      : 'Sta externe apps toe om quizgegevens te benaderen';
-  static String get apiKey =>
-      _language == 'en' ? AppStringsEn.apiKey : 'API-sleutel';
-  static String get generateApiKey => _language == 'en'
-      ? AppStringsEn.generateApiKey
-      : 'Genereer een sleutel voor API-toegang';
-  static String get apiPort =>
-      _language == 'en' ? AppStringsEn.apiPort : 'API-poort';
-  static String get apiPortDesc => _language == 'en'
-      ? AppStringsEn.apiPortDesc
-      : 'Poort voor lokale API-server';
-  static String get apiStatus =>
-      _language == 'en' ? AppStringsEn.apiStatus : 'API-status';
-  static String get apiStatusDesc => _language == 'en'
-      ? AppStringsEn.apiStatusDesc
-      : 'Toont of de API-server draait';
-  static String get apiDisabled =>
-      _language == 'en' ? AppStringsEn.apiDisabled : 'Uitgeschakeld';
-  static String get apiRunning =>
-      _language == 'en' ? AppStringsEn.apiRunning : 'Draait';
-  static String get apiStarting =>
-      _language == 'en' ? AppStringsEn.apiStarting : 'Starten...';
-  static String get copyApiKey =>
-      _language == 'en' ? AppStringsEn.copyApiKey : 'API-sleutel kopiëren';
-  static String get regenerateApiKey => _language == 'en'
-      ? AppStringsEn.regenerateApiKey
-      : 'API-sleutel opnieuw genereren';
-  static String get regenerateApiKeyTitle => _language == 'en'
-      ? AppStringsEn.regenerateApiKeyTitle
-      : 'API-sleutel opnieuw genereren';
-  static String get regenerateApiKeyMessage => _language == 'en'
-      ? AppStringsEn.regenerateApiKeyMessage
-      : 'Dit genereert een nieuwe API-sleutel en maakt de huidige ongeldig. Doorgaan?';
-  static String get apiKeyCopied => _language == 'en'
-      ? AppStringsEn.apiKeyCopied
-      : 'API-sleutel gekopieerd naar klembord';
-  static String get apiKeyCopyFailed => _language == 'en'
-      ? AppStringsEn.apiKeyCopyFailed
-      : 'Kon API-sleutel niet kopiëren';
-  static String get generateKey =>
-      _language == 'en' ? AppStringsEn.generateKey : 'Genereer sleutel';
-  static String get apiKeyGenerated => _language == 'en'
-      ? AppStringsEn.apiKeyGenerated
-      : 'Nieuwe API-sleutel gegenereerd';
 
   // Social Media
   static String get followOnSocialMedia => _language == 'en'
