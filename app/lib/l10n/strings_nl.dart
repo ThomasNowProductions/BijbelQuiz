@@ -1131,6 +1131,11 @@ class AppStrings {
   static String get errorLoadingMessages => _language == 'en'
       ? AppStringsEn.errorLoadingMessages
       : 'Fout bij laden van berichten';
+  static String get errorUpdatingReaction => _language == 'en'
+      ? AppStringsEn.errorUpdatingReaction
+      : 'Fout bij bijwerken van reactie';
+  static String get loadingMessages =>
+      _language == 'en' ? AppStringsEn.loadingMessages : 'Berichten laden...';
   static String get expiresIn =>
       _language == 'en' ? AppStringsEn.expiresIn : 'Verloopt over';
   static String get expiringSoon =>
@@ -1250,8 +1255,6 @@ class AppStrings {
       _language == 'en' ? AppStringsEn.sharedStats : 'Gedeelde statistieken';
   static String get newGame =>
       _language == 'en' ? AppStringsEn.newGame : 'Nieuw spel';
-  static String get loadingMessages =>
-      _language == 'en' ? AppStringsEn.loadingMessages : 'Berichten laden...';
   static String get errorLoadingUsernames => _language == 'en'
       ? AppStringsEn.errorLoadingUsernames
       : 'Fout bij laden gebruikersnamen: ';

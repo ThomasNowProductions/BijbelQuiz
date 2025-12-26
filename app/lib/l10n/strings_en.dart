@@ -453,7 +453,6 @@ class AppStringsEn {
   static const String analyticsDescription =
       'Help us improve the app by sending anonymous usage data';
 
-
   // Social Media
   static const String followOnSocialMedia = 'Follow on social media';
   static const String followUsOnSocialMedia = 'Follow us on social media';
@@ -589,6 +588,8 @@ class AppStringsEn {
   static const String noActiveMessagesSubtitle =
       'There are currently no messages to display';
   static const String errorLoadingMessages = 'Error loading messages';
+  static const String errorUpdatingReaction = 'Error updating reaction';
+  static const String loadingMessages = 'Loading messages...';
   static const String expiresIn = 'Expires in';
   static const String expiringSoon = 'Expiring soon';
   static const String days = 'days';
@@ -658,7 +659,6 @@ class AppStringsEn {
   static const String errorRemovingDevice = 'Error removing device: ';
   static const String sharedStats = 'Shared Statistics';
   static const String newGame = 'New Game';
-  static const String loadingMessages = 'Loading messages...';
   static const String errorLoadingUsernames = 'Error loading usernames: ';
   static const String urlCopiedToClipboard = 'URL copied to clipboard!';
   static const String tryAgainButton = 'Try Again';
