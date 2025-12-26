@@ -140,17 +140,17 @@ class NotificationService {
           'Scheduling $notificationsCount motivational notifications for ${now.toIso8601String().split('T')[0]}');
 
       for (int i = 0; i < notificationsCount; i++) {
-        final String message = _getMotivationalMessage(
-          language,
-          now.hour,
-        );
-
         final tz.TZDateTime scheduledTime = _calculateRandomTime(
           nowTz,
           startHour,
           startMinute,
           endHour,
           endMinute,
+        );
+
+        final String message = _getMotivationalMessage(
+          language,
+          scheduledTime.hour,
         );
 
         await _scheduleNotification(
