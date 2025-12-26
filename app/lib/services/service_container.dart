@@ -12,6 +12,7 @@ import '../providers/game_stats_provider.dart';
 import '../providers/lesson_progress_provider.dart';
 import '../theme/theme_manager.dart';
 import 'messaging_service.dart';
+import 'notification_service.dart';
 
 /// Container for managing service lifecycle and dependencies
 class ServiceContainer {
@@ -33,6 +34,7 @@ class ServiceContainer {
   GeminiService? _geminiService;
   StarTransactionService? _starTransactionService;
   MessagingService? _messagingService;
+  NotificationService? _notificationService;
 
   // Initialization state tracking
   final Map<String, Completer<void>> _initializationCompleters = {};
@@ -50,7 +52,8 @@ class ServiceContainer {
         await _analyticsService!.init();
       });
       final analyticsDuration = DateTime.now().difference(analyticsStart);
-      AppLogger.info('Analytics service initialized in ${analyticsDuration.inMilliseconds}ms');
+      AppLogger.info(
+          'Analytics service initialized in ${analyticsDuration.inMilliseconds}ms');
 
       // Theme manager (required for UI)
       final themeStart = DateTime.now();
@@ -59,7 +62,8 @@ class ServiceContainer {
         await _themeManager!.initialize();
       });
       final themeDuration = DateTime.now().difference(themeStart);
-      AppLogger.info('Theme manager initialized in ${themeDuration.inMilliseconds}ms');
+      AppLogger.info(
+          'Theme manager initialized in ${themeDuration.inMilliseconds}ms');
 
       // Settings provider (required for app configuration)
       final settingsStart = DateTime.now();
@@ -68,7 +72,8 @@ class ServiceContainer {
         await _settingsProvider!.loadSettings();
       });
       final settingsDuration = DateTime.now().difference(settingsStart);
-      AppLogger.info('Settings provider initialized in ${settingsDuration.inMilliseconds}ms');
+      AppLogger.info(
+          'Settings provider initialized in ${settingsDuration.inMilliseconds}ms');
 
       // Game stats provider (required for core functionality)
       final gameStatsStart = DateTime.now();
@@ -76,7 +81,8 @@ class ServiceContainer {
         _gameStatsProvider = GameStatsProvider();
       });
       final gameStatsDuration = DateTime.now().difference(gameStatsStart);
-      AppLogger.info('Game stats provider initialized in ${gameStatsDuration.inMilliseconds}ms');
+      AppLogger.info(
+          'Game stats provider initialized in ${gameStatsDuration.inMilliseconds}ms');
 
       // Time tracking service (singleton)
       final timeTrackingStart = DateTime.now();
@@ -85,7 +91,8 @@ class ServiceContainer {
         await _timeTrackingService!.initialize();
       });
       final timeTrackingDuration = DateTime.now().difference(timeTrackingStart);
-      AppLogger.info('Time tracking service initialized in ${timeTrackingDuration.inMilliseconds}ms');
+      AppLogger.info(
+          'Time tracking service initialized in ${timeTrackingDuration.inMilliseconds}ms');
 
       AppLogger.info('Critical services initialized successfully');
     } catch (e) {
@@ -130,6 +137,12 @@ class ServiceContainer {
       _messagingService = MessagingService();
     }));
 
+    unawaited(_initializeService('notification', () async {
+      _notificationService = NotificationService();
+      await _notificationService!.initialize();
+      await _notificationService!.checkAndScheduleDailyNotifications();
+    }));
+
     // Star transaction service needs providers to be ready
     unawaited(_initializeService('star_transaction', () async {
       await _waitForService('settings_provider');
@@ -138,7 +151,6 @@ class ServiceContainer {
       _starTransactionService = StarTransactionService.instance;
       // This will be initialized properly later when providers are available
     }));
-
 
     AppLogger.info('Optional services initialization started');
   }
@@ -256,6 +268,7 @@ class ServiceContainer {
 
   MessagingService? get messagingService => _messagingService;
 
+  NotificationService? get notificationService => _notificationService;
 
   /// Check if all critical services are ready
   bool get areCriticalServicesReady {
@@ -286,6 +299,8 @@ class ServiceContainer {
             _isServiceInitialized('star_transaction');
       case 'messaging':
         return _messagingService != null;
+      case 'notification':
+        return _notificationService != null;
       default:
         return false;
     }
@@ -309,6 +324,7 @@ class ServiceContainer {
         'star_transaction': _starTransactionService != null &&
             _isServiceInitialized('star_transaction'),
         'messaging': _messagingService != null,
+        'notification': _notificationService != null,
       },
       'failed_services': _failedServices.toList(),
       'all_critical_ready': areCriticalServicesReady,

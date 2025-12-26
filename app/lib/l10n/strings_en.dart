@@ -729,6 +729,11 @@ class AppStringsEn {
   static const String automaticBugReportsDesc =
       'Automatically send bug reports when errors occur (recommended)';
 
+  // Motivational Notifications
+  static const String motivationalNotifications = 'Motivational notifications';
+  static const String motivationalNotificationsDesc =
+      'Receive 1-3 notifications per day between 06:00 and 23:00 to encourage you to do a quiz';
+
   // Sync Screen
   static const String dataSuccessfullySynchronized =
       'Data successfully synchronized';

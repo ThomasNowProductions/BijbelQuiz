@@ -330,6 +330,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
           colorScheme,
         ),
       ),
+      if (!kIsWeb && (Platform.isIOS || Platform.isAndroid))
+        _SettingItem(
+          title: strings.AppStrings.motivationalNotifications,
+          subtitle: strings.AppStrings.motivationalNotificationsDesc,
+          child: _buildSwitch(
+            settings.motivationalNotificationsEnabled,
+            (value) {
+              _updateSetting(settings, 'toggle_motivational_notifications',
+                  () => settings.setMotivationalNotificationsEnabled(value));
+            },
+            colorScheme,
+          ),
+        ),
       // Actions
       _SettingItem(
         title: strings.AppStrings.donateButton,

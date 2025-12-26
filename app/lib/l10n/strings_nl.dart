@@ -1319,6 +1319,14 @@ class AppStrings {
       ? AppStringsEn.automaticBugReportsDesc
       : 'Automatisch bugrapporten verzenden wanneer er fouten optreden (aanbevolen)';
 
+  // Motivational Notifications
+  static String get motivationalNotifications => _language == 'en'
+      ? AppStringsEn.motivationalNotifications
+      : 'Motiverende notificaties';
+  static String get motivationalNotificationsDesc => _language == 'en'
+      ? AppStringsEn.motivationalNotificationsDesc
+      : 'Ontvang 1-3 notificaties per dag tussen 06:00 en 23:00 om je te motiveren een quiz te doen';
+
   // Sync Screen
   static String get dataSuccessfullySynchronized => _language == 'en'
       ? AppStringsEn.dataSuccessfullySynchronized

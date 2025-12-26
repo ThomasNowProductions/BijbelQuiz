@@ -1,0 +1,80 @@
+{
+  "motivational": {
+    "nl": {
+      "morning": [
+        "Goedemorgen! Tijd voor een Bijbelquiz!",
+        "Start je dag met een Bijbelquiz!",
+        "Ga vandaag aan de slag met Bijbelkennis!",
+        "Een nieuwe dag, een nieuwe kans om te leren!",
+        "Test je Bijbelkennis deze ochtend!",
+        "Lekker bezig! Doe nog een quiz vandaag!"
+      ],
+      "afternoon": [
+        "Goedemiddag! Pak nog even tijd voor een quiz!",
+        "Ideale tijd voor een Bijbelquiz!",
+        "Hou je voortgang erin met een quiz!",
+        "Neem een pauze en doe een Bijbelquiz!",
+        "Een momentje voor jezelf met de BijbelQuiz!",
+        "Blijf leren met een snelle quiz!"
+      ],
+      "evening": [
+        "Goedenavond! Doe nog een quiz voor het slapengaan!",
+        "Einde van de dag? Tijd voor een quiz!",
+        "Sluit je dag af met Bijbelkennis!",
+        "Nog even snel een quiz doen?",
+        "Eén laatste quiz voor vandaag!",
+        "Relax en speel een Bijbelquiz!"
+      ],
+      "general": [
+        "Wanneer ben je klaar voor je volgende quiz?",
+        "Je Bijbelkennis kan groeien met elke quiz!",
+        "Hoe goed ken jij de Bijbel? Test het nu!",
+        "Kom terug en test je Bijbelkennis!",
+        "Nog een quiz om je reeks te behouden!",
+        "Je kan het! Doe nog een quiz!",
+        "Elke vraag brengt je dichter bij meer kennis!",
+        "De BijbelQuiz wacht op je!",
+        "Challenge yourself met een nieuwe quiz!",
+        "Blijf consistent - doe een quiz vandaag!"
+      ]
+    },
+    "en": {
+      "morning": [
+        "Good morning! Time for a Bible quiz!",
+        "Start your day with a Bible quiz!",
+        "Get going with Bible knowledge today!",
+        "A new day, a new opportunity to learn!",
+        "Test your Bible knowledge this morning!",
+        "Keep it up! Do another quiz today!"
+      ],
+      "afternoon": [
+        "Good afternoon! Take a moment for a quiz!",
+        "Perfect time for a Bible quiz!",
+        "Keep your progress going with a quiz!",
+        "Take a break and do a Bible quiz!",
+        "A moment for yourself with the Bible Quiz!",
+        "Keep learning with a quick quiz!"
+      ],
+      "evening": [
+        "Good evening! Do one more quiz before bed!",
+        "End of the day? Time for a quiz!",
+        "Close your day with Bible knowledge!",
+        "One more quick quiz?",
+        "One last quiz for today!",
+        "Relax and play a Bible quiz!"
+      ],
+      "general": [
+        "When are you ready for your next quiz?",
+        "Your Bible knowledge can grow with every quiz!",
+        "How well do you know the Bible? Test it now!",
+        "Come back and test your Bible knowledge!",
+        "Another quiz to keep your streak alive!",
+        "You can do it! Do another quiz!",
+        "Every question brings you closer to more knowledge!",
+        "The Bible Quiz is waiting for you!",
+        "Challenge yourself with a new quiz!",
+        "Stay consistent - do a quiz today!"
+      ]
+    }
+  }
+}
