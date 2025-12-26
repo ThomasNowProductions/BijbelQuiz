@@ -29,37 +29,19 @@ def array_to_sql(arr):
 
 def main():
     parser = argparse.ArgumentParser(description='Convert questions JSON to SQL statements')
-    parser.add_argument('--output', '-o', 
-                       default=None,
-                       help='Output SQL file path')
-    parser.add_argument('--json-file', '-j',
-                       default=None,
-                       help='Path to JSON file (default: app/assets/questions-nl-sv.json)')
-    
-    parser.add_argument('--language', '-l',
+    parser.add_argument('language',
                        choices=['nl', 'en'],
-                       default='nl',
-                       help='Language of the questions (nl or en). Default: nl')
+                       help='Language of the questions (nl or en)')
     
     args = parser.parse_args()
     
-    # Set default output path based on language if not specified
-    if args.output is None:
-        if args.language == 'en':
-            args.output = Path(__file__).parent.parent / 'database' / 'questions-en.sql'
-        else:
-            args.output = Path(__file__).parent.parent / 'database' / 'questions-nl-sv.sql'
+    # Set output path based on language
+    if args.language == 'en':
+        output_path = Path(__file__).parent.parent / 'database' / 'questions-en.sql'
+        json_path = Path(__file__).parent.parent / "app" / "assets" / "questions-en.json"
     else:
-        args.output = Path(args.output)
-    
-    # Determine JSON file path
-    if args.json_file:
-        json_path = Path(args.json_file)
-    else:
-        if args.language == 'en':
-            json_path = Path(__file__).parent.parent / "app" / "assets" / "questions-en.json"
-        else:
-            json_path = Path(__file__).parent.parent / "app" / "assets" / "questions-nl-sv.json"
+        output_path = Path(__file__).parent.parent / 'database' / 'questions-nl-sv.sql'
+        json_path = Path(__file__).parent.parent / "app" / "assets" / "questions-nl-sv.json"
 
     if not json_path.exists():
         print(f"Error: Questions JSON file not found at {json_path}")
@@ -80,7 +62,6 @@ def main():
     sql_lines.append("")
     
     # Ensure output directory exists
-    output_path = Path(args.output)
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     table_name = 'questions_en' if args.language == 'en' else 'questions'

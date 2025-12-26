@@ -1,6 +1,6 @@
 -- SQL INSERT statements for nl questions table
 -- Generated from questions-nl-sv.json
--- Generated on: 1766784198.8416033
+-- Generated on: 1766784425.2406912
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
 VALUES ('000001', 'Hoeveel Bijbelboeken heeft het Nieuwe Testament?', '27', ARRAY['26','66','39'], 3, 'mc', '{}', NULL)
