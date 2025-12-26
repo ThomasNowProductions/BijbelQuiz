@@ -23,11 +23,11 @@ ALTER TABLE questions ENABLE ROW LEVEL SECURITY;
 
 -- Policy to allow authenticated users to read questions
 CREATE POLICY "Allow authenticated users to read questions" ON questions
-    FOR SELECT USING (auth.role() = 'authenticated' OR auth.role() = 'anon');
+    FOR SELECT USING ((select auth.role()) = 'authenticated' OR (select auth.role()) = 'anon');
 
 -- Policy to allow service role to manage questions
 CREATE POLICY "Allow service role to manage questions" ON questions
-    FOR ALL USING (auth.role() = 'service_role');
+    FOR ALL USING ((select auth.role()) = 'service_role');
 
 -- Function to update updated_at timestamp
 CREATE OR REPLACE FUNCTION update_updated_at_column()

@@ -31,4 +31,4 @@ CREATE POLICY "Allow anon users to insert error reports" ON error_reports
 
 -- Example policy to allow service role to access all records
 CREATE POLICY "Allow service role access to error reports" ON error_reports
-    FOR ALL USING (auth.role() = 'service_role');
+    FOR ALL USING ((select auth.role()) = 'service_role');

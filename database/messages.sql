@@ -27,17 +27,17 @@ CREATE POLICY "Anyone can read active messages" ON messages
 -- Policy for inserting messages (only authenticated users with proper roles)
 CREATE POLICY "Authenticated users can insert messages" ON messages
     FOR INSERT TO authenticated
-    WITH CHECK (auth.role() = 'authenticated');
+    WITH CHECK ((select auth.role()) = 'authenticated');
 
 -- Policy for updating messages (only authenticated users with proper roles)
 CREATE POLICY "Authenticated users can update messages" ON messages
     FOR UPDATE TO authenticated
-    USING (auth.role() = 'authenticated');
+    USING ((select auth.role()) = 'authenticated');
 
 -- Policy for deleting messages (only authenticated users with proper roles)
 CREATE POLICY "Authenticated users can delete messages" ON messages
     FOR DELETE TO authenticated
-    USING (auth.role() = 'authenticated');
+    USING ((select auth.role()) = 'authenticated');
 
 -- Message Reactions System
 -- Create message_reactions table for emoji reactions
@@ -76,17 +76,18 @@ CREATE POLICY "Users can insert reactions" ON message_reactions
 -- Policy for updating reactions (users can only update their own reactions)
 CREATE POLICY "Users can update their own reactions" ON message_reactions
     FOR UPDATE TO authenticated, anon
-    USING (user_id LIKE 'anonymous_user_%' OR auth.uid()::text = user_id);
+    USING (user_id LIKE 'anonymous_user_%' OR (select auth.uid())::text = user_id);
 
 -- Policy for deleting reactions (users can only delete their own reactions)
 CREATE POLICY "Users can delete their own reactions" ON message_reactions
     FOR DELETE TO authenticated, anon
-    USING (user_id LIKE 'anonymous_user_%' OR auth.uid()::text = user_id);
+    USING (user_id LIKE 'anonymous_user_%' OR (select auth.uid())::text = user_id);
 
 -- Create a function to get reaction counts for a message
 CREATE OR REPLACE FUNCTION get_message_reaction_counts(message_uuid UUID)
 RETURNS TABLE(emoji VARCHAR(10), count BIGINT) AS $$
 BEGIN
+    SET search_path = public, pg_temp;
     RETURN QUERY
     SELECT
         mr.emoji,
@@ -104,6 +105,7 @@ RETURNS VARCHAR(10) AS $$
 DECLARE
     user_reaction VARCHAR(10);
 BEGIN
+    SET search_path = public, pg_temp;
     SELECT mr.emoji INTO user_reaction
     FROM message_reactions mr
     WHERE mr.message_id = message_uuid AND mr.user_id = user_uuid
@@ -123,6 +125,7 @@ DECLARE
     existing_reaction VARCHAR(10);
     result JSON;
 BEGIN
+    SET search_path = public, pg_temp;
     -- Check if user already has a reaction
     SELECT mr.emoji INTO existing_reaction
     FROM message_reactions mr

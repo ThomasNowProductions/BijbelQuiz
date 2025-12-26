@@ -87,6 +87,7 @@ WHERE item_key IN (
 CREATE OR REPLACE FUNCTION update_current_price()
 RETURNS TRIGGER AS $$
 BEGIN
+    SET search_path = public, pg_temp;
     -- Check if discount is currently active (if discount dates are set)
     IF NEW.discount_start IS NOT NULL AND NEW.discount_end IS NOT NULL THEN
         -- If currently within discount period

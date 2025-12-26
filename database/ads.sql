@@ -32,6 +32,7 @@ ON CONFLICT (id) DO NOTHING;
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN
+    SET search_path = public, pg_temp;
     NEW.updated_at = NOW();
     RETURN NEW;
 END;
@@ -47,6 +48,7 @@ CREATE TRIGGER update_ads_updated_at
 CREATE OR REPLACE FUNCTION deactivate_expired_ads()
 RETURNS void AS $$
 BEGIN
+    SET search_path = public, pg_temp;
     UPDATE ads 
     SET is_active = FALSE 
     WHERE expiry_date < NOW() AND is_active = TRUE;
@@ -70,14 +72,14 @@ ALTER TABLE ads ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Allow public read access to active ads" ON ads
     FOR SELECT TO authenticated, anon
     USING (
-        is_active = TRUE 
-        AND start_date <= NOW() 
+        is_active = TRUE
+        AND start_date <= NOW()
         AND expiry_date > NOW()
     );
 
 -- Create a policy for authenticated users to manage ads (for admin purposes)
 CREATE POLICY "Allow authenticated users to manage ads" ON ads
-    FOR ALL TO authenticated
+    FOR INSERT, UPDATE, DELETE TO authenticated
     USING (true)
     WITH CHECK (true);
 
@@ -99,6 +101,7 @@ RETURNS INTEGER AS $$
 DECLARE
     deleted_count INTEGER;
 BEGIN
+    SET search_path = public, pg_temp;
     -- Delete ads that expired more than 1 year ago and are inactive
     DELETE FROM ads 
     WHERE is_active = FALSE 

@@ -35,3 +35,84 @@ VALUES
     ('THEME_OLED', 'theme', 'oled', '2025-12-31 23:59:59+00', 50),
     ('THEME_GREEN', 'theme', 'green', '2025-12-31 23:59:59+00', 50)
 ON CONFLICT (code) DO NOTHING;
+
+-- Function to check if a coupon is valid
+CREATE OR REPLACE FUNCTION is_coupon_valid(coupon_code TEXT)
+RETURNS BOOLEAN AS $$
+DECLARE
+    coupon_record coupons%ROWTYPE;
+BEGIN
+    SET search_path = public, pg_temp;
+    SELECT * INTO coupon_record FROM coupons WHERE code = coupon_code;
+    
+    IF NOT FOUND THEN
+        RETURN FALSE;
+    END IF;
+    
+    IF coupon_record.expiration_date < NOW() THEN
+        RETURN FALSE;
+    END IF;
+    
+    IF coupon_record.current_uses >= coupon_record.max_uses THEN
+        RETURN FALSE;
+    END IF;
+    
+    RETURN TRUE;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Function to increment coupon usage
+CREATE OR REPLACE FUNCTION increment_coupon_usage(coupon_code TEXT)
+RETURNS BOOLEAN AS $$
+DECLARE
+    coupon_record coupons%ROWTYPE;
+BEGIN
+    SET search_path = public, pg_temp;
+    UPDATE coupons
+    SET current_uses = current_uses + 1
+    WHERE code = coupon_code
+    AND current_uses < max_uses
+    AND expiration_date > NOW();
+    
+    RETURN FOUND;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Function to redeem a coupon
+CREATE OR REPLACE FUNCTION redeem_coupon(coupon_code TEXT, user_id UUID)
+RETURNS JSON AS $$
+DECLARE
+    coupon_record coupons%ROWTYPE;
+    result JSON;
+BEGIN
+    SET search_path = public, pg_temp;
+    SELECT * INTO coupon_record FROM coupons WHERE code = coupon_code;
+    
+    IF NOT FOUND THEN
+        result := json_build_object('success', FALSE, 'error', 'Coupon not found');
+        RETURN result;
+    END IF;
+    
+    IF coupon_record.expiration_date < NOW() THEN
+        result := json_build_object('success', FALSE, 'error', 'Coupon has expired');
+        RETURN result;
+    END IF;
+    
+    IF coupon_record.current_uses >= coupon_record.max_uses THEN
+        result := json_build_object('success', FALSE, 'error', 'Coupon has reached maximum uses');
+        RETURN result;
+    END IF;
+    
+    UPDATE coupons
+    SET current_uses = current_uses + 1
+    WHERE code = coupon_code;
+    
+    result := json_build_object(
+        'success', TRUE,
+        'reward_type', coupon_record.reward_type,
+        'reward_value', coupon_record.reward_value
+    );
+    
+    RETURN result;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
