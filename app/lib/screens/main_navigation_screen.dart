@@ -41,6 +41,11 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         });
       }
     });
+    _checkConnectionOnScreenLoad();
+  }
+
+  Future<void> _checkConnectionOnScreenLoad() async {
+    await _connectionService.checkConnection();
   }
 
   List<Widget> _getScreens() {

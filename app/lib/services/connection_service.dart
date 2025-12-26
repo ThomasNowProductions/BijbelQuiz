@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'logger.dart';
 import '../utils/automatic_error_reporter.dart';
 
@@ -90,47 +91,37 @@ class ConnectionService {
       }
 
       if (connectivityResult == ConnectivityResult.none) {
-        // Even if platform says none, we might want to double check with ping if we suspect platform issues?
-        // But usually 'none' is reliable. The issue is when it throws.
         _isConnected = false;
         _connectionType = ConnectionType.none;
         AppLogger.info(
             'Connection checked: not connected (platform reported none)');
       } else {
-        // Test connection with a simple ping
+        // Test connection by querying Supabase
         try {
-          final result = await InternetAddress.lookup('google.com')
-              .timeout(const Duration(seconds: 2));
+          final client = Supabase.instance.client;
+          await client.from('questions').select('id').limit(1).timeout(
+                const Duration(seconds: 3),
+              );
 
-          if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-            _isConnected = true;
+          _isConnected = true;
 
-            // Determine connection type based on connectivity result
-            if (connectivityResult == ConnectivityResult.wifi ||
-                connectivityResult == ConnectivityResult.ethernet) {
-              _connectionType = ConnectionType.fast;
-              _isSlowConnection = false;
-            } else {
-              await _determineConnectionType();
-            }
-            AppLogger.info(
-                'Connection checked: connected via ${connectivityResult.toString()}');
+          if (connectivityResult == ConnectivityResult.wifi ||
+              connectivityResult == ConnectivityResult.ethernet) {
+            _connectionType = ConnectionType.fast;
+            _isSlowConnection = false;
           } else {
-            _isConnected = false;
-            _connectionType = ConnectionType.none;
-            AppLogger.info('Connection checked: not connected (ping failed)');
+            await _determineConnectionType();
           }
+          AppLogger.info(
+              'Connection checked: connected to Supabase via ${connectivityResult.toString()}');
         } catch (e) {
           _isConnected = false;
           _connectionType = ConnectionType.none;
           AppLogger.info(
-              'Connection checked: not connected (ping threw exception)');
+              'Connection checked: not connected (Supabase query failed: $e)');
         }
       }
     } catch (e) {
-      // This outer catch block handles unexpected errors in the flow
-      // But we should try to assume connected if it was just a logic error?
-      // No, safest is to assume disconnected if everything blows up, but we tried to handle the DBus one above.
       _isConnected = false;
       _connectionType = ConnectionType.none;
       AppLogger.error('Error checking connection', e);
@@ -138,11 +129,8 @@ class ConnectionService {
 
     _recordConnectionStatus();
 
-    // Track connection status changes if state changed
     if (previousConnectionState != _isConnected ||
         previousConnectionType != _connectionType) {
-      // Note: This would need to be called from a widget that has access to BuildContext
-      // For now, we'll add a callback mechanism
       _onConnectionStatusChanged?.call(_isConnected, _connectionType);
     }
   }
