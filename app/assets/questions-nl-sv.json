@@ -15,7 +15,7 @@
   },
   {
     "vraag": "Hoe noemde Hanna haar kind?",
-    "juisteAntwoord": "Samuël",
+    "juisteAntwoord": "Samu\u00ebl",
     "fouteAntwoorden": [
       "Saul",
       "Simson",
@@ -38,9 +38,9 @@
     "moeilijkheidsgraad": 1,
     "type": "mc",
     "categories": [
-      "Matteüs"
+      "Matte\u00fcs"
     ],
-    "biblicalReference": "Mattheüs 1",
+    "biblicalReference": "Matthe\u00fcs 1",
     "id": "000003"
   },
   {
@@ -59,7 +59,7 @@
   },
   {
     "vraag": "Welke belofte krijgen de zachtmoedigen van de Heere Jezus in de zaligsprekingen?",
-    "juisteAntwoord": "Zij zullen het aardrijk beërven",
+    "juisteAntwoord": "Zij zullen het aardrijk be\u00ebrven",
     "fouteAntwoorden": [
       "Voor hen is het Koninkrijk der hemelen",
       "Zij zullen kinderen van God genoemd worden",
@@ -68,9 +68,9 @@
     "moeilijkheidsgraad": 3,
     "type": "mc",
     "categories": [
-      "Matteüs"
+      "Matte\u00fcs"
     ],
-    "biblicalReference": "Mattheüs 5:5",
+    "biblicalReference": "Matthe\u00fcs 5:5",
     "id": "000005"
   },
   {
@@ -79,12 +79,12 @@
     "fouteAntwoorden": [
       "Voor hen is het Koninkrijk der hemelen",
       "Zij zullen kinderen van God genoemd worden",
-      "Zij zullen het aardrijk beërven"
+      "Zij zullen het aardrijk be\u00ebrven"
     ],
     "moeilijkheidsgraad": 3,
     "type": "mc",
     "categories": [],
-    "biblicalReference": "Mattheüs 5:8",
+    "biblicalReference": "Matthe\u00fcs 5:8",
     "id": "000006"
   },
   {
@@ -92,8 +92,8 @@
     "juisteAntwoord": "Jeremia",
     "fouteAntwoorden": [
       "Jesaja",
-      "Ezechiël",
-      "Hoséa"
+      "Ezechi\u00ebl",
+      "Hos\u00e9a"
     ],
     "moeilijkheidsgraad": 5,
     "type": "mc",
@@ -105,11 +105,11 @@
   },
   {
     "vraag": "Welke profeet moest trouwen in opdracht van de Heere?",
-    "juisteAntwoord": "Hoséa",
+    "juisteAntwoord": "Hos\u00e9a",
     "fouteAntwoorden": [
       "Jesaja",
       "Jeremia",
-      "Ezechiël"
+      "Ezechi\u00ebl"
     ],
     "moeilijkheidsgraad": 5,
     "type": "mc",
@@ -120,12 +120,12 @@
     "id": "000008"
   },
   {
-    "vraag": "Welke profeet en zijn kinderen waren een symbool voor Israël?",
+    "vraag": "Welke profeet en zijn kinderen waren een symbool voor Isra\u00ebl?",
     "juisteAntwoord": "Jesaja",
     "fouteAntwoorden": [
       "Jeremia",
-      "Ezechiël",
-      "Hoséa"
+      "Ezechi\u00ebl",
+      "Hos\u00e9a"
     ],
     "moeilijkheidsgraad": 5,
     "type": "mc",
@@ -137,18 +137,18 @@
   },
   {
     "vraag": "Welke profeet verloor zijn vrouw tijdens zijn tijd als profeet?",
-    "juisteAntwoord": "Ezechiël",
+    "juisteAntwoord": "Ezechi\u00ebl",
     "fouteAntwoorden": [
       "Jesaja",
       "Jeremia",
-      "Hoséa"
+      "Hos\u00e9a"
     ],
     "moeilijkheidsgraad": 5,
     "type": "mc",
     "categories": [
-      "Ezechiël"
+      "Ezechi\u00ebl"
     ],
-    "biblicalReference": "Ezechiël 24:16-24",
+    "biblicalReference": "Ezechi\u00ebl 24:16-24",
     "id": "000010"
   },
   {
@@ -216,7 +216,7 @@
     "id": "000014"
   },
   {
-    "vraag": "Wie werd door Kaïn vermoord?",
+    "vraag": "Wie werd door Ka\u00efn vermoord?",
     "juisteAntwoord": "Abel",
     "fouteAntwoorden": [
       "Zijn moeder",
@@ -232,7 +232,7 @@
     "id": "000015"
   },
   {
-    "vraag": "Hoe oud was Methúsalah toen hij stierf?",
+    "vraag": "Hoe oud was Meth\u00fasalah toen hij stierf?",
     "juisteAntwoord": "969",
     "fouteAntwoorden": [
       "996",
@@ -297,9 +297,9 @@
   },
   {
     "vraag": "Waar is Abram geboren?",
-    "juisteAntwoord": "Ur der Chaldeeën",
+    "juisteAntwoord": "Ur der Chaldee\u00ebn",
     "fouteAntwoorden": [
-      "Kanaän",
+      "Kana\u00e4n",
       "Egypte",
       "Sinear"
     ],
@@ -328,7 +328,7 @@
     "id": "000021"
   },
   {
-    "vraag": "Waarom ging Abram naar Kanaän?",
+    "vraag": "Waarom ging Abram naar Kana\u00e4n?",
     "juisteAntwoord": "God vroeg het aan hem",
     "fouteAntwoorden": [
       "Daar was werk genoeg",
@@ -361,7 +361,7 @@
   },
   {
     "vraag": "Waarom gingen Abram en Sarai naar Egypte?",
-    "juisteAntwoord": "Er was hongersnood in Kanaän",
+    "juisteAntwoord": "Er was hongersnood in Kana\u00e4n",
     "fouteAntwoorden": [
       "Daar was veel geld te verdienen",
       "Ze gingen op familiebezoek",
@@ -376,7 +376,7 @@
     "id": "000024"
   },
   {
-    "vraag": "Abram en Lot gaan terug naar Kanaän. Waar gaat Lot wonen?",
+    "vraag": "Abram en Lot gaan terug naar Kana\u00e4n. Waar gaat Lot wonen?",
     "juisteAntwoord": "In de Jordaanstreek",
     "fouteAntwoorden": [
       "Aan de kust",
@@ -409,7 +409,7 @@
   },
   {
     "vraag": "Abram en Hagar krijgen een zoon, zijn naam is...",
-    "juisteAntwoord": "Ismaël",
+    "juisteAntwoord": "Isma\u00ebl",
     "fouteAntwoorden": [
       "Lot",
       "Izak",
@@ -459,7 +459,7 @@
     "vraag": "Waar moet Abraham Izak offeren?",
     "juisteAntwoord": "Op de berg Moria",
     "fouteAntwoorden": [
-      "Op de berg Sinaï",
+      "Op de berg Sina\u00ef",
       "Op de berg Karmel",
       "Op de berg Horeb"
     ],
@@ -491,7 +491,7 @@
     "vraag": "Wie volgt Mozes op?",
     "juisteAntwoord": "Jozua",
     "fouteAntwoorden": [
-      "Aäron",
+      "A\u00e4ron",
       "Kaleb",
       "Elia"
     ],
@@ -505,7 +505,7 @@
   },
   {
     "vraag": "Waar sloeg Mozes op de rots?",
-    "juisteAntwoord": "bij Meríba",
+    "juisteAntwoord": "bij Mer\u00edba",
     "fouteAntwoorden": [
       "bij Edom",
       "bij Mara",
@@ -520,7 +520,7 @@
     "id": "000033"
   },
   {
-    "vraag": "Na ... is een groot gedeelte van Kanaän veroverd",
+    "vraag": "Na ... is een groot gedeelte van Kana\u00e4n veroverd",
     "juisteAntwoord": "7 jaar",
     "fouteAntwoorden": [
       "4 jaar",
@@ -552,8 +552,8 @@
     "id": "000035"
   },
   {
-    "vraag": "Wat was de eerste taak van Israël na de dood van Jozua?",
-    "juisteAntwoord": "Vechten tegen de overgebleven Kaänanieten",
+    "vraag": "Wat was de eerste taak van Isra\u00ebl na de dood van Jozua?",
+    "juisteAntwoord": "Vechten tegen de overgebleven Ka\u00e4nanieten",
     "fouteAntwoorden": [
       "Het vinden van een nieuwe leider",
       "Het volk kreeg een periode rust",
@@ -585,7 +585,7 @@
   },
   {
     "vraag": "Wie was de eerste richter?",
-    "juisteAntwoord": "Othniël",
+    "juisteAntwoord": "Othni\u00ebl",
     "fouteAntwoorden": [
       "Ehud",
       "Samgar",
@@ -617,11 +617,11 @@
   },
   {
     "vraag": "Wie zijn de meest bekende richters?",
-    "juisteAntwoord": "Gideon, Simson en Samuël",
+    "juisteAntwoord": "Gideon, Simson en Samu\u00ebl",
     "fouteAntwoorden": [
-      "Saul, David en Salómo",
-      "Jeftha, Debóra en Barak",
-      "Otniël, Ehud en Samgar"
+      "Saul, David en Sal\u00f3mo",
+      "Jeftha, Deb\u00f3ra en Barak",
+      "Otni\u00ebl, Ehud en Samgar"
     ],
     "moeilijkheidsgraad": 1,
     "type": "mc",
@@ -649,7 +649,7 @@
   },
   {
     "vraag": "Wie was de laatste richter?",
-    "juisteAntwoord": "Samuël",
+    "juisteAntwoord": "Samu\u00ebl",
     "fouteAntwoorden": [
       "Eli",
       "Simson",
@@ -680,8 +680,8 @@
     "id": "000043"
   },
   {
-    "vraag": "Debóra versloeg de ... ",
-    "juisteAntwoord": "Kaänanieten",
+    "vraag": "Deb\u00f3ra versloeg de ... ",
+    "juisteAntwoord": "Ka\u00e4nanieten",
     "fouteAntwoorden": [
       "Midianieten",
       "Ammonieten",
@@ -696,21 +696,21 @@
     "id": "000044"
   },
   {
-    "vraag": "Verschillende richters worden geloofshelden genoemd in de Hebreeënbrief. Welke richter wordt hierin niet genoemd?",
-    "juisteAntwoord": "Debóra",
+    "vraag": "Verschillende richters worden geloofshelden genoemd in de Hebree\u00ebnbrief. Welke richter wordt hierin niet genoemd?",
+    "juisteAntwoord": "Deb\u00f3ra",
     "fouteAntwoorden": [
       "Gideon",
       "Simson",
-      "Samuël"
+      "Samu\u00ebl"
     ],
     "moeilijkheidsgraad": 3,
     "type": "mc",
     "categories": [],
-    "biblicalReference": "Hebreeën 11",
+    "biblicalReference": "Hebree\u00ebn 11",
     "id": "000045"
   },
   {
-    "vraag": "Wie leidt het volk na Samuël?",
+    "vraag": "Wie leidt het volk na Samu\u00ebl?",
     "juisteAntwoord": "Koning Saul",
     "fouteAntwoorden": [
       "Koning David",
@@ -724,11 +724,11 @@
     "id": "000046"
   },
   {
-    "vraag": "Wie is de eerste koning van Israël?",
+    "vraag": "Wie is de eerste koning van Isra\u00ebl?",
     "juisteAntwoord": "Saul",
     "fouteAntwoorden": [
       "David",
-      "Salómo",
+      "Sal\u00f3mo",
       "Herodes"
     ],
     "moeilijkheidsgraad": 1,
@@ -738,7 +738,7 @@
     "id": "000047"
   },
   {
-    "vraag": "Saul wordt door Samuël ... ",
+    "vraag": "Saul wordt door Samu\u00ebl ... ",
     "juisteAntwoord": "gezalfd",
     "fouteAntwoorden": [
       "gekroond",
@@ -748,7 +748,7 @@
     "moeilijkheidsgraad": 1,
     "type": "fitb",
     "categories": [
-      "1 Samuël"
+      "1 Samu\u00ebl"
     ],
     "biblicalReference": "1 Samuel 10:1",
     "id": "000048"
@@ -758,8 +758,8 @@
     "juisteAntwoord": "Achab",
     "fouteAntwoorden": [
       "Micha",
-      "Izebél",
-      "Baësa"
+      "Izeb\u00e9l",
+      "Ba\u00ebsa"
     ],
     "moeilijkheidsgraad": 5,
     "type": "mc",
@@ -787,7 +787,7 @@
     "id": "000050"
   },
   {
-    "vraag": "Uit welke plaats kwamen Elimélech en Naómi?",
+    "vraag": "Uit welke plaats kwamen Elim\u00e9lech en Na\u00f3mi?",
     "juisteAntwoord": "Bethlehem",
     "fouteAntwoorden": [
       "Jeruzalem",
@@ -803,7 +803,7 @@
     "id": "000051"
   },
   {
-    "vraag": "Hoe heetten de vrouwen waar de zonen van Naómi mee trouwden?",
+    "vraag": "Hoe heetten de vrouwen waar de zonen van Na\u00f3mi mee trouwden?",
     "juisteAntwoord": "Orpa en Ruth",
     "fouteAntwoorden": [
       "Orpa en Rebekka",
@@ -819,7 +819,7 @@
     "id": "000052"
   },
   {
-    "vraag": "Hoe wilde Naómi genoemd worden?",
+    "vraag": "Hoe wilde Na\u00f3mi genoemd worden?",
     "juisteAntwoord": "Mara",
     "fouteAntwoorden": [
       "Martha",
@@ -836,10 +836,10 @@
   },
   {
     "vraag": "Waarom was Boaz zo vriendelijk voor Ruth?",
-    "juisteAntwoord": "Ruth's toewijding aan Naómi raakte hem",
+    "juisteAntwoord": "Ruth's toewijding aan Na\u00f3mi raakte hem",
     "fouteAntwoorden": [
       "Hij was verliefd op Ruth",
-      "Omdat hij familie was van Naómi",
+      "Omdat hij familie was van Na\u00f3mi",
       "God vroeg dit van hem"
     ],
     "moeilijkheidsgraad": 3,
@@ -898,10 +898,10 @@
   },
   {
     "vraag": "Van wie werd Obed vader?",
-    "juisteAntwoord": "Isaï",
+    "juisteAntwoord": "Isa\u00ef",
     "fouteAntwoorden": [
       "Izak",
-      "Ismaël",
+      "Isma\u00ebl",
       "Issachar"
     ],
     "moeilijkheidsgraad": 1,
@@ -913,10 +913,10 @@
     "id": "000058"
   },
   {
-    "vraag": "Van wie werd Isaï de vader?",
+    "vraag": "Van wie werd Isa\u00ef de vader?",
     "juisteAntwoord": "Van koning David",
     "fouteAntwoorden": [
-      "Van koning Salómo",
+      "Van koning Sal\u00f3mo",
       "Van koning Saul",
       "Van koning Abia"
     ],
@@ -958,7 +958,7 @@
   },
   {
     "vraag": "Hoe noemde Hanna haar zoon?",
-    "juisteAntwoord": "Samuël",
+    "juisteAntwoord": "Samu\u00ebl",
     "fouteAntwoorden": [
       "Simson",
       "Gideon",
@@ -973,7 +973,7 @@
     "id": "000062"
   },
   {
-    "vraag": "Wat betekent Samuël?",
+    "vraag": "Wat betekent Samu\u00ebl?",
     "juisteAntwoord": "Van God gebeden",
     "fouteAntwoorden": [
       "Man van God",
@@ -983,14 +983,14 @@
     "moeilijkheidsgraad": 3,
     "type": "mc",
     "categories": [
-      "1 Samuël",
-      "2 Samuël"
+      "1 Samu\u00ebl",
+      "2 Samu\u00ebl"
     ],
     "biblicalReference": "1 Samuel 1:17",
     "id": "000063"
   },
   {
-    "vraag": "Waar bracht Hanna Samuël toe?",
+    "vraag": "Waar bracht Hanna Samu\u00ebl toe?",
     "juisteAntwoord": "Naar Eli",
     "fouteAntwoorden": [
       "Naar Jeruzalem",
@@ -1000,13 +1000,13 @@
     "moeilijkheidsgraad": 3,
     "type": "mc",
     "categories": [
-      "1 Samuël"
+      "1 Samu\u00ebl"
     ],
     "biblicalReference": "1 Samuel 1:25",
     "id": "000064"
   },
   {
-    "vraag": "Wat had Hanna niet bij zich toen ze Samuël naar Eli bracht?",
+    "vraag": "Wat had Hanna niet bij zich toen ze Samu\u00ebl naar Eli bracht?",
     "juisteAntwoord": "2 maten gerst",
     "fouteAntwoorden": [
       "3 varren",
@@ -1016,13 +1016,13 @@
     "moeilijkheidsgraad": 5,
     "type": "mc",
     "categories": [
-      "1 Samuël"
+      "1 Samu\u00ebl"
     ],
     "biblicalReference": "1 Samuel 1:24",
     "id": "000065"
   },
   {
-    "vraag": "Wie dacht dat Samuël hem riep?",
+    "vraag": "Wie dacht dat Samu\u00ebl hem riep?",
     "juisteAntwoord": "Eli",
     "fouteAntwoorden": [
       "Hofni",
@@ -1032,13 +1032,13 @@
     "moeilijkheidsgraad": 1,
     "type": "mc",
     "categories": [
-      "1 Samuël"
+      "1 Samu\u00ebl"
     ],
     "biblicalReference": "1 Samuel 3",
     "id": "000066"
   },
   {
-    "vraag": "Welke functie had Samuël niet in zijn leven?",
+    "vraag": "Welke functie had Samu\u00ebl niet in zijn leven?",
     "juisteAntwoord": "Koning",
     "fouteAntwoorden": [
       "Profeet",
@@ -1052,7 +1052,7 @@
     "id": "000067"
   },
   {
-    "vraag": "Hoe wordt de heilige stad in Ezechiël 48 genoemd?",
+    "vraag": "Hoe wordt de heilige stad in Ezechi\u00ebl 48 genoemd?",
     "juisteAntwoord": "De Heere is aldaar",
     "fouteAntwoorden": [
       "Sion",
@@ -1062,9 +1062,9 @@
     "moeilijkheidsgraad": 5,
     "type": "mc",
     "categories": [
-      "Ezechiël"
+      "Ezechi\u00ebl"
     ],
-    "biblicalReference": "Ezechiël 48:35",
+    "biblicalReference": "Ezechi\u00ebl 48:35",
     "id": "000068"
   },
   {
@@ -1110,14 +1110,14 @@
     "moeilijkheidsgraad": 3,
     "type": "mc",
     "categories": [
-      "1 Samuël"
+      "1 Samu\u00ebl"
     ],
     "biblicalReference": null,
     "id": "000071"
   },
   {
     "vraag": "Wie schreef het Bijbelboek Spreuken?",
-    "juisteAntwoord": "Salómo",
+    "juisteAntwoord": "Sal\u00f3mo",
     "fouteAntwoorden": [
       "David",
       "Asaf",
@@ -1329,14 +1329,14 @@
     "fouteAntwoorden": [
       "Jeruzalem",
       "Bethlehem",
-      "Kapernaüm"
+      "Kaperna\u00fcm"
     ],
     "moeilijkheidsgraad": 1,
     "type": "mc",
     "categories": [
-      "Matteüs"
+      "Matte\u00fcs"
     ],
-    "biblicalReference": "Mattheüs 2:23",
+    "biblicalReference": "Matthe\u00fcs 2:23",
     "id": "000085"
   },
   {
@@ -1364,11 +1364,11 @@
     "moeilijkheidsgraad": 1,
     "type": "mc",
     "categories": [],
-    "biblicalReference": "Mattheüs 7:25",
+    "biblicalReference": "Matthe\u00fcs 7:25",
     "id": "000087"
   },
   {
-    "vraag": "Van wie zei Jezus: Ik heb zo groot een geloof zelfs in Israël niet gevonden?",
+    "vraag": "Van wie zei Jezus: Ik heb zo groot een geloof zelfs in Isra\u00ebl niet gevonden?",
     "juisteAntwoord": "De hoofdman",
     "fouteAntwoorden": [
       "Petrus",
@@ -1378,13 +1378,13 @@
     "moeilijkheidsgraad": 1,
     "type": "mc",
     "categories": [
-      "Matteüs"
+      "Matte\u00fcs"
     ],
-    "biblicalReference": "Mattheüs 8:10",
+    "biblicalReference": "Matthe\u00fcs 8:10",
     "id": "000088"
   },
   {
-    "vraag": "Waar zat Matthéüs toen Jezus hem riep?",
+    "vraag": "Waar zat Matth\u00e9\u00fcs toen Jezus hem riep?",
     "juisteAntwoord": "In het tolhuis",
     "fouteAntwoorden": [
       "Op het tempelplein",
@@ -1394,9 +1394,9 @@
     "moeilijkheidsgraad": 3,
     "type": "mc",
     "categories": [
-      "Matteüs"
+      "Matte\u00fcs"
     ],
-    "biblicalReference": "Mattheüs 9:9",
+    "biblicalReference": "Matthe\u00fcs 9:9",
     "id": "000089"
   },
   {
@@ -1410,9 +1410,9 @@
     "moeilijkheidsgraad": 1,
     "type": "mc",
     "categories": [
-      "Matteüs"
+      "Matte\u00fcs"
     ],
-    "biblicalReference": "Mattheüs 17:20",
+    "biblicalReference": "Matthe\u00fcs 17:20",
     "id": "000090"
   },
   {
@@ -1426,7 +1426,7 @@
     "moeilijkheidsgraad": 1,
     "type": "mc",
     "categories": [],
-    "biblicalReference": "Mattheüs 18:22",
+    "biblicalReference": "Matthe\u00fcs 18:22",
     "id": "000091"
   },
   {
@@ -1440,7 +1440,7 @@
     "moeilijkheidsgraad": 1,
     "type": "mc",
     "categories": [],
-    "biblicalReference": "Mattheüs 20:30",
+    "biblicalReference": "Matthe\u00fcs 20:30",
     "id": "000092"
   },
   {
@@ -1463,7 +1463,7 @@
     "fouteAntwoorden": [
       "Paulus",
       "Petrus",
-      "Matthéüs"
+      "Matth\u00e9\u00fcs"
     ],
     "moeilijkheidsgraad": 1,
     "type": "mc",
@@ -1490,7 +1490,7 @@
     "id": "000095"
   },
   {
-    "vraag": "Wat moest Johannes schrijven aan Éfeze?",
+    "vraag": "Wat moest Johannes schrijven aan \u00c9feze?",
     "juisteAntwoord": "Gij hebt uw eerste liefde verlaten",
     "fouteAntwoorden": [
       "Wees getrouw tot de dood",
@@ -1500,7 +1500,7 @@
     "moeilijkheidsgraad": 5,
     "type": "mc",
     "categories": [
-      "Efeziërs"
+      "Efezi\u00ebrs"
     ],
     "biblicalReference": "Openbaring 2:4",
     "id": "000096"
@@ -1522,10 +1522,10 @@
     "id": "000097"
   },
   {
-    "vraag": "Aan welke leer hielden ze in Pérgamum vast?",
+    "vraag": "Aan welke leer hielden ze in P\u00e9rgamum vast?",
     "juisteAntwoord": "De leer van Bileam",
     "fouteAntwoorden": [
-      "De leer van de Farizeeën",
+      "De leer van de Farizee\u00ebn",
       "Er is geen opstanding",
       "De leer van Paulus"
     ],
@@ -1538,12 +1538,12 @@
     "id": "000098"
   },
   {
-    "vraag": "Welke vrouw hebben ze in Thyatíra laten begaan?",
-    "juisteAntwoord": "Izebél",
+    "vraag": "Welke vrouw hebben ze in Thyat\u00edra laten begaan?",
+    "juisteAntwoord": "Izeb\u00e9l",
     "fouteAntwoorden": [
       "de vrouw van Herodes",
       "De vrouw van Potifar",
-      "Salomé"
+      "Salom\u00e9"
     ],
     "moeilijkheidsgraad": 5,
     "type": "mc",
@@ -1554,7 +1554,7 @@
     "id": "000099"
   },
   {
-    "vraag": "Waar zal Jezus de gemeente Filadélfia voor bewaren?",
+    "vraag": "Waar zal Jezus de gemeente Filad\u00e9lfia voor bewaren?",
     "juisteAntwoord": "De ure der verzoeking",
     "fouteAntwoorden": [
       "Voor armoede",
@@ -1570,7 +1570,7 @@
     "id": "000100"
   },
   {
-    "vraag": "Waarom zal Jezus Laodicéa uit zijn mond spuwen?",
+    "vraag": "Waarom zal Jezus Laodic\u00e9a uit zijn mond spuwen?",
     "juisteAntwoord": "Omdat ze lauw zijn",
     "fouteAntwoorden": [
       "Omdat ze heet zijn",
@@ -1667,7 +1667,7 @@
   },
   {
     "vraag": "Hoe heet de engel van de afgrond in Openbaring?",
-    "juisteAntwoord": "Abáddon",
+    "juisteAntwoord": "Ab\u00e1ddon",
     "fouteAntwoorden": [
       "Lucifer",
       "De draak",
@@ -1778,7 +1778,7 @@
     "id": "000113"
   },
   {
-    "vraag": "Hoeveel brieven zijn er van Paulus aan de Korinthiërs?",
+    "vraag": "Hoeveel brieven zijn er van Paulus aan de Korinthi\u00ebrs?",
     "juisteAntwoord": "Twee",
     "fouteAntwoorden": [
       "Een",
@@ -1788,8 +1788,8 @@
     "moeilijkheidsgraad": 1,
     "type": "mc",
     "categories": [
-      "1 Korintiërs",
-      "2 Korintiërs"
+      "1 Korinti\u00ebrs",
+      "2 Korinti\u00ebrs"
     ],
     "biblicalReference": null,
     "id": "000114"
@@ -1837,12 +1837,12 @@
     "id": "000117"
   },
   {
-    "vraag": "In welke plaats zat Bartiméüs bij de poort te bedelen?",
+    "vraag": "In welke plaats zat Bartim\u00e9\u00fcs bij de poort te bedelen?",
     "juisteAntwoord": "Jericho",
     "fouteAntwoorden": [
       "Jeruzalem",
       "Samaria",
-      "Kapernaüm"
+      "Kaperna\u00fcm"
     ],
     "moeilijkheidsgraad": 3,
     "type": "mc",
@@ -1867,12 +1867,12 @@
     "id": "000119"
   },
   {
-    "vraag": "Welk eiland bezochten Paulus en Bárnabas op hun eerste zendingsreis?",
+    "vraag": "Welk eiland bezochten Paulus en B\u00e1rnabas op hun eerste zendingsreis?",
     "juisteAntwoord": "Cyprus",
     "fouteAntwoorden": [
       "Kreta",
       "Malta",
-      "Silicië"
+      "Silici\u00eb"
     ],
     "moeilijkheidsgraad": 3,
     "type": "mc",
@@ -1884,7 +1884,7 @@
   },
   {
     "vraag": "Welke koning kreeg een ernstige ziekte, dodelijke ziekte?",
-    "juisteAntwoord": "Hizkía",
+    "juisteAntwoord": "Hizk\u00eda",
     "fouteAntwoorden": [
       "Ahaz",
       "Manasse",
@@ -1897,12 +1897,12 @@
     "id": "000121"
   },
   {
-    "vraag": "Na zijn vlucht voor koningin Izébel vluchtte Elia naar de spelonk. Welke?",
+    "vraag": "Na zijn vlucht voor koningin Iz\u00e9bel vluchtte Elia naar de spelonk. Welke?",
     "juisteAntwoord": "De spelonk op de berg Horeb",
     "fouteAntwoorden": [
-      "De spelonk van Machpéla ",
+      "De spelonk van Machp\u00e9la ",
       "De spelonk van Adullam",
-      "De spelonken van Zefánja"
+      "De spelonken van Zef\u00e1nja"
     ],
     "moeilijkheidsgraad": 3,
     "type": "mc",
@@ -1913,7 +1913,7 @@
     "id": "000122"
   },
   {
-    "vraag": "Wat namen de Israëlieten niet mee van de Egyptenaren bij de uittocht uit Egypte?",
+    "vraag": "Wat namen de Isra\u00eblieten niet mee van de Egyptenaren bij de uittocht uit Egypte?",
     "juisteAntwoord": "Voedsel",
     "fouteAntwoorden": [
       "Goud",
@@ -1929,7 +1929,7 @@
     "id": "000123"
   },
   {
-    "vraag": "Hoe lang zat Paulus gevangen in Cesaréa ten tijde van Felix en Festus?",
+    "vraag": "Hoe lang zat Paulus gevangen in Cesar\u00e9a ten tijde van Felix en Festus?",
     "juisteAntwoord": "2 jaar",
     "fouteAntwoorden": [
       "1,5 jaar",
@@ -1946,11 +1946,11 @@
   },
   {
     "vraag": "Welke diaken werd in Jeruzalem gestenigd?",
-    "juisteAntwoord": "Stéfanus",
+    "juisteAntwoord": "St\u00e9fanus",
     "fouteAntwoorden": [
       "Filippus",
       "Timon",
-      "Nikolaüs"
+      "Nikola\u00fcs"
     ],
     "moeilijkheidsgraad": 1,
     "type": "mc",
@@ -1971,7 +1971,7 @@
     "moeilijkheidsgraad": 1,
     "type": "mc",
     "categories": [
-      "2 Samuël"
+      "2 Samu\u00ebl"
     ],
     "biblicalReference": "2 Samuel 15",
     "id": "000126"
@@ -1981,7 +1981,7 @@
     "juisteAntwoord": "De herders",
     "fouteAntwoorden": [
       "De wijzen",
-      "Koning Heródes ",
+      "Koning Her\u00f3des ",
       "Zacharias en Elisabet"
     ],
     "moeilijkheidsgraad": 1,
@@ -1994,7 +1994,7 @@
     "vraag": "10 melaatsen werden door Jezus genezen. Wie kwam terug om Hem te danken?",
     "juisteAntwoord": "Een Samaritaan",
     "fouteAntwoorden": [
-      "Een Israëliet",
+      "Een Isra\u00ebliet",
       "Een Jood",
       "Een Tollenaar"
     ],
@@ -2007,41 +2007,41 @@
     "id": "000128"
   },
   {
-    "vraag": "Wie was koning toen Daniël in de leeuwenkuil geworpen werd?",
-    "juisteAntwoord": "Daríus",
+    "vraag": "Wie was koning toen Dani\u00ebl in de leeuwenkuil geworpen werd?",
+    "juisteAntwoord": "Dar\u00edus",
     "fouteAntwoorden": [
-      "Nebukadnézar",
-      "Bélsazar",
+      "Nebukadn\u00e9zar",
+      "B\u00e9lsazar",
       "Kores"
     ],
     "moeilijkheidsgraad": 3,
     "type": "mc",
     "categories": [
-      "Daniël"
+      "Dani\u00ebl"
     ],
-    "biblicalReference": "Daniël 6",
+    "biblicalReference": "Dani\u00ebl 6",
     "id": "000129"
   },
   {
     "vraag": "De schoonmoeder van Petrus werd genezen van de koorts. In welke plaats was dit?",
-    "juisteAntwoord": "Kapérnaüm",
+    "juisteAntwoord": "Kap\u00e9rna\u00fcm",
     "fouteAntwoorden": [
       "Kana",
-      "Naïn",
+      "Na\u00efn",
       "Jericho"
     ],
     "moeilijkheidsgraad": 3,
     "type": "mc",
     "categories": [],
-    "biblicalReference": "Mattheüs 8:14",
+    "biblicalReference": "Matthe\u00fcs 8:14",
     "id": "000130"
   },
   {
     "vraag": "De inwoners van het Tienstammenrijk werden naar ... weggevoerd.",
-    "juisteAntwoord": "Assyrië",
+    "juisteAntwoord": "Assyri\u00eb",
     "fouteAntwoorden": [
       "Babel",
-      "Perzië",
+      "Perzi\u00eb",
       "Egypte"
     ],
     "moeilijkheidsgraad": 3,
@@ -2072,8 +2072,8 @@
     "vraag": "3 namen zijn voor hetzelfde meer/zee. Welke hoort er niet bij?",
     "juisteAntwoord": "De Dode Zee",
     "fouteAntwoorden": [
-      "Meer van Galiléa",
-      "Meer van Gennésaret",
+      "Meer van Galil\u00e9a",
+      "Meer van Genn\u00e9saret",
       "Zee van Tiberias"
     ],
     "moeilijkheidsgraad": 1,
@@ -2084,11 +2084,11 @@
   },
   {
     "vraag": "Er werd een nieuwe apostel gekozen in plaats van Judas. Wie was dat?",
-    "juisteAntwoord": "Matthías",
+    "juisteAntwoord": "Matth\u00edas",
     "fouteAntwoorden": [
       "Justus",
       "Filippus",
-      "Nathanaël"
+      "Nathana\u00ebl"
     ],
     "moeilijkheidsgraad": 3,
     "type": "mc",
@@ -2113,24 +2113,24 @@
     "id": "000135"
   },
   {
-    "vraag": "Daniël kreeg een Babylonische naam. Welke?",
-    "juisteAntwoord": "Béltsazar",
+    "vraag": "Dani\u00ebl kreeg een Babylonische naam. Welke?",
+    "juisteAntwoord": "B\u00e9ltsazar",
     "fouteAntwoorden": [
-      "Bélsazar",
+      "B\u00e9lsazar",
       "Sadrach",
       "Mesach"
     ],
     "moeilijkheidsgraad": 1,
     "type": "mc",
     "categories": [
-      "Daniël"
+      "Dani\u00ebl"
     ],
-    "biblicalReference": "Daniël 1:7",
+    "biblicalReference": "Dani\u00ebl 1:7",
     "id": "000136"
   },
   {
     "vraag": "De blindgeborene moest zich in ... wassen om ziende te worden.",
-    "juisteAntwoord": "het badwater van Silóam",
+    "juisteAntwoord": "het badwater van Sil\u00f3am",
     "fouteAntwoorden": [
       "het badwater van Bethesda",
       "de Jordaan",
@@ -2146,7 +2146,7 @@
   },
   {
     "vraag": "In de strijd tegen Egypte sneuvelde koning ... van Juda.",
-    "juisteAntwoord": "Josía",
+    "juisteAntwoord": "Jos\u00eda",
     "fouteAntwoorden": [
       "Amon",
       "Manasse",
@@ -2164,7 +2164,7 @@
     "vraag": "Waar ontstond de eerste christengemeente?",
     "juisteAntwoord": "Jeruzalem",
     "fouteAntwoorden": [
-      "Antiochië",
+      "Antiochi\u00eb",
       "Filippi",
       "Korinthe"
     ],
@@ -2182,7 +2182,7 @@
     "fouteAntwoorden": [
       "Simon en Andreas",
       "Simon en Jakobus",
-      "Johannes en Andréas"
+      "Johannes en Andr\u00e9as"
     ],
     "moeilijkheidsgraad": 5,
     "type": "mc",
@@ -2195,7 +2195,7 @@
     "juisteAntwoord": "Karmel",
     "fouteAntwoorden": [
       "Horeb",
-      "Sinaï",
+      "Sina\u00ef",
       "Tabor"
     ],
     "moeilijkheidsgraad": 3,
@@ -2260,7 +2260,7 @@
     "fouteAntwoorden": [
       "Jericho",
       "Jeruzalem",
-      "Ninevé"
+      "Ninev\u00e9"
     ],
     "moeilijkheidsgraad": 5,
     "type": "fitb",
@@ -2370,9 +2370,9 @@
     "vraag": "Aan wie schreef Johannes zijn brief, 3 Johannes?",
     "juisteAntwoord": "Gajus",
     "fouteAntwoorden": [
-      "De gemeente van Laodicéa",
+      "De gemeente van Laodic\u00e9a",
       "Aan niemand specifiek",
-      "Aan Diótrefes"
+      "Aan Di\u00f3trefes"
     ],
     "moeilijkheidsgraad": 5,
     "type": "mc",
@@ -2384,10 +2384,10 @@
   },
   {
     "vraag": "Vanuit welke plaats schreef Johannes zijn brief, 2 Johannes?",
-    "juisteAntwoord": "Vanuit Eféze",
+    "juisteAntwoord": "Vanuit Ef\u00e9ze",
     "fouteAntwoorden": [
       "Vanuit Korinthe",
-      "Vanuit Klein-Azië",
+      "Vanuit Klein-Azi\u00eb",
       "Dat is onbekend"
     ],
     "moeilijkheidsgraad": 3,
@@ -2399,10 +2399,10 @@
     "id": "000153"
   },
   {
-    "vraag": "Welke profeet zei tegen koning Hizkía dat hij moest sterven?",
+    "vraag": "Welke profeet zei tegen koning Hizk\u00eda dat hij moest sterven?",
     "juisteAntwoord": "Jesaja",
     "fouteAntwoorden": [
-      "Jeremía",
+      "Jerem\u00eda",
       "Micha",
       "Atmos"
     ],
@@ -2418,7 +2418,7 @@
     "vraag": "Van wie sloeg Petrus het oor af?",
     "juisteAntwoord": "Malchus",
     "fouteAntwoorden": [
-      "Matthéüs",
+      "Matth\u00e9\u00fcs",
       "Maltus",
       "Kajafas"
     ],
@@ -2431,12 +2431,12 @@
     "id": "000155"
   },
   {
-    "vraag": "Wat vroeg de Macedónische man in de droom van Paulus?",
-    "juisteAntwoord": "'Kom over in Macedónië en help ons'",
+    "vraag": "Wat vroeg de Maced\u00f3nische man in de droom van Paulus?",
+    "juisteAntwoord": "'Kom over in Maced\u00f3ni\u00eb en help ons'",
     "fouteAntwoorden": [
       "'Kom over en help ons'",
       "'Kom en zie'",
-      "'Kom over in Macedónië en predik het evangelie'"
+      "'Kom over in Maced\u00f3ni\u00eb en predik het evangelie'"
     ],
     "moeilijkheidsgraad": 3,
     "type": "mc",
@@ -2447,7 +2447,7 @@
     "id": "000156"
   },
   {
-    "vraag": "Welke straf kondigde de profeet Elía aan voor koning Achab?",
+    "vraag": "Welke straf kondigde de profeet El\u00eda aan voor koning Achab?",
     "juisteAntwoord": "Er zal geen dauw of regen zijn",
     "fouteAntwoorden": [
       "Er zal geen regen meer zijn",
@@ -2463,7 +2463,7 @@
     "id": "000157"
   },
   {
-    "vraag": "Wie was de vader van Samuël?",
+    "vraag": "Wie was de vader van Samu\u00ebl?",
     "juisteAntwoord": "Elkana",
     "fouteAntwoorden": [
       "Elihu",
@@ -2473,7 +2473,7 @@
     "moeilijkheidsgraad": 1,
     "type": "mc",
     "categories": [
-      "1 Samuël"
+      "1 Samu\u00ebl"
     ],
     "biblicalReference": "1 Samuel 1:1",
     "id": "000158"
@@ -2512,7 +2512,7 @@
     "id": "000160"
   },
   {
-    "vraag": "Wie waren de zonen van Zebedeüs?",
+    "vraag": "Wie waren de zonen van Zebede\u00fcs?",
     "juisteAntwoord": "Jakobus en Johannes",
     "fouteAntwoorden": [
       "Johannes en Andreas",
@@ -2575,7 +2575,7 @@
     "vraag": "Welke afgodendienst voerde koning Jerobeam in?",
     "juisteAntwoord": "De dienst van de gouden kalveren",
     "fouteAntwoorden": [
-      "De dienst van de Baël",
+      "De dienst van de Ba\u00ebl",
       "De dienst van Astarte",
       "De dienst van de sterren"
     ],
@@ -2654,7 +2654,7 @@
   },
   {
     "vraag": "Wie was de eerste Christen die stierf voor zijn geloof?",
-    "juisteAntwoord": "Stéfanus",
+    "juisteAntwoord": "St\u00e9fanus",
     "fouteAntwoorden": [
       "Petrus",
       "Jakobus",
@@ -2686,7 +2686,7 @@
   },
   {
     "vraag": "Hoe heette de vrouw van Aaron",
-    "juisteAntwoord": "Eliséba",
+    "juisteAntwoord": "Elis\u00e9ba",
     "moeilijkheidsgraad": 5,
     "type": "mc",
     "categories": [
@@ -2717,7 +2717,7 @@
     "id": "000173"
   },
   {
-    "vraag": "Wat was Nehémia's functie aan het hof van de koning van Perzië?",
+    "vraag": "Wat was Neh\u00e9mia's functie aan het hof van de koning van Perzi\u00eb?",
     "juisteAntwoord": "Schenker",
     "moeilijkheidsgraad": 4,
     "type": "mc",
@@ -2832,7 +2832,7 @@
     "moeilijkheidsgraad": 2,
     "type": "mc",
     "categories": [
-      "2 Samuël"
+      "2 Samu\u00ebl"
     ],
     "fouteAntwoorden": [
       "Hij vierde feest",
@@ -2843,7 +2843,7 @@
     "id": "000181"
   },
   {
-    "vraag": "Met hoeveel man versloeg Gídeon het leger van Midian?",
+    "vraag": "Met hoeveel man versloeg G\u00eddeon het leger van Midian?",
     "juisteAntwoord": "300",
     "moeilijkheidsgraad": 2,
     "type": "mc",
@@ -2859,8 +2859,8 @@
     "id": "000182"
   },
   {
-    "vraag": "Wie was de enige vrouwelijke richter van Israël?",
-    "juisteAntwoord": "Debóra",
+    "vraag": "Wie was de enige vrouwelijke richter van Isra\u00ebl?",
+    "juisteAntwoord": "Deb\u00f3ra",
     "moeilijkheidsgraad": 1,
     "type": "mc",
     "categories": [
@@ -2869,7 +2869,7 @@
     "fouteAntwoorden": [
       "Hanna",
       "Ruth",
-      "Jaël"
+      "Ja\u00ebl"
     ],
     "biblicalReference": "Richteren 4:4-5",
     "id": "000183"
@@ -2891,7 +2891,7 @@
     "id": "000184"
   },
   {
-    "vraag": "Wat moest Mozes doen om water uit de rots te krijgen bij Mériba?",
+    "vraag": "Wat moest Mozes doen om water uit de rots te krijgen bij M\u00e9riba?",
     "juisteAntwoord": "Met zijn staf op de rots slaan",
     "moeilijkheidsgraad": 3,
     "type": "mc",
@@ -2933,7 +2933,7 @@
       "Exodus"
     ],
     "fouteAntwoorden": [
-      "Ga heen naar Ninevé",
+      "Ga heen naar Ninev\u00e9",
       "Gij zijt uitverkoren boven alle volken",
       "Ik ben uw God"
     ],
@@ -2973,12 +2973,12 @@
     "id": "000189"
   },
   {
-    "vraag": "Welke naam had de discipel Mattheüs eerst?",
+    "vraag": "Welke naam had de discipel Matthe\u00fcs eerst?",
     "juisteAntwoord": "Levi",
     "moeilijkheidsgraad": 1,
     "type": "mc",
     "categories": [
-      "Matteüs"
+      "Matte\u00fcs"
     ],
     "fouteAntwoorden": [
       "Simon",
@@ -3010,30 +3010,30 @@
     "moeilijkheidsgraad": 2,
     "type": "mc",
     "categories": [
-      "Matteüs"
+      "Matte\u00fcs"
     ],
     "fouteAntwoorden": [
       "Naar Galilea",
-      "Naar Kapernaüm",
+      "Naar Kaperna\u00fcm",
       "Naar zijn discipelen"
     ],
-    "biblicalReference": "Matthéüs 4 : 1-3",
+    "biblicalReference": "Matth\u00e9\u00fcs 4 : 1-3",
     "id": "000192"
   },
   {
-    "vraag": "Hoe begint de bergrede in Mattheüs 5?",
+    "vraag": "Hoe begint de bergrede in Matthe\u00fcs 5?",
     "juisteAntwoord": "Met de zaligsprekingen",
     "moeilijkheidsgraad": 3,
     "type": "mc",
     "categories": [
-      "Matteüs"
+      "Matte\u00fcs"
     ],
     "fouteAntwoorden": [
       "Met het Onze Vader",
       "Met de gelijkenissen van het zaad",
       "Met het gebod der liefde"
     ],
-    "biblicalReference": "Matthéüs 5: 1-12",
+    "biblicalReference": "Matth\u00e9\u00fcs 5: 1-12",
     "id": "000193"
   },
   {
@@ -3042,7 +3042,7 @@
     "moeilijkheidsgraad": 4,
     "type": "mc",
     "categories": [
-      "Matteüs",
+      "Matte\u00fcs",
       "Marcus",
       "Lucas"
     ],
@@ -3055,19 +3055,19 @@
     "id": "000194"
   },
   {
-    "vraag": "Wie wordt in Mattheüs het eerst genoemd in de geslachtsrekening van Jezus?",
+    "vraag": "Wie wordt in Matthe\u00fcs het eerst genoemd in de geslachtsrekening van Jezus?",
     "juisteAntwoord": "Abraham",
     "moeilijkheidsgraad": 3,
     "type": "mc",
     "categories": [
-      "Matteüs"
+      "Matte\u00fcs"
     ],
     "fouteAntwoorden": [
       "Jakob",
       "Adam",
       "Mozes"
     ],
-    "biblicalReference": "Mattheüs 1:1",
+    "biblicalReference": "Matthe\u00fcs 1:1",
     "id": "000195"
   },
   {
@@ -3086,7 +3086,7 @@
   },
   {
     "vraag": "Aan wie is het evangelie van Lukas gericht?",
-    "juisteAntwoord": "Theófilus",
+    "juisteAntwoord": "The\u00f3filus",
     "moeilijkheidsgraad": 2,
     "type": "mc",
     "categories": [
@@ -3102,7 +3102,7 @@
   },
   {
     "vraag": "Wie zag/zagen Jezus als eerste na Zijn opstanding?",
-    "juisteAntwoord": "De Emmaüsgangers",
+    "juisteAntwoord": "De Emma\u00fcsgangers",
     "moeilijkheidsgraad": 2,
     "type": "mc",
     "categories": [
@@ -3162,7 +3162,7 @@
   },
   {
     "vraag": "Wie nam de plaats van Judas in als apostel?",
-    "juisteAntwoord": "Matthías",
+    "juisteAntwoord": "Matth\u00edas",
     "moeilijkheidsgraad": 3,
     "type": "mc",
     "categories": [
@@ -3250,7 +3250,7 @@
     ],
     "fouteAntwoorden": [
       "Zij die uit de Geest zijn",
-      "Zij die in Israël zijn geboren",
+      "Zij die in Isra\u00ebl zijn geboren",
       "Zij die uit het vlees zijn"
     ],
     "biblicalReference": "Romeinen 4:16",
@@ -3294,7 +3294,7 @@
     "moeilijkheidsgraad": 4,
     "type": "mc",
     "categories": [
-      "1 Korintiërs"
+      "1 Korinti\u00ebrs"
     ],
     "fouteAntwoorden": [
       "Vervolging",
@@ -3310,23 +3310,23 @@
     "moeilijkheidsgraad": 2,
     "type": "mc",
     "categories": [
-      "1 Korintiërs"
+      "1 Korinti\u00ebrs"
     ],
     "fouteAntwoorden": [
       "Stof der aarde",
       "Een zondig vat",
       "Een tijdelijke tent"
     ],
-    "biblicalReference": "1 Korintiërs 6 en 20",
+    "biblicalReference": "1 Korinti\u00ebrs 6 en 20",
     "id": "000211"
   },
   {
-    "vraag": "Hoeveel brieven schreef Paulus aan de Korinthiërs die bewaard zijn gebleven?",
+    "vraag": "Hoeveel brieven schreef Paulus aan de Korinthi\u00ebrs die bewaard zijn gebleven?",
     "juisteAntwoord": "Twee",
     "moeilijkheidsgraad": 1,
     "type": "mc",
     "categories": [
-      "1 Korintiërs"
+      "1 Korinti\u00ebrs"
     ],
     "fouteAntwoorden": [
       "Een",
@@ -3342,14 +3342,14 @@
     "moeilijkheidsgraad": 2,
     "type": "mc",
     "categories": [
-      "2 Korintiërs"
+      "2 Korinti\u00ebrs"
     ],
     "fouteAntwoorden": [
       "Zwakheid is een zonde",
       "Vermijd zwakte ten alle tijde",
       "Geloof overwint de zwakheid"
     ],
-    "biblicalReference": "2 Korintiërs 12:9",
+    "biblicalReference": "2 Korinti\u00ebrs 12:9",
     "id": "000213"
   },
   {
@@ -3358,14 +3358,14 @@
     "moeilijkheidsgraad": 2,
     "type": "mc",
     "categories": [
-      "2 Korintiërs"
+      "2 Korinti\u00ebrs"
     ],
     "fouteAntwoorden": [
       "Bediening van het oordeel",
       "Bediening van genade",
       "Bediening der geboden"
     ],
-    "biblicalReference": "2 Korintiërs 5:18",
+    "biblicalReference": "2 Korinti\u00ebrs 5:18",
     "id": "000214"
   },
   {
@@ -3596,7 +3596,7 @@
     "moeilijkheidsgraad": 5,
     "type": "mc",
     "categories": [
-      "2 Timoteüs"
+      "2 Timote\u00fcs"
     ],
     "fouteAntwoorden": [
       "Profeet, priester, koning",
@@ -3608,7 +3608,7 @@
   },
   {
     "vraag": "Wie heeft Paulus verlaten, hebbende de tegenwoordige wereld lief gekregen?",
-    "juisteAntwoord": "Démas",
+    "juisteAntwoord": "D\u00e9mas",
     "moeilijkheidsgraad": 4,
     "type": "mc",
     "categories": [
@@ -3645,7 +3645,7 @@
       "Titus"
     ],
     "fouteAntwoorden": [
-      "Zij is voor Israël gekomen",
+      "Zij is voor Isra\u00ebl gekomen",
       "Zij is voor de uitverkorenen",
       "Zij leert ons door de wet Christus kennen"
     ],
@@ -3653,7 +3653,7 @@
     "id": "000233"
   },
   {
-    "vraag": "Wie was Onésimus?",
+    "vraag": "Wie was On\u00e9simus?",
     "juisteAntwoord": "Een weggelopen slaaf",
     "moeilijkheidsgraad": 3,
     "type": "mc",
@@ -3665,39 +3665,39 @@
       "Een ouderling",
       "Een diaken"
     ],
-    "biblicalReference": "Filémon 1:16",
+    "biblicalReference": "Fil\u00e9mon 1:16",
     "id": "000234"
   },
   {
-    "vraag": "Wie was Melchizédek?",
+    "vraag": "Wie was Melchiz\u00e9dek?",
     "juisteAntwoord": "Een priester zonder geslachtsrekening",
     "moeilijkheidsgraad": 3,
     "type": "mc",
     "categories": [
-      "Hebreeën"
+      "Hebree\u00ebn"
     ],
     "fouteAntwoorden": [
       "Een priester uit het geslacht van David",
       "Een nakomeling van Abraham",
       "Een nakomeling van Mozes"
     ],
-    "biblicalReference": "Hebreeën 7:3",
+    "biblicalReference": "Hebree\u00ebn 7:3",
     "id": "000235"
   },
   {
-    "vraag": "Wie worden in Hebreeën 11 genoemd als voorbeelden van geloof?",
+    "vraag": "Wie worden in Hebree\u00ebn 11 genoemd als voorbeelden van geloof?",
     "juisteAntwoord": "Noach, Abraham, Mozes",
     "moeilijkheidsgraad": 2,
     "type": "mc",
     "categories": [
-      "Hebreeën"
+      "Hebree\u00ebn"
     ],
     "fouteAntwoorden": [
       "David, Elia, Jesaja",
       "Johannes, Petrus, Andreas",
       "Paulus, Timoteus, Titus"
     ],
-    "biblicalReference": "Hebreeën 11",
+    "biblicalReference": "Hebree\u00ebn 11",
     "id": "000236"
   },
   {
@@ -3747,7 +3747,7 @@
     "id": "000239"
   },
   {
-    "vraag": "Kaïn doodde zijn neef Abel",
+    "vraag": "Ka\u00efn doodde zijn neef Abel",
     "juisteAntwoord": "Niet waar",
     "moeilijkheidsgraad": 1,
     "type": "tf",
@@ -3761,7 +3761,7 @@
     "id": "000240"
   },
   {
-    "vraag": "Aäron was de vader van Mozes",
+    "vraag": "A\u00e4ron was de vader van Mozes",
     "juisteAntwoord": "Niet waar",
     "moeilijkheidsgraad": 1,
     "type": "tf",
@@ -3885,7 +3885,7 @@
     "id": "000249"
   },
   {
-    "vraag": "Het boek richteren eindigt met de woorden: \"In die dagen was er geen koning in Israël, een iegelijk deed wat recht was in zijn ogen\"",
+    "vraag": "Het boek richteren eindigt met de woorden: \"In die dagen was er geen koning in Isra\u00ebl, een iegelijk deed wat recht was in zijn ogen\"",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 4,
     "type": "tf",
@@ -3899,7 +3899,7 @@
     "id": "000250"
   },
   {
-    "vraag": "Simson was een richter in Israël",
+    "vraag": "Simson was een richter in Isra\u00ebl",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 3,
     "type": "tf",
@@ -3913,7 +3913,7 @@
     "id": "000251"
   },
   {
-    "vraag": "Ruth werd de grootmoeder van koning Salómo",
+    "vraag": "Ruth werd de grootmoeder van koning Sal\u00f3mo",
     "juisteAntwoord": "Niet waar",
     "moeilijkheidsgraad": 3,
     "type": "tf",
@@ -3927,12 +3927,12 @@
     "id": "000252"
   },
   {
-    "vraag": "Samuël werd opgevoed in het heiligdom in Jeruzalem",
+    "vraag": "Samu\u00ebl werd opgevoed in het heiligdom in Jeruzalem",
     "juisteAntwoord": "Niet waar",
     "moeilijkheidsgraad": 3,
     "type": "tf",
     "categories": [
-      "1 Samuël"
+      "1 Samu\u00ebl"
     ],
     "fouteAntwoorden": [
       "Waar"
@@ -3941,7 +3941,7 @@
     "id": "000253"
   },
   {
-    "vraag": "Saul was de eerste koning van Israël",
+    "vraag": "Saul was de eerste koning van Isra\u00ebl",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 2,
     "type": "tf",
@@ -3974,7 +3974,7 @@
     "moeilijkheidsgraad": 1,
     "type": "tf",
     "categories": [
-      "2 Samuël"
+      "2 Samu\u00ebl"
     ],
     "fouteAntwoorden": [
       "Niet waar"
@@ -3983,7 +3983,7 @@
     "id": "000256"
   },
   {
-    "vraag": "Elia daagde de Baäl-priesters uit op de berg Karmel",
+    "vraag": "Elia daagde de Ba\u00e4l-priesters uit op de berg Karmel",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 2,
     "categories": [
@@ -3996,7 +3996,7 @@
     "id": "000257"
   },
   {
-    "vraag": "Na Salómo bleef het koninkrijk een geheel",
+    "vraag": "Na Sal\u00f3mo bleef het koninkrijk een geheel",
     "juisteAntwoord": "Niet waar",
     "moeilijkheidsgraad": 3,
     "type": "tf",
@@ -4069,7 +4069,7 @@
     "moeilijkheidsgraad": 3,
     "type": "tf",
     "categories": [
-      "Daniël"
+      "Dani\u00ebl"
     ],
     "fouteAntwoorden": [
       "Waar"
@@ -4134,7 +4134,7 @@
     "id": "000267"
   },
   {
-    "vraag": "Nehémia was schenker aan het hof van de koning van Babel",
+    "vraag": "Neh\u00e9mia was schenker aan het hof van de koning van Babel",
     "juisteAntwoord": "Niet waar",
     "moeilijkheidsgraad": 4,
     "type": "tf",
@@ -4148,7 +4148,7 @@
     "id": "000268"
   },
   {
-    "vraag": "Nehémia leidde de herbouw van de muren van Jeruzalem",
+    "vraag": "Neh\u00e9mia leidde de herbouw van de muren van Jeruzalem",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 3,
     "type": "tf",
@@ -4162,7 +4162,7 @@
     "id": "000269"
   },
   {
-    "vraag": "Mórdechai was de vader van Esther",
+    "vraag": "M\u00f3rdechai was de vader van Esther",
     "juisteAntwoord": "Niet waar",
     "moeilijkheidsgraad": 1,
     "type": "tf",
@@ -4246,7 +4246,7 @@
     "id": "000275"
   },
   {
-    "vraag": "Salómo is de belangrijkste schrijver van het bijbelboek Spreuken",
+    "vraag": "Sal\u00f3mo is de belangrijkste schrijver van het bijbelboek Spreuken",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 2,
     "type": "tf",
@@ -4274,7 +4274,7 @@
     "id": "000277"
   },
   {
-    "vraag": "Prediker wordt toegeschreven aan Salómo",
+    "vraag": "Prediker wordt toegeschreven aan Sal\u00f3mo",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 3,
     "type": "tf",
@@ -4358,7 +4358,7 @@
     "id": "000283"
   },
   {
-    "vraag": "Jeremía schreef een boek aan de ballingen in Babel",
+    "vraag": "Jerem\u00eda schreef een boek aan de ballingen in Babel",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 3,
     "type": "tf",
@@ -4372,7 +4372,7 @@
     "id": "000284"
   },
   {
-    "vraag": "Jeremía zei: Ach Heere HEERE, zie, ik kan niet spreken, want ik ben oud",
+    "vraag": "Jerem\u00eda zei: Ach Heere HEERE, zie, ik kan niet spreken, want ik ben oud",
     "juisteAntwoord": "Niet waar",
     "moeilijkheidsgraad": 4,
     "type": "tf",
@@ -4414,63 +4414,63 @@
     "id": "000287"
   },
   {
-    "vraag": "Ezechiël predikte in Babel, ver weg van Jeruzalem",
+    "vraag": "Ezechi\u00ebl predikte in Babel, ver weg van Jeruzalem",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 3,
     "type": "tf",
     "categories": [
-      "Ezechiël"
+      "Ezechi\u00ebl"
     ],
     "fouteAntwoorden": [
       "Niet waar"
     ],
-    "biblicalReference": "Ezechiël 1:1-3",
+    "biblicalReference": "Ezechi\u00ebl 1:1-3",
     "id": "000288"
   },
   {
-    "vraag": "Ezechiël eindigt met: en ik was aldaar",
+    "vraag": "Ezechi\u00ebl eindigt met: en ik was aldaar",
     "juisteAntwoord": "Niet waar",
     "moeilijkheidsgraad": 5,
     "type": "tf",
     "categories": [
-      "Ezechiël"
+      "Ezechi\u00ebl"
     ],
     "fouteAntwoorden": [
       "Waar"
     ],
-    "biblicalReference": "Ezechiël 48:35",
+    "biblicalReference": "Ezechi\u00ebl 48:35",
     "id": "000289"
   },
   {
-    "vraag": "Daniël werkte aan het hof van meerdere koningen in Babel",
+    "vraag": "Dani\u00ebl werkte aan het hof van meerdere koningen in Babel",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 2,
     "type": "tf",
     "categories": [
-      "Daniël"
+      "Dani\u00ebl"
     ],
     "fouteAntwoorden": [
       "Niet waar"
     ],
-    "biblicalReference": "Daniël",
+    "biblicalReference": "Dani\u00ebl",
     "id": "000290"
   },
   {
-    "vraag": "Koning Nebukadnézar maakte een beeld van goud, de hoogte was 66 ellen",
+    "vraag": "Koning Nebukadn\u00e9zar maakte een beeld van goud, de hoogte was 66 ellen",
     "juisteAntwoord": "Niet waar",
     "moeilijkheidsgraad": 3,
     "type": "tf",
     "categories": [
-      "Daniël"
+      "Dani\u00ebl"
     ],
     "fouteAntwoorden": [
       "Waar"
     ],
-    "biblicalReference": "Daniël 3:1",
+    "biblicalReference": "Dani\u00ebl 3:1",
     "id": "000291"
   },
   {
-    "vraag": "Hoséa roept het volk op om weder te keren tot de Heere",
+    "vraag": "Hos\u00e9a roept het volk op om weder te keren tot de Heere",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 2,
     "type": "tf",
@@ -4484,7 +4484,7 @@
     "id": "000292"
   },
   {
-    "vraag": "Hoséa preekte alleen over liefde en vergeving",
+    "vraag": "Hos\u00e9a preekte alleen over liefde en vergeving",
     "juisteAntwoord": "Niet waar",
     "moeilijkheidsgraad": 3,
     "type": "tf",
@@ -4498,17 +4498,17 @@
     "id": "000293"
   },
   {
-    "vraag": "Joël beschrijft een sprinkhanenplaag als oordeel",
+    "vraag": "Jo\u00ebl beschrijft een sprinkhanenplaag als oordeel",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 5,
     "type": "tf",
     "categories": [
-      "Joël"
+      "Jo\u00ebl"
     ],
     "fouteAntwoorden": [
       "Niet waar"
     ],
-    "biblicalReference": "Joël 1",
+    "biblicalReference": "Jo\u00ebl 1",
     "id": "000294"
   },
   {
@@ -4517,16 +4517,16 @@
     "moeilijkheidsgraad": 4,
     "type": "tf",
     "categories": [
-      "Joël"
+      "Jo\u00ebl"
     ],
     "fouteAntwoorden": [
       "Waar"
     ],
-    "biblicalReference": "Joël 3:19",
+    "biblicalReference": "Jo\u00ebl 3:19",
     "id": "000295"
   },
   {
-    "vraag": "Amos was een herder uit Tekóa",
+    "vraag": "Amos was een herder uit Tek\u00f3a",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 2,
     "type": "tf",
@@ -4568,7 +4568,7 @@
     "id": "000298"
   },
   {
-    "vraag": "Obadja's profetie richt zich tegen Israël",
+    "vraag": "Obadja's profetie richt zich tegen Isra\u00ebl",
     "juisteAntwoord": "Niet waar",
     "moeilijkheidsgraad": 4,
     "type": "tf",
@@ -4582,7 +4582,7 @@
     "id": "000299"
   },
   {
-    "vraag": "Jona was blij met Gods barmhartigheid voor Ninevé",
+    "vraag": "Jona was blij met Gods barmhartigheid voor Ninev\u00e9",
     "juisteAntwoord": "Niet waar",
     "moeilijkheidsgraad": 3,
     "type": "tf",
@@ -4596,7 +4596,7 @@
     "id": "000300"
   },
   {
-    "vraag": "Jona werd door God geroepen om naar Ninevé te gaan",
+    "vraag": "Jona werd door God geroepen om naar Ninev\u00e9 te gaan",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 1,
     "type": "tf",
@@ -4638,7 +4638,7 @@
     "id": "000303"
   },
   {
-    "vraag": "Nahum profeteerde tegen de stad Ninevé",
+    "vraag": "Nahum profeteerde tegen de stad Ninev\u00e9",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 3,
     "type": "tf",
@@ -4666,7 +4666,7 @@
     "id": "000305"
   },
   {
-    "vraag": "Hábakuk vermeldt: \"de rechtvaardige zal door zijn geloof leven\"",
+    "vraag": "H\u00e1bakuk vermeldt: \"de rechtvaardige zal door zijn geloof leven\"",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 4,
     "type": "tf",
@@ -4680,7 +4680,7 @@
     "id": "000306"
   },
   {
-    "vraag": "Hábakuk wordt door God gestraft vanwege zijn twijfels",
+    "vraag": "H\u00e1bakuk wordt door God gestraft vanwege zijn twijfels",
     "juisteAntwoord": "Niet waar",
     "moeilijkheidsgraad": 4,
     "type": "tf",
@@ -4694,7 +4694,7 @@
     "id": "000307"
   },
   {
-    "vraag": "Zefánja roept zachtmoedigen op om de Heere te zoeken",
+    "vraag": "Zef\u00e1nja roept zachtmoedigen op om de Heere te zoeken",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 3,
     "type": "tf",
@@ -4708,7 +4708,7 @@
     "id": "000308"
   },
   {
-    "vraag": "Het boek Zefánja heeft slechts twee hoofdstukken",
+    "vraag": "Het boek Zef\u00e1nja heeft slechts twee hoofdstukken",
     "juisteAntwoord": "Niet waar",
     "moeilijkheidsgraad": 4,
     "type": "tf",
@@ -4722,7 +4722,7 @@
     "id": "000309"
   },
   {
-    "vraag": "Haggaï werkte samen met de profeet Zacharía",
+    "vraag": "Hagga\u00ef werkte samen met de profeet Zachar\u00eda",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 4,
     "type": "tf",
@@ -4736,7 +4736,7 @@
     "id": "000310"
   },
   {
-    "vraag": "Haggaï moest zich richten tot Sealthiël",
+    "vraag": "Hagga\u00ef moest zich richten tot Sealthi\u00ebl",
     "juisteAntwoord": "Niet waar",
     "moeilijkheidsgraad": 5,
     "type": "tf",
@@ -4746,11 +4746,11 @@
     "fouteAntwoorden": [
       "Waar"
     ],
-    "biblicalReference": "Haggaï 1: 1,2 en 12",
+    "biblicalReference": "Hagga\u00ef 1: 1,2 en 12",
     "id": "000311"
   },
   {
-    "vraag": "Zacharía bevat visioenen, waaronder die van de van de Man met het meetsnoer",
+    "vraag": "Zachar\u00eda bevat visioenen, waaronder die van de van de Man met het meetsnoer",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 4,
     "type": "tf",
@@ -4764,7 +4764,7 @@
     "id": "000312"
   },
   {
-    "vraag": "Zacharía bevat geen voorspellingen over de toekomst van Jeruzalem",
+    "vraag": "Zachar\u00eda bevat geen voorspellingen over de toekomst van Jeruzalem",
     "juisteAntwoord": "Niet waar",
     "moeilijkheidsgraad": 4,
     "type": "tf",
@@ -4778,7 +4778,7 @@
     "id": "000313"
   },
   {
-    "vraag": "Maleáchi is het laatste bijbelboek van het Nieuwe Testament",
+    "vraag": "Male\u00e1chi is het laatste bijbelboek van het Nieuwe Testament",
     "juisteAntwoord": "Niet waar",
     "moeilijkheidsgraad": 1,
     "type": "tf",
@@ -4790,7 +4790,7 @@
     "id": "000314"
   },
   {
-    "vraag": "Maleáchi houdt een strafprediking tegen de priesters",
+    "vraag": "Male\u00e1chi houdt een strafprediking tegen de priesters",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 5,
     "type": "tf",
@@ -4804,45 +4804,45 @@
     "id": "000315"
   },
   {
-    "vraag": "De Bergrede staat in het evangelie van van Mattheüs",
+    "vraag": "De Bergrede staat in het evangelie van van Matthe\u00fcs",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 3,
     "type": "tf",
     "categories": [
-      "Matteüs"
+      "Matte\u00fcs"
     ],
     "fouteAntwoorden": [
       "Niet waar"
     ],
-    "biblicalReference": "Mattheüs 5 en 7",
+    "biblicalReference": "Matthe\u00fcs 5 en 7",
     "id": "000316"
   },
   {
-    "vraag": "Mattheüs richt zich vooral op het Romeinse publiek",
+    "vraag": "Matthe\u00fcs richt zich vooral op het Romeinse publiek",
     "juisteAntwoord": "Niet waar",
     "moeilijkheidsgraad": 4,
     "type": "tf",
     "categories": [
-      "Matteüs"
+      "Matte\u00fcs"
     ],
     "fouteAntwoorden": [
       "Waar"
     ],
-    "biblicalReference": "Matthéüs 1, 2, 4",
+    "biblicalReference": "Matth\u00e9\u00fcs 1, 2, 4",
     "id": "000317"
   },
   {
-    "vraag": "In Mattheüs wordt Jezus vaak de \"Zoon van David\" genoemd",
+    "vraag": "In Matthe\u00fcs wordt Jezus vaak de \"Zoon van David\" genoemd",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 3,
     "type": "tf",
     "categories": [
-      "Matteüs"
+      "Matte\u00fcs"
     ],
     "fouteAntwoorden": [
       "Niet waar"
     ],
-    "biblicalReference": "Matthéüs 1, 9, 21",
+    "biblicalReference": "Matth\u00e9\u00fcs 1, 9, 21",
     "id": "000318"
   },
   {
@@ -4851,7 +4851,7 @@
     "moeilijkheidsgraad": 3,
     "type": "tf",
     "categories": [
-      "Matteüs",
+      "Matte\u00fcs",
       "Marcus",
       "Lucas",
       "Johannes"
@@ -4880,7 +4880,7 @@
     "moeilijkheidsgraad": 3,
     "type": "tf",
     "categories": [
-      "Matteüs",
+      "Matte\u00fcs",
       "Marcus",
       "Lucas",
       "Johannes"
@@ -5031,18 +5031,18 @@
     "id": "000331"
   },
   {
-    "vraag": "Korinthe is geschreven aan de christenen in Éfeze",
+    "vraag": "Korinthe is geschreven aan de christenen in \u00c9feze",
     "juisteAntwoord": "Niet waar",
     "moeilijkheidsgraad": 2,
     "type": "tf",
     "categories": [
-      "1 Korintiërs",
-      "2 Korintiërs"
+      "1 Korinti\u00ebrs",
+      "2 Korinti\u00ebrs"
     ],
     "fouteAntwoorden": [
       "Waar"
     ],
-    "biblicalReference": "1 Korintiërs 1:2",
+    "biblicalReference": "1 Korinti\u00ebrs 1:2",
     "id": "000332"
   },
   {
@@ -5051,12 +5051,12 @@
     "moeilijkheidsgraad": 2,
     "type": "tf",
     "categories": [
-      "1 Korintiërs"
+      "1 Korinti\u00ebrs"
     ],
     "fouteAntwoorden": [
       "Niet waar"
     ],
-    "biblicalReference": "1 Korintiërs 13",
+    "biblicalReference": "1 Korinti\u00ebrs 13",
     "id": "000333"
   },
   {
@@ -5066,12 +5066,12 @@
     "type": "tf",
     "categories": [
       "Romeinen",
-      "2 Korintiërs"
+      "2 Korinti\u00ebrs"
     ],
     "fouteAntwoorden": [
       "Waar"
     ],
-    "biblicalReference": "2 Korintiërs 7:5",
+    "biblicalReference": "2 Korinti\u00ebrs 7:5",
     "id": "000334"
   },
   {
@@ -5080,12 +5080,12 @@
     "moeilijkheidsgraad": 3,
     "type": "tf",
     "categories": [
-      "2 Korintiërs"
+      "2 Korinti\u00ebrs"
     ],
     "fouteAntwoorden": [
       "Niet waar"
     ],
-    "biblicalReference": "2 Korintiërs 8 en 9",
+    "biblicalReference": "2 Korinti\u00ebrs 8 en 9",
     "id": "000335"
   },
   {
@@ -5117,12 +5117,12 @@
     "id": "000337"
   },
   {
-    "vraag": "In Éfeze wordt de geestelijke wapenrusting beschreven",
+    "vraag": "In \u00c9feze wordt de geestelijke wapenrusting beschreven",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 3,
     "type": "tf",
     "categories": [
-      "Efeziërs"
+      "Efezi\u00ebrs"
     ],
     "fouteAntwoorden": [
       "Niet waar"
@@ -5131,18 +5131,18 @@
     "id": "000338"
   },
   {
-    "vraag": "Paulus schrijft het bijbelboek Éfeze tijdens zijn eerste zendingsreis",
+    "vraag": "Paulus schrijft het bijbelboek \u00c9feze tijdens zijn eerste zendingsreis",
     "juisteAntwoord": "Niet waar",
     "moeilijkheidsgraad": 3,
     "type": "tf",
     "categories": [
-      "Efeziërs",
+      "Efezi\u00ebrs",
       "Handelingen"
     ],
     "fouteAntwoorden": [
       "Waar"
     ],
-    "biblicalReference": "Efeziërs 3:1",
+    "biblicalReference": "Efezi\u00ebrs 3:1",
     "id": "000339"
   },
   {
@@ -5255,7 +5255,7 @@
     "moeilijkheidsgraad": 3,
     "type": "tf",
     "categories": [
-      "1 Timoteüs"
+      "1 Timote\u00fcs"
     ],
     "fouteAntwoorden": [
       "Niet waar"
@@ -5269,7 +5269,7 @@
     "moeilijkheidsgraad": 4,
     "type": "tf",
     "categories": [
-      "1 Timoteüs"
+      "1 Timote\u00fcs"
     ],
     "fouteAntwoorden": [
       "Waar"
@@ -5283,7 +5283,7 @@
     "moeilijkheidsgraad": 3,
     "type": "tf",
     "categories": [
-      "1 Timoteüs"
+      "1 Timote\u00fcs"
     ],
     "fouteAntwoorden": [
       "Niet waar"
@@ -5309,8 +5309,8 @@
     "moeilijkheidsgraad": 4,
     "type": "tf",
     "categories": [
-      "1 Timoteüs",
-      "2 Timoteüs"
+      "1 Timote\u00fcs",
+      "2 Timote\u00fcs"
     ],
     "fouteAntwoorden": [
       "Waar"
@@ -5437,15 +5437,15 @@
     ],
     "fouteAntwoorden": [
       "Babylon",
-      "Kanaän",
-      "Assyrië"
+      "Kana\u00e4n",
+      "Assyri\u00eb"
     ],
     "biblicalReference": "Exodus 12",
     "id": "000360"
   },
   {
     "vraag": "De wet werd gegeven op de berg ... ",
-    "juisteAntwoord": "Sinaï",
+    "juisteAntwoord": "Sina\u00ef",
     "moeilijkheidsgraad": 1,
     "type": "fitb",
     "categories": [
@@ -5589,7 +5589,7 @@
   },
   {
     "vraag": "Het boek Numeri begint met een telling van de ... ",
-    "juisteAntwoord": "Israëlieten",
+    "juisteAntwoord": "Isra\u00eblieten",
     "moeilijkheidsgraad": 2,
     "type": "fitb",
     "categories": [
@@ -5604,7 +5604,7 @@
     "id": "000370"
   },
   {
-    "vraag": "Mozes dan sprak tot de kinderen Israëls, dat zij het ... houden zouden",
+    "vraag": "Mozes dan sprak tot de kinderen Isra\u00ebls, dat zij het ... houden zouden",
     "juisteAntwoord": "pascha",
     "moeilijkheidsgraad": 2,
     "type": "fitb",
@@ -5645,7 +5645,7 @@
       "Exodus"
     ],
     "fouteAntwoorden": [
-      "Aäron",
+      "A\u00e4ron",
       "Levi",
       "Edom"
     ],
@@ -5695,7 +5695,7 @@
       "Deuteronomium"
     ],
     "fouteAntwoorden": [
-      "Sinaï",
+      "Sina\u00ef",
       "Horeb",
       "Hor"
     ],
@@ -5783,7 +5783,7 @@
     "id": "000381"
   },
   {
-    "vraag": "Toen bouwde Jozua een altaar den Heere, den God Israëls, op den berg ... ",
+    "vraag": "Toen bouwde Jozua een altaar den Heere, den God Isra\u00ebls, op den berg ... ",
     "juisteAntwoord": "Ebal",
     "moeilijkheidsgraad": 3,
     "type": "fitb",
@@ -5792,7 +5792,7 @@
     ],
     "fouteAntwoorden": [
       "Horeb",
-      "Sinaï",
+      "Sina\u00ef",
       "Hermon"
     ],
     "biblicalReference": "Jozua 8:30",
@@ -5816,11 +5816,11 @@
   },
   {
     "vraag": "Die vijf koningen zijn gevonden, verborgen in de spelonk bij ... ",
-    "juisteAntwoord": "Makkéda",
+    "juisteAntwoord": "Makk\u00e9da",
     "moeilijkheidsgraad": 3,
     "type": "fitb",
     "categories": [
-      "1 Samuël"
+      "1 Samu\u00ebl"
     ],
     "fouteAntwoorden": [
       "Adullam",
@@ -5831,8 +5831,8 @@
     "id": "000384"
   },
   {
-    "vraag": "De eerste richter van Israël was ... ",
-    "juisteAntwoord": "Othniël",
+    "vraag": "De eerste richter van Isra\u00ebl was ... ",
+    "juisteAntwoord": "Othni\u00ebl",
     "moeilijkheidsgraad": 2,
     "type": "fitb",
     "categories": [
@@ -5848,22 +5848,22 @@
   },
   {
     "vraag": " ... nu, een vrouw die een profetes was, de huisvrouw van Lappidoth",
-    "juisteAntwoord": "Debóra",
+    "juisteAntwoord": "Deb\u00f3ra",
     "moeilijkheidsgraad": 1,
     "type": "fitb",
     "categories": [
-      "1 Samuël"
+      "1 Samu\u00ebl"
     ],
     "fouteAntwoorden": [
       "Rebekka",
-      "Jaël",
+      "Ja\u00ebl",
       "Priscilla"
     ],
     "biblicalReference": "Richteren 4:4",
     "id": "000386"
   },
   {
-    "vraag": "Gídeon vroeg om een teken van God met een ... ",
+    "vraag": "G\u00eddeon vroeg om een teken van God met een ... ",
     "juisteAntwoord": "wollen vlies",
     "moeilijkheidsgraad": 1,
     "type": "fitb",
@@ -5903,16 +5903,16 @@
       "Genesis"
     ],
     "fouteAntwoorden": [
-      "Jaïr",
+      "Ja\u00efr",
       "Gideon",
-      "Efraïm"
+      "Efra\u00efm"
     ],
     "biblicalReference": "Richteren 11",
     "id": "000389"
   },
   {
     "vraag": "En ... , de man van Naomi stierf",
-    "juisteAntwoord": "Elimélech",
+    "juisteAntwoord": "Elim\u00e9lech",
     "moeilijkheidsgraad": 2,
     "type": "fitb",
     "categories": [
@@ -5928,7 +5928,7 @@
     "id": "000390"
   },
   {
-    "vraag": "Noemt mij niet Naómi, noemt mij ... ",
+    "vraag": "Noemt mij niet Na\u00f3mi, noemt mij ... ",
     "juisteAntwoord": "Mara",
     "moeilijkheidsgraad": 1,
     "type": "fitb",
@@ -5944,7 +5944,7 @@
     "id": "000391"
   },
   {
-    "vraag": "Naómi nu had een bloedvriend van haar man, een man, geweldig van ...",
+    "vraag": "Na\u00f3mi nu had een bloedvriend van haar man, een man, geweldig van ...",
     "juisteAntwoord": "vermogen",
     "moeilijkheidsgraad": 2,
     "type": "fitb",
@@ -6013,7 +6013,7 @@
     "moeilijkheidsgraad": 2,
     "type": "fitb",
     "categories": [
-      "1 Samuël"
+      "1 Samu\u00ebl"
     ],
     "fouteAntwoorden": [
       "Jeruzalem",
@@ -6059,8 +6059,8 @@
     "moeilijkheidsgraad": 2,
     "type": "fitb",
     "categories": [
-      "1 Samuël",
-      "2 Samuël"
+      "1 Samu\u00ebl",
+      "2 Samu\u00ebl"
     ],
     "fouteAntwoorden": [
       "meer rijkdom had",
@@ -6071,13 +6071,13 @@
     "id": "000399"
   },
   {
-    "vraag": "David werd koning over Israël in de stad ... ",
+    "vraag": "David werd koning over Isra\u00ebl in de stad ... ",
     "juisteAntwoord": "Hebron",
     "moeilijkheidsgraad": 3,
     "type": "fitb",
     "categories": [
-      "1 Samuël",
-      "2 Samuël"
+      "1 Samu\u00ebl",
+      "2 Samu\u00ebl"
     ],
     "fouteAntwoorden": [
       "Jeruzalem",
@@ -6093,8 +6093,8 @@
     "moeilijkheidsgraad": 2,
     "type": "mc",
     "categories": [
-      "1 Samuël",
-      "2 Samuël"
+      "1 Samu\u00ebl",
+      "2 Samu\u00ebl"
     ],
     "fouteAntwoorden": [
       "Bethel",
@@ -6110,7 +6110,7 @@
     "moeilijkheidsgraad": 1,
     "type": "mc",
     "categories": [
-      "1 Samuël"
+      "1 Samu\u00ebl"
     ],
     "fouteAntwoorden": [
       "Elia",
@@ -6126,7 +6126,7 @@
     "moeilijkheidsgraad": 4,
     "type": "fitb",
     "categories": [
-      "2 Samuël"
+      "2 Samu\u00ebl"
     ],
     "fouteAntwoorden": [
       "Jeruzalem",
@@ -6138,7 +6138,7 @@
   },
   {
     "vraag": "Welke vrouw zei: Behoud o koning",
-    "juisteAntwoord": "de Tekoïtische",
+    "juisteAntwoord": "de Teko\u00eftische",
     "moeilijkheidsgraad": 5,
     "type": "fitb",
     "categories": [
@@ -6147,22 +6147,22 @@
     "fouteAntwoorden": [
       "de Ammonitische",
       "de Hetitische",
-      "de Israëlitische"
+      "de Isra\u00eblitische"
     ],
     "biblicalReference": "2 Samuel",
     "id": "000404"
   },
   {
     "vraag": "Wie wilde koning worden toen David oud was?",
-    "juisteAntwoord": "Adónia",
+    "juisteAntwoord": "Ad\u00f3nia",
     "moeilijkheidsgraad": 3,
     "type": "fitb",
     "categories": [
-      "1 Samuël",
-      "2 Samuël"
+      "1 Samu\u00ebl",
+      "2 Samu\u00ebl"
     ],
     "fouteAntwoorden": [
-      "Sálomo",
+      "S\u00e1lomo",
       "Joab",
       "Absalom"
     ],
@@ -6179,8 +6179,8 @@
     ],
     "fouteAntwoorden": [
       "Nathan",
-      "Benája",
-      "Jójada"
+      "Ben\u00e1ja",
+      "J\u00f3jada"
     ],
     "biblicalReference": "1 Koningen 1:32",
     "id": "000406"
@@ -6191,7 +6191,7 @@
     "moeilijkheidsgraad": 3,
     "type": "fitb",
     "categories": [
-      "Matteüs",
+      "Matte\u00fcs",
       "Kerst"
     ],
     "fouteAntwoorden": [
@@ -6235,7 +6235,7 @@
     "id": "000409"
   },
   {
-    "vraag": "De koning van Israël in de tijd van Elisa was ... ",
+    "vraag": "De koning van Isra\u00ebl in de tijd van Elisa was ... ",
     "juisteAntwoord": "Joram",
     "moeilijkheidsgraad": 4,
     "type": "fitb",
@@ -6245,7 +6245,7 @@
     ],
     "fouteAntwoorden": [
       "Achab",
-      "Sálomo",
+      "S\u00e1lomo",
       "David"
     ],
     "biblicalReference": "2 Koningen 3",
@@ -6266,7 +6266,7 @@
     "id": "000411"
   },
   {
-    "vraag": "Als nu Elísa weder te ... kwam, zo was er honger in dat land",
+    "vraag": "Als nu El\u00edsa weder te ... kwam, zo was er honger in dat land",
     "juisteAntwoord": "Gilgal",
     "moeilijkheidsgraad": 3,
     "type": "fitb",
@@ -6275,14 +6275,14 @@
     ],
     "fouteAntwoorden": [
       "Sunem",
-      "Baäl-Salisa",
-      "Syrië"
+      "Ba\u00e4l-Salisa",
+      "Syri\u00eb"
     ],
     "biblicalReference": "2 Koningen 4:38",
     "id": "000412"
   },
   {
-    "vraag": "Zijn niet ... en ... , de rivieren van Damascus, beter dan alle wateren van Israël",
+    "vraag": "Zijn niet ... en ... , de rivieren van Damascus, beter dan alle wateren van Isra\u00ebl",
     "juisteAntwoord": "Abana, Farpar",
     "moeilijkheidsgraad": 5,
     "type": "fitb",
@@ -6351,7 +6351,7 @@
     "moeilijkheidsgraad": 5,
     "type": "fitb",
     "categories": [
-      "1 Samuël"
+      "1 Samu\u00ebl"
     ],
     "fouteAntwoorden": [
       "Gadieten",
@@ -6362,7 +6362,7 @@
     "id": "000417"
   },
   {
-    "vraag": "Aäron nu en zijn zonen rookten op het altaar des ... en op het reukaltaar",
+    "vraag": "A\u00e4ron nu en zijn zonen rookten op het altaar des ... en op het reukaltaar",
     "juisteAntwoord": "brandoffers",
     "moeilijkheidsgraad": 3,
     "type": "fitb",
@@ -6383,7 +6383,7 @@
     "moeilijkheidsgraad": 4,
     "type": "fitb",
     "categories": [
-      "1 Samuël"
+      "1 Samu\u00ebl"
     ],
     "fouteAntwoorden": [
       "drie",
@@ -6394,7 +6394,7 @@
     "id": "000419"
   },
   {
-    "vraag": "Sálomo bouwde een tempel te Jeruzalem op den berg ... ",
+    "vraag": "S\u00e1lomo bouwde een tempel te Jeruzalem op den berg ... ",
     "juisteAntwoord": "Moria",
     "moeilijkheidsgraad": 3,
     "type": "fitb",
@@ -6403,7 +6403,7 @@
       "2 Kronieken"
     ],
     "fouteAntwoorden": [
-      "Sinaï",
+      "Sina\u00ef",
       "Karmel",
       "Sion"
     ],
@@ -6412,7 +6412,7 @@
   },
   {
     "vraag": "De koning die de tempel herstelde was ... ",
-    "juisteAntwoord": "Josía",
+    "juisteAntwoord": "Jos\u00eda",
     "moeilijkheidsgraad": 3,
     "type": "fitb",
     "categories": [
@@ -6421,7 +6421,7 @@
     ],
     "fouteAntwoorden": [
       "David",
-      "Sálomo",
+      "S\u00e1lomo",
       "Achaz"
     ],
     "biblicalReference": "2 Kronieken 34",
@@ -6444,7 +6444,7 @@
     "id": "000422"
   },
   {
-    "vraag": "En zij brachten voor Sálomo ... uit Egypte en uit al die landen",
+    "vraag": "En zij brachten voor S\u00e1lomo ... uit Egypte en uit al die landen",
     "juisteAntwoord": "paarden",
     "moeilijkheidsgraad": 3,
     "type": "fitb",
@@ -6460,7 +6460,7 @@
     "id": "000423"
   },
   {
-    "vraag": "En Salomo regeerde te Jeruzalem over gans Israël ... jaar",
+    "vraag": "En Salomo regeerde te Jeruzalem over gans Isra\u00ebl ... jaar",
     "juisteAntwoord": "40",
     "moeilijkheidsgraad": 1,
     "type": "fitb",
@@ -6485,14 +6485,14 @@
     ],
     "fouteAntwoorden": [
       "Darius",
-      "Nebukadnézar",
+      "Nebukadn\u00e9zar",
       "Xerxes"
     ],
     "biblicalReference": "Ezra",
     "id": "000425"
   },
   {
-    "vraag": "Ezra leidde de terugkeer van de Israëlieten naar ... ",
+    "vraag": "Ezra leidde de terugkeer van de Isra\u00eblieten naar ... ",
     "juisteAntwoord": "Jeruzalem",
     "moeilijkheidsgraad": 2,
     "type": "fitb",
@@ -6587,7 +6587,7 @@
     "id": "000431"
   },
   {
-    "vraag": "Nehémia was bezorgd over de ... van het volk",
+    "vraag": "Neh\u00e9mia was bezorgd over de ... van het volk",
     "juisteAntwoord": "zonden",
     "moeilijkheidsgraad": 2,
     "type": "fitb",
@@ -6600,7 +6600,7 @@
       "ziekten",
       "gaven"
     ],
-    "biblicalReference": "Nehémia 1: 6,7",
+    "biblicalReference": "Neh\u00e9mia 1: 6,7",
     "id": "000432"
   },
   {
@@ -6637,7 +6637,7 @@
   },
   {
     "vraag": "Het geschiedde nu in de dagen van ...",
-    "juisteAntwoord": "Ahasvéros",
+    "juisteAntwoord": "Ahasv\u00e9ros",
     "moeilijkheidsgraad": 2,
     "type": "fitb",
     "categories": [
@@ -6649,8 +6649,8 @@
       "Jozua",
       "Richteren",
       "Ruth",
-      "1 Samuël",
-      "2 Samuël",
+      "1 Samu\u00ebl",
+      "2 Samu\u00ebl",
       "1 Koningen",
       "2 Koningen",
       "1 Kronieken",
@@ -6662,7 +6662,7 @@
     "fouteAntwoorden": [
       "Ammon",
       "Moab",
-      "Mórdechai"
+      "M\u00f3rdechai"
     ],
     "biblicalReference": "Esther 1:1",
     "id": "000435"
@@ -6801,7 +6801,7 @@
     "moeilijkheidsgraad": 5,
     "type": "fitb",
     "categories": [
-      "1 Samuël"
+      "1 Samu\u00ebl"
     ],
     "fouteAntwoorden": [
       "Elifaz",
@@ -6993,7 +6993,7 @@
   },
   {
     "vraag": "De schrijver van Prediker wordt toegeschreven aan ...",
-    "juisteAntwoord": "Sálomo",
+    "juisteAntwoord": "S\u00e1lomo",
     "moeilijkheidsgraad": 1,
     "type": "fitb",
     "categories": [
@@ -7120,7 +7120,7 @@
   },
   {
     "vraag": "Salomo had een wijngaard te ...",
-    "juisteAntwoord": "Baäl-Hamon",
+    "juisteAntwoord": "Ba\u00e4l-Hamon",
     "moeilijkheidsgraad": 5,
     "type": "fitb",
     "categories": [
@@ -7129,8 +7129,8 @@
     ],
     "fouteAntwoorden": [
       "Hamon",
-      "Baäl-Gad",
-      "Kirjat-Baäl"
+      "Ba\u00e4l-Gad",
+      "Kirjat-Ba\u00e4l"
     ],
     "biblicalReference": "Hooglied 8:11",
     "id": "000464"
@@ -7144,7 +7144,7 @@
       "Jesaja"
     ],
     "fouteAntwoorden": [
-      "Israëls",
+      "Isra\u00ebls",
       "Abrahams",
       "Davids"
     ],
@@ -7384,23 +7384,23 @@
       "overdenken",
       "zien"
     ],
-    "biblicalReference": "Ezechiël 3:2",
+    "biblicalReference": "Ezechi\u00ebl 3:2",
     "id": "000480"
   },
   {
     "vraag": "Mensenkind, zet uw aangezicht tegen de bergen ...",
-    "juisteAntwoord": "Israëls",
+    "juisteAntwoord": "Isra\u00ebls",
     "moeilijkheidsgraad": 3,
     "type": "fitb",
     "categories": [
-      "Ezechiël"
+      "Ezechi\u00ebl"
     ],
     "fouteAntwoorden": [
       "Cherubs",
       "rondom Jeruzalem",
       "Sions"
     ],
-    "biblicalReference": "Ezechiël 6:2",
+    "biblicalReference": "Ezechi\u00ebl 6:2",
     "id": "000481"
   },
   {
@@ -7409,14 +7409,14 @@
     "moeilijkheidsgraad": 3,
     "type": "fitb",
     "categories": [
-      "Ezechiël"
+      "Ezechi\u00ebl"
     ],
     "fouteAntwoorden": [
       "aarde",
       "muur",
       "rivier"
     ],
-    "biblicalReference": "Ezechiël 8:8",
+    "biblicalReference": "Ezechi\u00ebl 8:8",
     "id": "000482"
   },
   {
@@ -7432,28 +7432,28 @@
       "verlaten",
       "verwoest"
     ],
-    "biblicalReference": "Ezechiël 12:20",
+    "biblicalReference": "Ezechi\u00ebl 12:20",
     "id": "000483"
   },
   {
-    "vraag": "Ofschoon Noach, Daniël en ... in het midden van hetzelve waren",
+    "vraag": "Ofschoon Noach, Dani\u00ebl en ... in het midden van hetzelve waren",
     "juisteAntwoord": "Job",
     "moeilijkheidsgraad": 4,
     "type": "fitb",
     "categories": [
-      "Daniël"
+      "Dani\u00ebl"
     ],
     "fouteAntwoorden": [
       "Amos",
       "Jona",
       "David"
     ],
-    "biblicalReference": "Ezechiël 14:20",
+    "biblicalReference": "Ezechi\u00ebl 14:20",
     "id": "000484"
   },
   {
     "vraag": "en dat men hen onderwees in de spraak der ...",
-    "juisteAntwoord": "Chaldeeën",
+    "juisteAntwoord": "Chaldee\u00ebn",
     "moeilijkheidsgraad": 2,
     "type": "fitb",
     "categories": [
@@ -7461,26 +7461,26 @@
     ],
     "fouteAntwoorden": [
       "volkeren",
-      "Chaldiërs",
-      "Judeeën"
+      "Chaldi\u00ebrs",
+      "Judee\u00ebn"
     ],
-    "biblicalReference": "Daniël 1:4",
+    "biblicalReference": "Dani\u00ebl 1:4",
     "id": "000485"
   },
   {
-    "vraag": "en Daniël noemde hij ...",
-    "juisteAntwoord": "Béltsazar",
+    "vraag": "en Dani\u00ebl noemde hij ...",
+    "juisteAntwoord": "B\u00e9ltsazar",
     "moeilijkheidsgraad": 1,
     "type": "fitb",
     "categories": [
-      "Daniël"
+      "Dani\u00ebl"
     ],
     "fouteAntwoorden": [
       "Sadrach",
       "Mesach",
       "Abed-nego"
     ],
-    "biblicalReference": "Daniël 1:7",
+    "biblicalReference": "Dani\u00ebl 1:7",
     "id": "000486"
   },
   {
@@ -7496,23 +7496,23 @@
       "7",
       "14"
     ],
-    "biblicalReference": "Daniël 1:12",
+    "biblicalReference": "Dani\u00ebl 1:12",
     "id": "000487"
   },
   {
-    "vraag": "Daarom ging Daniël in tot..., dien de koning gesteld had om de wijzen van Babel om te brengen",
+    "vraag": "Daarom ging Dani\u00ebl in tot..., dien de koning gesteld had om de wijzen van Babel om te brengen",
     "juisteAntwoord": "Arioch",
     "moeilijkheidsgraad": 2,
     "type": "fitb",
     "categories": [
-      "Daniël"
+      "Dani\u00ebl"
     ],
     "fouteAntwoorden": [
       "Melzar",
       "Sadrach",
-      "Ariël"
+      "Ari\u00ebl"
     ],
-    "biblicalReference": "Daniël 2:24",
+    "biblicalReference": "Dani\u00ebl 2:24",
     "id": "000488"
   },
   {
@@ -7522,19 +7522,19 @@
     "type": "fitb",
     "categories": [
       "1 Koningen",
-      "2 Samuël"
+      "2 Samu\u00ebl"
     ],
     "fouteAntwoorden": [
       "Tekel",
       "Mene",
       "Upharsin"
     ],
-    "biblicalReference": "Daniël 5:28",
+    "biblicalReference": "Dani\u00ebl 5:28",
     "id": "000489"
   },
   {
-    "vraag": "en in de dagen van ..., zoon van Joas, koning van Israël",
-    "juisteAntwoord": "Jeróbeam",
+    "vraag": "en in de dagen van ..., zoon van Joas, koning van Isra\u00ebl",
+    "juisteAntwoord": "Jer\u00f3beam",
     "moeilijkheidsgraad": 5,
     "type": "fitb",
     "categories": [
@@ -7561,14 +7561,14 @@
     ],
     "fouteAntwoorden": [
       "Lo-Ruchama",
-      "Jizreël",
+      "Jizre\u00ebl",
       "Gomer"
     ],
     "biblicalReference": "Hosea 1:9",
     "id": "000491"
   },
   {
-    "vraag": "Efraïm is vergezeld met de..., laat hem varen",
+    "vraag": "Efra\u00efm is vergezeld met de..., laat hem varen",
     "juisteAntwoord": "afgoden",
     "moeilijkheidsgraad": 3,
     "type": "fitb",
@@ -7616,19 +7616,19 @@
     "id": "000494"
   },
   {
-    "vraag": "Het woord den Heeren dat geschied is tot Joël, den zoon van...",
-    "juisteAntwoord": "Pethuël",
+    "vraag": "Het woord den Heeren dat geschied is tot Jo\u00ebl, den zoon van...",
+    "juisteAntwoord": "Pethu\u00ebl",
     "moeilijkheidsgraad": 4,
     "type": "fitb",
     "categories": [
       "Hooglied"
     ],
     "fouteAntwoorden": [
-      "Paltiël",
+      "Palti\u00ebl",
       "Petahja",
       "Jojada"
     ],
-    "biblicalReference": "Joël 1:1",
+    "biblicalReference": "Jo\u00ebl 1:1",
     "id": "000495"
   },
   {
@@ -7644,7 +7644,7 @@
       "Sichem",
       "Jericho"
     ],
-    "biblicalReference": "Joël 2:1",
+    "biblicalReference": "Jo\u00ebl 2:1",
     "id": "000496"
   },
   {
@@ -7660,7 +7660,7 @@
       "blijmoedig",
       "heilig"
     ],
-    "biblicalReference": "Joël 2:21",
+    "biblicalReference": "Jo\u00ebl 2:21",
     "id": "000497"
   },
   {
@@ -7676,7 +7676,7 @@
       "bewaard",
       "bekeerd"
     ],
-    "biblicalReference": "Joël 2:32",
+    "biblicalReference": "Jo\u00ebl 2:32",
     "id": "000498"
   },
   {
@@ -7692,7 +7692,7 @@
       "Edom",
       "Jeruzalem"
     ],
-    "biblicalReference": "Ezechiël 29:9",
+    "biblicalReference": "Ezechi\u00ebl 29:9",
     "id": "000499"
   },
   {
@@ -7717,13 +7717,13 @@
     "moeilijkheidsgraad": 4,
     "type": "mc",
     "categories": [
-      "Matteüs"
+      "Matte\u00fcs"
     ],
-    "biblicalReference": "Mattheüs 1:16",
+    "biblicalReference": "Matthe\u00fcs 1:16",
     "fouteAntwoorden": [
       "Eliud",
       "Mattan",
-      "Eleázar"
+      "Ele\u00e1zar"
     ],
     "id": "000501"
   },
@@ -7733,7 +7733,7 @@
     "moeilijkheidsgraad": 1,
     "type": "mc",
     "categories": [],
-    "biblicalReference": "Mattheüs 4:2",
+    "biblicalReference": "Matthe\u00fcs 4:2",
     "fouteAntwoorden": [
       "7",
       "10",
@@ -7747,9 +7747,9 @@
     "moeilijkheidsgraad": 2,
     "type": "mc",
     "categories": [
-      "Matteüs"
+      "Matte\u00fcs"
     ],
-    "biblicalReference": "Mattheüs 5:13",
+    "biblicalReference": "Matthe\u00fcs 5:13",
     "fouteAntwoorden": [
       "Het is tot genezing",
       "Het wordt gezuiverd",
@@ -7763,9 +7763,9 @@
     "moeilijkheidsgraad": 3,
     "type": "mc",
     "categories": [
-      "Matteüs"
+      "Matte\u00fcs"
     ],
-    "biblicalReference": "Mattheüs 5:3",
+    "biblicalReference": "Matthe\u00fcs 5:3",
     "fouteAntwoorden": [
       "Zalig zijn die treuren",
       "Zalig zijn de zachtmoedigen",
@@ -7779,11 +7779,11 @@
     "moeilijkheidsgraad": 4,
     "type": "mc",
     "categories": [
-      "Matteüs",
+      "Matte\u00fcs",
       "Lucas",
       "Kerst"
     ],
-    "biblicalReference": "Mattheüs 8:1",
+    "biblicalReference": "Matthe\u00fcs 8:1",
     "fouteAntwoorden": [
       "Hij onderwijst in de synagoge",
       "Hij gaat opnieuw prediken",
@@ -7797,7 +7797,7 @@
     "moeilijkheidsgraad": 1,
     "type": "mc",
     "categories": [],
-    "biblicalReference": "Matthéüs  14: 28,29",
+    "biblicalReference": "Matth\u00e9\u00fcs  14: 28,29",
     "fouteAntwoorden": [
       "Johannes",
       "Thomas",
@@ -7807,13 +7807,13 @@
   },
   {
     "vraag": "Wie vroeg aan Jezus of Hij hen zegt of Hij de Christus, de Zoon van God is?",
-    "juisteAntwoord": "Kájafas",
+    "juisteAntwoord": "K\u00e1jafas",
     "moeilijkheidsgraad": 4,
     "type": "mc",
     "categories": [
       "Johannes"
     ],
-    "biblicalReference": "Mattheüs 26:63",
+    "biblicalReference": "Matthe\u00fcs 26:63",
     "fouteAntwoorden": [
       "Judas",
       "Pilatus",
@@ -7827,10 +7827,10 @@
     "moeilijkheidsgraad": 2,
     "type": "mc",
     "categories": [
-      "Matteüs",
+      "Matte\u00fcs",
       "Kerst"
     ],
-    "biblicalReference": "Mattheüs 3:16",
+    "biblicalReference": "Matthe\u00fcs 3:16",
     "fouteAntwoorden": [
       "De aarde beefde",
       "De zon verduisterde",
@@ -7844,7 +7844,7 @@
     "moeilijkheidsgraad": 2,
     "type": "mc",
     "categories": [],
-    "biblicalReference": "Mattheüs 4:18",
+    "biblicalReference": "Matthe\u00fcs 4:18",
     "fouteAntwoorden": [
       "Johannes",
       "Jakobus",
@@ -7858,10 +7858,10 @@
     "moeilijkheidsgraad": 3,
     "type": "mc",
     "categories": [
-      "Matteüs",
+      "Matte\u00fcs",
       "Lucas"
     ],
-    "biblicalReference": "Mattheüs 14:27",
+    "biblicalReference": "Matthe\u00fcs 14:27",
     "fouteAntwoorden": [
       "Vreest niet, Ik ben het",
       "Volg mij",
@@ -7875,7 +7875,7 @@
     "moeilijkheidsgraad": 1,
     "type": "mc",
     "categories": [],
-    "biblicalReference": "Mattheüs 26:15",
+    "biblicalReference": "Matthe\u00fcs 26:15",
     "fouteAntwoorden": [
       "20",
       "40",
@@ -7889,11 +7889,11 @@
     "moeilijkheidsgraad": 3,
     "type": "mc",
     "categories": [
-      "Matteüs"
+      "Matte\u00fcs"
     ],
-    "biblicalReference": "Mattheüs 27:11",
+    "biblicalReference": "Matthe\u00fcs 27:11",
     "fouteAntwoorden": [
-      "Kájafas",
+      "K\u00e1jafas",
       "Herodes",
       "De Hogepriester"
     ],
@@ -7905,7 +7905,7 @@
     "moeilijkheidsgraad": 3,
     "type": "mc",
     "categories": [
-      "Matteüs",
+      "Matte\u00fcs",
       "Marcus",
       "Lucas",
       "Johannes",
@@ -7919,7 +7919,7 @@
       "Paasmaandag",
       "Pinkstermaandag"
     ],
-    "biblicalReference": "Matthéüs 27: 51, 52",
+    "biblicalReference": "Matth\u00e9\u00fcs 27: 51, 52",
     "fouteAntwoorden": [
       "De aarde beefde",
       "Het werd 3 uur lang donker",
@@ -7935,9 +7935,9 @@
     "categories": [
       "Genesis"
     ],
-    "biblicalReference": "Mattheüs 27:19",
+    "biblicalReference": "Matthe\u00fcs 27:19",
     "fouteAntwoorden": [
-      "De vrouw van Kájafas",
+      "De vrouw van K\u00e1jafas",
       "De vrouw van Herodes",
       "De vrouw Judas"
     ],
@@ -7945,15 +7945,15 @@
   },
   {
     "vraag": "Wie vond(en) het lege graf?",
-    "juisteAntwoord": "Maria Magdaléna en de de andere Maria",
+    "juisteAntwoord": "Maria Magdal\u00e9na en de de andere Maria",
     "moeilijkheidsgraad": 2,
     "type": "mc",
     "categories": [
       "Openbaring"
     ],
-    "biblicalReference": "Mattheüs 28:1",
+    "biblicalReference": "Matthe\u00fcs 28:1",
     "fouteAntwoorden": [
-      "Maria Magdaléna",
+      "Maria Magdal\u00e9na",
       "Maria, de moeder van Jezus",
       "Petrus en Johannes"
     ],
@@ -7967,7 +7967,7 @@
     "categories": [
       "Openbaring"
     ],
-    "biblicalReference": "Mattheüs 28:5",
+    "biblicalReference": "Matthe\u00fcs 28:5",
     "fouteAntwoorden": [
       "Hij is opgestaan",
       "Hij is hier niet; want Hij is opgestaan",
@@ -7985,7 +7985,7 @@
       "Pasen",
       "Hemelvaart"
     ],
-    "biblicalReference": "Mattheüs 28:19",
+    "biblicalReference": "Matthe\u00fcs 28:19",
     "fouteAntwoorden": [
       "De Heilige Geest",
       "Een zegen",
@@ -8027,11 +8027,11 @@
   },
   {
     "vraag": "Welke discipel was er niet bij op berg der verheerlijking?",
-    "juisteAntwoord": "Andréas",
+    "juisteAntwoord": "Andr\u00e9as",
     "moeilijkheidsgraad": 1,
     "type": "mc",
     "categories": [
-      "Matteüs",
+      "Matte\u00fcs",
       "Marcus",
       "Lucas"
     ],
@@ -8092,7 +8092,7 @@
     "id": "000523"
   },
   {
-    "vraag": "Wie was de vierde dochter van Zeláfead?",
+    "vraag": "Wie was de vierde dochter van Zel\u00e1fead?",
     "juisteAntwoord": "Milka",
     "moeilijkheidsgraad": 4,
     "type": "mc",
@@ -8125,7 +8125,7 @@
   },
   {
     "vraag": "Welke koning viel door een tralie in zijn opperzaal?",
-    "juisteAntwoord": "Aházia",
+    "juisteAntwoord": "Ah\u00e1zia",
     "moeilijkheidsgraad": 4,
     "type": "mc",
     "categories": [
@@ -8134,24 +8134,24 @@
     "biblicalReference": "2 Koningen 1:2",
     "fouteAntwoorden": [
       "Joram",
-      "Azária",
+      "Az\u00e1ria",
       "Joas"
     ],
     "id": "000526"
   },
   {
     "vraag": "Wie was de moeder van Absalom?",
-    "juisteAntwoord": "Máächa",
+    "juisteAntwoord": "M\u00e1\u00e4cha",
     "moeilijkheidsgraad": 4,
     "type": "mc",
     "categories": [
-      "2 Samuël"
+      "2 Samu\u00ebl"
     ],
     "biblicalReference": "2 Samuel 3:3",
     "fouteAntwoorden": [
       "Haggith",
-      "Ahinóam",
-      "Abígaïl"
+      "Ahin\u00f3am",
+      "Ab\u00edga\u00efl"
     ],
     "id": "000527"
   },
@@ -8172,7 +8172,7 @@
     "id": "000528"
   },
   {
-    "vraag": "Wie was de hofmeester van koning Hizkía?",
+    "vraag": "Wie was de hofmeester van koning Hizk\u00eda?",
     "juisteAntwoord": "Eljakim",
     "moeilijkheidsgraad": 3,
     "type": "mc",
@@ -8182,14 +8182,14 @@
     ],
     "biblicalReference": "Jesaja 36:3",
     "fouteAntwoorden": [
-      "Hilkía",
+      "Hilk\u00eda",
       "Sebna",
       "Joah"
     ],
     "id": "000529"
   },
   {
-    "vraag": "Hoeveel zonen had Gídeon?",
+    "vraag": "Hoeveel zonen had G\u00eddeon?",
     "juisteAntwoord": "70",
     "moeilijkheidsgraad": 3,
     "type": "mc",
@@ -8216,7 +8216,7 @@
     "fouteAntwoorden": [
       "Jeftha",
       "Samgar",
-      "Othniël"
+      "Othni\u00ebl"
     ],
     "id": "000531"
   },
@@ -8237,8 +8237,8 @@
     "id": "000532"
   },
   {
-    "vraag": "Wie was de derde zoon van Aäron?",
-    "juisteAntwoord": "Eleázar",
+    "vraag": "Wie was de derde zoon van A\u00e4ron?",
+    "juisteAntwoord": "Ele\u00e1zar",
     "moeilijkheidsgraad": 5,
     "type": "mc",
     "categories": [
@@ -8247,14 +8247,14 @@
     "biblicalReference": "Exodus 6:22",
     "fouteAntwoorden": [
       "Nadab",
-      "Abíhu",
+      "Ab\u00edhu",
       "Ithamar"
     ],
     "id": "000533"
   },
   {
     "vraag": "Welke gemeente had een geopende deur? Johannes schreef er een brief aan.",
-    "juisteAntwoord": "Filadélfia",
+    "juisteAntwoord": "Filad\u00e9lfia",
     "moeilijkheidsgraad": 4,
     "type": "mc",
     "categories": [
@@ -8265,7 +8265,7 @@
     "fouteAntwoorden": [
       "Sardis",
       "Smyrna",
-      "Éfeze"
+      "\u00c9feze"
     ],
     "id": "000534"
   },
@@ -8280,13 +8280,13 @@
     "biblicalReference": "Genesis 36: 2,3",
     "fouteAntwoorden": [
       "Ada",
-      "Aholibáma",
+      "Aholib\u00e1ma",
       "Basmath"
     ],
     "id": "000535"
   },
   {
-    "vraag": "Wie was de vierde zoon van Abraham en Ketûra?",
+    "vraag": "Wie was de vierde zoon van Abraham en Ket\u00fbra?",
     "juisteAntwoord": "Midian",
     "moeilijkheidsgraad": 5,
     "type": "mc",
@@ -8334,7 +8334,7 @@
     "id": "000538"
   },
   {
-    "vraag": "Welke zoon van Jakob zal aan de haven der zeeën wonen?",
+    "vraag": "Welke zoon van Jakob zal aan de haven der zee\u00ebn wonen?",
     "juisteAntwoord": "Zebulon",
     "moeilijkheidsgraad": 4,
     "type": "mc",
@@ -8351,7 +8351,7 @@
   },
   {
     "vraag": "Welke profeet voorspelde een zware sprinkhanenplaag?",
-    "juisteAntwoord": "Joël",
+    "juisteAntwoord": "Jo\u00ebl",
     "moeilijkheidsgraad": 4,
     "type": "mc",
     "categories": [
@@ -8359,7 +8359,7 @@
     ],
     "biblicalReference": null,
     "fouteAntwoorden": [
-      "Hoséa",
+      "Hos\u00e9a",
       "Micha",
       "Nahum"
     ],
@@ -8543,7 +8543,7 @@
     "id": "000551"
   },
   {
-    "vraag": "Op welke rij van de borslap van Aäron waren een hyacint, agaat en amethist?",
+    "vraag": "Op welke rij van de borslap van A\u00e4ron waren een hyacint, agaat en amethist?",
     "juisteAntwoord": "3",
     "moeilijkheidsgraad": 1,
     "type": "mc",
@@ -8615,7 +8615,7 @@
     "id": "000556"
   },
   {
-    "vraag": "Jeremía was een profeet in het koninkrijk van Juda",
+    "vraag": "Jerem\u00eda was een profeet in het koninkrijk van Juda",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 4,
     "type": "tf",
@@ -8629,7 +8629,7 @@
     "id": "000557"
   },
   {
-    "vraag": "Jeremía profeteerde alleen tijdens de regering van koning David",
+    "vraag": "Jerem\u00eda profeteerde alleen tijdens de regering van koning David",
     "juisteAntwoord": "Niet waar",
     "moeilijkheidsgraad": 3,
     "type": "tf",
@@ -8643,7 +8643,7 @@
     "id": "000558"
   },
   {
-    "vraag": "Pashur nam Jeremía gevangen",
+    "vraag": "Pashur nam Jerem\u00eda gevangen",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 4,
     "type": "tf",
@@ -8657,7 +8657,7 @@
     "id": "000559"
   },
   {
-    "vraag": "Jeremía schrijft in zijn brief: Dan zult gij Mij aanroepen en heengaan en tot Mij bidden; en Ik zal naar u niet horen",
+    "vraag": "Jerem\u00eda schrijft in zijn brief: Dan zult gij Mij aanroepen en heengaan en tot Mij bidden; en Ik zal naar u niet horen",
     "juisteAntwoord": "Niet waar",
     "moeilijkheidsgraad": 3,
     "type": "tf",
@@ -8671,91 +8671,91 @@
     "id": "000560"
   },
   {
-    "vraag": "Ezechiël was een profeet in ballingschap in Babel",
+    "vraag": "Ezechi\u00ebl was een profeet in ballingschap in Babel",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 3,
     "type": "tf",
     "categories": [
-      "Ezechiël"
+      "Ezechi\u00ebl"
     ],
-    "biblicalReference": "Ezechiël 1: 1-3",
+    "biblicalReference": "Ezechi\u00ebl 1: 1-3",
     "fouteAntwoorden": [
       "Niet waar"
     ],
     "id": "000561"
   },
   {
-    "vraag": "Ezechiël werd tot een wachter gesteld over het huis van Jeruzalem",
+    "vraag": "Ezechi\u00ebl werd tot een wachter gesteld over het huis van Jeruzalem",
     "juisteAntwoord": "Niet waar",
     "moeilijkheidsgraad": 4,
     "type": "tf",
     "categories": [
-      "Ezechiël"
+      "Ezechi\u00ebl"
     ],
-    "biblicalReference": "Ezechiël 3:17",
+    "biblicalReference": "Ezechi\u00ebl 3:17",
     "fouteAntwoorden": [
       "Waar"
     ],
     "id": "000562"
   },
   {
-    "vraag": "Ezechiël werd geroepen om de zonden van Israël te verkondigen",
+    "vraag": "Ezechi\u00ebl werd geroepen om de zonden van Isra\u00ebl te verkondigen",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 3,
     "type": "tf",
     "categories": [
-      "Ezechiël"
+      "Ezechi\u00ebl"
     ],
-    "biblicalReference": "Ezechiël 2: 3-5",
+    "biblicalReference": "Ezechi\u00ebl 2: 3-5",
     "fouteAntwoorden": [
       "Niet waar"
     ],
     "id": "000563"
   },
   {
-    "vraag": "Joël voorspelde de uitstorting van de Heilige Geest",
+    "vraag": "Jo\u00ebl voorspelde de uitstorting van de Heilige Geest",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 3,
     "type": "tf",
     "categories": [
-      "Joël"
+      "Jo\u00ebl"
     ],
-    "biblicalReference": "Joël 2: 28, 29",
+    "biblicalReference": "Jo\u00ebl 2: 28, 29",
     "fouteAntwoorden": [
       "Niet waar"
     ],
     "id": "000564"
   },
   {
-    "vraag": "Joël eindigt met een waarschuwing voor Israëls vijanden",
+    "vraag": "Jo\u00ebl eindigt met een waarschuwing voor Isra\u00ebls vijanden",
     "juisteAntwoord": "Niet waar",
     "moeilijkheidsgraad": 4,
     "type": "tf",
     "categories": [
-      "Joël"
+      "Jo\u00ebl"
     ],
-    "biblicalReference": "Joël 3: 18-21",
+    "biblicalReference": "Jo\u00ebl 3: 18-21",
     "fouteAntwoorden": [
       "Waar"
     ],
     "id": "000565"
   },
   {
-    "vraag": "Hoséa sprak over de terugkeer van het volk naar God",
+    "vraag": "Hos\u00e9a sprak over de terugkeer van het volk naar God",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 4,
     "type": "tf",
     "categories": [
       "Hosea"
     ],
-    "biblicalReference": "Hoséa 6: 1-2",
+    "biblicalReference": "Hos\u00e9a 6: 1-2",
     "fouteAntwoorden": [
       "Niet waar"
     ],
     "id": "000566"
   },
   {
-    "vraag": "Hoséa schrijft dat Assur ons niet zal behouden, wij zullen rijden op paarden",
+    "vraag": "Hos\u00e9a schrijft dat Assur ons niet zal behouden, wij zullen rijden op paarden",
     "juisteAntwoord": "Niet waar",
     "moeilijkheidsgraad": 3,
     "type": "tf",
@@ -8817,10 +8817,10 @@
     "type": "tf",
     "categories": [
       "Romeinen",
-      "1 Korintiërs",
-      "2 Korintiërs",
+      "1 Korinti\u00ebrs",
+      "2 Korinti\u00ebrs",
       "Galaten",
-      "Efeziërs",
+      "Efezi\u00ebrs",
       "Kolossenzen",
       "1 Tessalonicenzen",
       "2 Tessalonicenzen"
@@ -8860,12 +8860,12 @@
     "id": "000573"
   },
   {
-    "vraag": "Paulus behandelt in de brief aan Éfeze de eenheid van de gemeente",
+    "vraag": "Paulus behandelt in de brief aan \u00c9feze de eenheid van de gemeente",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 3,
     "type": "tf",
     "categories": [
-      "Efeziërs",
+      "Efezi\u00ebrs",
       "Kerst",
       "Pasen",
       "Pinksteren",
@@ -8882,12 +8882,12 @@
     "id": "000574"
   },
   {
-    "vraag": "Paulus spreekt in de brief aan Éfeze over de liefde van Christus",
+    "vraag": "Paulus spreekt in de brief aan \u00c9feze over de liefde van Christus",
     "juisteAntwoord": "Waar",
     "moeilijkheidsgraad": 3,
     "type": "tf",
     "categories": [
-      "Efeziërs"
+      "Efezi\u00ebrs"
     ],
     "biblicalReference": "Efeziers 3: 17-19",
     "fouteAntwoorden": [
@@ -8952,16 +8952,16 @@
     "id": "000579"
   },
   {
-    "vraag": "En zeide tot ... : Kunt gij dan niet één uur met mij waken?",
+    "vraag": "En zeide tot ... : Kunt gij dan niet \u00e9\u00e9n uur met mij waken?",
     "juisteAntwoord": "Petrus",
     "moeilijkheidsgraad": 2,
     "type": "fitb",
     "categories": [],
-    "biblicalReference": "Mattheüs 26:40",
+    "biblicalReference": "Matthe\u00fcs 26:40",
     "fouteAntwoorden": [
       "Johannes",
       "Jakobus",
-      "Matthéüs"
+      "Matth\u00e9\u00fcs"
     ],
     "id": "000580"
   },
@@ -9001,7 +9001,7 @@
     "categories": [],
     "biblicalReference": "Johannes 6:68",
     "fouteAntwoorden": [
-      "Andréas",
+      "Andr\u00e9as",
       "Johannes",
       "Jakobus"
     ],
@@ -9030,7 +9030,7 @@
     "biblicalReference": "Johannes 14:5",
     "fouteAntwoorden": [
       "Lukas",
-      "Andréas",
+      "Andr\u00e9as",
       "Johannes"
     ],
     "id": "000585"
@@ -9043,7 +9043,7 @@
     "categories": [],
     "biblicalReference": "Johannes 14:8",
     "fouteAntwoorden": [
-      "Andréas",
+      "Andr\u00e9as",
       "Johannes",
       "Jakobus"
     ],
@@ -9057,7 +9057,7 @@
     "categories": [],
     "biblicalReference": "Lukas 2:46",
     "fouteAntwoorden": [
-      "Één",
+      "\u00c9\u00e9n",
       "Twee",
       "Vier"
     ],
@@ -9069,7 +9069,7 @@
     "moeilijkheidsgraad": 3,
     "type": "mc",
     "categories": [],
-    "biblicalReference": "Mattheüs 15:34",
+    "biblicalReference": "Matthe\u00fcs 15:34",
     "fouteAntwoorden": [
       "Vijf",
       "Drie",
@@ -9083,7 +9083,7 @@
     "moeilijkheidsgraad": 2,
     "type": "mc",
     "categories": [],
-    "biblicalReference": "Mattheüs 16:16",
+    "biblicalReference": "Matthe\u00fcs 16:16",
     "fouteAntwoorden": [
       "Johannes",
       "Lukas",
@@ -9153,7 +9153,7 @@
     "moeilijkheidsgraad": 1,
     "type": "mc",
     "categories": [],
-    "biblicalReference": "Mattheüs 2:1",
+    "biblicalReference": "Matthe\u00fcs 2:1",
     "fouteAntwoorden": [
       "Noorden",
       "Zuiden",
@@ -9167,7 +9167,7 @@
     "moeilijkheidsgraad": 3,
     "type": "tf",
     "categories": [],
-    "biblicalReference": "Mattheüs 4:9",
+    "biblicalReference": "Matthe\u00fcs 4:9",
     "fouteAntwoorden": [
       "Niet waar"
     ],
@@ -9179,7 +9179,7 @@
     "moeilijkheidsgraad": 4,
     "type": "tf",
     "categories": [],
-    "biblicalReference": "Mattheüs 5:7",
+    "biblicalReference": "Matthe\u00fcs 5:7",
     "fouteAntwoorden": [
       "Waar"
     ],
@@ -9191,7 +9191,7 @@
     "moeilijkheidsgraad": 2,
     "type": "mc",
     "categories": [],
-    "biblicalReference": "Mattheüs 14:20",
+    "biblicalReference": "Matthe\u00fcs 14:20",
     "fouteAntwoorden": [
       "Vijf",
       "Twee",

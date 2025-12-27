@@ -5083,5 +5083,4104 @@
     ],
     "biblicalReference": "Daniel 3:1",
     "id": "000335"
+  },
+  {
+    "question": "Paul mentions the fruits of the Spirit in Galatians",
+    "correctAnswer": "True",
+    "incorrectAnswers": [
+      "Not true"
+    ],
+    "difficulty": 2,
+    "type": "tf",
+    "categories": [
+      "Galatians"
+    ],
+    "biblicalReference": "Galatians 5:22",
+    "id": "000336"
+  },
+  {
+    "question": "In Christ there is difference between Jew and Greek, Paul writes in Galatians",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 2,
+    "type": "tf",
+    "categories": [
+      "Galatians"
+    ],
+    "biblicalReference": "Galatians 3:28",
+    "id": "000337"
+  },
+  {
+    "question": "In Ephesians the spiritual armor is described",
+    "correctAnswer": "True",
+    "incorrectAnswers": [
+      "Not true"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Ephesians"
+    ],
+    "biblicalReference": "Ephesians 6: 10-20",
+    "id": "000338"
+  },
+  {
+    "question": "Paul wrote the biblical book Ephesians during his first missionary journey",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Ephesians",
+      "Acts"
+    ],
+    "biblicalReference": "Ephesians 3:1",
+    "id": "000339"
+  },
+  {
+    "question": "Philippians is addressed to the Christians in Philippi",
+    "correctAnswer": "True",
+    "incorrectAnswers": [
+      "Not true"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "Philippians"
+    ],
+    "biblicalReference": "Philippians",
+    "id": "000340"
+  },
+  {
+    "question": "In Philippians it says \"For to me to live is Christ, and to die is gain\"",
+    "correctAnswer": "True",
+    "incorrectAnswers": [
+      "Not true"
+    ],
+    "difficulty": 2,
+    "type": "tf",
+    "categories": [
+      "Philippians"
+    ],
+    "biblicalReference": "Philippians 1:21",
+    "id": "000341"
+  },
+  {
+    "question": "In Colossians the fruits of the Spirit are described",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 2,
+    "type": "tf",
+    "categories": [],
+    "biblicalReference": "Colossians",
+    "id": "000342"
+  },
+  {
+    "question": "Paul knew the Christians of Colossae personally",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "Colossians"
+    ],
+    "biblicalReference": "Colossians 1",
+    "id": "000343"
+  },
+  {
+    "question": "1 Thessalonians is probably Paul's oldest letter",
+    "correctAnswer": "True",
+    "incorrectAnswers": [
+      "Not true"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [],
+    "biblicalReference": "1 Thessalonians",
+    "id": "000344"
+  },
+  {
+    "question": "In Thessalonians Paul calls to holy walk and brotherly love",
+    "correctAnswer": "True",
+    "incorrectAnswers": [
+      "Not true"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "1 Thessalonians"
+    ],
+    "biblicalReference": "1 Thessalonians 4",
+    "id": "000345"
+  },
+  {
+    "question": "In 2 Thessalonians Paul calls to steadfastness",
+    "correctAnswer": "True",
+    "incorrectAnswers": [
+      "Not true"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [],
+    "biblicalReference": "2 Thessalonians 2: 13-17",
+    "id": "000346"
+  },
+  {
+    "question": "2 Thessalonians is mainly a repetition of the first letter",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [],
+    "biblicalReference": "2 Thessalonians",
+    "id": "000347"
+  },
+  {
+    "question": "Paul writes in 1 Timothy about the office of elders and deacons",
+    "correctAnswer": "True",
+    "incorrectAnswers": [
+      "Not true"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "1 Timothy"
+    ],
+    "biblicalReference": "1 Timothy 3",
+    "id": "000348"
+  },
+  {
+    "question": "Timothy was a pastor in Rome",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "1 Timothy"
+    ],
+    "biblicalReference": "1 Timothy",
+    "id": "000349"
+  },
+  {
+    "question": "Paul writes in 1 Timothy about the role of women in the church",
+    "correctAnswer": "True",
+    "incorrectAnswers": [
+      "Not true"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "1 Timothy"
+    ],
+    "biblicalReference": "1 Timothy",
+    "id": "000350"
+  },
+  {
+    "question": "In 2 Timothy Paul mentions \"All Scripture is God-breathed\"",
+    "correctAnswer": "True",
+    "incorrectAnswers": [
+      "Not true"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [],
+    "biblicalReference": "2 Timothy 3:16",
+    "id": "000351"
+  },
+  {
+    "question": "In 2 Timothy Paul expects that he will go on a journey soon",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "1 Timothy",
+      "2 Timothy"
+    ],
+    "biblicalReference": "2 Timothy",
+    "id": "000352"
+  },
+  {
+    "question": "Titus was left by Paul on the island of Cyprus",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "Philemon"
+    ],
+    "biblicalReference": "Titus 1:5",
+    "id": "000353"
+  },
+  {
+    "question": "Titus contains instructions for appointing elders",
+    "correctAnswer": "True",
+    "incorrectAnswers": [
+      "Not true"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Philemon",
+      "Titus"
+    ],
+    "biblicalReference": "Titus 1: 5-9",
+    "id": "000354"
+  },
+  {
+    "question": "When ... saw that she was not bearing children for Jacob, she envied ... her sister.",
+    "correctAnswer": "Rachel",
+    "incorrectAnswers": [
+      "Leah",
+      "Bilhah",
+      "Zilpah"
+    ],
+    "difficulty": 1,
+    "type": "fitb",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Genesis 30:1",
+    "id": "000355"
+  },
+  {
+    "question": "And Adam lived ... years and begot a son in his own likeness, in his own image, and named his name Seth",
+    "correctAnswer": "130",
+    "incorrectAnswers": [
+      "90",
+      "110",
+      "140"
+    ],
+    "difficulty": 4,
+    "type": "fitb",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Genesis 5:3",
+    "id": "000356"
+  },
+  {
+    "question": "So all the days of Enoch were ... years",
+    "correctAnswer": "365",
+    "incorrectAnswers": [
+      "969",
+      "300",
+      "782"
+    ],
+    "difficulty": 4,
+    "type": "fitb",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Genesis 5:23",
+    "id": "000357"
+  },
+  {
+    "question": "But Noah found ... in the eyes of the Lord",
+    "correctAnswer": "grace",
+    "incorrectAnswers": [
+      "mercy",
+      "forgiveness",
+      "goodness"
+    ],
+    "difficulty": 1,
+    "type": "fitb",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Genesis 6:8",
+    "id": "000358"
+  },
+  {
+    "question": "And the Lord said: Shall I hide from ... what I do?",
+    "correctAnswer": "Abraham",
+    "incorrectAnswers": [
+      "Adam",
+      "Noah",
+      "Lot"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Genesis 18:17",
+    "id": "000359"
+  },
+  {
+    "question": "Moses led the people out of ...",
+    "correctAnswer": "Egypt",
+    "incorrectAnswers": [
+      "Babylon",
+      "Canaan",
+      "Assyria"
+    ],
+    "difficulty": 1,
+    "type": "fitb",
+    "categories": [
+      "Exodus"
+    ],
+    "biblicalReference": "Exodus 12",
+    "id": "000360"
+  },
+  {
+    "question": "The law was given on the mountain ...",
+    "correctAnswer": "Sinai",
+    "incorrectAnswers": [
+      "Horeb",
+      "Nebo",
+      "Moria"
+    ],
+    "difficulty": 1,
+    "type": "fitb",
+    "categories": [
+      "Exodus"
+    ],
+    "biblicalReference": "Exodus 19 and 20",
+    "id": "000361"
+  },
+  {
+    "question": "And they shall make Me a ... that I may dwell in their midst",
+    "correctAnswer": "sanctuary",
+    "incorrectAnswers": [
+      "tent",
+      "tabernacle",
+      "temple"
+    ],
+    "difficulty": 4,
+    "type": "fitb",
+    "categories": [
+      "John"
+    ],
+    "biblicalReference": "Exodus 25:8",
+    "id": "000362"
+  },
+  {
+    "question": "His snuffers and his ... shall be pure gold",
+    "correctAnswer": "snuff dishes",
+    "incorrectAnswers": [
+      "lamps",
+      "knops",
+      "tongs"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Exodus"
+    ],
+    "biblicalReference": "Exodus 25:38",
+    "id": "000363"
+  },
+  {
+    "question": "Then he (Moses) said: Show me Your ...",
+    "correctAnswer": "glory",
+    "incorrectAnswers": [
+      "goodness",
+      "grace",
+      "greatness"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Exodus"
+    ],
+    "biblicalReference": "Exodus 33:18",
+    "id": "000364"
+  },
+  {
+    "question": "Break them in pieces and pour oil on it: it is a ...",
+    "correctAnswer": "grain offering",
+    "incorrectAnswers": [
+      "burnt offering",
+      "fire offering",
+      "thanksgiving offering"
+    ],
+    "difficulty": 4,
+    "type": "fitb",
+    "categories": [
+      "Psalms"
+    ],
+    "biblicalReference": "Leviticus 2:6",
+    "id": "000365"
+  },
+  {
+    "question": "It is a ... ; he has certainly made himself guilty to the Lord",
+    "correctAnswer": "guilt offering",
+    "incorrectAnswers": [
+      "burnt offering",
+      "thanksgiving offering",
+      "peace offering"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Job"
+    ],
+    "biblicalReference": "Leviticus 5:19",
+    "id": "000366"
+  },
+  {
+    "question": "And the priest shall light it on the altar as burnt offering to the Lord; it is a ...",
+    "correctAnswer": "guilt offering",
+    "incorrectAnswers": [
+      "sin offering",
+      "burnt offering",
+      "thanksgiving offering"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Leviticus"
+    ],
+    "biblicalReference": "Leviticus 7:5",
+    "id": "000367"
+  },
+  {
+    "question": "When Moses heard that, it was ... in his eyes",
+    "correctAnswer": "good",
+    "incorrectAnswers": [
+      "evil",
+      "right",
+      "beautiful"
+    ],
+    "difficulty": 4,
+    "type": "fitb",
+    "categories": [
+      "Exodus"
+    ],
+    "biblicalReference": "Leviticus 10:20",
+    "id": "000368"
+  },
+  {
+    "question": "Also the ... of that oil shall pour it on the priest's left hand",
+    "correctAnswer": "priest",
+    "incorrectAnswers": [
+      "prophet",
+      "man",
+      "survivor"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Leviticus"
+    ],
+    "biblicalReference": "Leviticus 14:26",
+    "id": "000369"
+  },
+  {
+    "question": "The book of Numbers begins with a census of the ...",
+    "correctAnswer": "Israelites",
+    "incorrectAnswers": [
+      "priests",
+      "Levites",
+      "foreigners"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Numbers"
+    ],
+    "biblicalReference": "Numbers 1",
+    "id": "000370"
+  },
+  {
+    "question": "Moses then spoke to the children of Israel, that they should keep the ...",
+    "correctAnswer": "Passover",
+    "incorrectAnswers": [
+      "commandment",
+      "feast of tabernacles",
+      "faith"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Exodus",
+      "Deuteronomy"
+    ],
+    "biblicalReference": "Numbers 9:4",
+    "id": "000371"
+  },
+  {
+    "question": "Of the tribe of Judah ..., the son of Jephunneh",
+    "correctAnswer": "Caleb",
+    "incorrectAnswers": [
+      "Simeon",
+      "Issachar",
+      "Benjamin"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Numbers 13:6",
+    "id": "000372"
+  },
+  {
+    "question": "And ... did it; as the Lord commanded him, so he did",
+    "correctAnswer": "Moses",
+    "incorrectAnswers": [
+      "Aaron",
+      "Levi",
+      "Edom"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Exodus"
+    ],
+    "biblicalReference": "Numbers 17:11",
+    "id": "000373"
+  },
+  {
+    "question": "But the children of ... did not die",
+    "correctAnswer": "Korah",
+    "incorrectAnswers": [
+      "Dathan",
+      "Abiram",
+      "Eliab"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Exodus"
+    ],
+    "biblicalReference": "Numbers 26:11",
+    "id": "000374"
+  },
+  {
+    "question": "Moses spoke to the people before they entered the promised land ...",
+    "correctAnswer": "entered",
+    "incorrectAnswers": [
+      "left",
+      "conquered",
+      "forgot"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Exodus",
+      "Deuteronomy"
+    ],
+    "biblicalReference": "Deuteronomy 1",
+    "id": "000375"
+  },
+  {
+    "question": "Moses died on the mountain ...",
+    "correctAnswer": "Nebo",
+    "incorrectAnswers": [
+      "Sinai",
+      "Horeb",
+      "Hor"
+    ],
+    "difficulty": 1,
+    "type": "fitb",
+    "categories": [
+      "Exodus",
+      "Deuteronomy"
+    ],
+    "biblicalReference": "Deuteronomy 34:5",
+    "id": "000376"
+  },
+  {
+    "question": "Therefore the Lord has said to me: You shall not cross this ...",
+    "correctAnswer": "Jordan",
+    "incorrectAnswers": [
+      "Land",
+      "River",
+      "Mountain"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Jeremiah"
+    ],
+    "biblicalReference": "Deuteronomy 3:27",
+    "id": "000377"
+  },
+  {
+    "question": "A ... you shall not muzzle, when he is thirsty",
+    "correctAnswer": "ox",
+    "incorrectAnswers": [
+      "bull",
+      "ram",
+      "bear"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Proverbs"
+    ],
+    "biblicalReference": "Deuteronomy 25:4",
+    "id": "000378"
+  },
+  {
+    "question": "For you shall do what ... is in the eyes of the Lord",
+    "correctAnswer": "right",
+    "incorrectAnswers": [
+      "good",
+      "evil",
+      "just"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Deuteronomy"
+    ],
+    "biblicalReference": "Deuteronomy 12:28",
+    "id": "000379"
+  },
+  {
+    "question": "Then Joshua commanded the ... of the people, saying:",
+    "correctAnswer": "officers",
+    "incorrectAnswers": [
+      "leaders",
+      "heads",
+      "sons"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Joshua"
+    ],
+    "biblicalReference": "Joshua",
+    "id": "000380"
+  },
+  {
+    "question": "And He said: No, but I am the ... of the host of the Lord",
+    "correctAnswer": "Commander",
+    "incorrectAnswers": [
+      "King",
+      "Priest",
+      "Prophet"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Exodus"
+    ],
+    "biblicalReference": "Joshua 5",
+    "id": "000381"
+  },
+  {
+    "question": "Then Joshua built an altar to the Lord, the God of Israel, on the mountain ...",
+    "correctAnswer": "Ebal",
+    "incorrectAnswers": [
+      "Horeb",
+      "Sinai",
+      "Hermon"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Joshua"
+    ],
+    "biblicalReference": "Joshua 8:30",
+    "id": "000382"
+  },
+  {
+    "question": "But the king of ... they captured alive, and they brought him to Joshua",
+    "correctAnswer": "Ai",
+    "incorrectAnswers": [
+      "Lebanon",
+      "Perez",
+      "Gibeon"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Joshua"
+    ],
+    "biblicalReference": "Joshua 8:23",
+    "id": "000383"
+  },
+  {
+    "question": "Those five kings were found, hidden in the cave at ...",
+    "correctAnswer": "Makkedah",
+    "incorrectAnswers": [
+      "Adullam",
+      "Machpelah",
+      "the prophets"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "1 Samuel"
+    ],
+    "biblicalReference": "Joshua 10:16",
+    "id": "000384"
+  },
+  {
+    "question": "The first judge of Israel was ...",
+    "correctAnswer": "Othniel",
+    "incorrectAnswers": [
+      "Ehud",
+      "Shamgar",
+      "Gideon"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Judges"
+    ],
+    "biblicalReference": "Judges 3",
+    "id": "000385"
+  },
+  {
+    "question": "... now, a woman who was a prophetess, the wife of Lappidoth",
+    "correctAnswer": "Deborah",
+    "incorrectAnswers": [
+      "Rebekah",
+      "Jael",
+      "Priscilla"
+    ],
+    "difficulty": 1,
+    "type": "fitb",
+    "categories": [
+      "1 Samuel"
+    ],
+    "biblicalReference": "Judges 4:4",
+    "id": "000386"
+  },
+  {
+    "question": "Gideon asked for a sign from God with a ...",
+    "correctAnswer": "fleece of wool",
+    "incorrectAnswers": [
+      "dream",
+      "vision",
+      "voice"
+    ],
+    "difficulty": 1,
+    "type": "fitb",
+    "categories": [
+      "Judges"
+    ],
+    "biblicalReference": "Judges 6:37",
+    "id": "000387"
+  },
+  {
+    "question": "Then the trees said to the vine: Come you, be ... over us",
+    "correctAnswer": "king",
+    "incorrectAnswers": [
+      "ruler",
+      "prince",
+      "chief"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Ecclesiastes"
+    ],
+    "biblicalReference": "Judges 9:12",
+    "id": "000388"
+  },
+  {
+    "question": "And ... vowed a vow to the Lord",
+    "correctAnswer": "Jephthah",
+    "incorrectAnswers": [
+      "Jair",
+      "Gideon",
+      "Ephraim"
+    ],
+    "difficulty": 1,
+    "type": "fitb",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Judges 11",
+    "id": "000389"
+  },
+  {
+    "question": "And ..., the husband of Naomi died",
+    "correctAnswer": "Elimelech",
+    "incorrectAnswers": [
+      "Mahlon",
+      "Chilion",
+      "Boaz"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Genesis",
+      "Ruth"
+    ],
+    "biblicalReference": "Ruth 1:3",
+    "id": "000390"
+  },
+  {
+    "question": "Call me not Naomi, call me ...",
+    "correctAnswer": "Mara",
+    "incorrectAnswers": [
+      "Orpah",
+      "Ruth",
+      "Rachel"
+    ],
+    "difficulty": 1,
+    "type": "fitb",
+    "categories": [
+      "Ruth"
+    ],
+    "biblicalReference": "Ruth 1:20",
+    "id": "000391"
+  },
+  {
+    "question": "Naomi now had a kinsman of her husband, a man, mighty in ...",
+    "correctAnswer": "wealth",
+    "incorrectAnswers": [
+      "name",
+      "spirit",
+      "goodness"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Ruth"
+    ],
+    "biblicalReference": "Ruth 2:1",
+    "id": "000392"
+  },
+  {
+    "question": "The Lord will reward your ..., and your reward will be full from the Lord",
+    "correctAnswer": "deed",
+    "incorrectAnswers": [
+      "wage",
+      "goodness",
+      "faith"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Ruth"
+    ],
+    "biblicalReference": "Ruth 2:12",
+    "id": "000393"
+  },
+  {
+    "question": "When she now rose ...",
+    "correctAnswer": "to read",
+    "incorrectAnswers": [
+      "to go",
+      "to work",
+      "to comfort her"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Revelation"
+    ],
+    "biblicalReference": "Ruth",
+    "id": "000394"
+  },
+  {
+    "question": "And she said to her: All what you ... , I will do",
+    "correctAnswer": "say to me",
+    "incorrectAnswers": [
+      "command me",
+      "threaten me",
+      "speak to me"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Ruth"
+    ],
+    "biblicalReference": "Ruth",
+    "id": "000395"
+  },
+  {
+    "question": "Elkanah went annually to sacrifice in ...",
+    "correctAnswer": "Shiloh",
+    "incorrectAnswers": [
+      "Jerusalem",
+      "the temple",
+      "the tabernacle"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "1 Samuel"
+    ],
+    "biblicalReference": "1 Samuel 1:3",
+    "id": "000396"
+  },
+  {
+    "question": "But when a man sins against the Lord, who will ...",
+    "correctAnswer": "pray for him",
+    "incorrectAnswers": [
+      "be able to exist",
+      "still seek",
+      "then find"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [],
+    "biblicalReference": "1 Samuel 2:25",
+    "id": "000397"
+  },
+  {
+    "question": "And I will raise up for Myself a ... priest, who will do as is in My heart and in My soul shall be",
+    "correctAnswer": "faithful",
+    "incorrectAnswers": [
+      "man",
+      "prophet",
+      "son"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Isaiah"
+    ],
+    "biblicalReference": "1 Samuel 2:35",
+    "id": "000398"
+  },
+  {
+    "question": "Saul became jealous of David because he ...",
+    "correctAnswer": "received more praise",
+    "incorrectAnswers": [
+      "had more wealth",
+      "had more friends",
+      "possessed more land"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "1 Samuel",
+      "2 Samuel"
+    ],
+    "biblicalReference": "1 Samuel 18",
+    "id": "000399"
+  },
+  {
+    "question": "David became king over Israel in the city ...",
+    "correctAnswer": "Hebron",
+    "incorrectAnswers": [
+      "Jerusalem",
+      "Bethlehem",
+      "Jericho"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "1 Samuel",
+      "2 Samuel"
+    ],
+    "biblicalReference": "2 Samuel 2",
+    "id": "000400"
+  },
+  {
+    "question": "David brought the ark of God to ...",
+    "correctAnswer": "Jerusalem",
+    "incorrectAnswers": [
+      "Bethel",
+      "Hebron",
+      "Gilgal"
+    ],
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "1 Samuel",
+      "2 Samuel"
+    ],
+    "biblicalReference": "2 Samuel 6",
+    "id": "000401"
+  },
+  {
+    "question": "The Lord sent the prophet ... to David",
+    "correctAnswer": "Nathan",
+    "incorrectAnswers": [
+      "Elijah",
+      "Elisha",
+      "Isaiah"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "1 Samuel"
+    ],
+    "biblicalReference": "2 Samuel 12:1",
+    "id": "000402"
+  },
+  {
+    "question": "Absalom fled to ...",
+    "correctAnswer": "Geshur",
+    "incorrectAnswers": [
+      "Jerusalem",
+      "Rabbah",
+      "Ziklag"
+    ],
+    "difficulty": 4,
+    "type": "fitb",
+    "categories": [
+      "2 Samuel"
+    ],
+    "biblicalReference": "2 Samuel 13:38",
+    "id": "000403"
+  },
+  {
+    "question": "Which woman said: Keep the king?",
+    "correctAnswer": "the Tekoite",
+    "incorrectAnswers": [
+      "the Ammonitess",
+      "the Hittite",
+      "the Israelitess"
+    ],
+    "difficulty": 5,
+    "type": "fitb",
+    "categories": [
+      "1 Kings"
+    ],
+    "biblicalReference": "2 Samuel",
+    "id": "000404"
+  },
+  {
+    "question": "Who wanted to become king when David was old?",
+    "correctAnswer": "Adonijah",
+    "incorrectAnswers": [
+      "Solomon",
+      "Joab",
+      "Absalom"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "1 Samuel",
+      "2 Samuel"
+    ],
+    "biblicalReference": "1 Kings 1",
+    "id": "000405"
+  },
+  {
+    "question": "Grant me ... , the priest",
+    "correctAnswer": "Zadok",
+    "incorrectAnswers": [
+      "Nathan",
+      "Benaiah",
+      "Joiada"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Exodus"
+    ],
+    "biblicalReference": "1 Kings 1:32",
+    "id": "000406"
+  },
+  {
+    "question": "and they have made him ride on ... of the king",
+    "correctAnswer": "the mule",
+    "incorrectAnswers": [
+      "the donkey",
+      "the chariot",
+      "the horse"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Matthew",
+      "Christ"
+    ],
+    "biblicalReference": "1 Kings 1",
+    "id": "000407"
+  },
+  {
+    "question": "I go in the way of all the earth; so you are strong and become ...",
+    "correctAnswer": "a man",
+    "incorrectAnswers": [
+      "brave",
+      "a watchman",
+      "God-fearing"
+    ],
+    "difficulty": 4,
+    "type": "fitb",
+    "categories": [
+      "Deuteronomy"
+    ],
+    "biblicalReference": "1 Kings 2:2",
+    "id": "000408"
+  },
+  {
+    "question": "Apply your ... so that you do not let her gray hair descend with peace into the grave",
+    "correctAnswer": "wisdom",
+    "incorrectAnswers": [
+      "word",
+      "understanding",
+      "wealth"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Ecclesiastes"
+    ],
+    "biblicalReference": "1 Kings 2:6",
+    "id": "000409"
+  },
+  {
+    "question": "The king of Israel in time of Elisha was ...",
+    "correctAnswer": "Joram",
+    "incorrectAnswers": [
+      "Ahab",
+      "Solomon",
+      "David"
+    ],
+    "difficulty": 4,
+    "type": "fitb",
+    "categories": [
+      "1 Kings",
+      "2 Kings"
+    ],
+    "biblicalReference": "2 Kings 3",
+    "id": "000410"
+  },
+  {
+    "question": "He then said to the young men: ... him to his mother",
+    "correctAnswer": "bring",
+    "incorrectAnswers": [
+      "carry",
+      "lead",
+      "give"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [],
+    "biblicalReference": "2 Kings 4:27",
+    "id": "000411"
+  },
+  {
+    "question": "When Elisha then returned to ..., there was famine in that land",
+    "correctAnswer": "Gilgal",
+    "incorrectAnswers": [
+      "Shunem",
+      "Baal-shalisha",
+      "Syria"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "1 Kings"
+    ],
+    "biblicalReference": "2 Kings 4:38",
+    "id": "000412"
+  },
+  {
+    "question": "His ... and ..., the rivers of Damascus, are better than all waters of Israel",
+    "correctAnswer": "Abana, Pharpar",
+    "incorrectAnswers": [
+      "Euphrates, Tigris",
+      "Pison, Gihon",
+      "Jordan, Nile"
+    ],
+    "difficulty": 5,
+    "type": "fitb",
+    "categories": [
+      "2 Kings"
+    ],
+    "biblicalReference": "2 Kings 5:12",
+    "id": "000413"
+  },
+  {
+    "question": "that the iron fell in the water, and he cried and said: Ah, my lord; for it was ...",
+    "correctAnswer": "heavy",
+    "incorrectAnswers": [
+      "fallen",
+      "broken",
+      "rusty"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "2 Kings"
+    ],
+    "biblicalReference": "2 Kings 6:5",
+    "id": "000414"
+  },
+  {
+    "question": "1 Chronicles begins with a list of ...",
+    "correctAnswer": "generations",
+    "incorrectAnswers": [
+      "kings",
+      "prophets",
+      "priests"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "1 Chronicles"
+    ],
+    "biblicalReference": "1 Chronicles 1",
+    "id": "000415"
+  },
+  {
+    "question": "and his mother had called him ..., saying: For I bore him with pain",
+    "correctAnswer": "Jabez",
+    "incorrectAnswers": [
+      "Perez",
+      "Hezron",
+      "Etam"
+    ],
+    "difficulty": 1,
+    "type": "fitb",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "1 Chronicles 4:9",
+    "id": "000416"
+  },
+  {
+    "question": "And in days of Saul they fought against the ... ; who fell by their hand",
+    "correctAnswer": "Hagarites",
+    "incorrectAnswers": [
+      "Gadites",
+      "Reubenites",
+      "Hivites"
+    ],
+    "difficulty": 5,
+    "type": "fitb",
+    "categories": [
+      "1 Samuel"
+    ],
+    "biblicalReference": "1 Chronicles 5:10",
+    "id": "000417"
+  },
+  {
+    "question": "Aaron now and his sons burned offerings on the altar of ... and on the incense altar",
+    "correctAnswer": "burnt offerings",
+    "incorrectAnswers": [
+      "grain offerings",
+      "sin offerings",
+      "thanksgiving offerings"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Exodus"
+    ],
+    "biblicalReference": "1 Chronicles 6:49",
+    "id": "000418"
+  },
+  {
+    "question": "So Saul and his ... died",
+    "correctAnswer": "three",
+    "incorrectAnswers": [
+      "two",
+      "four",
+      "five"
+    ],
+    "difficulty": 4,
+    "type": "fitb",
+    "categories": [
+      "1 Samuel"
+    ],
+    "biblicalReference": "1 Chronicles 10:13",
+    "id": "000419"
+  },
+  {
+    "question": "Solomon built a temple in Jerusalem on the mountain ...",
+    "correctAnswer": "Moria",
+    "incorrectAnswers": [
+      "Sinai",
+      "Carmel",
+      "Zion"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "1 Kings",
+      "2 Chronicles"
+    ],
+    "biblicalReference": "2 Chronicles 3:1",
+    "id": "000420"
+  },
+  {
+    "question": "The king who restored the temple was ...",
+    "correctAnswer": "Josiah",
+    "incorrectAnswers": [
+      "David",
+      "Solomon",
+      "Ahaz"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "1 Chronicles",
+      "2 Chronicles"
+    ],
+    "biblicalReference": "2 Chronicles 34",
+    "id": "000421"
+  },
+  {
+    "question": "and he called the name of judge ... and of the left Boaz",
+    "correctAnswer": "Jachin",
+    "incorrectAnswers": [
+      "Joachin",
+      "Jacob",
+      "Jehozadak"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Ruth"
+    ],
+    "biblicalReference": "2 Chronicles 3:17",
+    "id": "000422"
+  },
+  {
+    "question": "And they brought for Solomon ... from Egypt and from all those lands",
+    "correctAnswer": "horses",
+    "incorrectAnswers": [
+      "gold",
+      "silver",
+      "camels"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "1 Kings"
+    ],
+    "biblicalReference": "2 Chronicles 1:17",
+    "id": "000423"
+  },
+  {
+    "question": "And Solomon reigned in Jerusalem over all Israel ... years",
+    "correctAnswer": "40",
+    "incorrectAnswers": [
+      "30",
+      "34",
+      "45"
+    ],
+    "difficulty": 1,
+    "type": "fitb",
+    "categories": [
+      "1 Kings"
+    ],
+    "biblicalReference": "2 Chronicles",
+    "id": "000424"
+  },
+  {
+    "question": "The return of the exiles began under king ...",
+    "correctAnswer": "Cyrus",
+    "incorrectAnswers": [
+      "Darius",
+      "Nebuchadnezzar",
+      "Xerxes"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Ezra"
+    ],
+    "biblicalReference": "Ezra",
+    "id": "000425"
+  },
+  {
+    "question": "Ezra led the return of the Israelites to ...",
+    "correctAnswer": "Jerusalem",
+    "incorrectAnswers": [
+      "Egypt",
+      "Babylon",
+      "Moab"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Ezra"
+    ],
+    "biblicalReference": "Ezra",
+    "id": "000426"
+  },
+  {
+    "question": "And they set up the Levites from ... years old and above to take oversight over work of Lord's house",
+    "correctAnswer": "18",
+    "incorrectAnswers": [
+      "20",
+      "22",
+      "25"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Exodus"
+    ],
+    "biblicalReference": "Ezra 3:8",
+    "id": "000427"
+  },
+  {
+    "question": "The letter which you have fitted for us, is ... for me to read",
+    "correctAnswer": "profitable",
+    "incorrectAnswers": [
+      "unprofitable",
+      "good",
+      "readable"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Philemon"
+    ],
+    "biblicalReference": "Ezra 4:18",
+    "id": "000428"
+  },
+  {
+    "question": "Now when I fast at the river ...",
+    "correctAnswer": "Ahava",
+    "incorrectAnswers": [
+      "Tigris",
+      "Euphrates",
+      "Pison"
+    ],
+    "difficulty": 5,
+    "type": "fitb",
+    "categories": [
+      "Ezra"
+    ],
+    "biblicalReference": "Ezra 8:21",
+    "id": "000429"
+  },
+  {
+    "question": "I now was ... of the king",
+    "correctAnswer": "cupbearer",
+    "incorrectAnswers": [
+      "baker",
+      "priest",
+      "prophet"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [],
+    "biblicalReference": "Nehemiah 1:11",
+    "id": "000430"
+  },
+  {
+    "question": "The walls of Jerusalem were rebuilt in ... days",
+    "correctAnswer": "52",
+    "incorrectAnswers": [
+      "42",
+      "30",
+      "70"
+    ],
+    "difficulty": 1,
+    "type": "fitb",
+    "categories": [
+      "Ezra",
+      "Nehemiah"
+    ],
+    "biblicalReference": "Nehemiah 6:15",
+    "id": "000431"
+  },
+  {
+    "question": "Nehemiah was concerned over the ... of the people",
+    "correctAnswer": "sins",
+    "incorrectAnswers": [
+      "wealth",
+      "diseases",
+      "gave"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Nehemiah",
+      "Ezra"
+    ],
+    "biblicalReference": "Nehemiah 1: 6,7",
+    "id": "000432"
+  },
+  {
+    "question": "Remember me, my God, for good, all that I have ... to this people",
+    "correctAnswer": "done for",
+    "incorrectAnswers": [
+      "done to You",
+      "done to them",
+      "done to these"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Psalms"
+    ],
+    "biblicalReference": "Nehemiah 5:19",
+    "id": "000433"
+  },
+  {
+    "question": "Come and let us gather together in the valleys, in the valley ...",
+    "correctAnswer": "Ono",
+    "incorrectAnswers": [
+      "Ela",
+      "Kison",
+      "Hinnom"
+    ],
+    "difficulty": 5,
+    "type": "fitb",
+    "categories": [
+      "Psalms"
+    ],
+    "biblicalReference": "Nehemiah 6:2",
+    "id": "000434"
+  },
+  {
+    "question": "Esther was ..., beautiful and lovely in form",
+    "correctAnswer": "white",
+    "incorrectAnswers": [
+      "black",
+      "yellow",
+      "red"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Exodus"
+    ],
+    "biblicalReference": "Esther 1:1",
+    "id": "000435"
+  },
+  {
+    "question": "In the twelfth month, which is the month ..., in the tenth year of his reign",
+    "correctAnswer": "Tebeth",
+    "incorrectAnswers": [
+      "Nisan",
+      "Sivan",
+      "Adar"
+    ],
+    "difficulty": 4,
+    "type": "fitb",
+    "categories": [
+      "1 Kings"
+    ],
+    "biblicalReference": "Esther 2:16",
+    "id": "000436"
+  },
+  {
+    "question": "Then Esther called ..., one of the king's chamberlains",
+    "correctAnswer": "Hatach",
+    "incorrectAnswers": [
+      "Haman",
+      "Heber",
+      "Hanan"
+    ],
+    "difficulty": 4,
+    "type": "fitb",
+    "categories": [
+      "Esther"
+    ],
+    "biblicalReference": "Esther 4:5",
+    "id": "000437"
+  },
+  {
+    "question": "With the Jews there was light and joy and ...",
+    "correctAnswer": "gladness",
+    "incorrectAnswers": [
+      "honor",
+      "praise",
+      "happiness"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [],
+    "biblicalReference": "Esther 8:16",
+    "id": "000438"
+  },
+  {
+    "question": "Among the Jews were light and gladness and ...",
+    "correctAnswer": "glory",
+    "incorrectAnswers": [
+      "honor",
+      "praise",
+      "happiness"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [],
+    "biblicalReference": "Esther 8:16",
+    "id": "000439"
+  },
+  {
+    "question": "And to him were born ... sons and three daughters",
+    "correctAnswer": "7",
+    "incorrectAnswers": [
+      "5",
+      "8",
+      "3"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Job 1:2",
+    "id": "000440"
+  },
+  {
+    "question": "In all this Job did not sin, and charged God with nothing ...",
+    "correctAnswer": "unrighteous",
+    "incorrectAnswers": [
+      "wrong",
+      "evil",
+      "good"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Job"
+    ],
+    "biblicalReference": "Job 1:22",
+    "id": "000441"
+  },
+  {
+    "question": "For He gives pain and He ...; He wounds and His hands heal",
+    "correctAnswer": "binds",
+    "incorrectAnswers": [
+      "heals",
+      "creates",
+      "helps"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Isaiah",
+      "Christ",
+      "Psalm"
+    ],
+    "biblicalReference": "Job 5:18",
+    "id": "000442"
+  },
+  {
+    "question": "Teach me, and I will ... and will give me understanding in which I erred",
+    "correctAnswer": "keep silent",
+    "incorrectAnswers": [
+      "preach",
+      "go",
+      "walk"
+    ],
+    "difficulty": 4,
+    "type": "fitb",
+    "categories": [
+      "Psalms"
+    ],
+    "biblicalReference": "Job 6:24",
+    "id": "000443"
+  },
+  {
+    "question": "Then answered ..., the Shuhite, and said:",
+    "correctAnswer": "Bildad",
+    "incorrectAnswers": [
+      "Eliphaz",
+      "Zophar",
+      "Elihu"
+    ],
+    "difficulty": 5,
+    "type": "fitb",
+    "categories": [
+      "1 Samuel"
+    ],
+    "biblicalReference": "Job 25:1",
+    "id": "000444"
+  },
+  {
+    "question": "Serves the Lord with ..., and pleases Him with thanksgiving",
+    "correctAnswer": "fear",
+    "incorrectAnswers": [
+      "joy",
+      "gladness",
+      "honor"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Psalms"
+    ],
+    "biblicalReference": "Psalms 2:11",
+    "id": "000445"
+  },
+  {
+    "question": "I lay down and slept; I was ashamed, for the Lord ... me",
+    "correctAnswer": "sustained",
+    "incorrectAnswers": [
+      "helped",
+      "redeemed",
+      "honored"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Psalms"
+    ],
+    "biblicalReference": "Psalms 3:6",
+    "id": "000446"
+  },
+  {
+    "question": "The Lord has heard my ...; the Lord will accept my prayer",
+    "correctAnswer": "crying",
+    "incorrectAnswers": [
+      "prayer",
+      "song",
+      "praise"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Psalms"
+    ],
+    "biblicalReference": "Psalms 6:10",
+    "id": "000447"
+  },
+  {
+    "question": "O Lord, our Lord, how ... is Your Name in all the earth",
+    "correctAnswer": "glorious",
+    "incorrectAnswers": [
+      "big",
+      "heavenly",
+      "lovely"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Psalms"
+    ],
+    "biblicalReference": "Psalms 8:10",
+    "id": "000448"
+  },
+  {
+    "question": "Therefore I will praise You, O Lord, among the heathen, and I will ... Your name",
+    "correctAnswer": "sing psalms to",
+    "incorrectAnswers": [
+      "love",
+      "bless",
+      "praise"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Psalms"
+    ],
+    "biblicalReference": "Psalms 18:50",
+    "id": "000449"
+  },
+  {
+    "question": "The fear of the Lord is the beginning of ...",
+    "correctAnswer": "wisdom",
+    "incorrectAnswers": [
+      "wisdom",
+      "joy",
+      "blessedness"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Psalms",
+      "Proverbs",
+      "Ecclesiastes",
+      "Haggai"
+    ],
+    "biblicalReference": "Proverbs 1:7",
+    "id": "000450"
+  },
+  {
+    "question": "Do you seek her as silver and consume her like ...",
+    "correctAnswer": "hidden treasures",
+    "incorrectAnswers": [
+      "wealth",
+      "possessions",
+      "gold"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Proverbs"
+    ],
+    "biblicalReference": "Proverbs 2:4",
+    "id": "000451"
+  },
+  {
+    "question": "Trust in the Lord with your whole heart, and lean not on your ...",
+    "correctAnswer": "understanding",
+    "incorrectAnswers": [
+      "heart",
+      "wealth",
+      "knowledge"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Psalms",
+      "Proverbs"
+    ],
+    "biblicalReference": "Proverbs 3:5",
+    "id": "000452"
+  },
+  {
+    "question": "I will instruct you in the path of ...; I will make my eyes on your ways",
+    "correctAnswer": "wisdom",
+    "incorrectAnswers": [
+      "good",
+      "straight",
+      "level"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Proverbs"
+    ],
+    "biblicalReference": "Proverbs 4:11",
+    "id": "000453"
+  },
+  {
+    "question": "Commit your ... to the Lord, and your thoughts will be established",
+    "correctAnswer": "works",
+    "incorrectAnswers": [
+      "way",
+      "thoughts",
+      "eyes"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Psalms"
+    ],
+    "biblicalReference": "Proverbs 16:3",
+    "id": "000454"
+  },
+  {
+    "question": "All has a ... time",
+    "correctAnswer": "destined time",
+    "incorrectAnswers": [
+      "fixed",
+      "good",
+      "set time"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Ecclesiastes"
+    ],
+    "biblicalReference": "Ecclesiastes 3:1",
+    "id": "000455"
+  },
+  {
+    "question": "The book of Ecclesiastes is written to ...",
+    "correctAnswer": "Solomon",
+    "incorrectAnswers": [
+      "David",
+      "Moses",
+      "Isaiah"
+    ],
+    "difficulty": 1,
+    "type": "fitb",
+    "categories": [
+      "Ecclesiastes"
+    ],
+    "biblicalReference": "Ecclesiastes 1:1",
+    "id": "000456"
+  },
+  {
+    "question": "And it has neither seen ... nor known it; it has more rest than he",
+    "correctAnswer": "sun",
+    "incorrectAnswers": [
+      "moon",
+      "stars",
+      "waters"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Ecclesiastes"
+    ],
+    "biblicalReference": "Ecclesiastes 6:5",
+    "id": "000457"
+  },
+  {
+    "question": "and who breaks a ... through will be caught by him",
+    "correctAnswer": "hedge",
+    "incorrectAnswers": [
+      "lizard",
+      "mouse",
+      "weasel"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Proverbs"
+    ],
+    "biblicalReference": "Proverbs 10:8",
+    "id": "000458"
+  },
+  {
+    "question": "and much reading is wearing out of ...",
+    "correctAnswer": "flesh",
+    "incorrectAnswers": [
+      "understanding",
+      "eyes",
+      "vision"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Proverbs"
+    ],
+    "biblicalReference": "Proverbs 12:12",
+    "id": "000459"
+  },
+  {
+    "question": "Draw me, we will ...",
+    "correctAnswer": "open up",
+    "incorrectAnswers": [
+      "find",
+      "approach",
+      "seek"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Haggai"
+    ],
+    "biblicalReference": "Haggai 1:4",
+    "id": "000460"
+  },
+  {
+    "question": "The bars of our houses are ...",
+    "correctAnswer": "cedars",
+    "incorrectAnswers": [
+      "oaks",
+      "from olive wood",
+      "from acacia wood"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Psalms",
+      "Proverbs"
+    ],
+    "biblicalReference": "Haggai 1:17",
+    "id": "000461"
+  },
+  {
+    "question": "For behold, the ... is past",
+    "correctAnswer": "winter",
+    "incorrectAnswers": [
+      "summer",
+      "spring",
+      "autumn"
+    ],
+    "difficulty": 1,
+    "type": "fitb",
+    "categories": [],
+    "biblicalReference": "Haggai 2:11",
+    "id": "000462"
+  },
+  {
+    "question": "When I knew it, I set My soul on the ... of My people",
+    "correctAnswer": "violent",
+    "incorrectAnswers": [
+      "gentle",
+      "loving",
+      "restless"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Isaiah"
+    ],
+    "biblicalReference": "Haggai 6:12",
+    "id": "000463"
+  },
+  {
+    "question": "Solomon had a daughter in ...",
+    "correctAnswer": "Baal-Hamon",
+    "incorrectAnswers": [
+      "Hamon",
+      "Baal-Gad",
+      "Jeroboam-Baal"
+    ],
+    "difficulty": 5,
+    "type": "fitb",
+    "categories": [
+      "1 Kings",
+      "2 Chronicles"
+    ],
+    "biblicalReference": "Haggai 8:11",
+    "id": "000464"
+  },
+  {
+    "question": "The ... will be gathered again, even to the God of heaven",
+    "correctAnswer": "Jacob's",
+    "incorrectAnswers": [
+      "Isaiah's",
+      "Abraham's",
+      "David's"
+    ],
+    "difficulty": 4,
+    "type": "fitb",
+    "categories": [
+      "Isaiah"
+    ],
+    "biblicalReference": "Isaiah 10:21",
+    "id": "000465"
+  },
+  {
+    "question": "The ... and the ... shall come together",
+    "correctAnswer": "cow, bear",
+    "incorrectAnswers": [
+      "lion",
+      "wolf",
+      "sheep"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Isaiah 11:7",
+    "id": "000466"
+  },
+  {
+    "question": "Praising the Lord, for He has done ... things",
+    "correctAnswer": "glorious",
+    "incorrectAnswers": [
+      "good",
+      "Godly"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Psalms"
+    ],
+    "biblicalReference": "Isaiah 12:5",
+    "id": "000467"
+  },
+  {
+    "question": "and the prophet Isaiah, the son of ..., came to him",
+    "correctAnswer": "Amoz",
+    "incorrectAnswers": [
+      "Hezekiah",
+      "Ahab",
+      "Judah"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Isaiah"
+    ],
+    "biblicalReference": "Isaiah 38:1",
+    "id": "000468"
+  },
+  {
+    "question": "O Zion, you who ... of good news",
+    "correctAnswer": "bring forth",
+    "incorrectAnswers": [
+      "hear",
+      "proclaim",
+      "publish"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Psalms"
+    ],
+    "biblicalReference": "Isaiah 40:9",
+    "id": "000469"
+  },
+  {
+    "question": "And I said: Ah, Lord God, behold, I cannot speak, for I am ...",
+    "correctAnswer": "young",
+    "incorrectAnswers": [
+      "old",
+      "experienced",
+      "ashamed"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Isaiah"
+    ],
+    "biblicalReference": "Jeremiah 1:6",
+    "id": "000470"
+  },
+  {
+    "question": "for I am with you, to ... to the Lord",
+    "correctAnswer": "plead",
+    "incorrectAnswers": [
+      "help",
+      "support",
+      "listen"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [],
+    "biblicalReference": "Jeremiah 1:8",
+    "id": "000471"
+  },
+  {
+    "question": "He will bring to them a ... who will be strong for them",
+    "correctAnswer": "wind",
+    "incorrectAnswers": [
+      "storm",
+      "rain",
+      "overflow"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [],
+    "biblicalReference": "Jeremiah 4:12",
+    "id": "000472"
+  },
+  {
+    "question": "See, you trust on ... which do no good",
+    "correctAnswer": "false words",
+    "incorrectAnswers": [
+      "gold",
+      "thoughts",
+      "teachers"
+    ],
+    "difficulty": 4,
+    "type": "fitb",
+    "categories": [
+      "Isaiah"
+    ],
+    "biblicalReference": "Jeremiah 7:8",
+    "id": "000473"
+  },
+  {
+    "question": "You set my ... to the days of sorrows",
+    "correctAnswer": "remembrance",
+    "incorrectAnswers": [
+      "fear",
+      "despair",
+      "grief"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Psalms"
+    ],
+    "biblicalReference": "Jeremiah 17:17",
+    "id": "000474"
+  },
+  {
+    "question": "My soul is weary of ... and bows down within me",
+    "correctAnswer": "life",
+    "incorrectAnswers": [
+      "living",
+      "grief",
+      "distress"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Psalms"
+    ],
+    "biblicalReference": "Klaagliederen 3:20",
+    "id": "000475"
+  },
+  {
+    "question": "Is it ... of the Lord, that we have not been destroyed?",
+    "correctAnswer": "kindnesses",
+    "incorrectAnswers": [
+      "goodnesses",
+      "righteousnesses",
+      "mercies"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Romans"
+    ],
+    "biblicalReference": "Klaagliederen 3:22",
+    "id": "000476"
+  },
+  {
+    "question": "They are all ... tomorrow, Your love is great",
+    "correctAnswer": "new",
+    "incorrectAnswers": [
+      "goodness",
+      "faith",
+      "loving"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Psalms"
+    ],
+    "biblicalReference": "Klaagliederen 3:23",
+    "id": "000477"
+  },
+  {
+    "question": "For he plots and deceives people children not ...",
+    "correctAnswer": "from heart",
+    "incorrectAnswers": [
+      "with lust",
+      "with malice",
+      "in eternity"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Job"
+    ],
+    "biblicalReference": "Klaagliederen 3:33",
+    "id": "000478"
+  },
+  {
+    "question": "You have already seen ..., all their thoughts against me",
+    "correctAnswer": "all",
+    "incorrectAnswers": [
+      "their evil",
+      "their sins",
+      "their plotting"
+    ],
+    "difficulty": 4,
+    "type": "fitb",
+    "categories": [
+      "Jeremiah"
+    ],
+    "biblicalReference": "Klaagliederen 3:60",
+    "id": "000479"
+  },
+  {
+    "question": "And when I opened my mouth, and He gave me that role to ...",
+    "correctAnswer": "eat",
+    "incorrectAnswers": [
+      "listen",
+      "observe",
+      "see"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Revelation"
+    ],
+    "biblicalReference": "Ezekiel 3:2",
+    "id": "000480"
+  },
+  {
+    "question": "Men, set your face against the ...",
+    "correctAnswer": "Israel's mountains",
+    "incorrectAnswers": [
+      "Cherubim",
+      "around Jerusalem",
+      "Zions"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Ezekiel"
+    ],
+    "biblicalReference": "Ezekiel 6:2",
+    "id": "000481"
+  },
+  {
+    "question": "And He said to me: Man, go now and walk in ...",
+    "correctAnswer": "wilderness",
+    "incorrectAnswers": [
+      "earth",
+      "mountains",
+      "river"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Ezekiel"
+    ],
+    "biblicalReference": "Ezekiel 8:8",
+    "id": "000482"
+  },
+  {
+    "question": "And the inhabited places shall be ...",
+    "correctAnswer": "ruins",
+    "incorrectAnswers": [
+      "destroyed",
+      "abandoned",
+      "overthrown"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Isaiah"
+    ],
+    "biblicalReference": "Ezekiel 12:20",
+    "id": "000483"
+  },
+  {
+    "question": "But Noah, Daniel and ... were in the middle of it themselves",
+    "correctAnswer": "Job",
+    "incorrectAnswers": [
+      "Amos",
+      "Jonah",
+      "David"
+    ],
+    "difficulty": 4,
+    "type": "fitb",
+    "categories": [
+      "Daniel"
+    ],
+    "biblicalReference": "Ezekiel 14:20",
+    "id": "000484"
+  },
+  {
+    "question": "and that men subdued them in the speech of the ...",
+    "correctAnswer": "Chaldeans",
+    "incorrectAnswers": [
+      "Babylonians",
+      "Persians",
+      "Egyptians"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Exodus"
+    ],
+    "biblicalReference": "Daniel 1:4",
+    "id": "000485"
+  },
+  {
+    "question": "and Daniel named him ...",
+    "correctAnswer": "Belteshazzar",
+    "incorrectAnswers": [
+      "Shadrach",
+      "Meshach",
+      "Abed-nego"
+    ],
+    "difficulty": 1,
+    "type": "fitb",
+    "categories": [
+      "Daniel"
+    ],
+    "biblicalReference": "Daniel 1:7",
+    "id": "000486"
+  },
+  {
+    "question": "Yet be patient, ..., your kingdom is divided",
+    "correctAnswer": "10 days",
+    "incorrectAnswers": [
+      "6 days",
+      "7 days",
+      "14 days"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Daniel 1:12",
+    "id": "000487"
+  },
+  {
+    "question": "Then Daniel entered until ..., of the king who had set up the wise men of Babylon to bring us to eat and drink",
+    "correctAnswer": "Arioch",
+    "incorrectAnswers": [
+      "Melzar",
+      "Shadrach",
+      "Ari-el"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Daniel"
+    ],
+    "biblicalReference": "Daniel 2:24",
+    "id": "000488"
+  },
+  {
+    "question": "... , your kingdom is divided",
+    "correctAnswer": "Medes",
+    "incorrectAnswers": [
+      "Persians",
+      "Greeks",
+      "Tekei"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "1 Kings",
+      "2 Samuel"
+    ],
+    "biblicalReference": "Daniel 5:28",
+    "id": "000489"
+  },
+  {
+    "question": "and in the days of ..., son of Joash, king of Israel",
+    "correctAnswer": "Jeroboam",
+    "incorrectAnswers": [
+      "Jotham",
+      "Ahaz",
+      "Hezekiah"
+    ],
+    "difficulty": 5,
+    "type": "fitb",
+    "categories": [
+      "1 Kings",
+      "2 Kings",
+      "1 Chronicles",
+      "2 Chronicles"
+    ],
+    "biblicalReference": "Hosea 1:1",
+    "id": "000490"
+  },
+  {
+    "question": "Is not his name ...; for you have not been My people",
+    "correctAnswer": "Lo-Ruhamah",
+    "incorrectAnswers": [
+      "Lo-Ruchamah",
+      "Lizreel",
+      "Gomer"
+    ],
+    "difficulty": 5,
+    "type": "fitb",
+    "categories": [
+      "Jeremiah"
+    ],
+    "biblicalReference": "Hosea 1:9",
+    "id": "000491"
+  },
+  {
+    "question": "Ephraim is ..., let him go and become a ...",
+    "correctAnswer": "godless",
+    "incorrectAnswers": [
+      "brother",
+      "priest",
+      "prophet"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Hosea 4:17",
+    "id": "000492"
+  },
+  {
+    "question": "Come and let us ... to the Lord",
+    "correctAnswer": "return",
+    "incorrectAnswers": [
+      "repent",
+      "observe",
+      "pray"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Psalms"
+    ],
+    "biblicalReference": "Hosea 6:1",
+    "id": "000493"
+  },
+  {
+    "question": "Who is ...? Who understands these things",
+    "correctAnswer": "wise",
+    "incorrectAnswers": [
+      "understanding",
+      "right",
+      "insightful"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "John"
+    ],
+    "biblicalReference": "Hosea 14:10",
+    "id": "000494"
+  },
+  {
+    "question": "The word of the Lord that has gone forth to ...",
+    "correctAnswer": "Joel",
+    "incorrectAnswers": [
+      "Pethuel",
+      "Jeremiah",
+      "Jonah"
+    ],
+    "difficulty": 4,
+    "type": "fitb",
+    "categories": [
+      "Numbers"
+    ],
+    "biblicalReference": "Joel 1:1",
+    "id": "000495"
+  },
+  {
+    "question": "Consecrate the ... to Zion",
+    "correctAnswer": "Sion",
+    "incorrectAnswers": [
+      "Jerusalem",
+      "Bethlehem",
+      "Jericho"
+    ],
+    "difficulty": 1,
+    "type": "fitb",
+    "categories": [
+      "Numbers"
+    ],
+    "biblicalReference": "Joel 2:1",
+    "id": "000496"
+  },
+  {
+    "question": "Fear not, O land; be ... and be glad",
+    "correctAnswer": "joyful",
+    "incorrectAnswers": [
+      "peaceful",
+      "thankful",
+      "happy"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Isaiah"
+    ],
+    "biblicalReference": "Joel 2:21",
+    "id": "000497"
+  },
+  {
+    "question": "Who is ... who calls you?",
+    "correctAnswer": "He",
+    "incorrectAnswers": [
+      "Heavenly Father",
+      "Holy Spirit",
+      "Lord God"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "John"
+    ],
+    "biblicalReference": "Joel 2:32",
+    "id": "000498"
+  },
+  {
+    "question": "and everyone who calls on the name of the Lord shall be ...",
+    "correctAnswer": "saved",
+    "incorrectAnswers": [
+      "blessed",
+      "redeemed",
+      "forgiven"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [
+      "Romans"
+    ],
+    "biblicalReference": "Joel 2:32",
+    "id": "000499"
+  },
+  {
+    "question": "And ... shall become a wilderness and desolation",
+    "correctAnswer": "Egypt",
+    "incorrectAnswers": [
+      "Judah",
+      "Edom",
+      "Jerusalem"
+    ],
+    "difficulty": 4,
+    "type": "fitb",
+    "categories": [
+      "Jeremiah"
+    ],
+    "biblicalReference": "Ezekiel 29:9",
+    "id": "000499"
+  },
+  {
+    "question": "that when that field is called in their own language ..., that is a field of blood",
+    "correctAnswer": "Abel",
+    "incorrectAnswers": [
+      "Cain",
+      "Achad",
+      "Abeldam"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Acts 1:19",
+    "id": "000500"
+  },
+  {
+    "question": "Who is the father of Joseph, the man of Mary (Jesus' mother)?",
+    "correctAnswer": "Jacob",
+    "incorrectAnswers": [
+      "Eliud",
+      "Mattan",
+      "Eleazar"
+    ],
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "Matthew"
+    ],
+    "biblicalReference": "Matthew 1:16",
+    "id": "000501"
+  },
+  {
+    "question": "How many days and nights did Jesus fast in the wilderness?",
+    "correctAnswer": "40",
+    "incorrectAnswers": [
+      "7",
+      "10",
+      "30"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "Matthew 4:2",
+    "id": "000502"
+  },
+  {
+    "question": "Jesus says the salt of the earth has lost its ... What does Jesus say happens to it?",
+    "correctAnswer": "It is thrown out and trampled by people",
+    "incorrectAnswers": [
+      "It is blessed and salted",
+      "It becomes purified",
+      "Its taste changes pleasantly"
+    ],
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "Matthew"
+    ],
+    "biblicalReference": "Matthew 5:13",
+    "id": "000503"
+  },
+  {
+    "question": "What is the first beatitude in the Sermon on the Mount?",
+    "correctAnswer": "Blessed are the poor in spirit",
+    "incorrectAnswers": [
+      "Blessed are those who mourn",
+      "Blessed are the meek",
+      "Blessed are the pure in heart"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "Matthew"
+    ],
+    "biblicalReference": "Matthew 5:3",
+    "id": "000504"
+  },
+  {
+    "question": "What does Jesus do first after coming down from the mountain?",
+    "correctAnswer": "He heals a leper",
+    "incorrectAnswers": [
+      "He teaches in the synagogue",
+      "He goes again to preach",
+      "He calls a disciple"
+    ],
+    "difficulty": 4,
+    "categories": [
+      "Matthew",
+      "Luke",
+      "Christ"
+    ],
+    "biblicalReference": "Matthew 8:1",
+    "id": "000505"
+  },
+  {
+    "question": "Which disciple walked on the water to Jesus?",
+    "correctAnswer": "Peter",
+    "incorrectAnswers": [
+      "John",
+      "Thomas",
+      "Judas"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "Matthew 14: 28,29",
+    "id": "000506"
+  },
+  {
+    "question": "Who asked Jesus if He is the Christ, the Son of God?",
+    "correctAnswer": "Caiaphas",
+    "incorrectAnswers": [
+      "Judas",
+      "Pilatus",
+      "Herod"
+    ],
+    "difficulty": 4,
+    "categories": [
+      "John"
+    ],
+    "biblicalReference": "Matthew 26:63",
+    "id": "000507"
+  },
+  {
+    "question": "What happened when Jesus was baptized?",
+    "correctAnswer": "The heavens were opened",
+    "incorrectAnswers": [
+      "The earth shook",
+      "The sun darkened",
+      "An angel descended"
+    ],
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "Matthew",
+      "Christ"
+    ],
+    "biblicalReference": "Matthew 3:16",
+    "id": "000508"
+  },
+  {
+    "question": "Who was the first disciple Jesus called?",
+    "correctAnswer": "Peter",
+    "incorrectAnswers": [
+      "John",
+      "Jacobus",
+      "Andrew"
+    ],
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "Matthew 4:18",
+    "id": "000509"
+  },
+  {
+    "question": "What did Jesus say to them when he walked on water to the disciples?",
+    "correctAnswer": "I am, do not be afraid",
+    "incorrectAnswers": [
+      "Do not be afraid, I am",
+      "Walk to me",
+      "I am the Way, do not be afraid"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "Matthew",
+      "Luke"
+    ],
+    "biblicalReference": "Matthew 14:27",
+    "id": "000510"
+  },
+  {
+    "question": "For how many silver pieces was Jesus betrayed?",
+    "correctAnswer": "30",
+    "incorrectAnswers": [
+      "20",
+      "40",
+      "10"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "Matthew 26:15",
+    "id": "000511"
+  },
+  {
+    "question": "Who said to Jesus: You are the King of the Jews?",
+    "correctAnswer": "Pilate",
+    "incorrectAnswers": [
+      "Caiphas",
+      "Herod",
+      "The High Priest"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "Matthew"
+    ],
+    "biblicalReference": "Matthew 27: 51, 52",
+    "id": "000512"
+  },
+  {
+    "question": "What happened after Jesus was dead for 3 hours?",
+    "correctAnswer": "The rocks split and the earth shook",
+    "incorrectAnswers": [
+      "The earth was darkened for 3 hours",
+      "The temple curtain was torn in two",
+      "An angel descended"
+    ],
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "Matthew"
+    ],
+    "biblicalReference": "Matthew 27: 51, 52",
+    "id": "000513"
+  },
+  {
+    "question": "Who said: I have suffered much in a dream to do Your will?",
+    "correctAnswer": "Pilate's wife",
+    "incorrectAnswers": [
+      "The wife of Caiaphas",
+      "The wife of Herod",
+      "The wife of Judas"
+    ],
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Matthew 27:19",
+    "id": "000514"
+  },
+  {
+    "question": "Who found (saw) the empty tomb?",
+    "correctAnswer": "Mary Magdalene and the other Mary",
+    "incorrectAnswers": [
+      "Mary, mother of Jesus",
+      "Peter and John",
+      "Peter and James"
+    ],
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "Revelation"
+    ],
+    "biblicalReference": "Matthew 28:1",
+    "id": "000515"
+  },
+  {
+    "question": "What said the angel first to the women at the tomb?",
+    "correctAnswer": "Do not be afraid",
+    "incorrectAnswers": [
+      "He is risen",
+      "He is not here; He has risen",
+      "He goes ahead quickly"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "Revelation"
+    ],
+    "biblicalReference": "Matthew 28:5",
+    "id": "000516"
+  },
+  {
+    "question": "What did Jesus give to his disciples after His resurrection?",
+    "correctAnswer": "A command",
+    "incorrectAnswers": [
+      "The Holy Spirit",
+      "A blessing",
+      "A promise"
+    ],
+    "difficulty": 2,
+    "categories": [
+      "Acts",
+      "Easter",
+      "Pentecost"
+    ],
+    "biblicalReference": "Matthew 28:19",
+    "id": "000517"
+  },
+  {
+    "question": "Who was the fourth son of Jacob?",
+    "correctAnswer": "Judah",
+    "incorrectAnswers": [
+      "Levi",
+      "Dan",
+      "Naphtali"
+    ],
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Genesis 29:35",
+    "id": "000518"
+  },
+  {
+    "question": "What was the color of the second lamb in Revelation?",
+    "correctAnswer": "Red",
+    "incorrectAnswers": [
+      "White",
+      "Black",
+      "Fawn"
+    ],
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "Revelation"
+    ],
+    "biblicalReference": "Revelation 6:4",
+    "id": "000519"
+  },
+  {
+    "question": "Which disciple was not on the mountain of transfiguration?",
+    "correctAnswer": "Andreas",
+    "incorrectAnswers": [
+      "Peter",
+      "John",
+      "Jacobus"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "Matthew",
+      "Mark",
+      "Luke"
+    ],
+    "biblicalReference": "Luke 9:28",
+    "id": "000520"
+  },
+  {
+    "question": "How many people went into the ark of Noah?",
+    "correctAnswer": "8",
+    "incorrectAnswers": [
+      "6",
+      "4",
+      "10"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Genesis 8:16",
+    "id": "000521"
+  },
+  {
+    "question": "Who was not a son of Noah?",
+    "correctAnswer": "Gomer",
+    "incorrectAnswers": [
+      "Sem",
+      "Ham",
+      "Japheth"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Genesis 9:18",
+    "id": "000522"
+  },
+  {
+    "question": "From whom was Dan a son?",
+    "correctAnswer": "Bilhah",
+    "incorrectAnswers": [
+      "Rachel",
+      "Leah",
+      "Zilpah"
+    ],
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Genesis 30:5",
+    "id": "000523"
+  },
+  {
+    "question": "Who was fourth daughter of Zelophehad?",
+    "correctAnswer": "Milcah",
+    "incorrectAnswers": [
+      "Naah",
+      "Hoglah",
+      "Tirzah"
+    ],
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "Numbers"
+    ],
+    "biblicalReference": "Numbers 27:1",
+    "id": "000524"
+  },
+  {
+    "question": "Who spoke for Job?",
+    "correctAnswer": "Elihu",
+    "incorrectAnswers": [
+      "Bildad",
+      "Zophar",
+      "Elifaz"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "Job"
+    ],
+    "biblicalReference": "Job 32:2",
+    "id": "000525"
+  },
+  {
+    "question": "Which king fell by a falsehood in his territory?",
+    "correctAnswer": "Ahabaziah",
+    "incorrectAnswers": [
+      "Joram",
+      "Azariah",
+      "Jotham"
+    ],
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "1 Kings"
+    ],
+    "biblicalReference": "2 Kings 1:2",
+    "id": "000526"
+  },
+  {
+    "question": "Who was mother of Absalom?",
+    "correctAnswer": "Maacah",
+    "incorrectAnswers": [
+      "Haggith",
+      "Ahinoam",
+      "Abigail"
+    ],
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "2 Samuel"
+    ],
+    "biblicalReference": "2 Samuel 3:3",
+    "id": "000527"
+  },
+  {
+    "question": "What was the final plague in Egypt?",
+    "correctAnswer": "Hail and darkness",
+    "incorrectAnswers": [
+      "Locusts and flies",
+      "Lice and boils",
+      "Frost and thunder"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "Exodus"
+    ],
+    "biblicalReference": "Exodus 9:24",
+    "id": "000528"
+  },
+  {
+    "question": "Who was queen mother of King Hezekiah?",
+    "correctAnswer": "Hephzibah",
+    "incorrectAnswers": [
+      "Jehosheba",
+      "Abi",
+      "Michal"
+    ],
+    "difficulty": 3,
+    "categories": [
+      "1 Kings",
+      "2 Kings"
+    ],
+    "biblicalReference": "Isaiah 36:3",
+    "id": "000529"
+  },
+  {
+    "question": "How many sons had Gideon?",
+    "correctAnswer": "70",
+    "incorrectAnswers": [
+      "30",
+      "50",
+      "60"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "Judges"
+    ],
+    "biblicalReference": "Judges 8:30",
+    "id": "000530"
+  },
+  {
+    "question": "Which judge was left-handed?",
+    "correctAnswer": "Ehud",
+    "incorrectAnswers": [
+      "Jephthah",
+      "Shamgar",
+      "Othniel"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "Judges"
+    ],
+    "biblicalReference": "Judges 3:15",
+    "id": "000531"
+  },
+  {
+    "question": "Where was tabernacle of gold made?",
+    "correctAnswer": "Gold",
+    "incorrectAnswers": [
+      "Silver",
+      "Bronze",
+      "Iron"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "Exodus"
+    ],
+    "biblicalReference": "Exodus 25:31",
+    "id": "000532"
+  },
+  {
+    "question": "Who was third son of Aaron?",
+    "correctAnswer": "Eleazar",
+    "incorrectAnswers": [
+      "Nadab",
+      "Abihu",
+      "Ithamar"
+    ],
+    "difficulty": 5,
+    "type": "mc",
+    "categories": [
+      "Leviticus"
+    ],
+    "biblicalReference": "Exodus 6:22",
+    "id": "000533"
+  },
+  {
+    "question": "Which community did John write a letter to? John wrote a letter.",
+    "correctAnswer": "Philadelphian",
+    "incorrectAnswers": [
+      "Smyrna",
+      "Pergamum",
+      "Laodicea"
+    ],
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "Acts",
+      "Revelation",
+      "John"
+    ],
+    "biblicalReference": "Revelation 3:7",
+    "id": "000534"
+  },
+  {
+    "question": "Where was no woman of Esau?",
+    "correctAnswer": "Zilpah",
+    "incorrectAnswers": [
+      "Ada",
+      "Aholibamah",
+      "Basemath"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Genesis 36: 2,3",
+    "id": "000535"
+  },
+  {
+    "question": "Who was fourth son of Abraham and Keturah?",
+    "correctAnswer": "Midian",
+    "incorrectAnswers": [
+      "Ishbak",
+      "Medan",
+      "Shuah"
+    ],
+    "difficulty": 5,
+    "type": "mc",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Genesis 25:2",
+    "id": "000536"
+  },
+  {
+    "question": "Who plotted to release Joseph from the pit?",
+    "correctAnswer": "Reuben",
+    "incorrectAnswers": [
+      "Simeon",
+      "Judah",
+      "Levi"
+    ],
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Genesis 37:29",
+    "id": "000537"
+  },
+  {
+    "question": "Who stood before Benjamin when they were at Jacob?",
+    "correctAnswer": "Judah",
+    "incorrectAnswers": [
+      "Simeon",
+      "Reuben",
+      "Naftali"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Genesis 43:8-9",
+    "id": "000538"
+  },
+  {
+    "question": "Which son of Jacob will dwell at the havens of the sea?",
+    "correctAnswer": "Zebulon",
+    "incorrectAnswers": [
+      "Reuben",
+      "Gad",
+      "Asher"
+    ],
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Genesis 49:13",
+    "id": "000539"
+  },
+  {
+    "question": "Which prophet preached a funeral lamentation?",
+    "correctAnswer": "Joel",
+    "incorrectAnswers": [
+      "Hosea",
+      "Micah",
+      "Nahum"
+    ],
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "Jonah"
+    ],
+    "biblicalReference": null,
+    "id": "000540"
+  },
+  {
+    "question": "Who was the father of Abram?",
+    "correctAnswer": "Terah",
+    "incorrectAnswers": [
+      "Haran",
+      "Nahor",
+      "Serug"
+    ],
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Genesis 11:26",
+    "id": "000541"
+  },
+  {
+    "question": "How many shekels of silver did Abraham pay to Ephron for Sarah's grave?",
+    "correctAnswer": "400",
+    "incorrectAnswers": [
+      "200",
+      "500",
+      "600"
+    ],
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Genesis 23:16",
+    "id": "000542"
+  },
+  {
+    "question": "How old was Abraham when he died?",
+    "correctAnswer": "175",
+    "incorrectAnswers": [
+      "150",
+      "155",
+      "180"
+    ],
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Genesis 25:7",
+    "id": "000543"
+  },
+  {
+    "question": "Who stayed with Joseph in Egypt?",
+    "correctAnswer": "Simeon",
+    "incorrectAnswers": [
+      "Ruben",
+      "Judah",
+      "Zebulun"
+    ],
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Genesis 42:24",
+    "id": "000544"
+  },
+  {
+    "question": "Who was firstborn son of Reuben?",
+    "correctAnswer": "Hanoch",
+    "incorrectAnswers": [
+      "Pallu",
+      "Hezron",
+      "Charmi"
+    ],
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Genesis 46:9",
+    "id": "000545"
+  },
+  {
+    "question": "Jacob was deceived, how many days?",
+    "correctAnswer": "40",
+    "incorrectAnswers": [
+      "20",
+      "30",
+      "60"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Genesis 50:3",
+    "id": "000546"
+  },
+  {
+    "question": "How many days was Jacob mourned at the Jordan?",
+    "correctAnswer": "7",
+    "incorrectAnswers": [
+      "3",
+      "5",
+      "10"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Genesis 50:10",
+    "id": "000547"
+  },
+  {
+    "question": "How long did Joseph live?",
+    "correctAnswer": "110",
+    "incorrectAnswers": [
+      "120",
+      "130",
+      "150"
+    ],
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Genesis 50:26",
+    "id": "000548"
+  },
+  {
+    "question": "What was the second plague in Egypt?",
+    "correctAnswer": "Frogs",
+    "incorrectAnswers": [
+      "Lice",
+      "Locusts and boils"
+    ],
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "Exodus"
+    ],
+    "biblicalReference": "Exodus 8:16",
+    "id": "000549"
+  },
+  {
+    "question": "How many days was there second plague in Egypt?",
+    "correctAnswer": "2",
+    "incorrectAnswers": [
+      "3",
+      "4",
+      "6"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "Exodus"
+    ],
+    "biblicalReference": "Exodus 10:22",
+    "id": "000550"
+  },
+  {
+    "question": "Which day is a feast?",
+    "correctAnswer": "5",
+    "incorrectAnswers": [
+      "2",
+      "3",
+      "6"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "Exodus",
+      "Deuteronomy"
+    ],
+    "biblicalReference": "Exodus 20:12",
+    "id": "000551"
+  },
+  {
+    "question": "On which rows of the breastplate of Aaron were a ruby, an onyx and an amethyst?",
+    "correctAnswer": "3",
+    "incorrectAnswers": [
+      "1",
+      "2",
+      "4"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [
+      "Exodus"
+    ],
+    "biblicalReference": "Exodus 28:19",
+    "id": "000552"
+  },
+  {
+    "question": "Isaiah was a prophet in the kingdom of Judah",
+    "correctAnswer": "True",
+    "incorrectAnswers": [
+      "Not true"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "Isaiah"
+    ],
+    "biblicalReference": "Isaiah 1:1",
+    "id": "000553"
+  },
+  {
+    "question": "Isaiah had visions of the Lord, standing for angels and new ... and new earth",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "Isaiah"
+    ],
+    "biblicalReference": "Isaiah 6:1",
+    "id": "000554"
+  },
+  {
+    "question": "Isaiah was a contemporary of King Saul",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Isaiah"
+    ],
+    "biblicalReference": "Isaiah 1:1",
+    "id": "000555"
+  },
+  {
+    "question": "Isaiah prophesied about new heavens and new ...",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Isaiah"
+    ],
+    "biblicalReference": "Isaiah 65:17",
+    "id": "000556"
+  },
+  {
+    "question": "Jeremiah was a prophet in the kingdom of Judah",
+    "correctAnswer": "True",
+    "incorrectAnswers": [
+      "Not true"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "Jeremiah"
+    ],
+    "biblicalReference": "Jeremiah 1:1",
+    "id": "000557"
+  },
+  {
+    "question": "Jeremiah prophesied only during the reign of King David",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Jeremiah"
+    ],
+    "biblicalReference": "Jeremiah 1:3",
+    "id": "000558"
+  },
+  {
+    "question": "Pashur took Jeremiah captive",
+    "correctAnswer": "True",
+    "incorrectAnswers": [
+      "Not true"
+    ],
+    "difficulty": 4,
+    "categories": [
+      "Jeremiah"
+    ],
+    "biblicalReference": "Jeremiah 20:2",
+    "id": "000559"
+  },
+  {
+    "question": "Jeremiah writes in his letter: Dan has made an end to ... and will not hear to me, and I will pray to you but you will not listen",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Jeremiah"
+    ],
+    "biblicalReference": "Jeremiah 29:12",
+    "id": "000560"
+  },
+  {
+    "question": "Ezekiel was a prophet in Babylon?",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Ezekiel"
+    ],
+    "biblicalReference": "Ezekiel 1:1-3",
+    "id": "000561"
+  },
+  {
+    "question": "Ezekiel became a watchman for Israel ... days",
+    "correctAnswer": "7",
+    "incorrectAnswers": [
+      "3",
+      "14",
+      "30"
+    ],
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "Ezekiel"
+    ],
+    "biblicalReference": "Ezekiel 3:15",
+    "id": "000562"
+  },
+  {
+    "question": "Ezekiel prophesied about new heavens and new ...",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Ezekiel"
+    ],
+    "biblicalReference": "Ezekiel 32:1",
+    "id": "000563"
+  },
+  {
+    "question": "Daniel wrote in a dream: 'You shall fast ... days'",
+    "correctAnswer": "21",
+    "incorrectAnswers": [
+      "3",
+      "7",
+      "40"
+    ],
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "Daniel"
+    ],
+    "biblicalReference": "Daniel 10:2-3",
+    "id": "000564"
+  },
+  {
+    "question": "Ezekiel prophesied about 430 years of Jerusalem's ...",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 2,
+    "type": "tf",
+    "categories": [
+      "Ezekiel"
+    ],
+    "biblicalReference": "Ezekiel 29",
+    "id": "000565"
+  },
+  {
+    "question": "God made a promise to Abraham in ... BC",
+    "correctAnswer": "2000",
+    "incorrectAnswers": [
+      "1500",
+      "1800",
+      "2500"
+    ],
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [
+      "Genesis"
+    ],
+    "biblicalReference": "Genesis 12:4",
+    "id": "000566"
+  },
+  {
+    "question": "Which prophet was in Babylon when God spoke to Daniel?",
+    "correctAnswer": "Jeremiah",
+    "incorrectAnswers": [
+      "Isaiah",
+      "Ezekiel",
+      "Daniel himself"
+    ],
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "Daniel"
+    ],
+    "biblicalReference": "Daniel 9:2",
+    "id": "000567"
+  },
+  {
+    "question": "The book of Daniel ends with these words: 'But you, go your way, for the words are ... up to the time of the end.'",
+    "correctAnswer": "sealed",
+    "incorrectAnswers": [
+      "closed",
+      "open",
+      "broken"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [
+      "Daniel"
+    ],
+    "biblicalReference": "Daniel 12:9",
+    "id": "000568"
+  },
+  {
+    "question": "The book of Daniel was written in ... languages",
+    "correctAnswer": "2",
+    "incorrectAnswers": [
+      "1",
+      "3",
+      "4"
+    ],
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [
+      "Daniel"
+    ],
+    "biblicalReference": "Daniel",
+    "id": "000569"
+  },
+  {
+    "question": "The letter to the Romans is Paul's ... letter",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Romans"
+    ],
+    "biblicalReference": "Romans 16",
+    "id": "000570"
+  },
+  {
+    "question": "Paul speaks about the new life through the Holy ...",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Romans",
+      "1 Corinthians",
+      "2 Corinthians",
+      "Galatians",
+      "Ephesians",
+      "Colossians",
+      "1 Thessalonians",
+      "2 Thessalonians"
+    ],
+    "biblicalReference": "Romans 8",
+    "id": "000571"
+  },
+  {
+    "question": "Paul wrote the letter to the Galatians because of their ... to the gospel",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "Galatians"
+    ],
+    "biblicalReference": "Galatians 1: 6,7",
+    "id": "000572"
+  },
+  {
+    "question": "The Galatians are ... to make the ... of Christ perfect and to fulfill the law",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Galatians"
+    ],
+    "biblicalReference": "Galatians 6:2",
+    "id": "000573"
+  },
+  {
+    "question": "Paul speaks in the letter to the Ephesians about the ... of Christ",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Ephesians"
+    ],
+    "biblicalReference": "Ephesians 3: 17-19",
+    "id": "000574"
+  },
+  {
+    "question": "Paul writes in Philippians: I can do all things through ... who gives me strength",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Philippians"
+    ],
+    "biblicalReference": "Philippians 4:13",
+    "id": "000575"
+  },
+  {
+    "question": "Paul warns in Colossians against ... teachings",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Colossians"
+    ],
+    "biblicalReference": "Colossians 2:8",
+    "id": "000576"
+  },
+  {
+    "question": "Paul wrote Colossians while he was in ...",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 4,
+    "type": "tf",
+    "categories": [
+      "Colossians"
+    ],
+    "biblicalReference": "Colossians 4:10",
+    "id": "000577"
+  },
+  {
+    "question": "Paul speaks in the letter to the Ephesians about the ... of Christ",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Ephesians"
+    ],
+    "biblicalReference": "Ephesians 3: 17-19",
+    "id": "000578"
+  },
+  {
+    "question": "Paul wrote the letter to the ... on the love of Christ",
+    "correctAnswer": "Not true",
+    "incorrectAnswers": [
+      "True"
+    ],
+    "difficulty": 3,
+    "type": "tf",
+    "categories": [
+      "Ephesians"
+    ],
+    "biblicalReference": "Ephesians 3: 17-19",
+    "id": "000579"
+  },
+  {
+    "question": "And he said to ...: which of these times should you we know? You, me, the Lord do not keep one hour with us.",
+    "correctAnswer": "Peter",
+    "incorrectAnswers": [
+      "Johannes",
+      "Jakobus",
+      "Matth\u00e9\u00fcs"
+    ],
+    "difficulty": 2,
+    "type": "fitb",
+    "categories": [],
+    "biblicalReference": "Matthew 26:40",
+    "id": "000580"
+  },
+  {
+    "question": "And so is it ...: The Lord is ... of the Lord.",
+    "correctAnswer": "forever",
+    "incorrectAnswers": [
+      "thanked",
+      "blessed",
+      "praised"
+    ],
+    "difficulty": 3,
+    "type": "fitb",
+    "categories": [],
+    "biblicalReference": "1 Chronicles 16:36",
+    "id": "000581"
+  },
+  {
+    "question": "In which book is David's psalm preserved?",
+    "correctAnswer": "1 Chronicles",
+    "incorrectAnswers": [
+      "1 Kings",
+      "2 Kings",
+      "2 Chronicles"
+    ],
+    "difficulty": 5,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "1 Chronicles 16: 7-36",
+    "id": "000582"
+  },
+  {
+    "question": "Which apostle: You have the words of eternal life?",
+    "correctAnswer": "Peter",
+    "incorrectAnswers": [
+      "Andreans",
+      "Johannes",
+      "Jakobus"
+    ],
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "John 6:68",
+    "id": "000583"
+  },
+  {
+    "question": "Which disciple: Do not know where we will go?",
+    "correctAnswer": "Thomas",
+    "incorrectAnswers": [
+      "Johannes",
+      "Petrus",
+      "Jakobus"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "John 11:16",
+    "id": "000584"
+  },
+  {
+    "question": "Which disciple: He, we know not where we are going?",
+    "correctAnswer": "Thomas",
+    "incorrectAnswers": [
+      "Lukas",
+      "Andreans",
+      "Johannes"
+    ],
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "John 14:5",
+    "id": "000585"
+  },
+  {
+    "question": "Which disciple: He, the Father, to You is named?",
+    "correctAnswer": "Philip",
+    "incorrectAnswers": [
+      "Johannes",
+      "Petrus",
+      "Andr\u00e9as"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "John 14:8",
+    "id": "000586"
+  },
+  {
+    "question": "Which port in Jerusalem is a healing well?",
+    "correctAnswer": "The Sheep Gate",
+    "incorrectAnswers": [
+      "The Fish Gate",
+      "The Golden Gate",
+      "The Water Gate"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "John 5:2",
+    "id": "000587"
+  },
+  {
+    "question": "How many men had the Samaritan woman's husbands?",
+    "correctAnswer": "Five",
+    "incorrectAnswers": [
+      "Two",
+      "Seven",
+      "Three"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "John 4:18",
+    "id": "000588"
+  },
+  {
+    "question": "Which well in Samaria did Jesus speak to a woman?",
+    "correctAnswer": "Jacob's Well",
+    "incorrectAnswers": [
+      "The King's Well",
+      "The Prophet's Well",
+      "Abraham's Well"
+    ],
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "John 4:6",
+    "id": "000589"
+  },
+  {
+    "question": "Which well is in Sychar, where Jesus met a Samaritan woman?",
+    "correctAnswer": "Jacob's Well",
+    "incorrectAnswers": [
+      "Abraham's Well",
+      "David's Well",
+      "The King's Well"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "John 4:6",
+    "id": "000590"
+  },
+  {
+    "question": "What was the 2nd miraculous sign Jesus performed in Cana?",
+    "correctAnswer": "The Lost Coin Healing",
+    "incorrectAnswers": [
+      "Turning Water to Wine",
+      "Healing the Official's Son",
+      "Feeding the 5000"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "John 4:46-54",
+    "id": "000591"
+  },
+  {
+    "question": "Which pool in Jerusalem had five porches?",
+    "correctAnswer": "Bethesda",
+    "incorrectAnswers": [
+      "Siloam",
+      "Hezekiah's Pool",
+      "The Upper Pool"
+    ],
+    "difficulty": 4,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "John 5:2",
+    "id": "000592"
+  },
+  {
+    "question": "How long were the disciples in the upper room?",
+    "correctAnswer": "Ten days",
+    "incorrectAnswers": [
+      "Three days",
+      "Seven days",
+      "Forty days"
+    ],
+    "difficulty": 2,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "Acts 1:13",
+    "id": "000593"
+  },
+  {
+    "question": "Which gate is a healing well in Jerusalem?",
+    "correctAnswer": "The Sheep Gate",
+    "incorrectAnswers": [
+      "The Golden Gate",
+      "The Water Gate",
+      "The Fish Gate"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "Acts 3:2",
+    "id": "000594"
+  },
+  {
+    "question": "Who was the Samaritan woman's first husband?",
+    "correctAnswer": "Five",
+    "incorrectAnswers": [
+      "Two",
+      "Seven",
+      "Three"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "Luke 16:18",
+    "id": "000595"
+  },
+  {
+    "question": "Which gate in Jerusalem is a healing well?",
+    "correctAnswer": "The Sheep Gate",
+    "incorrectAnswers": [
+      "The Golden Gate",
+      "The Water Gate",
+      "The Fish Gate"
+    ],
+    "difficulty": 3,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "Acts 3:2",
+    "id": "000596"
+  },
+  {
+    "question": "How many days did the feast of Dedication (Hanukkah) last?",
+    "correctAnswer": "Two",
+    "incorrectAnswers": [
+      "Three",
+      "Five",
+      "Seven"
+    ],
+    "difficulty": 1,
+    "type": "mc",
+    "categories": [],
+    "biblicalReference": "Matthew 4:9",
+    "id": "000597"
   }
 ]

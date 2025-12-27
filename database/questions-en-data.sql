@@ -4022,4 +4022,3160 @@ ON CONFLICT (id) DO UPDATE SET
     biblical_reference = EXCLUDED.biblical_reference,
     updated_at = NOW();
 
--- Total questions processed: 335
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000336', 'Paul mentions the fruits of the Spirit in Galatians', 'True', ARRAY['Not true'], 2, 'tf', ARRAY['Galatians'], 'Galatians 5:22')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000337', 'In Christ there is difference between Jew and Greek, Paul writes in Galatians', 'Not true', ARRAY['True'], 2, 'tf', ARRAY['Galatians'], 'Galatians 3:28')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000338', 'In Ephesians the spiritual armor is described', 'True', ARRAY['Not true'], 3, 'tf', ARRAY['Ephesians'], 'Ephesians 6: 10-20')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000339', 'Paul wrote the biblical book Ephesians during his first missionary journey', 'Not true', ARRAY['True'], 3, 'tf', ARRAY['Ephesians','Acts'], 'Ephesians 3:1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000340', 'Philippians is addressed to the Christians in Philippi', 'True', ARRAY['Not true'], 4, 'tf', ARRAY['Philippians'], 'Philippians')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000341', 'In Philippians it says "For to me to live is Christ, and to die is gain"', 'True', ARRAY['Not true'], 2, 'tf', ARRAY['Philippians'], 'Philippians 1:21')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000342', 'In Colossians the fruits of the Spirit are described', 'Not true', ARRAY['True'], 2, 'tf', '{}', 'Colossians')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000343', 'Paul knew the Christians of Colossae personally', 'Not true', ARRAY['True'], 4, 'tf', ARRAY['Colossians'], 'Colossians 1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000344', '1 Thessalonians is probably Paul''s oldest letter', 'True', ARRAY['Not true'], 4, 'tf', '{}', '1 Thessalonians')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000345', 'In Thessalonians Paul calls to holy walk and brotherly love', 'True', ARRAY['Not true'], 3, 'tf', ARRAY['1 Thessalonians'], '1 Thessalonians 4')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000346', 'In 2 Thessalonians Paul calls to steadfastness', 'True', ARRAY['Not true'], 3, 'tf', '{}', '2 Thessalonians 2: 13-17')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000347', '2 Thessalonians is mainly a repetition of the first letter', 'Not true', ARRAY['True'], 3, 'tf', '{}', '2 Thessalonians')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000348', 'Paul writes in 1 Timothy about the office of elders and deacons', 'True', ARRAY['Not true'], 3, 'tf', ARRAY['1 Timothy'], '1 Timothy 3')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000349', 'Timothy was a pastor in Rome', 'Not true', ARRAY['True'], 4, 'tf', ARRAY['1 Timothy'], '1 Timothy')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000350', 'Paul writes in 1 Timothy about the role of women in the church', 'True', ARRAY['Not true'], 3, 'tf', ARRAY['1 Timothy'], '1 Timothy')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000351', 'In 2 Timothy Paul mentions "All Scripture is God-breathed"', 'True', ARRAY['Not true'], 4, 'tf', '{}', '2 Timothy 3:16')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000352', 'In 2 Timothy Paul expects that he will go on a journey soon', 'Not true', ARRAY['True'], 4, 'tf', ARRAY['1 Timothy','2 Timothy'], '2 Timothy')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000353', 'Titus was left by Paul on the island of Cyprus', 'Not true', ARRAY['True'], 4, 'tf', ARRAY['Philemon'], 'Titus 1:5')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000354', 'Titus contains instructions for appointing elders', 'True', ARRAY['Not true'], 3, 'tf', ARRAY['Philemon','Titus'], 'Titus 1: 5-9')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000355', 'When ... saw that she was not bearing children for Jacob, she envied ... her sister.', 'Rachel', ARRAY['Leah','Bilhah','Zilpah'], 1, 'fitb', ARRAY['Genesis'], 'Genesis 30:1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000356', 'And Adam lived ... years and begot a son in his own likeness, in his own image, and named his name Seth', '130', ARRAY['90','110','140'], 4, 'fitb', ARRAY['Genesis'], 'Genesis 5:3')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000357', 'So all the days of Enoch were ... years', '365', ARRAY['969','300','782'], 4, 'fitb', ARRAY['Genesis'], 'Genesis 5:23')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000358', 'But Noah found ... in the eyes of the Lord', 'grace', ARRAY['mercy','forgiveness','goodness'], 1, 'fitb', ARRAY['Genesis'], 'Genesis 6:8')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000359', 'And the Lord said: Shall I hide from ... what I do?', 'Abraham', ARRAY['Adam','Noah','Lot'], 3, 'fitb', ARRAY['Genesis'], 'Genesis 18:17')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000360', 'Moses led the people out of ...', 'Egypt', ARRAY['Babylon','Canaan','Assyria'], 1, 'fitb', ARRAY['Exodus'], 'Exodus 12')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000361', 'The law was given on the mountain ...', 'Sinai', ARRAY['Horeb','Nebo','Moria'], 1, 'fitb', ARRAY['Exodus'], 'Exodus 19 and 20')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000362', 'And they shall make Me a ... that I may dwell in their midst', 'sanctuary', ARRAY['tent','tabernacle','temple'], 4, 'fitb', ARRAY['John'], 'Exodus 25:8')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000363', 'His snuffers and his ... shall be pure gold', 'snuff dishes', ARRAY['lamps','knops','tongs'], 3, 'fitb', ARRAY['Exodus'], 'Exodus 25:38')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000364', 'Then he (Moses) said: Show me Your ...', 'glory', ARRAY['goodness','grace','greatness'], 2, 'fitb', ARRAY['Exodus'], 'Exodus 33:18')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000365', 'Break them in pieces and pour oil on it: it is a ...', 'grain offering', ARRAY['burnt offering','fire offering','thanksgiving offering'], 4, 'fitb', ARRAY['Psalms'], 'Leviticus 2:6')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000366', 'It is a ... ; he has certainly made himself guilty to the Lord', 'guilt offering', ARRAY['burnt offering','thanksgiving offering','peace offering'], 3, 'fitb', ARRAY['Job'], 'Leviticus 5:19')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000367', 'And the priest shall light it on the altar as burnt offering to the Lord; it is a ...', 'guilt offering', ARRAY['sin offering','burnt offering','thanksgiving offering'], 3, 'fitb', ARRAY['Leviticus'], 'Leviticus 7:5')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000368', 'When Moses heard that, it was ... in his eyes', 'good', ARRAY['evil','right','beautiful'], 4, 'fitb', ARRAY['Exodus'], 'Leviticus 10:20')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000369', 'Also the ... of that oil shall pour it on the priest''s left hand', 'priest', ARRAY['prophet','man','survivor'], 3, 'fitb', ARRAY['Leviticus'], 'Leviticus 14:26')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000370', 'The book of Numbers begins with a census of the ...', 'Israelites', ARRAY['priests','Levites','foreigners'], 2, 'fitb', ARRAY['Numbers'], 'Numbers 1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000371', 'Moses then spoke to the children of Israel, that they should keep the ...', 'Passover', ARRAY['commandment','feast of tabernacles','faith'], 2, 'fitb', ARRAY['Exodus','Deuteronomy'], 'Numbers 9:4')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000372', 'Of the tribe of Judah ..., the son of Jephunneh', 'Caleb', ARRAY['Simeon','Issachar','Benjamin'], 3, 'fitb', ARRAY['Genesis'], 'Numbers 13:6')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000373', 'And ... did it; as the Lord commanded him, so he did', 'Moses', ARRAY['Aaron','Levi','Edom'], 2, 'fitb', ARRAY['Exodus'], 'Numbers 17:11')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000374', 'But the children of ... did not die', 'Korah', ARRAY['Dathan','Abiram','Eliab'], 2, 'fitb', ARRAY['Exodus'], 'Numbers 26:11')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000375', 'Moses spoke to the people before they entered the promised land ...', 'entered', ARRAY['left','conquered','forgot'], 2, 'fitb', ARRAY['Exodus','Deuteronomy'], 'Deuteronomy 1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000376', 'Moses died on the mountain ...', 'Nebo', ARRAY['Sinai','Horeb','Hor'], 1, 'fitb', ARRAY['Exodus','Deuteronomy'], 'Deuteronomy 34:5')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000377', 'Therefore the Lord has said to me: You shall not cross this ...', 'Jordan', ARRAY['Land','River','Mountain'], 3, 'fitb', ARRAY['Jeremiah'], 'Deuteronomy 3:27')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000378', 'A ... you shall not muzzle, when he is thirsty', 'ox', ARRAY['bull','ram','bear'], 2, 'fitb', ARRAY['Proverbs'], 'Deuteronomy 25:4')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000379', 'For you shall do what ... is in the eyes of the Lord', 'right', ARRAY['good','evil','just'], 3, 'fitb', ARRAY['Deuteronomy'], 'Deuteronomy 12:28')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000380', 'Then Joshua commanded the ... of the people, saying:', 'officers', ARRAY['leaders','heads','sons'], 3, 'fitb', ARRAY['Joshua'], 'Joshua')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000381', 'And He said: No, but I am the ... of the host of the Lord', 'Commander', ARRAY['King','Priest','Prophet'], 3, 'fitb', ARRAY['Exodus'], 'Joshua 5')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000382', 'Then Joshua built an altar to the Lord, the God of Israel, on the mountain ...', 'Ebal', ARRAY['Horeb','Sinai','Hermon'], 3, 'fitb', ARRAY['Joshua'], 'Joshua 8:30')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000383', 'But the king of ... they captured alive, and they brought him to Joshua', 'Ai', ARRAY['Lebanon','Perez','Gibeon'], 3, 'fitb', ARRAY['Joshua'], 'Joshua 8:23')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000384', 'Those five kings were found, hidden in the cave at ...', 'Makkedah', ARRAY['Adullam','Machpelah','the prophets'], 3, 'fitb', ARRAY['1 Samuel'], 'Joshua 10:16')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000385', 'The first judge of Israel was ...', 'Othniel', ARRAY['Ehud','Shamgar','Gideon'], 2, 'fitb', ARRAY['Judges'], 'Judges 3')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000386', '... now, a woman who was a prophetess, the wife of Lappidoth', 'Deborah', ARRAY['Rebekah','Jael','Priscilla'], 1, 'fitb', ARRAY['1 Samuel'], 'Judges 4:4')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000387', 'Gideon asked for a sign from God with a ...', 'fleece of wool', ARRAY['dream','vision','voice'], 1, 'fitb', ARRAY['Judges'], 'Judges 6:37')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000388', 'Then the trees said to the vine: Come you, be ... over us', 'king', ARRAY['ruler','prince','chief'], 3, 'fitb', ARRAY['Ecclesiastes'], 'Judges 9:12')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000389', 'And ... vowed a vow to the Lord', 'Jephthah', ARRAY['Jair','Gideon','Ephraim'], 1, 'fitb', ARRAY['Genesis'], 'Judges 11')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000390', 'And ..., the husband of Naomi died', 'Elimelech', ARRAY['Mahlon','Chilion','Boaz'], 2, 'fitb', ARRAY['Genesis','Ruth'], 'Ruth 1:3')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000391', 'Call me not Naomi, call me ...', 'Mara', ARRAY['Orpah','Ruth','Rachel'], 1, 'fitb', ARRAY['Ruth'], 'Ruth 1:20')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000392', 'Naomi now had a kinsman of her husband, a man, mighty in ...', 'wealth', ARRAY['name','spirit','goodness'], 2, 'fitb', ARRAY['Ruth'], 'Ruth 2:1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000393', 'The Lord will reward your ..., and your reward will be full from the Lord', 'deed', ARRAY['wage','goodness','faith'], 2, 'fitb', ARRAY['Ruth'], 'Ruth 2:12')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000394', 'When she now rose ...', 'to read', ARRAY['to go','to work','to comfort her'], 3, 'fitb', ARRAY['Revelation'], 'Ruth')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000395', 'And she said to her: All what you ... , I will do', 'say to me', ARRAY['command me','threaten me','speak to me'], 3, 'fitb', ARRAY['Ruth'], 'Ruth')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000396', 'Elkanah went annually to sacrifice in ...', 'Shiloh', ARRAY['Jerusalem','the temple','the tabernacle'], 2, 'fitb', ARRAY['1 Samuel'], '1 Samuel 1:3')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000397', 'But when a man sins against the Lord, who will ...', 'pray for him', ARRAY['be able to exist','still seek','then find'], 2, 'fitb', '{}', '1 Samuel 2:25')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000398', 'And I will raise up for Myself a ... priest, who will do as is in My heart and in My soul shall be', 'faithful', ARRAY['man','prophet','son'], 2, 'fitb', ARRAY['Isaiah'], '1 Samuel 2:35')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000399', 'Saul became jealous of David because he ...', 'received more praise', ARRAY['had more wealth','had more friends','possessed more land'], 2, 'fitb', ARRAY['1 Samuel','2 Samuel'], '1 Samuel 18')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000400', 'David became king over Israel in the city ...', 'Hebron', ARRAY['Jerusalem','Bethlehem','Jericho'], 3, 'fitb', ARRAY['1 Samuel','2 Samuel'], '2 Samuel 2')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000401', 'David brought the ark of God to ...', 'Jerusalem', ARRAY['Bethel','Hebron','Gilgal'], 2, 'mc', ARRAY['1 Samuel','2 Samuel'], '2 Samuel 6')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000402', 'The Lord sent the prophet ... to David', 'Nathan', ARRAY['Elijah','Elisha','Isaiah'], 1, 'mc', ARRAY['1 Samuel'], '2 Samuel 12:1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000403', 'Absalom fled to ...', 'Geshur', ARRAY['Jerusalem','Rabbah','Ziklag'], 4, 'fitb', ARRAY['2 Samuel'], '2 Samuel 13:38')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000404', 'Which woman said: Keep the king?', 'the Tekoite', ARRAY['the Ammonitess','the Hittite','the Israelitess'], 5, 'fitb', ARRAY['1 Kings'], '2 Samuel')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000405', 'Who wanted to become king when David was old?', 'Adonijah', ARRAY['Solomon','Joab','Absalom'], 3, 'fitb', ARRAY['1 Samuel','2 Samuel'], '1 Kings 1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000406', 'Grant me ... , the priest', 'Zadok', ARRAY['Nathan','Benaiah','Joiada'], 3, 'fitb', ARRAY['Exodus'], '1 Kings 1:32')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000407', 'and they have made him ride on ... of the king', 'the mule', ARRAY['the donkey','the chariot','the horse'], 3, 'fitb', ARRAY['Matthew','Christ'], '1 Kings 1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000408', 'I go in the way of all the earth; so you are strong and become ...', 'a man', ARRAY['brave','a watchman','God-fearing'], 4, 'fitb', ARRAY['Deuteronomy'], '1 Kings 2:2')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000409', 'Apply your ... so that you do not let her gray hair descend with peace into the grave', 'wisdom', ARRAY['word','understanding','wealth'], 3, 'fitb', ARRAY['Ecclesiastes'], '1 Kings 2:6')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000410', 'The king of Israel in time of Elisha was ...', 'Joram', ARRAY['Ahab','Solomon','David'], 4, 'fitb', ARRAY['1 Kings','2 Kings'], '2 Kings 3')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000411', 'He then said to the young men: ... him to his mother', 'bring', ARRAY['carry','lead','give'], 3, 'fitb', '{}', '2 Kings 4:27')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000412', 'When Elisha then returned to ..., there was famine in that land', 'Gilgal', ARRAY['Shunem','Baal-shalisha','Syria'], 3, 'fitb', ARRAY['1 Kings'], '2 Kings 4:38')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000413', 'His ... and ..., the rivers of Damascus, are better than all waters of Israel', 'Abana, Pharpar', ARRAY['Euphrates, Tigris','Pison, Gihon','Jordan, Nile'], 5, 'fitb', ARRAY['2 Kings'], '2 Kings 5:12')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000414', 'that the iron fell in the water, and he cried and said: Ah, my lord; for it was ...', 'heavy', ARRAY['fallen','broken','rusty'], 3, 'fitb', ARRAY['2 Kings'], '2 Kings 6:5')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000415', '1 Chronicles begins with a list of ...', 'generations', ARRAY['kings','prophets','priests'], 3, 'fitb', ARRAY['1 Chronicles'], '1 Chronicles 1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000416', 'and his mother had called him ..., saying: For I bore him with pain', 'Jabez', ARRAY['Perez','Hezron','Etam'], 1, 'fitb', ARRAY['Genesis'], '1 Chronicles 4:9')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000417', 'And in days of Saul they fought against the ... ; who fell by their hand', 'Hagarites', ARRAY['Gadites','Reubenites','Hivites'], 5, 'fitb', ARRAY['1 Samuel'], '1 Chronicles 5:10')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000418', 'Aaron now and his sons burned offerings on the altar of ... and on the incense altar', 'burnt offerings', ARRAY['grain offerings','sin offerings','thanksgiving offerings'], 3, 'fitb', ARRAY['Exodus'], '1 Chronicles 6:49')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000419', 'So Saul and his ... died', 'three', ARRAY['two','four','five'], 4, 'fitb', ARRAY['1 Samuel'], '1 Chronicles 10:13')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000420', 'Solomon built a temple in Jerusalem on the mountain ...', 'Moria', ARRAY['Sinai','Carmel','Zion'], 3, 'fitb', ARRAY['1 Kings','2 Chronicles'], '2 Chronicles 3:1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000421', 'The king who restored the temple was ...', 'Josiah', ARRAY['David','Solomon','Ahaz'], 3, 'fitb', ARRAY['1 Chronicles','2 Chronicles'], '2 Chronicles 34')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000422', 'and he called the name of judge ... and of the left Boaz', 'Jachin', ARRAY['Joachin','Jacob','Jehozadak'], 2, 'fitb', ARRAY['Ruth'], '2 Chronicles 3:17')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000423', 'And they brought for Solomon ... from Egypt and from all those lands', 'horses', ARRAY['gold','silver','camels'], 3, 'fitb', ARRAY['1 Kings'], '2 Chronicles 1:17')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000424', 'And Solomon reigned in Jerusalem over all Israel ... years', '40', ARRAY['30','34','45'], 1, 'fitb', ARRAY['1 Kings'], '2 Chronicles')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000425', 'The return of the exiles began under king ...', 'Cyrus', ARRAY['Darius','Nebuchadnezzar','Xerxes'], 2, 'fitb', ARRAY['Ezra'], 'Ezra')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000426', 'Ezra led the return of the Israelites to ...', 'Jerusalem', ARRAY['Egypt','Babylon','Moab'], 2, 'fitb', ARRAY['Ezra'], 'Ezra')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000427', 'And they set up the Levites from ... years old and above to take oversight over work of Lord''s house', '18', ARRAY['20','22','25'], 3, 'fitb', ARRAY['Exodus'], 'Ezra 3:8')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000428', 'The letter which you have fitted for us, is ... for me to read', 'profitable', ARRAY['unprofitable','good','readable'], 3, 'fitb', ARRAY['Philemon'], 'Ezra 4:18')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000429', 'Now when I fast at the river ...', 'Ahava', ARRAY['Tigris','Euphrates','Pison'], 5, 'fitb', ARRAY['Ezra'], 'Ezra 8:21')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000430', 'I now was ... of the king', 'cupbearer', ARRAY['baker','priest','prophet'], 2, 'fitb', '{}', 'Nehemiah 1:11')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000431', 'The walls of Jerusalem were rebuilt in ... days', '52', ARRAY['42','30','70'], 1, 'fitb', ARRAY['Ezra','Nehemiah'], 'Nehemiah 6:15')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000432', 'Nehemiah was concerned over the ... of the people', 'sins', ARRAY['wealth','diseases','gave'], 2, 'fitb', ARRAY['Nehemiah','Ezra'], 'Nehemiah 1: 6,7')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000433', 'Remember me, my God, for good, all that I have ... to this people', 'done for', ARRAY['done to You','done to them','done to these'], 3, 'fitb', ARRAY['Psalms'], 'Nehemiah 5:19')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000434', 'Come and let us gather together in the valleys, in the valley ...', 'Ono', ARRAY['Ela','Kison','Hinnom'], 5, 'fitb', ARRAY['Psalms'], 'Nehemiah 6:2')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000435', 'Esther was ..., beautiful and lovely in form', 'white', ARRAY['black','yellow','red'], 3, 'fitb', ARRAY['Exodus'], 'Esther 1:1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000436', 'In the twelfth month, which is the month ..., in the tenth year of his reign', 'Tebeth', ARRAY['Nisan','Sivan','Adar'], 4, 'fitb', ARRAY['1 Kings'], 'Esther 2:16')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000437', 'Then Esther called ..., one of the king''s chamberlains', 'Hatach', ARRAY['Haman','Heber','Hanan'], 4, 'fitb', ARRAY['Esther'], 'Esther 4:5')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000438', 'With the Jews there was light and joy and ...', 'gladness', ARRAY['honor','praise','happiness'], 3, 'fitb', '{}', 'Esther 8:16')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000439', 'Among the Jews were light and gladness and ...', 'glory', ARRAY['honor','praise','happiness'], 3, 'fitb', '{}', 'Esther 8:16')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000440', 'And to him were born ... sons and three daughters', '7', ARRAY['5','8','3'], 2, 'fitb', ARRAY['Genesis'], 'Job 1:2')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000441', 'In all this Job did not sin, and charged God with nothing ...', 'unrighteous', ARRAY['wrong','evil','good'], 2, 'fitb', ARRAY['Job'], 'Job 1:22')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000442', 'For He gives pain and He ...; He wounds and His hands heal', 'binds', ARRAY['heals','creates','helps'], 3, 'fitb', ARRAY['Isaiah','Christ','Psalm'], 'Job 5:18')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000443', 'Teach me, and I will ... and will give me understanding in which I erred', 'keep silent', ARRAY['preach','go','walk'], 4, 'fitb', ARRAY['Psalms'], 'Job 6:24')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000444', 'Then answered ..., the Shuhite, and said:', 'Bildad', ARRAY['Eliphaz','Zophar','Elihu'], 5, 'fitb', ARRAY['1 Samuel'], 'Job 25:1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000445', 'Serves the Lord with ..., and pleases Him with thanksgiving', 'fear', ARRAY['joy','gladness','honor'], 3, 'fitb', ARRAY['Psalms'], 'Psalms 2:11')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000446', 'I lay down and slept; I was ashamed, for the Lord ... me', 'sustained', ARRAY['helped','redeemed','honored'], 3, 'fitb', ARRAY['Psalms'], 'Psalms 3:6')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000447', 'The Lord has heard my ...; the Lord will accept my prayer', 'crying', ARRAY['prayer','song','praise'], 3, 'fitb', ARRAY['Psalms'], 'Psalms 6:10')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000448', 'O Lord, our Lord, how ... is Your Name in all the earth', 'glorious', ARRAY['big','heavenly','lovely'], 2, 'fitb', ARRAY['Psalms'], 'Psalms 8:10')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000449', 'Therefore I will praise You, O Lord, among the heathen, and I will ... Your name', 'sing psalms to', ARRAY['love','bless','praise'], 2, 'fitb', ARRAY['Psalms'], 'Psalms 18:50')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000450', 'The fear of the Lord is the beginning of ...', 'wisdom', ARRAY['wisdom','joy','blessedness'], 2, 'fitb', ARRAY['Psalms','Proverbs','Ecclesiastes','Haggai'], 'Proverbs 1:7')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000451', 'Do you seek her as silver and consume her like ...', 'hidden treasures', ARRAY['wealth','possessions','gold'], 3, 'fitb', ARRAY['Proverbs'], 'Proverbs 2:4')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000452', 'Trust in the Lord with your whole heart, and lean not on your ...', 'understanding', ARRAY['heart','wealth','knowledge'], 2, 'fitb', ARRAY['Psalms','Proverbs'], 'Proverbs 3:5')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000453', 'I will instruct you in the path of ...; I will make my eyes on your ways', 'wisdom', ARRAY['good','straight','level'], 3, 'fitb', ARRAY['Proverbs'], 'Proverbs 4:11')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000454', 'Commit your ... to the Lord, and your thoughts will be established', 'works', ARRAY['way','thoughts','eyes'], 3, 'fitb', ARRAY['Psalms'], 'Proverbs 16:3')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000455', 'All has a ... time', 'destined time', ARRAY['fixed','good','set time'], 2, 'fitb', ARRAY['Ecclesiastes'], 'Ecclesiastes 3:1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000456', 'The book of Ecclesiastes is written to ...', 'Solomon', ARRAY['David','Moses','Isaiah'], 1, 'fitb', ARRAY['Ecclesiastes'], 'Ecclesiastes 1:1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000457', 'And it has neither seen ... nor known it; it has more rest than he', 'sun', ARRAY['moon','stars','waters'], 3, 'fitb', ARRAY['Ecclesiastes'], 'Ecclesiastes 6:5')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000458', 'and who breaks a ... through will be caught by him', 'hedge', ARRAY['lizard','mouse','weasel'], 2, 'fitb', ARRAY['Proverbs'], 'Proverbs 10:8')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000459', 'and much reading is wearing out of ...', 'flesh', ARRAY['understanding','eyes','vision'], 2, 'fitb', ARRAY['Proverbs'], 'Proverbs 12:12')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000460', 'Draw me, we will ...', 'open up', ARRAY['find','approach','seek'], 2, 'fitb', ARRAY['Haggai'], 'Haggai 1:4')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000461', 'The bars of our houses are ...', 'cedars', ARRAY['oaks','from olive wood','from acacia wood'], 3, 'fitb', ARRAY['Psalms','Proverbs'], 'Haggai 1:17')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000462', 'For behold, the ... is past', 'winter', ARRAY['summer','spring','autumn'], 1, 'fitb', '{}', 'Haggai 2:11')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000463', 'When I knew it, I set My soul on the ... of My people', 'violent', ARRAY['gentle','loving','restless'], 3, 'fitb', ARRAY['Isaiah'], 'Haggai 6:12')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000464', 'Solomon had a daughter in ...', 'Baal-Hamon', ARRAY['Hamon','Baal-Gad','Jeroboam-Baal'], 5, 'fitb', ARRAY['1 Kings','2 Chronicles'], 'Haggai 8:11')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000465', 'The ... will be gathered again, even to the God of heaven', 'Jacob''s', ARRAY['Isaiah''s','Abraham''s','David''s'], 4, 'fitb', ARRAY['Isaiah'], 'Isaiah 10:21')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000466', 'The ... and the ... shall come together', 'cow, bear', ARRAY['lion','wolf','sheep'], 3, 'fitb', ARRAY['Genesis'], 'Isaiah 11:7')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000467', 'Praising the Lord, for He has done ... things', 'glorious', ARRAY['good','Godly'], 3, 'fitb', ARRAY['Psalms'], 'Isaiah 12:5')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000468', 'and the prophet Isaiah, the son of ..., came to him', 'Amoz', ARRAY['Hezekiah','Ahab','Judah'], 3, 'fitb', ARRAY['Isaiah'], 'Isaiah 38:1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000469', 'O Zion, you who ... of good news', 'bring forth', ARRAY['hear','proclaim','publish'], 3, 'fitb', ARRAY['Psalms'], 'Isaiah 40:9')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000470', 'And I said: Ah, Lord God, behold, I cannot speak, for I am ...', 'young', ARRAY['old','experienced','ashamed'], 3, 'fitb', ARRAY['Isaiah'], 'Jeremiah 1:6')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000471', 'for I am with you, to ... to the Lord', 'plead', ARRAY['help','support','listen'], 3, 'fitb', '{}', 'Jeremiah 1:8')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000472', 'He will bring to them a ... who will be strong for them', 'wind', ARRAY['storm','rain','overflow'], 3, 'fitb', '{}', 'Jeremiah 4:12')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000473', 'See, you trust on ... which do no good', 'false words', ARRAY['gold','thoughts','teachers'], 4, 'fitb', ARRAY['Isaiah'], 'Jeremiah 7:8')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000474', 'You set my ... to the days of sorrows', 'remembrance', ARRAY['fear','despair','grief'], 3, 'fitb', ARRAY['Psalms'], 'Jeremiah 17:17')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000475', 'My soul is weary of ... and bows down within me', 'life', ARRAY['living','grief','distress'], 3, 'fitb', ARRAY['Psalms'], 'Klaagliederen 3:20')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000476', 'Is it ... of the Lord, that we have not been destroyed?', 'kindnesses', ARRAY['goodnesses','righteousnesses','mercies'], 3, 'fitb', ARRAY['Romans'], 'Klaagliederen 3:22')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000477', 'They are all ... tomorrow, Your love is great', 'new', ARRAY['goodness','faith','loving'], 3, 'fitb', ARRAY['Psalms'], 'Klaagliederen 3:23')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000478', 'For he plots and deceives people children not ...', 'from heart', ARRAY['with lust','with malice','in eternity'], 3, 'fitb', ARRAY['Job'], 'Klaagliederen 3:33')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000479', 'You have already seen ..., all their thoughts against me', 'all', ARRAY['their evil','their sins','their plotting'], 4, 'fitb', ARRAY['Jeremiah'], 'Klaagliederen 3:60')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000480', 'And when I opened my mouth, and He gave me that role to ...', 'eat', ARRAY['listen','observe','see'], 3, 'fitb', ARRAY['Revelation'], 'Ezekiel 3:2')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000481', 'Men, set your face against the ...', 'Israel''s mountains', ARRAY['Cherubim','around Jerusalem','Zions'], 3, 'fitb', ARRAY['Ezekiel'], 'Ezekiel 6:2')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000482', 'And He said to me: Man, go now and walk in ...', 'wilderness', ARRAY['earth','mountains','river'], 3, 'fitb', ARRAY['Ezekiel'], 'Ezekiel 8:8')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000483', 'And the inhabited places shall be ...', 'ruins', ARRAY['destroyed','abandoned','overthrown'], 3, 'fitb', ARRAY['Isaiah'], 'Ezekiel 12:20')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000484', 'But Noah, Daniel and ... were in the middle of it themselves', 'Job', ARRAY['Amos','Jonah','David'], 4, 'fitb', ARRAY['Daniel'], 'Ezekiel 14:20')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000485', 'and that men subdued them in the speech of the ...', 'Chaldeans', ARRAY['Babylonians','Persians','Egyptians'], 2, 'fitb', ARRAY['Exodus'], 'Daniel 1:4')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000486', 'and Daniel named him ...', 'Belteshazzar', ARRAY['Shadrach','Meshach','Abed-nego'], 1, 'fitb', ARRAY['Daniel'], 'Daniel 1:7')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000487', 'Yet be patient, ..., your kingdom is divided', '10 days', ARRAY['6 days','7 days','14 days'], 2, 'fitb', ARRAY['Genesis'], 'Daniel 1:12')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000488', 'Then Daniel entered until ..., of the king who had set up the wise men of Babylon to bring us to eat and drink', 'Arioch', ARRAY['Melzar','Shadrach','Ari-el'], 2, 'fitb', ARRAY['Daniel'], 'Daniel 2:24')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000489', '... , your kingdom is divided', 'Medes', ARRAY['Persians','Greeks','Tekei'], 2, 'fitb', ARRAY['1 Kings','2 Samuel'], 'Daniel 5:28')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000490', 'and in the days of ..., son of Joash, king of Israel', 'Jeroboam', ARRAY['Jotham','Ahaz','Hezekiah'], 5, 'fitb', ARRAY['1 Kings','2 Kings','1 Chronicles','2 Chronicles'], 'Hosea 1:1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000491', 'Is not his name ...; for you have not been My people', 'Lo-Ruhamah', ARRAY['Lo-Ruchamah','Lizreel','Gomer'], 5, 'fitb', ARRAY['Jeremiah'], 'Hosea 1:9')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000492', 'Ephraim is ..., let him go and become a ...', 'godless', ARRAY['brother','priest','prophet'], 3, 'fitb', ARRAY['Genesis'], 'Hosea 4:17')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000493', 'Come and let us ... to the Lord', 'return', ARRAY['repent','observe','pray'], 3, 'fitb', ARRAY['Psalms'], 'Hosea 6:1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000494', 'Who is ...? Who understands these things', 'wise', ARRAY['understanding','right','insightful'], 3, 'fitb', ARRAY['John'], 'Hosea 14:10')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000495', 'The word of the Lord that has gone forth to ...', 'Joel', ARRAY['Pethuel','Jeremiah','Jonah'], 4, 'fitb', ARRAY['Numbers'], 'Joel 1:1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000496', 'Consecrate the ... to Zion', 'Sion', ARRAY['Jerusalem','Bethlehem','Jericho'], 1, 'fitb', ARRAY['Numbers'], 'Joel 2:1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000497', 'Fear not, O land; be ... and be glad', 'joyful', ARRAY['peaceful','thankful','happy'], 3, 'fitb', ARRAY['Isaiah'], 'Joel 2:21')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000498', 'Who is ... who calls you?', 'He', ARRAY['Heavenly Father','Holy Spirit','Lord God'], 3, 'fitb', ARRAY['John'], 'Joel 2:32')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000499', 'and everyone who calls on the name of the Lord shall be ...', 'saved', ARRAY['blessed','redeemed','forgiven'], 3, 'fitb', ARRAY['Romans'], 'Joel 2:32')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000499', 'And ... shall become a wilderness and desolation', 'Egypt', ARRAY['Judah','Edom','Jerusalem'], 4, 'fitb', ARRAY['Jeremiah'], 'Ezekiel 29:9')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000500', 'that when that field is called in their own language ..., that is a field of blood', 'Abel', ARRAY['Cain','Achad','Abeldam'], 2, 'fitb', ARRAY['Genesis'], 'Acts 1:19')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000501', 'Who is the father of Joseph, the man of Mary (Jesus'' mother)?', 'Jacob', ARRAY['Eliud','Mattan','Eleazar'], 4, 'mc', ARRAY['Matthew'], 'Matthew 1:16')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000502', 'How many days and nights did Jesus fast in the wilderness?', '40', ARRAY['7','10','30'], 1, 'mc', '{}', 'Matthew 4:2')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000503', 'Jesus says the salt of the earth has lost its ... What does Jesus say happens to it?', 'It is thrown out and trampled by people', ARRAY['It is blessed and salted','It becomes purified','Its taste changes pleasantly'], 2, 'mc', ARRAY['Matthew'], 'Matthew 5:13')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000504', 'What is the first beatitude in the Sermon on the Mount?', 'Blessed are the poor in spirit', ARRAY['Blessed are those who mourn','Blessed are the meek','Blessed are the pure in heart'], 3, 'mc', ARRAY['Matthew'], 'Matthew 5:3')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000505', 'What does Jesus do first after coming down from the mountain?', 'He heals a leper', ARRAY['He teaches in the synagogue','He goes again to preach','He calls a disciple'], 4, 'mc', ARRAY['Matthew','Luke','Christ'], 'Matthew 8:1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000506', 'Which disciple walked on the water to Jesus?', 'Peter', ARRAY['John','Thomas','Judas'], 1, 'mc', '{}', 'Matthew 14: 28,29')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000507', 'Who asked Jesus if He is the Christ, the Son of God?', 'Caiaphas', ARRAY['Judas','Pilatus','Herod'], 4, 'mc', ARRAY['John'], 'Matthew 26:63')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000508', 'What happened when Jesus was baptized?', 'The heavens were opened', ARRAY['The earth shook','The sun darkened','An angel descended'], 2, 'mc', ARRAY['Matthew','Christ'], 'Matthew 3:16')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000509', 'Who was the first disciple Jesus called?', 'Peter', ARRAY['John','Jacobus','Andrew'], 2, 'mc', '{}', 'Matthew 4:18')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000510', 'What did Jesus say to them when he walked on water to the disciples?', 'I am, do not be afraid', ARRAY['Do not be afraid, I am','Walk to me','I am the Way, do not be afraid'], 3, 'mc', ARRAY['Matthew','Luke'], 'Matthew 14:27')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000511', 'For how many silver pieces was Jesus betrayed?', '30', ARRAY['20','40','10'], 1, 'mc', '{}', 'Matthew 26:15')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000512', 'Who said to Jesus: You are the King of the Jews?', 'Pilate', ARRAY['Caiphas','Herod','The High Priest'], 3, 'mc', ARRAY['Matthew'], 'Matthew 27: 51, 52')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000513', 'What happened after Jesus was dead for 3 hours?', 'The rocks split and the earth shook', ARRAY['The earth was darkened for 3 hours','The temple curtain was torn in two','An angel descended'], 4, 'mc', ARRAY['Matthew'], 'Matthew 27: 51, 52')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000514', 'Who said: I have suffered much in a dream to do Your will?', 'Pilate''s wife', ARRAY['The wife of Caiaphas','The wife of Herod','The wife of Judas'], 4, 'mc', ARRAY['Genesis'], 'Matthew 27:19')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000515', 'Who found (saw) the empty tomb?', 'Mary Magdalene and the other Mary', ARRAY['Mary, mother of Jesus','Peter and John','Peter and James'], 2, 'mc', ARRAY['Revelation'], 'Matthew 28:1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000516', 'What said the angel first to the women at the tomb?', 'Do not be afraid', ARRAY['He is risen','He is not here; He has risen','He goes ahead quickly'], 3, 'mc', ARRAY['Revelation'], 'Matthew 28:5')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000517', 'What did Jesus give to his disciples after His resurrection?', 'A command', ARRAY['The Holy Spirit','A blessing','A promise'], 2, 'mc', ARRAY['Acts','Easter','Pentecost'], 'Matthew 28:19')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000518', 'Who was the fourth son of Jacob?', 'Judah', ARRAY['Levi','Dan','Naphtali'], 2, 'mc', ARRAY['Genesis'], 'Genesis 29:35')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000519', 'What was the color of the second lamb in Revelation?', 'Red', ARRAY['White','Black','Fawn'], 4, 'mc', ARRAY['Revelation'], 'Revelation 6:4')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000520', 'Which disciple was not on the mountain of transfiguration?', 'Andreas', ARRAY['Peter','John','Jacobus'], 1, 'mc', ARRAY['Matthew','Mark','Luke'], 'Luke 9:28')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000521', 'How many people went into the ark of Noah?', '8', ARRAY['6','4','10'], 1, 'mc', ARRAY['Genesis'], 'Genesis 8:16')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000522', 'Who was not a son of Noah?', 'Gomer', ARRAY['Sem','Ham','Japheth'], 1, 'mc', ARRAY['Genesis'], 'Genesis 9:18')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000523', 'From whom was Dan a son?', 'Bilhah', ARRAY['Rachel','Leah','Zilpah'], 4, 'mc', ARRAY['Genesis'], 'Genesis 30:5')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000524', 'Who was fourth daughter of Zelophehad?', 'Milcah', ARRAY['Naah','Hoglah','Tirzah'], 4, 'mc', ARRAY['Numbers'], 'Numbers 27:1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000525', 'Who spoke for Job?', 'Elihu', ARRAY['Bildad','Zophar','Elifaz'], 3, 'mc', ARRAY['Job'], 'Job 32:2')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000526', 'Which king fell by a falsehood in his territory?', 'Ahabaziah', ARRAY['Joram','Azariah','Jotham'], 4, 'mc', ARRAY['1 Kings'], '2 Kings 1:2')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000527', 'Who was mother of Absalom?', 'Maacah', ARRAY['Haggith','Ahinoam','Abigail'], 4, 'mc', ARRAY['2 Samuel'], '2 Samuel 3:3')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000528', 'What was the final plague in Egypt?', 'Hail and darkness', ARRAY['Locusts and flies','Lice and boils','Frost and thunder'], 1, 'mc', ARRAY['Exodus'], 'Exodus 9:24')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000529', 'Who was queen mother of King Hezekiah?', 'Hephzibah', ARRAY['Jehosheba','Abi','Michal'], 3, 'mc', ARRAY['1 Kings','2 Kings'], 'Isaiah 36:3')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000530', 'How many sons had Gideon?', '70', ARRAY['30','50','60'], 3, 'mc', ARRAY['Judges'], 'Judges 8:30')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000531', 'Which judge was left-handed?', 'Ehud', ARRAY['Jephthah','Shamgar','Othniel'], 3, 'mc', ARRAY['Judges'], 'Judges 3:15')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000532', 'Where was tabernacle of gold made?', 'Gold', ARRAY['Silver','Bronze','Iron'], 1, 'mc', ARRAY['Exodus'], 'Exodus 25:31')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000533', 'Who was third son of Aaron?', 'Eleazar', ARRAY['Nadab','Abihu','Ithamar'], 5, 'mc', ARRAY['Leviticus'], 'Exodus 6:22')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000534', 'Which community did John write a letter to? John wrote a letter.', 'Philadelphian', ARRAY['Smyrna','Pergamum','Laodicea'], 4, 'mc', ARRAY['Acts','Revelation','John'], 'Revelation 3:7')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000535', 'Where was no woman of Esau?', 'Zilpah', ARRAY['Ada','Aholibamah','Basemath'], 3, 'mc', ARRAY['Genesis'], 'Genesis 36: 2,3')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000536', 'Who was fourth son of Abraham and Keturah?', 'Midian', ARRAY['Ishbak','Medan','Shuah'], 5, 'mc', ARRAY['Genesis'], 'Genesis 25:2')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000537', 'Who plotted to release Joseph from the pit?', 'Reuben', ARRAY['Simeon','Judah','Levi'], 2, 'mc', ARRAY['Genesis'], 'Genesis 37:29')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000538', 'Who stood before Benjamin when they were at Jacob?', 'Judah', ARRAY['Simeon','Reuben','Naftali'], 1, 'mc', ARRAY['Genesis'], 'Genesis 43:8-9')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000539', 'Which son of Jacob will dwell at the havens of the sea?', 'Zebulon', ARRAY['Reuben','Gad','Asher'], 4, 'mc', ARRAY['Genesis'], 'Genesis 49:13')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000540', 'Which prophet preached a funeral lamentation?', 'Joel', ARRAY['Hosea','Micah','Nahum'], 4, 'mc', ARRAY['Jonah'], NULL)
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000541', 'Who was the father of Abram?', 'Terah', ARRAY['Haran','Nahor','Serug'], 2, 'mc', ARRAY['Genesis'], 'Genesis 11:26')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000542', 'How many shekels of silver did Abraham pay to Ephron for Sarah''s grave?', '400', ARRAY['200','500','600'], 4, 'mc', ARRAY['Genesis'], 'Genesis 23:16')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000543', 'How old was Abraham when he died?', '175', ARRAY['150','155','180'], 2, 'mc', ARRAY['Genesis'], 'Genesis 25:7')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000544', 'Who stayed with Joseph in Egypt?', 'Simeon', ARRAY['Ruben','Judah','Zebulun'], 2, 'mc', ARRAY['Genesis'], 'Genesis 42:24')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000545', 'Who was firstborn son of Reuben?', 'Hanoch', ARRAY['Pallu','Hezron','Charmi'], 4, 'mc', ARRAY['Genesis'], 'Genesis 46:9')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000546', 'Jacob was deceived, how many days?', '40', ARRAY['20','30','60'], 3, 'mc', ARRAY['Genesis'], 'Genesis 50:3')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000547', 'How many days was Jacob mourned at the Jordan?', '7', ARRAY['3','5','10'], 3, 'mc', ARRAY['Genesis'], 'Genesis 50:10')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000548', 'How long did Joseph live?', '110', ARRAY['120','130','150'], 2, 'mc', ARRAY['Genesis'], 'Genesis 50:26')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000549', 'What was the second plague in Egypt?', 'Frogs', ARRAY['Lice','Locusts and boils'], 2, 'mc', ARRAY['Exodus'], 'Exodus 8:16')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000550', 'How many days was there second plague in Egypt?', '2', ARRAY['3','4','6'], 1, 'mc', ARRAY['Exodus'], 'Exodus 10:22')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000551', 'Which day is a feast?', '5', ARRAY['2','3','6'], 1, 'mc', ARRAY['Exodus','Deuteronomy'], 'Exodus 20:12')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000552', 'On which rows of the breastplate of Aaron were a ruby, an onyx and an amethyst?', '3', ARRAY['1','2','4'], 1, 'mc', ARRAY['Exodus'], 'Exodus 28:19')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000553', 'Isaiah was a prophet in the kingdom of Judah', 'True', ARRAY['Not true'], 4, 'tf', ARRAY['Isaiah'], 'Isaiah 1:1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000554', 'Isaiah had visions of the Lord, standing for angels and new ... and new earth', 'Not true', ARRAY['True'], 4, 'tf', ARRAY['Isaiah'], 'Isaiah 6:1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000555', 'Isaiah was a contemporary of King Saul', 'Not true', ARRAY['True'], 3, 'tf', ARRAY['Isaiah'], 'Isaiah 1:1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000556', 'Isaiah prophesied about new heavens and new ...', 'Not true', ARRAY['True'], 3, 'tf', ARRAY['Isaiah'], 'Isaiah 65:17')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000557', 'Jeremiah was a prophet in the kingdom of Judah', 'True', ARRAY['Not true'], 4, 'tf', ARRAY['Jeremiah'], 'Jeremiah 1:1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000558', 'Jeremiah prophesied only during the reign of King David', 'Not true', ARRAY['True'], 3, 'tf', ARRAY['Jeremiah'], 'Jeremiah 1:3')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000559', 'Pashur took Jeremiah captive', 'True', ARRAY['Not true'], 4, 'mc', ARRAY['Jeremiah'], 'Jeremiah 20:2')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000560', 'Jeremiah writes in his letter: Dan has made an end to ... and will not hear to me, and I will pray to you but you will not listen', 'Not true', ARRAY['True'], 3, 'tf', ARRAY['Jeremiah'], 'Jeremiah 29:12')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000561', 'Ezekiel was a prophet in Babylon?', 'Not true', ARRAY['True'], 3, 'tf', ARRAY['Ezekiel'], 'Ezekiel 1:1-3')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000562', 'Ezekiel became a watchman for Israel ... days', '7', ARRAY['3','14','30'], 2, 'mc', ARRAY['Ezekiel'], 'Ezekiel 3:15')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000563', 'Ezekiel prophesied about new heavens and new ...', 'Not true', ARRAY['True'], 3, 'tf', ARRAY['Ezekiel'], 'Ezekiel 32:1')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000564', 'Daniel wrote in a dream: ''You shall fast ... days''', '21', ARRAY['3','7','40'], 2, 'mc', ARRAY['Daniel'], 'Daniel 10:2-3')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000565', 'Ezekiel prophesied about 430 years of Jerusalem''s ...', 'Not true', ARRAY['True'], 2, 'tf', ARRAY['Ezekiel'], 'Ezekiel 29')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000566', 'God made a promise to Abraham in ... BC', '2000', ARRAY['1500','1800','2500'], 2, 'mc', ARRAY['Genesis'], 'Genesis 12:4')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000567', 'Which prophet was in Babylon when God spoke to Daniel?', 'Jeremiah', ARRAY['Isaiah','Ezekiel','Daniel himself'], 4, 'mc', ARRAY['Daniel'], 'Daniel 9:2')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000568', 'The book of Daniel ends with these words: ''But you, go your way, for the words are ... up to the time of the end.''', 'sealed', ARRAY['closed','open','broken'], 3, 'mc', ARRAY['Daniel'], 'Daniel 12:9')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000569', 'The book of Daniel was written in ... languages', '2', ARRAY['1','3','4'], 4, 'mc', ARRAY['Daniel'], 'Daniel')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000570', 'The letter to the Romans is Paul''s ... letter', 'Not true', ARRAY['True'], 3, 'tf', ARRAY['Romans'], 'Romans 16')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000571', 'Paul speaks about the new life through the Holy ...', 'Not true', ARRAY['True'], 3, 'tf', ARRAY['Romans','1 Corinthians','2 Corinthians','Galatians','Ephesians','Colossians','1 Thessalonians','2 Thessalonians'], 'Romans 8')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000572', 'Paul wrote the letter to the Galatians because of their ... to the gospel', 'Not true', ARRAY['True'], 4, 'tf', ARRAY['Galatians'], 'Galatians 1: 6,7')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000573', 'The Galatians are ... to make the ... of Christ perfect and to fulfill the law', 'Not true', ARRAY['True'], 3, 'tf', ARRAY['Galatians'], 'Galatians 6:2')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000574', 'Paul speaks in the letter to the Ephesians about the ... of Christ', 'Not true', ARRAY['True'], 3, 'tf', ARRAY['Ephesians'], 'Ephesians 3: 17-19')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000575', 'Paul writes in Philippians: I can do all things through ... who gives me strength', 'Not true', ARRAY['True'], 3, 'tf', ARRAY['Philippians'], 'Philippians 4:13')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000576', 'Paul warns in Colossians against ... teachings', 'Not true', ARRAY['True'], 3, 'tf', ARRAY['Colossians'], 'Colossians 2:8')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000577', 'Paul wrote Colossians while he was in ...', 'Not true', ARRAY['True'], 4, 'tf', ARRAY['Colossians'], 'Colossians 4:10')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000578', 'Paul speaks in the letter to the Ephesians about the ... of Christ', 'Not true', ARRAY['True'], 3, 'tf', ARRAY['Ephesians'], 'Ephesians 3: 17-19')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000579', 'Paul wrote the letter to the ... on the love of Christ', 'Not true', ARRAY['True'], 3, 'tf', ARRAY['Ephesians'], 'Ephesians 3: 17-19')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000580', 'And he said to ...: which of these times should you we know? You, me, the Lord do not keep one hour with us.', 'Peter', ARRAY['Johannes','Jakobus','Matthéüs'], 2, 'fitb', '{}', 'Matthew 26:40')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000581', 'And so is it ...: The Lord is ... of the Lord.', 'forever', ARRAY['thanked','blessed','praised'], 3, 'fitb', '{}', '1 Chronicles 16:36')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000582', 'In which book is David''s psalm preserved?', '1 Chronicles', ARRAY['1 Kings','2 Kings','2 Chronicles'], 5, 'mc', '{}', '1 Chronicles 16: 7-36')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000583', 'Which apostle: You have the words of eternal life?', 'Peter', ARRAY['Andreans','Johannes','Jakobus'], 4, 'mc', '{}', 'John 6:68')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000584', 'Which disciple: Do not know where we will go?', 'Thomas', ARRAY['Johannes','Petrus','Jakobus'], 1, 'mc', '{}', 'John 11:16')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000585', 'Which disciple: He, we know not where we are going?', 'Thomas', ARRAY['Lukas','Andreans','Johannes'], 4, 'mc', '{}', 'John 14:5')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000586', 'Which disciple: He, the Father, to You is named?', 'Philip', ARRAY['Johannes','Petrus','Andréas'], 3, 'mc', '{}', 'John 14:8')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000587', 'Which port in Jerusalem is a healing well?', 'The Sheep Gate', ARRAY['The Fish Gate','The Golden Gate','The Water Gate'], 3, 'mc', '{}', 'John 5:2')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000588', 'How many men had the Samaritan woman''s husbands?', 'Five', ARRAY['Two','Seven','Three'], 3, 'mc', '{}', 'John 4:18')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000589', 'Which well in Samaria did Jesus speak to a woman?', 'Jacob''s Well', ARRAY['The King''s Well','The Prophet''s Well','Abraham''s Well'], 2, 'mc', '{}', 'John 4:6')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000590', 'Which well is in Sychar, where Jesus met a Samaritan woman?', 'Jacob''s Well', ARRAY['Abraham''s Well','David''s Well','The King''s Well'], 3, 'mc', '{}', 'John 4:6')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000591', 'What was the 2nd miraculous sign Jesus performed in Cana?', 'The Lost Coin Healing', ARRAY['Turning Water to Wine','Healing the Official''s Son','Feeding the 5000'], 3, 'mc', '{}', 'John 4:46-54')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000592', 'Which pool in Jerusalem had five porches?', 'Bethesda', ARRAY['Siloam','Hezekiah''s Pool','The Upper Pool'], 4, 'mc', '{}', 'John 5:2')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000593', 'How long were the disciples in the upper room?', 'Ten days', ARRAY['Three days','Seven days','Forty days'], 2, 'mc', '{}', 'Acts 1:13')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000594', 'Which gate is a healing well in Jerusalem?', 'The Sheep Gate', ARRAY['The Golden Gate','The Water Gate','The Fish Gate'], 3, 'mc', '{}', 'Acts 3:2')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000595', 'Who was the Samaritan woman''s first husband?', 'Five', ARRAY['Two','Seven','Three'], 3, 'mc', '{}', 'Luke 16:18')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000596', 'Which gate in Jerusalem is a healing well?', 'The Sheep Gate', ARRAY['The Golden Gate','The Water Gate','The Fish Gate'], 3, 'mc', '{}', 'Acts 3:2')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
+VALUES ('000597', 'How many days did the feast of Dedication (Hanukkah) last?', 'Two', ARRAY['Three','Five','Seven'], 1, 'mc', '{}', 'Matthew 4:9')
+ON CONFLICT (id) DO UPDATE SET
+    question = EXCLUDED.question,
+    correct_answer = EXCLUDED.correct_answer,
+    incorrect_answers = EXCLUDED.incorrect_answers,
+    difficulty = EXCLUDED.difficulty,
+    type = EXCLUDED.type,
+    categories = EXCLUDED.categories,
+    biblical_reference = EXCLUDED.biblical_reference,
+    updated_at = NOW();
+
+-- Total questions processed: 598
