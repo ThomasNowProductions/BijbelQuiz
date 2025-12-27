@@ -3,13 +3,10 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 import '../models/lesson.dart';
-import '../models/ad.dart';
 import './quiz_screen.dart';
 import 'package:provider/provider.dart';
 import '../providers/settings_provider.dart';
 import '../services/lesson_service.dart';
-import '../services/ad_service.dart';
-import '../widgets/ad_widget.dart';
 import '../l10n/strings_nl.dart' as strings;
 
 class LessonCompleteScreen extends StatefulWidget {
@@ -38,32 +35,6 @@ class LessonCompleteScreen extends StatefulWidget {
 
 class _LessonCompleteScreenState extends State<LessonCompleteScreen>
     with SingleTickerProviderStateMixin {
-  final AdService _adService = AdService();
-  Ad? _currentAd;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadAd();
-  }
-
-  Future<void> _loadAd() async {
-    try {
-      final ad = await _adService.getDisplayAd();
-      if (!mounted) return;
-
-      setState(() {
-        _currentAd = ad;
-      });
-    } catch (e) {
-      if (mounted) {
-        setState(() {
-          _currentAd = null;
-        });
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final analyticsService =
@@ -74,7 +45,7 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
     final cs = Theme.of(context).colorScheme;
     final pctValue =
         widget.total > 0 ? (widget.correct / widget.total * 100.0) : 0.0;
-    
+
     // Check if it's a mobile device
     final isMobile = MediaQuery.of(context).size.width < 600;
 
@@ -111,7 +82,7 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
                   ),
                 ),
               ),
-              
+
               // Back button positioned at top
               Positioned(
                 top: 8,
@@ -125,7 +96,7 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
                   ),
                 ),
               ),
-              
+
               SafeArea(
                 child: Center(
                   child: ConstrainedBox(
@@ -145,16 +116,20 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
                                     duration: const Duration(milliseconds: 500),
                                     curve: Curves.easeOutBack,
                                     builder: (context, value, child) =>
-                                        Transform.scale(scale: value, child: child),
+                                        Transform.scale(
+                                            scale: value, child: child),
                                     child: Container(
                                       padding: const EdgeInsets.all(18),
                                       decoration: BoxDecoration(
-                                        color: cs.primary.withValues(alpha: 0.1),
+                                        color:
+                                            cs.primary.withValues(alpha: 0.1),
                                         borderRadius: BorderRadius.circular(20),
-                                        border: Border.all(color: cs.outlineVariant),
+                                        border: Border.all(
+                                            color: cs.outlineVariant),
                                         boxShadow: [
                                           BoxShadow(
-                                            color: cs.primary.withValues(alpha: 0.15),
+                                            color: cs.primary
+                                                .withValues(alpha: 0.15),
                                             blurRadius: 18,
                                             spreadRadius: 2,
                                             offset: const Offset(0, 6),
@@ -189,21 +164,24 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
                                     decoration: BoxDecoration(
                                       color: cs.surface,
                                       borderRadius: BorderRadius.circular(14),
-                                      border: Border.all(color: cs.outlineVariant),
+                                      border:
+                                          Border.all(color: cs.outlineVariant),
                                     ),
                                     child: Text(
                                       widget.lesson.title,
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleMedium
-                                          ?.copyWith(fontWeight: FontWeight.w700),
+                                          ?.copyWith(
+                                              fontWeight: FontWeight.w700),
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
 
                                   const SizedBox(height: 24),
                                   // Speedometer (total score)
-                                  _Speedometer(percentage: pctValue.clamp(0.0, 100.0)),
+                                  _Speedometer(
+                                      percentage: pctValue.clamp(0.0, 100.0)),
 
                                   const SizedBox(height: 60),
                                   // Stats cards in single row
@@ -220,8 +198,10 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
                                           ),
                                           const SizedBox(width: 12),
                                           _StatCard(
-                                            icon: Icons.local_fire_department_rounded,
-                                            label: strings.AppStrings.bestStreak,
+                                            icon: Icons
+                                                .local_fire_department_rounded,
+                                            label:
+                                                strings.AppStrings.bestStreak,
                                             value: '${widget.bestStreak}',
                                           ),
                                         ],
@@ -230,7 +210,8 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
                                   else
                                     // Desktop: Fixed row
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         _AnimatedNumberCard(
                                           icon: Icons.check_circle_rounded,
@@ -239,19 +220,20 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
                                         ),
                                         const SizedBox(width: 12),
                                         _StatCard(
-                                          icon: Icons.local_fire_department_rounded,
+                                          icon: Icons
+                                              .local_fire_department_rounded,
                                           label: strings.AppStrings.bestStreak,
                                           value: '${widget.bestStreak}',
                                         ),
                                       ],
                                     ),
-                                  
+
                                   const SizedBox(height: 24),
                                 ],
                               ),
                             ),
                           ),
-                          
+
                           // Buttons at bottom
                           if (isMobile)
                             // Mobile: Compact buttons with short labels
@@ -274,9 +256,11 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
                                           vertical: 12),
                                     ),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
-                                        const Icon(Icons.refresh_rounded, size: 18),
+                                        const Icon(Icons.refresh_rounded,
+                                            size: 18),
                                         const SizedBox(width: 4),
                                         Text(strings.AppStrings.retryLesson),
                                       ],
@@ -288,10 +272,12 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
                                   child: ElevatedButton(
                                     onPressed: widget.stars > 0
                                         ? () {
-                                            Provider.of<AnalyticsService>(context,
+                                            Provider.of<AnalyticsService>(
+                                                context,
                                                 listen: false);
 
-                                            Provider.of<AnalyticsService>(context,
+                                            Provider.of<AnalyticsService>(
+                                                    context,
                                                     listen: false)
                                                 .capture(context,
                                                     'start_next_lesson_from_complete');
@@ -303,11 +289,13 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
                                           vertical: 12),
                                     ),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(strings.AppStrings.nextLesson),
                                         const SizedBox(width: 4),
-                                        const Icon(Icons.arrow_forward_rounded, size: 18),
+                                        const Icon(Icons.arrow_forward_rounded,
+                                            size: 18),
                                       ],
                                     ),
                                   ),
@@ -335,13 +323,13 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
                                           vertical: 14),
                                     ),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         const Icon(Icons.refresh_rounded,
                                             size: 20),
                                         const SizedBox(width: 8),
-                                        Text(
-                                            strings.AppStrings.retryLesson),
+                                        Text(strings.AppStrings.retryLesson),
                                       ],
                                     ),
                                   ),
@@ -351,10 +339,12 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
                                   child: ElevatedButton(
                                     onPressed: widget.stars > 0
                                         ? () {
-                                            Provider.of<AnalyticsService>(context,
+                                            Provider.of<AnalyticsService>(
+                                                context,
                                                 listen: false);
 
-                                            Provider.of<AnalyticsService>(context,
+                                            Provider.of<AnalyticsService>(
+                                                    context,
                                                     listen: false)
                                                 .capture(context,
                                                     'start_next_lesson_from_complete');
@@ -366,7 +356,8 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
                                           vertical: 14),
                                     ),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(strings.AppStrings.nextLesson),
                                         const SizedBox(width: 8),
@@ -405,84 +396,10 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
       final nextLesson = lessons[nextIndex];
       if (!mounted) return;
 
-      // Only show ad if we have one available, otherwise go directly to next lesson
-      if (_currentAd != null) {
-        // Show ad dialog first
-        await _showAdDialog(nextLesson);
-      } else {
-        // No ad available, go directly to next quiz
-        await _proceedToNextLesson(nextLesson);
-      }
+      await _proceedToNextLesson(nextLesson);
     } catch (_) {
       // Silently ignore; button is disabled when not eligible.
     }
-  }
-
-  Future<void> _showAdDialog(Lesson nextLesson) async {
-    if (!mounted) return;
-
-    final cs = Theme.of(context).colorScheme;
-    showDialog(
-      context: context,
-      barrierDismissible: false, // Don't allow dismiss without choice
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: cs.surface,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          contentPadding: const EdgeInsets.all(24),
-          content: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 400),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Ad widget
-                AdWidget(
-                  ad: _currentAd!,
-                  onDismiss: () {
-                    // Close dialog and proceed without viewing ad
-                    Navigator.of(context).pop();
-                    _proceedToNextLesson(nextLesson);
-                  },
-                  onView: () {
-                    // Track ad view
-                    final analyticsService =
-                        Provider.of<AnalyticsService>(context, listen: false);
-                    analyticsService.trackFeatureUsage(
-                        context, 'custom_ads', 'viewed',
-                        additionalProperties: {
-                          'ad_id': _currentAd!.id,
-                          'ad_title': _currentAd!.title,
-                        });
-                  },
-                ),
-
-                const SizedBox(height: 20),
-
-                // Continue button
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(); // Close dialog
-                      _proceedToNextLesson(nextLesson);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(50),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: Text(strings.AppStrings.nextLesson),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
   }
 
   Future<void> _proceedToNextLesson(Lesson nextLesson) async {

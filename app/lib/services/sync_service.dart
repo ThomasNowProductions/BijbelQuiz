@@ -584,8 +584,9 @@ class SyncService {
   bool _isValidSyncedData(String key, Map<String, dynamic> data) {
     // Basic validation - we rely on ConflictResolvers to handle data integrity during merge
     // but we can do some high-level checks here.
-    if (data.isEmpty && key != 'settings')
+    if (data.isEmpty && key != 'settings') {
       return false; // Settings can be empty?
+    }
 
     // We could delegate to specific validators if needed, but for now we trust the source
     // as we are moving towards a more robust conflict resolution strategy.

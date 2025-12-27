@@ -1757,12 +1757,6 @@ class AppStrings {
       : 'Vraag: $question';
   static String get blank => _language == 'en' ? AppStringsEn.blank : '______';
 
-  // Ad Widget
-  static String get recommendedAd =>
-      _language == 'en' ? AppStringsEn.recommendedAd : 'Aanbevolen';
-  static String get moreInformation =>
-      _language == 'en' ? AppStringsEn.moreInformation : 'Meer informatie';
-
   // Lesson Select Screen
   static String get lessonLocked =>
       _language == 'en' ? AppStringsEn.lessonLocked : 'Les is nog vergrendeld';

@@ -972,10 +972,6 @@ class AppStringsEn {
   static String questionLabel(String question) => 'Question: $question';
   static const String blank = '______';
 
-  // Ad Widget
-  static const String recommendedAd = 'Recommended';
-  static const String moreInformation = 'More Information';
-
   // Lesson Select Screen
   static const String lessonLocked = 'Lesson is still locked';
 
