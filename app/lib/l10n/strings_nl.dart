@@ -1803,4 +1803,17 @@ class AppStrings {
       _language == 'en'
           ? AppStringsEn.reactionButtonEn(emoji, count, selected)
           : '${emoji} reactie${count > 0 ? ", $count reacties" : ""}${selected ? ", geselecteerd" : ""}';
+
+  // Greetings
+  static List<String> get greetings => _language == 'en'
+      ? AppStringsEn.greetings
+      : const [
+          'Dit is jouw voortgang',
+          'Hier is je voortgang op dit moment',
+          'Bekijk je voortgang',
+          'Je voortgang tot nu toe',
+          'Jouw leervoortgang',
+          'Je huidige voortgang',
+          'Je voortgang overzicht',
+        ];
 }

@@ -6,7 +6,6 @@ import '../providers/lesson_progress_provider.dart';
 import '../screens/quiz_screen.dart';
 import '../services/analytics_service.dart';
 import '../services/greeting_service.dart';
-import '../services/logger.dart';
 import '../l10n/strings_nl.dart' as strings;
 
 enum DayState { success, fail, freeze, future }
@@ -62,23 +61,10 @@ class _ProgressHeaderState extends State<ProgressHeader>
     });
   }
 
-  Future<void> _loadGreeting() async {
-    try {
-      final greeting = await _greetingService.getTimeBasedGreeting();
-      if (mounted) {
-        setState(() {
-          _greeting = greeting;
-        });
-        AppLogger.info('Loaded greeting: $greeting');
-      }
-    } catch (e) {
-      AppLogger.warning('Error loading greeting: $e');
-      if (mounted) {
-        setState(() {
-          _greeting = strings.AppStrings.yourProgress; // Keep fallback
-        });
-      }
-    }
+  void _loadGreeting() {
+    setState(() {
+      _greeting = _greetingService.getRandomGreeting();
+    });
   }
 
   @override

@@ -997,4 +997,15 @@ class AppStringsEn {
     if (selected) label += ', selected';
     return label;
   }
+
+  // Greetings
+  static const List<String> greetings = [
+    'Your progress',
+    'Here is your progress at this moment',
+    'View your progress',
+    'Your progress so far',
+    'Your learning progress',
+    'Your current progress',
+    'Your progress overview',
+  ];
 }
