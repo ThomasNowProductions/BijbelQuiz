@@ -1,5 +1,7 @@
 # BijbelQuiz
 
+![Tablet image](https://bijbelquiz.app/assets/images/Tablet-1.png)
+
 [![Flutter](https://img.shields.io/badge/Flutter-3.0+-02569B?logo=flutter)](https://flutter.dev)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 ![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/ThomasNowProductions/BijbelQuiz?utm_source=oss&utm_medium=github&utm_campaign=ThomasNowProductions%2FBijbelQuiz&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)

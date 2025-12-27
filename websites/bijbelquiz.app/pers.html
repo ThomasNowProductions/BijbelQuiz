@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pres - BijbelQuiz</title>
+    <meta name="description" content="Download persmateriaal voor BijbelQuiz. Vind beeldmateriaal en logo's voor media en promotie.">
+    <meta name="keywords" content="bijbelquiz pers, bijbelquiz persmateriaal, bijbel quiz media kit, bijbelquiz beeldmateriaal">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://bijbelquiz.app/pers.html">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="theme.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body class="center-screen fade-in">
+    <div class="container faq-container">
+        <div class="faq-header">
+            <i class="material-icons icon-large">campaign</i>
+            <h1>Persmateriaal</h1>
+            <p class="hero-description">Beeldmateriaal en logo's voor media en promotie van BijbelQuiz.</p>
+        </div>
+
+        <!-- Download Press Kit -->
+        <div class="card" style="margin-bottom: 2rem;">
+            <h2 style="color: var(--primary); margin-bottom: 1rem;">Download Perskit</h2>
+            <p style="margin-bottom: 1.5rem;">Download alle beeldmateriaal en logo's in één ZIP-bestand. Bevat screenshots, logo's en promotiebeelden in verschillende formaten.</p>
+            <a href="/assets/press.zip" class="btn primary" download>
+                <i class="material-icons">download</i>
+                Download perskit (.zip)
+            </a>
+        </div>
+
+        <!-- Embed Images -->
+        <div class="card" style="margin-bottom: 2rem;">
+            <h2 style="color: var(--primary); margin-bottom: 1rem;">Beeldmateriaal Embedden</h2>
+            <p style="margin-bottom: 1.5rem;">Je kunt rechtstreeks afbeeldingen van BijbelQuiz embedden in je website, blog of artikel. Door de afbeeldingen van onze servers te gebruiken, worden ze altijd automatisch bijgewerkt naar de nieuwste versies.</p>
+            
+            <div style="background: linear-gradient(135deg, var(--primary) 0%, #1d4ed8 100%); color: white; padding: 1.5rem; border-radius: var(--radius-md); margin-bottom: 1.5rem;">
+                <p style="margin: 0; color: white; font-weight: 600;"><i class="material-icons" style="vertical-align: middle; font-size: 1.2rem;">update</i> Altijd up-to-date</p>
+                <p style="margin: 0.5rem 0 0 0; color: rgba(255,255,255,0.9); font-size: 0.95rem;">Als we nieuwe screenshots of logo's uploaden, worden je embedded afbeeldingen automatisch bijgewerkt zonder dat je iets hoeft te wijzigen.</p>
+            </div>
+            
+            <p style="margin-bottom: 1.5rem;">Gebruik de volgende URL-structuur:</p>
+            
+            <div class="update-details">
+                <p style="margin-bottom: 0.5rem;"><strong>Base URL:</strong></p>
+                <code style="display: block; background: var(--surface); padding: 1rem; border-radius: var(--radius-sm); color: var(--text-secondary); word-break: break-all; margin-bottom: 1rem;">https://bijbelquiz.app/assets/images/[bestandsnaam]</code>
+                
+                <p style="margin-bottom: 0.5rem;"><strong>Beschikbare afbeeldingen:</strong></p>
+                <ul style="list-style: none; padding: 0;">
+                    <li><code>Mobile-1.png</code></li>
+                    <li><code>Mobile-2.png</code></li>
+                    <li><code>Mobile-3.png</code></li>
+                    <li><code>Mobile-4.png</code></li>
+                    <li><code>Screenshot-1.png</code></li>
+                    <li><code>Screenshot-2.png</code></li>
+                    <li><code>Screenshot-3.png</code></li>
+                    <li><code>Screenshot-4.png</code></li>
+                    <li><code>Screenshot-5.png</code></li>
+                    <li><code>Tablet-1.png</code></li>
+                    <li><code>Tablet-2.png</code></li>
+                    <li><code>Tablet-3.png</code></li>
+                    <li><code>Tablet-4.png</code></li>
+                </ul>
+            </div>
+
+            <p style="margin-top: 1.5rem; margin-bottom: 1rem;"><strong>Voorbeeld HTML:</strong></p>
+            <div class="update-details">
+                <pre style="background: var(--surface); padding: 1rem; border-radius: var(--radius-sm); overflow-x: auto; margin: 0;"><code>&lt;img src="https://bijbelquiz.app/assets/images/Mobile-1.png" alt="BijbelQuiz mobiele screenshot"&gt;</code></pre>
+            </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="contact-cta">
+            <h2>Vragen?</h2>
+            <p>Neem contact met ons op voor interviews, exclusieve informatie of samenwerkingen.</p>
+            <a href="mailto:thomasnowprod@proton.me" class="btn primary">
+                <i class="material-icons">email</i>
+                Neem contact op
+            </a>
+        </div>
+    </div>
+
+    <footer id="main-footer"></footer>
+
+    <script>
+        // Fetch and inject the central footer
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/components/footer.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('main-footer').innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('Error loading footer:', error);
+                });
+        });
+    </script>
+
+    <style>
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .faq-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .faq-header .icon-large {
+            margin-bottom: 1.5rem;
+        }
+
+        .faq-header h1 {
+            margin-bottom: 1rem;
+        }
+
+        /* Contact CTA */
+        .contact-cta {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--surface-highest);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--outline);
+        }
+
+        .contact-cta h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .contact-cta p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        /* Code blocks */
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .faq-container {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .faq-header {
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+    <script src="/js/status.js"></script>
+</body>
+</html>

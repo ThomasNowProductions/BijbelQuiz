@@ -103,6 +103,10 @@
     {
       "source": "/faq",
       "destination": "https://bijbelquiz.app/faq.html"
+    },
+    {
+      "source": "/pers",
+      "destination": "https://bijbelquiz.app/pers.html"
     }
   ],
   "headers": [
