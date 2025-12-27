@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'package:flutter/services.dart';
 import '../models/lesson.dart';
 import '../services/logger.dart';
 import '../utils/automatic_error_reporter.dart';
@@ -8,34 +6,6 @@ import '../utils/automatic_error_reporter.dart';
 /// Lessons are generic, numbered, and each pulls a capped set of random questions.
 class LessonService {
   LessonService();
-
-  List<String>? _categories;
-
-  Future<List<String>> _loadCategories() async {
-    if (_categories != null) return _categories!;
-    try {
-      final jsonString = await rootBundle.loadString('assets/categories.json');
-      final List<dynamic> jsonList = json.decode(jsonString);
-      _categories = jsonList.map((e) => e.toString()).toList();
-      return _categories!;
-    } catch (e) {
-      AppLogger.error('Failed to load categories', e);
-      
-      // Report error to automatic error tracking system
-      await AutomaticErrorReporter.reportStorageError(
-        message: 'Failed to load lesson categories from assets',
-        operation: 'load_categories',
-        filePath: 'assets/categories.json',
-        additionalInfo: {
-          'error': e.toString(),
-          'operation_type': 'asset_loading',
-          'fallback_used': true,
-        },
-      );
-      
-      return ['Genesis', 'Exodus', 'Matteüs', 'Johannes']; // Fallback
-    }
-  }
 
   /// Generates a sequential list of generic lessons (Les 1, Les 2, ...).
   ///
@@ -48,7 +18,6 @@ class LessonService {
     int maxQuestionsPerLesson = 10,
   }) async {
     try {
-      final categories = await _loadCategories();
       final lessons = <Lesson>[];
 
       for (int i = 0; i < maxLessons; i++) {
@@ -91,7 +60,7 @@ class LessonService {
       return lessons;
     } catch (e) {
       AppLogger.error('Failed to generate lessons', e);
-      
+
       // Report error to automatic error tracking system
       await AutomaticErrorReporter.reportQuestionError(
         message: 'Failed to generate lessons',
@@ -105,7 +74,7 @@ class LessonService {
           'fallback_used': true,
         },
       );
-      
+
       // Minimal fallback to keep UI functional
       return [
         Lesson(

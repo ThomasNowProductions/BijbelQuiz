@@ -8,7 +8,6 @@ import '../utils/automatic_error_reporter.dart';
 
 /// A service for monitoring network connectivity and optimizing for poor connections
 class ConnectionService {
-  static const Duration _connectionTimeout = Duration(seconds: 5);
   static const Duration _retryDelay = Duration(seconds: 2);
   static const int _maxRetries = 3;
 
