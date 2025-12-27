@@ -1,6 +1,6 @@
 -- SQL INSERT statements for en questions table
 -- Generated from questions-en.json
--- Generated on: 1766784425.2406912
+-- Generated on: 1766828313.435703
 
 INSERT INTO questions_en (id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference)
 VALUES ('000001', 'How many books does the New Testament have?', '27', ARRAY['26','66','39'], 3, 'mc', '{}', NULL)

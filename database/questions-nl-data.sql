@@ -1,6 +1,6 @@
 -- SQL INSERT statements for nl questions table
 -- Generated from questions-nl-sv.json
--- Generated on: 1763806680.095157
+-- Generated on: 1766828313.435703
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
 VALUES ('000001', 'Hoeveel Bijbelboeken heeft het Nieuwe Testament?', '27', ARRAY['26','66','39'], 3, 'mc', '{}', NULL)
@@ -15,7 +15,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000002', 'Hoe noemde Hanna haar kind?', 'Samuël', ARRAY['Saul','Simson','Gideon'], 1, 'mc', '{}', '1 Samuël 1:20')
+VALUES ('000002', 'Hoe noemde Hanna haar kind?', 'Samuël', ARRAY['Saul','Simson','Gideon'], 1, 'mc', '{}', '1 Samuel 1:20')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -495,7 +495,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000042', 'Wie was de laatste richter?', 'Samuël', ARRAY['Eli','Simson','Jeftha'], 1, 'mc', ARRAY['Richteren'], '1 Samuël')
+VALUES ('000042', 'Wie was de laatste richter?', 'Samuël', ARRAY['Eli','Simson','Jeftha'], 1, 'mc', ARRAY['Richteren'], '1 Samuel')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -543,7 +543,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000046', 'Wie leidt het volk na Samuël?', 'Koning Saul', ARRAY['Koning David','Hogepriester Eli','Richter Simson'], 1, 'mc', '{}', '1 Samuël 10:1')
+VALUES ('000046', 'Wie leidt het volk na Samuël?', 'Koning Saul', ARRAY['Koning David','Hogepriester Eli','Richter Simson'], 1, 'mc', '{}', '1 Samuel 10:1')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -555,7 +555,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000047', 'Wie is de eerste koning van Israël?', 'Saul', ARRAY['David','Salómo','Herodes'], 1, 'mc', '{}', '1 Samuël 10:1')
+VALUES ('000047', 'Wie is de eerste koning van Israël?', 'Saul', ARRAY['David','Salómo','Herodes'], 1, 'mc', '{}', '1 Samuel 10:1')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -567,7 +567,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000048', 'Saul wordt door Samuël ... ', 'gezalfd', ARRAY['gekroond','ingewijd','gedoopt'], 1, 'fitb', ARRAY['1 Samuël'], '1 Samuël 10:1')
+VALUES ('000048', 'Saul wordt door Samuël ... ', 'gezalfd', ARRAY['gekroond','ingewijd','gedoopt'], 1, 'fitb', ARRAY['1 Samuël'], '1 Samuel 10:1')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -699,7 +699,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000059', 'Van wie werd Isaï de vader?', 'Van koning David', ARRAY['Van koning Salómo','Van koning Saul','Van koning Abia'], 1, 'mc', '{}', '1 Samuël 17:12')
+VALUES ('000059', 'Van wie werd Isaï de vader?', 'Van koning David', ARRAY['Van koning Salómo','Van koning Saul','Van koning Abia'], 1, 'mc', '{}', '1 Samuel 17:12')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -711,7 +711,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000060', 'Hoeveel vrouwen had Elkana?', 'Twee', ARRAY['Een','Drie','Vier'], 1, 'mc', ARRAY['Genesis'], '1 Samuël 1:2')
+VALUES ('000060', 'Hoeveel vrouwen had Elkana?', 'Twee', ARRAY['Een','Drie','Vier'], 1, 'mc', ARRAY['Genesis'], '1 Samuel 1:2')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -723,7 +723,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000061', 'Wat dacht de oude priester toen Hanna in de tempel bad?', 'Dat ze dronken was', ARRAY['Dat ze ernstig bad','Dat ze verdrietig was','Dat ze moe was'], 1, 'mc', '{}', '1 Samuël 1:14')
+VALUES ('000061', 'Wat dacht de oude priester toen Hanna in de tempel bad?', 'Dat ze dronken was', ARRAY['Dat ze ernstig bad','Dat ze verdrietig was','Dat ze moe was'], 1, 'mc', '{}', '1 Samuel 1:14')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -735,7 +735,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000062', 'Hoe noemde Hanna haar zoon?', 'Samuël', ARRAY['Simson','Gideon','Juda'], 1, 'mc', ARRAY['Genesis'], '1 Samuël 1:20')
+VALUES ('000062', 'Hoe noemde Hanna haar zoon?', 'Samuël', ARRAY['Simson','Gideon','Juda'], 1, 'mc', ARRAY['Genesis'], '1 Samuel 1:20')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -747,7 +747,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000063', 'Wat betekent Samuël?', 'Van God gebeden', ARRAY['Man van God','Trooster','God geeft'], 3, 'mc', ARRAY['1 Samuël','2 Samuël'], '1 Samuël 1:17')
+VALUES ('000063', 'Wat betekent Samuël?', 'Van God gebeden', ARRAY['Man van God','Trooster','God geeft'], 3, 'mc', ARRAY['1 Samuël','2 Samuël'], '1 Samuel 1:17')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -759,7 +759,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000064', 'Waar bracht Hanna Samuël toe?', 'Naar Eli', ARRAY['Naar Jeruzalem','Naar Elia','Naar de tempel in Jeruzalem'], 3, 'mc', ARRAY['1 Samuël'], '1 Samuël 1:25')
+VALUES ('000064', 'Waar bracht Hanna Samuël toe?', 'Naar Eli', ARRAY['Naar Jeruzalem','Naar Elia','Naar de tempel in Jeruzalem'], 3, 'mc', ARRAY['1 Samuël'], '1 Samuel 1:25')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -771,7 +771,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000065', 'Wat had Hanna niet bij zich toen ze Samuël naar Eli bracht?', '2 maten gerst', ARRAY['3 varren','een efa meel','een fles wijn'], 5, 'mc', ARRAY['1 Samuël'], '1 Samuël 1:24')
+VALUES ('000065', 'Wat had Hanna niet bij zich toen ze Samuël naar Eli bracht?', '2 maten gerst', ARRAY['3 varren','een efa meel','een fles wijn'], 5, 'mc', ARRAY['1 Samuël'], '1 Samuel 1:24')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -783,7 +783,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000066', 'Wie dacht dat Samuël hem riep?', 'Eli', ARRAY['Hofni','Pinehas','de Heere'], 1, 'mc', ARRAY['1 Samuël'], '1 Samuël 3')
+VALUES ('000066', 'Wie dacht dat Samuël hem riep?', 'Eli', ARRAY['Hofni','Pinehas','de Heere'], 1, 'mc', ARRAY['1 Samuël'], '1 Samuel 3')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -795,7 +795,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000067', 'Welke functie had Samuël niet in zijn leven?', 'Koning', ARRAY['Profeet','Priester','Richter'], 1, 'mc', '{}', '1 Samuël')
+VALUES ('000067', 'Welke functie had Samuël niet in zijn leven?', 'Koning', ARRAY['Profeet','Priester','Richter'], 1, 'mc', '{}', '1 Samuel')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -843,7 +843,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000071', 'Op welk instrument speelde David vaak?', 'Harp', ARRAY['Citer','Fluit','Cimbaal'], 3, 'mc', ARRAY['1 Samuël'], '1 en 2 Samuël')
+VALUES ('000071', 'Op welk instrument speelde David vaak?', 'Harp', ARRAY['Citer','Fluit','Cimbaal'], 3, 'mc', ARRAY['1 Samuël'], NULL)
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -1359,7 +1359,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000114', 'Hoeveel brieven zijn er van Paulus aan de Korinthiërs?', 'Twee', ARRAY['Een','Drie','Vier'], 1, 'mc', ARRAY['1 Korintiërs','2 Korintiërs'], '1 en 2 Korinthe')
+VALUES ('000114', 'Hoeveel brieven zijn er van Paulus aan de Korinthiërs?', 'Twee', ARRAY['Een','Drie','Vier'], 1, 'mc', ARRAY['1 Korintiërs','2 Korintiërs'], NULL)
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -1371,7 +1371,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000115', 'Hoeveel personen heeft Jezus opgewekt?', 'Drie', ARRAY['Twee','Een','Vier'], 3, 'mc', '{}', 'Evangelïen')
+VALUES ('000115', 'Hoeveel personen heeft Jezus opgewekt?', 'Drie', ARRAY['Twee','Een','Vier'], 3, 'mc', '{}', NULL)
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -1383,7 +1383,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000116', 'Hoeveel jaar heeft Jezus ongeveer gepreekt?', 'Drie', ARRAY['Twee','Een','Vier'], 1, 'mc', '{}', 'In de evangeliën')
+VALUES ('000116', 'Hoeveel jaar heeft Jezus ongeveer gepreekt?', 'Drie', ARRAY['Twee','Een','Vier'], 1, 'mc', '{}', NULL)
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -1443,7 +1443,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000121', 'Welke koning kreeg een ernstige ziekte, dodelijke ziekte?', 'Hizkía', ARRAY['Ahaz','Manasse','Juda'], 1, 'mc', '{}', 'Hizkia 20:1')
+VALUES ('000121', 'Welke koning kreeg een ernstige ziekte, dodelijke ziekte?', 'Hizkía', ARRAY['Ahaz','Manasse','Juda'], 1, 'mc', '{}', NULL)
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -1503,7 +1503,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000126', 'Welke zoon wilde David van de troon stoten?', 'Absalom', ARRAY['Joab','Amnon','Adnia'], 1, 'mc', ARRAY['2 Samuël'], '2 Samuël 15')
+VALUES ('000126', 'Welke zoon wilde David van de troon stoten?', 'Absalom', ARRAY['Joab','Amnon','Adnia'], 1, 'mc', ARRAY['2 Samuël'], '2 Samuel 15')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -1887,7 +1887,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000158', 'Wie was de vader van Samuël?', 'Elkana', ARRAY['Elihu','Elam','Jerobeam'], 1, 'mc', ARRAY['1 Samuël'], '1 Samuël 1:1')
+VALUES ('000158', 'Wie was de vader van Samuël?', 'Elkana', ARRAY['Elihu','Elam','Jerobeam'], 1, 'mc', ARRAY['1 Samuël'], '1 Samuel 1:1')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -2127,7 +2127,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000178', 'Wie bracht de ark van God naar Jeruzalem, nadat het eerst was mislukt?', 'David', ARRAY['Mozes','Saul','Joab'], 3, 'mc', '{}', '2 Samuël 6: 12-15')
+VALUES ('000178', 'Wie bracht de ark van God naar Jeruzalem, nadat het eerst was mislukt?', 'David', ARRAY['Mozes','Saul','Joab'], 3, 'mc', '{}', '2 Samuel 6: 12-15')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -2163,7 +2163,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000181', 'Wat deed David toen hij hoorde van de dood van Absalom?', 'Hij weende en rouwde', ARRAY['Hij vierde feest','Hij vluchtte','Hij sloeg zich met stenen'], 2, 'mc', ARRAY['2 Samuël'], '2 Samuël 18:33')
+VALUES ('000181', 'Wat deed David toen hij hoorde van de dood van Absalom?', 'Hij weende en rouwde', ARRAY['Hij vierde feest','Hij vluchtte','Hij sloeg zich met stenen'], 2, 'mc', ARRAY['2 Samuël'], '2 Samuel 18:33')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -2187,7 +2187,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000183', 'Wie was de enige vrouwelijke richter van Israël?', 'Debóra', ARRAY['Hanna','Ruth','Jaël'], 1, 'mc', ARRAY['Richteren'], 'Richteren 4: 4 en 5')
+VALUES ('000183', 'Wie was de enige vrouwelijke richter van Israël?', 'Debóra', ARRAY['Hanna','Ruth','Jaël'], 1, 'mc', ARRAY['Richteren'], 'Richteren 4:4-5')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -2211,7 +2211,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000185', 'Wat moest Mozes doen om water uit de rots te krijgen bij Mériba?', 'Met zijn staf op de rots slaan', ARRAY['Tot de rots spreken','Bidden tot de Heere','De rots besprenkelen met bloed'], 3, 'mc', ARRAY['Genesis','Exodus'], 'Éxodus 17: 1-7')
+VALUES ('000185', 'Wat moest Mozes doen om water uit de rots te krijgen bij Mériba?', 'Met zijn staf op de rots slaan', ARRAY['Tot de rots spreken','Bidden tot de Heere','De rots besprenkelen met bloed'], 3, 'mc', ARRAY['Genesis','Exodus'], 'Exodus 17:1-7')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -2355,7 +2355,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000197', 'Aan wie is het evangelie van Lukas gericht?', 'Theófilus', ARRAY['Timotheüs','Titus','Silas'], 2, 'mc', ARRAY['Lucas'], 'Lukas 1:3')
+VALUES ('000197', 'Aan wie is het evangelie van Lukas gericht?', 'Theófilus', ARRAY['Timoteus','Titus','Silas'], 2, 'mc', ARRAY['Lucas'], 'Lukas 1:3')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -2439,7 +2439,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000204', 'Wie bekeerde zich op de weg naar Damascus?', 'Saulus', ARRAY['Petrus','Barnabas','Timotheüs'], 1, 'mc', ARRAY['Handelingen'], 'Handelingen 9: 1-6')
+VALUES ('000204', 'Wie bekeerde zich op de weg naar Damascus?', 'Saulus', ARRAY['Petrus','Barnabas','Timoteus'], 1, 'mc', ARRAY['Handelingen'], 'Handelingen 9: 1-6')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -2511,7 +2511,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000210', 'Wat is het probleem in de gemeente te Korinthe?', 'Twist en verdeeldheid', ARRAY['Vervolging','Gebrek aan geloof','Gebrek aan liefde'], 4, 'mc', ARRAY['1 Korintiërs'], '1 Korinthe 1: 10-13')
+VALUES ('000210', 'Wat is het probleem in de gemeente te Korinthe?', 'Twist en verdeeldheid', ARRAY['Vervolging','Gebrek aan geloof','Gebrek aan liefde'], 4, 'mc', ARRAY['1 Korintiërs'], '1 Korintiers1:10-13')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -2535,7 +2535,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000212', 'Hoeveel brieven schreef Paulus aan de Korinthiërs die bewaard zijn gebleven?', 'Twee', ARRAY['Een','Drie','Vier'], 1, 'mc', ARRAY['1 Korintiërs'], 'Korintiërs 1 en 2')
+VALUES ('000212', 'Hoeveel brieven schreef Paulus aan de Korinthiërs die bewaard zijn gebleven?', 'Twee', ARRAY['Een','Drie','Vier'], 1, 'mc', ARRAY['1 Korintiërs'], NULL)
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -2607,7 +2607,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000218', 'Wat moeten kinderen doen?', 'Gehoorzaam zijn aan hun ouders', ARRAY['Stil zijn','Werken','Bidden'], 1, 'mc', '{}', 'Éfeze 6: 1-3')
+VALUES ('000218', 'Wat moeten kinderen doen?', 'Gehoorzaam zijn aan hun ouders', ARRAY['Stil zijn','Werken','Bidden'], 1, 'mc', '{}', 'Efeziers 6:1-3')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -2631,7 +2631,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000220', 'Wie wordt genoemd als Paulus'' broeder en medearbeider?', 'Epafroditus', ARRAY['Barnabas','Silas','Timotheüs'], 4, 'mc', ARRAY['Filippenzen'], 'Filippenzen 2:25')
+VALUES ('000220', 'Wie wordt genoemd als Paulus'' broeder en medearbeider?', 'Epafroditus', ARRAY['Barnabas','Silas','Timoteus'], 4, 'mc', ARRAY['Filippenzen'], 'Filippenzen 2:25')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -2643,7 +2643,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000221', 'Wie schreef de brief aan de Kolossenzen?', 'Paulus', ARRAY['Kolossenzen','Silas','Timotheus'], 1, 'mc', ARRAY['Kerst','Pasen','Pinksteren','Hemelvaart','Goede Vrijdag','Stille Zaterdag','Paasmaandag','Pinkstermaandag','Kolossenzen'], 'Kolossenzen 1: 1 en 2')
+VALUES ('000221', 'Wie schreef de brief aan de Kolossenzen?', 'Paulus', ARRAY['Kolossenzen','Silas','Timotheus'], 1, 'mc', ARRAY['Kolossenzen'], 'Kolossenzen 1:1-2')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -2655,7 +2655,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000222', 'Wie schreef de brief aan de Thessalonicenzen?', 'Paulus, Silvanus en Timotheüs', ARRAY['Paulus','Paulus en Timotheüs','Paulus en Barnabas'], 5, 'mc', '{}', '1 Thessalonicenzen 1:1')
+VALUES ('000222', 'Wie schreef de brief aan de Thessalonicenzen?', 'Paulus, Silvanus en Timoteus', ARRAY['Paulus','Paulus en Timoteus','Paulus en Barnabas'], 5, 'mc', '{}', '1 Tessalonicenzen 1:1')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -2679,7 +2679,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000224', 'Wat gebeurt er met de doden in Christus bij Zijn wederkomst?', 'Zij zullen eerst opstaan', ARRAY['Zij worden geoordeeld','Zij keren terug met Jezus','Zij zullen als laatsten opstaan'], 2, 'mc', '{}', '1 Thessalonicenzen 4:16')
+VALUES ('000224', 'Wat gebeurt er met de doden in Christus bij Zijn wederkomst?', 'Zij zullen eerst opstaan', ARRAY['Zij worden geoordeeld','Zij keren terug met Jezus','Zij zullen als laatsten opstaan'], 2, 'mc', '{}', '1 Tessalonicenzen 4:16')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -2691,7 +2691,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000225', 'Wat moet er eerst gebeuren voor de dag des Heeren komt?', 'De geloofsafval en de openbaring van de mens der zonde', ARRAY['De wederkomst','De opstanding uit de doden','De verdrukking'], 3, 'mc', '{}', '2 Thessalonicenzen 2')
+VALUES ('000225', 'Wat moet er eerst gebeuren voor de dag des Heeren komt?', 'De geloofsafval en de openbaring van de mens der zonde', ARRAY['De wederkomst','De opstanding uit de doden','De verdrukking'], 3, 'mc', '{}', '2 Tessalonicenzen 2')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -2703,7 +2703,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000226', 'Hoe wordt de "mens der zonde" ook wel genoemd?', 'De zoon des verderfs', ARRAY['De antichrist','De draak','De overste der duisternis'], 3, 'mc', '{}', '2 Thessalonicenzen 2:3')
+VALUES ('000226', 'Hoe wordt de "mens der zonde" ook wel genoemd?', 'De zoon des verderfs', ARRAY['De antichrist','De draak','De overste der duisternis'], 3, 'mc', '{}', '2 Tessalonicenzen 2:3')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -2715,7 +2715,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000227', 'Wat is Paulus'' zegenwens aan het eind van Thessalonicenzen?', 'De genade van onze Heere Jezus Christus zij met u allen. Amen.', ARRAY['Genade en vrede zij met u allen. Amen.','De liefde Gods en de gemeenschap des Heiligen Geestes zij met u allen, Amen.','De vrede Gods zij met u allen. Amen.'], 4, 'mc', '{}', '2 Thessalonicenzen 3:18')
+VALUES ('000227', 'Wat is Paulus'' zegenwens aan het eind van Thessalonicenzen?', 'De genade van onze Heere Jezus Christus zij met u allen. Amen.', ARRAY['Genade en vrede zij met u allen. Amen.','De liefde Gods en de gemeenschap des Heiligen Geestes zij met u allen, Amen.','De vrede Gods zij met u allen. Amen.'], 4, 'mc', '{}', '2 Tessalonicenzen 3:18')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -2727,7 +2727,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000228', 'Wat zegt Paulus over vrouwen in de eredienst?', 'Dat zij in stilheid zij', ARRAY['Dat zij profetere','Dat zij het volk onderwijze','Dat zij het volk predike'], 3, 'mc', '{}', '1 Timotheüs 2:11')
+VALUES ('000228', 'Wat zegt Paulus over vrouwen in de eredienst?', 'Dat zij in stilheid zij', ARRAY['Dat zij profetere','Dat zij het volk onderwijze','Dat zij het volk predike'], 3, 'mc', '{}', '1 Timoteus 2:11')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -2739,7 +2739,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000229', 'Wat is God niet?', 'Een geest der vreesachtigheid', ARRAY['Een verterend vuur','Een God van het oordeel','Een God der twist'], 4, 'mc', '{}', '2 Timotheüs 1:7')
+VALUES ('000229', 'Wat is God niet?', 'Een geest der vreesachtigheid', ARRAY['Een verterend vuur','Een God van het oordeel','Een God der twist'], 4, 'mc', '{}', '2 Timoteus 1:7')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -2751,7 +2751,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000230', 'Welke vergelijking gebruikt Paulus voor het leven van een gelovige?', 'Soldaat, atleet, landbouwer', ARRAY['Profeet, priester, koning','Vreemdeling, pelgrim, reiziger','Visser, landbouwer, soldaat'], 5, 'mc', ARRAY['2 Timoteüs'], '2 Timotheüs 2')
+VALUES ('000230', 'Welke vergelijking gebruikt Paulus voor het leven van een gelovige?', 'Soldaat, atleet, landbouwer', ARRAY['Profeet, priester, koning','Vreemdeling, pelgrim, reiziger','Visser, landbouwer, soldaat'], 5, 'mc', ARRAY['2 Timoteüs'], '2 Timoteus 2')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -2763,7 +2763,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000231', 'Wie heeft Paulus verlaten, hebbende de tegenwoordige wereld lief gekregen?', 'Démas', ARRAY['Timotheüs'], 4, 'mc', ARRAY['Romeinen'], '2 Timotheüs 4:10')
+VALUES ('000231', 'Wie heeft Paulus verlaten, hebbende de tegenwoordige wereld lief gekregen?', 'Démas', ARRAY['Timoteus'], 4, 'mc', ARRAY['Romeinen'], '2 Timoteus 4:10')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -2823,7 +2823,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000236', 'Wie worden in Hebreeën 11 genoemd als voorbeelden van geloof?', 'Noach, Abraham, Mozes', ARRAY['David, Elia, Jesaja','Johannes, Petrus, Andreas','Paulus, Timotheüs, Titus'], 2, 'mc', ARRAY['Hebreeën'], 'Hebreeën 11')
+VALUES ('000236', 'Wie worden in Hebreeën 11 genoemd als voorbeelden van geloof?', 'Noach, Abraham, Mozes', ARRAY['David, Elia, Jesaja','Johannes, Petrus, Andreas','Paulus, Timoteus, Titus'], 2, 'mc', ARRAY['Hebreeën'], 'Hebreeën 11')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -3027,7 +3027,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000253', 'Samuël werd opgevoed in het heiligdom in Jeruzalem', 'Niet waar', ARRAY['Waar'], 3, 'tf', ARRAY['1 Samuël'], '1 Samuël 1:3')
+VALUES ('000253', 'Samuël werd opgevoed in het heiligdom in Jeruzalem', 'Niet waar', ARRAY['Waar'], 3, 'tf', ARRAY['1 Samuël'], '1 Samuel 1:3')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -3039,7 +3039,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000254', 'Saul was de eerste koning van Israël', 'Waar', ARRAY['Niet waar'], 2, 'tf', ARRAY['Genesis'], '1 Samuël 10:1')
+VALUES ('000254', 'Saul was de eerste koning van Israël', 'Waar', ARRAY['Niet waar'], 2, 'tf', ARRAY['Genesis'], '1 Samuel 10:1')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -3051,7 +3051,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000255', 'Uza stierf toen hij de ark van God aanraakte', 'Waar', ARRAY['Niet waar'], 3, 'tf', ARRAY['Exodus'], '2 Samuël 6: 6 en 7')
+VALUES ('000255', 'Uza stierf toen hij de ark van God aanraakte', 'Waar', ARRAY['Niet waar'], 3, 'tf', ARRAY['Exodus'], '2 Samuel 6:6, 7')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -3063,7 +3063,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000256', 'Absalom, Davids zoon, kwam in opstand tegen David', 'Waar', ARRAY['Niet waar'], 1, 'tf', ARRAY['2 Samuël'], '2 Samuël 13 - 18')
+VALUES ('000256', 'Absalom, Davids zoon, kwam in opstand tegen David', 'Waar', ARRAY['Niet waar'], 1, 'tf', ARRAY['2 Samuël'], '2 Samuel 13 - 18')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -3099,7 +3099,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000259', 'Elisa kreeg een dubbel deel van Elia''s geest', 'Waar', ARRAY['Niet waar'], 4, 'tf', ARRAY['Openbaring'], '2 Koningen 2: 9 en 10')
+VALUES ('000259', 'Elisa kreeg een dubbel deel van Elia''s geest', 'Waar', ARRAY['Niet waar'], 4, 'tf', ARRAY['Openbaring'], '2 Koningen 2:9, 10')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -3159,7 +3159,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000264', 'Ezra leidde de eerste groep ballingen terug naar Jeruzalem', 'Niet waar', ARRAY['Waar'], 5, 'tf', ARRAY['Ezra'], 'Ezra 2: 1 en 2')
+VALUES ('000264', 'Ezra leidde de eerste groep ballingen terug naar Jeruzalem', 'Niet waar', ARRAY['Waar'], 5, 'tf', ARRAY['Ezra'], 'Ezra 2:1, 2')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -3171,7 +3171,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000265', 'Ezra was priester en schriftgeleerde', 'Waar', ARRAY['Niet waar'], 4, 'tf', ARRAY['Ezra'], 'Ezra 7: 6 en 11')
+VALUES ('000265', 'Ezra was priester en schriftgeleerde', 'Waar', ARRAY['Niet waar'], 4, 'tf', ARRAY['Ezra'], 'Ezra 7:6, 11')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -3375,7 +3375,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000282', 'Jesaja profeteerde over de komst van de Messias', 'Waar', ARRAY['Niet waar'], 1, 'tf', ARRAY['Jesaja'], 'Jesaja 7, 9, 11 en 53')
+VALUES ('000282', 'Jesaja profeteerde over de komst van de Messias', 'Waar', ARRAY['Niet waar'], 1, 'tf', ARRAY['Jesaja'], 'Jesaja 7, 9, 11, 53')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -3639,7 +3639,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000304', 'Nahum profeteerde tegen de stad Ninevé', 'Waar', ARRAY['Niet waar'], 3, 'tf', ARRAY['Nahum'], 'Nahum 1, 2 en 3')
+VALUES ('000304', 'Nahum profeteerde tegen de stad Ninevé', 'Waar', ARRAY['Niet waar'], 3, 'tf', ARRAY['Nahum'], 'Nahum 1, 2, 3')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -3711,7 +3711,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000310', 'Haggaï werkte samen met de profeet Zacharía', 'Waar', ARRAY['Niet waar'], 4, 'tf', ARRAY['Zacharia'], 'Haggaï en Zacharía')
+VALUES ('000310', 'Haggaï werkte samen met de profeet Zacharía', 'Waar', ARRAY['Niet waar'], 4, 'tf', ARRAY['Zacharia'], NULL)
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -3735,7 +3735,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000312', 'Zacharía bevat visioenen, waaronder die van de van de Man met het meetsnoer', 'Waar', ARRAY['Niet waar'], 4, 'tf', ARRAY['Zacharia'], 'Zacharía 2: 1-4')
+VALUES ('000312', 'Zacharía bevat visioenen, waaronder die van de van de Man met het meetsnoer', 'Waar', ARRAY['Niet waar'], 4, 'tf', ARRAY['Zacharia'], 'Zacharia 2:1-4')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -3771,7 +3771,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000315', 'Maleáchi houdt een strafprediking tegen de priesters', 'Waar', ARRAY['Niet waar'], 5, 'tf', ARRAY['Maleachi'], 'Maleáchi 1:6 - 2:9')
+VALUES ('000315', 'Maleáchi houdt een strafprediking tegen de priesters', 'Waar', ARRAY['Niet waar'], 5, 'tf', ARRAY['Maleachi'], NULL)
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -4047,7 +4047,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000338', 'In Éfeze wordt de geestelijke wapenrusting beschreven', 'Waar', ARRAY['Niet waar'], 3, 'tf', ARRAY['Efeziërs'], 'Éfeze 6: 10-20')
+VALUES ('000338', 'In Éfeze wordt de geestelijke wapenrusting beschreven', 'Waar', ARRAY['Niet waar'], 3, 'tf', ARRAY['Efeziërs'], 'Efeziers 6: 10-20')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -4071,7 +4071,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000340', 'Filippenzen is gericht aan de Christenen in Filippi', 'Waar', ARRAY['Niet waar'], 4, 'tf', ARRAY['Filippenzen'], 'Fillipenzen')
+VALUES ('000340', 'Filippenzen is gericht aan de Christenen in Filippi', 'Waar', ARRAY['Niet waar'], 4, 'tf', ARRAY['Filippenzen'], 'Filippenzen')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -4119,7 +4119,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000344', '1 Thessalonicenzen is waarschijnlijk Paulus oudste brief', 'Waar', ARRAY['Niet waar'], 4, 'tf', '{}', '1 Thessalonicenzen')
+VALUES ('000344', '1 Thessalonicenzen is waarschijnlijk Paulus oudste brief', 'Waar', ARRAY['Niet waar'], 4, 'tf', '{}', '1 Tessalonicenzen')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -4131,7 +4131,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000345', 'In Thessalonicenzen roept Paulus op tot heilige wandel en broederlijke liefde', 'Waar', ARRAY['Niet waar'], 3, 'tf', ARRAY['1 Tessalonicenzen'], '1 Thessalonicenzen 4')
+VALUES ('000345', 'In Thessalonicenzen roept Paulus op tot heilige wandel en broederlijke liefde', 'Waar', ARRAY['Niet waar'], 3, 'tf', ARRAY['1 Tessalonicenzen'], '1 Tessalonicenzen 4')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -4143,7 +4143,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000346', 'In 2 Thessalonicenzen roept Paulus op tot standvastigheid', 'Waar', ARRAY['Niet waar'], 3, 'tf', '{}', '2 Thessalonicenzen 2: 13-17')
+VALUES ('000346', 'In 2 Thessalonicenzen roept Paulus op tot standvastigheid', 'Waar', ARRAY['Niet waar'], 3, 'tf', '{}', '2 Tessalonicenzen 2: 13-17')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -4155,7 +4155,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000347', '2 Thessalonicenzen is vooral een herhaling van de eerste brief', 'Niet waar', ARRAY['Waar'], 3, 'tf', '{}', '2 Thessalonicenzen')
+VALUES ('000347', '2 Thessalonicenzen is vooral een herhaling van de eerste brief', 'Niet waar', ARRAY['Waar'], 3, 'tf', '{}', '2 Tessalonicenzen')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -4167,7 +4167,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000348', 'Paulus schrijft in 1 Timotheüs over het ambt van ouderlingen en diakenen', 'Waar', ARRAY['Niet waar'], 3, 'tf', ARRAY['1 Timoteüs'], '1 Timotheüs 3')
+VALUES ('000348', 'Paulus schrijft in 1 Timoteus over het ambt van ouderlingen en diakenen', 'Waar', ARRAY['Niet waar'], 3, 'tf', ARRAY['1 Timoteüs'], '1 Timoteus 3')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -4179,7 +4179,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000349', 'Timotheüs was voorganger in Rome', 'Niet waar', ARRAY['Waar'], 4, 'tf', ARRAY['1 Timoteüs'], '1 Timotheüs')
+VALUES ('000349', 'Timoteus was voorganger in Rome', 'Niet waar', ARRAY['Waar'], 4, 'tf', ARRAY['1 Timoteüs'], '1 Timoteus')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -4191,7 +4191,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000350', 'Paulus schrijft in 1 Timotheüs over de rol van de vrouw in de gemeente', 'Waar', ARRAY['Niet waar'], 3, 'tf', ARRAY['1 Timoteüs'], '1 Timotheüs')
+VALUES ('000350', 'Paulus schrijft in 1 Timoteus over de rol van de vrouw in de gemeente', 'Waar', ARRAY['Niet waar'], 3, 'tf', ARRAY['1 Timoteüs'], '1 Timoteus')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -4203,7 +4203,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000351', 'In 2 Timotheüs noemt Paulus "Al de schrift is van God ingegeven"', 'Waar', ARRAY['Niet waar'], 4, 'tf', '{}', '2 Timotheüs 3:16')
+VALUES ('000351', 'In 2 Timoteus noemt Paulus "Al de schrift is van God ingegeven"', 'Waar', ARRAY['Niet waar'], 4, 'tf', '{}', '2 Timoteus 3:16')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -4215,7 +4215,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000352', 'In 2 Timotheüs verwacht Paulus dat hij binnenkort op reis zal gaan', 'Niet waar', ARRAY['Waar'], 4, 'tf', ARRAY['1 Timoteüs','2 Timoteüs'], '2 Timotheüs')
+VALUES ('000352', 'In 2 Timoteus verwacht Paulus dat hij binnenkort op reis zal gaan', 'Niet waar', ARRAY['Waar'], 4, 'tf', ARRAY['1 Timoteüs','2 Timoteüs'], '2 Timoteus')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -4515,7 +4515,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000377', 'daartoe heeft de Heere tot mij gezegd: Gij zult over deze ... niet gaan', 'Jordaan', ARRAY['Landpale','Rivier','Berg'], 3, 'fitb', ARRAY['Jeremia'], 'Deuterononium 3:27')
+VALUES ('000377', 'daartoe heeft de Heere tot mij gezegd: Gij zult over deze ... niet gaan', 'Jordaan', ARRAY['Landpale','Rivier','Berg'], 3, 'fitb', ARRAY['Jeremia'], 'Deuteronomium 3:27')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -4731,7 +4731,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000395', 'En zij zeide tot haar: Al wat gij ... , zal ik doen', 'tot mij zegt', ARRAY['mij gebied','mij beveelt','tot mij spreekt'], 3, 'fitb', ARRAY['Ruth'], '1 Samuël')
+VALUES ('000395', 'En zij zeide tot haar: Al wat gij ... , zal ik doen', 'tot mij zegt', ARRAY['mij gebied','mij beveelt','tot mij spreekt'], 3, 'fitb', ARRAY['Ruth'], '1 Samuel')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -4743,7 +4743,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000396', 'Elkana ging jaarlijks offeren in ... ', 'Silo', ARRAY['Jeruzalem','de tempel','de tabernakel'], 2, 'fitb', ARRAY['1 Samuël'], '1 Samuël 1:3')
+VALUES ('000396', 'Elkana ging jaarlijks offeren in ... ', 'Silo', ARRAY['Jeruzalem','de tempel','de tabernakel'], 2, 'fitb', ARRAY['1 Samuël'], '1 Samuel 1:3')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -4755,7 +4755,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000397', 'Maar wanneer een mens tegen de Heere zondigt, wie zal ... ', 'voor hem bidden', ARRAY['kunnen bestaan','dan nog zoeken','dan vinden'], 2, 'fitb', '{}', '1 Samuël 2:25')
+VALUES ('000397', 'Maar wanneer een mens tegen de Heere zondigt, wie zal ... ', 'voor hem bidden', ARRAY['kunnen bestaan','dan nog zoeken','dan vinden'], 2, 'fitb', '{}', '1 Samuel 2:25')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -4767,7 +4767,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000398', 'En ik zal Mij een getrouwen ... verwekken, die zal doen gelijk als in Mijn hart en in Mijn ziel zijn zal', 'priester', ARRAY['man','profeet','zoon'], 2, 'fitb', ARRAY['Jesaja'], '1 Samuël 2:35')
+VALUES ('000398', 'En ik zal Mij een getrouwen ... verwekken, die zal doen gelijk als in Mijn hart en in Mijn ziel zijn zal', 'priester', ARRAY['man','profeet','zoon'], 2, 'fitb', ARRAY['Jesaja'], '1 Samuel 2:35')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -4779,7 +4779,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000399', 'Saul werd jaloers op David omdat hij ... ', 'meer lof ontving', ARRAY['meer rijkdom had','meer vrienden had','meer land bezat'], 2, 'fitb', ARRAY['1 Samuël','2 Samuël'], '1 Samuël 18')
+VALUES ('000399', 'Saul werd jaloers op David omdat hij ... ', 'meer lof ontving', ARRAY['meer rijkdom had','meer vrienden had','meer land bezat'], 2, 'fitb', ARRAY['1 Samuël','2 Samuël'], '1 Samuel 18')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -4791,7 +4791,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000400', 'David werd koning over Israël in de stad ... ', 'Hebron', ARRAY['Jeruzalem','Bethlehem','Jericho'], 3, 'fitb', ARRAY['1 Samuël','2 Samuël'], '2 Samuël 2')
+VALUES ('000400', 'David werd koning over Israël in de stad ... ', 'Hebron', ARRAY['Jeruzalem','Bethlehem','Jericho'], 3, 'fitb', ARRAY['1 Samuël','2 Samuël'], '2 Samuel 2')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -4803,7 +4803,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000401', 'David bracht de ark Gods naar ... ', 'Jeruzalem', ARRAY['Bethel','Hebron','Gilgal'], 2, 'mc', ARRAY['1 Samuël','2 Samuël'], '2 Samuël 6')
+VALUES ('000401', 'David bracht de ark Gods naar ... ', 'Jeruzalem', ARRAY['Bethel','Hebron','Gilgal'], 2, 'mc', ARRAY['1 Samuël','2 Samuël'], '2 Samuel 6')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -4815,7 +4815,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000402', 'De Heere zond de profeet ... tot David', 'Nathan', ARRAY['Elia','Elisa','Jesaja'], 1, 'mc', ARRAY['1 Samuël'], '2 Samuël 12:1')
+VALUES ('000402', 'De Heere zond de profeet ... tot David', 'Nathan', ARRAY['Elia','Elisa','Jesaja'], 1, 'mc', ARRAY['1 Samuël'], '2 Samuel 12:1')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -4827,7 +4827,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000403', 'Absalom vluchtte naar ... ', 'Gesur', ARRAY['Jeruzalem','Rabba','Ziklag'], 4, 'fitb', ARRAY['2 Samuël'], '2 Samuël 13:38')
+VALUES ('000403', 'Absalom vluchtte naar ... ', 'Gesur', ARRAY['Jeruzalem','Rabba','Ziklag'], 4, 'fitb', ARRAY['2 Samuël'], '2 Samuel 13:38')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -4839,7 +4839,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000404', 'Welke vrouw zei: Behoud o koning', 'de Tekoïtische', ARRAY['de Ammonitische','de Hetitische','de Israëlitische'], 5, 'fitb', ARRAY['1 Koningen'], '2 Samuël')
+VALUES ('000404', 'Welke vrouw zei: Behoud o koning', 'de Tekoïtische', ARRAY['de Ammonitische','de Hetitische','de Israëlitische'], 5, 'fitb', ARRAY['1 Koningen'], '2 Samuel')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -6315,7 +6315,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000527', 'Wie was de moeder van Absalom?', 'Máächa', ARRAY['Haggith','Ahinóam','Abígaïl'], 4, 'mc', ARRAY['2 Samuël'], '2 Samuël 3:3')
+VALUES ('000527', 'Wie was de moeder van Absalom?', 'Máächa', ARRAY['Haggith','Ahinóam','Abígaïl'], 4, 'mc', ARRAY['2 Samuël'], '2 Samuel 3:3')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -6879,7 +6879,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000574', 'Paulus behandelt in de brief aan Éfeze de eenheid van de gemeente', 'Waar', ARRAY['Niet waar'], 3, 'tf', ARRAY['Efeziërs','Kerst','Pasen','Pinksteren','Hemelvaart','Goede Vrijdag','Stille Zaterdag','Paasmaandag','Pinkstermaandag'], 'Éfeze 4: 3-6')
+VALUES ('000574', 'Paulus behandelt in de brief aan Éfeze de eenheid van de gemeente', 'Waar', ARRAY['Niet waar'], 3, 'tf', ARRAY['Efeziërs','Kerst','Pasen','Pinksteren','Hemelvaart','Goede Vrijdag','Stille Zaterdag','Paasmaandag','Pinkstermaandag'], 'Efeziers 4: 3-6')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,
@@ -6891,7 +6891,7 @@ ON CONFLICT (id) DO UPDATE SET
     updated_at = NOW();
 
 INSERT INTO questions (id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference)
-VALUES ('000575', 'Paulus spreekt in de brief aan Éfeze over de liefde van Christus', 'Waar', ARRAY['Niet waar'], 3, 'tf', ARRAY['Efeziërs'], 'Éfeze 3: 17-19')
+VALUES ('000575', 'Paulus spreekt in de brief aan Éfeze over de liefde van Christus', 'Waar', ARRAY['Niet waar'], 3, 'tf', ARRAY['Efeziërs'], 'Efeziers 3: 17-19')
 ON CONFLICT (id) DO UPDATE SET
     vraag = EXCLUDED.vraag,
     juiste_antwoord = EXCLUDED.juiste_antwoord,

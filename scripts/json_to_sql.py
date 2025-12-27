@@ -37,10 +37,10 @@ def main():
     
     # Set output path based on language
     if args.language == 'en':
-        output_path = Path(__file__).parent.parent / 'database' / 'questions-en.sql'
+        output_path = Path(__file__).parent.parent / 'database' / 'questions-en-data.sql'
         json_path = Path(__file__).parent.parent / "app" / "assets" / "questions-en.json"
     else:
-        output_path = Path(__file__).parent.parent / 'database' / 'questions-nl-sv.sql'
+        output_path = Path(__file__).parent.parent / 'database' / 'questions-nl-data.sql'
         json_path = Path(__file__).parent.parent / "app" / "assets" / "questions-nl-sv.json"
 
     if not json_path.exists():
