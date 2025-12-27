@@ -28,6 +28,33 @@ class _SocialScreenState extends State<SocialScreen> {
   final Map<String, String?> _userReactions = {};
   final List<String> _availableEmojis = ['👍', '❤️', '😊', '😢', '😮', '😡'];
 
+  Widget _getIconForEmoji(String emoji, Color color) {
+    IconData iconData;
+    switch (emoji) {
+      case '👍':
+        iconData = Icons.thumb_up_outlined;
+        break;
+      case '❤️':
+        iconData = Icons.favorite_outline;
+        break;
+      case '😊':
+        iconData = Icons.sentiment_satisfied_alt_outlined;
+        break;
+      case '😢':
+        iconData = Icons.sentiment_dissatisfied_outlined;
+        break;
+      case '😮':
+        iconData = Icons.sentiment_neutral_outlined;
+        break;
+      case '😡':
+        iconData = Icons.sentiment_very_dissatisfied_outlined;
+        break;
+      default:
+        iconData = Icons.error_outline;
+    }
+    return Icon(iconData, size: 20, color: color);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -549,9 +576,11 @@ class _SocialScreenState extends State<SocialScreen> {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
+                _getIconForEmoji(
                   emoji,
-                  style: const TextStyle(fontSize: 20),
+                  isReacted
+                      ? colorScheme.primary
+                      : colorScheme.onSurface.withValues(alpha: 0.6),
                 ),
                 if (count > 0) ...[
                   const SizedBox(width: 6),
@@ -559,8 +588,8 @@ class _SocialScreenState extends State<SocialScreen> {
                     count.toString(),
                     style: textTheme.bodyMedium?.copyWith(
                       color: isReacted
-                          ? colorScheme.onPrimaryContainer
-                          : colorScheme.onSurfaceVariant,
+                          ? colorScheme.primary
+                          : colorScheme.onSurface.withValues(alpha: 0.6),
                       fontWeight: FontWeight.w500,
                     ),
                   ),
