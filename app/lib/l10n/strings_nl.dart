@@ -1766,4 +1766,41 @@ class AppStrings {
       _language == 'en' ? AppStringsEn.languageNl : 'Nederlands';
   static String get languageEn =>
       _language == 'en' ? AppStringsEn.languageEn : 'English';
+
+  // Accessibility Labels
+  static String get selected =>
+      _language == 'en' ? AppStringsEn.selectedEn : selectedNl;
+  static const String selectedNl = 'Geselecteerd';
+  static String get newMessagesOrLoginRequired => _language == 'en'
+      ? AppStringsEn.newMessagesOrLoginRequiredEn
+      : newMessagesOrLoginRequiredNl;
+  static const String newMessagesOrLoginRequiredNl =
+      'Nieuwe berichten of login vereist';
+  static String get activeDiscountsAvailable => _language == 'en'
+      ? AppStringsEn.activeDiscountsAvailableEn
+      : activeDiscountsAvailableNl;
+  static const String activeDiscountsAvailableNl =
+      'Actieve kortingen beschikbaar';
+  static String get enabled =>
+      _language == 'en' ? AppStringsEn.enabledEn : enabledNl;
+  static const String enabledNl = 'Ingeschakeld';
+  static String get disabled =>
+      _language == 'en' ? AppStringsEn.disabledEn : disabledNl;
+  static const String disabledNl = 'Uitgeschakeld';
+  static String get clearSearch =>
+      _language == 'en' ? AppStringsEn.clearSearchEn : clearSearchNl;
+  static const String clearSearchNl = 'Zoeken wissen';
+  static String sectionIcon(String section) => _language == 'en'
+      ? AppStringsEn.sectionIconEn(section)
+      : '${section} sectie icoon';
+  static String get openBQIDSettings =>
+      _language == 'en' ? AppStringsEn.openBQIDSettingsEn : openBQIDSettingsNl;
+  static const String openBQIDSettingsNl = 'BQID instellingen openen';
+  static String pageIndicator(int current, int total) => _language == 'en'
+      ? AppStringsEn.pageIndicatorEn(current, total)
+      : 'Pagina $current van $total';
+  static String reactionButton(String emoji, int count, bool selected) =>
+      _language == 'en'
+          ? AppStringsEn.reactionButtonEn(emoji, count, selected)
+          : '${emoji} reactie${count > 0 ? ", $count reacties" : ""}${selected ? ", geselecteerd" : ""}';
 }

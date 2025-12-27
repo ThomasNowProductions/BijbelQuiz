@@ -212,16 +212,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
         controller: _searchController,
         decoration: InputDecoration(
           hintText: strings.AppStrings.searchSettings,
-          prefixIcon: Icon(Icons.search,
-              color: colorScheme.onSurface.withValues(alpha: 0.6)),
+          labelText: strings.AppStrings.searchSettings,
+          prefixIcon: Semantics(
+            label: strings.AppStrings.searchSettings,
+            excludeSemantics: true,
+            child: Icon(Icons.search,
+                color: colorScheme.onSurface.withValues(alpha: 0.6)),
+          ),
           suffixIcon: _searchController.text.isNotEmpty
-              ? IconButton(
-                  icon: Icon(Icons.clear,
-                      color: colorScheme.onSurface.withValues(alpha: 0.6)),
-                  onPressed: () {
-                    _searchController.clear();
-                    setState(() {});
-                  },
+              ? Semantics(
+                  button: true,
+                  label: strings.AppStrings.clearSearch,
+                  child: IconButton(
+                    icon: Icon(Icons.clear,
+                        color: colorScheme.onSurface.withValues(alpha: 0.6)),
+                    onPressed: () {
+                      _searchController.clear();
+                      setState(() {});
+                    },
+                  ),
                 )
               : null,
           border: OutlineInputBorder(
@@ -752,10 +761,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget _buildSwitch(
       bool value, Function(bool) onChanged, ColorScheme colorScheme) {
-    return Switch(
-      value: value,
-      onChanged: onChanged,
-      activeThumbColor: colorScheme.primary,
+    return Semantics(
+      button: true,
+      label: value ? strings.AppStrings.enabled : strings.AppStrings.disabled,
+      child: Switch(
+        value: value,
+        onChanged: onChanged,
+        activeThumbColor: colorScheme.primary,
+      ),
     );
   }
 
@@ -766,11 +779,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
     Color? color,
   }) {
     final colorScheme = Theme.of(context).colorScheme;
-    return IconButton(
-      onPressed: onTap,
-      icon: Icon(icon, color: color ?? colorScheme.primary),
-      color: color ?? colorScheme.primary,
-      tooltip: null,
+    return Semantics(
+      button: true,
+      label: onTap == null ? 'Action unavailable' : strings.AppStrings.submit,
+      child: IconButton(
+        onPressed: onTap,
+        icon: Icon(icon, color: color ?? colorScheme.primary),
+        color: color ?? colorScheme.primary,
+        tooltip: null,
+      ),
     );
   }
 

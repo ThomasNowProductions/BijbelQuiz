@@ -978,4 +978,23 @@ class AppStringsEn {
   // Languages
   static const String languageNl = 'Dutch';
   static const String languageEn = 'English';
+
+  // Accessibility Labels (English)
+  static const String selectedEn = 'Selected';
+  static const String newMessagesOrLoginRequiredEn =
+      'New messages or login required';
+  static const String activeDiscountsAvailableEn = 'Active discounts available';
+  static const String enabledEn = 'Enabled';
+  static const String disabledEn = 'Disabled';
+  static const String clearSearchEn = 'Clear search';
+  static const String openBQIDSettingsEn = 'Open BQID settings';
+  static String sectionIconEn(String section) => '$section section icon';
+  static String pageIndicatorEn(int current, int total) =>
+      'Page $current of $total';
+  static String reactionButtonEn(String emoji, int count, bool selected) {
+    String label = '$emoji reaction';
+    if (count > 0) label += ', $count reactions';
+    if (selected) label += ', selected';
+    return label;
+  }
 }

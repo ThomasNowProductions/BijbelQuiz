@@ -385,10 +385,14 @@ class _SocialScreenState extends State<SocialScreen> {
                     ],
                   ),
                 ),
-                Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  size: 16,
-                  color: colorScheme.onSurface.withValues(alpha: 0.5),
+                Semantics(
+                  label: strings.AppStrings.openBQIDSettings,
+                  excludeSemantics: true,
+                  child: Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    size: 16,
+                    color: colorScheme.onSurface.withValues(alpha: 0.5),
+                  ),
                 ),
               ],
             ),
@@ -428,10 +432,15 @@ class _SocialScreenState extends State<SocialScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Icon(
-              Icons.error_outline,
-              size: 48,
-              color: colorScheme.error,
+            Semantics(
+              label: strings.AppStrings.sectionIcon(
+                  strings.AppStrings.manageYourBqid),
+              excludeSemantics: true,
+              child: Icon(
+                Icons.person_add,
+                size: 20,
+                color: colorScheme.primary,
+              ),
             ),
             const SizedBox(height: 16),
             Text(
@@ -560,41 +569,46 @@ class _SocialScreenState extends State<SocialScreen> {
         final isReacted = _hasUserReactedWith(message.id, emoji);
         final count = _getReactionCount(message.id, emoji);
 
-        return InkWell(
-          onTap: () => _handleReaction(message.id, emoji),
-          borderRadius: BorderRadius.circular(8),
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-            decoration: BoxDecoration(
-              color:
-                  isReacted ? colorScheme.primaryContainer : Colors.transparent,
-              borderRadius: BorderRadius.circular(8),
-              border: isReacted
-                  ? Border.all(color: colorScheme.primary, width: 1)
-                  : null,
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _getIconForEmoji(
-                  emoji,
-                  isReacted
-                      ? colorScheme.primary
-                      : colorScheme.onSurface.withValues(alpha: 0.6),
-                ),
-                if (count > 0) ...[
-                  const SizedBox(width: 6),
-                  Text(
-                    count.toString(),
-                    style: textTheme.bodyMedium?.copyWith(
-                      color: isReacted
-                          ? colorScheme.primary
-                          : colorScheme.onSurface.withValues(alpha: 0.6),
-                      fontWeight: FontWeight.w500,
-                    ),
+        return Semantics(
+          button: true,
+          label: strings.AppStrings.reactionButton(emoji, count, isReacted),
+          child: InkWell(
+            onTap: () => _handleReaction(message.id, emoji),
+            borderRadius: BorderRadius.circular(8),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+              decoration: BoxDecoration(
+                color: isReacted
+                    ? colorScheme.primaryContainer
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(8),
+                border: isReacted
+                    ? Border.all(color: colorScheme.primary, width: 1)
+                    : null,
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _getIconForEmoji(
+                    emoji,
+                    isReacted
+                        ? colorScheme.primary
+                        : colorScheme.onSurface.withValues(alpha: 0.6),
                   ),
+                  if (count > 0) ...[
+                    const SizedBox(width: 6),
+                    Text(
+                      count.toString(),
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: isReacted
+                            ? colorScheme.primary
+                            : colorScheme.onSurface.withValues(alpha: 0.6),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
                 ],
-              ],
+              ),
             ),
           ),
         );

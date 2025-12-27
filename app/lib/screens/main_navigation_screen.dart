@@ -127,20 +127,27 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       icon: Stack(
         clipBehavior: Clip.none,
         children: [
-          const Icon(Icons.groups_outlined),
+          Semantics(
+            label: strings.AppStrings.social,
+            button: true,
+            child: const Icon(Icons.groups_outlined),
+          ),
           if (showAlertDot)
             Positioned(
               right: -2,
               top: -2,
-              child: Container(
-                width: 8,
-                height: 8,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.error,
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: Theme.of(context).colorScheme.surface,
-                    width: 1,
+              child: Semantics(
+                label: strings.AppStrings.newMessagesOrLoginRequired,
+                child: Container(
+                  width: 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.error,
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Theme.of(context).colorScheme.surface,
+                      width: 1,
+                    ),
                   ),
                 ),
               ),
@@ -150,20 +157,27 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       selectedIcon: Stack(
         clipBehavior: Clip.none,
         children: [
-          const Icon(Icons.groups),
+          Semantics(
+            label: 'Selected - ${strings.AppStrings.social}',
+            button: true,
+            child: const Icon(Icons.groups),
+          ),
           if (showAlertDot)
             Positioned(
               right: -2,
               top: -2,
-              child: Container(
-                width: 8,
-                height: 8,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.error,
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: Theme.of(context).colorScheme.surface,
-                    width: 1,
+              child: Semantics(
+                label: strings.AppStrings.newMessagesOrLoginRequired,
+                child: Container(
+                  width: 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.error,
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Theme.of(context).colorScheme.surface,
+                      width: 1,
+                    ),
                   ),
                 ),
               ),
@@ -183,20 +197,27 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       icon: Stack(
         clipBehavior: Clip.none,
         children: [
-          const Icon(Icons.store_outlined),
+          Semantics(
+            label: strings.AppStrings.store,
+            button: true,
+            child: const Icon(Icons.store_outlined),
+          ),
           if (hasActiveDiscount)
             Positioned(
               right: -2,
               top: -2,
-              child: Container(
-                width: 8,
-                height: 8,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.error,
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: Theme.of(context).colorScheme.surface,
-                    width: 1,
+              child: Semantics(
+                label: strings.AppStrings.activeDiscountsAvailable,
+                child: Container(
+                  width: 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.error,
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Theme.of(context).colorScheme.surface,
+                      width: 1,
+                    ),
                   ),
                 ),
               ),
@@ -206,20 +227,27 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       selectedIcon: Stack(
         clipBehavior: Clip.none,
         children: [
-          const Icon(Icons.store),
+          Semantics(
+            label: 'Selected - ${strings.AppStrings.store}',
+            button: true,
+            child: const Icon(Icons.store),
+          ),
           if (hasActiveDiscount)
             Positioned(
               right: -2,
               top: -2,
-              child: Container(
-                width: 8,
-                height: 8,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.error,
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: Theme.of(context).colorScheme.surface,
-                    width: 1,
+              child: Semantics(
+                label: strings.AppStrings.activeDiscountsAvailable,
+                child: Container(
+                  width: 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.error,
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Theme.of(context).colorScheme.surface,
+                      width: 1,
+                    ),
                   ),
                 ),
               ),
@@ -257,8 +285,17 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   List<NavigationDestination> _buildDestinations() {
     final destinations = <NavigationDestination>[
       NavigationDestination(
-        icon: const Icon(Icons.menu_book_outlined),
-        selectedIcon: const Icon(Icons.menu_book),
+        icon: Semantics(
+          label: strings.AppStrings.lessons,
+          button: true,
+          child: const Icon(Icons.menu_book_outlined),
+        ),
+        selectedIcon: Semantics(
+          label:
+              '${strings.AppStrings.selected} - ${strings.AppStrings.lessons}',
+          button: true,
+          child: const Icon(Icons.menu_book),
+        ),
         label: strings.AppStrings.lessons,
       ),
     ];
@@ -270,8 +307,16 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
     destinations.add(
       NavigationDestination(
-        icon: const Icon(Icons.settings_outlined),
-        selectedIcon: const Icon(Icons.settings),
+        icon: Semantics(
+          label: strings.AppStrings.settings,
+          button: true,
+          child: const Icon(Icons.settings_outlined),
+        ),
+        selectedIcon: Semantics(
+          label: 'Selected - ${strings.AppStrings.settings}',
+          button: true,
+          child: const Icon(Icons.settings),
+        ),
         label: strings.AppStrings.settings,
       ),
     );

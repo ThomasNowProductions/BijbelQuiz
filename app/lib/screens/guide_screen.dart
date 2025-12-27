@@ -109,50 +109,64 @@ class _GuideScreenState extends State<GuideScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   if (_currentPage > 0)
-                    TextButton(
-                      onPressed: () {
-                        _pageController.previousPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                        );
-                      },
-                      child: Text(strings.AppStrings.previous),
+                    Semantics(
+                      button: true,
+                      label: strings.AppStrings.previous,
+                      child: TextButton(
+                        onPressed: () {
+                          _pageController.previousPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                        child: Text(strings.AppStrings.previous),
+                      ),
                     )
                   else
                     const SizedBox(width: 80),
-                  Row(
-                    children: List.generate(
-                      pages.length,
-                      (index) => Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 4),
-                        width: 8,
-                        height: 8,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: _currentPage == index
-                              ? colorScheme.primary
-                              : colorScheme.outlineVariant,
+                  Semantics(
+                    label: strings.AppStrings.pageIndicator(
+                        _currentPage + 1, pages.length),
+                    child: Row(
+                      children: List.generate(
+                        pages.length,
+                        (index) => Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 4),
+                          width: 8,
+                          height: 8,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: _currentPage == index
+                                ? colorScheme.primary
+                                : colorScheme.outlineVariant,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  TextButton(
-                    onPressed: pages[_currentPage].isAuthPage
-                        ? null
-                        : () {
-                            if (isLastPage) {
-                              _handleGuideCompletion(context);
-                            } else {
-                              _pageController.nextPage(
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeInOut,
-                              );
-                            }
-                          },
-                    child: Text(
-                      isLastPage
-                          ? strings.AppStrings.getStarted
-                          : strings.AppStrings.next,
+                  Semantics(
+                    button: true,
+                    label: isLastPage
+                        ? strings.AppStrings.getStarted
+                        : strings.AppStrings.next,
+                    child: TextButton(
+                      onPressed: pages[_currentPage].isAuthPage
+                          ? null
+                          : () {
+                              if (isLastPage) {
+                                _handleGuideCompletion(context);
+                              } else {
+                                _pageController.nextPage(
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+                                );
+                              }
+                            },
+                      child: Text(
+                        isLastPage
+                            ? strings.AppStrings.getStarted
+                            : strings.AppStrings.next,
+                      ),
                     ),
                   ),
                 ],
@@ -554,13 +568,13 @@ class _GuidePageViewState extends State<GuidePageView> {
                                     items: [
                                       DropdownMenuItem(
                                         value: 'nl',
-                                        child: Text(
-                                            strings.AppStrings.languageNl),
+                                        child:
+                                            Text(strings.AppStrings.languageNl),
                                       ),
                                       DropdownMenuItem(
                                         value: 'en',
-                                        child: Text(
-                                            strings.AppStrings.languageEn),
+                                        child:
+                                            Text(strings.AppStrings.languageEn),
                                       ),
                                     ],
                                     onChanged: (String? value) {
