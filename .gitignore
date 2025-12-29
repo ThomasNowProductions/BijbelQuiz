@@ -1,14 +1,11 @@
 # ==============================================================================
-# COMBINED .GITIGNORE FILE
-# Combined from all .gitignore files in the project
+# BIJBELQUIZ FLUTTER APP .GITIGNORE
+# Optimized for Flutter mobile app with web components
 # ==============================================================================
 
 # ==============================================================================
 # DEVELOPMENT TOOLS & IDE
 # ==============================================================================
-
-# Kilo code
-.kilocode/
 
 # IDE and Editor files
 .vscode/
@@ -19,6 +16,9 @@
 *~
 .history/*
 .vscode-test
+
+# Kilo code
+.kilocode/
 
 # ==============================================================================
 # ENVIRONMENT & CONFIGURATION
@@ -38,17 +38,11 @@ supabase/config.toml
 supabase/.temp
 supabase/functions/**/node_modules
 
-# Firebase (if using)
-.firebase/
-firebase-debug.log
-firebaserc
-
 # ==============================================================================
 # FLUTTER & DART
 # ==============================================================================
 
 # Flutter/Dart/Pub related
-**/doc/api/
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
@@ -64,25 +58,6 @@ linked_*.ds
 unlinked.ds
 unlinked_spec.ds
 
-# Flutter repo-specific
-/bin/cache/
-/bin/internal/bootstrap.bat
-/bin/internal/bootstrap.sh
-/bin/mingit/
-/dev/benchmarks/mega_gallery/
-/dev/bots/.recipe_deps
-/dev/bots/android_tools/
-/dev/devicelab/ABresults*.json
-/dev/docs/doc/
-/dev/docs/flutter.docs.zip
-/dev/docs/lib/
-/dev/docs/pubspec.yaml
-/dev/integration_tests/**/xcuserdata
-/dev/integration_tests/**/Pods
-/packages/flutter/coverage/
-version
-analysis_benchmark.json
-
 # Flutter miscellaneous
 *.class
 *.lock
@@ -92,85 +67,6 @@ analysis_benchmark.json
 .history
 pubspec.lock
 .metadata
-
-# ==============================================================================
-# NODE.JS & JAVASCRIPT
-# ==============================================================================
-
-# Dependencies
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-bower_components
-jspm_packages/
-
-# Build outputs
-dist/
-.next/
-out/
-.nuxt
-.vercel/
-.turbo/
-.storybook-out
-
-# Cache directories
-.cache/
-.npm/
-.eslintcache
-.stylelintcache
-.parcel-cache
-.rpt2_cache/
-.rts2_cache_cjs/
-.rts2_cache_es/
-.rts2_cache_umd/
-.yarn/cache
-.yarn/unplugged
-.yarn/build-state.yml
-.yarn/install-state.gz
-.pnp.*
-
-# TypeScript
-*.tsbuildinfo
-.next/types/**/*.ts
-
-# Next.js SWC binaries
-**/node_modules/@next/swc-*/**/*.node
-
-# Coverage and testing
-coverage/
-*.lcov
-.nyc_output
-lib-cov
-
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
-
-# Optional REPL history
-.node_repl_history
-
-# Output of 'npm pack'
-*.tgz
-
-# Yarn Integrity file
-.yarn-integrity
-
-# Gatsby files
-public
-
-# Storybook build outputs
-.out
-
-# Temporary folders
-tmp/
-temp/
-*.tmp
-*.temp
 
 # ==============================================================================
 # PLATFORM SPECIFIC
@@ -204,32 +100,28 @@ bijbelquiz-release-key.jks
 /ios/**/DerivedData/
 /ios/**/Icon?
 **/ios/**/Pods/
-/ios/**/.symlinks/
-/ios/**/profile
+**/ios/**/.symlinks/
+**/ios/**/profile
 **/ios/**/xcuserdata
 **/ios/.generated/
-/ios/Flutter/.last_build_id
-**/ios/Flutter/App.framework
-**/ios/Flutter/Flutter.framework
-**/ios/Flutter/Flutter.podspec
-**/ios/Flutter/Generated.xcconfig
-**/ios/Flutter/ephemeral
-**/ios/Flutter/app.flx
-**/ios/Flutter/app.zip
-**/ios/Flutter/flutter_assets/
-**/ios/Flutter/flutter_export_environment.sh
-**/ios/Flutter/GeneratedPluginRegistrant.*
-**/ios/Runner/GeneratedPluginRegistrant.*
-**/ios/ServiceDefinitions.json
-**/ios/Runner/GeneratedPluginRegistrant.*
+/ios/**/Flutter/.last_build_id
+**/ios/**/Flutter/App.framework
+**/ios/**/Flutter/Flutter.framework
+**/ios/**/Flutter/Flutter.podspec
+**/ios/**/Flutter/Generated.xcconfig
+**/ios/**/Flutter/ephemeral
+**/ios/**/Flutter/app.flx
+**/ios/**/Flutter/app.zip
+**/ios/**/Flutter/flutter_assets/
+**/ios/**/Flutter/flutter_export_environment.sh
+**/ios/**/Flutter/GeneratedPluginRegistrant.*
+**/ios/**/Runner/GeneratedPluginRegistrant.*
+**/ios/**/ServiceDefinitions.json
 
 # macOS
-**/Flutter/ephemeral/
-/Pods/
-/macos/Flutter/GeneratedPluginRegistrant.swift
-**/macos/Flutter/GeneratedPluginRegistrant.*
-**/macos/Flutter/ephemeral
-**/xcuserdata/
+**/macos/Flutter/ephemeral/
+**/macos/**/Pods/
+**/macos/**/xcuserdata/
 
 # Windows
 **/windows/flutter/generated_plugin_registrant.*
@@ -260,23 +152,32 @@ ehthumbs.db
 Thumbs.db
 desktop.ini
 
-# Linux
-
 # ==============================================================================
 # LOGS & TEMPORARY FILES
 # ==============================================================================
 
 # Logs
 logs/
+*.log
 
 # Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
 
 # ==============================================================================
-# ICONS & ASSETS
+# WEB BUILD OUTPUTS (for website/ directory)
 # ==============================================================================
 
-# Icons (keep README.txt)
-!icons/README.txt
+# Web build outputs
+website/build/
+website/dist/
+website/.next/
+website/out/
+website/.nuxt
+website/.vercel/
+website/.turbo/
 
 # ==============================================================================
 # SYMBOLS & DEBUG
@@ -284,32 +185,3 @@ logs/
 
 # Symbols
 app.*.symbols
-
-# ==============================================================================
-# WEBSITE SPECIFIC EXCEPTIONS
-# ==============================================================================
-
-# Flutter - ignore build files except in websites/
-!/websites/**/build/
-!/websites/**/android/app/build/
-!/websites/**/ios/Flutter/.last_build_id
-
-# ==============================================================================
-# EXCEPTIONS TO ABOVE RULES
-# ==============================================================================
-
-# iOS exceptions
-!**/ios/**/default.mode1v3
-!**/ios/**/default.mode2v3
-!**/ios/**/default.pbxuser
-!**/ios/**/default.perspectivev3
-
-# Package exceptions
-!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
-!/dev/ci/**/Gemfile.lock
-
-# VSCode extension exception
-!.vscode/extensions.json
-
-# Netlify exception
-.netlify
