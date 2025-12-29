@@ -1,6 +1,6 @@
 # BijbelQuiz
 
-![Tablet image](https://bijbelquiz.app/assets/images/Tablet-1.png)
+![Tablet image](https://bijbelquiz.app/assets/images/promo-tablet-lesson-select-screen.png)
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.0+-02569B?logo=flutter)](https://flutter.dev)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
