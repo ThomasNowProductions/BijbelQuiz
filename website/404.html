@@ -24,7 +24,7 @@
     <!-- Additional SEO -->
     <meta name="format-detection" content="telephone=no">
 
-    <link rel="stylesheet" href="https://bijbelquiz.app/theme.css">
+    <link rel="stylesheet" href="https://bijbelquiz.app/assets/css/theme.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- Structured Data -->
@@ -83,7 +83,7 @@
     <script>
         // Fetch and inject the central footer
         document.addEventListener('DOMContentLoaded', function() {
-            fetch('/components/footer.html')
+            fetch('/assets/components/footer.html')
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('main-footer').innerHTML = data;

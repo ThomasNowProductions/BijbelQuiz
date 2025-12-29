@@ -14,7 +14,11 @@
     },
     {
       "source": "/email",
-      "destination": "/email.html"
+      "destination": "/e-mail"
+    },
+    {
+      "source": "/e-mail",
+      "destination": "/pages/email/index.html"
     },
     {
       "source": "/kwebler",
@@ -45,40 +49,12 @@
       "destination": "https://app.formbricks.com/s/n84yeqlqef4s8u7k1xty3lwe"
     },
     {
-      "source": "/download",
-      "destination": "https://bijbelquiz.app/download.html"
-    },
-    {
-      "source": "/privacy",
-      "destination": "https://bijbelquiz.app/algemene-voorwaarden.html"
-    },
-    {
-      "source": "/algemene-voorwaarden",
-      "destination": "https://bijbelquiz.app/algemene-voorwaarden.html"
-    },
-    {
       "source": "/status",
       "destination": "https://bijbelquiz.instatus.com/"
     },
     {
       "source": "/nooki",
       "destination": "https://nooki.me/c/BijbelQuiz"
-    },
-    {
-      "source": "/links",
-      "destination": "https://bijbelquiz.app/links.html"
-    },
-    {
-      "source": "/i/:id",
-      "destination": "https://bijbelquiz.app/invite.html"
-    },
-    {
-      "source": "/i",
-      "destination": "https://bijbelquiz.app/invite.html"
-    },
-    {
-      "source": "/wachtlijst",
-      "destination": "https://bijbelquiz.app/download"
     },
     {
       "source": "/playstore",
@@ -101,12 +77,136 @@
       "destination": "https://app.youform.com/forms/bir6movc"
     },
     {
+      "source": "/download",
+      "destination": "/download.html"
+    },
+    {
       "source": "/faq",
-      "destination": "https://bijbelquiz.app/faq.html"
+      "destination": "/faq.html"
     },
     {
       "source": "/pers",
-      "destination": "https://bijbelquiz.app/pers.html"
+      "destination": "/pers.html"
+    },
+    {
+      "source": "/links",
+      "destination": "/links.html"
+    },
+    {
+      "source": "/i/:id",
+      "destination": "/invite.html"
+    },
+    {
+      "source": "/i",
+      "destination": "/invite.html"
+    },
+    {
+      "source": "/wachtlijst",
+      "destination": "/download.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/algemene-voorwaarden"
+    },
+    {
+      "source": "/terms",
+      "destination": "/algemene-voorwaarden"
+    },
+    {
+      "source": "/voorwaarden",
+      "destination": "/algemene-voorwaarden"
+    },
+    {
+      "source": "/algemene-voorwaarden",
+      "destination": "/pages/terms/index.html"
+    },
+    {
+      "source": "/thank-you",
+      "destination": "/dankjewel"
+    },
+    {
+      "source": "/dankjewel",
+      "destination": "/pages/thank-you.html"
+    },
+    {
+      "source": "/guides",
+      "destination": "/instructie"
+    },
+    {
+      "source": "/guides/android",
+      "destination": "/instructie/android"
+    },
+    {
+      "source": "/guides/api",
+      "destination": "/instructie/api"
+    },
+    {
+      "source": "/guides/windows",
+      "destination": "/instructie/windows"
+    },
+    {
+      "source": "/guides/migration",
+      "destination": "/instructie/migratie"
+    },
+    {
+      "source": "/guides/migratie",
+      "destination": "/instructie/migratie"
+    },
+    {
+      "source": "/instructie",
+      "destination": "/pages/guides/index.html"
+    },
+    {
+      "source": "/instructie/android",
+      "destination": "/pages/guides/android.html"
+    },
+    {
+      "source": "/instructie/api",
+      "destination": "/pages/guides/api.html"
+    },
+    {
+      "source": "/instructie/windows",
+      "destination": "/pages/guides/windows.html"
+    },
+    {
+      "source": "/instructie/migratie",
+      "destination": "/pages/guides/migratie.html"
+    },
+    {
+      "source": "/account/delete",
+      "destination": "/account/verwijderen"
+    },
+    {
+      "source": "/account/registered",
+      "destination": "/account/geregistreerd"
+    },
+    {
+      "source": "/account",
+      "destination": "/pages/account/"
+    },
+    {
+      "source": "/account/verwijderen",
+      "destination": "/pages/account/verwijderen.html"
+    },
+    {
+      "source": "/account/geregistreerd",
+      "destination": "/pages/account/geregistreerd.html"
+    },
+    {
+      "source": "/tools",
+      "destination": "/vraag-editor"
+    },
+    {
+      "source": "/tools/editor",
+      "destination": "/vraag-editor"
+    },
+    {
+      "source": "/question-editor",
+      "destination": "/vraag-editor"
+    },
+    {
+      "source": "/vraag-editor",
+      "destination": "/pages/tools/"
     }
   ],
   "headers": [

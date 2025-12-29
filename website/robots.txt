@@ -5,16 +5,23 @@ Allow: /
 Disallow: /backend/
 Disallow: /mcp/
 Disallow: /downloads/
+Disallow: /assets/
+Disallow: /pages/tools/
 
 # Allow access to main pages
 Allow: /index.html
-Allow: /privacy.html
-Allow: /algemene-voorwaarden.html
 Allow: /download.html
-Allow: /404.html
+Allow: /faq.html
+Allow: /pers.html
 Allow: /links.html
 Allow: /invite.html
 Allow: /score.html
+Allow: /algemene-voorwaarden
+Allow: /e-mail
+Allow: /account/verwijderen
+Allow: /account/geregistreerd
+Allow: /pages/guides/
+Allow: /dankjewel
 
 # Sitemap location
 Sitemap: https://bijbelquiz.app/sitemap.xml

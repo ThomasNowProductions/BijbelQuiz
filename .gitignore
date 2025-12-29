@@ -185,3 +185,5 @@ website/.turbo/
 
 # Symbols
 app.*.symbols
+.vercel
+.env*.local
