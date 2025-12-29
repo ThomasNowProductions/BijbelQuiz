@@ -117,9 +117,6 @@ class AppStringsEn {
   static const String colorfulMode = 'Colorful Mode';
   static const String colorfulModeDesc =
       'Enable different colors for lesson cards';
-  static const String hidePopup = 'Hide promotion popup';
-  static const String hidePopupDesc =
-      'Do you only want to enable this setting if you have donated to us? We have no way to verify this, but we trust you to be honest.';
   static const String tryAgain = 'Try Again';
   static const String couldNotOpenStatusPage = 'Could not open status page.';
   static const String lessonLayout = 'Lesson Layout';

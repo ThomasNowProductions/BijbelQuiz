@@ -213,11 +213,6 @@ class AppStrings {
   static String get colorfulModeDesc => _language == 'en'
       ? AppStringsEn.colorfulModeDesc
       : 'Zet verschillende kleuren aan voor leskaarten';
-  static String get hidePopup =>
-      _language == 'en' ? AppStringsEn.hidePopup : 'Verberg promotie pop-up';
-  static String get hidePopupDesc => _language == 'en'
-      ? AppStringsEn.hidePopupDesc
-      : 'Wil je deze instelling alleen aanzetten als u aan ons heeft gedoneerd? We hebben geen manier om het te verifieren, maar we vertrouwen erop dat je eerlijk bent.';
   static String get tryAgain =>
       _language == 'en' ? AppStringsEn.tryAgain : 'Opnieuw proberen';
   static String get couldNotOpenStatusPage => _language == 'en'

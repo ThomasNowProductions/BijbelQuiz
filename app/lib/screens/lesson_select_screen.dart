@@ -142,7 +142,8 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
 
   /// Helper method to track lesson selection analytics
   void _trackLessonSelection(Lesson lesson, bool unlocked) {
-    final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+    final analyticsService =
+        Provider.of<AnalyticsService>(context, listen: false);
 
     // Track lesson system usage
     analyticsService.trackFeatureSuccess(
@@ -155,10 +156,8 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
 
     // Track streak feature if this contributes to streak
     if (_streakDays > 0) {
-      analyticsService.trackFeatureUsage(
-          context,
-          AnalyticsService.featureStreakTracking,
-          AnalyticsService.actionUsed,
+      analyticsService.trackFeatureUsage(context,
+          AnalyticsService.featureStreakTracking, AnalyticsService.actionUsed,
           additionalProperties: {
             'current_streak': _streakDays,
           });
@@ -189,7 +188,8 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
       _activeDays = list.toSet();
 
       // Calculate streak using the utility class
-      _streakDays = streak_utils.StreakCalculator.calculateCurrentStreak(_activeDays);
+      _streakDays =
+          streak_utils.StreakCalculator.calculateCurrentStreak(_activeDays);
     } catch (e) {
       // Log error but continue gracefully
       debugPrint('Error loading streak data: $e');
@@ -239,7 +239,8 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
   }
 
   List<DayIndicator> _getFiveDayWindow() {
-    final streakDayIndicators = streak_utils.StreakCalculator.getFiveDayWindow(_activeDays);
+    final streakDayIndicators =
+        streak_utils.StreakCalculator.getFiveDayWindow(_activeDays);
     // Convert from streak_utils.DayIndicator to progress_header.DayIndicator
     return streakDayIndicators.map((streakDayIndicator) {
       DayState state;
@@ -392,11 +393,6 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
 
   /// Determines whether to show a promo card based on probability and user interaction history
   bool _shouldShowPromoCard(SettingsProvider settings) {
-    // Check if user has enabled hiding promo cards
-    if (settings.hidePromoCard) {
-      return false;
-    }
-
     // Check if user is not logged in - if so, always show account creation promo
     final isLoggedIn = Supabase.instance.client.auth.currentUser != null;
     if (!isLoggedIn) {
@@ -409,22 +405,26 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
     }
 
     // For donation popup
-    if (_shouldHidePromo(settings.lastDonationPopup, settings.hasClickedDonationLink)) {
+    if (_shouldHidePromo(
+        settings.lastDonationPopup, settings.hasClickedDonationLink)) {
       return false;
     }
 
     // For follow popup
-    if (_shouldHidePromo(settings.lastFollowPopup, settings.hasClickedFollowLink)) {
+    if (_shouldHidePromo(
+        settings.lastFollowPopup, settings.hasClickedFollowLink)) {
       return false;
     }
 
     // For satisfaction popup
-    if (_shouldHidePromo(settings.lastSatisfactionPopup, settings.hasClickedSatisfactionLink)) {
+    if (_shouldHidePromo(
+        settings.lastSatisfactionPopup, settings.hasClickedSatisfactionLink)) {
       return false;
     }
 
     // For difficulty feedback popup
-    if (_shouldHidePromo(settings.lastDifficultyPopup, settings.hasClickedDifficultyLink)) {
+    if (_shouldHidePromo(
+        settings.lastDifficultyPopup, settings.hasClickedDifficultyLink)) {
       return false;
     }
 
@@ -439,7 +439,8 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
     }
 
     final now = DateTime.now();
-    final nextAllowed = DateTime(lastPopup.year, lastPopup.month + 1, 1); // First of next month
+    final nextAllowed =
+        DateTime(lastPopup.year, lastPopup.month + 1, 1); // First of next month
     return now.isBefore(nextAllowed);
   }
 
@@ -481,11 +482,11 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
 
   /// Helper method to handle analytics for locked lesson taps
   void _handleLockedLessonTap(String lessonId) {
-    final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+    final analyticsService =
+        Provider.of<AnalyticsService>(context, listen: false);
     analyticsService.capture(context, 'tap_locked_lesson',
         properties: {'lesson_id': lessonId});
-    showTopSnackBar(
-        context, strings.AppStrings.lessonLocked,
+    showTopSnackBar(context, strings.AppStrings.lessonLocked,
         style: TopSnackBarStyle.warning);
   }
 
@@ -493,9 +494,8 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
   Future<void> _navigateToQuiz(Lesson lesson) async {
     await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => QuizScreen(
-            lesson: lesson,
-            sessionLimit: lesson.maxQuestions),
+        builder: (_) =>
+            QuizScreen(lesson: lesson, sessionLimit: lesson.maxQuestions),
       ),
     );
 
@@ -540,9 +540,9 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
           _trackLessonSelection(lesson, unlocked);
 
           // Capture tap event
-          Provider.of<AnalyticsService>(context, listen: false)
-              .capture(context, 'tap_lesson',
-                  properties: {'lesson_id': lesson.id});
+          Provider.of<AnalyticsService>(context, listen: false).capture(
+              context, 'tap_lesson',
+              properties: {'lesson_id': lesson.id});
 
           // Navigate to quiz
           await _navigateToQuiz(lesson);
@@ -556,7 +556,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
         layoutType: layoutType,
         isDesktop: MediaQuery.of(context).size.width > 1200,
         isTablet: MediaQuery.of(context).size.width > 600 &&
-                 MediaQuery.of(context).size.width <= 1200,
+            MediaQuery.of(context).size.width <= 1200,
         isSmallPhone: MediaQuery.of(context).size.width < 400,
       );
     }

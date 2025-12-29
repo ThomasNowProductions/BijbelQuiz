@@ -35,7 +35,6 @@ class SettingsProvider extends ChangeNotifier {
   static const String _showNavigationLabelsKey = 'show_navigation_labels';
   static const String _layoutTypeKey = 'layout_type';
   static const String _colorfulModeKey = 'colorful_mode';
-  static const String _hidePromoCardKey = 'hide_promo_card';
   static const String _automaticBugReportingKey = 'automatic_bug_reporting';
   static const String _motivationalNotificationsEnabledKey =
       'motivational_notifications_enabled';
@@ -78,10 +77,6 @@ class SettingsProvider extends ChangeNotifier {
 
   String _layoutType = layoutGrid; // default to grid
   bool _colorfulMode = false; // default to false (single color mode)
-
-  // Promo card settings
-  bool _hidePromoCard =
-      false; // default to false (don't hide the promo card, so show it)
 
   // Bug reporting settings
   bool _automaticBugReporting =
@@ -177,12 +172,6 @@ class SettingsProvider extends ChangeNotifier {
 
   /// Whether colorful mode is enabled for lesson cards
   bool get colorfulMode => _colorfulMode;
-
-  /// Whether to hide the promo card popup on lesson select screen
-  bool get hidePromoCard => _hidePromoCard;
-
-  /// Whether to show the promo card popup on lesson select screen (opposite of hidePromoCard)
-  bool get showPromoCard => !_hidePromoCard;
 
   /// Whether automatic bug reporting is enabled
   bool get automaticBugReporting => _automaticBugReporting;
@@ -469,9 +458,6 @@ class SettingsProvider extends ChangeNotifier {
 
       // Load colorful mode setting
       _colorfulMode = _getBoolSetting(_colorfulModeKey, defaultValue: false);
-
-      // Load hide promo card setting
-      _hidePromoCard = _getBoolSetting(_hidePromoCardKey, defaultValue: false);
 
       // Load automatic bug reporting setting
       _automaticBugReporting =
@@ -916,20 +902,6 @@ class SettingsProvider extends ChangeNotifier {
     );
   }
 
-  /// Updates the hide promo card setting
-  Future<void> setHidePromoCard(bool hide) async {
-    AppLogger.info(
-        'Changing hide promo card setting from $_hidePromoCard to $hide');
-    await _saveSetting(
-      action: () async {
-        _hidePromoCard = hide;
-        await _prefs?.setBool(_hidePromoCardKey, hide);
-        AppLogger.info('Hide promo card setting saved successfully: $hide');
-      },
-      errorMessage: 'Failed to save hide promo card setting',
-    );
-  }
-
   /// Updates the automatic bug reporting setting
   Future<void> setAutomaticBugReporting(bool enabled) async {
     AppLogger.info(
@@ -1004,7 +976,6 @@ class SettingsProvider extends ChangeNotifier {
       'showNavigationLabels': _showNavigationLabels,
       'layoutType': _layoutType,
       'colorfulMode': _colorfulMode,
-      'hidePromoCard': _hidePromoCard,
       'automaticBugReporting': _automaticBugReporting,
       'motivationalNotificationsEnabled': _motivationalNotificationsEnabled,
       'aiThemes': _aiThemes.map((key, value) => MapEntry(key, value.toJson())),
@@ -1062,7 +1033,6 @@ class SettingsProvider extends ChangeNotifier {
     _layoutType = data['layoutType'] ?? layoutGrid;
 
     _colorfulMode = data['colorfulMode'] ?? false;
-    _hidePromoCard = data['hidePromoCard'] ?? false;
     _automaticBugReporting = data['automaticBugReporting'] ?? true;
     _motivationalNotificationsEnabled =
         data['motivationalNotificationsEnabled'] ?? true;
@@ -1162,9 +1132,6 @@ class SettingsProvider extends ChangeNotifier {
 
     // Save colorful mode setting
     await _prefs?.setBool(_colorfulModeKey, _colorfulMode);
-
-    // Save hide promo card setting
-    await _prefs?.setBool(_hidePromoCardKey, _hidePromoCard);
 
     // Save automatic bug reporting setting
     await _prefs?.setBool(_automaticBugReportingKey, _automaticBugReporting);

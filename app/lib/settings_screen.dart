@@ -293,16 +293,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
           colorScheme,
         ),
       ),
-      _SettingItem(
-        title: strings.AppStrings.hidePopup,
-        subtitle: strings.AppStrings.hidePopupDesc,
-        child: _buildSwitch(
-          settings.hidePromoCard,
-          (value) => _updateSetting(settings, 'toggle_hide_promo_card',
-              () => settings.setHidePromoCard(value)),
-          colorScheme,
-        ),
-      ),
       // Game
       _SettingItem(
         title: strings.AppStrings.gameSpeed,
