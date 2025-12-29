@@ -31,6 +31,7 @@
         <meta name="format-detection" content="telephone=no" />
 
         <link rel="stylesheet" href="/assets/css/theme.css" />
+        <link rel="stylesheet" href="/assets/css/gen.css" />
         <link
             href="https://fonts.googleapis.com/icon?family=Material+Icons"
             rel="stylesheet"
@@ -52,82 +53,6 @@
                 }
             }
         </script>
-
-        <style>
-            .stats-container {
-                width: 100%;
-                max-width: 800px; /* Increased width */
-                margin: 0 auto;
-                padding: 12px;
-                background: transparent;
-                border-radius: 16px;
-                border: 2px solid #000000; /* Black border like in Flutter app */
-            }
-
-            .stat-row {
-                display: flex;
-                justify-content: space-between;
-                padding: 8px 0;
-            }
-
-            .stat-label {
-                font-size: 1rem;
-                color: #000000; /* Black text like in Flutter app */
-            }
-
-            .stat-value {
-                font-size: 1.5rem;
-                font-weight: bold;
-                color: #000000; /* Black text like in Flutter app */
-            }
-
-            .divider {
-                height: 16px;
-                width: 100%;
-            }
-
-            .divider-thin {
-                height: 16px;
-                width: 100%;
-                border-bottom: 1px solid #000000; /* Black thin divider like in Flutter app */
-            }
-
-            .center-screen {
-                min-height: 100vh;
-                display: flex;
-                flex-direction: column;
-                padding: 24px;
-            }
-
-            .content-container {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .header-icon {
-                font-size: 80px;
-                color: #000000; /* Black icon like in Flutter app */
-                text-align: center;
-            }
-
-            .title {
-                font-size: 2rem;
-                font-weight: bold;
-                color: #000000; /* Black text like in Flutter app */
-                text-align: center;
-                margin: 24px 0 8px 0;
-            }
-
-            .subtitle {
-                font-size: 1rem;
-                color: #000000; /* Black text like in Flutter app */
-                text-align: center;
-                margin-bottom: 24px;
-            }
-        </style>
     </head>
     <body class="center-screen fade-in" style="background-color: #fff9c4">
         <!-- Amber shade 200 -->
@@ -167,57 +92,7 @@
             </div>
         </div>
 
-        <script>
-            // Function to extract URL parameters
-            function getUrlParameter(name) {
-                const urlParams = new URLSearchParams(window.location.search);
-                return urlParams.get(name);
-            }
-
-            // Function to update stats with URL parameters
-            function updateStatsFromUrl() {
-                // Get values from URL parameters, default to 0 if not present
-                const score = parseInt(getUrlParameter("score")) || 0;
-                const currentStreak =
-                    parseInt(getUrlParameter("currentStreak")) || 0;
-                const longestStreak =
-                    parseInt(getUrlParameter("longestStreak")) || 0;
-                const incorrect = parseInt(getUrlParameter("incorrect")) || 0;
-                const totalQuestions =
-                    parseInt(getUrlParameter("totalQuestions")) ||
-                    Math.max(score + incorrect, 1); // At least 1 to avoid division by zero
-                const accuracy = parseInt(getUrlParameter("accuracy")) || 0;
-                const hoursSpent =
-                    parseFloat(getUrlParameter("hoursSpent")) || 0.0;
-
-                // Update the DOM elements
-                document.getElementById("scoreValue").textContent = score;
-                document.getElementById("accuracyValue").textContent =
-                    `${accuracy}%`;
-                document.getElementById("hoursValue").textContent =
-                    hoursSpent.toFixed(1);
-                document.getElementById("streakValue").textContent =
-                    currentStreak;
-                document.getElementById("longestStreakValue").textContent =
-                    longestStreak;
-                document.getElementById("mistakesValue").textContent =
-                    incorrect;
-                document.getElementById("totalQuestionsValue").textContent =
-                    totalQuestions;
-
-                // Update the page title and description with the score
-                document.querySelector(".title").textContent =
-                    `Jaar in Review - ${score} correct`;
-                document.querySelector(".subtitle").textContent =
-                    `Bekijk de BijbelQuiz resultaten: ${accuracy}% accuraatheid, ${currentStreak} reeks`;
-            }
-
-            // Run when page loads
-            document.addEventListener("DOMContentLoaded", function () {
-                // Update stats from URL
-                updateStatsFromUrl();
-            });
-        </script>
-    <script src="/js/status.js"></script>
+        <script src="/js/gen-stats.js"></script>
+        <script src="/js/status.js"></script>
     </body>
 </html>

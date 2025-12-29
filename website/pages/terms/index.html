@@ -25,6 +25,8 @@
     <meta name="format-detection" content="telephone=no">
 
     <link rel="stylesheet" href="/assets/css/theme.css">
+    <link rel="stylesheet" href="/assets/css/footer.css">
+    <link rel="stylesheet" href="/assets/css/terms.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- Structured Data -->
@@ -500,99 +502,7 @@
         <footer id="main-footer"></footer>
     </div>
 
-    <style>
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-        }
-        .footer-link {
-            color: var(--primary);
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-        .footer-link:hover {
-            text-decoration: underline;
-        }
-        .footer-separator {
-            margin: 0 0.5rem;
-            color: var(--text-secondary);
-        }
-        .terms-content {
-            text-align: left;
-            margin-bottom: 2rem;
-        }
-        .terms-content h2 {
-            font-size: 1.25rem;
-            margin-top: 1.5rem;
-            margin-bottom: 0.5rem;
-            color: var(--on-surface);
-        }
-        .terms-content h3 {
-            font-size: 1.1rem;
-            margin-top: 1.2rem;
-            margin-bottom: 0.4rem;
-            color: #666;
-        }
-        .terms-content ul {
-            margin-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        .terms-content li {
-            margin-bottom: 0.3rem;
-        }
-
-        /* Summary box styling for both light and dark modes */
-        .summary-box {
-            background: #f8fafc !important;
-            border: 1px solid #64748b !important;
-            color: #1e293b !important;
-        }
-
-        .highlight-box {
-            background: #f0f9ff !important;
-            border: 1px solid #0ea5e9 !important;
-            color: #0c4a6e !important;
-        }
-
-        /* Dark mode styling */
-        @media (prefers-color-scheme: dark) {
-            .summary-box {
-                background: #1e293b !important;
-                border: 1px solid #475569 !important;
-                color: #f1f5f9 !important;
-                padding: 1.5rem !important;
-            }
-            .summary-box h3 {
-                color: #60a5fa !important;
-            }
-
-            .highlight-box {
-                background: #0f172a !important;
-                border: 1px solid #0369a1 !important;
-                color: #bae6fd !important;
-            }
-            .highlight-box h3 {
-                color: #38bdf8 !important;
-            }
-        }
-    </style>
-    
-    <script>
-        // Fetch and inject the central footer
-        document.addEventListener('DOMContentLoaded', function() {
-            fetch('/assets/components/footer.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('main-footer').innerHTML = data;
-                })
-                .catch(error => {
-                    console.error('Error loading footer:', error);
-                });
-        });
-    </script>
+    <script src="/js/footer.js"></script>
     <script src="/js/status.js"></script>
 </body>
 </html>

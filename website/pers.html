@@ -12,6 +12,7 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/assets/css/theme.css">
+    <link rel="stylesheet" href="/assets/css/press.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -86,79 +87,7 @@
 
     <footer id="main-footer"></footer>
 
-    <script>
-        // Fetch and inject the central footer
-        document.addEventListener('DOMContentLoaded', function() {
-            fetch('/assets/components/footer.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('main-footer').innerHTML = data;
-                })
-                .catch(error => {
-                    console.error('Error loading footer:', error);
-                });
-        });
-    </script>
-
-    <style>
-        .faq-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-        }
-
-        .faq-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .faq-header .icon-large {
-            margin-bottom: 1.5rem;
-        }
-
-        .faq-header h1 {
-            margin-bottom: 1rem;
-        }
-
-        /* Contact CTA */
-        .contact-cta {
-            text-align: center;
-            margin-top: 3rem;
-            padding: 2rem;
-            background: var(--surface-highest);
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--outline);
-        }
-
-        .contact-cta h2 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .contact-cta p {
-            margin-bottom: 1.5rem;
-            color: var(--text-secondary);
-        }
-
-        /* Code blocks */
-        code {
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.9rem;
-        }
-
-        /* Mobile responsiveness */
-        @media (max-width: 768px) {
-            .faq-container {
-                padding: 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .faq-header {
-                margin-bottom: 2rem;
-            }
-        }
-    </style>
+    <script src="/js/footer.js"></script>
     <script src="/js/status.js"></script>
 </body>
 </html>

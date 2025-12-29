@@ -1,0 +1,22 @@
+.footer-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.footer-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.footer-link:hover {
+    text-decoration: underline;
+}
+
+.footer-separator {
+    margin: 0 0.5rem;
+    color: var(--text-secondary);
+}

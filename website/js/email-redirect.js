@@ -1,0 +1,1 @@
+window.location.href = "mailto:thomasnowprod@proton.me";
