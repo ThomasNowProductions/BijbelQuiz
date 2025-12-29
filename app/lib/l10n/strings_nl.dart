@@ -1792,7 +1792,7 @@ class AppStrings {
   static const String clearSearchNl = 'Zoeken wissen';
   static String sectionIcon(String section) => _language == 'en'
       ? AppStringsEn.sectionIconEn(section)
-      : '${section} sectie icoon';
+      : '$section sectie icoon';
   static String get openBQIDSettings =>
       _language == 'en' ? AppStringsEn.openBQIDSettingsEn : openBQIDSettingsNl;
   static const String openBQIDSettingsNl = 'BQID instellingen openen';
@@ -1802,7 +1802,7 @@ class AppStrings {
   static String reactionButton(String emoji, int count, bool selected) =>
       _language == 'en'
           ? AppStringsEn.reactionButtonEn(emoji, count, selected)
-          : '${emoji} reactie${count > 0 ? ", $count reacties" : ""}${selected ? ", geselecteerd" : ""}';
+          : '$emoji reactie${count > 0 ? ", $count reacties" : ""}${selected ? ", geselecteerd" : ""}';
 
   // Greetings
   static List<String> get greetings => _language == 'en'
