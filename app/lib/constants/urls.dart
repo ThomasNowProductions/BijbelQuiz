@@ -1,7 +1,6 @@
 class AppUrls {
   // Base domains
   static const String baseDomain = 'https://bijbelquiz.app';
-  static const String baseDomainAPI = 'https://backend.bijbelquiz.app/api';
 
   // Homepage
   static final String homepage = baseDomain;
