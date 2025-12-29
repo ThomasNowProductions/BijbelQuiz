@@ -32,7 +32,11 @@ class AppLogger {
   /// Initializes the logger.
   ///
   /// Listens to log records and prints them to the console.
+  /// In release mode, logging is completely disabled for maximum performance.
   static void init() {
+    if (kReleaseMode) {
+      return;
+    }
     _subscription?.cancel();
     _subscription = Logger.root.onRecord.listen((record) {
       try {
@@ -79,6 +83,9 @@ class AppLogger {
 
   /// Sanitizes log messages by removing sensitive information
   static String _sanitizeLogMessage(String message) {
+    if (kReleaseMode) {
+      return message;
+    }
     String sanitized = message;
 
     // Sanitize JSON strings that might contain sensitive data
@@ -253,7 +260,7 @@ class AppLogger {
     Level levelToUse = isProduction
         ? (productionLevel ??
             Level
-                .INFO) // Default to INFO in production to reduce sensitive data exposure
+                .WARNING) // Default to WARNING in production to reduce sensitive data exposure
         : (developmentLevel ??
             Level.ALL); // Default to ALL in development for debugging
 
@@ -270,34 +277,45 @@ class AppLogger {
   }
 
   /// Logs an info message.
-  static void info(String message) =>
-      _logger.info(_sanitizeLogMessage(message));
+  static void info(String message) {
+    if (kReleaseMode) return;
+    _logger.info(_sanitizeLogMessage(message));
+  }
 
   /// Logs a warning message, optionally with an [error] and [stackTrace].
-  static void warning(String message,
-          [Object? error, StackTrace? stackTrace]) =>
-      _logger.warning(_sanitizeLogMessage(message), error, stackTrace);
+  static void warning(String message, [Object? error, StackTrace? stackTrace]) {
+    if (kReleaseMode) return;
+    _logger.warning(_sanitizeLogMessage(message), error, stackTrace);
+  }
 
   /// Logs an error message, optionally with an [error] and [stackTrace].
   static void error(String message, [Object? error, StackTrace? stackTrace]) {
+    if (kReleaseMode) return;
     _logger.severe(_sanitizeLogMessage(message), error, stackTrace);
   }
 
   /// Logs a debug message.
-  static void debug(String message) =>
-      _logger.fine(_sanitizeLogMessage(message));
+  static void debug(String message) {
+    if (kReleaseMode) return;
+    _logger.fine(_sanitizeLogMessage(message));
+  }
 
   /// Logs a fine-grained (verbose) message.
-  static void fine(String message) =>
-      _logger.fine(_sanitizeLogMessage(message));
+  static void fine(String message) {
+    if (kReleaseMode) return;
+    _logger.fine(_sanitizeLogMessage(message));
+  }
 
   /// Logs a severe error message.
-  static void severe(String message, [Object? error, StackTrace? stackTrace]) =>
-      _logger.severe(_sanitizeLogMessage(message), error, stackTrace);
+  static void severe(String message, [Object? error, StackTrace? stackTrace]) {
+    if (kReleaseMode) return;
+    _logger.severe(_sanitizeLogMessage(message), error, stackTrace);
+  }
 
   /// Logs a message at a custom [level].
   static void log(Level level, String message,
       {Object? error, StackTrace? stackTrace}) {
+    if (kReleaseMode) return;
     _logger.log(level, _sanitizeLogMessage(message), error, stackTrace);
   }
 }

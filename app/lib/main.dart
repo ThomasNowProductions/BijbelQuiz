@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/foundation.dart' show kIsWeb, kReleaseMode;
 import 'dart:async';
 import 'dart:io' show Platform;
 import 'package:app_links/app_links.dart';
@@ -104,15 +104,13 @@ Future<void> main() async {
   final initializationStart = DateTime.now();
 
   // Initialize logging with secure settings based on environment
-  bool isProduction =
-      const bool.fromEnvironment('dart.vm.product', defaultValue: false);
   AppLogger.setSecureLevel(
-      isProduction: isProduction,
-      productionLevel: Level.INFO,
+      isProduction: kReleaseMode,
+      productionLevel: Level.WARNING,
       developmentLevel: Level.ALL);
   AppLogger.init();
   AppLogger.info(
-      'Logger initialized successfully with secure settings (Production: $isProduction)');
+      'Logger initialized successfully with secure settings (Release: $kReleaseMode)');
 
   AppLogger.info('BijbelQuiz app starting up...');
 
@@ -192,7 +190,7 @@ Future<void> main() async {
       );
       final supabaseInitDuration = DateTime.now().difference(supabaseInitStart);
       // Restore our desired log level after Supabase changes it
-      Logger.root.level = isProduction ? Level.INFO : Level.ALL;
+      Logger.root.level = kReleaseMode ? Level.WARNING : Level.ALL;
       AppLogger.info(
           'Supabase initialized successfully in ${supabaseInitDuration.inMilliseconds}ms');
       supabaseInitialized = true;
