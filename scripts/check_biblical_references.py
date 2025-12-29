@@ -9,6 +9,8 @@ can be properly mapped by the Dart BibleBookMapper class.
 
 import json
 import re
+import sys
+import argparse
 from pathlib import Path
 from typing import Dict, List, Set, Tuple, Optional
 
@@ -224,12 +226,8 @@ class BiblicalReferenceChecker:
 
     def check_questions_file(self, json_file_path: str) -> Dict:
         """Check all questions in the JSON file"""
-        print(f"Reading questions from: {json_file_path}")
-        
         with open(json_file_path, 'r', encoding='utf-8') as f:
             questions = json.load(f)
-        
-        print(f"Found {len(questions)} questions to check")
         
         valid_count = 0
         invalid_count = 0
@@ -269,44 +267,26 @@ class BiblicalReferenceChecker:
         
         return self.results
 
-    def print_results(self):
-        """Print detailed results"""
+    def print_stats(self):
+        """Print just the statistics"""
         stats = self.results['statistics']
+        print(f"Invalid: {stats['invalid_references']}")
+        print(f"Valid: {stats['valid_references']}")
+        print(f"No reference: {stats['no_references']}")
+
+    def print_results(self, show_valid=False, show_invalid=False, show_no_reference=False):
+        """Print detailed results based on flags"""
+        if show_valid:
+            for ref in self.results['valid_references']:
+                print(ref['id'])
         
-        print("\n" + "="*60)
-        print("BIBLICAL REFERENCES VALIDATION REPORT")
-        print("="*60)
-        print(f"Total questions: {stats['total_questions']}")
-        print(f"Questions with biblical references: {stats['questions_with_references']}")
-        print(f"Valid references: {stats['valid_references']}")
-        print(f"Invalid references: {stats['invalid_references']}")
-        print(f"Questions without references: {stats['no_references']}")
-        
-        if self.results['valid_references']:
-            print(f"\n✓ VALID REFERENCES ({len(self.results['valid_references'])}):")
-            print("-" * 40)
-            for ref in self.results['valid_references'][:10]:  # Show first 10
-                books = ', '.join([f"{book['original']} (→ {book['dart_format']})" for book in ref['books']])
-                print(f"  {ref['id']}: {ref['reference']}")
-                print(f"    Books: {books}")
-            if len(self.results['valid_references']) > 10:
-                print(f"    ... and {len(self.results['valid_references']) - 10} more")
-        
-        if self.results['invalid_references']:
-            print(f"\n✗ INVALID REFERENCES ({len(self.results['invalid_references'])}):")
-            print("-" * 40)
+        if show_invalid:
             for ref in self.results['invalid_references']:
-                books = ', '.join([f"{book['original']} (→ {book['normalized']})" for book in ref['books']])
-                print(f"  {ref['id']}: {ref['reference']}")
-                print(f"    Unrecognized books: {books}")
+                print(ref['id'])
         
-        if self.results['no_reference']:
-            print(f"\n- NO REFERENCES ({len(self.results['no_reference'])}):")
-            print("-" * 40)
-            for ref in self.results['no_reference'][:5]:  # Show first 5
-                print(f"  {ref['id']}: {ref['reference']}")
-            if len(self.results['no_reference']) > 5:
-                print(f"    ... and {len(self.results['no_reference']) - 5} more")
+        if show_no_reference:
+            for ref in self.results['no_reference']:
+                print(ref['id'])
 
     def print_summary(self):
         """Print just the summary"""
@@ -328,33 +308,39 @@ class BiblicalReferenceChecker:
 
 def main():
     """Main function"""
+    parser = argparse.ArgumentParser(description='Check biblical references against BibleBookMapper')
+    parser.add_argument('--invalid', action='store_true', help='Show all question IDs with invalid references')
+    parser.add_argument('--valid', action='store_true', help='Show all question IDs with valid references')
+    parser.add_argument('--no-reference', action='store_true', help='Show all question IDs without references')
+    args = parser.parse_args()
+    
     # Paths
     base_dir = Path(__file__).parent.parent
     questions_file = base_dir / "app/assets/questions-nl-sv.json"
     mapper_file = base_dir / "app/lib/utils/bible_book_mapper.dart"
     
-    print("Biblical Reference Checker")
-    print("=" * 40)
-    
     # Check if files exist
     if not questions_file.exists():
-        print(f"❌ Questions file not found: {questions_file}")
+        print(f"❌ Questions file not found: {questions_file}", file=sys.stderr)
         return 1
     
     if not mapper_file.exists():
-        print(f"❌ Mapper file not found: {mapper_file}")
+        print(f"❌ Mapper file not found: {mapper_file}", file=sys.stderr)
         return 1
-    
-    print(f"✓ Questions file: {questions_file}")
-    print(f"✓ Mapper file: {mapper_file}")
     
     # Run check
     checker = BiblicalReferenceChecker()
     results = checker.check_questions_file(str(questions_file))
     
-    # Print results
-    checker.print_results()
-    checker.print_summary()
+    # Print detailed results if flags are provided, otherwise print stats
+    if args.invalid or args.valid or args.no_reference:
+        checker.print_results(
+            show_valid=args.valid,
+            show_invalid=args.invalid,
+            show_no_reference=args.no_reference
+        )
+    else:
+        checker.print_stats()
     
     # Return appropriate exit code
     return 0 if results['statistics']['invalid_references'] == 0 else 1
