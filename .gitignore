@@ -83,14 +83,6 @@ unlinked_spec.ds
 version
 analysis_benchmark.json
 
-# Flutter web specific
-flutter_service_worker.js
-flutter.js
-main.dart.js
-version.json
-index.html
-canvaskit/
-
 # Flutter miscellaneous
 *.class
 *.lock
