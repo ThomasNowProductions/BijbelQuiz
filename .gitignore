@@ -294,10 +294,6 @@ app.*.symbols
 !/websites/**/android/app/build/
 !/websites/**/ios/Flutter/.last_build_id
 
-# Don't ignore anything in play.bijbelquiz.app website, except for .env files
-!/websites/play.bijbelquiz.app/**
-/websites/play.bijbelquiz.app/.env*
-
 # ==============================================================================
 # EXCEPTIONS TO ABOVE RULES
 # ==============================================================================
