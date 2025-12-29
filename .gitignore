@@ -126,6 +126,8 @@ bijbelquiz-release-key.jks
 # Windows
 **/windows/flutter/generated_plugin_registrant.*
 **/windows/flutter/generated_plugins.cmake
+**/windows/flutter/ephemeral/
+**/windows/flutter/.plugin_symlinks/
 
 # Linux
 **/linux/flutter/generated_plugin_registrant.cc
