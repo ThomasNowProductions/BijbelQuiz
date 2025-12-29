@@ -40,7 +40,7 @@ def write_file(path: Path, content: str) -> None:
 # The script lives in <repo_root>/scripts/, so the repo root is its parent.
 REPO_ROOT = Path(__file__).resolve().parent.parent
 APP_ROOT = REPO_ROOT / "app"
-WEB_ROOT = REPO_ROOT / "websites"
+WEB_ROOT = REPO_ROOT / "website"
 
 # ---------- 1️⃣ Update pubspec.yaml (bump version & build number) ----------
 
@@ -82,7 +82,7 @@ def update_build_gradle(new_version: str) -> int:
 # ---------- 3️⃣ Update download.html ----------
 
 def update_download_html(new_version: str) -> None:
-    html_path = WEB_ROOT / "bijbelquiz.app" / "download.html"
+    html_path = WEB_ROOT / "download.html"
     if not html_path.exists():
         raise RuntimeError(f"download.html not found at {html_path}")
     content = read_file(html_path)
