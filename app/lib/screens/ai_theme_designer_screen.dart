@@ -69,7 +69,8 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
 
   /// Navigates to the auth screen for authentication.
   void _navigateToAuthScreen() {
-    final analyticsService = Provider.of<AnalyticsService>(context, listen: false);
+    final analyticsService =
+        Provider.of<AnalyticsService>(context, listen: false);
     analyticsService.capture(context, 'open_auth_screen_from_ai_theme');
 
     Navigator.of(context).pushReplacement(
@@ -79,7 +80,8 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
           onLoginSuccess: () {
             Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
-                  builder: (_) => MainNavigationScreen(initialIndex: 3)), // Index 3 for AI theme screen
+                  builder: (_) => MainNavigationScreen(
+                      initialIndex: 3)), // Index 3 for AI theme screen
               (route) => false,
             );
           },
@@ -440,26 +442,18 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
-                  ),
-                  child: _isLoadingCost
-                      ? Text(
-                          'Laden...',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: colorScheme.onPrimary.withValues(alpha: 0.7),
-                          ),
-                        )
-                      : Text(
-                          _isGenerating
-                              ? 'Aan het genereren...'
-                              : 'Genereer Thema',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: colorScheme.onPrimary,
-                          ),
+                    textStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
                         ),
+                  ),
+                  child: Text(
+                    _isLoadingCost
+                        ? 'Laden...'
+                        : _isGenerating
+                            ? 'Aan het genereren...'
+                            : 'Genereer Thema',
+                  ),
                 ),
               ),
             ],
