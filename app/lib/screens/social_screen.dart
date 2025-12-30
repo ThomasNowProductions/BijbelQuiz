@@ -325,7 +325,7 @@ class _SocialScreenState extends State<SocialScreen> {
       width: double.infinity,
       margin: EdgeInsets.zero,
       decoration: BoxDecoration(
-        color: colorScheme.surface,
+        color: colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
