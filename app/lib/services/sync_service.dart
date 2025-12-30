@@ -40,6 +40,9 @@ class SyncService {
   final Map<String, Function(String, String)> _errorCallbacks = {};
   final Map<String, Function(String)> _successCallbacks = {};
 
+  // Profile creation concurrency protection
+  final Map<String, bool> _profileCreationInProgress = {};
+
   /// Public getter for connection status
   bool get isConnected => _connectionService.isConnected;
 
@@ -151,6 +154,9 @@ class SyncService {
     // Reset sync state
     _syncInProgress.clear();
     _realtimeUpdateInProgress.clear();
+
+    // Clear profile creation in-progress flags
+    _profileCreationInProgress.clear();
 
     // Clear all listeners to prevent cross-user contamination
     _listeners.clear();
@@ -603,7 +609,18 @@ class SyncService {
   Future<Map<String, dynamic>?> getCurrentUserProfile() async {
     if (_currentUserId == null) return null;
 
+    // Concurrency protection: if profile creation is already in progress for this user,
+    // return null to avoid race condition (will retry on next call)
+    if (_profileCreationInProgress[_currentUserId!] == true) {
+      AppLogger.debug(
+          'Profile creation already in progress for user: $_currentUserId, skipping');
+      return null;
+    }
+
     try {
+      // Mark profile creation as in progress
+      _profileCreationInProgress[_currentUserId!] = true;
+
       // First try to get existing profile
       final response = await _client
           .from('user_profiles')
@@ -640,8 +657,38 @@ class SyncService {
       AppLogger.info('Created default user profile for user: $_currentUserId');
       return newProfile;
     } catch (e) {
+      // Handle unique constraint violation - this means another concurrent request
+      // already created the profile, which is actually fine
+      if (e.toString().contains('23505') ||
+          e.toString().contains('42501') ||
+          e.toString().toLowerCase().contains('unique') ||
+          e.toString().toLowerCase().contains('duplicate') ||
+          e.toString().toLowerCase().contains('violates unique constraint')) {
+        AppLogger.info(
+            'Profile already created by concurrent request for user: $_currentUserId');
+        // Try to fetch the profile that was created by the other request
+        try {
+          final response = await _client
+              .from('user_profiles')
+              .select()
+              .eq('user_id', _currentUserId!)
+              .maybeSingle();
+          return response;
+        } catch (fetchError) {
+          AppLogger.error(
+              'Failed to fetch profile after concurrent creation', fetchError);
+          return null;
+        }
+      }
+
+      // Log other errors
       AppLogger.error('Failed to get current user profile', e);
       return null;
+    } finally {
+      // Always clear the in-progress flag
+      if (_currentUserId != null) {
+        _profileCreationInProgress[_currentUserId!] = false;
+      }
     }
   }
 }

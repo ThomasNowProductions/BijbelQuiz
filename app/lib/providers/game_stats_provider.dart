@@ -25,6 +25,7 @@ class GameStatsProvider extends ChangeNotifier {
   int _incorrectAnswers = 0;
   bool _isLoading = true;
   String? _error;
+  bool _syncListenerSetup = false;
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   void Function(String message)? onError;
   SyncService get syncService => SyncService.instance;
@@ -592,6 +593,11 @@ class GameStatsProvider extends ChangeNotifier {
 
   /// Sets up sync listener
   void setupSyncListener() {
+    if (_syncListenerSetup) {
+      AppLogger.debug('Game stats sync listener already set up, skipping');
+      return;
+    }
+    _syncListenerSetup = true;
     AppLogger.info('Setting up game stats sync listener');
     syncService.addListener('game_stats', (data) {
       AppLogger.info(
@@ -611,6 +617,7 @@ class GameStatsProvider extends ChangeNotifier {
   void dispose() {
     // Remove sync listeners to prevent memory leaks
     syncService.removeListener('game_stats');
+    _syncListenerSetup = false;
     AppLogger.debug('GameStatsProvider disposed - listeners cleaned up');
     super.dispose();
   }

@@ -60,6 +60,7 @@ class SettingsProvider extends ChangeNotifier {
   bool _isLoading = true;
   String? _error;
   String? _selectedCustomThemeKey;
+  bool _syncListenerSetup = false;
   Set<String> _unlockedThemes = {};
   final Map<String, AITheme> _aiThemes = {};
 
@@ -1152,6 +1153,11 @@ class SettingsProvider extends ChangeNotifier {
 
   /// Sets up sync listener
   void setupSyncListener() {
+    if (_syncListenerSetup) {
+      AppLogger.debug('Settings sync listener already set up, skipping');
+      return;
+    }
+    _syncListenerSetup = true;
     syncService.addListener('settings', (data) {
       loadImportData(data);
     });
@@ -1162,6 +1168,7 @@ class SettingsProvider extends ChangeNotifier {
   void dispose() {
     // Remove sync listeners to prevent memory leaks
     syncService.removeListener('settings');
+    _syncListenerSetup = false;
     AppLogger.debug('SettingsProvider disposed - listeners cleaned up');
     super.dispose();
   }

@@ -29,6 +29,12 @@ class NotificationService {
       return;
     }
 
+    if (Platform.isLinux) {
+      AppLogger.info('Linux platform detected - notifications not available');
+      _initialized = false;
+      return;
+    }
+
     try {
       AppLogger.info('Initializing NotificationService...');
 

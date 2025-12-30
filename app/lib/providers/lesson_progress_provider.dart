@@ -17,8 +17,9 @@ class LessonProgressProvider extends ChangeNotifier {
   SharedPreferences? _prefs;
   bool _isLoading = true;
   String? _error;
+  bool _syncListenerSetup = false;
 
-  /// Number of lessons unlocked from the start (sequential from index 0)
+  /// Number of lessons unlocked from start (sequential from index 0)
   int _unlockedCount = 1;
 
   /// Map: lessonId -> bestStars (0..3)
@@ -56,7 +57,8 @@ class LessonProgressProvider extends ChangeNotifier {
     Supabase.instance.client.auth.onAuthStateChange.listen((event) {
       final session = event.session;
       if (session?.user != null) {
-        AppLogger.info('User signed in (LessonProgressProvider), reloading data...');
+        AppLogger.info(
+            'User signed in (LessonProgressProvider), reloading data...');
         // Small delay to ensure SyncService has processed the user update
         Future.delayed(const Duration(milliseconds: 500), () {
           _load();
@@ -89,19 +91,22 @@ class LessonProgressProvider extends ChangeNotifier {
       if (syncService.isAuthenticated) {
         AppLogger.info('User authenticated, fetching synced data from server');
         final allData = await syncService.fetchAllData();
-        
+
         if (allData != null && allData.containsKey('lesson_progress')) {
           final syncedData = allData['lesson_progress'];
-          AppLogger.info('Found synced lesson progress, merging with local data');
-          
+          AppLogger.info(
+              'Found synced lesson progress, merging with local data');
+
           if (syncedData != null) {
             // Merge: take maximum unlocked count and best stars
-            final syncedUnlockedCount = syncedData['unlockedCount'] as int? ?? 1;
+            final syncedUnlockedCount =
+                syncedData['unlockedCount'] as int? ?? 1;
             if (syncedUnlockedCount > _unlockedCount) {
               _unlockedCount = syncedUnlockedCount;
             }
 
-            final syncedBestStars = Map<String, int>.from(syncedData['bestStarsByLesson'] ?? {});
+            final syncedBestStars =
+                Map<String, int>.from(syncedData['bestStarsByLesson'] ?? {});
             syncedBestStars.forEach((lessonId, stars) {
               final currentStars = _bestStarsByLesson[lessonId] ?? 0;
               if (stars > currentStars) {
@@ -111,7 +116,8 @@ class LessonProgressProvider extends ChangeNotifier {
 
             // Save merged data
             await _persist();
-            AppLogger.info('Merged lesson progress: unlocked $_unlockedCount, stars for ${_bestStarsByLesson.length} lessons');
+            AppLogger.info(
+                'Merged lesson progress: unlocked $_unlockedCount, stars for ${_bestStarsByLesson.length} lessons');
           }
         }
       }
@@ -159,7 +165,7 @@ class LessonProgressProvider extends ChangeNotifier {
 
     await _persist();
     notifyListeners();
-    
+
     // Trigger sync
     triggerSync();
   }
@@ -179,7 +185,7 @@ class LessonProgressProvider extends ChangeNotifier {
     _bestStarsByLesson.clear();
     await _persist();
     notifyListeners();
-    
+
     // Trigger sync
     triggerSync();
   }
@@ -218,11 +224,17 @@ class LessonProgressProvider extends ChangeNotifier {
 
     await _persist();
     notifyListeners();
-    AppLogger.info('Loaded synced lesson progress: unlocked $_unlockedCount (was $oldUnlockedCount)');
+    AppLogger.info(
+        'Loaded synced lesson progress: unlocked $_unlockedCount (was $oldUnlockedCount)');
   }
 
   /// Sets up sync listener
   void setupSyncListener() {
+    if (_syncListenerSetup) {
+      AppLogger.debug('Lesson progress sync listener already set up, skipping');
+      return;
+    }
+    _syncListenerSetup = true;
     AppLogger.info('Setting up lesson progress sync listener');
     syncService.addListener('lesson_progress', (data) {
       AppLogger.info('Received synced lesson progress update');
@@ -241,6 +253,7 @@ class LessonProgressProvider extends ChangeNotifier {
   void dispose() {
     // Remove sync listeners to prevent memory leaks
     syncService.removeListener('lesson_progress');
+    _syncListenerSetup = false;
     AppLogger.debug('LessonProgressProvider disposed - listeners cleaned up');
     super.dispose();
   }

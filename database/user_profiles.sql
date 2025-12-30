@@ -26,7 +26,7 @@ CREATE POLICY "Users can update their own non-deleted profile" ON user_profiles
     FOR UPDATE USING ((select auth.uid()) = user_id AND deleted_at IS NULL);
 
 CREATE POLICY "Users can insert their own profile" ON user_profiles
-    FOR INSERT WITH CHECK ((select auth.uid()) = user_id);
+    FOR INSERT WITH CHECK (auth.uid() IS NOT NULL AND auth.uid() = user_id AND deleted_at IS NULL);
 
 -- Allow users to "soft delete" their own profile
 CREATE POLICY "Users can soft delete their own profile" ON user_profiles

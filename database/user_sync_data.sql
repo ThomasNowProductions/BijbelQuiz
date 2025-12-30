@@ -32,6 +32,10 @@ CREATE TRIGGER update_user_sync_data_updated_at
     BEFORE UPDATE ON user_sync_data
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
+-- Enable Realtime for this table to allow real-time sync subscriptions
+-- This fixes: "Unable to subscribe to changes with given parameters"
+ALTER PUBLICATION supabase_realtime ADD TABLE user_sync_data;
+
 -- Create devices table for tracking user devices
 CREATE TABLE IF NOT EXISTS user_devices (
     device_id TEXT PRIMARY KEY,
