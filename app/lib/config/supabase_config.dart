@@ -19,7 +19,7 @@ class SupabaseConfig {
     AppLogger.info('Loading Supabase environment variables...');
     final envLoadStart = DateTime.now();
     final url = dotenv.env['SUPABASE_URL'];
-    final supabaseAnonKey = dotenv.env['SUPABASE_ANON_KEY'];
+    final supabasePublishableKey = dotenv.env['SUPABASE_PUBLISHABLE_KEY'];
     final envLoadDuration = DateTime.now().difference(envLoadStart);
     AppLogger.info(
         'Supabase environment variables loaded in ${envLoadDuration.inMilliseconds}ms');
@@ -33,9 +33,11 @@ class SupabaseConfig {
 
     SupabaseConfig.supabaseUrl = url;
 
-    if (supabaseAnonKey == null || supabaseAnonKey.isEmpty) {
-      AppLogger.error('SUPABASE_ANON_KEY environment variable is not set');
-      throw Exception('SUPABASE_ANON_KEY environment variable is not set');
+    if (supabasePublishableKey == null || supabasePublishableKey.isEmpty) {
+      AppLogger.error(
+          'SUPABASE_PUBLISHABLE_KEY environment variable is not set');
+      throw Exception(
+          'SUPABASE_PUBLISHABLE_KEY environment variable is not set');
     }
 
     AppLogger.info('Supabase configuration validated successfully');
@@ -45,7 +47,7 @@ class SupabaseConfig {
     final supabaseClientInitStart = DateTime.now();
     await Supabase.initialize(
       url: url,
-      anonKey: supabaseAnonKey,
+      anonKey: supabasePublishableKey,
     );
     final supabaseClientInitDuration =
         DateTime.now().difference(supabaseClientInitStart);
