@@ -24,6 +24,25 @@ import '../widgets/lesson_skeleton.dart';
 import '../widgets/promo_card.dart';
 import '../utils/streak_calculator.dart' as streak_utils;
 
+enum PromoType { donation, satisfaction, difficulty, accountCreation, follow }
+
+extension PromoTypeExtension on PromoType {
+  String get analyticsName {
+    switch (this) {
+      case PromoType.donation:
+        return 'donation';
+      case PromoType.satisfaction:
+        return 'satisfaction';
+      case PromoType.difficulty:
+        return 'difficulty';
+      case PromoType.accountCreation:
+        return 'account_creation';
+      case PromoType.follow:
+        return 'follow';
+    }
+  }
+}
+
 class LessonSelectScreen extends StatefulWidget {
   const LessonSelectScreen({super.key});
 
@@ -59,13 +78,8 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
   /// Whether to show the promotional card
   bool _showPromoCard = false;
 
-  /// Which type of promo to show
-  bool _isDonationPromo = true; // true for donation, false for follow
-  bool _isSatisfactionPromo = false; // true for satisfaction survey
-  bool _isDifficultyPromo = false; // true for difficulty feedback
-  bool _isAccountCreationPromo = false; // true for account creation
-  String? _socialMediaType; // for individual social media popups
-  // Search and filters removed for simplified UI
+  /// Current promo type to display
+  PromoType? _currentPromoType;
 
   // Daily usage streak tracking (persisted locally)
   static const String _activeDaysKey = 'daily_active_days_v1';
@@ -326,55 +340,10 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
       if (mounted && !append) {
         setState(() {
           _isLoading = false;
-          // Show promo card with new logic for different popup types
           _showPromoCard = _shouldShowPromoCard(settings);
           if (_showPromoCard) {
-            // Check if user is not logged in - always show account creation promo
-            final isLoggedIn =
-                Supabase.instance.client.auth.currentUser != null;
-            if (!isLoggedIn) {
-              _isDonationPromo = false;
-              _isSatisfactionPromo = false;
-              _isDifficultyPromo = false;
-              _isAccountCreationPromo = true;
-              _socialMediaType = null;
-            } else {
-              // For logged-in users, determine which type of promo to show
-              final rand = Random().nextDouble();
-              if (rand < 0.125) {
-                _isDonationPromo = true;
-                _isSatisfactionPromo = false;
-                _isDifficultyPromo = false;
-                _isAccountCreationPromo = false;
-                _socialMediaType = null;
-              } else if (rand < 0.25) {
-                _isDonationPromo = false;
-                _isSatisfactionPromo = false;
-                _isDifficultyPromo = true;
-                _isAccountCreationPromo = false;
-                _socialMediaType = null;
-              } else if (rand < 0.375) {
-                _isDonationPromo = false;
-                _isSatisfactionPromo = true;
-                _isDifficultyPromo = false;
-                _isAccountCreationPromo = false;
-                _socialMediaType = null;
-              } else {
-                _isDonationPromo = false;
-                _isSatisfactionPromo = false;
-                _isDifficultyPromo = false;
-                _isAccountCreationPromo = false;
-                _socialMediaType = 'follow';
-              }
-            }
-            Provider.of<AnalyticsService>(context, listen: false)
-                .capture(context, 'show_promo_card', properties: {
-              'is_donation': _isDonationPromo,
-              'is_satisfaction': _isSatisfactionPromo,
-              'is_difficulty': _isDifficultyPromo,
-              'is_account_creation': _isAccountCreationPromo,
-              'social_media_type': _socialMediaType ?? '',
-            });
+            _currentPromoType = _determinePromoType();
+            _trackPromoCardShown();
           }
         });
       }
@@ -442,6 +411,139 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
     final nextAllowed =
         DateTime(lastPopup.year, lastPopup.month + 1, 1); // First of next month
     return now.isBefore(nextAllowed);
+  }
+
+  PromoType _determinePromoType() {
+    final isLoggedIn = Supabase.instance.client.auth.currentUser != null;
+    if (!isLoggedIn) {
+      return PromoType.accountCreation;
+    }
+
+    final rand = Random().nextDouble();
+    if (rand < 0.125) return PromoType.donation;
+    if (rand < 0.25) return PromoType.difficulty;
+    if (rand < 0.375) return PromoType.satisfaction;
+    return PromoType.follow;
+  }
+
+  void _trackPromoCardShown() {
+    Provider.of<AnalyticsService>(context, listen: false)
+        .capture(context, 'show_promo_card', properties: {
+      'promo_type': _currentPromoType?.analyticsName ?? '',
+    });
+  }
+
+  void _onPromoDismissed() {
+    final analyticsService =
+        Provider.of<AnalyticsService>(context, listen: false);
+    analyticsService.capture(context, 'dismiss_promo_card');
+    analyticsService.trackFeatureDismissal(
+        context, AnalyticsService.featurePromoCards,
+        additionalProperties: {
+          'promo_type': _currentPromoType?.analyticsName ?? '',
+        });
+    setState(() {
+      _showPromoCard = false;
+    });
+  }
+
+  void _onPromoViewed() {
+    Provider.of<AnalyticsService>(context, listen: false).trackFeatureUsage(
+        context,
+        AnalyticsService.featurePromoCards,
+        AnalyticsService.actionAccessed,
+        additionalProperties: {
+          'promo_type': _currentPromoType?.analyticsName ?? '',
+        });
+  }
+
+  Future<void> _onPromoAction(String action) async {
+    switch (_currentPromoType) {
+      case PromoType.donation:
+        await _handleDonationAction();
+        break;
+      case PromoType.satisfaction:
+        await _handleSatisfactionAction();
+        break;
+      case PromoType.difficulty:
+        await _handleDifficultyAction(action);
+        break;
+      case PromoType.accountCreation:
+        await _handleAccountCreationAction();
+        break;
+      case PromoType.follow:
+        await _handleFollowAction(action);
+        break;
+      case null:
+        break;
+    }
+  }
+
+  Future<void> _handleDonationAction() async {
+    final analyticsService =
+        Provider.of<AnalyticsService>(context, listen: false);
+    analyticsService.capture(context, 'tap_donation_promo');
+    analyticsService.trackFeatureSuccess(
+        context, AnalyticsService.featureDonationSystem);
+    final settings = Provider.of<SettingsProvider>(context, listen: false);
+    await settings.markDonationLinkAsClicked();
+    await settings.updateLastDonationPopup();
+    _openDonationPage();
+  }
+
+  Future<void> _handleSatisfactionAction() async {
+    final analyticsService =
+        Provider.of<AnalyticsService>(context, listen: false);
+    analyticsService.capture(context, 'tap_satisfaction_promo');
+    analyticsService.trackFeatureSuccess(
+        context, AnalyticsService.featureSatisfactionSurveys);
+    final settings = Provider.of<SettingsProvider>(context, listen: false);
+    await settings.markSatisfactionLinkAsClicked();
+    await settings.updateLastSatisfactionPopup();
+    _launchUrl(AppUrls.satisfactionSurveyUrl);
+  }
+
+  Future<void> _handleDifficultyAction(String feedback) async {
+    final analyticsService =
+        Provider.of<AnalyticsService>(context, listen: false);
+    analyticsService.capture(context, 'tap_difficulty_feedback',
+        properties: {'feedback': feedback});
+    analyticsService.trackFeatureSuccess(
+        context, AnalyticsService.featureDifficultyFeedback,
+        additionalProperties: {'feedback_type': feedback});
+    final settings = Provider.of<SettingsProvider>(context, listen: false);
+    await settings.markDifficultyLinkAsClicked();
+    await settings.updateLastDifficultyPopup();
+
+    if (feedback == 'too_hard' ||
+        feedback == 'too_easy' ||
+        feedback == 'good') {
+      await _adjustDifficulty(feedback);
+    }
+
+    setState(() {
+      _showPromoCard = false;
+    });
+  }
+
+  Future<void> _handleAccountCreationAction() async {
+    final analyticsService =
+        Provider.of<AnalyticsService>(context, listen: false);
+    analyticsService.capture(context, 'tap_create_account_promo');
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const SocialScreen(),
+      ),
+    );
+  }
+
+  Future<void> _handleFollowAction(String url) async {
+    Provider.of<AnalyticsService>(context, listen: false)
+        .capture(context, 'tap_follow_promo', properties: {'url': url});
+    final settings = Provider.of<SettingsProvider>(context, listen: false);
+    await settings.markFollowLinkAsClicked();
+    await settings.updateLastFollowPopup();
+    _launchUrl(url);
   }
 
   Future<void> _launchUrl(String url) async {
@@ -561,160 +663,53 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
       );
     }
 
-    if (_showSkeletons) {
-      switch (layoutType) {
-        case SettingsProvider.layoutList:
-          // List view layout with skeletons
-          return SliverPadding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-            sliver: SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  return Container(
-                    height: 120, // Fixed height for list items
-                    margin: const EdgeInsets.only(bottom: 8.0),
-                    child: RepaintBoundary(
-                      child: createSkeletonTile(index),
-                    ),
-                  );
-                },
-                childCount: 10, // Show 10 skeleton items
-                addAutomaticKeepAlives: false,
-                addSemanticIndexes: false,
-                addRepaintBoundaries: true,
-              ),
-            ),
+    final isList = layoutType == SettingsProvider.layoutList;
+    final isCompactGrid = layoutType == SettingsProvider.layoutCompactGrid;
+    final childCount =
+        _showSkeletons ? (isList ? 10 : 12) : filteredIndices.length;
+    final maxExtent = isCompactGrid ? tileMaxExtent * 0.8 : tileMaxExtent;
+    final spacing = isCompactGrid ? 10.0 : 14.0;
+    final aspect = isCompactGrid ? gridAspect * 0.9 : gridAspect;
+
+    final delegate = SliverChildBuilderDelegate(
+      (context, index) {
+        final child = _showSkeletons
+            ? createSkeletonTile(index)
+            : RepaintBoundary(child: createLessonTile(index));
+        if (isList) {
+          return Container(
+            height: 120,
+            margin: const EdgeInsets.only(bottom: 8.0),
+            child: child,
           );
-        case SettingsProvider.layoutCompactGrid:
-          // Compact grid layout with skeletons
-          return SliverPadding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-            sliver: SliverGrid(
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: tileMaxExtent * 0.8, // 80% of normal size
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-                childAspectRatio: gridAspect * 0.9, // Slightly more square
-              ),
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  return RepaintBoundary(
-                    child: createSkeletonTile(index),
-                  );
-                },
-                childCount: 12, // Show 12 skeleton items for compact grid
-                addAutomaticKeepAlives: false,
-                addSemanticIndexes: false,
-                addRepaintBoundaries: true,
-              ),
-            ),
-          );
-        case SettingsProvider.layoutGrid:
-        default:
-          // Original grid layout with skeletons
-          return SliverPadding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-            sliver: SliverGrid(
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: tileMaxExtent,
-                mainAxisSpacing: 14,
-                crossAxisSpacing: 14,
-                childAspectRatio: gridAspect,
-              ),
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  return RepaintBoundary(
-                    child: createSkeletonTile(index),
-                  );
-                },
-                childCount: 12, // Show 12 skeleton items for grid
-                addAutomaticKeepAlives: false,
-                addSemanticIndexes: false,
-                addRepaintBoundaries: true,
-              ),
-            ),
-          );
-      }
+        }
+        return child;
+      },
+      childCount: childCount,
+      addAutomaticKeepAlives: false,
+      addSemanticIndexes: false,
+      addRepaintBoundaries: true,
+    );
+
+    if (isList) {
+      return SliverPadding(
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+        sliver: SliverList(delegate: delegate),
+      );
     }
 
-    switch (layoutType) {
-      case SettingsProvider.layoutList:
-        // List view layout
-        return SliverPadding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-          sliver: SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return Container(
-                  height: 120, // Fixed height for list items
-                  margin: const EdgeInsets.only(bottom: 8.0),
-                  child: RepaintBoundary(
-                    child: createLessonTile(index),
-                  ),
-                );
-              },
-              childCount: filteredIndices.length,
-              // Performance: disable keep-alives and semantic indexes for list items.
-              addAutomaticKeepAlives: false,
-              addSemanticIndexes: false,
-              addRepaintBoundaries: true,
-            ),
-          ),
-        );
-      case SettingsProvider.layoutCompactGrid:
-        // Compact grid layout with smaller tiles
-        return SliverPadding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-          sliver: SliverGrid(
-            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: tileMaxExtent * 0.8, // 80% of normal size
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-              childAspectRatio: gridAspect * 0.9, // Slightly more square
-            ),
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return RepaintBoundary(
-                  child: createLessonTile(index),
-                );
-              },
-              childCount: filteredIndices.length,
-              // Performance: disable keep-alives and semantic indexes for grid items.
-              // The grid lazily builds children and does not need to keep offscreen items alive.
-              addAutomaticKeepAlives: false,
-              addSemanticIndexes: false,
-              addRepaintBoundaries: true,
-            ),
-          ),
-        );
-      case SettingsProvider.layoutGrid:
-      default:
-        // Original grid layout - Optimized to avoid SliverLayoutBuilder where not needed
-        return SliverPadding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-          sliver: SliverGrid(
-            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: tileMaxExtent,
-              mainAxisSpacing: 14,
-              crossAxisSpacing: 14,
-              childAspectRatio: gridAspect,
-            ),
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return RepaintBoundary(
-                  child: createLessonTile(index),
-                );
-              },
-              childCount: filteredIndices.length,
-              // Performance: disable keep-alives and semantic indexes for grid items.
-              // The grid lazily builds children and does not need to keep offscreen items alive.
-              addAutomaticKeepAlives: false,
-              addSemanticIndexes: false,
-              addRepaintBoundaries: true,
-            ),
-          ),
-        );
-    }
+    return SliverPadding(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+      sliver: SliverGrid(
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: maxExtent,
+          mainAxisSpacing: spacing,
+          crossAxisSpacing: spacing,
+          childAspectRatio: aspect,
+        ),
+        delegate: delegate,
+      ),
+    );
   }
 
   @override
@@ -841,7 +836,6 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                         physics:
                             const BouncingScrollPhysics(), // Add bouncing physics for snappy feel
                         slivers: [
-                          // Promo card (if shown)
                           if (_showPromoCard)
                             SliverToBoxAdapter(
                               child: Padding(
@@ -849,159 +843,21 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
                                     const EdgeInsets.fromLTRB(16, 16, 16, 8),
                                 child: RepaintBoundary(
                                   child: PromoCard(
-                                    isDonation: _isDonationPromo,
-                                    isSatisfaction: _isSatisfactionPromo,
-                                    isDifficulty: _isDifficultyPromo,
-                                    isAccountCreation: _isAccountCreationPromo,
-                                    socialMediaType: _socialMediaType,
-                                    onDismiss: () {
-                                      final analyticsService =
-                                          Provider.of<AnalyticsService>(context,
-                                              listen: false);
-                                      analyticsService.capture(
-                                          context, 'dismiss_promo_card');
-                                      analyticsService.trackFeatureDismissal(
-                                          context,
-                                          AnalyticsService.featurePromoCards,
-                                          additionalProperties: {
-                                            'promo_type': _isDonationPromo
-                                                ? 'donation'
-                                                : (_isSatisfactionPromo
-                                                    ? 'satisfaction'
-                                                    : (_isDifficultyPromo
-                                                        ? 'difficulty'
-                                                        : (_isAccountCreationPromo
-                                                            ? 'account_creation'
-                                                            : (_socialMediaType ??
-                                                                'follow')))),
-                                          });
-                                      setState(() {
-                                        _showPromoCard = false;
-                                      });
-                                    },
-                                    onView: () {
-                                      // Track promo card view
-                                      final analyticsService =
-                                          Provider.of<AnalyticsService>(context,
-                                              listen: false);
-                                      analyticsService.trackFeatureUsage(
-                                          context,
-                                          AnalyticsService.featurePromoCards,
-                                          AnalyticsService.actionAccessed,
-                                          additionalProperties: {
-                                            'promo_type': _isDonationPromo
-                                                ? 'donation'
-                                                : (_isSatisfactionPromo
-                                                    ? 'satisfaction'
-                                                    : (_isDifficultyPromo
-                                                        ? 'difficulty'
-                                                        : (_isAccountCreationPromo
-                                                            ? 'account_creation'
-                                                            : (_socialMediaType ??
-                                                                'follow')))),
-                                          });
-                                    },
-                                    onAction: (url) async {
-                                      final settings =
-                                          Provider.of<SettingsProvider>(context,
-                                              listen: false);
-
-                                      if (_isDonationPromo) {
-                                        final analyticsService =
-                                            Provider.of<AnalyticsService>(
-                                                context,
-                                                listen: false);
-                                        analyticsService.capture(
-                                            context, 'tap_donation_promo');
-                                        analyticsService.trackFeatureSuccess(
-                                            context,
-                                            AnalyticsService
-                                                .featureDonationSystem);
-                                        await settings
-                                            .markDonationLinkAsClicked();
-                                        await settings
-                                            .updateLastDonationPopup();
-                                        _openDonationPage();
-                                      } else if (_isSatisfactionPromo) {
-                                        final analyticsService =
-                                            Provider.of<AnalyticsService>(
-                                                context,
-                                                listen: false);
-                                        analyticsService.capture(
-                                            context, 'tap_satisfaction_promo');
-                                        analyticsService.trackFeatureSuccess(
-                                            context,
-                                            AnalyticsService
-                                                .featureSatisfactionSurveys);
-                                        await settings
-                                            .markSatisfactionLinkAsClicked();
-                                        await settings
-                                            .updateLastSatisfactionPopup();
-                                        _launchUrl(
-                                            AppUrls.satisfactionSurveyUrl);
-                                      } else if (_isDifficultyPromo) {
-                                        // Handle difficulty feedback
-                                        final analyticsService =
-                                            Provider.of<AnalyticsService>(
-                                                context,
-                                                listen: false);
-                                        analyticsService.capture(
-                                            context, 'tap_difficulty_feedback',
-                                            properties: {'feedback': url});
-                                        analyticsService.trackFeatureSuccess(
-                                            context,
-                                            AnalyticsService
-                                                .featureDifficultyFeedback,
-                                            additionalProperties: {
-                                              'feedback_type': url
-                                            });
-                                        await settings
-                                            .markDifficultyLinkAsClicked();
-                                        await settings
-                                            .updateLastDifficultyPopup();
-
-                                        // Handle the different feedback options
-                                        if (url == 'too_hard') {
-                                          // User feels questions are too hard
-                                          await _adjustDifficulty('too_hard');
-                                        } else if (url == 'too_easy') {
-                                          // User feels questions are too easy
-                                          await _adjustDifficulty('too_easy');
-                                        } else if (url == 'good') {
-                                          // User feels questions are just right
-                                          await _adjustDifficulty('good');
-                                        }
-
-                                        // Hide the promo after action
-                                        setState(() {
-                                          _showPromoCard = false;
-                                        });
-                                      } else if (_isAccountCreationPromo) {
-                                        final analyticsService =
-                                            Provider.of<AnalyticsService>(
-                                                context,
-                                                listen: false);
-                                        analyticsService.capture(context,
-                                            'tap_create_account_promo');
-                                        // Navigate to social screen which will handle auth
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const SocialScreen(),
-                                          ),
-                                        );
-                                      } else {
-                                        Provider.of<AnalyticsService>(context,
-                                                listen: false)
-                                            .capture(
-                                                context, 'tap_follow_promo',
-                                                properties: {'url': url});
-                                        await settings
-                                            .markFollowLinkAsClicked();
-                                        await settings.updateLastFollowPopup();
-                                        _launchUrl(url);
-                                      }
-                                    },
+                                    isDonation:
+                                        _currentPromoType == PromoType.donation,
+                                    isSatisfaction: _currentPromoType ==
+                                        PromoType.satisfaction,
+                                    isDifficulty: _currentPromoType ==
+                                        PromoType.difficulty,
+                                    isAccountCreation: _currentPromoType ==
+                                        PromoType.accountCreation,
+                                    socialMediaType:
+                                        _currentPromoType == PromoType.follow
+                                            ? 'follow'
+                                            : null,
+                                    onDismiss: _onPromoDismissed,
+                                    onView: _onPromoViewed,
+                                    onAction: _onPromoAction,
                                   ),
                                 ),
                               ),
