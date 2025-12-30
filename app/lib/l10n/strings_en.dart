@@ -581,7 +581,7 @@ class AppStringsEn {
       "Share your BQID with others to start getting followers";
 
   // Messages
-  static const String noActiveMessages = 'No active messages';
+  static const String noActiveMessages = 'No messages';
   static const String noActiveMessagesSubtitle =
       'There are currently no messages to display';
   static const String errorLoadingMessages = 'Error loading messages';

@@ -1119,7 +1119,7 @@ class AppStrings {
   // Messages
   static String get noActiveMessages => _language == 'en'
       ? AppStringsEn.noActiveMessages
-      : 'Geen actieve berichten';
+      : 'Geen berichten';
   static String get noActiveMessagesSubtitle => _language == 'en'
       ? AppStringsEn.noActiveMessagesSubtitle
       : 'Er zijn momenteel geen berichten om weer te geven';
