@@ -50,9 +50,12 @@ class LessonSelectScreen extends StatefulWidget {
   State<LessonSelectScreen> createState() => _LessonSelectScreenState();
 }
 
-class _LessonSelectScreenState extends State<LessonSelectScreen> {
+class _LessonSelectScreenState extends State<LessonSelectScreen>
+    with SingleTickerProviderStateMixin {
   final LessonService _lessonService = LessonService();
   final ScrollController _scrollController = ScrollController();
+  late AnimationController _fadeController;
+  late Animation<double> _fadeAnimation;
 
   /// Whether lessons are currently loading for the first time
   bool _isInitialLoading = true;
@@ -92,13 +95,22 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
   @override
   void initState() {
     super.initState();
+    _fadeController = AnimationController(
+      duration: const Duration(milliseconds: 600),
+      vsync: this,
+    );
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _fadeController,
+        curve: Curves.easeOutCubic,
+      ),
+    );
+    _fadeController.forward();
+
     final analyticsService =
         Provider.of<AnalyticsService>(context, listen: false);
 
-    // Track screen view
     analyticsService.screen(context, 'LessonSelectScreen');
-
-    // Track lesson system access
     analyticsService.trackFeatureStart(
         context, AnalyticsService.featureLessonSystem);
 
@@ -107,7 +119,6 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
     _loadCachedLessons();
     _scrollController.addListener(_onScroll);
 
-    // Check if we need to show the guide screen (only once)
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _checkAndShowGuide();
     });
@@ -192,6 +203,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
   @override
   void dispose() {
     _scrollController.dispose();
+    _fadeController.dispose();
     super.dispose();
   }
 
@@ -765,23 +777,31 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: colorScheme.primary.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(10),
+                gradient: LinearGradient(
+                  colors: [
+                    colorScheme.primary.withValues(alpha: 0.15),
+                    colorScheme.primary.withValues(alpha: 0.05),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(
-                Icons.menu_book,
-                size: 20,
+                Icons.menu_book_rounded,
+                size: 22,
                 color: colorScheme.primary,
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: 14),
             Text(
               strings.AppStrings.lessons,
               style: textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w700,
-                color: colorScheme.onSurface.withValues(alpha: 0.7),
+                letterSpacing: -0.5,
+                color: colorScheme.onSurface,
               ),
             ),
           ],
@@ -790,128 +810,186 @@ class _LessonSelectScreenState extends State<LessonSelectScreen> {
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: true,
+        surfaceTintColor: colorScheme.surface,
       ),
       body: _isInitialLoading && _showSkeletons
           ? Center(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    Theme.of(context).colorScheme.primary,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: colorScheme.primary.withValues(alpha: 0.05),
+                      shape: BoxShape.circle,
+                    ),
+                    child: CircularProgressIndicator(
+                      strokeWidth: 3,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        colorScheme.primary,
+                      ),
+                    ),
                   ),
-                ),
+                  const SizedBox(height: 16),
+                  Text(
+                    strings.AppStrings.loading,
+                    style: textTheme.bodyMedium?.copyWith(
+                      color: colorScheme.onSurface.withValues(alpha: 0.6),
+                    ),
+                  ),
+                ],
               ),
             )
           : _error != null
               ? Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(_error!,
-                          style: textTheme.bodyLarge
-                              ?.copyWith(color: colorScheme.error)),
-                      const SizedBox(height: 12),
-                      ElevatedButton(
-                        onPressed: _loadLessons,
-                        child: Text(strings.AppStrings.tryAgain),
+                  child: Padding(
+                    padding: const EdgeInsets.all(32),
+                    child: Container(
+                      padding: const EdgeInsets.all(24),
+                      decoration: BoxDecoration(
+                        color:
+                            colorScheme.errorContainer.withValues(alpha: 0.5),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: colorScheme.error.withValues(alpha: 0.3),
+                          width: 1,
+                        ),
                       ),
-                    ],
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.error_outline_rounded,
+                            size: 48,
+                            color: colorScheme.error,
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            strings.AppStrings.couldNotLoadLessons,
+                            textAlign: TextAlign.center,
+                            style: textTheme.titleMedium?.copyWith(
+                              color: colorScheme.onSurface,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                          ElevatedButton.icon(
+                            onPressed: _loadLessons,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: colorScheme.error,
+                              foregroundColor: colorScheme.onError,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 24,
+                                vertical: 12,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            icon: const Icon(Icons.refresh_rounded),
+                            label: Text(strings.AppStrings.tryAgain),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 )
-              : LayoutBuilder(
-                  builder: (context, constraints) {
-                    final w = constraints.maxWidth;
-                    final h = constraints.maxHeight;
-                    // Guard against transient zero-sized viewport during lifecycle changes.
-                    if (!w.isFinite || !h.isFinite || w <= 0 || h <= 0) {
-                      return const SizedBox.shrink();
-                    }
-                    return RefreshIndicator(
-                      onRefresh: () => _loadLessons(maxLessons: 20),
-                      child: CustomScrollView(
-                        controller: _scrollController,
-                        // Increase cache extent to prebuild upcoming sliver children
-                        // for smoother, jank-free scrolling at the cost of some memory.
-                        cacheExtent: 800,
-                        physics:
-                            const BouncingScrollPhysics(), // Add bouncing physics for snappy feel
-                        slivers: [
-                          if (_showPromoCard)
+              : FadeTransition(
+                  opacity: _fadeAnimation,
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      final w = constraints.maxWidth;
+                      final h = constraints.maxHeight;
+                      if (!w.isFinite || !h.isFinite || w <= 0 || h <= 0) {
+                        return const SizedBox.shrink();
+                      }
+                      return RefreshIndicator(
+                        onRefresh: () => _loadLessons(maxLessons: 20),
+                        color: colorScheme.primary,
+                        backgroundColor: colorScheme.surface,
+                        child: CustomScrollView(
+                          controller: _scrollController,
+                          cacheExtent: 1000,
+                          physics: const BouncingScrollPhysics(),
+                          slivers: [
+                            if (_showPromoCard)
+                              SliverToBoxAdapter(
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                                  child: RepaintBoundary(
+                                    child: PromoCard(
+                                      isDonation: _currentPromoType ==
+                                          PromoType.donation,
+                                      isSatisfaction: _currentPromoType ==
+                                          PromoType.satisfaction,
+                                      isDifficulty: _currentPromoType ==
+                                          PromoType.difficulty,
+                                      isAccountCreation: _currentPromoType ==
+                                          PromoType.accountCreation,
+                                      socialMediaType:
+                                          _currentPromoType == PromoType.follow
+                                              ? 'follow'
+                                              : null,
+                                      onDismiss: _onPromoDismissed,
+                                      onView: _onPromoViewed,
+                                      onAction: _onPromoAction,
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                            // Hero progress + CTA section
                             SliverToBoxAdapter(
                               child: Padding(
                                 padding:
-                                    const EdgeInsets.fromLTRB(16, 16, 16, 8),
-                                child: RepaintBoundary(
-                                  child: PromoCard(
-                                    isDonation:
-                                        _currentPromoType == PromoType.donation,
-                                    isSatisfaction: _currentPromoType ==
-                                        PromoType.satisfaction,
-                                    isDifficulty: _currentPromoType ==
-                                        PromoType.difficulty,
-                                    isAccountCreation: _currentPromoType ==
-                                        PromoType.accountCreation,
-                                    socialMediaType:
-                                        _currentPromoType == PromoType.follow
-                                            ? 'follow'
-                                            : null,
-                                    onDismiss: _onPromoDismissed,
-                                    onView: _onPromoViewed,
-                                    onAction: _onPromoAction,
-                                  ),
+                                    const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    RepaintBoundary(
+                                      child: ProgressHeader(
+                                        lessons: _lessons,
+                                        continueLesson: continueLesson,
+                                        streakDays: _streakDays,
+                                        dayWindow: _getFiveDayWindow(),
+                                        onAfterQuizReturn: _refreshStreakData,
+                                        onMultiplayerPressed: () {
+                                          final analyticsService =
+                                              Provider.of<AnalyticsService>(
+                                                  context,
+                                                  listen: false);
+                                          analyticsService.capture(context,
+                                              'multiplayer_button_tapped');
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (_) =>
+                                                  const MultiplayerGameSetupScreen(),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                  ],
                                 ),
                               ),
                             ),
 
-                          // Hero progress + CTA section
-                          SliverToBoxAdapter(
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  RepaintBoundary(
-                                    child: ProgressHeader(
-                                      lessons: _lessons,
-                                      continueLesson: continueLesson,
-                                      streakDays: _streakDays,
-                                      dayWindow: _getFiveDayWindow(),
-                                      onAfterQuizReturn: _refreshStreakData,
-                                      onMultiplayerPressed: () {
-                                        final analyticsService =
-                                            Provider.of<AnalyticsService>(
-                                                context,
-                                                listen: false);
-                                        analyticsService.capture(context,
-                                            'multiplayer_button_tapped');
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (_) =>
-                                                const MultiplayerGameSetupScreen(),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8),
-                                ],
-                              ),
-                            ),
-                          ),
-
-                          if (filteredIndices.isNotEmpty)
-                            _buildLessonLayout(
-                                layoutType,
-                                filteredIndices,
-                                progress,
-                                totalLessons,
-                                continueIdx,
-                                tileMaxExtent,
-                                gridAspect),
-                        ],
-                      ),
-                    );
-                  },
+                            if (filteredIndices.isNotEmpty)
+                              _buildLessonLayout(
+                                  layoutType,
+                                  filteredIndices,
+                                  progress,
+                                  totalLessons,
+                                  continueIdx,
+                                  tileMaxExtent,
+                                  gridAspect),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ),
     );
   }
