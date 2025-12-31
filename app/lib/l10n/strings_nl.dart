@@ -549,7 +549,7 @@ class AppStrings {
   // Footer
   static String get copyright => _language == 'en'
       ? AppStringsEn.copyright
-      : '© 2024-2025 ThomasNow Productions';
+      : '© 2024-2026 ThomasNow Productions';
   static String get version =>
       _language == 'en' ? AppStringsEn.version : 'Versie';
 
@@ -1117,9 +1117,8 @@ class AppStrings {
       : "Deel jouw BQID met anderen om volgers te krijgen";
 
   // Messages
-  static String get noActiveMessages => _language == 'en'
-      ? AppStringsEn.noActiveMessages
-      : 'Geen berichten';
+  static String get noActiveMessages =>
+      _language == 'en' ? AppStringsEn.noActiveMessages : 'Geen berichten';
   static String get noActiveMessagesSubtitle => _language == 'en'
       ? AppStringsEn.noActiveMessagesSubtitle
       : 'Er zijn momenteel geen berichten om weer te geven';
@@ -1152,7 +1151,7 @@ class AppStrings {
   static String get enterUsername =>
       _language == 'en' ? AppStringsEn.enterUsername : 'Voer gebruikersnaam in';
   static String get usernameHint =>
-      _language == 'en' ? AppStringsEn.usernameHint : 'Bijv. Jan2025';
+      _language == 'en' ? AppStringsEn.usernameHint : 'Bijv. Jan2026';
   static String get saveUsername =>
       _language == 'en' ? AppStringsEn.saveUsername : 'Bewaar gebruikersnaam';
   static String get pleaseEnterUsername => _language == 'en'

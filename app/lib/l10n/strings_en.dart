@@ -298,7 +298,7 @@ class AppStringsEn {
   static const String testAllFeatures = 'Test All Features';
 
   // Footer
-  static const String copyright = '© 2024-2025 ThomasNow Productions';
+  static const String copyright = '© 2024-2026 ThomasNow Productions';
   static const String version = 'Version';
 
   // Social
@@ -703,7 +703,7 @@ class AppStringsEn {
   static const String noExpirationDate = 'No expiration date';
   static const String username = 'Username';
   static const String enterUsername = 'Enter username';
-  static const String usernameHint = 'e.g. John2025';
+  static const String usernameHint = 'e.g. John2026';
   static const String saveUsername = 'Save username';
   static const String pleaseEnterUsername = 'Please enter a username';
   static const String usernameTooLong =

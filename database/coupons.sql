@@ -27,13 +27,13 @@ CREATE POLICY "Allow update access for all users" ON public.coupons
 
 -- Insert some sample coupons
 INSERT INTO public.coupons (code, reward_type, reward_value, expiration_date, max_uses)
-VALUES 
-    ('WELCOME2025', 'stars', '100', '2025-12-31 23:59:59+00', 1000),
-    ('STARTER2025', 'stars', '50', '2025-12-31 23:59:59+00', 1000),
-    ('BONUS500', 'stars', '500', '2025-12-31 23:59:59+00', 100),
-    ('THEME_GIFT', 'theme', 'christmas', '2025-12-31 23:59:59+00', 50),
-    ('THEME_OLED', 'theme', 'oled', '2025-12-31 23:59:59+00', 50),
-    ('THEME_GREEN', 'theme', 'green', '2025-12-31 23:59:59+00', 50)
+VALUES
+    ('WELCOME2026', 'stars', '100', '2026-12-31 23:59:59+00', 1000),
+    ('STARTER2026', 'stars', '50', '2026-12-31 23:59:59+00', 1000),
+    ('BONUS500', 'stars', '500', '2026-12-31 23:59:59+00', 100),
+    ('THEME_GIFT', 'theme', 'christmas', '2026-12-31 23:59:59+00', 50),
+    ('THEME_OLED', 'theme', 'oled', '2026-12-31 23:59:59+00', 50),
+    ('THEME_GREEN', 'theme', 'green', '2026-12-31 23:59:59+00', 50)
 ON CONFLICT (code) DO NOTHING;
 
 -- Function to check if a coupon is valid
