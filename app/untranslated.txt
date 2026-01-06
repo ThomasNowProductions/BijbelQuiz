@@ -1,0 +1,14 @@
+{
+  "nl": [
+    "selectedEn",
+    "newMessagesOrLoginRequiredEn",
+    "activeDiscountsAvailableEn",
+    "enabledEn",
+    "disabledEn",
+    "clearSearchEn",
+    "openBQIDSettingsEn",
+    "sectionIconEn",
+    "pageIndicatorEn",
+    "reactionButtonEn"
+  ]
+}

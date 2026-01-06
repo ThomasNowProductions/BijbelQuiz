@@ -1,0 +1,2550 @@
+{
+  "@@locale": "nl",
+  "appName": "BijbelQuiz",
+  "@appName": {
+    "description": "The name of the application"
+  },
+  "appDescription": "Test je Bijbelkennis",
+  "@appDescription": {
+    "description": "App description shown in stores"
+  },
+  "loading": "Laden...",
+  "@loading": {
+    "description": "Shown while content is loading"
+  },
+  "error": "Fout",
+  "@error": {
+    "description": "Generic error message"
+  },
+  "back": "Terug",
+  "@back": {
+    "description": "Navigate back"
+  },
+  "submit": "Indienen",
+  "@submit": {
+    "description": "Submit button"
+  },
+  "cancel": "Annuleren",
+  "@cancel": {
+    "description": "Cancel button"
+  },
+  "ok": "OK",
+  "@ok": {
+    "description": "OK button"
+  },
+  "question": "Vraag",
+  "@question": {
+    "description": "Quiz question label"
+  },
+  "score": "Score",
+  "@score": {
+    "description": "Current score display"
+  },
+  "correct": "Correct!",
+  "@correct": {
+    "description": "Correct answer feedback"
+  },
+  "incorrect": "Niet correct",
+  "@incorrect": {
+    "description": "Incorrect answer feedback"
+  },
+  "quizComplete": "Quiz voltooid!",
+  "@quizComplete": {
+    "description": "Shown when quiz is finished"
+  },
+  "yourScore": "Jouw score: ",
+  "@yourScore": {
+    "description": "Display user's score"
+  },
+  "unlockBiblicalReference": "Ontgrendel Bijbelverwijzing (Béta)",
+  "@unlockBiblicalReference": {
+    "description": "Button to unlock biblical references feature"
+  },
+  "biblicalReference": "Bijbelverwijzing",
+  "@biblicalReference": {
+    "description": "Biblical reference label"
+  },
+  "close": "Sluiten",
+  "@close": {
+    "description": "Close button"
+  },
+  "settings": "Instellingen",
+  "@settings": {
+    "description": "Settings screen title"
+  },
+  "sound": "Geluid",
+  "@sound": {
+    "description": "Sound settings"
+  },
+  "language": "Taal",
+  "@language": {
+    "description": "Language setting"
+  },
+  "theme": "Thema",
+  "@theme": {
+    "description": "Theme settings"
+  },
+  "darkMode": "Donkere modus",
+  "@darkMode": {
+    "description": "Dark mode option"
+  },
+  "lightMode": "Lichte modus",
+  "@lightMode": {
+    "description": "Light mode option"
+  },
+  "systemDefault": "Systeemstandaard",
+  "@systemDefault": {
+    "description": "System default theme option"
+  },
+  "lessons": "Lessen",
+  "@lessons": {
+    "description": "Lessons section"
+  },
+  "continueLearning": "Verder leren",
+  "@continueLearning": {
+    "description": "Continue learning button"
+  },
+  "store": "Winkel",
+  "@store": {
+    "description": "Store screen title"
+  },
+  "unlockAll": "Alles ontgrendelen",
+  "@unlockAll": {
+    "description": "Unlock all content option"
+  },
+  "purchaseSuccessful": "Aankoop voltooid!",
+  "@purchaseSuccessful": {
+    "description": "Purchase completed successfully"
+  },
+  "donate": "Ondersteun ons",
+  "@donate": {
+    "description": "Donation section title"
+  },
+  "donateButton": "Doneer nu",
+  "@donateButton": {
+    "description": "Donate button"
+  },
+  "donateExplanation": "Steun de ontwikkeling van deze app met een donatie. Dit is nodig om de app verder te ontwikkelen/onderhouden.",
+  "@donateExplanation": {
+    "description": "Explanation for donation request"
+  },
+  "guide": "Handleiding",
+  "@guide": {
+    "description": "Guide screen title"
+  },
+  "howToPlay": "Hoe te spelen",
+  "@howToPlay": {
+    "description": "How to play section"
+  },
+  "connectionError": "Geen internetverbinding",
+  "@connectionError": {
+    "description": "Network connection error"
+  },
+  "connectionErrorMsg": "Controleer je internetverbinding en probeer het opnieuw.",
+  "@connectionErrorMsg": {
+    "description": "Instructions for connection error"
+  },
+  "unknownError": "Er is een fout opgetreden",
+  "@unknownError": {
+    "description": "Generic error message"
+  },
+  "errorNoQuestions": "Geen geldige vragen gevonden",
+  "@errorNoQuestions": {
+    "description": "No questions available error"
+  },
+  "errorLoadQuestions": "Fout bij het laden van de vragen",
+  "@errorLoadQuestions": {
+    "description": "Question loading error"
+  },
+  "couldNotOpenDonationPage": "Kon de donatiepagina niet openen",
+  "@couldNotOpenDonationPage": {
+    "description": "Error opening donation page"
+  },
+  "aiError": "AI-service fout opgetreden",
+  "@aiError": {
+    "description": "AI service error"
+  },
+  "apiError": "API-service fout opgetreden",
+  "@apiError": {
+    "description": "API service error"
+  },
+  "storageError": "Opslagfout opgetreden",
+  "@storageError": {
+    "description": "Storage error"
+  },
+  "syncError": "Synchronisatie mislukt",
+  "@syncError": {
+    "description": "Sync operation failed"
+  },
+  "permissionDenied": "Toestemming vereist voor deze functie",
+  "@permissionDenied": {
+    "description": "Permission denied error"
+  },
+  "streak": "Reeks",
+  "@streak": {
+    "description": "Streak metric label"
+  },
+  "best": "Beste",
+  "@best": {
+    "description": "Best score/result"
+  },
+  "time": "Tijd",
+  "@time": {
+    "description": "Time label"
+  },
+  "screenSizeNotSupported": "Schermgrootte niet ondersteund",
+  "@screenSizeNotSupported": {
+    "description": "Unsupported screen size error"
+  },
+  "yourProgress": "Jouw voortgang",
+  "@yourProgress": {
+    "description": "Progress section title"
+  },
+  "dailyStreak": "Dagelijkse reeks",
+  "@dailyStreak": {
+    "description": "Daily streak label"
+  },
+  "continueWith": "Ga verder",
+  "@continueWith": {
+    "description": "Continue with section"
+  },
+  "multiplayerQuiz": "Multiplayer Quiz",
+  "@multiplayerQuiz": {
+    "description": "Multiplayer quiz option"
+  },
+  "chooseGameDuration": "Kies spelduur",
+  "@chooseGameDuration": {
+    "description": "Game duration selection"
+  },
+  "startMultiplayerQuiz": "Start Multiplayer Quiz",
+  "@startMultiplayerQuiz": {
+    "description": "Start multiplayer quiz button"
+  },
+  "multiplayerDescription": "Speel tegen elkaar op één telefoon! De telefoon wordt in tweeën gesplitst - bovenste helft draait 180 graden om.",
+  "@multiplayerDescription": {
+    "description": "Multiplayer quiz description"
+  },
+  "gameRules": "Spelregels:",
+  "@gameRules": {
+    "description": "Game rules section"
+  },
+  "ruleBothPlayers": "• Beide spelers beantwoorden Bijbelvragen",
+  "@ruleBothPlayers": {
+    "description": "Multiplayer rule: both players answer"
+  },
+  "ruleCorrectAnswer": "• Een correct antwoord geeft punten",
+  "@ruleCorrectAnswer": {
+    "description": "Multiplayer rule: points for correct answers"
+  },
+  "ruleWinner": "• Degene met de correcte antwoorden aan het einde wint",
+  "@ruleWinner": {
+    "description": "Multiplayer rule: winner determination"
+  },
+  "ruleScreenRotation": "• De bovenste helft van het scherm draait 180 graden op mobiel",
+  "@ruleScreenRotation": {
+    "description": "Multiplayer rule: screen rotation"
+  },
+  "timeUp": "Tijd is om!",
+  "@timeUp": {
+    "description": "Time expired message"
+  },
+  "timeUpMessage": "Je hebt niet op tijd geantwoord. Je reeks is gereset.",
+  "@timeUpMessage": {
+    "description": "Time up explanation with streak reset"
+  },
+  "notEnoughPoints": "Onvoldoende punten",
+  "@notEnoughPoints": {
+    "description": "Insufficient points"
+  },
+  "lessonComplete": "Les voltooid",
+  "@lessonComplete": {
+    "description": "Lesson completion message"
+  },
+  "percentage": "Percentage",
+  "@percentage": {
+    "description": "Percentage label"
+  },
+  "bestStreak": "Beste reeks",
+  "@bestStreak": {
+    "description": "Best streak label"
+  },
+  "retryLesson": "Opnieuw proberen",
+  "@retryLesson": {
+    "description": "Retry lesson button"
+  },
+  "nextLesson": "Volgende les",
+  "@nextLesson": {
+    "description": "Next lesson button"
+  },
+  "backToLessons": "Terug naar lessen",
+  "@backToLessons": {
+    "description": "Back to lessons button"
+  },
+  "endScore": "Eindscore",
+  "@endScore": {
+    "description": "Final score label"
+  },
+  "endScoreHint": "Jouw totaalscore in percentage op een snelheidsmeter",
+  "@endScoreHint": {
+    "description": "End score hint"
+  },
+  "display": "Weergave",
+  "@display": {
+    "description": "Display settings section"
+  },
+  "chooseTheme": "Kies je thema",
+  "@chooseTheme": {
+    "description": "Theme selection prompt"
+  },
+  "lightTheme": "Licht",
+  "@lightTheme": {
+    "description": "Light theme option"
+  },
+  "systemTheme": "Systeem",
+  "@systemTheme": {
+    "description": "System theme option"
+  },
+  "darkTheme": "Donker",
+  "@darkTheme": {
+    "description": "Dark theme option"
+  },
+  "oledTheme": "OLED",
+  "@oledTheme": {
+    "description": "OLED theme option"
+  },
+  "greenTheme": "Groen",
+  "@greenTheme": {
+    "description": "Green theme option"
+  },
+  "orangeTheme": "Oranje",
+  "@orangeTheme": {
+    "description": "Orange theme option"
+  },
+  "showNavigationLabels": "Toon navigatielabels",
+  "@showNavigationLabels": {
+    "description": "Navigation labels toggle"
+  },
+  "showNavigationLabelsDesc": "Toon of verberg tekstlabels onder de navigatie-iconen",
+  "@showNavigationLabelsDesc": {
+    "description": "Navigation labels description"
+  },
+  "colorfulMode": "Kleurrijke modus",
+  "@colorfulMode": {
+    "description": "Colorful mode toggle"
+  },
+  "colorfulModeDesc": "Zet verschillende kleuren aan voor leskaarten",
+  "@colorfulModeDesc": {
+    "description": "Colorful mode description"
+  },
+  "tryAgain": "Opnieuw proberen",
+  "@tryAgain": {
+    "description": "Try again button"
+  },
+  "couldNotOpenStatusPage": "Kon de statuspagina niet openen.",
+  "@couldNotOpenStatusPage": {
+    "description": "Error opening status page"
+  },
+  "lessonLayout": "Lesindeling",
+  "@lessonLayout": {
+    "description": "Lesson layout setting"
+  },
+  "chooseLessonLayout": "Kies hoe lessen worden weergegeven",
+  "@chooseLessonLayout": {
+    "description": "Lesson layout selection"
+  },
+  "layoutGrid": "Raster",
+  "@layoutGrid": {
+    "description": "Grid layout option"
+  },
+  "layoutList": "Lijst",
+  "@layoutList": {
+    "description": "List layout option"
+  },
+  "layoutCompactGrid": "Compact raster",
+  "@layoutCompactGrid": {
+    "description": "Compact grid layout option"
+  },
+  "couldNotLoadLessons": "Kon lessen niet laden",
+  "@couldNotLoadLessons": {
+    "description": "Error loading lessons"
+  },
+  "progress": "Voortgang",
+  "@progress": {
+    "description": "Progress label"
+  },
+  "resetProgress": "Voortgang resetten",
+  "@resetProgress": {
+    "description": "Reset progress button"
+  },
+  "resetProgressConfirmation": "Weet je zeker dat je je voortgang wilt resetten? Dit kan niet ongedaan worden gemaakt.",
+  "@resetProgressConfirmation": {
+    "description": "Reset progress confirmation"
+  },
+  "confirm": "Bevestigen",
+  "@confirm": {
+    "description": "Confirm button"
+  },
+  "startLesson": "Start les",
+  "@startLesson": {
+    "description": "Start lesson button"
+  },
+  "locked": "Vergrendeld",
+  "@locked": {
+    "description": "Locked status"
+  },
+  "complete": "Voltooid",
+  "@complete": {
+    "description": "Completed status"
+  },
+  "perfectScore": "Perfecte score!",
+  "@perfectScore": {
+    "description": "Perfect score achieved"
+  },
+  "retry": "Opnieuw proberen",
+  "@retry": {
+    "description": "Retry button"
+  },
+  "previous": "Vorige",
+  "@previous": {
+    "description": "Previous button"
+  },
+  "next": "Volgende",
+  "@next": {
+    "description": "Next button"
+  },
+  "getStarted": "Aan de slag",
+  "@getStarted": {
+    "description": "Get started button"
+  },
+  "welcomeTitle": "Welkom bij BijbelQuiz",
+  "@welcomeTitle": {
+    "description": "Welcome screen title"
+  },
+  "welcomeDescription": "Ontdek de Bijbel op een leuke en interactieve manier met uitdagende vragen en lessen.",
+  "@welcomeDescription": {
+    "description": "Welcome screen description"
+  },
+  "howToPlayTitle": "Hoe speel je?",
+  "@howToPlayTitle": {
+    "description": "How to play section title"
+  },
+  "howToPlayDescription": "Beantwoord vragen over de Bijbel. Hoe accurater je antwoord, hoe meer punten je verdient. Punten kun je later uitgeven in de winkel voor exclusieve thema's en power-ups.",
+  "@howToPlayDescription": {
+    "description": "How to play description"
+  },
+  "trackProgressTitle": "Speel alleen, met vrienden of familie",
+  "@trackProgressTitle": {
+    "description": "Track progress section title"
+  },
+  "trackProgressDescription": "Ga naar het \"Sociaal\" tabblad om vrienden te volgen of klik op Multiplayer Quiz om samen te spelen.",
+  "@trackProgressDescription": {
+    "description": "Track progress description"
+  },
+  "customizeExperienceTitle": "Pas Je Ervaring Aan",
+  "@customizeExperienceTitle": {
+    "description": "Customization section title"
+  },
+  "customizeExperienceDescription": "Pas je thema, speelsnelheid en de geluidseffecten aan in de instellingen. Heeft u nog vragen of suggesties? We horen graag van je via {contactEmail}",
+  "@customizeExperienceDescription": {
+    "description": "Customization description",
+    "placeholders": {
+      "contactEmail": {
+        "type": "String",
+        "description": "Contact email address"
+      }
+    }
+  },
+  "supportUsDescription": "Vind je deze app nuttig? Overweeg dan een donatie om ons te helpen de app te onderhouden en te verbeteren. Elke bijdrage wordt gewaardeerd!",
+  "@supportUsDescription": {
+    "description": "Support us description"
+  },
+  "donateNow": "Doneer Nu",
+  "@donateNow": {
+    "description": "Donate now button"
+  },
+  "activationTitle": "Activeer je account",
+  "@activationTitle": {
+    "description": "Activation screen title"
+  },
+  "activationSubtitle": "Voer je activatiecode in om de app te gebruiken",
+  "@activationSubtitle": {
+    "description": "Activation screen subtitle"
+  },
+  "activationCodeHint": "Voer je activatiecode in",
+  "@activationCodeHint": {
+    "description": "Activation code input hint"
+  },
+  "activateButton": "Activeren",
+  "@activateButton": {
+    "description": "Activate button"
+  },
+  "verifyButton": "Verifiëren",
+  "@verifyButton": {
+    "description": "Verify button"
+  },
+  "verifying": "Controleren...",
+  "@verifying": {
+    "description": "Verifying status"
+  },
+  "activationTip": "Voer de activatiecode in die je hebt ontvangen bij aankoop.",
+  "@activationTip": {
+    "description": "Activation tip"
+  },
+  "activationSuccess": "Succesvol geactiveerd!",
+  "@activationSuccess": {
+    "description": "Activation success message"
+  },
+  "activationError": "Ongeldige activatiecode. Probeer het opnieuw.",
+  "@activationError": {
+    "description": "Activation error message"
+  },
+  "activationErrorTitle": "Activatie mislukt",
+  "@activationErrorTitle": {
+    "description": "Activation error title"
+  },
+  "activationSuccessMessage": "Je account is succesvol geactiveerd. Veel plezier met de app!",
+  "@activationSuccessMessage": {
+    "description": "Activation success details"
+  },
+  "activationRequired": "Activatie vereist",
+  "@activationRequired": {
+    "description": "Activation required message"
+  },
+  "activationRequiredMessage": "Je moet de app activeren voordat je deze kunt gebruiken.",
+  "@activationRequiredMessage": {
+    "description": "Activation required details"
+  },
+  "yourStars": "Jouw sterren",
+  "@yourStars": {
+    "description": "Stars balance display"
+  },
+  "availableStars": "Beschikbare sterren",
+  "@availableStars": {
+    "description": "Available stars label"
+  },
+  "powerUps": "Power-ups",
+  "@powerUps": {
+    "description": "Power-ups section"
+  },
+  "themes": "Thema's",
+  "@themes": {
+    "description": "Themes section"
+  },
+  "availableThemes": "Beschikbare thema's",
+  "@availableThemes": {
+    "description": "Available themes label"
+  },
+  "unlockTheme": "Ontgrendel thema",
+  "@unlockTheme": {
+    "description": "Unlock theme button"
+  },
+  "unlocked": "Ontgrendeld",
+  "@unlocked": {
+    "description": "Unlocked status"
+  },
+  "notEnoughStars": "Niet genoeg sterren",
+  "@notEnoughStars": {
+    "description": "Insufficient stars"
+  },
+  "unlockFor": "Ontgrendel voor",
+  "@unlockFor": {
+    "description": "Unlock cost prefix"
+  },
+  "stars": "sterren",
+  "@stars": {
+    "description": "Stars unit"
+  },
+  "free": "Gratis",
+  "@free": {
+    "description": "Free item"
+  },
+  "purchased": "Aangekocht",
+  "@purchased": {
+    "description": "Purchased status"
+  },
+  "confirmPurchase": "Bevestig aankoop",
+  "@confirmPurchase": {
+    "description": "Confirm purchase button"
+  },
+  "purchaseConfirmation": "Weet je zeker dat je dit thema wilt ontgrendelen voor",
+  "@purchaseConfirmation": {
+    "description": "Purchase confirmation message"
+  },
+  "purchaseSuccess": "Thema succesvol ontgrendeld!",
+  "@purchaseSuccess": {
+    "description": "Purchase success message"
+  },
+  "purchaseError": "Niet genoeg sterren om dit thema te ontgrendelen.",
+  "@purchaseError": {
+    "description": "Purchase error message"
+  },
+  "couldNotOpenDownloadPage": "Kon de downloadpagina niet openen",
+  "@couldNotOpenDownloadPage": {
+    "description": "Error opening download page"
+  },
+  "themeUnlockedWithSwitchOption": "ontgrendeld! Je kunt altijd terugkeren naar het standaardthema in de instellingen.",
+  "@themeUnlockedWithSwitchOption": {
+    "description": "Theme unlocked with switch option"
+  },
+  "doubleStars5Questions": "Dubbele sterren (5 vragen)",
+  "@doubleStars5Questions": {
+    "description": "Double stars power-up"
+  },
+  "doubleStars5QuestionsDesc": "Verdien dubbele sterren voor je volgende 5 vragen",
+  "@doubleStars5QuestionsDesc": {
+    "description": "Double stars power-up description"
+  },
+  "tripleStars5Questions": "Driedubbele sterren (5 vragen)",
+  "@tripleStars5Questions": {
+    "description": "Triple stars power-up"
+  },
+  "tripleStars5QuestionsDesc": "Verdien driedubbele sterren voor je volgende 5 vragen",
+  "@tripleStars5QuestionsDesc": {
+    "description": "Triple stars power-up description"
+  },
+  "fiveTimesStars5Questions": "5x sterren (5 vragen)",
+  "@fiveTimesStars5Questions": {
+    "description": "5x stars power-up"
+  },
+  "fiveTimesStars5QuestionsDesc": "Verdien 5x sterren voor je volgende 5 vragen",
+  "@fiveTimesStars5QuestionsDesc": {
+    "description": "5x stars power-up description"
+  },
+  "doubleStars60Seconds": "Dubbele sterren (60 seconden)",
+  "@doubleStars60Seconds": {
+    "description": "Double stars for 60 seconds power-up"
+  },
+  "doubleStars60SecondsDesc": "Verdien dubbele sterren gedurende 60 seconden",
+  "@doubleStars60SecondsDesc": {
+    "description": "Double stars 60s description"
+  },
+  "oledThemeName": "OLED thema",
+  "@oledThemeName": {
+    "description": "OLED theme name"
+  },
+  "oledThemeDesc": "Ontgrendel een echt zwart, hoog-contrast thema",
+  "@oledThemeDesc": {
+    "description": "OLED theme description"
+  },
+  "greenThemeName": "Groen thema",
+  "@greenThemeName": {
+    "description": "Green theme name"
+  },
+  "greenThemeDesc": "Ontgrendel een fris groen thema",
+  "@greenThemeDesc": {
+    "description": "Green theme description"
+  },
+  "orangeThemeName": "Oranje thema",
+  "@orangeThemeName": {
+    "description": "Orange theme name"
+  },
+  "orangeThemeDesc": "Ontgrendel een levendig oranje thema",
+  "@orangeThemeDesc": {
+    "description": "Orange theme description"
+  },
+  "couponTitle": "Coupon code",
+  "@couponTitle": {
+    "description": "Coupon section title"
+  },
+  "couponDescription": "Wissel hem hier in voor beloningen",
+  "@couponDescription": {
+    "description": "Coupon description"
+  },
+  "couponRedeem": "Inwisselen",
+  "@couponRedeem": {
+    "description": "Redeem coupon button"
+  },
+  "couponDialogTitle": "Coupon inwisselen",
+  "@couponDialogTitle": {
+    "description": "Coupon dialog title"
+  },
+  "couponCodeLabel": "Coupon code",
+  "@couponCodeLabel": {
+    "description": "Coupon code label"
+  },
+  "couponCodeHint": "Coupon hier...",
+  "@couponCodeHint": {
+    "description": "Coupon code input hint"
+  },
+  "couponSuccessTitle": "Gefeliciteerd!",
+  "@couponSuccessTitle": {
+    "description": "Coupon success title"
+  },
+  "couponStarsReceived": "Je hebt {amount} sterren ontvangen!",
+  "@couponStarsReceived": {
+    "description": "Coupon stars reward message",
+    "placeholders": {
+      "amount": {
+        "type": "int",
+        "description": "Number of stars received"
+      }
+    }
+  },
+  "couponThemeUnlocked": "Je hebt een nieuw thema ontgrendeld!",
+  "@couponThemeUnlocked": {
+    "description": "Coupon theme unlocked message"
+  },
+  "couponErrorTitle": "Fout",
+  "@couponErrorTitle": {
+    "description": "Coupon error title"
+  },
+  "couponInvalid": "Ongeldige coupon code",
+  "@couponInvalid": {
+    "description": "Invalid coupon message"
+  },
+  "couponExpired": "Deze coupon is verlopen",
+  "@couponExpired": {
+    "description": "Expired coupon message"
+  },
+  "couponMaxUsed": "Deze coupon is niet meer geldig (maximaal aantal keer gebruikt)",
+  "@couponMaxUsed": {
+    "description": "Coupon max uses reached"
+  },
+  "couponAlreadyRedeemed": "Deze coupon is al ingewisseld",
+  "@couponAlreadyRedeemed": {
+    "description": "Already redeemed coupon message"
+  },
+  "couponMaxPerDay": "Maximaal 5 coupons kunnen per dag worden ingewisseld",
+  "@couponMaxPerDay": {
+    "description": "Coupon daily limit"
+  },
+  "qrCode": "QR-code",
+  "@qrCode": {
+    "description": "QR code label"
+  },
+  "qrCodeDescription": "Richt de camera op de QR-code",
+  "@qrCodeDescription": {
+    "description": "QR code scanning description"
+  },
+  "qrScannerMobileOnly": "QR-scanner alleen beschikbaar op mobiel",
+  "@qrScannerMobileOnly": {
+    "description": "QR scanner mobile only warning"
+  },
+  "invalidQRCode": "Ongeldige QR-code",
+  "@invalidQRCode": {
+    "description": "Invalid QR code message"
+  },
+  "cameraAccessRequired": "Camera toegang vereist",
+  "@cameraAccessRequired": {
+    "description": "Camera permission required"
+  },
+  "cameraAccessDescription": "Om QR-codes te kunnen scannen, heeft de app toegang nodig tot je camera. Deze toestemming wordt alleen gebruikt voor het scannen van coupons.",
+  "@cameraAccessDescription": {
+    "description": "Camera permission description"
+  },
+  "grantCameraPermission": "Camera toestemming verlenen",
+  "@grantCameraPermission": {
+    "description": "Grant camera permission button"
+  },
+  "openSettings": "Instellingen openen",
+  "@openSettings": {
+    "description": "Open settings button"
+  },
+  "cameraError": "Camera fout",
+  "@cameraError": {
+    "description": "Camera error"
+  },
+  "cameraInitializationError": "Er is een fout opgetreden bij het initialiseren van de camera: ",
+  "@cameraInitializationError": {
+    "description": "Camera initialization error"
+  },
+  "initializingCamera": "Camera initialiseren...",
+  "@initializingCamera": {
+    "description": "Camera initialization status"
+  },
+  "qrCodeTutorial": "Houd de QR-code binnen het kader voor automatische detectie",
+  "@qrCodeTutorial": {
+    "description": "QR code scanning tutorial"
+  },
+  "supportUsTitle": "Ondersteun ons",
+  "@supportUsTitle": {
+    "description": "Support us section title"
+  },
+  "errorLoadingSettings": "Fout bij het laden van instellingen",
+  "@errorLoadingSettings": {
+    "description": "Settings loading error"
+  },
+  "gameSettings": "Spelinstellingen",
+  "@gameSettings": {
+    "description": "Game settings section"
+  },
+  "gameSpeed": "Spelsnelheid",
+  "@gameSpeed": {
+    "description": "Game speed label"
+  },
+  "chooseGameSpeed": "Kies de snelheid van het spel",
+  "@chooseGameSpeed": {
+    "description": "Game speed selection"
+  },
+  "slow": "Langzaam",
+  "@slow": {
+    "description": "Slow speed option"
+  },
+  "medium": "Gemiddeld",
+  "@medium": {
+    "description": "Medium speed option"
+  },
+  "fast": "Snel",
+  "@fast": {
+    "description": "Fast speed option"
+  },
+  "muteSoundEffects": "Geluidseffecten dempen",
+  "@muteSoundEffects": {
+    "description": "Mute sound effects toggle"
+  },
+  "muteSoundEffectsDesc": "Schakel alle spelgeluiden uit",
+  "@muteSoundEffectsDesc": {
+    "description": "Mute sound effects description"
+  },
+  "about": "Over",
+  "@about": {
+    "description": "About section"
+  },
+  "serverStatus": "Serverstatus",
+  "@serverStatus": {
+    "description": "Server status section"
+  },
+  "checkServiceStatus": "Controleer de status van onze services",
+  "@checkServiceStatus": {
+    "description": "Service status check description"
+  },
+  "openStatusPage": "Open statuspagina",
+  "@openStatusPage": {
+    "description": "Open status page button"
+  },
+  "actions": "Acties",
+  "@actions": {
+    "description": "Actions section"
+  },
+  "exportStats": "Statistieken exporteren",
+  "@exportStats": {
+    "description": "Export statistics button"
+  },
+  "exportStatsDesc": "Sla je voortgang en scores op als tekst",
+  "@exportStatsDesc": {
+    "description": "Export statistics description"
+  },
+  "importStats": "Statistieken importeren",
+  "@importStats": {
+    "description": "Import statistics button"
+  },
+  "importStatsDesc": "Laad eerder geëxporteerde statistieken",
+  "@importStatsDesc": {
+    "description": "Import statistics description"
+  },
+  "resetAndLogout": "Resetten en uitloggen",
+  "@resetAndLogout": {
+    "description": "Reset and logout button"
+  },
+  "resetAndLogoutDesc": "Alle gegevens wissen en app deactiveren",
+  "@resetAndLogoutDesc": {
+    "description": "Reset and logout description"
+  },
+  "showIntroduction": "Introductie tonen",
+  "@showIntroduction": {
+    "description": "Show introduction button"
+  },
+  "reportIssue": "Probleem melden",
+  "@reportIssue": {
+    "description": "Report issue button"
+  },
+  "clearQuestionCache": "Vragencache wissen",
+  "@clearQuestionCache": {
+    "description": "Clear question cache button"
+  },
+  "contactUs": "Neem contact op",
+  "@contactUs": {
+    "description": "Contact us button"
+  },
+  "emailNotAvailable": "Kon e-mailclient niet openen",
+  "@emailNotAvailable": {
+    "description": "Email client not available"
+  },
+  "cacheCleared": "Vragencache gewist!",
+  "@cacheCleared": {
+    "description": "Cache cleared message"
+  },
+  "testAllFeatures": "Test Alle Functies",
+  "@testAllFeatures": {
+    "description": "Test all features button"
+  },
+  "copyright": "© 2024-2026 ThomasNow Productions",
+  "@copyright": {
+    "description": "Copyright notice"
+  },
+  "version": "Versie",
+  "@version": {
+    "description": "Version label"
+  },
+  "social": "Sociaal",
+  "@social": {
+    "description": "Social section"
+  },
+  "comingSoon": "Binnenkort beschikbaar!",
+  "@comingSoon": {
+    "description": "Coming soon message"
+  },
+  "socialComingSoonMessage": "De sociale functies van BijbelQuiz zijn binnenkort beschikbaar. Blijf op de hoogte voor updates!",
+  "@socialComingSoonMessage": {
+    "description": "Social features coming soon message"
+  },
+  "manageYourBqid": "Beheer je BQID",
+  "@manageYourBqid": {
+    "description": "Manage BQID button"
+  },
+  "manageYourBqidSubtitle": "Beheer je BQID, geregistreerde apparaten en meer",
+  "@manageYourBqidSubtitle": {
+    "description": "Manage BQID subtitle"
+  },
+  "moreSocialFeaturesComingSoon": "Meer sociale functies binnenkort beschikbaar",
+  "@moreSocialFeaturesComingSoon": {
+    "description": "More social features coming soon"
+  },
+  "socialFeatures": "Sociale Functies",
+  "@socialFeatures": {
+    "description": "Social features section"
+  },
+  "connectWithOtherUsers": "Verbind met andere BijbelQuiz-gebruikers, deel prestaties en strijd op de scoreborden!",
+  "@connectWithOtherUsers": {
+    "description": "Connect with other users description"
+  },
+  "search": "Zoeken",
+  "@search": {
+    "description": "Search label"
+  },
+  "myFollowing": "Volgend",
+  "@myFollowing": {
+    "description": "Following list label"
+  },
+  "myFollowers": "Volgers",
+  "@myFollowers": {
+    "description": "Followers list label"
+  },
+  "messages": "Berichten",
+  "@messages": {
+    "description": "Messages label"
+  },
+  "searchUsers": "Zoek Gebruikers",
+  "@searchUsers": {
+    "description": "Search users button"
+  },
+  "searchByUsername": "Zoek op gebruikersnaam",
+  "@searchByUsername": {
+    "description": "Search by username option"
+  },
+  "enterUsernameToSearch": "Voer gebruikersnaam in om te zoeken...",
+  "@enterUsernameToSearch": {
+    "description": "Username search input hint"
+  },
+  "noUsersFound": "Geen gebruikers gevonden",
+  "@noUsersFound": {
+    "description": "No users found message"
+  },
+  "follow": "Volgen",
+  "@follow": {
+    "description": "Follow button"
+  },
+  "unfollow": "Ontvolgen",
+  "@unfollow": {
+    "description": "Unfollow button"
+  },
+  "yourself": "Zelf",
+  "@yourself": {
+    "description": "Yourself label"
+  },
+  "bibleBot": "Bijbel Bot",
+  "@bibleBot": {
+    "description": "Bible Bot label"
+  },
+  "couldNotOpenEmail": "Kon e-mailclient niet openen",
+  "@couldNotOpenEmail": {
+    "description": "Could not open email"
+  },
+  "couldNotOpenUpdatePage": "Kon update pagina niet openen",
+  "@couldNotOpenUpdatePage": {
+    "description": "Could not open update page"
+  },
+  "errorOpeningUpdatePage": "Fout bij openen update pagina: ",
+  "@errorOpeningUpdatePage": {
+    "description": "Error opening update page"
+  },
+  "couldNotCopyLink": "Kon link niet kopiëren",
+  "@couldNotCopyLink": {
+    "description": "Could not copy link"
+  },
+  "errorCopyingLink": "Kon link niet kopiëren: ",
+  "@errorCopyingLink": {
+    "description": "Error copying link"
+  },
+  "inviteLinkCopied": "Uitnodigingslink gekopieerd naar klembord!",
+  "@inviteLinkCopied": {
+    "description": "Invite link copied message"
+  },
+  "statsLinkCopied": "Statistieken link gekopieerd naar klembord!",
+  "@statsLinkCopied": {
+    "description": "Stats link copied message"
+  },
+  "copyStatsLinkToClipboard": "Kopieer je statistieken link naar het klembord",
+  "@copyStatsLinkToClipboard": {
+    "description": "Copy stats link description"
+  },
+  "importButton": "Importeren",
+  "@importButton": {
+    "description": "Import button"
+  },
+  "followUs": "Volg ons",
+  "@followUs": {
+    "description": "Follow us label"
+  },
+  "followUsMessage": "Volg ons op social media voor updates en community!",
+  "@followUsMessage": {
+    "description": "Follow us message"
+  },
+  "followMastodon": "Volg Mastodon",
+  "@followMastodon": {
+    "description": "Follow Mastodon button"
+  },
+  "followPixelfed": "Volg Pixelfed",
+  "@followPixelfed": {
+    "description": "Follow Pixelfed button"
+  },
+  "followKwebler": "Volg Kwebler",
+  "@followKwebler": {
+    "description": "Follow Kwebler button"
+  },
+  "followSignal": "Volg Signal",
+  "@followSignal": {
+    "description": "Follow Signal button"
+  },
+  "followDiscord": "Volg Discord",
+  "@followDiscord": {
+    "description": "Follow Discord button"
+  },
+  "followBluesky": "Volg Bluesky",
+  "@followBluesky": {
+    "description": "Follow Bluesky button"
+  },
+  "followNooki": "Volg Nooki",
+  "@followNooki": {
+    "description": "Follow Nooki button"
+  },
+  "couldNotOpenPlatform": "Kon {platform} niet openen",
+  "@couldNotOpenPlatform": {
+    "description": "Could not open platform",
+    "placeholders": {
+      "platform": {
+        "type": "String",
+        "description": "Platform name"
+      }
+    }
+  },
+  "shareAppWithFriends": "Deel app met vrienden",
+  "@shareAppWithFriends": {
+    "description": "Share app button"
+  },
+  "shareYourStats": "Deel je statistieken",
+  "@shareYourStats": {
+    "description": "Share stats button"
+  },
+  "inviteFriend": "Nodig een vriend uit",
+  "@inviteFriend": {
+    "description": "Invite friend button"
+  },
+  "enterYourName": "Voer je naam in",
+  "@enterYourName": {
+    "description": "Enter your name input"
+  },
+  "enterFriendName": "Voer de naam van je vriend in",
+  "@enterFriendName": {
+    "description": "Enter friend name input"
+  },
+  "inviteMessage": "Nodig je vriend uit voor de BijbelQuiz!",
+  "@inviteMessage": {
+    "description": "Invite message"
+  },
+  "customizeInvite": "Personaliseer je uitnodiging",
+  "@customizeInvite": {
+    "description": "Customize invite button"
+  },
+  "sendInvite": "Verzend uitnodiging",
+  "@sendInvite": {
+    "description": "Send invite button"
+  },
+  "languageMustBeNl": "Taal moet \"nl\" zijn (alleen Nederlands toegestaan)",
+  "@languageMustBeNl": {
+    "description": "Language must be Dutch error"
+  },
+  "failedToSaveTheme": "Kon thema-instelling niet opslaan:",
+  "@failedToSaveTheme": {
+    "description": "Failed to save theme"
+  },
+  "failedToSaveSlowMode": "Kon langzame modus-instelling niet opslaan:",
+  "@failedToSaveSlowMode": {
+    "description": "Failed to save slow mode"
+  },
+  "failedToSaveGameSpeed": "Kon spelsnelheid-instelling niet opslaan:",
+  "@failedToSaveGameSpeed": {
+    "description": "Failed to save game speed"
+  },
+  "failedToUpdateDonationStatus": "Kon donatiestatus niet bijwerken:",
+  "@failedToUpdateDonationStatus": {
+    "description": "Failed to update donation status"
+  },
+  "failedToUpdateCheckForUpdateStatus": "Kon update-controle status niet bijwerken:",
+  "@failedToUpdateCheckForUpdateStatus": {
+    "description": "Failed to update check for update status"
+  },
+  "failedToSaveMuteSetting": "Kon demp-instelling niet opslaan:",
+  "@failedToSaveMuteSetting": {
+    "description": "Failed to save mute setting"
+  },
+  "failedToSaveGuideStatus": "Kon gidsstatus niet opslaan:",
+  "@failedToSaveGuideStatus": {
+    "description": "Failed to save guide status"
+  },
+  "failedToResetGuideStatus": "Kon gidsstatus niet resetten:",
+  "@failedToResetGuideStatus": {
+    "description": "Failed to reset guide status"
+  },
+  "failedToResetCheckForUpdateStatus": "Kon update-controle status niet resetten:",
+  "@failedToResetCheckForUpdateStatus": {
+    "description": "Failed to reset check for update status"
+  },
+  "exportStatsTitle": "Statistieken exporteren",
+  "@exportStatsTitle": {
+    "description": "Export statistics title"
+  },
+  "exportStatsMessage": "Kopieer deze tekst om je voortgang op te slaan:",
+  "@exportStatsMessage": {
+    "description": "Export statistics message"
+  },
+  "importStatsTitle": "Statistieken importeren",
+  "@importStatsTitle": {
+    "description": "Import statistics title"
+  },
+  "importStatsMessage": "Plak je eerder geëxporteerde statistieken hier:",
+  "@importStatsMessage": {
+    "description": "Import statistics message"
+  },
+  "importStatsHint": "Plak hier...",
+  "@importStatsHint": {
+    "description": "Import statistics hint"
+  },
+  "statsExportedSuccessfully": "Statistieken succesvol geëxporteerd!",
+  "@statsExportedSuccessfully": {
+    "description": "Export success message"
+  },
+  "statsImportedSuccessfully": "Statistieken succesvol geïmporteerd!",
+  "@statsImportedSuccessfully": {
+    "description": "Import success message"
+  },
+  "failedToExportStats": "Kon statistieken niet exporteren:",
+  "@failedToExportStats": {
+    "description": "Export failed message"
+  },
+  "failedToImportStats": "Kon statistieken niet importeren:",
+  "@failedToImportStats": {
+    "description": "Import failed message"
+  },
+  "invalidOrTamperedData": "Ongeldige of gemanipuleerde gegevens",
+  "@invalidOrTamperedData": {
+    "description": "Invalid data message"
+  },
+  "pleaseEnterValidString": "Voer een geldige tekst in",
+  "@pleaseEnterValidString": {
+    "description": "Valid string required"
+  },
+  "copyCode": "Code kopiëren",
+  "@copyCode": {
+    "description": "Copy code button"
+  },
+  "codeCopied": "Code gekopieerd naar klembord",
+  "@codeCopied": {
+    "description": "Code copied message"
+  },
+  "exportAllDataJson": "Alle gegevens exporteren (JSON)",
+  "@exportAllDataJson": {
+    "description": "Export all data button"
+  },
+  "exportAllDataJsonDesc": "Exporteer alle app-gegevens inclusief instellingen, statistieken en voortgang als JSON",
+  "@exportAllDataJsonDesc": {
+    "description": "Export all data description"
+  },
+  "exportAllDataJsonTitle": "Alle gegevens exporteren (JSON)",
+  "@exportAllDataJsonTitle": {
+    "description": "Export all data title"
+  },
+  "exportAllDataJsonMessage": "Je volledige app-gegevens zijn geëxporteerd als JSON. Je kunt deze gegevens kopiëren om ze op te slaan of te delen.",
+  "@exportAllDataJsonMessage": {
+    "description": "Export all data message"
+  },
+  "copyToClipboard": "Naar klembord kopiëren",
+  "@copyToClipboard": {
+    "description": "Copy to clipboard button"
+  },
+  "jsonDataCopied": "JSON-gegevens gekopieerd naar klembord",
+  "@jsonDataCopied": {
+    "description": "JSON data copied message"
+  },
+  "multiDeviceSync": "Multi-Apparaat Sync",
+  "@multiDeviceSync": {
+    "description": "Multi-device sync section"
+  },
+  "currentlySynced": "Je bent momenteel gesynced. Gegevens worden in realtime gedeeld tussen apparaten.",
+  "@currentlySynced": {
+    "description": "Currently synced message"
+  },
+  "yourSyncId": "Jouw Sync ID:",
+  "@yourSyncId": {
+    "description": "Your sync ID label"
+  },
+  "shareSyncId": "Deel deze ID met andere apparaten om toe te treden.",
+  "@shareSyncId": {
+    "description": "Share sync ID description"
+  },
+  "errorGeneric": "Fout: ",
+  "@errorGeneric": {
+    "description": "Generic error prefix"
+  },
+  "multiDeviceSyncButton": "Multi-Apparaat Sync",
+  "@multiDeviceSyncButton": {
+    "description": "Multi-device sync button"
+  },
+  "syncDataDescription": "Sync data tussen apparaten met behulp van een code",
+  "@syncDataDescription": {
+    "description": "Sync data description"
+  },
+  "syncDescription": "Verbind met een ander apparaat om je voortgang en statistieken te synchroniseren.",
+  "@syncDescription": {
+    "description": "Sync description"
+  },
+  "userId": "BQID",
+  "@userId": {
+    "description": "User ID label"
+  },
+  "enterUserId": "Voer een BQID in om verbinding te maken met een ander apparaat",
+  "@enterUserId": {
+    "description": "Enter user ID input"
+  },
+  "userIdCode": "BQID",
+  "@userIdCode": {
+    "description": "User ID code"
+  },
+  "connectToUser": "Verbdinden met BQID",
+  "@connectToUser": {
+    "description": "Connect to user button"
+  },
+  "createUserId": "Maak een nieuwe BQID",
+  "@createUserId": {
+    "description": "Create user ID button"
+  },
+  "createUserIdDescription": "Maak een nieuwe BQID en deel de code met anderen om verbinding te maken.",
+  "@createUserIdDescription": {
+    "description": "Create user ID description"
+  },
+  "currentlyConnectedToUser": "Je bent momenteel verbonden met een BQID. Gegevens worden gedeeld tussen apparaten.",
+  "@currentlyConnectedToUser": {
+    "description": "Currently connected message"
+  },
+  "yourUserId": "Jouw BQID:",
+  "@yourUserId": {
+    "description": "Your user ID label"
+  },
+  "shareUserId": "Deel dit ID met andere apparaten om verbinding te maken.",
+  "@shareUserId": {
+    "description": "Share user ID description"
+  },
+  "leaveUserId": "Verwijder BQID van dit apparaat",
+  "@leaveUserId": {
+    "description": "Leave user ID button"
+  },
+  "userIdDescription": "Verbind met een ander apparaat met een BQID om je data en statistieken te sychroniseren.",
+  "@userIdDescription": {
+    "description": "User ID description"
+  },
+  "pleaseEnterUserId": "Voer een BQID in",
+  "@pleaseEnterUserId": {
+    "description": "Please enter user ID"
+  },
+  "failedToConnectToUser": "Kon niet verbinden met de BQID. Controleer het ID en probeer opnieuw.",
+  "@failedToConnectToUser": {
+    "description": "Failed to connect message"
+  },
+  "failedToCreateUserId": "Kon BQID niet maken. Probeer opnieuw.",
+  "@failedToCreateUserId": {
+    "description": "Failed to create user ID"
+  },
+  "userIdButton": "BQID",
+  "@userIdButton": {
+    "description": "User ID button"
+  },
+  "userIdDescriptionSetting": "Maak of verbind met een BQID om je voortgang te synchroniseren",
+  "@userIdDescriptionSetting": {
+    "description": "User ID setting description"
+  },
+  "createUserIdButton": "Maak een BQID",
+  "@createUserIdButton": {
+    "description": "Create user ID button"
+  },
+  "of": "Of",
+  "@of": {
+    "description": "Or separator"
+  },
+  "tapToCopyUserId": "Tik om BQID te kopiëren",
+  "@tapToCopyUserId": {
+    "description": "Tap to copy user ID"
+  },
+  "userIdCopiedToClipboard": "BQID gekopieerd naar klembord",
+  "@userIdCopiedToClipboard": {
+    "description": "User ID copied message"
+  },
+  "notFollowing": "Je volgt op dit moment niemand",
+  "@notFollowing": {
+    "description": "Not following anyone message"
+  },
+  "joinRoomToViewFollowing": "Je moet een ruimte toetreden om te zien wij jij volgt",
+  "@joinRoomToViewFollowing": {
+    "description": "Join room to view following"
+  },
+  "searchUsersToFollow": "Zoek naar gebruikers om ze te volgen",
+  "@searchUsersToFollow": {
+    "description": "Search users to follow"
+  },
+  "noFollowers": "Je hebt op dit moment geen volgers",
+  "@noFollowers": {
+    "description": "No followers message"
+  },
+  "joinRoomToViewFollowers": "Je moet een ruimte toetreden om je volgers te zien",
+  "@joinRoomToViewFollowers": {
+    "description": "Join room to view followers"
+  },
+  "shareBQIDFollowers": "Deel jouw BQID met anderen om volgers te krijgen",
+  "@shareBQIDFollowers": {
+    "description": "Share BQID to get followers"
+  },
+  "noActiveMessages": "Geen berichten",
+  "@noActiveMessages": {
+    "description": "No messages label"
+  },
+  "noActiveMessagesSubtitle": "Er zijn momenteel geen berichten om weer te geven",
+  "@noActiveMessagesSubtitle": {
+    "description": "No messages subtitle"
+  },
+  "errorLoadingMessages": "Fout bij laden van berichten",
+  "@errorLoadingMessages": {
+    "description": "Error loading messages"
+  },
+  "errorUpdatingReaction": "Fout bij bijwerken van reactie",
+  "@errorUpdatingReaction": {
+    "description": "Error updating reaction"
+  },
+  "loadingMessages": "Berichten laden...",
+  "@loadingMessages": {
+    "description": "Loading messages"
+  },
+  "expiresIn": "Verloopt over",
+  "@expiresIn": {
+    "description": "Expires in label"
+  },
+  "expiringSoon": "Verloopt binnenkort",
+  "@expiringSoon": {
+    "description": "Expiring soon label"
+  },
+  "days": "dagen",
+  "@days": {
+    "description": "Days unit"
+  },
+  "hoursMessage": "uur",
+  "@hoursMessage": {
+    "description": "Hours unit"
+  },
+  "minutes": "minuten",
+  "@minutes": {
+    "description": "Minutes unit"
+  },
+  "lessThanAMinute": "minder dan een minuut",
+  "@lessThanAMinute": {
+    "description": "Less than a minute"
+  },
+  "created": "Aangemaakt",
+  "@created": {
+    "description": "Created label"
+  },
+  "bijbelquizGenTitle": "BijbelQuiz Gen",
+  "@bijbelquizGenTitle": {
+    "description": "Year in review title"
+  },
+  "bijbelquizGenSubtitle": "Jouw jaar in ",
+  "@bijbelquizGenSubtitle": {
+    "description": "Year in review subtitle"
+  },
+  "bijbelquizGenWelcomeText": "Bekijk je prestaties van vandaag en deel jouw BijbelQuiz-jaar!",
+  "@bijbelquizGenWelcomeText": {
+    "description": "Year in review welcome text"
+  },
+  "questionsAnswered": "Vragen beantwoord",
+  "@questionsAnswered": {
+    "description": "Questions answered label"
+  },
+  "bijbelquizGenQuestionsSubtitle": "Je hebt hopelijk veel nieuwe dingen geleerd.",
+  "@bijbelquizGenQuestionsSubtitle": {
+    "description": "Questions answered subtitle"
+  },
+  "mistakesMade": "Fouten gemaakt",
+  "@mistakesMade": {
+    "description": "Mistakes made label"
+  },
+  "bijbelquizGenMistakesSubtitle": "Elke fout is een kans om te leren en groeien in je Bijbelkennis!",
+  "@bijbelquizGenMistakesSubtitle": {
+    "description": "Mistakes made subtitle"
+  },
+  "timeSpent": "Tijd besteed",
+  "@timeSpent": {
+    "description": "Time spent label"
+  },
+  "bijbelquizGenTimeSubtitle": "Je hebt tijd genomen om je Bijbelkennis te verdiepen!",
+  "@bijbelquizGenTimeSubtitle": {
+    "description": "Time spent subtitle"
+  },
+  "bijbelquizGenBestStreak": "Beste reeks",
+  "@bijbelquizGenBestStreak": {
+    "description": "Best streak label"
+  },
+  "bijbelquizGenStreakSubtitle": "Je langste reeks toont je consistentie en toewijding!",
+  "@bijbelquizGenStreakSubtitle": {
+    "description": "Streak subtitle"
+  },
+  "yearInReview": "Jouw jaar in review",
+  "@yearInReview": {
+    "description": "Year in review label"
+  },
+  "bijbelquizGenYearReviewSubtitle": "Een overzicht van je BijbelQuiz prestaties in het afgelopen jaar!",
+  "@bijbelquizGenYearReviewSubtitle": {
+    "description": "Year review subtitle"
+  },
+  "hours": "Uren",
+  "@hours": {
+    "description": "Hours unit"
+  },
+  "correctAnswers": "Correcte antwoorden",
+  "@correctAnswers": {
+    "description": "Correct answers label"
+  },
+  "accuracy": "Nauwkeurigheid",
+  "@accuracy": {
+    "description": "Accuracy label"
+  },
+  "currentStreak": "Huidige reeks",
+  "@currentStreak": {
+    "description": "Current streak label"
+  },
+  "thankYouForUsingBijbelQuiz": "Bedankt voor het gebruik van BijbelQuiz!",
+  "@thankYouForUsingBijbelQuiz": {
+    "description": "Thank you message"
+  },
+  "bijbelquizGenThankYouText": "We hopen dat onze app het afgelopen jaar tot Zegen mocht zijn. Bedankt voor je steun en betrokkenheid!",
+  "@bijbelquizGenThankYouText": {
+    "description": "Thank you text"
+  },
+  "bijbelquizGenDonateButton": "Doneer",
+  "@bijbelquizGenDonateButton": {
+    "description": "Donate button text"
+  },
+  "done": "Klaar",
+  "@done": {
+    "description": "Done button"
+  },
+  "bijbelquizGenSkip": "Overslaan",
+  "@bijbelquizGenSkip": {
+    "description": "Skip button"
+  },
+  "success": "Succes",
+  "@success": {
+    "description": "Success label"
+  },
+  "reportSubmittedSuccessfully": "Je melding is succesvol verstuurd!",
+  "@reportSubmittedSuccessfully": {
+    "description": "Report submitted success"
+  },
+  "reportSubmissionFailed": "Melding kon niet worden verstuurd. Probeer het later opnieuw.",
+  "@reportSubmissionFailed": {
+    "description": "Report submission failed"
+  },
+  "reportBug": "Meld een bug",
+  "@reportBug": {
+    "description": "Report bug button"
+  },
+  "reportBugDescription": "Meld een bug of probleem met de app",
+  "@reportBugDescription": {
+    "description": "Report bug description"
+  },
+  "subject": "Onderwerp",
+  "@subject": {
+    "description": "Subject label"
+  },
+  "pleaseEnterSubject": "Voer een onderwerp in",
+  "@pleaseEnterSubject": {
+    "description": "Please enter subject"
+  },
+  "description": "Beschrijving",
+  "@description": {
+    "description": "Description label"
+  },
+  "pleaseEnterDescription": "Voer een beschrijving in",
+  "@pleaseEnterDescription": {
+    "description": "Please enter description"
+  },
+  "emailOptional": "E-mail (optioneel)",
+  "@emailOptional": {
+    "description": "Email optional label"
+  },
+  "reportQuestion": "Meld Vraag",
+  "@reportQuestion": {
+    "description": "Report question button"
+  },
+  "questionReportedSuccessfully": "Vraag succesvol gemeld",
+  "@questionReportedSuccessfully": {
+    "description": "Question reported success"
+  },
+  "errorReportingQuestion": "Fout bij melden van vraag",
+  "@errorReportingQuestion": {
+    "description": "Error reporting question"
+  },
+  "grid": "Raster",
+  "@grid": {
+    "description": "Grid layout"
+  },
+  "list": "Lijst",
+  "@list": {
+    "description": "List layout"
+  },
+  "compactGrid": "Compact raster",
+  "@compactGrid": {
+    "description": "Compact grid layout"
+  },
+  "useTheme": "Gebruik thema",
+  "@useTheme": {
+    "description": "Use theme button"
+  },
+  "failedToRemoveDevice": "Kon apparaat niet verwijderen",
+  "@failedToRemoveDevice": {
+    "description": "Failed to remove device"
+  },
+  "errorRemovingDevice": "Fout bij verwijderen apparaat: ",
+  "@errorRemovingDevice": {
+    "description": "Error removing device"
+  },
+  "sharedStats": "Gedeelde statistieken",
+  "@sharedStats": {
+    "description": "Shared statistics"
+  },
+  "newGame": "Nieuw spel",
+  "@newGame": {
+    "description": "New game button"
+  },
+  "errorLoadingUsernames": "Fout bij laden gebruikersnamen: ",
+  "@errorLoadingUsernames": {
+    "description": "Error loading usernames"
+  },
+  "urlCopiedToClipboard": "URL gekopieerd naar klembord!",
+  "@urlCopiedToClipboard": {
+    "description": "URL copied message"
+  },
+  "tryAgainButton": "Probeer opnieuw",
+  "@tryAgainButton": {
+    "description": "Try again button"
+  },
+  "checkConnection": "Controleer verbinding",
+  "@checkConnection": {
+    "description": "Check connection button"
+  },
+  "goToQuiz": "Naar de quiz",
+  "@goToQuiz": {
+    "description": "Go to quiz button"
+  },
+  "errorLoadingAnalytics": "Fout bij laden analytics",
+  "@errorLoadingAnalytics": {
+    "description": "Error loading analytics"
+  },
+  "bibleReferenceCopiedForSharing": "Bijbelverwijzing gekopieerd om te delen",
+  "@bibleReferenceCopiedForSharing": {
+    "description": "Bible reference copied for sharing"
+  },
+  "errorHandlingTest": "Foutafhandeling test",
+  "@errorHandlingTest": {
+    "description": "Error handling test"
+  },
+  "errorHandlingTestDescription": "Dit scherm demonstreert het nieuwe foutafhandelingssysteem",
+  "@errorHandlingTestDescription": {
+    "description": "Error handling test description"
+  },
+  "testErrorHandling": "Test foutafhandeling",
+  "@testErrorHandling": {
+    "description": "Test error handling button"
+  },
+  "testErrorDialog": "Test foutdialoog",
+  "@testErrorDialog": {
+    "description": "Test error dialog button"
+  },
+  "retryButton": "Opnieuw proberen",
+  "@retryButton": {
+    "description": "Retry button"
+  },
+  "searchSettings": "Zoek instellingen...",
+  "@searchSettings": {
+    "description": "Search settings input"
+  },
+  "lessonLayoutSettings": "Lesindeling",
+  "@lessonLayoutSettings": {
+    "description": "Lesson layout settings"
+  },
+  "chooseLessonLayoutDesc": "Kies hoe lessen worden weergegeven",
+  "@chooseLessonLayoutDesc": {
+    "description": "Choose lesson layout description"
+  },
+  "showIntroductionDesc": "Bekijk de app-introductie en tutorial",
+  "@showIntroductionDesc": {
+    "description": "Show introduction description"
+  },
+  "clearQuestionCacheDesc": "Verwijder gecachte vragen om opslagruimte vrij te maken",
+  "@clearQuestionCacheDesc": {
+    "description": "Clear question cache description"
+  },
+  "followOnSocialMediaDesc": "Verbind met ons op social media platforms",
+  "@followOnSocialMediaDesc": {
+    "description": "Follow on social media description"
+  },
+  "inviteFriendDesc": "Deel een gepersonaliseerde uitnodigingslink met vrienden",
+  "@inviteFriendDesc": {
+    "description": "Invite friend description"
+  },
+  "bugReport": "Rapporteer een probleem",
+  "@bugReport": {
+    "description": "Bug report button"
+  },
+  "bugReportDesc": "Rapporteer bugs en problemen met de app",
+  "@bugReportDesc": {
+    "description": "Bug report description"
+  },
+  "streakLabel": " reeks",
+  "@streakLabel": {
+    "description": "Streak label suffix"
+  },
+  "unknownUser": "Onbekende Gebruiker",
+  "@unknownUser": {
+    "description": "Unknown user label"
+  },
+  "lastScore": "Laatste score:",
+  "@lastScore": {
+    "description": "Last score label"
+  },
+  "notAvailable": "Onbekend",
+  "@notAvailable": {
+    "description": "Not available label"
+  },
+  "followedUsersScores": "Scores van Gevolgde Gebruikers",
+  "@followedUsersScores": {
+    "description": "Followed users scores"
+  },
+  "thankYouForSupport": "Bedankt voor je steun!",
+  "@thankYouForSupport": {
+    "description": "Thank you for support"
+  },
+  "thankYouForYourSupport": "We waarderen dat je BijbelQuiz gebruikt en deelneemt aan onze gemeenschap.",
+  "@thankYouForYourSupport": {
+    "description": "Thank you for your support message"
+  },
+  "supportWithDonation": "Ondersteun ons met een donatie",
+  "@supportWithDonation": {
+    "description": "Support with donation button"
+  },
+  "bijbelquizGenDonationText": "Je donatie helpt ons BijbelQuiz te onderhouden en te verbeteren voor jouw, en anderen.",
+  "@bijbelquizGenDonationText": {
+    "description": "Donation text"
+  },
+  "noExpirationDate": "Geen vervaldatum",
+  "@noExpirationDate": {
+    "description": "No expiration date"
+  },
+  "username": "Gebruikersnaam",
+  "@username": {
+    "description": "Username label"
+  },
+  "enterUsername": "Voer gebruikersnaam in",
+  "@enterUsername": {
+    "description": "Enter username input"
+  },
+  "usernameHint": "Bijv. Jan2026",
+  "@usernameHint": {
+    "description": "Username input hint"
+  },
+  "saveUsername": "Bewaar gebruikersnaam",
+  "@saveUsername": {
+    "description": "Save username button"
+  },
+  "pleaseEnterUsername": "Voer een gebruikersnaam in",
+  "@pleaseEnterUsername": {
+    "description": "Please enter username"
+  },
+  "usernameTooLong": "Gebruikersnaam mag maximaal 30 tekens bevatten",
+  "@usernameTooLong": {
+    "description": "Username too long error"
+  },
+  "usernameAlreadyTaken": "Gebruikersnaam is al in gebruik",
+  "@usernameAlreadyTaken": {
+    "description": "Username already taken error"
+  },
+  "usernameBlacklisted": "Deze gebruikersnaam is niet toegestaan",
+  "@usernameBlacklisted": {
+    "description": "Username blacklisted error"
+  },
+  "usernameSaved": "Gebruikersnaam opgeslagen!",
+  "@usernameSaved": {
+    "description": "Username saved message"
+  },
+  "beta": "Bèta",
+  "@beta": {
+    "description": "Beta label"
+  },
+  "shareStatsTitle": "Deel je statistieken",
+  "@shareStatsTitle": {
+    "description": "Share stats title"
+  },
+  "shareYourBijbelQuizStats": "Deel je BijbelQuiz statistieken",
+  "@shareYourBijbelQuizStats": {
+    "description": "Share your BibleQuiz stats"
+  },
+  "correctAnswersShare": "Correcte antwoorden",
+  "@correctAnswersShare": {
+    "description": "Correct answers for sharing"
+  },
+  "currentStreakShare": "Huidige reeks",
+  "@currentStreakShare": {
+    "description": "Current streak for sharing"
+  },
+  "bestStreakShare": "Beste reeks",
+  "@bestStreakShare": {
+    "description": "Best streak for sharing"
+  },
+  "mistakesShare": "Fouten",
+  "@mistakesShare": {
+    "description": "Mistakes for sharing"
+  },
+  "accuracyShare": "Accuraatheid",
+  "@accuracyShare": {
+    "description": "Accuracy for sharing"
+  },
+  "timeSpentShare": "Tijd besteed",
+  "@timeSpentShare": {
+    "description": "Time spent for sharing"
+  },
+  "shareResults": "Deel je resultaten",
+  "@shareResults": {
+    "description": "Share results button"
+  },
+  "copyLink": "Kopieer link",
+  "@copyLink": {
+    "description": "Copy link button"
+  },
+  "automaticBugReports": "Automatisch problemen melden",
+  "@automaticBugReports": {
+    "description": "Automatic bug reports toggle"
+  },
+  "automaticBugReportsDesc": "Automatisch bugrapporten verzenden wanneer er fouten optreden (aanbevolen)",
+  "@automaticBugReportsDesc": {
+    "description": "Automatic bug reports description"
+  },
+  "motivationalNotifications": "Motiverende notificaties",
+  "@motivationalNotifications": {
+    "description": "Motivational notifications toggle"
+  },
+  "motivationalNotificationsDesc": "Ontvang 1-3 notificaties per dag tussen 06:00 en 23:00 om je te motiveren een quiz te doen",
+  "@motivationalNotificationsDesc": {
+    "description": "Motivational notifications description"
+  },
+  "dataSuccessfullySynchronized": "Gegevens succesvol gesynchroniseerd",
+  "@dataSuccessfullySynchronized": {
+    "description": "Data sync success"
+  },
+  "synchronizationFailed": "Synchronisatie mislukt: ",
+  "@synchronizationFailed": {
+    "description": "Sync failed message"
+  },
+  "editProfile": "Profiel bewerken",
+  "@editProfile": {
+    "description": "Edit profile button"
+  },
+  "adjustNameAndBio": "Naam en bio aanpassen",
+  "@adjustNameAndBio": {
+    "description": "Adjust name and bio button"
+  },
+  "changeUsername": "Gebruikersnaam wijzigen",
+  "@changeUsername": {
+    "description": "Change username button"
+  },
+  "adjustYourUsername": "Je gebruikersnaam aanpassen",
+  "@adjustYourUsername": {
+    "description": "Adjust your username button"
+  },
+  "changePassword": "Wachtwoord wijzigen",
+  "@changePassword": {
+    "description": "Change password button"
+  },
+  "secureYourAccount": "Beveilig je account",
+  "@secureYourAccount": {
+    "description": "Secure your account button"
+  },
+  "signOut": "Uitloggen",
+  "@signOut": {
+    "description": "Sign out button"
+  },
+  "signOutFromDevice": "Van dit apparaat afmelden",
+  "@signOutFromDevice": {
+    "description": "Sign out from device button"
+  },
+  "deleteAccount": "Account verwijderen",
+  "@deleteAccount": {
+    "description": "Delete account button"
+  },
+  "permanentlyDeleteAccount": "Account permanent verwijderen",
+  "@permanentlyDeleteAccount": {
+    "description": "Permanently delete account button"
+  },
+  "displayName": "Weergavenaam",
+  "@displayName": {
+    "description": "Display name label"
+  },
+  "bioOptional": "Bio (optioneel)",
+  "@bioOptional": {
+    "description": "Bio optional label"
+  },
+  "newUsername": "Nieuwe gebruikersnaam",
+  "@newUsername": {
+    "description": "New username input"
+  },
+  "chooseUniqueName": "Kies een unieke naam",
+  "@chooseUniqueName": {
+    "description": "Choose unique name"
+  },
+  "currentPassword": "Huidig wachtwoord",
+  "@currentPassword": {
+    "description": "Current password input"
+  },
+  "newPassword": "Nieuw wachtwoord",
+  "@newPassword": {
+    "description": "New password input"
+  },
+  "atLeast6Characters": "Minimaal 6 karakters",
+  "@atLeast6Characters": {
+    "description": "Minimum 6 characters"
+  },
+  "confirmNewPassword": "Bevestig nieuw wachtwoord",
+  "@confirmNewPassword": {
+    "description": "Confirm new password input"
+  },
+  "fillAllPasswordFields": "Vul alle wachtwoord velden in",
+  "@fillAllPasswordFields": {
+    "description": "Fill all password fields"
+  },
+  "newPasswordsDoNotMatch": "Nieuwe wachtwoorden komen niet overeen",
+  "@newPasswordsDoNotMatch": {
+    "description": "Passwords do not match"
+  },
+  "newPasswordMin6Chars": "Nieuw wachtwoord moet minimaal 6 karakters bevatten",
+  "@newPasswordMin6Chars": {
+    "description": "New password minimum 6 characters"
+  },
+  "enterNewUsername": "Voer een nieuwe gebruikersnaam in",
+  "@enterNewUsername": {
+    "description": "Enter new username"
+  },
+  "usernameMin3Chars": "Gebruikersnaam moet minimaal 3 karakters bevatten",
+  "@usernameMin3Chars": {
+    "description": "Username minimum 3 characters"
+  },
+  "usernameMax20Chars": "Gebruikersnaam mag maximaal 20 karakters bevatten",
+  "@usernameMax20Chars": {
+    "description": "Username maximum 20 characters"
+  },
+  "usernameNotAllowed": "Deze gebruikersnaam is niet toegestaan",
+  "@usernameNotAllowed": {
+    "description": "Username not allowed"
+  },
+  "thisUsernameAlreadyTaken": "Deze gebruikersnaam is al in gebruik",
+  "@thisUsernameAlreadyTaken": {
+    "description": "Username already taken"
+  },
+  "usernameSuccessfullyChanged": "Gebruikersnaam succesvol gewijzigd",
+  "@usernameSuccessfullyChanged": {
+    "description": "Username changed success"
+  },
+  "failedToChangeUsername": "Gebruikersnaam wijzigen mislukt",
+  "@failedToChangeUsername": {
+    "description": "Username change failed"
+  },
+  "displayNameRequired": "Weergavenaam is verplicht",
+  "@displayNameRequired": {
+    "description": "Display name required"
+  },
+  "profileSuccessfullyUpdated": "Profiel succesvol bijgewerkt",
+  "@profileSuccessfullyUpdated": {
+    "description": "Profile update success"
+  },
+  "failedToUpdateProfile": "Profiel bijwerken mislukt",
+  "@failedToUpdateProfile": {
+    "description": "Profile update failed"
+  },
+  "signOutFailed": "Uitloggen mislukt",
+  "@signOutFailed": {
+    "description": "Sign out failed"
+  },
+  "passwordSuccessfullyChanged": "Wachtwoord succesvol gewijzigd",
+  "@passwordSuccessfullyChanged": {
+    "description": "Password change success"
+  },
+  "failedToChangePassword": "Wachtwoord wijzigen mislukt",
+  "@failedToChangePassword": {
+    "description": "Password change failed"
+  },
+  "updated": "Bijgewerkt",
+  "@updated": {
+    "description": "Updated label"
+  },
+  "notUpdated": "Niet bijgewerkt",
+  "@notUpdated": {
+    "description": "Not updated label"
+  },
+  "lastSync": "Laatste sync",
+  "@lastSync": {
+    "description": "Last sync label"
+  },
+  "user": "Gebruiker",
+  "@user": {
+    "description": "User label"
+  },
+  "account": "Account",
+  "@account": {
+    "description": "Account label"
+  },
+  "syncing": "Syncing...",
+  "@syncing": {
+    "description": "Syncing status"
+  },
+  "sync": "Sync",
+  "@sync": {
+    "description": "Sync button"
+  },
+  "save": "Opslaan",
+  "@save": {
+    "description": "Save button"
+  },
+  "change": "Wijzigen",
+  "@change": {
+    "description": "Change button"
+  },
+  "never": "Nooit",
+  "@never": {
+    "description": "Never label"
+  },
+  "justNow": "Zojuist",
+  "@justNow": {
+    "description": "Just now label"
+  },
+  "minutesAgo": "m geleden",
+  "@minutesAgo": {
+    "description": "Minutes ago label"
+  },
+  "hoursAgo": "u geleden",
+  "@hoursAgo": {
+    "description": "Hours ago label"
+  },
+  "daysAgo": "d geleden",
+  "@daysAgo": {
+    "description": "Days ago label"
+  },
+  "noEmail": "Geen email",
+  "@noEmail": {
+    "description": "No email label"
+  },
+  "leaderboard": "Leaderboard",
+  "@leaderboard": {
+    "description": "Leaderboard label"
+  },
+  "noLeaderboardData": "Geen leaderboard gegevens beschikbaar",
+  "@noLeaderboardData": {
+    "description": "No leaderboard data"
+  },
+  "elim50CouponMessage": "Je hebt 50 punten gekregen en er is 50 cent gedoneerd voor de verbouwing van Elim!",
+  "@elim50CouponMessage": {
+    "description": "ELIM50 coupon message"
+  },
+  "loginWithBqid": "Login met je BQID",
+  "@loginWithBqid": {
+    "description": "Login with BQID button"
+  },
+  "socialFeaturesMessage": "Maak een account aan om sociale functies te gebruiken, zoals het zoeken naar gebruikers, vrienden maken en berichten versturen.",
+  "@socialFeaturesMessage": {
+    "description": "Social features message"
+  },
+  "login": "Inloggen",
+  "@login": {
+    "description": "Login button"
+  },
+  "signup": "Aanmelden",
+  "@signup": {
+    "description": "Sign up button"
+  },
+  "email": "Email",
+  "@email": {
+    "description": "Email label"
+  },
+  "emailHint": "jouw@email.com",
+  "@emailHint": {
+    "description": "Email input hint"
+  },
+  "usernameSignupHint": "Kies een unieke naam",
+  "@usernameSignupHint": {
+    "description": "Username signup hint"
+  },
+  "password": "Wachtwoord",
+  "@password": {
+    "description": "Password label"
+  },
+  "passwordHint": "Minimaal 6 karakters",
+  "@passwordHint": {
+    "description": "Password input hint"
+  },
+  "confirmPassword": "Bevestig wachtwoord",
+  "@confirmPassword": {
+    "description": "Confirm password label"
+  },
+  "confirmPasswordHint": "Herhaal je wachtwoord",
+  "@confirmPasswordHint": {
+    "description": "Confirm password hint"
+  },
+  "accountCreatedMessage": "Account aangemaakt! Controleer je email voor verificatie.",
+  "@accountCreatedMessage": {
+    "description": "Account created message"
+  },
+  "fillEmailAndPassword": "Vul je email en wachtwoord in om door te gaan.",
+  "@fillEmailAndPassword": {
+    "description": "Fill email and password"
+  },
+  "enterValidEmail": "Voer een geldig emailadres in.",
+  "@enterValidEmail": {
+    "description": "Enter valid email"
+  },
+  "fillAllFields": "Vul alle velden in om een account aan te maken.",
+  "@fillAllFields": {
+    "description": "Fill all fields"
+  },
+  "passwordsDoNotMatch": "Wachtwoorden komen niet overeen. Controleer of je beide velden hetzelfde hebt ingevuld.",
+  "@passwordsDoNotMatch": {
+    "description": "Passwords do not match"
+  },
+  "passwordTooShort": "Wachtwoord moet minimaal 6 karakters bevatten voor je veiligheid.",
+  "@passwordTooShort": {
+    "description": "Password too short"
+  },
+  "checkingPassword": "Wachtwoord wordt gecontroleerd op veiligheid...",
+  "@checkingPassword": {
+    "description": "Checking password"
+  },
+  "passwordCompromised": "Dit wachtwoord is aangetroffen in datalekken. Kies een ander wachtwoord voor je veiligheid.",
+  "@passwordCompromised": {
+    "description": "Password compromised"
+  },
+  "usernameTooShort": "Gebruikersnaam moet minimaal 3 karakters bevatten.",
+  "@usernameTooShort": {
+    "description": "Username too short"
+  },
+  "usernameSignupTooLong": "Gebruikersnaam mag maximaal 20 karakters bevatten.",
+  "@usernameSignupTooLong": {
+    "description": "Username too long"
+  },
+  "usernameInvalidChars": "Gebruikersnaam mag alleen letters, cijfers en underscores bevatten.",
+  "@usernameInvalidChars": {
+    "description": "Username invalid characters"
+  },
+  "checkingUsername": "Beschikbaarheid van gebruikersnaam wordt gecontroleerd...",
+  "@checkingUsername": {
+    "description": "Checking username"
+  },
+  "invalidEmailOrPassword": "Ongeldig email of wachtwoord. Controleer je gegevens en probeer opnieuw.",
+  "@invalidEmailOrPassword": {
+    "description": "Invalid email or password"
+  },
+  "emailNotConfirmed": "Je email is nog niet geverifieerd. Controleer je inbox en klik op de verificatielink.",
+  "@emailNotConfirmed": {
+    "description": "Email not confirmed"
+  },
+  "tooManyRequests": "Te veel pogingen. Wacht even voordat je opnieuw probeert.",
+  "@tooManyRequests": {
+    "description": "Too many requests"
+  },
+  "passwordTooShortGeneric": "Wachtwoord moet minimaal 6 karakters bevatten.",
+  "@passwordTooShortGeneric": {
+    "description": "Password too short generic"
+  },
+  "invalidEmailAddress": "Ongeldig emailadres. Controleer of je een geldig emailadres hebt ingevoerd.",
+  "@invalidEmailAddress": {
+    "description": "Invalid email address"
+  },
+  "userAlreadyRegistered": "Er bestaat al een account met dit emailadres. Probeer in te loggen of gebruik een ander emailadres.",
+  "@userAlreadyRegistered": {
+    "description": "User already registered"
+  },
+  "signupDisabled": "Aanmelden is momenteel uitgeschakeld. Probeer het later opnieuw.",
+  "@signupDisabled": {
+    "description": "Sign up disabled"
+  },
+  "weakPassword": "Wachtwoord is te zwak. Kies een sterker wachtwoord met meer karakters.",
+  "@weakPassword": {
+    "description": "Weak password"
+  },
+  "genericError": "Er is iets misgegaan. Probeer het opnieuw of neem contact op als het probleem aanhoudt.",
+  "@genericError": {
+    "description": "Generic error"
+  },
+  "guideAccount": "Account",
+  "@guideAccount": {
+    "description": "Guide account section"
+  },
+  "guideAccountDescription": "Maak een account aan of log in om je voortgang te bewaren en sociale functies te gebruiken.",
+  "@guideAccountDescription": {
+    "description": "Guide account description"
+  },
+  "couponRedeemDescription": "Je kunt couponcodes later verzilveren via het winkelmenu.",
+  "@couponRedeemDescription": {
+    "description": "Coupon redeem description"
+  },
+  "termsAgreementText": "Als u doorgaat gaat u akkoord met onze ",
+  "@termsAgreementText": {
+    "description": "Terms agreement text"
+  },
+  "termsOfService": "algemene voorwaarden",
+  "@termsOfService": {
+    "description": "Terms of service link"
+  },
+  "progressOverview": "Voortgangsoverzicht",
+  "@progressOverview": {
+    "description": "Progress overview"
+  },
+  "progressOverviewHint": "Toont je huidige voortgang door de lessen",
+  "@progressOverviewHint": {
+    "description": "Progress overview hint"
+  },
+  "lessonCompletionProgress": "Voortgang lesvoltooiing",
+  "@lessonCompletionProgress": {
+    "description": "Lesson completion progress"
+  },
+  "lessonsCompleted": "{unlocked} van de {total} lessen voltooid",
+  "@lessonsCompleted": {
+    "description": "Lessons completed progress",
+    "placeholders": {
+      "unlocked": {
+        "type": "int",
+        "description": "Number of lessons unlocked"
+      },
+      "total": {
+        "type": "int",
+        "description": "Total number of lessons"
+      }
+    }
+  },
+  "continueWithLesson": "Ga verder met les: {lessonTitle}",
+  "@continueWithLesson": {
+    "description": "Continue with specific lesson",
+    "placeholders": {
+      "lessonTitle": {
+        "type": "String",
+        "description": "Title of the lesson"
+      }
+    }
+  },
+  "continueWithLessonHint": "Start de volgende aanbevolen les in je voortgang",
+  "@continueWithLessonHint": {
+    "description": "Continue with lesson hint"
+  },
+  "practiceMode": "Oefenmodus",
+  "@practiceMode": {
+    "description": "Practice mode"
+  },
+  "practiceModeHint": "Start een willekeurige oefenquiz zonder je voortgang te beïnvloeden",
+  "@practiceModeHint": {
+    "description": "Practice mode hint"
+  },
+  "multiplayerMode": "Multiplayer-modus",
+  "@multiplayerMode": {
+    "description": "Multiplayer mode"
+  },
+  "multiplayerModeHint": "Start een multiplayer quizspel",
+  "@multiplayerModeHint": {
+    "description": "Multiplayer mode hint"
+  },
+  "startRandomPracticeQuiz": "Start een willekeurige oefenquiz",
+  "@startRandomPracticeQuiz": {
+    "description": "Start random practice quiz button"
+  },
+  "playButton": "Speel",
+  "@playButton": {
+    "description": "Play button"
+  },
+  "dailyStreakDescription_one": "Je gebruikt BijbelQuiz al {streakDays} dag op rij",
+  "dailyStreakDescription_other": "Je gebruikt BijbelQuiz al {streakDays} dagen op rij",
+  "@dailyStreakDescription": {
+    "description": "Daily streak description",
+    "placeholders": {
+      "streakDays": {
+        "type": "int",
+        "description": "Number of streak days"
+      }
+    }
+  },
+  "monday": "Ma",
+  "@monday": {
+    "description": "Monday abbreviation"
+  },
+  "tuesday": "Di",
+  "@tuesday": {
+    "description": "Tuesday abbreviation"
+  },
+  "wednesday": "Wo",
+  "@wednesday": {
+    "description": "Wednesday abbreviation"
+  },
+  "thursday": "Do",
+  "@thursday": {
+    "description": "Thursday abbreviation"
+  },
+  "friday": "Vr",
+  "@friday": {
+    "description": "Friday abbreviation"
+  },
+  "saturday": "Za",
+  "@saturday": {
+    "description": "Saturday abbreviation"
+  },
+  "sunday": "Zo",
+  "@sunday": {
+    "description": "Sunday abbreviation"
+  },
+  "questionReportedByUser": "Vraag gerapporteerd door gebruiker",
+  "@questionReportedByUser": {
+    "description": "Question reported by user"
+  },
+  "invalidBiblicalReferenceInQuestion": "Ongeldige bijbelverwijzing in vraag",
+  "@invalidBiblicalReferenceInQuestion": {
+    "description": "Invalid biblical reference in question"
+  },
+  "pleaseEnterDataToImport": "Voer gegevens in om te importeren",
+  "@pleaseEnterDataToImport": {
+    "description": "Please enter data to import"
+  },
+  "importFailed": "Importeren mislukt: ",
+  "@importFailed": {
+    "description": "Import failed message"
+  },
+  "errorLoadingStore": "Fout bij laden winkel",
+  "@errorLoadingStore": {
+    "description": "Error loading store"
+  },
+  "purchaseFailed": "Aankoop mislukt, probeer het opnieuw",
+  "@purchaseFailed": {
+    "description": "Purchase failed message"
+  },
+  "purchaseErrorString": "Fout bij aankoop: {error}",
+  "@purchaseErrorString": {
+    "description": "Purchase error string",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "description": "Error message"
+      }
+    }
+  },
+  "christmasTheme": "Kerst Thema",
+  "@christmasTheme": {
+    "description": "Christmas theme name"
+  },
+  "christmasThemeDescription": "Een feestelijk kerstthema met rode en groene kleuren",
+  "@christmasThemeDescription": {
+    "description": "Christmas theme description"
+  },
+  "terminalGreenTheme": "Terminal Green",
+  "@terminalGreenTheme": {
+    "description": "Terminal green theme name"
+  },
+  "terminalGreenThemeDescription": "Een klassiek terminal thema met groene tekst op zwarte achtergrond",
+  "@terminalGreenThemeDescription": {
+    "description": "Terminal green theme description"
+  },
+  "oceanBlueTheme": "Ocean Blue",
+  "@oceanBlueTheme": {
+    "description": "Ocean blue theme name"
+  },
+  "oceanBlueThemeDescription": "Een helder oceaanblauw thema voor een frisse look",
+  "@oceanBlueThemeDescription": {
+    "description": "Ocean blue theme description"
+  },
+  "roseWhiteTheme": "Rose White",
+  "@roseWhiteTheme": {
+    "description": "Rose white theme name"
+  },
+  "roseWhiteThemeDescription": "Een elegant roze en wit thema",
+  "@roseWhiteThemeDescription": {
+    "description": "Rose white theme description"
+  },
+  "darkWoodTheme": "Dark Wood",
+  "@darkWoodTheme": {
+    "description": "Dark wood theme name"
+  },
+  "darkWoodThemeDescription": "Een warm donker hout thema",
+  "@darkWoodThemeDescription": {
+    "description": "Dark wood theme description"
+  },
+  "paymentError": "Fout bij betaling: {error}",
+  "@paymentError": {
+    "description": "Payment error message",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "description": "Error message"
+      }
+    }
+  },
+  "errorOpeningAiThemeGenerator": "Fout bij openen van AI thema generator",
+  "@errorOpeningAiThemeGenerator": {
+    "description": "Error opening AI theme generator"
+  },
+  "discount": "Korting!",
+  "@discount": {
+    "description": "Discount label"
+  },
+  "bibleReferenceCopied": "Bijbelverwijzing gekopieerd: {reference}",
+  "@bibleReferenceCopied": {
+    "description": "Bible reference copied message",
+    "placeholders": {
+      "reference": {
+        "type": "String",
+        "description": "Bible reference"
+      }
+    }
+  },
+  "share": "Delen",
+  "@share": {
+    "description": "Share button"
+  },
+  "shareBibleReference": "Bijbelverwijzing: {reference} ({translation})",
+  "@shareBibleReference": {
+    "description": "Share Bible reference",
+    "placeholders": {
+      "reference": {
+        "type": "String",
+        "description": "Bible reference"
+      },
+      "translation": {
+        "type": "String",
+        "description": "Translation name"
+      }
+    }
+  },
+  "lessonLabel": "Les {index}: {title}",
+  "@lessonLabel": {
+    "description": "Lesson label with number and title",
+    "placeholders": {
+      "index": {
+        "type": "int",
+        "description": "Lesson index"
+      },
+      "title": {
+        "type": "String",
+        "description": "Lesson title"
+      }
+    }
+  },
+  "unlockedButNotPlayable": "ontgrendeld maar niet speelbaar",
+  "@unlockedButNotPlayable": {
+    "description": "Unlocked but not playable status"
+  },
+  "lockedHint": "Deze les is vergrendeld. Voltooi eerdere lessen om deze te ontgrendelen.",
+  "@lockedHint": {
+    "description": "Locked lesson hint"
+  },
+  "unlockedButNotPlayableHint": "Deze les is ontgrendeld, maar je kunt alleen de meest recente ontgrendelde les spelen.",
+  "@unlockedButNotPlayableHint": {
+    "description": "Unlocked but not playable hint"
+  },
+  "tapToStart": "Tik om deze les te starten",
+  "@tapToStart": {
+    "description": "Tap to start lesson"
+  },
+  "recommended": "Aanbevolen: {label}",
+  "@recommended": {
+    "description": "Recommended label",
+    "placeholders": {
+      "label": {
+        "type": "String",
+        "description": "Recommended item label"
+      }
+    }
+  },
+  "lessonNumber": "Les {index}",
+  "@lessonNumber": {
+    "description": "Lesson number",
+    "placeholders": {
+      "index": {
+        "type": "int",
+        "description": "Lesson index"
+      }
+    }
+  },
+  "bookIconSemanticLabel": "Boekicoon dat de lesinhoud vertegenwoordigt",
+  "@bookIconSemanticLabel": {
+    "description": "Book icon accessibility label"
+  },
+  "lockedSpecialLessonSemanticLabel": "Vergrendelde speciale les",
+  "@lockedSpecialLessonSemanticLabel": {
+    "description": "Locked special lesson accessibility label"
+  },
+  "lockedLessonSemanticLabel": "Vergrendelde les",
+  "@lockedLessonSemanticLabel": {
+    "description": "Locked lesson accessibility label"
+  },
+  "mcqLabel": "Meerkeuzevraag",
+  "@mcqLabel": {
+    "description": "Multiple choice question label"
+  },
+  "mcqHint": "Selecteer het juiste antwoord uit de onderstaande opties",
+  "@mcqHint": {
+    "description": "Multiple choice hint"
+  },
+  "answerOptionsLabel": "Antwoordmogelijkheden",
+  "@answerOptionsLabel": {
+    "description": "Answer options label"
+  },
+  "answerOptionsHint": "Kies een van de {count} opties",
+  "@answerOptionsHint": {
+    "description": "Answer options hint",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "description": "Number of options"
+      }
+    }
+  },
+  "fitbLabel": "Vul de lege plek in vraag",
+  "@fitbLabel": {
+    "description": "Fill in the blank label"
+  },
+  "fitbHint": "Selecteer het woord dat de zin aanvult",
+  "@fitbHint": {
+    "description": "Fill in the blank hint"
+  },
+  "fitbHint2": "Kies het juiste woord om de lege plek in te vullen",
+  "@fitbHint2": {
+    "description": "Fill in the blank hint 2"
+  },
+  "tfLabel": "Waar of niet waar vraag",
+  "@tfLabel": {
+    "description": "True or false label"
+  },
+  "tfHint": "Selecteer of de bewering waar of niet waar is",
+  "@tfHint": {
+    "description": "True or false hint"
+  },
+  "tfHint2": "Kies Waar of Niet waar",
+  "@tfHint2": {
+    "description": "True or false hint 2"
+  },
+  "trueText": "Waar",
+  "@trueText": {
+    "description": "True option"
+  },
+  "falseText": "Niet waar",
+  "@falseText": {
+    "description": "False option"
+  },
+  "questionLabel": "Vraag: {question}",
+  "@questionLabel": {
+    "description": "Question label",
+    "placeholders": {
+      "question": {
+        "type": "String",
+        "description": "Question text"
+      }
+    }
+  },
+  "blank": "______",
+  "@blank": {
+    "description": "Blank placeholder"
+  },
+  "lessonLocked": "Les is nog vergrendeld",
+  "@lessonLocked": {
+    "description": "Lesson locked message"
+  },
+  "languageNl": "Nederlands",
+  "@languageNl": {
+    "description": "Dutch language name"
+  },
+  "languageEn": "English",
+  "@languageEn": {
+    "description": "English language name"
+  },
+  "selected": "Geselecteerd",
+  "@selected": {
+    "description": "Selected accessibility label"
+  },
+  "newMessagesOrLoginRequired": "Nieuwe berichten of login vereist",
+  "@newMessagesOrLoginRequired": {
+    "description": "New messages or login required"
+  },
+  "activeDiscountsAvailable": "Actieve kortingen beschikbaar",
+  "@activeDiscountsAvailable": {
+    "description": "Active discounts available"
+  },
+  "enabled": "Ingeschakeld",
+  "@enabled": {
+    "description": "Enabled status"
+  },
+  "disabled": "Uitgeschakeld",
+  "@disabled": {
+    "description": "Disabled status"
+  },
+  "clearSearch": "Zoeken wissen",
+  "@clearSearch": {
+    "description": "Clear search accessibility label"
+  },
+  "openBQIDSettings": "BQID instellingen openen",
+  "@openBQIDSettings": {
+    "description": "Open BQID settings accessibility label"
+  },
+  "sectionIcon": "{section} sectie icoon",
+  "@sectionIcon": {
+    "description": "Section icon accessibility label",
+    "placeholders": {
+      "section": {
+        "type": "String",
+        "description": "Section name"
+      }
+    }
+  },
+  "pageIndicator": "Pagina {current} van {total}",
+  "@pageIndicator": {
+    "description": "Page indicator accessibility label",
+    "placeholders": {
+      "current": {
+        "type": "int",
+        "description": "Current page"
+      },
+      "total": {
+        "type": "int",
+        "description": "Total pages"
+      }
+    }
+  },
+  "reactionButton": "{emoji} reactie",
+  "@reactionButton": {
+    "description": "Reaction button accessibility label"
+  }
+}

@@ -1,0 +1,2550 @@
+{
+  "@@locale": "en",
+  "appName": "BibleQuiz",
+  "@appName": {
+    "description": "The name of the application"
+  },
+  "appDescription": "Test Your Bible Knowledge",
+  "@appDescription": {
+    "description": "App description shown in stores"
+  },
+  "loading": "Loading...",
+  "@loading": {
+    "description": "Shown while content is loading"
+  },
+  "error": "Error",
+  "@error": {
+    "description": "Generic error message"
+  },
+  "back": "Back",
+  "@back": {
+    "description": "Navigate back"
+  },
+  "submit": "Submit",
+  "@submit": {
+    "description": "Submit button"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button"
+  },
+  "ok": "OK",
+  "@ok": {
+    "description": "OK button"
+  },
+  "question": "Question",
+  "@question": {
+    "description": "Quiz question label"
+  },
+  "score": "Score",
+  "@score": {
+    "description": "Current score display"
+  },
+  "correct": "Correct!",
+  "@correct": {
+    "description": "Correct answer feedback"
+  },
+  "incorrect": "Incorrect",
+  "@incorrect": {
+    "description": "Incorrect answer feedback"
+  },
+  "quizComplete": "Quiz Complete!",
+  "@quizComplete": {
+    "description": "Shown when quiz is finished"
+  },
+  "yourScore": "Your score: ",
+  "@yourScore": {
+    "description": "Display user's score"
+  },
+  "unlockBiblicalReference": "Unlock Bible Reference (Beta)",
+  "@unlockBiblicalReference": {
+    "description": "Button to unlock biblical references feature"
+  },
+  "biblicalReference": "Bible Reference",
+  "@biblicalReference": {
+    "description": "Biblical reference label"
+  },
+  "close": "Close",
+  "@close": {
+    "description": "Close button"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings screen title"
+  },
+  "sound": "Sound",
+  "@sound": {
+    "description": "Sound settings"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Language setting"
+  },
+  "theme": "Theme",
+  "@theme": {
+    "description": "Theme settings"
+  },
+  "darkMode": "Dark Mode",
+  "@darkMode": {
+    "description": "Dark mode option"
+  },
+  "lightMode": "Light Mode",
+  "@lightMode": {
+    "description": "Light mode option"
+  },
+  "systemDefault": "System Default",
+  "@systemDefault": {
+    "description": "System default theme option"
+  },
+  "lessons": "Lessons",
+  "@lessons": {
+    "description": "Lessons section"
+  },
+  "continueLearning": "Continue Learning",
+  "@continueLearning": {
+    "description": "Continue learning button"
+  },
+  "store": "Store",
+  "@store": {
+    "description": "Store screen title"
+  },
+  "unlockAll": "Unlock All",
+  "@unlockAll": {
+    "description": "Unlock all content option"
+  },
+  "purchaseSuccessful": "Purchase Successful!",
+  "@purchaseSuccessful": {
+    "description": "Purchase completed successfully"
+  },
+  "donate": "Support Us",
+  "@donate": {
+    "description": "Donation section title"
+  },
+  "donateButton": "Donate Now",
+  "@donateButton": {
+    "description": "Donate button"
+  },
+  "donateExplanation": "Support the development of this app with a donation. This is needed to continue developing/maintaining the app.",
+  "@donateExplanation": {
+    "description": "Explanation for donation request"
+  },
+  "guide": "Guide",
+  "@guide": {
+    "description": "Guide screen title"
+  },
+  "howToPlay": "How to Play",
+  "@howToPlay": {
+    "description": "How to play section"
+  },
+  "connectionError": "No Internet Connection",
+  "@connectionError": {
+    "description": "Network connection error"
+  },
+  "connectionErrorMsg": "Check your internet connection and try again.",
+  "@connectionErrorMsg": {
+    "description": "Instructions for connection error"
+  },
+  "unknownError": "An error occurred",
+  "@unknownError": {
+    "description": "Generic error message"
+  },
+  "errorNoQuestions": "No valid questions found",
+  "@errorNoQuestions": {
+    "description": "No questions available error"
+  },
+  "errorLoadQuestions": "Error loading questions",
+  "@errorLoadQuestions": {
+    "description": "Question loading error"
+  },
+  "couldNotOpenDonationPage": "Could not open donation page",
+  "@couldNotOpenDonationPage": {
+    "description": "Error opening donation page"
+  },
+  "aiError": "AI service error occurred",
+  "@aiError": {
+    "description": "AI service error"
+  },
+  "apiError": "API service error occurred",
+  "@apiError": {
+    "description": "API service error"
+  },
+  "storageError": "Storage error occurred",
+  "@storageError": {
+    "description": "Storage error"
+  },
+  "syncError": "Synchronization failed",
+  "@syncError": {
+    "description": "Sync operation failed"
+  },
+  "permissionDenied": "Permission required for this feature",
+  "@permissionDenied": {
+    "description": "Permission denied error"
+  },
+  "streak": "Streak",
+  "@streak": {
+    "description": "Streak metric label"
+  },
+  "best": "Best",
+  "@best": {
+    "description": "Best score/result"
+  },
+  "time": "Time",
+  "@time": {
+    "description": "Time label"
+  },
+  "screenSizeNotSupported": "Screen size not supported",
+  "@screenSizeNotSupported": {
+    "description": "Unsupported screen size error"
+  },
+  "yourProgress": "Your Progress",
+  "@yourProgress": {
+    "description": "Progress section title"
+  },
+  "dailyStreak": "Daily Streak",
+  "@dailyStreak": {
+    "description": "Daily streak label"
+  },
+  "continueWith": "Continue With",
+  "@continueWith": {
+    "description": "Continue with section"
+  },
+  "multiplayerQuiz": "Multiplayer Quiz",
+  "@multiplayerQuiz": {
+    "description": "Multiplayer quiz option"
+  },
+  "chooseGameDuration": "Choose game duration",
+  "@chooseGameDuration": {
+    "description": "Game duration selection"
+  },
+  "startMultiplayerQuiz": "Start Multiplayer Quiz",
+  "@startMultiplayerQuiz": {
+    "description": "Start multiplayer quiz button"
+  },
+  "multiplayerDescription": "Play against each other on one phone! The phone is split in two - the top half rotates 180 degrees.",
+  "@multiplayerDescription": {
+    "description": "Multiplayer quiz description"
+  },
+  "gameRules": "Game rules:",
+  "@gameRules": {
+    "description": "Game rules section"
+  },
+  "ruleBothPlayers": "• Both players answer Bible questions",
+  "@ruleBothPlayers": {
+    "description": "Multiplayer rule: both players answer"
+  },
+  "ruleCorrectAnswer": "• A correct answer gives points",
+  "@ruleCorrectAnswer": {
+    "description": "Multiplayer rule: points for correct answers"
+  },
+  "ruleWinner": "• The one with the correct answers at the end wins",
+  "@ruleWinner": {
+    "description": "Multiplayer rule: winner determination"
+  },
+  "ruleScreenRotation": "• The top half of the screen rotates 180 degrees on mobile",
+  "@ruleScreenRotation": {
+    "description": "Multiplayer rule: screen rotation"
+  },
+  "timeUp": "Time is up!",
+  "@timeUp": {
+    "description": "Time expired message"
+  },
+  "timeUpMessage": "You did not answer in time. Your streak has been reset.",
+  "@timeUpMessage": {
+    "description": "Time up explanation with streak reset"
+  },
+  "notEnoughPoints": "Not Enough Points",
+  "@notEnoughPoints": {
+    "description": "Insufficient points"
+  },
+  "lessonComplete": "Lesson Complete",
+  "@lessonComplete": {
+    "description": "Lesson completion message"
+  },
+  "percentage": "Percentage",
+  "@percentage": {
+    "description": "Percentage label"
+  },
+  "bestStreak": "Best Streak",
+  "@bestStreak": {
+    "description": "Best streak label"
+  },
+  "retryLesson": "Try Again",
+  "@retryLesson": {
+    "description": "Retry lesson button"
+  },
+  "nextLesson": "Next Lesson",
+  "@nextLesson": {
+    "description": "Next lesson button"
+  },
+  "backToLessons": "Back to Lessons",
+  "@backToLessons": {
+    "description": "Back to lessons button"
+  },
+  "endScore": "End Score",
+  "@endScore": {
+    "description": "Final score label"
+  },
+  "endScoreHint": "Your total score in percentage on a speedometer",
+  "@endScoreHint": {
+    "description": "End score hint"
+  },
+  "display": "Display",
+  "@display": {
+    "description": "Display settings section"
+  },
+  "chooseTheme": "Choose your theme",
+  "@chooseTheme": {
+    "description": "Theme selection prompt"
+  },
+  "lightTheme": "Light",
+  "@lightTheme": {
+    "description": "Light theme option"
+  },
+  "systemTheme": "System",
+  "@systemTheme": {
+    "description": "System theme option"
+  },
+  "darkTheme": "Dark",
+  "@darkTheme": {
+    "description": "Dark theme option"
+  },
+  "oledTheme": "OLED",
+  "@oledTheme": {
+    "description": "OLED theme option"
+  },
+  "greenTheme": "Green",
+  "@greenTheme": {
+    "description": "Green theme option"
+  },
+  "orangeTheme": "Orange",
+  "@orangeTheme": {
+    "description": "Orange theme option"
+  },
+  "showNavigationLabels": "Show Navigation Labels",
+  "@showNavigationLabels": {
+    "description": "Navigation labels toggle"
+  },
+  "showNavigationLabelsDesc": "Show or hide text labels below navigation icons",
+  "@showNavigationLabelsDesc": {
+    "description": "Navigation labels description"
+  },
+  "colorfulMode": "Colorful Mode",
+  "@colorfulMode": {
+    "description": "Colorful mode toggle"
+  },
+  "colorfulModeDesc": "Enable different colors for lesson cards",
+  "@colorfulModeDesc": {
+    "description": "Colorful mode description"
+  },
+  "tryAgain": "Try Again",
+  "@tryAgain": {
+    "description": "Try again button"
+  },
+  "couldNotOpenStatusPage": "Could not open status page.",
+  "@couldNotOpenStatusPage": {
+    "description": "Error opening status page"
+  },
+  "lessonLayout": "Lesson Layout",
+  "@lessonLayout": {
+    "description": "Lesson layout setting"
+  },
+  "chooseLessonLayout": "Choose how lessons are displayed",
+  "@chooseLessonLayout": {
+    "description": "Lesson layout selection"
+  },
+  "layoutGrid": "Grid",
+  "@layoutGrid": {
+    "description": "Grid layout option"
+  },
+  "layoutList": "List",
+  "@layoutList": {
+    "description": "List layout option"
+  },
+  "layoutCompactGrid": "Compact Grid",
+  "@layoutCompactGrid": {
+    "description": "Compact grid layout option"
+  },
+  "couldNotLoadLessons": "Could not load lessons",
+  "@couldNotLoadLessons": {
+    "description": "Error loading lessons"
+  },
+  "progress": "Progress",
+  "@progress": {
+    "description": "Progress label"
+  },
+  "resetProgress": "Reset Progress",
+  "@resetProgress": {
+    "description": "Reset progress button"
+  },
+  "resetProgressConfirmation": "Are you sure you want to reset your progress? This cannot be undone.",
+  "@resetProgressConfirmation": {
+    "description": "Reset progress confirmation"
+  },
+  "confirm": "Confirm",
+  "@confirm": {
+    "description": "Confirm button"
+  },
+  "startLesson": "Start Lesson",
+  "@startLesson": {
+    "description": "Start lesson button"
+  },
+  "locked": "Locked",
+  "@locked": {
+    "description": "Locked status"
+  },
+  "complete": "Complete",
+  "@complete": {
+    "description": "Completed status"
+  },
+  "perfectScore": "Perfect Score!",
+  "@perfectScore": {
+    "description": "Perfect score achieved"
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "Retry button"
+  },
+  "previous": "Previous",
+  "@previous": {
+    "description": "Previous button"
+  },
+  "next": "Next",
+  "@next": {
+    "description": "Next button"
+  },
+  "getStarted": "Get Started",
+  "@getStarted": {
+    "description": "Get started button"
+  },
+  "welcomeTitle": "Welcome to BibleQuiz",
+  "@welcomeTitle": {
+    "description": "Welcome screen title"
+  },
+  "welcomeDescription": "Discover the Bible in a fun and interactive way with challenging questions and lessons.",
+  "@welcomeDescription": {
+    "description": "Welcome screen description"
+  },
+  "howToPlayTitle": "How to Play?",
+  "@howToPlayTitle": {
+    "description": "How to play section title"
+  },
+  "howToPlayDescription": "Answer questions about the Bible. The more accurate your answer, the more points you earn. You can later spend points in the shop on exclusive themes and power-ups.",
+  "@howToPlayDescription": {
+    "description": "How to play description"
+  },
+  "trackProgressTitle": "Play alone, with friends or family",
+  "@trackProgressTitle": {
+    "description": "Track progress section title"
+  },
+  "trackProgressDescription": "Go to the \"Social\" tab to follow friends or click on Multiplayer Quiz to play together.",
+  "@trackProgressDescription": {
+    "description": "Track progress description"
+  },
+  "customizeExperienceTitle": "Customize Your Experience",
+  "@customizeExperienceTitle": {
+    "description": "Customization section title"
+  },
+  "customizeExperienceDescription": "Customize your theme, game speed, and sound effects in the settings. Do you have any questions or suggestions? We would love to hear from you at {contactEmail}",
+  "@customizeExperienceDescription": {
+    "description": "Customization description",
+    "placeholders": {
+      "contactEmail": {
+        "type": "String",
+        "description": "Contact email address"
+      }
+    }
+  },
+  "supportUsDescription": "Do you find this app useful? Consider donating to help us maintain and improve the app. Every contribution is appreciated!",
+  "@supportUsDescription": {
+    "description": "Support us description"
+  },
+  "donateNow": "Donate Now",
+  "@donateNow": {
+    "description": "Donate now button"
+  },
+  "activationTitle": "Activate your account",
+  "@activationTitle": {
+    "description": "Activation screen title"
+  },
+  "activationSubtitle": "Enter your activation code to use the app",
+  "@activationSubtitle": {
+    "description": "Activation screen subtitle"
+  },
+  "activationCodeHint": "Enter your activation code",
+  "@activationCodeHint": {
+    "description": "Activation code input hint"
+  },
+  "activateButton": "Activate",
+  "@activateButton": {
+    "description": "Activate button"
+  },
+  "verifyButton": "Verify",
+  "@verifyButton": {
+    "description": "Verify button"
+  },
+  "verifying": "Verifying...",
+  "@verifying": {
+    "description": "Verifying status"
+  },
+  "activationTip": "Enter the activation code you received with your purchase.",
+  "@activationTip": {
+    "description": "Activation tip"
+  },
+  "activationSuccess": "Successfully activated!",
+  "@activationSuccess": {
+    "description": "Activation success message"
+  },
+  "activationError": "Invalid activation code. Please try again.",
+  "@activationError": {
+    "description": "Activation error message"
+  },
+  "activationErrorTitle": "Activation Failed",
+  "@activationErrorTitle": {
+    "description": "Activation error title"
+  },
+  "activationSuccessMessage": "Your account has been successfully activated. Enjoy the app!",
+  "@activationSuccessMessage": {
+    "description": "Activation success details"
+  },
+  "activationRequired": "Activation Required",
+  "@activationRequired": {
+    "description": "Activation required message"
+  },
+  "activationRequiredMessage": "You must activate the app before you can use it.",
+  "@activationRequiredMessage": {
+    "description": "Activation required details"
+  },
+  "yourStars": "Your Stars",
+  "@yourStars": {
+    "description": "Stars balance display"
+  },
+  "availableStars": "Available Stars",
+  "@availableStars": {
+    "description": "Available stars label"
+  },
+  "powerUps": "Power-ups",
+  "@powerUps": {
+    "description": "Power-ups section"
+  },
+  "themes": "Themes",
+  "@themes": {
+    "description": "Themes section"
+  },
+  "availableThemes": "Available Themes",
+  "@availableThemes": {
+    "description": "Available themes label"
+  },
+  "unlockTheme": "Unlock Theme",
+  "@unlockTheme": {
+    "description": "Unlock theme button"
+  },
+  "unlocked": "Unlocked",
+  "@unlocked": {
+    "description": "Unlocked status"
+  },
+  "notEnoughStars": "Not Enough Stars",
+  "@notEnoughStars": {
+    "description": "Insufficient stars"
+  },
+  "unlockFor": "Unlock for",
+  "@unlockFor": {
+    "description": "Unlock cost prefix"
+  },
+  "stars": "stars",
+  "@stars": {
+    "description": "Stars unit"
+  },
+  "free": "Free",
+  "@free": {
+    "description": "Free item"
+  },
+  "purchased": "Purchased",
+  "@purchased": {
+    "description": "Purchased status"
+  },
+  "confirmPurchase": "Confirm Purchase",
+  "@confirmPurchase": {
+    "description": "Confirm purchase button"
+  },
+  "purchaseConfirmation": "Are you sure you want to unlock this theme for",
+  "@purchaseConfirmation": {
+    "description": "Purchase confirmation message"
+  },
+  "purchaseSuccess": "Theme successfully unlocked!",
+  "@purchaseSuccess": {
+    "description": "Purchase success message"
+  },
+  "purchaseError": "Not enough stars to unlock this theme.",
+  "@purchaseError": {
+    "description": "Purchase error message"
+  },
+  "couldNotOpenDownloadPage": "Could not open download page",
+  "@couldNotOpenDownloadPage": {
+    "description": "Error opening download page"
+  },
+  "themeUnlockedWithSwitchOption": "unlocked! You can always return to the default theme in settings.",
+  "@themeUnlockedWithSwitchOption": {
+    "description": "Theme unlocked with switch option"
+  },
+  "doubleStars5Questions": "Double Stars (5 questions)",
+  "@doubleStars5Questions": {
+    "description": "Double stars power-up"
+  },
+  "doubleStars5QuestionsDesc": "Earn double stars for your next 5 questions",
+  "@doubleStars5QuestionsDesc": {
+    "description": "Double stars power-up description"
+  },
+  "tripleStars5Questions": "Triple Stars (5 questions)",
+  "@tripleStars5Questions": {
+    "description": "Triple stars power-up"
+  },
+  "tripleStars5QuestionsDesc": "Earn triple stars for your next 5 questions",
+  "@tripleStars5QuestionsDesc": {
+    "description": "Triple stars power-up description"
+  },
+  "fiveTimesStars5Questions": "5x Stars (5 questions)",
+  "@fiveTimesStars5Questions": {
+    "description": "5x stars power-up"
+  },
+  "fiveTimesStars5QuestionsDesc": "Earn 5x stars for your next 5 questions",
+  "@fiveTimesStars5QuestionsDesc": {
+    "description": "5x stars power-up description"
+  },
+  "doubleStars60Seconds": "Double Stars (60 seconds)",
+  "@doubleStars60Seconds": {
+    "description": "Double stars for 60 seconds power-up"
+  },
+  "doubleStars60SecondsDesc": "Earn double stars for 60 seconds",
+  "@doubleStars60SecondsDesc": {
+    "description": "Double stars 60s description"
+  },
+  "oledThemeName": "OLED Theme",
+  "@oledThemeName": {
+    "description": "OLED theme name"
+  },
+  "oledThemeDesc": "Unlock a true black, high-contrast theme",
+  "@oledThemeDesc": {
+    "description": "OLED theme description"
+  },
+  "greenThemeName": "Green Theme",
+  "@greenThemeName": {
+    "description": "Green theme name"
+  },
+  "greenThemeDesc": "Unlock a fresh green theme",
+  "@greenThemeDesc": {
+    "description": "Green theme description"
+  },
+  "orangeThemeName": "Orange Theme",
+  "@orangeThemeName": {
+    "description": "Orange theme name"
+  },
+  "orangeThemeDesc": "Unlock a vibrant orange theme",
+  "@orangeThemeDesc": {
+    "description": "Orange theme description"
+  },
+  "couponTitle": "Have a coupon code?",
+  "@couponTitle": {
+    "description": "Coupon section title"
+  },
+  "couponDescription": "Redeem it here for rewards",
+  "@couponDescription": {
+    "description": "Coupon description"
+  },
+  "couponRedeem": "Redeem",
+  "@couponRedeem": {
+    "description": "Redeem coupon button"
+  },
+  "couponDialogTitle": "Redeem Coupon",
+  "@couponDialogTitle": {
+    "description": "Coupon dialog title"
+  },
+  "couponCodeLabel": "Coupon code",
+  "@couponCodeLabel": {
+    "description": "Coupon code label"
+  },
+  "couponCodeHint": "e.g. SUMMER2023",
+  "@couponCodeHint": {
+    "description": "Coupon code input hint"
+  },
+  "couponSuccessTitle": "Congratulations!",
+  "@couponSuccessTitle": {
+    "description": "Coupon success title"
+  },
+  "couponStarsReceived": "You received {amount} stars!",
+  "@couponStarsReceived": {
+    "description": "Coupon stars reward message",
+    "placeholders": {
+      "amount": {
+        "type": "int",
+        "description": "Number of stars received"
+      }
+    }
+  },
+  "couponThemeUnlocked": "You unlocked a new theme!",
+  "@couponThemeUnlocked": {
+    "description": "Coupon theme unlocked message"
+  },
+  "couponErrorTitle": "Error",
+  "@couponErrorTitle": {
+    "description": "Coupon error title"
+  },
+  "couponInvalid": "Invalid coupon code",
+  "@couponInvalid": {
+    "description": "Invalid coupon message"
+  },
+  "couponExpired": "This coupon has expired",
+  "@couponExpired": {
+    "description": "Expired coupon message"
+  },
+  "couponMaxUsed": "This coupon is no longer valid (maximum uses reached)",
+  "@couponMaxUsed": {
+    "description": "Coupon max uses reached"
+  },
+  "couponAlreadyRedeemed": "This coupon has already been redeemed",
+  "@couponAlreadyRedeemed": {
+    "description": "Already redeemed coupon message"
+  },
+  "couponMaxPerDay": "Maximum of 5 coupons can be redeemed per day",
+  "@couponMaxPerDay": {
+    "description": "Coupon daily limit"
+  },
+  "qrCode": "QR-code",
+  "@qrCode": {
+    "description": "QR code label"
+  },
+  "qrCodeDescription": "Point the camera at the QR code",
+  "@qrCodeDescription": {
+    "description": "QR code scanning description"
+  },
+  "qrScannerMobileOnly": "QR Scanner only available on mobile",
+  "@qrScannerMobileOnly": {
+    "description": "QR scanner mobile only warning"
+  },
+  "invalidQRCode": "Invalid QR code",
+  "@invalidQRCode": {
+    "description": "Invalid QR code message"
+  },
+  "cameraAccessRequired": "Camera access required",
+  "@cameraAccessRequired": {
+    "description": "Camera permission required"
+  },
+  "cameraAccessDescription": "To scan QR codes, the app needs access to your camera. This permission is only used for scanning coupons.",
+  "@cameraAccessDescription": {
+    "description": "Camera permission description"
+  },
+  "grantCameraPermission": "Grant camera permission",
+  "@grantCameraPermission": {
+    "description": "Grant camera permission button"
+  },
+  "openSettings": "Open settings",
+  "@openSettings": {
+    "description": "Open settings button"
+  },
+  "cameraError": "Camera error",
+  "@cameraError": {
+    "description": "Camera error"
+  },
+  "cameraInitializationError": "An error occurred while initializing the camera: ",
+  "@cameraInitializationError": {
+    "description": "Camera initialization error"
+  },
+  "initializingCamera": "Initializing camera...",
+  "@initializingCamera": {
+    "description": "Camera initialization status"
+  },
+  "qrCodeTutorial": "Hold the QR code within the frame for automatic detection",
+  "@qrCodeTutorial": {
+    "description": "QR code scanning tutorial"
+  },
+  "supportUsTitle": "Support Us",
+  "@supportUsTitle": {
+    "description": "Support us section title"
+  },
+  "errorLoadingSettings": "Error loading settings",
+  "@errorLoadingSettings": {
+    "description": "Settings loading error"
+  },
+  "gameSettings": "Game Settings",
+  "@gameSettings": {
+    "description": "Game settings section"
+  },
+  "gameSpeed": "Game Speed",
+  "@gameSpeed": {
+    "description": "Game speed label"
+  },
+  "chooseGameSpeed": "Choose the speed of the game",
+  "@chooseGameSpeed": {
+    "description": "Game speed selection"
+  },
+  "slow": "Slow",
+  "@slow": {
+    "description": "Slow speed option"
+  },
+  "medium": "Medium",
+  "@medium": {
+    "description": "Medium speed option"
+  },
+  "fast": "Fast",
+  "@fast": {
+    "description": "Fast speed option"
+  },
+  "muteSoundEffects": "Mute Sound Effects",
+  "@muteSoundEffects": {
+    "description": "Mute sound effects toggle"
+  },
+  "muteSoundEffectsDesc": "Turn off all game sounds",
+  "@muteSoundEffectsDesc": {
+    "description": "Mute sound effects description"
+  },
+  "about": "About",
+  "@about": {
+    "description": "About section"
+  },
+  "serverStatus": "Server Status",
+  "@serverStatus": {
+    "description": "Server status section"
+  },
+  "checkServiceStatus": "Check the status of our services",
+  "@checkServiceStatus": {
+    "description": "Service status check description"
+  },
+  "openStatusPage": "Open Status Page",
+  "@openStatusPage": {
+    "description": "Open status page button"
+  },
+  "actions": "Actions",
+  "@actions": {
+    "description": "Actions section"
+  },
+  "exportStats": "Export Statistics",
+  "@exportStats": {
+    "description": "Export statistics button"
+  },
+  "exportStatsDesc": "Save your progress and scores as text",
+  "@exportStatsDesc": {
+    "description": "Export statistics description"
+  },
+  "importStats": "Import Statistics",
+  "@importStats": {
+    "description": "Import statistics button"
+  },
+  "importStatsDesc": "Load previously exported statistics",
+  "@importStatsDesc": {
+    "description": "Import statistics description"
+  },
+  "resetAndLogout": "Reset and Log Out",
+  "@resetAndLogout": {
+    "description": "Reset and logout button"
+  },
+  "resetAndLogoutDesc": "Clear all data and deactivate app",
+  "@resetAndLogoutDesc": {
+    "description": "Reset and logout description"
+  },
+  "showIntroduction": "Show Introduction",
+  "@showIntroduction": {
+    "description": "Show introduction button"
+  },
+  "reportIssue": "Report Issue",
+  "@reportIssue": {
+    "description": "Report issue button"
+  },
+  "clearQuestionCache": "Clear Question Cache",
+  "@clearQuestionCache": {
+    "description": "Clear question cache button"
+  },
+  "contactUs": "Contact Us",
+  "@contactUs": {
+    "description": "Contact us button"
+  },
+  "emailNotAvailable": "Could not open email client",
+  "@emailNotAvailable": {
+    "description": "Email client not available"
+  },
+  "cacheCleared": "Question cache cleared!",
+  "@cacheCleared": {
+    "description": "Cache cleared message"
+  },
+  "testAllFeatures": "Test All Features",
+  "@testAllFeatures": {
+    "description": "Test all features button"
+  },
+  "copyright": "© 2024-2026 ThomasNow Productions",
+  "@copyright": {
+    "description": "Copyright notice"
+  },
+  "version": "Version",
+  "@version": {
+    "description": "Version label"
+  },
+  "social": "Social",
+  "@social": {
+    "description": "Social section"
+  },
+  "comingSoon": "Coming Soon!",
+  "@comingSoon": {
+    "description": "Coming soon message"
+  },
+  "socialComingSoonMessage": "BibleQuiz social features are coming soon. Stay tuned for updates!",
+  "@socialComingSoonMessage": {
+    "description": "Social features coming soon message"
+  },
+  "manageYourBqid": "Manage Your BQID",
+  "@manageYourBqid": {
+    "description": "Manage BQID button"
+  },
+  "manageYourBqidSubtitle": "Manage your BQID, registered devices and more",
+  "@manageYourBqidSubtitle": {
+    "description": "Manage BQID subtitle"
+  },
+  "moreSocialFeaturesComingSoon": "More social features coming soon",
+  "@moreSocialFeaturesComingSoon": {
+    "description": "More social features coming soon"
+  },
+  "socialFeatures": "Social Features",
+  "@socialFeatures": {
+    "description": "Social features section"
+  },
+  "connectWithOtherUsers": "Connect with other BibleQuiz users, share achievements and compete on the leaderboards!",
+  "@connectWithOtherUsers": {
+    "description": "Connect with other users description"
+  },
+  "search": "Search",
+  "@search": {
+    "description": "Search label"
+  },
+  "myFollowing": "My Following",
+  "@myFollowing": {
+    "description": "Following list label"
+  },
+  "myFollowers": "My Followers",
+  "@myFollowers": {
+    "description": "Followers list label"
+  },
+  "messages": "Messages",
+  "@messages": {
+    "description": "Messages label"
+  },
+  "searchUsers": "Search Users",
+  "@searchUsers": {
+    "description": "Search users button"
+  },
+  "searchByUsername": "Search by username",
+  "@searchByUsername": {
+    "description": "Search by username option"
+  },
+  "enterUsernameToSearch": "Enter username to search...",
+  "@enterUsernameToSearch": {
+    "description": "Username search input hint"
+  },
+  "noUsersFound": "No users found",
+  "@noUsersFound": {
+    "description": "No users found message"
+  },
+  "follow": "Follow",
+  "@follow": {
+    "description": "Follow button"
+  },
+  "unfollow": "Unfollow",
+  "@unfollow": {
+    "description": "Unfollow button"
+  },
+  "yourself": "Yourself",
+  "@yourself": {
+    "description": "Yourself label"
+  },
+  "bibleBot": "Bible Bot",
+  "@bibleBot": {
+    "description": "Bible Bot label"
+  },
+  "couldNotOpenEmail": "Could not open email client",
+  "@couldNotOpenEmail": {
+    "description": "Could not open email"
+  },
+  "couldNotOpenUpdatePage": "Could not open update page",
+  "@couldNotOpenUpdatePage": {
+    "description": "Could not open update page"
+  },
+  "errorOpeningUpdatePage": "Error opening update page: ",
+  "@errorOpeningUpdatePage": {
+    "description": "Error opening update page"
+  },
+  "couldNotCopyLink": "Could not copy link",
+  "@couldNotCopyLink": {
+    "description": "Could not copy link"
+  },
+  "errorCopyingLink": "Could not copy link: ",
+  "@errorCopyingLink": {
+    "description": "Error copying link"
+  },
+  "inviteLinkCopied": "Invitation link copied to clipboard!",
+  "@inviteLinkCopied": {
+    "description": "Invite link copied message"
+  },
+  "statsLinkCopied": "Statistics link copied to clipboard!",
+  "@statsLinkCopied": {
+    "description": "Stats link copied message"
+  },
+  "copyStatsLinkToClipboard": "Copy your statistics link to the clipboard",
+  "@copyStatsLinkToClipboard": {
+    "description": "Copy stats link description"
+  },
+  "importButton": "Import",
+  "@importButton": {
+    "description": "Import button"
+  },
+  "followUs": "Follow Us",
+  "@followUs": {
+    "description": "Follow us label"
+  },
+  "followUsMessage": "Follow us on social media for updates and community!",
+  "@followUsMessage": {
+    "description": "Follow us message"
+  },
+  "followMastodon": "Follow Mastodon",
+  "@followMastodon": {
+    "description": "Follow Mastodon button"
+  },
+  "followPixelfed": "Follow Pixelfed",
+  "@followPixelfed": {
+    "description": "Follow Pixelfed button"
+  },
+  "followKwebler": "Follow Kwebler",
+  "@followKwebler": {
+    "description": "Follow Kwebler button"
+  },
+  "followSignal": "Follow Signal",
+  "@followSignal": {
+    "description": "Follow Signal button"
+  },
+  "followDiscord": "Follow Discord",
+  "@followDiscord": {
+    "description": "Follow Discord button"
+  },
+  "followBluesky": "Follow Bluesky",
+  "@followBluesky": {
+    "description": "Follow Bluesky button"
+  },
+  "followNooki": "Follow Nooki",
+  "@followNooki": {
+    "description": "Follow Nooki button"
+  },
+  "couldNotOpenPlatform": "Could not open {platform}",
+  "@couldNotOpenPlatform": {
+    "description": "Could not open platform",
+    "placeholders": {
+      "platform": {
+        "type": "String",
+        "description": "Platform name"
+      }
+    }
+  },
+  "shareAppWithFriends": "Share app with friends",
+  "@shareAppWithFriends": {
+    "description": "Share app button"
+  },
+  "shareYourStats": "Share your statistics",
+  "@shareYourStats": {
+    "description": "Share stats button"
+  },
+  "inviteFriend": "Invite a friend",
+  "@inviteFriend": {
+    "description": "Invite friend button"
+  },
+  "enterYourName": "Enter your name",
+  "@enterYourName": {
+    "description": "Enter your name input"
+  },
+  "enterFriendName": "Enter your friend's name",
+  "@enterFriendName": {
+    "description": "Enter friend name input"
+  },
+  "inviteMessage": "Invite your friend to BibleQuiz!",
+  "@inviteMessage": {
+    "description": "Invite message"
+  },
+  "customizeInvite": "Personalize your invitation",
+  "@customizeInvite": {
+    "description": "Customize invite button"
+  },
+  "sendInvite": "Send invitation",
+  "@sendInvite": {
+    "description": "Send invite button"
+  },
+  "languageMustBeNl": "Language must be \"nl\" (only Dutch allowed)",
+  "@languageMustBeNl": {
+    "description": "Language must be Dutch error"
+  },
+  "failedToSaveTheme": "Could not save theme setting:",
+  "@failedToSaveTheme": {
+    "description": "Failed to save theme"
+  },
+  "failedToSaveSlowMode": "Could not save slow mode setting:",
+  "@failedToSaveSlowMode": {
+    "description": "Failed to save slow mode"
+  },
+  "failedToSaveGameSpeed": "Could not save game speed setting:",
+  "@failedToSaveGameSpeed": {
+    "description": "Failed to save game speed"
+  },
+  "failedToUpdateDonationStatus": "Could not update donation status:",
+  "@failedToUpdateDonationStatus": {
+    "description": "Failed to update donation status"
+  },
+  "failedToUpdateCheckForUpdateStatus": "Could not update check for update status:",
+  "@failedToUpdateCheckForUpdateStatus": {
+    "description": "Failed to update check for update status"
+  },
+  "failedToSaveMuteSetting": "Could not save mute setting:",
+  "@failedToSaveMuteSetting": {
+    "description": "Failed to save mute setting"
+  },
+  "failedToSaveGuideStatus": "Could not save guide status:",
+  "@failedToSaveGuideStatus": {
+    "description": "Failed to save guide status"
+  },
+  "failedToResetGuideStatus": "Could not reset guide status:",
+  "@failedToResetGuideStatus": {
+    "description": "Failed to reset guide status"
+  },
+  "failedToResetCheckForUpdateStatus": "Could not reset check for update status:",
+  "@failedToResetCheckForUpdateStatus": {
+    "description": "Failed to reset check for update status"
+  },
+  "exportStatsTitle": "Export Statistics",
+  "@exportStatsTitle": {
+    "description": "Export statistics title"
+  },
+  "exportStatsMessage": "Copy this text to save your progress:",
+  "@exportStatsMessage": {
+    "description": "Export statistics message"
+  },
+  "importStatsTitle": "Import Statistics",
+  "@importStatsTitle": {
+    "description": "Import statistics title"
+  },
+  "importStatsMessage": "Paste your previously exported statistics here:",
+  "@importStatsMessage": {
+    "description": "Import statistics message"
+  },
+  "importStatsHint": "Paste here...",
+  "@importStatsHint": {
+    "description": "Import statistics hint"
+  },
+  "statsExportedSuccessfully": "Statistics exported successfully!",
+  "@statsExportedSuccessfully": {
+    "description": "Export success message"
+  },
+  "statsImportedSuccessfully": "Statistics imported successfully!",
+  "@statsImportedSuccessfully": {
+    "description": "Import success message"
+  },
+  "failedToExportStats": "Could not export statistics:",
+  "@failedToExportStats": {
+    "description": "Export failed message"
+  },
+  "failedToImportStats": "Could not import statistics:",
+  "@failedToImportStats": {
+    "description": "Import failed message"
+  },
+  "invalidOrTamperedData": "Invalid or tampered data",
+  "@invalidOrTamperedData": {
+    "description": "Invalid data message"
+  },
+  "pleaseEnterValidString": "Please enter a valid string",
+  "@pleaseEnterValidString": {
+    "description": "Valid string required"
+  },
+  "copyCode": "Copy Code",
+  "@copyCode": {
+    "description": "Copy code button"
+  },
+  "codeCopied": "Code copied to clipboard",
+  "@codeCopied": {
+    "description": "Code copied message"
+  },
+  "exportAllDataJson": "Export All Data (JSON)",
+  "@exportAllDataJson": {
+    "description": "Export all data button"
+  },
+  "exportAllDataJsonDesc": "Export all app data including settings, stats, and progress as JSON",
+  "@exportAllDataJsonDesc": {
+    "description": "Export all data description"
+  },
+  "exportAllDataJsonTitle": "Export All Data (JSON)",
+  "@exportAllDataJsonTitle": {
+    "description": "Export all data title"
+  },
+  "exportAllDataJsonMessage": "Your complete app data has been exported as JSON. You can copy this data to save it or share it.",
+  "@exportAllDataJsonMessage": {
+    "description": "Export all data message"
+  },
+  "copyToClipboard": "Copy to Clipboard",
+  "@copyToClipboard": {
+    "description": "Copy to clipboard button"
+  },
+  "jsonDataCopied": "JSON data copied to clipboard",
+  "@jsonDataCopied": {
+    "description": "JSON data copied message"
+  },
+  "multiDeviceSync": "Multi-Device Sync",
+  "@multiDeviceSync": {
+    "description": "Multi-device sync section"
+  },
+  "currentlySynced": "You are currently synced. Data is shared in real-time between devices.",
+  "@currentlySynced": {
+    "description": "Currently synced message"
+  },
+  "yourSyncId": "Your Sync ID:",
+  "@yourSyncId": {
+    "description": "Your sync ID label"
+  },
+  "shareSyncId": "Share this ID with other devices to join.",
+  "@shareSyncId": {
+    "description": "Share sync ID description"
+  },
+  "errorGeneric": "Error: ",
+  "@errorGeneric": {
+    "description": "Generic error prefix"
+  },
+  "multiDeviceSyncButton": "Multi-Device Sync",
+  "@multiDeviceSyncButton": {
+    "description": "Multi-device sync button"
+  },
+  "syncDataDescription": "Sync data between devices using a code",
+  "@syncDataDescription": {
+    "description": "Sync data description"
+  },
+  "syncDescription": "Connect to another device to sync your progress and statistics.",
+  "@syncDescription": {
+    "description": "Sync description"
+  },
+  "userId": "BQID",
+  "@userId": {
+    "description": "User ID label"
+  },
+  "enterUserId": "Enter a BQID to connect to another device",
+  "@enterUserId": {
+    "description": "Enter user ID input"
+  },
+  "userIdCode": "BQID",
+  "@userIdCode": {
+    "description": "User ID code"
+  },
+  "connectToUser": "Connect to BQID",
+  "@connectToUser": {
+    "description": "Connect to user button"
+  },
+  "createUserId": "Create a new BQID",
+  "@createUserId": {
+    "description": "Create user ID button"
+  },
+  "createUserIdDescription": "Create a new BQID and share the code with others to connect.",
+  "@createUserIdDescription": {
+    "description": "Create user ID description"
+  },
+  "currentlyConnectedToUser": "You are currently connected to a BQID. Data is shared between devices.",
+  "@currentlyConnectedToUser": {
+    "description": "Currently connected message"
+  },
+  "yourUserId": "Your BQID:",
+  "@yourUserId": {
+    "description": "Your user ID label"
+  },
+  "shareUserId": "Share this ID with other devices to connect.",
+  "@shareUserId": {
+    "description": "Share user ID description"
+  },
+  "leaveUserId": "Remove BQID from this device",
+  "@leaveUserId": {
+    "description": "Leave user ID button"
+  },
+  "userIdDescription": "Connect to another device with a BQID to sync your data and statistics.",
+  "@userIdDescription": {
+    "description": "User ID description"
+  },
+  "pleaseEnterUserId": "Please enter a BQID",
+  "@pleaseEnterUserId": {
+    "description": "Please enter user ID"
+  },
+  "failedToConnectToUser": "Failed to connect to the BQID. Check the ID and try again.",
+  "@failedToConnectToUser": {
+    "description": "Failed to connect message"
+  },
+  "failedToCreateUserId": "Failed to create BQID. Please try again.",
+  "@failedToCreateUserId": {
+    "description": "Failed to create user ID"
+  },
+  "userIdButton": "BQID",
+  "@userIdButton": {
+    "description": "User ID button"
+  },
+  "userIdDescriptionSetting": "Create or connect to a BQID to sync your progress",
+  "@userIdDescriptionSetting": {
+    "description": "User ID setting description"
+  },
+  "createUserIdButton": "Create a BQID",
+  "@createUserIdButton": {
+    "description": "Create user ID button"
+  },
+  "of": "Or",
+  "@of": {
+    "description": "Or separator"
+  },
+  "tapToCopyUserId": "Tap to copy BQID",
+  "@tapToCopyUserId": {
+    "description": "Tap to copy user ID"
+  },
+  "userIdCopiedToClipboard": "BQID copied to clipboard",
+  "@userIdCopiedToClipboard": {
+    "description": "User ID copied message"
+  },
+  "notFollowing": "You are not following anyone yet",
+  "@notFollowing": {
+    "description": "Not following anyone message"
+  },
+  "joinRoomToViewFollowing": "You need to join a room to see who you are following",
+  "@joinRoomToViewFollowing": {
+    "description": "Join room to view following"
+  },
+  "searchUsersToFollow": "Search for users to start following them",
+  "@searchUsersToFollow": {
+    "description": "Search users to follow"
+  },
+  "noFollowers": "You don't have any followers yet",
+  "@noFollowers": {
+    "description": "No followers message"
+  },
+  "joinRoomToViewFollowers": "You need to join a room to see your followers",
+  "@joinRoomToViewFollowers": {
+    "description": "Join room to view followers"
+  },
+  "shareBQIDFollowers": "Share your BQID with others to start getting followers",
+  "@shareBQIDFollowers": {
+    "description": "Share BQID to get followers"
+  },
+  "noActiveMessages": "No messages",
+  "@noActiveMessages": {
+    "description": "No messages label"
+  },
+  "noActiveMessagesSubtitle": "There are currently no messages to display",
+  "@noActiveMessagesSubtitle": {
+    "description": "No messages subtitle"
+  },
+  "errorLoadingMessages": "Error loading messages",
+  "@errorLoadingMessages": {
+    "description": "Error loading messages"
+  },
+  "errorUpdatingReaction": "Error updating reaction",
+  "@errorUpdatingReaction": {
+    "description": "Error updating reaction"
+  },
+  "loadingMessages": "Loading messages...",
+  "@loadingMessages": {
+    "description": "Loading messages"
+  },
+  "expiresIn": "Expires in",
+  "@expiresIn": {
+    "description": "Expires in label"
+  },
+  "expiringSoon": "Expiring soon",
+  "@expiringSoon": {
+    "description": "Expiring soon label"
+  },
+  "days": "days",
+  "@days": {
+    "description": "Days unit"
+  },
+  "hoursMessage": "hours",
+  "@hoursMessage": {
+    "description": "Hours unit"
+  },
+  "minutes": "minutes",
+  "@minutes": {
+    "description": "Minutes unit"
+  },
+  "lessThanAMinute": "less than a minute",
+  "@lessThanAMinute": {
+    "description": "Less than a minute"
+  },
+  "created": "Created",
+  "@created": {
+    "description": "Created label"
+  },
+  "bijbelquizGenTitle": "BibleQuiz Gen",
+  "@bijbelquizGenTitle": {
+    "description": "Year in review title"
+  },
+  "bijbelquizGenSubtitle": "Your year in ",
+  "@bijbelquizGenSubtitle": {
+    "description": "Year in review subtitle"
+  },
+  "bijbelquizGenWelcomeText": "Review your achievements today and share your BibleQuiz year!",
+  "@bijbelquizGenWelcomeText": {
+    "description": "Year in review welcome text"
+  },
+  "questionsAnswered": "Questions answered",
+  "@questionsAnswered": {
+    "description": "Questions answered label"
+  },
+  "bijbelquizGenQuestionsSubtitle": "You have hopefully learned many new things.",
+  "@bijbelquizGenQuestionsSubtitle": {
+    "description": "Questions answered subtitle"
+  },
+  "mistakesMade": "Mistakes made",
+  "@mistakesMade": {
+    "description": "Mistakes made label"
+  },
+  "bijbelquizGenMistakesSubtitle": "Every mistake is a chance to learn and grow in your Bible knowledge!",
+  "@bijbelquizGenMistakesSubtitle": {
+    "description": "Mistakes made subtitle"
+  },
+  "timeSpent": "Time spent",
+  "@timeSpent": {
+    "description": "Time spent label"
+  },
+  "bijbelquizGenTimeSubtitle": "You took time to deepen your Bible knowledge!",
+  "@bijbelquizGenTimeSubtitle": {
+    "description": "Time spent subtitle"
+  },
+  "bijbelquizGenBestStreak": "Best streak",
+  "@bijbelquizGenBestStreak": {
+    "description": "Best streak label"
+  },
+  "bijbelquizGenStreakSubtitle": "Your longest streak shows your consistency and dedication!",
+  "@bijbelquizGenStreakSubtitle": {
+    "description": "Streak subtitle"
+  },
+  "yearInReview": "Your year in review",
+  "@yearInReview": {
+    "description": "Year in review label"
+  },
+  "bijbelquizGenYearReviewSubtitle": "An overview of your BibleQuiz performance in the past year!",
+  "@bijbelquizGenYearReviewSubtitle": {
+    "description": "Year review subtitle"
+  },
+  "hours": "hours",
+  "@hours": {
+    "description": "Hours unit"
+  },
+  "correctAnswers": "Correct answers",
+  "@correctAnswers": {
+    "description": "Correct answers label"
+  },
+  "accuracy": "Accuracy",
+  "@accuracy": {
+    "description": "Accuracy label"
+  },
+  "currentStreak": "Current streak",
+  "@currentStreak": {
+    "description": "Current streak label"
+  },
+  "thankYouForUsingBijbelQuiz": "Thank you for using BibleQuiz!",
+  "@thankYouForUsingBijbelQuiz": {
+    "description": "Thank you message"
+  },
+  "bijbelquizGenThankYouText": "We hope our app has been a blessing this past year.",
+  "@bijbelquizGenThankYouText": {
+    "description": "Thank you text"
+  },
+  "bijbelquizGenDonateButton": "Donate to us to show your continued support for our development, so we can continue to improve the app and so you can look back on another educational year next year.",
+  "@bijbelquizGenDonateButton": {
+    "description": "Donate button text"
+  },
+  "done": "Done",
+  "@done": {
+    "description": "Done button"
+  },
+  "bijbelquizGenSkip": "Skip",
+  "@bijbelquizGenSkip": {
+    "description": "Skip button"
+  },
+  "success": "Success",
+  "@success": {
+    "description": "Success label"
+  },
+  "reportSubmittedSuccessfully": "Your report has been submitted successfully!",
+  "@reportSubmittedSuccessfully": {
+    "description": "Report submitted success"
+  },
+  "reportSubmissionFailed": "Failed to submit report. Please try again later.",
+  "@reportSubmissionFailed": {
+    "description": "Report submission failed"
+  },
+  "reportBug": "Report a Bug",
+  "@reportBug": {
+    "description": "Report bug button"
+  },
+  "reportBugDescription": "Report a bug or issue with the app",
+  "@reportBugDescription": {
+    "description": "Report bug description"
+  },
+  "subject": "Subject",
+  "@subject": {
+    "description": "Subject label"
+  },
+  "pleaseEnterSubject": "Please enter a subject",
+  "@pleaseEnterSubject": {
+    "description": "Please enter subject"
+  },
+  "description": "Description",
+  "@description": {
+    "description": "Description label"
+  },
+  "pleaseEnterDescription": "Please enter a description",
+  "@pleaseEnterDescription": {
+    "description": "Please enter description"
+  },
+  "emailOptional": "Email (optional)",
+  "@emailOptional": {
+    "description": "Email optional label"
+  },
+  "reportQuestion": "Report Question",
+  "@reportQuestion": {
+    "description": "Report question button"
+  },
+  "questionReportedSuccessfully": "Question reported successfully",
+  "@questionReportedSuccessfully": {
+    "description": "Question reported success"
+  },
+  "errorReportingQuestion": "Error reporting question",
+  "@errorReportingQuestion": {
+    "description": "Error reporting question"
+  },
+  "grid": "Grid",
+  "@grid": {
+    "description": "Grid layout"
+  },
+  "list": "List",
+  "@list": {
+    "description": "List layout"
+  },
+  "compactGrid": "Compact Grid",
+  "@compactGrid": {
+    "description": "Compact grid layout"
+  },
+  "useTheme": "Use Theme",
+  "@useTheme": {
+    "description": "Use theme button"
+  },
+  "failedToRemoveDevice": "Failed to remove device",
+  "@failedToRemoveDevice": {
+    "description": "Failed to remove device"
+  },
+  "errorRemovingDevice": "Error removing device: ",
+  "@errorRemovingDevice": {
+    "description": "Error removing device"
+  },
+  "sharedStats": "Shared Statistics",
+  "@sharedStats": {
+    "description": "Shared statistics"
+  },
+  "newGame": "New Game",
+  "@newGame": {
+    "description": "New game button"
+  },
+  "errorLoadingUsernames": "Error loading usernames: ",
+  "@errorLoadingUsernames": {
+    "description": "Error loading usernames"
+  },
+  "urlCopiedToClipboard": "URL copied to clipboard!",
+  "@urlCopiedToClipboard": {
+    "description": "URL copied message"
+  },
+  "tryAgainButton": "Try Again",
+  "@tryAgainButton": {
+    "description": "Try again button"
+  },
+  "checkConnection": "Check Connection",
+  "@checkConnection": {
+    "description": "Check connection button"
+  },
+  "goToQuiz": "Go to Quiz",
+  "@goToQuiz": {
+    "description": "Go to quiz button"
+  },
+  "errorLoadingAnalytics": "Error loading analytics",
+  "@errorLoadingAnalytics": {
+    "description": "Error loading analytics"
+  },
+  "bibleReferenceCopiedForSharing": "Bible reference copied for sharing",
+  "@bibleReferenceCopiedForSharing": {
+    "description": "Bible reference copied for sharing"
+  },
+  "errorHandlingTest": "Error Handling Test",
+  "@errorHandlingTest": {
+    "description": "Error handling test"
+  },
+  "errorHandlingTestDescription": "This screen demonstrates the new error handling system",
+  "@errorHandlingTestDescription": {
+    "description": "Error handling test description"
+  },
+  "testErrorHandling": "Test Error Handling",
+  "@testErrorHandling": {
+    "description": "Test error handling button"
+  },
+  "testErrorDialog": "Test Error Dialog",
+  "@testErrorDialog": {
+    "description": "Test error dialog button"
+  },
+  "retryButton": "Retry",
+  "@retryButton": {
+    "description": "Retry button"
+  },
+  "searchSettings": "Search settings...",
+  "@searchSettings": {
+    "description": "Search settings input"
+  },
+  "lessonLayoutSettings": "Lesson Layout",
+  "@lessonLayoutSettings": {
+    "description": "Lesson layout settings"
+  },
+  "chooseLessonLayoutDesc": "Choose how lessons are displayed",
+  "@chooseLessonLayoutDesc": {
+    "description": "Choose lesson layout description"
+  },
+  "showIntroductionDesc": "View the app introduction and tutorial",
+  "@showIntroductionDesc": {
+    "description": "Show introduction description"
+  },
+  "clearQuestionCacheDesc": "Remove cached questions to free up storage space",
+  "@clearQuestionCacheDesc": {
+    "description": "Clear question cache description"
+  },
+  "followOnSocialMediaDesc": "Connect with us on social media platforms",
+  "@followOnSocialMediaDesc": {
+    "description": "Follow on social media description"
+  },
+  "inviteFriendDesc": "Share a personalized invite link with friends",
+  "@inviteFriendDesc": {
+    "description": "Invite friend description"
+  },
+  "bugReport": "Bug Report",
+  "@bugReport": {
+    "description": "Bug report button"
+  },
+  "bugReportDesc": "Report bugs and issues with the app",
+  "@bugReportDesc": {
+    "description": "Bug report description"
+  },
+  "streakLabel": " streak",
+  "@streakLabel": {
+    "description": "Streak label suffix"
+  },
+  "unknownUser": "Unknown User",
+  "@unknownUser": {
+    "description": "Unknown user label"
+  },
+  "lastScore": "Last score:",
+  "@lastScore": {
+    "description": "Last score label"
+  },
+  "notAvailable": "Unknown",
+  "@notAvailable": {
+    "description": "Not available label"
+  },
+  "followedUsersScores": "Scores of Followed Users",
+  "@followedUsersScores": {
+    "description": "Followed users scores"
+  },
+  "thankYouForSupport": "Thank you for your support!",
+  "@thankYouForSupport": {
+    "description": "Thank you for support"
+  },
+  "thankYouForYourSupport": "We appreciate you using BibleQuiz and participating in our community.",
+  "@thankYouForYourSupport": {
+    "description": "Thank you for your support message"
+  },
+  "supportWithDonation": "Support us with a donation",
+  "@supportWithDonation": {
+    "description": "Support with donation button"
+  },
+  "bijbelquizGenDonationText": "Your donation helps us maintain and improve BibleQuiz for you and others.",
+  "@bijbelquizGenDonationText": {
+    "description": "Donation text"
+  },
+  "noExpirationDate": "No expiration date",
+  "@noExpirationDate": {
+    "description": "No expiration date"
+  },
+  "username": "Username",
+  "@username": {
+    "description": "Username label"
+  },
+  "enterUsername": "Enter username",
+  "@enterUsername": {
+    "description": "Enter username input"
+  },
+  "usernameHint": "e.g. John2026",
+  "@usernameHint": {
+    "description": "Username input hint"
+  },
+  "saveUsername": "Save username",
+  "@saveUsername": {
+    "description": "Save username button"
+  },
+  "pleaseEnterUsername": "Please enter a username",
+  "@pleaseEnterUsername": {
+    "description": "Please enter username"
+  },
+  "usernameTooLong": "Username must be at most 30 characters",
+  "@usernameTooLong": {
+    "description": "Username too long error"
+  },
+  "usernameAlreadyTaken": "Username is already taken",
+  "@usernameAlreadyTaken": {
+    "description": "Username already taken error"
+  },
+  "usernameBlacklisted": "This username is not allowed",
+  "@usernameBlacklisted": {
+    "description": "Username blacklisted error"
+  },
+  "usernameSaved": "Username saved!",
+  "@usernameSaved": {
+    "description": "Username saved message"
+  },
+  "beta": "Beta",
+  "@beta": {
+    "description": "Beta label"
+  },
+  "shareStatsTitle": "Share your stats",
+  "@shareStatsTitle": {
+    "description": "Share stats title"
+  },
+  "shareYourBijbelQuizStats": "Share your BibleQuiz stats",
+  "@shareYourBijbelQuizStats": {
+    "description": "Share your BibleQuiz stats"
+  },
+  "correctAnswersShare": "Correct answers",
+  "@correctAnswersShare": {
+    "description": "Correct answers for sharing"
+  },
+  "currentStreakShare": "Current streak",
+  "@currentStreakShare": {
+    "description": "Current streak for sharing"
+  },
+  "bestStreakShare": "Best streak",
+  "@bestStreakShare": {
+    "description": "Best streak for sharing"
+  },
+  "mistakesShare": "Mistakes",
+  "@mistakesShare": {
+    "description": "Mistakes for sharing"
+  },
+  "accuracyShare": "Accuracy",
+  "@accuracyShare": {
+    "description": "Accuracy for sharing"
+  },
+  "timeSpentShare": "Time spent",
+  "@timeSpentShare": {
+    "description": "Time spent for sharing"
+  },
+  "shareResults": "Share your results",
+  "@shareResults": {
+    "description": "Share results button"
+  },
+  "copyLink": "Copy link",
+  "@copyLink": {
+    "description": "Copy link button"
+  },
+  "automaticBugReports": "Automatic bug reporting",
+  "@automaticBugReports": {
+    "description": "Automatic bug reports toggle"
+  },
+  "automaticBugReportsDesc": "Automatically send bug reports when errors occur (recommended)",
+  "@automaticBugReportsDesc": {
+    "description": "Automatic bug reports description"
+  },
+  "motivationalNotifications": "Motivational notifications",
+  "@motivationalNotifications": {
+    "description": "Motivational notifications toggle"
+  },
+  "motivationalNotificationsDesc": "Receive 1-3 notifications per day between 06:00 and 23:00 to encourage you to do a quiz",
+  "@motivationalNotificationsDesc": {
+    "description": "Motivational notifications description"
+  },
+  "dataSuccessfullySynchronized": "Data successfully synchronized",
+  "@dataSuccessfullySynchronized": {
+    "description": "Data sync success"
+  },
+  "synchronizationFailed": "Synchronization failed: ",
+  "@synchronizationFailed": {
+    "description": "Sync failed message"
+  },
+  "editProfile": "Edit Profile",
+  "@editProfile": {
+    "description": "Edit profile button"
+  },
+  "adjustNameAndBio": "Adjust name and bio",
+  "@adjustNameAndBio": {
+    "description": "Adjust name and bio button"
+  },
+  "changeUsername": "Change Username",
+  "@changeUsername": {
+    "description": "Change username button"
+  },
+  "adjustYourUsername": "Adjust your username",
+  "@adjustYourUsername": {
+    "description": "Adjust your username button"
+  },
+  "changePassword": "Change Password",
+  "@changePassword": {
+    "description": "Change password button"
+  },
+  "secureYourAccount": "Secure your account",
+  "@secureYourAccount": {
+    "description": "Secure your account button"
+  },
+  "signOut": "Sign Out",
+  "@signOut": {
+    "description": "Sign out button"
+  },
+  "signOutFromDevice": "Sign out from this device",
+  "@signOutFromDevice": {
+    "description": "Sign out from device button"
+  },
+  "deleteAccount": "Delete Account",
+  "@deleteAccount": {
+    "description": "Delete account button"
+  },
+  "permanentlyDeleteAccount": "Permanently delete account",
+  "@permanentlyDeleteAccount": {
+    "description": "Permanently delete account button"
+  },
+  "displayName": "Display Name",
+  "@displayName": {
+    "description": "Display name label"
+  },
+  "bioOptional": "Bio (optional)",
+  "@bioOptional": {
+    "description": "Bio optional label"
+  },
+  "newUsername": "New username",
+  "@newUsername": {
+    "description": "New username input"
+  },
+  "chooseUniqueName": "Choose a unique name",
+  "@chooseUniqueName": {
+    "description": "Choose unique name"
+  },
+  "currentPassword": "Current password",
+  "@currentPassword": {
+    "description": "Current password input"
+  },
+  "newPassword": "New password",
+  "@newPassword": {
+    "description": "New password input"
+  },
+  "atLeast6Characters": "At least 6 characters",
+  "@atLeast6Characters": {
+    "description": "Minimum 6 characters"
+  },
+  "confirmNewPassword": "Confirm new password",
+  "@confirmNewPassword": {
+    "description": "Confirm new password input"
+  },
+  "fillAllPasswordFields": "Fill in all password fields",
+  "@fillAllPasswordFields": {
+    "description": "Fill all password fields"
+  },
+  "newPasswordsDoNotMatch": "New passwords do not match",
+  "@newPasswordsDoNotMatch": {
+    "description": "Passwords do not match"
+  },
+  "newPasswordMin6Chars": "New password must contain at least 6 characters",
+  "@newPasswordMin6Chars": {
+    "description": "New password minimum 6 characters"
+  },
+  "enterNewUsername": "Enter a new username",
+  "@enterNewUsername": {
+    "description": "Enter new username"
+  },
+  "usernameMin3Chars": "Username must contain at least 3 characters",
+  "@usernameMin3Chars": {
+    "description": "Username minimum 3 characters"
+  },
+  "usernameMax20Chars": "Username may contain at most 20 characters",
+  "@usernameMax20Chars": {
+    "description": "Username maximum 20 characters"
+  },
+  "usernameNotAllowed": "This username is not allowed",
+  "@usernameNotAllowed": {
+    "description": "Username not allowed"
+  },
+  "thisUsernameAlreadyTaken": "This username is already taken",
+  "@thisUsernameAlreadyTaken": {
+    "description": "Username already taken"
+  },
+  "usernameSuccessfullyChanged": "Username successfully changed",
+  "@usernameSuccessfullyChanged": {
+    "description": "Username changed success"
+  },
+  "failedToChangeUsername": "Failed to change username",
+  "@failedToChangeUsername": {
+    "description": "Username change failed"
+  },
+  "displayNameRequired": "Display name is required",
+  "@displayNameRequired": {
+    "description": "Display name required"
+  },
+  "profileSuccessfullyUpdated": "Profile successfully updated",
+  "@profileSuccessfullyUpdated": {
+    "description": "Profile update success"
+  },
+  "failedToUpdateProfile": "Failed to update profile",
+  "@failedToUpdateProfile": {
+    "description": "Profile update failed"
+  },
+  "signOutFailed": "Sign out failed",
+  "@signOutFailed": {
+    "description": "Sign out failed"
+  },
+  "passwordSuccessfullyChanged": "Password successfully changed",
+  "@passwordSuccessfullyChanged": {
+    "description": "Password change success"
+  },
+  "failedToChangePassword": "Failed to change password",
+  "@failedToChangePassword": {
+    "description": "Password change failed"
+  },
+  "updated": "Updated",
+  "@updated": {
+    "description": "Updated label"
+  },
+  "notUpdated": "Not updated",
+  "@notUpdated": {
+    "description": "Not updated label"
+  },
+  "lastSync": "Last sync",
+  "@lastSync": {
+    "description": "Last sync label"
+  },
+  "user": "User",
+  "@user": {
+    "description": "User label"
+  },
+  "account": "Account",
+  "@account": {
+    "description": "Account label"
+  },
+  "syncing": "Syncing...",
+  "@syncing": {
+    "description": "Syncing status"
+  },
+  "sync": "Sync",
+  "@sync": {
+    "description": "Sync button"
+  },
+  "save": "Save",
+  "@save": {
+    "description": "Save button"
+  },
+  "change": "Change",
+  "@change": {
+    "description": "Change button"
+  },
+  "never": "Never",
+  "@never": {
+    "description": "Never label"
+  },
+  "justNow": "Just now",
+  "@justNow": {
+    "description": "Just now label"
+  },
+  "minutesAgo": "m ago",
+  "@minutesAgo": {
+    "description": "Minutes ago label"
+  },
+  "hoursAgo": "h ago",
+  "@hoursAgo": {
+    "description": "Hours ago label"
+  },
+  "daysAgo": "d ago",
+  "@daysAgo": {
+    "description": "Days ago label"
+  },
+  "noEmail": "No email",
+  "@noEmail": {
+    "description": "No email label"
+  },
+  "leaderboard": "Leaderboard",
+  "@leaderboard": {
+    "description": "Leaderboard label"
+  },
+  "noLeaderboardData": "No leaderboard data available",
+  "@noLeaderboardData": {
+    "description": "No leaderboard data"
+  },
+  "elim50CouponMessage": "You got 50 points and got 50 cents donated for the renovation of Elim!",
+  "@elim50CouponMessage": {
+    "description": "ELIM50 coupon message"
+  },
+  "loginWithBqid": "Login with your BQID",
+  "@loginWithBqid": {
+    "description": "Login with BQID button"
+  },
+  "socialFeaturesMessage": "Create an account to use social features, such as searching for users, making friends and sending messages.",
+  "@socialFeaturesMessage": {
+    "description": "Social features message"
+  },
+  "login": "Login",
+  "@login": {
+    "description": "Login button"
+  },
+  "signup": "Sign up",
+  "@signup": {
+    "description": "Sign up button"
+  },
+  "email": "Email",
+  "@email": {
+    "description": "Email label"
+  },
+  "emailHint": "your@email.com",
+  "@emailHint": {
+    "description": "Email input hint"
+  },
+  "usernameSignupHint": "Choose a unique name",
+  "@usernameSignupHint": {
+    "description": "Username signup hint"
+  },
+  "password": "Password",
+  "@password": {
+    "description": "Password label"
+  },
+  "passwordHint": "Minimum 6 characters",
+  "@passwordHint": {
+    "description": "Password input hint"
+  },
+  "confirmPassword": "Confirm password",
+  "@confirmPassword": {
+    "description": "Confirm password label"
+  },
+  "confirmPasswordHint": "Repeat your password",
+  "@confirmPasswordHint": {
+    "description": "Confirm password hint"
+  },
+  "accountCreatedMessage": "Account created! Check your email for verification.",
+  "@accountCreatedMessage": {
+    "description": "Account created message"
+  },
+  "fillEmailAndPassword": "Fill in your email and password to continue.",
+  "@fillEmailAndPassword": {
+    "description": "Fill email and password"
+  },
+  "enterValidEmail": "Enter a valid email address.",
+  "@enterValidEmail": {
+    "description": "Enter valid email"
+  },
+  "fillAllFields": "Fill in all fields to create an account.",
+  "@fillAllFields": {
+    "description": "Fill all fields"
+  },
+  "passwordsDoNotMatch": "Passwords do not match. Check if you entered the same in both fields.",
+  "@passwordsDoNotMatch": {
+    "description": "Passwords do not match"
+  },
+  "passwordTooShort": "Password must contain at least 6 characters for your security.",
+  "@passwordTooShort": {
+    "description": "Password too short"
+  },
+  "checkingPassword": "Password is being checked for security...",
+  "@checkingPassword": {
+    "description": "Checking password"
+  },
+  "passwordCompromised": "This password has been found in data breaches. Choose a different password for your security.",
+  "@passwordCompromised": {
+    "description": "Password compromised"
+  },
+  "usernameTooShort": "Username must contain at least 3 characters.",
+  "@usernameTooShort": {
+    "description": "Username too short"
+  },
+  "usernameSignupTooLong": "Username may contain at most 20 characters.",
+  "@usernameSignupTooLong": {
+    "description": "Username too long"
+  },
+  "usernameInvalidChars": "Username may only contain letters, numbers and underscores.",
+  "@usernameInvalidChars": {
+    "description": "Username invalid characters"
+  },
+  "checkingUsername": "Username availability is being checked...",
+  "@checkingUsername": {
+    "description": "Checking username"
+  },
+  "invalidEmailOrPassword": "Invalid email or password. Check your details and try again.",
+  "@invalidEmailOrPassword": {
+    "description": "Invalid email or password"
+  },
+  "emailNotConfirmed": "Your email has not been verified. Check your inbox and click the verification link.",
+  "@emailNotConfirmed": {
+    "description": "Email not confirmed"
+  },
+  "tooManyRequests": "Too many attempts. Wait a moment before trying again.",
+  "@tooManyRequests": {
+    "description": "Too many requests"
+  },
+  "passwordTooShortGeneric": "Password should be at least 6 characters.",
+  "@passwordTooShortGeneric": {
+    "description": "Password too short generic"
+  },
+  "invalidEmailAddress": "Invalid email address. Make sure you entered a valid email address.",
+  "@invalidEmailAddress": {
+    "description": "Invalid email address"
+  },
+  "userAlreadyRegistered": "An account with this email address already exists. Try logging in or use a different email address.",
+  "@userAlreadyRegistered": {
+    "description": "User already registered"
+  },
+  "signupDisabled": "Sign up is currently disabled. Try again later.",
+  "@signupDisabled": {
+    "description": "Sign up disabled"
+  },
+  "weakPassword": "Password is too weak. Choose a stronger password with more characters.",
+  "@weakPassword": {
+    "description": "Weak password"
+  },
+  "genericError": "Something went wrong. Try again or contact support if the problem persists.",
+  "@genericError": {
+    "description": "Generic error"
+  },
+  "guideAccount": "Account",
+  "@guideAccount": {
+    "description": "Guide account section"
+  },
+  "guideAccountDescription": "Create an account or log in to save your progress and use social features.",
+  "@guideAccountDescription": {
+    "description": "Guide account description"
+  },
+  "couponRedeemDescription": "You can redeem coupon codes later at the shop menu.",
+  "@couponRedeemDescription": {
+    "description": "Coupon redeem description"
+  },
+  "termsAgreementText": "By continuing you agree to our ",
+  "@termsAgreementText": {
+    "description": "Terms agreement text"
+  },
+  "termsOfService": "terms of service",
+  "@termsOfService": {
+    "description": "Terms of service link"
+  },
+  "progressOverview": "Progress overview",
+  "@progressOverview": {
+    "description": "Progress overview"
+  },
+  "progressOverviewHint": "Shows your current progress through lessons",
+  "@progressOverviewHint": {
+    "description": "Progress overview hint"
+  },
+  "lessonCompletionProgress": "Lesson completion progress",
+  "@lessonCompletionProgress": {
+    "description": "Lesson completion progress"
+  },
+  "lessonsCompleted": "{unlocked} out of {total} lessons completed",
+  "@lessonsCompleted": {
+    "description": "Lessons completed progress",
+    "placeholders": {
+      "unlocked": {
+        "type": "int",
+        "description": "Number of lessons unlocked"
+      },
+      "total": {
+        "type": "int",
+        "description": "Total number of lessons"
+      }
+    }
+  },
+  "continueWithLesson": "Continue with lesson: {lessonTitle}",
+  "@continueWithLesson": {
+    "description": "Continue with specific lesson",
+    "placeholders": {
+      "lessonTitle": {
+        "type": "String",
+        "description": "Title of the lesson"
+      }
+    }
+  },
+  "continueWithLessonHint": "Start the next recommended lesson in your progress",
+  "@continueWithLessonHint": {
+    "description": "Continue with lesson hint"
+  },
+  "practiceMode": "Practice mode",
+  "@practiceMode": {
+    "description": "Practice mode"
+  },
+  "practiceModeHint": "Start a random practice quiz without affecting progress",
+  "@practiceModeHint": {
+    "description": "Practice mode hint"
+  },
+  "multiplayerMode": "Multiplayer mode",
+  "@multiplayerMode": {
+    "description": "Multiplayer mode"
+  },
+  "multiplayerModeHint": "Start a multiplayer quiz game",
+  "@multiplayerModeHint": {
+    "description": "Multiplayer mode hint"
+  },
+  "startRandomPracticeQuiz": "Start a random practice quiz",
+  "@startRandomPracticeQuiz": {
+    "description": "Start random practice quiz button"
+  },
+  "playButton": "Play",
+  "@playButton": {
+    "description": "Play button"
+  },
+  "dailyStreakDescription_one": "You have been using BibleQuiz for a day in a row",
+  "dailyStreakDescription_other": "You have been using BibleQuiz for {streakDays} days in a row",
+  "@dailyStreakDescription": {
+    "description": "Daily streak description",
+    "placeholders": {
+      "streakDays": {
+        "type": "int",
+        "description": "Number of streak days"
+      }
+    }
+  },
+  "monday": "Mon",
+  "@monday": {
+    "description": "Monday abbreviation"
+  },
+  "tuesday": "Tue",
+  "@tuesday": {
+    "description": "Tuesday abbreviation"
+  },
+  "wednesday": "Wed",
+  "@wednesday": {
+    "description": "Wednesday abbreviation"
+  },
+  "thursday": "Thu",
+  "@thursday": {
+    "description": "Thursday abbreviation"
+  },
+  "friday": "Fri",
+  "@friday": {
+    "description": "Friday abbreviation"
+  },
+  "saturday": "Sat",
+  "@saturday": {
+    "description": "Saturday abbreviation"
+  },
+  "sunday": "Sun",
+  "@sunday": {
+    "description": "Sunday abbreviation"
+  },
+  "questionReportedByUser": "Question reported by user",
+  "@questionReportedByUser": {
+    "description": "Question reported by user"
+  },
+  "invalidBiblicalReferenceInQuestion": "Invalid biblical reference in question",
+  "@invalidBiblicalReferenceInQuestion": {
+    "description": "Invalid biblical reference in question"
+  },
+  "pleaseEnterDataToImport": "Please enter data to import",
+  "@pleaseEnterDataToImport": {
+    "description": "Please enter data to import"
+  },
+  "importFailed": "Import failed: ",
+  "@importFailed": {
+    "description": "Import failed message"
+  },
+  "errorLoadingStore": "Error loading store",
+  "@errorLoadingStore": {
+    "description": "Error loading store"
+  },
+  "purchaseFailed": "Purchase failed, please try again",
+  "@purchaseFailed": {
+    "description": "Purchase failed message"
+  },
+  "purchaseErrorString": "Error during purchase: {error}",
+  "@purchaseErrorString": {
+    "description": "Purchase error string",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "description": "Error message"
+      }
+    }
+  },
+  "christmasTheme": "Christmas Theme",
+  "@christmasTheme": {
+    "description": "Christmas theme name"
+  },
+  "christmasThemeDescription": "A festive Christmas theme with red and green colors",
+  "@christmasThemeDescription": {
+    "description": "Christmas theme description"
+  },
+  "terminalGreenTheme": "Terminal Green",
+  "@terminalGreenTheme": {
+    "description": "Terminal green theme name"
+  },
+  "terminalGreenThemeDescription": "A classic terminal theme with green text on a black background",
+  "@terminalGreenThemeDescription": {
+    "description": "Terminal green theme description"
+  },
+  "oceanBlueTheme": "Ocean Blue",
+  "@oceanBlueTheme": {
+    "description": "Ocean blue theme name"
+  },
+  "oceanBlueThemeDescription": "A bright ocean blue theme for a fresh look",
+  "@oceanBlueThemeDescription": {
+    "description": "Ocean blue theme description"
+  },
+  "roseWhiteTheme": "Rose White",
+  "@roseWhiteTheme": {
+    "description": "Rose white theme name"
+  },
+  "roseWhiteThemeDescription": "An elegant pink and white theme",
+  "@roseWhiteThemeDescription": {
+    "description": "Rose white theme description"
+  },
+  "darkWoodTheme": "Dark Wood",
+  "@darkWoodTheme": {
+    "description": "Dark wood theme name"
+  },
+  "darkWoodThemeDescription": "A warm dark wood theme",
+  "@darkWoodThemeDescription": {
+    "description": "Dark wood theme description"
+  },
+  "paymentError": "Payment error: {error}",
+  "@paymentError": {
+    "description": "Payment error message",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "description": "Error message"
+      }
+    }
+  },
+  "errorOpeningAiThemeGenerator": "Error opening AI theme generator",
+  "@errorOpeningAiThemeGenerator": {
+    "description": "Error opening AI theme generator"
+  },
+  "discount": "Discount!",
+  "@discount": {
+    "description": "Discount label"
+  },
+  "bibleReferenceCopied": "Bible reference copied: {reference}",
+  "@bibleReferenceCopied": {
+    "description": "Bible reference copied message",
+    "placeholders": {
+      "reference": {
+        "type": "String",
+        "description": "Bible reference"
+      }
+    }
+  },
+  "share": "Share",
+  "@share": {
+    "description": "Share button"
+  },
+  "shareBibleReference": "Bible reference: {reference} ({translation})",
+  "@shareBibleReference": {
+    "description": "Share Bible reference",
+    "placeholders": {
+      "reference": {
+        "type": "String",
+        "description": "Bible reference"
+      },
+      "translation": {
+        "type": "String",
+        "description": "Translation name"
+      }
+    }
+  },
+  "lessonLabel": "Lesson {index}: {title}",
+  "@lessonLabel": {
+    "description": "Lesson label with number and title",
+    "placeholders": {
+      "index": {
+        "type": "int",
+        "description": "Lesson index"
+      },
+      "title": {
+        "type": "String",
+        "description": "Lesson title"
+      }
+    }
+  },
+  "unlockedButNotPlayable": "unlocked but not playable",
+  "@unlockedButNotPlayable": {
+    "description": "Unlocked but not playable status"
+  },
+  "lockedHint": "This lesson is locked. Complete previous lessons to unlock it.",
+  "@lockedHint": {
+    "description": "Locked lesson hint"
+  },
+  "unlockedButNotPlayableHint": "This lesson is unlocked but you can only play the most recent unlocked lesson.",
+  "@unlockedButNotPlayableHint": {
+    "description": "Unlocked but not playable hint"
+  },
+  "tapToStart": "Tap to start this lesson",
+  "@tapToStart": {
+    "description": "Tap to start lesson"
+  },
+  "recommended": "Recommended: {label}",
+  "@recommended": {
+    "description": "Recommended label",
+    "placeholders": {
+      "label": {
+        "type": "String",
+        "description": "Recommended item label"
+      }
+    }
+  },
+  "lessonNumber": "Lesson {index}",
+  "@lessonNumber": {
+    "description": "Lesson number",
+    "placeholders": {
+      "index": {
+        "type": "int",
+        "description": "Lesson index"
+      }
+    }
+  },
+  "bookIconSemanticLabel": "Book icon representing lesson content",
+  "@bookIconSemanticLabel": {
+    "description": "Book icon accessibility label"
+  },
+  "lockedSpecialLessonSemanticLabel": "Locked special lesson",
+  "@lockedSpecialLessonSemanticLabel": {
+    "description": "Locked special lesson accessibility label"
+  },
+  "lockedLessonSemanticLabel": "Locked lesson",
+  "@lockedLessonSemanticLabel": {
+    "description": "Locked lesson accessibility label"
+  },
+  "mcqLabel": "Multiple choice question",
+  "@mcqLabel": {
+    "description": "Multiple choice question label"
+  },
+  "mcqHint": "Select the correct answer from the options below",
+  "@mcqHint": {
+    "description": "Multiple choice hint"
+  },
+  "answerOptionsLabel": "Answer options",
+  "@answerOptionsLabel": {
+    "description": "Answer options label"
+  },
+  "answerOptionsHint": "Choose one of the {count} options",
+  "@answerOptionsHint": {
+    "description": "Answer options hint",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "description": "Number of options"
+      }
+    }
+  },
+  "fitbLabel": "Fill in the blank question",
+  "@fitbLabel": {
+    "description": "Fill in the blank label"
+  },
+  "fitbHint": "Select the word that completes the sentence",
+  "@fitbHint": {
+    "description": "Fill in the blank hint"
+  },
+  "fitbHint2": "Choose the correct word to fill in the blank",
+  "@fitbHint2": {
+    "description": "Fill in the blank hint 2"
+  },
+  "tfLabel": "True or False question",
+  "@tfLabel": {
+    "description": "True or false label"
+  },
+  "tfHint": "Select whether the statement is true or false",
+  "@tfHint": {
+    "description": "True or false hint"
+  },
+  "tfHint2": "Choose True or False",
+  "@tfHint2": {
+    "description": "True or false hint 2"
+  },
+  "trueText": "True",
+  "@trueText": {
+    "description": "True option"
+  },
+  "falseText": "False",
+  "@falseText": {
+    "description": "False option"
+  },
+  "questionLabel": "Question: {question}",
+  "@questionLabel": {
+    "description": "Question label",
+    "placeholders": {
+      "question": {
+        "type": "String",
+        "description": "Question text"
+      }
+    }
+  },
+  "blank": "______",
+  "@blank": {
+    "description": "Blank placeholder"
+  },
+  "lessonLocked": "Lesson is still locked",
+  "@lessonLocked": {
+    "description": "Lesson locked message"
+  },
+  "languageNl": "Dutch",
+  "@languageNl": {
+    "description": "Dutch language name"
+  },
+  "languageEn": "English",
+  "@languageEn": {
+    "description": "English language name"
+  },
+  "selectedEn": "Selected",
+  "@selectedEn": {
+    "description": "Selected accessibility label"
+  },
+  "newMessagesOrLoginRequiredEn": "New messages or login required",
+  "@newMessagesOrLoginRequiredEn": {
+    "description": "New messages or login required"
+  },
+  "activeDiscountsAvailableEn": "Active discounts available",
+  "@activeDiscountsAvailableEn": {
+    "description": "Active discounts available"
+  },
+  "enabledEn": "Enabled",
+  "@enabledEn": {
+    "description": "Enabled status"
+  },
+  "disabledEn": "Disabled",
+  "@disabledEn": {
+    "description": "Disabled status"
+  },
+  "clearSearchEn": "Clear search",
+  "@clearSearchEn": {
+    "description": "Clear search accessibility label"
+  },
+  "openBQIDSettingsEn": "Open BQID settings",
+  "@openBQIDSettingsEn": {
+    "description": "Open BQID settings accessibility label"
+  },
+  "sectionIconEn": "{section} section icon",
+  "@sectionIconEn": {
+    "description": "Section icon accessibility label",
+    "placeholders": {
+      "section": {
+        "type": "String",
+        "description": "Section name"
+      }
+    }
+  },
+  "pageIndicatorEn": "Page {current} of {total}",
+  "@pageIndicatorEn": {
+    "description": "Page indicator accessibility label",
+    "placeholders": {
+      "current": {
+        "type": "int",
+        "description": "Current page"
+      },
+      "total": {
+        "type": "int",
+        "description": "Total pages"
+      }
+    }
+  },
+  "reactionButtonEn": "{emoji} reaction",
+  "@reactionButtonEn": {
+    "description": "Reaction button accessibility label"
+  }
+}

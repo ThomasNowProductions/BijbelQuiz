@@ -1,0 +1,16 @@
+# This is the configuration file for the Flutter localization tool.
+# See https://docs.flutter.dev/ui/accessibility-and-internationalization/internationalization#localizing-your-app
+#
+# For the Flutter Intl package configuration, use the pubspec.yaml flutter_intl section.
+
+# Directory where the ARB files are located
+arb-dir: lib/l10n
+
+# Directory where the generated localization classes will be placed
+output-dir: lib/generated/l10n
+
+# File to store untranslated messages
+untranslated-messages-file: untranslated.txt
+
+# Localization key patterns (optional)
+# synthetic-package: false
