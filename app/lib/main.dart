@@ -499,7 +499,6 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
       navigatorKey: navigatorKey,
       navigatorObservers: [analyticsService.getObserver()],
       title: strings.AppStrings.appName,
-      debugShowCheckedModeBanner: false,
       theme: ThemeUtils.getLightTheme(settings),
       darkTheme: ThemeUtils.getDarkTheme(settings),
       themeMode: ThemeUtils.getThemeMode(settings),
