@@ -114,13 +114,19 @@ class ErrorReportingService {
   }) async {
     try {
       // Check if automatic bug reporting is enabled
+      bool shouldReport = true;
       if (context != null) {
         final settings = Provider.of<SettingsProvider>(context, listen: false);
-        if (!settings.automaticBugReporting) {
-          AppLogger.info(
-              'Automatic bug reporting is disabled, skipping error report');
-          return;
-        }
+        shouldReport = settings.automaticBugReporting;
+      } else {
+        // Use static method to check setting without BuildContext
+        shouldReport = await SettingsProvider.isAutomaticBugReportingEnabled();
+      }
+      
+      if (!shouldReport) {
+        AppLogger.info(
+            'Automatic bug reporting is disabled, skipping error report');
+        return;
       }
 
       AppLogger.info(
@@ -203,6 +209,22 @@ class ErrorReportingService {
     String? buildNumber,
     BuildContext? context,
   }) async {
+    // Check if automatic bug reporting is enabled before creating the error
+    bool shouldReport = true;
+    if (context != null) {
+      final settings = Provider.of<SettingsProvider>(context, listen: false);
+      shouldReport = settings.automaticBugReporting;
+    } else {
+      // Use static method to check setting without BuildContext
+      shouldReport = await SettingsProvider.isAutomaticBugReportingEnabled();
+    }
+    
+    if (!shouldReport) {
+      AppLogger.info(
+          'Automatic bug reporting is disabled, skipping error report');
+      return;
+    }
+    
     final appError = AppError(
       type: type,
       technicalMessage: message,
