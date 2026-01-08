@@ -15,6 +15,23 @@ if (keyPropertiesFile.exists()) {
     }
 }
 
+// Load version from pubspec.yaml
+def pubspec = new Properties()
+def pubspecFile = rootProject.file('../pubspec.yaml')
+if (pubspecFile.exists()) {
+    def yamlContent = pubspecFile.text
+    def versionMatch = yamlContent =~ /version:\s*(\d+\.\d+\.\d+)\+(\d+)/
+    if (versionMatch.find()) {
+        pubspec['versionName'] = versionMatch.group(1)
+        pubspec['versionCode'] = versionMatch.group(2)
+        println "[INFO] Version loaded from pubspec.yaml: ${pubspec['versionName']} (${pubspec['versionCode']})"
+    } else {
+        throw new GradleException("Could not parse version from pubspec.yaml")
+    }
+} else {
+    throw new GradleException("pubspec.yaml file not found at: ${pubspecFile.absolutePath}")
+}
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'dev.flutter.flutter-gradle-plugin'
@@ -29,8 +46,8 @@ android {
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion 36
         multiDexEnabled true
-        versionCode 23
-        versionName "1.5.6"
+        versionCode pubspec['versionCode'].toInteger()
+        versionName pubspec['versionName']
 
         manifestPlaceholders = [
             applicationName: 'io.flutter.app.FlutterApplication'

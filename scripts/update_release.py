@@ -6,10 +6,11 @@ Usage:
 
 The script will:
   1. Update `app/pubspec.yaml` with the new version and increment the build number.
-  2. Increment Android `versionCode` and set `versionName` in `app/android/app/build.gradle`.
-  3. Replace the version string in `websites/bijbelquiz.app/download.html`.
-  4. Build Flutter artefacts (web, APK, AAB, Linux) - specify --platform to build only one.
-  5. Package the Linux binary in a .tar.gz archive and place it in the root directory (if building for Linux).
+  2. Replace the version string in `website/download.html`.
+  3. Build Flutter artefacts (web, APK, AAB, Linux) - specify --platform to build only one.
+  4. Package the Linux binary in a .tar.gz archive and place it in the root directory (if building for Linux).
+
+Note: Android build.gradle no longer needs manual updates - it fetches version from pubspec.yaml.
 """
 
 import argparse
@@ -57,29 +58,7 @@ def update_pubspec(new_version: str) -> None:
     write_file(pubspec_path, new_content)
     print(f"Updated pubspec.yaml: {old_version}+{old_build} → {new_version}+{new_build}")
 
-# ---------- 2️⃣ Update Android build.gradle ----------
-
-def update_build_gradle(new_version: str) -> int:
-    gradle_path = APP_ROOT / "android" / "app" / "build.gradle"
-    content = read_file(gradle_path)
-    # versionCode
-    code_match = re.search(r"versionCode\s+(\d+)", content)
-    if not code_match:
-        raise RuntimeError("versionCode not found in build.gradle")
-    old_code = int(code_match.group(1))
-    new_code = old_code + 1
-    content = re.sub(r"versionCode\s+\d+", f"versionCode {new_code}", content)
-    # versionName
-    name_match = re.search(r"versionName\s+['\"]([^'\"]+)['\"]", content)
-    if not name_match:
-        raise RuntimeError("versionName not found in build.gradle")
-    old_name = name_match.group(1)
-    content = re.sub(r"versionName\s+['\"][^'\"]+['\"]", f"versionName \"{new_version}\"", content)
-    write_file(gradle_path, content)
-    print(f"Updated build.gradle: versionCode {old_code} → {new_code}, versionName {old_name} → {new_version}")
-    return new_code
-
-# ---------- 3️⃣ Update download.html ----------
+# ---------- 2️⃣ Update download.html ----------
 
 def update_download_html(new_version: str) -> None:
     html_path = WEB_ROOT / "download.html"
@@ -92,7 +71,7 @@ def update_download_html(new_version: str) -> None:
     write_file(html_path, new_content)
     print(f"Updated download.html (replaced {count} occurrence(s)).")
 
-# ---------- 4️⃣ Build steps ----------
+# ---------- 3️⃣ Build steps ----------
 
 def flutter_build(platform: str | None = None) -> None:
     # Clean first
@@ -114,6 +93,8 @@ def flutter_build(platform: str | None = None) -> None:
     if platform is None or platform == "linux":
         # Linux
         run_cmd(["flutter", "build", "linux", "--release"], cwd=APP_ROOT)
+
+# ---------- 4️⃣ Package Linux binary ----------
 
 def package_linux_binary(version: str) -> None:
     """Package the Linux binary in a .tar.gz archive and place it in the root directory."""
@@ -164,7 +145,6 @@ def main() -> None:
 
     try:
         update_pubspec(args.version)
-        new_code = update_build_gradle(args.version)
         update_download_html(args.version)
         flutter_build(platform=args.platform)
 
@@ -180,7 +160,6 @@ def main() -> None:
         web_output = APP_ROOT / "build" / "web"
         print("\n=== Release Summary ===")
         print(f"Version: {args.version}")
-        print(f"Android versionCode: {new_code}")
         if args.platform is None or args.platform == "web":
             print(f"Web output: {web_output}")
         if args.platform is None or args.platform == "apk":
