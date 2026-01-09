@@ -266,13 +266,7 @@ Future<void> main() async {
 
     // Initialize store provider
     final storeProvider = StoreProvider();
-    await storeProvider.loadStoreItems().timeout(
-      Duration(seconds: 5),
-      onTimeout: () {
-        AppLogger.warning('Store items loading timed out, continuing without store');
-        return Future.value();
-      },
-    );
+    await storeProvider.loadStoreItems();
 
     AppLogger.info('Starting Flutter app with service container...');
     runApp(

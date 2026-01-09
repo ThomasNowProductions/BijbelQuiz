@@ -1005,4 +1005,11 @@ class AppStringsEn {
     'Your current progress',
     'Your progress overview',
   ];
+
+  // Break Reminder
+  static const String breakReminderTitle = 'Time for a Break';
+  static const String breakReminderMessage =
+      'You\'ve been using the app for 30 minutes. It\'s time to take a short break!';
+  static const String breakReminderOk = 'OK, I\'ll take a break';
+  static const String breakReminderContinue = 'Continue';
 }

@@ -1810,4 +1810,17 @@ class AppStrings {
           'Je huidige voortgang',
           'Je voortgang overzicht',
         ];
+
+  // Break Reminder
+  static String get breakReminderTitle => _language == 'en'
+      ? AppStringsEn.breakReminderTitle
+      : 'Tijd voor een pauze';
+  static String get breakReminderMessage => _language == 'en'
+      ? AppStringsEn.breakReminderMessage
+      : 'Je gebruikt de app nu al 30 minuten. Het is tijd voor een korte pauze!';
+  static String get breakReminderOk => _language == 'en'
+      ? AppStringsEn.breakReminderOk
+      : 'OK, ik neem een pauze';
+  static String get breakReminderContinue =>
+      _language == 'en' ? AppStringsEn.breakReminderContinue : 'Doorgaan';
 }

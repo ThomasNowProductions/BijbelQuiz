@@ -122,7 +122,7 @@ class ErrorReportingService {
         // Use static method to check setting without BuildContext
         shouldReport = await SettingsProvider.isAutomaticBugReportingEnabled();
       }
-      
+
       if (!shouldReport) {
         AppLogger.info(
             'Automatic bug reporting is disabled, skipping error report');
@@ -218,13 +218,13 @@ class ErrorReportingService {
       // Use static method to check setting without BuildContext
       shouldReport = await SettingsProvider.isAutomaticBugReportingEnabled();
     }
-    
+
     if (!shouldReport) {
       AppLogger.info(
           'Automatic bug reporting is disabled, skipping error report');
       return;
     }
-    
+
     final appError = AppError(
       type: type,
       technicalMessage: message,
@@ -240,7 +240,6 @@ class ErrorReportingService {
       deviceInfo: deviceInfo,
       appVersion: appVersion,
       buildNumber: buildNumber,
-      context: context,
     );
   }
 
