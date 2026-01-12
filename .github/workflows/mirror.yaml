@@ -1,0 +1,32 @@
+name: Mirror to Codeberg
+
+# Trigger on push to any branch
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Checkout full history
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # full history needed for mirror
+
+      # 2️⃣ Push to Codeberg
+      - name: Push to Codeberg
+        env:
+          CODEBERG_TOKEN: ${{ secrets.CODEBERG_TOKEN }}
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+          # Add Codeberg as remote with token authentication
+          git remote add codeberg https://${{ secrets.CODEBERG_TOKEN }}@codeberg.org/ThomasNowProductions/BijbelQuiz.git
+
+          # Mirror everything: branches, tags, refs
+          git push --mirror codeberg
