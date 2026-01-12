@@ -1,30 +1,23 @@
-name: Sync to Codeberg
+name: Mirror to Codeberg
 
 on:
   push:
     branches:
       - '**'
-  delete:
   create:
+  delete:
   workflow_dispatch:
 
 jobs:
-  sync:
+  mirror:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout all history
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Sync to Codeberg
-        uses: wangchucheng/git-repo-sync@v0.1.0
-        with:
-          # Your specific target URL
-          target-url: https://codeberg.org/ThomasNowProductions/BijbelQuiz.git
-          
-          # Your Codeberg username
-          target-username: ThomasNowProductions
-          
-          # The secret you must create in GitHub Settings
-          target-token: ${{ secrets.CODEBERG_TOKEN }}
+      - name: Mirror to Codeberg
+        run: |
+          git remote add codeberg https://ThomasNowProductions:${{ secrets.CODEBERG_TOKEN }}@codeberg.org/ThomasNowProductions/BijbelQuiz.git
+          git push --mirror codeberg
