@@ -115,7 +115,8 @@ class TimeTrackingService {
       _sessionStartTime = null;
 
       _stopTracking();
-      AppLogger.info('Session ended. Time tracking now uses question-based approach only.');
+      AppLogger.info(
+          'Session ended. Time tracking now uses question-based approach only.');
     }
   }
 
@@ -195,7 +196,8 @@ class TimeTrackingService {
     // Add 5 seconds per question answered
     _totalTimeSpent += 5;
     _prefs?.setInt(_totalTimeKey, _totalTimeSpent);
-    AppLogger.info('Recorded question answered. Added 5 seconds. Total time now: $_totalTimeSpent seconds');
+    AppLogger.info(
+        'Recorded question answered. Added 5 seconds. Total time now: $_totalTimeSpent seconds');
   }
 
   /// Clean up resources

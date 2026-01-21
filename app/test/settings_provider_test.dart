@@ -118,7 +118,6 @@ void main() {
       expect(provider.mute, true);
     });
 
-
     test('should mark as donated correctly', () async {
       SharedPreferences.setMockInitialValues({});
 
@@ -390,7 +389,6 @@ void main() {
       await provider.unlockTheme('theme1');
       expect(provider.isThemeUnlocked('theme1'), true);
     });
-
 
     test('should handle donation status correctly', () async {
       SharedPreferences.setMockInitialValues({});

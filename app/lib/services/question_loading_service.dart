@@ -43,7 +43,7 @@ class QuestionLoadingService {
       }
     } catch (e) {
       AppLogger.error('Failed to load more questions in background', e);
-      
+
       // Report error to automatic error tracking system
       await AutomaticErrorReporter.reportQuestionError(
         message: 'Failed to load more questions in background',
@@ -98,7 +98,7 @@ class QuestionLoadingService {
       }
     } catch (e) {
       AppLogger.error('Failed to load more questions in background', e);
-      
+
       // Report error to automatic error tracking system
       await AutomaticErrorReporter.reportQuestionError(
         message: 'Failed to load more questions in advanced background loading',

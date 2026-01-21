@@ -20,7 +20,7 @@ class LessonTileSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final orig = colorScheme.surfaceContainerHighest;
-    
+
     // Use Color.fromRGBO for better Android compatibility with alpha
     final baseColor = Color.fromRGBO(
       ((orig.r * 255.0).round() & 0xff),
@@ -44,7 +44,8 @@ class LessonTileSkeleton extends StatelessWidget {
           height: 120, // Fixed height for list items
           decoration: BoxDecoration(
             color: baseColor,
-            borderRadius: BorderRadius.circular(context.responsiveBorderRadius(18)),
+            borderRadius:
+                BorderRadius.circular(context.responsiveBorderRadius(18)),
             border: Border.all(
               color: colorScheme.outlineVariant.withValues(alpha: 0.7),
               width: 1,
@@ -57,7 +58,8 @@ class LessonTileSkeleton extends StatelessWidget {
                 top: 12,
                 left: 12,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
                     color: baseColor,
                     borderRadius: BorderRadius.circular(12),
@@ -114,7 +116,8 @@ class LessonTileSkeleton extends StatelessWidget {
         skeletonContent = Container(
           decoration: BoxDecoration(
             color: baseColor,
-            borderRadius: BorderRadius.circular(context.responsiveBorderRadius(18)),
+            borderRadius:
+                BorderRadius.circular(context.responsiveBorderRadius(18)),
             border: Border.all(
               color: colorScheme.outlineVariant.withValues(alpha: 0.7),
               width: 1,
@@ -127,7 +130,8 @@ class LessonTileSkeleton extends StatelessWidget {
                 top: 12,
                 left: 12,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
                     color: baseColor,
                     borderRadius: BorderRadius.circular(12),
@@ -185,7 +189,8 @@ class LessonTileSkeleton extends StatelessWidget {
         skeletonContent = Container(
           decoration: BoxDecoration(
             color: baseColor,
-            borderRadius: BorderRadius.circular(context.responsiveBorderRadius(18)),
+            borderRadius:
+                BorderRadius.circular(context.responsiveBorderRadius(18)),
             border: Border.all(
               color: colorScheme.outlineVariant.withValues(alpha: 0.7),
               width: 1,
@@ -198,7 +203,8 @@ class LessonTileSkeleton extends StatelessWidget {
                 top: 12,
                 left: 12,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
                     color: baseColor,
                     borderRadius: BorderRadius.circular(12),

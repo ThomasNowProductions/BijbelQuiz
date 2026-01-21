@@ -107,8 +107,7 @@ class _PromoCardState extends State<PromoCard> {
                             ? Icons.tune_rounded
                             : widget.isAccountCreation
                                 ? Icons.person_add_rounded
-                                : Icons
-                                    .group_add_rounded,
+                                : Icons.group_add_rounded,
                 color: cs.onSurface.withValues(alpha: 0.7),
                 size: 20,
               ),
@@ -123,8 +122,7 @@ class _PromoCardState extends State<PromoCard> {
                               ? strings.AppStrings.difficultyFeedbackTitle
                               : widget.isAccountCreation
                                   ? strings.AppStrings.createAccount
-                                  : strings.AppStrings
-                                      .followUs,
+                                  : strings.AppStrings.followUs,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w800,
                         color: cs.onSurface,
@@ -282,4 +280,3 @@ class _PromoCardState extends State<PromoCard> {
     );
   }
 }
-

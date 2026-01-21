@@ -43,7 +43,8 @@ class CouponService {
 
       // 3. Validate usage limit
       if (currentUses >= maxUses) {
-        throw Exception('This coupon is no longer valid (maximum uses reached)');
+        throw Exception(
+            'This coupon is no longer valid (maximum uses reached)');
       }
 
       // 4. Increment usage count
@@ -65,7 +66,10 @@ class CouponService {
       // Report error to automatic error tracking system
       await AutomaticErrorReporter.reportNetworkError(
         message: 'Failed to redeem coupon: ${e.toString()}',
-        additionalInfo: {'coupon_code': normalizedCode, 'operation': 'redeem_coupon'},
+        additionalInfo: {
+          'coupon_code': normalizedCode,
+          'operation': 'redeem_coupon'
+        },
       );
       AppLogger.error('Error redeeming coupon: $e');
       rethrow;

@@ -85,7 +85,6 @@ class _QuizScreenState extends State<QuizScreen>
   bool _initializedStats = false;
   bool _hasLoggedScreenView = false;
 
-
   // Performance optimization: track loading states to reduce debug logging
   bool _lastLoadingState = true;
   bool _lastGameStatsLoadingState = true;
@@ -141,7 +140,6 @@ class _QuizScreenState extends State<QuizScreen>
     _initializeServices();
     _initializeManagers();
     _initializeQuiz();
-
 
     // Listen for game stats reset to reset question pool
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -216,7 +214,6 @@ class _QuizScreenState extends State<QuizScreen>
     );
   }
 
-
   @override
   void dispose() {
     // Update question selector mounted state
@@ -290,8 +287,7 @@ class _QuizScreenState extends State<QuizScreen>
     if (ModalRoute.of(context)?.isCurrent != true) return;
 
     final settings = Provider.of<SettingsProvider>(context, listen: false);
-    final gameStats =
-        Provider.of<GameStatsProvider>(context, listen: false);
+    final gameStats = Provider.of<GameStatsProvider>(context, listen: false);
 
     // Get dynamic retry price from database
     final priceHelper = QuizActionPriceHelper();
@@ -366,15 +362,18 @@ class _QuizScreenState extends State<QuizScreen>
                         final analyticsService = Provider.of<AnalyticsService>(
                             dialogContext,
                             listen: false);
-                        analyticsService.capture(dialogContext, 'retry_with_points');
-                        analyticsService.trackFeatureAttempt(
-                            dialogContext, AnalyticsService.featureRetryWithPoints,
+                        analyticsService.capture(
+                            dialogContext, 'retry_with_points');
+                        analyticsService.trackFeatureAttempt(dialogContext,
+                            AnalyticsService.featureRetryWithPoints,
                             additionalProperties: {
                               'time_remaining': 0, // Time is up
                               'current_streak': gameStats.currentStreak,
                               'current_score': gameStats.score,
                             });
-                        gameStats.spendPointsForRetry(amount: retryPrice).then((success) {
+                        gameStats
+                            .spendPointsForRetry(amount: retryPrice)
+                            .then((success) {
                           if (!dialogContext.mounted) return;
                           if (success) {
                             // Track successful retry with points
@@ -724,7 +723,8 @@ class _QuizScreenState extends State<QuizScreen>
     final gameStats =
         Provider.of<GameStatsProvider>(localContext, listen: false);
     final settings = Provider.of<SettingsProvider>(localContext, listen: false);
-    final timeTrackingService = Provider.of<TimeTrackingService>(localContext, listen: false);
+    final timeTrackingService =
+        Provider.of<TimeTrackingService>(localContext, listen: false);
 
     // Update game stats first
     await gameStats.updateStats(isCorrect: isCorrect);

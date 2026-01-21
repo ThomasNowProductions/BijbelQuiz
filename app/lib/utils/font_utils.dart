@@ -26,7 +26,8 @@ class FontUtils {
       await fontLoader.load();
 
       final fontLoadDuration = DateTime.now().difference(fontLoadStart);
-      AppLogger.info('Quicksand font loaded successfully in ${fontLoadDuration.inMilliseconds}ms');
+      AppLogger.info(
+          'Quicksand font loaded successfully in ${fontLoadDuration.inMilliseconds}ms');
     } catch (e) {
       AppLogger.error('Failed to preload Quicksand font: $e', e);
       // Continue anyway - Flutter will handle fallback
@@ -68,7 +69,8 @@ class FontUtils {
       // is more complex in Flutter
       return fontFamily.isNotEmpty;
     } catch (e) {
-      AppLogger.warning('Failed to check font availability for: $fontFamily', e);
+      AppLogger.warning(
+          'Failed to check font availability for: $fontFamily', e);
       return false;
     }
   }

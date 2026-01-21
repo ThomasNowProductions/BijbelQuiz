@@ -36,7 +36,8 @@ class TrackingService {
       final userIdStart = DateTime.now();
       await _ensurePersistentUserId();
       final userIdDuration = DateTime.now().difference(userIdStart);
-      AppLogger.info('Persistent user ID ensured in ${userIdDuration.inMilliseconds}ms');
+      AppLogger.info(
+          'Persistent user ID ensured in ${userIdDuration.inMilliseconds}ms');
 
       // Load PostHog configuration from environment variables
       AppLogger.info('Loading PostHog configuration...');
@@ -45,11 +46,15 @@ class TrackingService {
       final host = dotenv.env['POSTHOG_HOST'] ?? 'https://us.i.posthog.com';
       final configDuration = DateTime.now().difference(configStart);
 
-      if (apiKey == null || apiKey.isEmpty || apiKey == 'YOUR_POSTHOG_API_KEY_HERE') {
-        throw Exception('PostHog API key not found in environment variables. Please check your .env file.');
+      if (apiKey == null ||
+          apiKey.isEmpty ||
+          apiKey == 'YOUR_POSTHOG_API_KEY_HERE') {
+        throw Exception(
+            'PostHog API key not found in environment variables. Please check your .env file.');
       }
 
-      AppLogger.info('PostHog configuration loaded in ${configDuration.inMilliseconds}ms');
+      AppLogger.info(
+          'PostHog configuration loaded in ${configDuration.inMilliseconds}ms');
 
       // Configure PostHog
       AppLogger.info('Configuring PostHog...');
@@ -58,19 +63,23 @@ class TrackingService {
       config.debug = kDebugMode; // Use debug mode in development
       config.captureApplicationLifecycleEvents = true;
       config.host = host;
-      final posthogConfigDuration = DateTime.now().difference(posthogConfigStart);
-      AppLogger.info('PostHog configured in ${posthogConfigDuration.inMilliseconds}ms');
+      final posthogConfigDuration =
+          DateTime.now().difference(posthogConfigStart);
+      AppLogger.info(
+          'PostHog configured in ${posthogConfigDuration.inMilliseconds}ms');
 
       // Setup PostHog
       AppLogger.info('Setting up PostHog...');
       final posthogSetupStart = DateTime.now();
       await Posthog().setup(config);
       final posthogSetupDuration = DateTime.now().difference(posthogSetupStart);
-      AppLogger.info('PostHog setup completed in ${posthogSetupDuration.inMilliseconds}ms');
+      AppLogger.info(
+          'PostHog setup completed in ${posthogSetupDuration.inMilliseconds}ms');
 
       _isInitialized = true;
       final totalDuration = DateTime.now().difference(trackingInitStart);
-      AppLogger.info('PostHog tracking service initialized successfully in ${totalDuration.inMilliseconds}ms with API key: ${apiKey.substring(0, 8)}...');
+      AppLogger.info(
+          'PostHog tracking service initialized successfully in ${totalDuration.inMilliseconds}ms with API key: ${apiKey.substring(0, 8)}...');
     } catch (e) {
       AppLogger.error('Failed to initialize PostHog tracking service: $e', e);
       rethrow;
@@ -527,7 +536,6 @@ class TrackingService {
     }
   }
 
-
   /// Get the current user's distinct ID
   Future<String> getDistinctId() async {
     try {
@@ -550,7 +558,8 @@ class TrackingService {
     }
 
     if (!_isInitialized) {
-      AppLogger.warning('PostHog not initialized, skipping user identification');
+      AppLogger.warning(
+          'PostHog not initialized, skipping user identification');
       return;
     }
 
@@ -569,7 +578,8 @@ class TrackingService {
   /// Register super properties with PostHog
   Future<void> registerSuperProperty(String key, Object value) async {
     if (!_isInitialized) {
-      AppLogger.warning('PostHog not initialized, skipping super property registration');
+      AppLogger.warning(
+          'PostHog not initialized, skipping super property registration');
       return;
     }
 
@@ -584,7 +594,8 @@ class TrackingService {
   /// Unregister super properties with PostHog
   Future<void> unregisterSuperProperty(String key) async {
     if (!_isInitialized) {
-      AppLogger.warning('PostHog not initialized, skipping super property unregistration');
+      AppLogger.warning(
+          'PostHog not initialized, skipping super property unregistration');
       return;
     }
 
@@ -662,14 +673,16 @@ class TrackingService {
   /// Get comprehensive feature usage statistics (legacy method for compatibility)
   /// Note: This now returns an empty map since PostHog handles analytics differently
   Future<Map<String, dynamic>> getFeatureUsageStats() async {
-    AppLogger.info('getFeatureUsageStats called - PostHog handles analytics differently');
+    AppLogger.info(
+        'getFeatureUsageStats called - PostHog handles analytics differently');
     return {};
   }
 
   /// Generate a feature usage report for decision making (legacy method for compatibility)
   /// Note: This now returns a placeholder since PostHog handles analytics differently
   Future<String> generateFeatureUsageReport() async {
-    AppLogger.info('generateFeatureUsageReport called - PostHog handles analytics differently');
+    AppLogger.info(
+        'generateFeatureUsageReport called - PostHog handles analytics differently');
     return '''
 # Feature Usage Analytics Report
 Generated on: ${DateTime.now().toIso8601String()}
@@ -691,7 +704,8 @@ Please check your PostHog dashboard for detailed analytics and feature usage rep
   /// Get feature usage insights for a specific feature (legacy method for compatibility)
   /// Note: This now returns an empty map since PostHog handles analytics differently
   Future<Map<String, dynamic>> getFeatureInsights(String feature) async {
-    AppLogger.info('getFeatureInsights called for $feature - PostHog handles analytics differently');
+    AppLogger.info(
+        'getFeatureInsights called for $feature - PostHog handles analytics differently');
     return {
       'feature': feature,
       'note': 'Use PostHog dashboard for detailed insights',

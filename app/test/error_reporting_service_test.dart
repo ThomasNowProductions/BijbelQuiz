@@ -4,9 +4,7 @@ import 'package:bijbelquiz/error/error_types.dart';
 
 void main() {
   group('ErrorReportingService Tests', () {
-
-    setUp(() {
-    });
+    setUp(() {});
 
     test('ErrorReport can be created with all parameters', () {
       final errorReport = ErrorReport(
@@ -33,9 +31,11 @@ void main() {
       expect(errorReport.userMessage, 'Could not connect to the server');
       expect(errorReport.errorCode, 'NET001');
       expect(errorReport.stackTrace, 'Stack trace details here');
-      expect(errorReport.context, '{"questionId": "123", "screen": "HomeScreen"}');
+      expect(
+          errorReport.context, '{"questionId": "123", "screen": "HomeScreen"}');
       expect(errorReport.questionId, '123');
-      expect(errorReport.additionalInfo, '{"device": "iPhone 12", "os": "iOS 14"}');
+      expect(errorReport.additionalInfo,
+          '{"device": "iPhone 12", "os": "iOS 14"}');
       expect(errorReport.deviceInfo, 'iPhone 12, iOS 14');
       expect(errorReport.appVersion, '1.0.0');
       expect(errorReport.buildNumber, '123');

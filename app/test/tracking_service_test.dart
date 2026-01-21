@@ -3,14 +3,15 @@ import 'package:flutter_test/flutter_test.dart';
 // Mock TrackingService for test since the actual service doesn't exist
 class MockTrackingService {
   Future<void> init() async {}
-  
+
   static const String featureQuizGameplay = 'feature_quiz_gameplay';
   static const String actionUsed = 'action_used';
-  
-  Future<void> trackFeatureUsage(Object context, String feature, String action) async {
+
+  Future<void> trackFeatureUsage(
+      Object context, String feature, String action) async {
     // Mock implementation - does nothing
   }
-  
+
   Future<void> screen(Object context, String screenName) async {
     // Mock implementation - does nothing
   }
@@ -34,7 +35,7 @@ void main() {
       // This simple test just verifies the method can be called without throwing
       try {
         await trackingService.trackFeatureUsage(
-          'mock_context', 
+          'mock_context',
           MockTrackingService.featureQuizGameplay,
           MockTrackingService.actionUsed,
         );

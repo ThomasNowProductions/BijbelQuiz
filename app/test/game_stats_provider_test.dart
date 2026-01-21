@@ -57,7 +57,8 @@ void main() {
 
       await provider.updateStats(isCorrect: true);
 
-      expect(provider.score, 6); // 1 base point + 5 streak bonus for new longest streak
+      expect(provider.score,
+          6); // 1 base point + 5 streak bonus for new longest streak
       expect(provider.currentStreak, 1);
       expect(provider.longestStreak, 1);
       expect(provider.incorrectAnswers, 0);
@@ -166,7 +167,8 @@ void main() {
       expect(provider.score, 50); // 100 - 50
     });
 
-    test('should fail to spend points for retry without enough points', () async {
+    test('should fail to spend points for retry without enough points',
+        () async {
       SharedPreferences.setMockInitialValues({
         'game_score': 30,
       });
@@ -357,7 +359,8 @@ void main() {
       }
 
       // Should have earned 2 points per question (1 base + 1 bonus from powerup)
-      expect(provider.score, 21); // 3 questions * (1 base + 5 streak bonus + 1 powerup bonus)
+      expect(provider.score,
+          21); // 3 questions * (1 base + 5 streak bonus + 1 powerup bonus)
       expect(provider.isPowerupActive, false); // Should be deactivated
     });
 
@@ -386,7 +389,8 @@ void main() {
       await provider.updateStats(isCorrect: true);
 
       expect(provider.currentStreak, 1);
-      expect(provider.score, 19); // 18 (from previous streak) + 1 base + 0 streak bonus (new streak)
+      expect(provider.score,
+          19); // 18 (from previous streak) + 1 base + 0 streak bonus (new streak)
     });
 
     test('should handle loading states correctly', () async {

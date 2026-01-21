@@ -16,7 +16,8 @@ class CouponRedeemScreen extends StatefulWidget {
   State<CouponRedeemScreen> createState() => _CouponRedeemScreenState();
 }
 
-class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProviderStateMixin {
+class _CouponRedeemScreenState extends State<CouponRedeemScreen>
+    with TickerProviderStateMixin {
   int _selectedIndex = 0; // 0 for Coupon code, 1 for QR-code
   DateTime? _lastScanTime;
   String? _lastProcessedCode;
@@ -91,7 +92,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
     try {
       // Check if we're on a mobile platform
       final isMobile = Theme.of(context).platform == TargetPlatform.android ||
-                       Theme.of(context).platform == TargetPlatform.iOS;
+          Theme.of(context).platform == TargetPlatform.iOS;
 
       if (!isMobile) {
         setState(() {
@@ -286,7 +287,8 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
                                 fontWeight: FontWeight.w600,
                                 color: _selectedIndex == 0
                                     ? Colors.teal
-                                    : colorScheme.onSurface.withValues(alpha: 0.6),
+                                    : colorScheme.onSurface
+                                        .withValues(alpha: 0.6),
                               ),
                             ),
                           ),
@@ -320,7 +322,8 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
                                     fontWeight: FontWeight.w600,
                                     color: _selectedIndex == 1
                                         ? Colors.teal
-                                        : colorScheme.onSurface.withValues(alpha: 0.6),
+                                        : colorScheme.onSurface
+                                            .withValues(alpha: 0.6),
                                   ),
                                 ),
                               ],
@@ -404,7 +407,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
 
     // Check if platform is supported (Android or iOS)
     final isMobile = Theme.of(context).platform == TargetPlatform.android ||
-                     Theme.of(context).platform == TargetPlatform.iOS;
+        Theme.of(context).platform == TargetPlatform.iOS;
 
     if (!isMobile) {
       return Center(
@@ -785,7 +788,8 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
 
     // Debouncing: prevent rapid successive scans
     final now = DateTime.now();
-    if (_lastScanTime != null && now.difference(_lastScanTime!) < const Duration(seconds: 2)) {
+    if (_lastScanTime != null &&
+        now.difference(_lastScanTime!) < const Duration(seconds: 2)) {
       return;
     }
     if (code == _lastProcessedCode) return;
@@ -805,12 +809,15 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
 
     if (uri != null) {
       // Check host (allow www. and without)
-      final isValidHost = uri.host == 'bijbelquiz.app' || uri.host == 'www.bijbelquiz.app';
+      final isValidHost =
+          uri.host == 'bijbelquiz.app' || uri.host == 'www.bijbelquiz.app';
       if (isValidHost) {
         couponCode = uri.queryParameters['coupon'];
 
         // Also support /coupon/COUPON_CODE format
-        if (couponCode == null && uri.pathSegments.length >= 2 && uri.pathSegments[0] == 'coupon') {
+        if (couponCode == null &&
+            uri.pathSegments.length >= 2 &&
+            uri.pathSegments[0] == 'coupon') {
           couponCode = uri.pathSegments[1];
         }
       }
@@ -866,10 +873,12 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
       _errorAnimationController.reverse();
     });
 
-    _showResultDialog(context, strings.AppStrings.invalidQRCode, isSuccess: false);
+    _showResultDialog(context, strings.AppStrings.invalidQRCode,
+        isSuccess: false);
   }
 
-  void _showResultDialog(BuildContext context, String message, {bool isSuccess = true, VoidCallback? onDismiss}) {
+  void _showResultDialog(BuildContext context, String message,
+      {bool isSuccess = true, VoidCallback? onDismiss}) {
     if (isSuccess) {
       // Trigger success animation
       _successAnimationController.forward().then((_) {
@@ -941,7 +950,8 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
 
     if (redeemedCodes.contains(normalizedCode)) {
       if (!mounted) return;
-      _showResultDialog(context, strings.AppStrings.couponAlreadyRedeemed, isSuccess: false);
+      _showResultDialog(context, strings.AppStrings.couponAlreadyRedeemed,
+          isSuccess: false);
       return;
     }
 
@@ -966,14 +976,14 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
       Navigator.pop(context); // Dismiss loading
 
       String message = '';
-      
+
       // Check for special ELIM50 coupon code
       if (normalizedCode == 'ELIM50') {
         // Add 50 stars to the user's account
         if (mounted) {
           Provider.of<GameStatsProvider>(context, listen: false).addStars(50);
         }
-        
+
         // Show special message for ELIM50
         message = strings.AppStrings.elim50CouponMessage;
       } else {
@@ -981,13 +991,16 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
         if (reward.type == 'stars') {
           final amount = reward.value as int;
           if (mounted) {
-            Provider.of<GameStatsProvider>(context, listen: false).addStars(amount);
+            Provider.of<GameStatsProvider>(context, listen: false)
+                .addStars(amount);
           }
-          message = strings.AppStrings.couponStarsReceived.replaceAll('{amount}', amount.toString());
+          message = strings.AppStrings.couponStarsReceived
+              .replaceAll('{amount}', amount.toString());
         } else if (reward.type == 'theme') {
           final themeId = reward.value as String;
           if (mounted) {
-            await Provider.of<SettingsProvider>(context, listen: false).unlockTheme(themeId);
+            await Provider.of<SettingsProvider>(context, listen: false)
+                .unlockTheme(themeId);
           }
           message = strings.AppStrings.couponThemeUnlocked;
         }
@@ -999,7 +1012,8 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
       await prefs.setInt('coupon_redemption_count', count + 1);
 
       if (!mounted) return;
-      _showResultDialog(context, message, isSuccess: true, onDismiss: () => Navigator.pop(context));
+      _showResultDialog(context, message,
+          isSuccess: true, onDismiss: () => Navigator.pop(context));
     } catch (e) {
       if (!mounted) return;
       Navigator.pop(context); // Dismiss loading
@@ -1014,11 +1028,13 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen> with TickerProv
         errorMessage = strings.AppStrings.couponInvalid;
       } else if (errorMessage == 'This coupon has expired') {
         errorMessage = strings.AppStrings.couponExpired;
-      } else if (errorMessage == 'This coupon is no longer valid (maximum uses reached)') {
+      } else if (errorMessage ==
+          'This coupon is no longer valid (maximum uses reached)') {
         errorMessage = strings.AppStrings.couponMaxUsed;
       } else if (errorMessage == 'This coupon has already been redeemed') {
         errorMessage = strings.AppStrings.couponAlreadyRedeemed;
-      } else if (errorMessage == 'Maximum of 5 coupons can be redeemed per day') {
+      } else if (errorMessage ==
+          'Maximum of 5 coupons can be redeemed per day') {
         errorMessage = strings.AppStrings.couponMaxPerDay;
       }
 

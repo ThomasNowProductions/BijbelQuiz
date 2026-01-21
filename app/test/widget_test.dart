@@ -58,7 +58,8 @@ void main() {
     expect(gameStats.score, isA<int>());
   });
 
-  testWidgets('Settings provider integration test', (WidgetTester tester) async {
+  testWidgets('Settings provider integration test',
+      (WidgetTester tester) async {
     late SettingsProvider settingsProvider;
 
     await tester.pumpWidget(
@@ -91,7 +92,8 @@ void main() {
     expect(settings.themeMode, isA<ThemeMode>());
   });
 
-  testWidgets('Game stats provider integration test', (WidgetTester tester) async {
+  testWidgets('Game stats provider integration test',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       ChangeNotifierProvider<GameStatsProvider>(
         create: (_) => GameStatsProvider(),
@@ -120,12 +122,15 @@ void main() {
     expect(gameStats.score, greaterThanOrEqualTo(0));
   });
 
-  testWidgets('Multiple providers integration test', (WidgetTester tester) async {
+  testWidgets('Multiple providers integration test',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       MultiProvider(
         providers: [
-          ChangeNotifierProvider<SettingsProvider>(create: (_) => SettingsProvider()),
-          ChangeNotifierProvider<GameStatsProvider>(create: (_) => GameStatsProvider()),
+          ChangeNotifierProvider<SettingsProvider>(
+              create: (_) => SettingsProvider()),
+          ChangeNotifierProvider<GameStatsProvider>(
+              create: (_) => GameStatsProvider()),
         ],
         child: MaterialApp(
           home: Builder(

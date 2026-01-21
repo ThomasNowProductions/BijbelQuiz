@@ -101,7 +101,7 @@ class StarTransactionService {
   /// Load transaction history from persistent storage
   Future<void> _loadTransactionHistory() async {
     final rawTransactions = _prefs?.getStringList(_transactionsKey) ?? [];
-    
+
     try {
       _transactions.clear();
 
@@ -124,7 +124,7 @@ class StarTransactionService {
       AppLogger.info('Loaded ${_transactions.length} star transactions');
     } catch (e) {
       AppLogger.error('Error loading transaction history: $e');
-      
+
       // Report error to automatic error tracking system
       await AutomaticErrorReporter.reportStorageError(
         message: 'Failed to load star transaction history',
@@ -165,7 +165,7 @@ class StarTransactionService {
           'Saved star transaction: ${transaction.type} ${transaction.amount} stars - ${transaction.reason}');
     } catch (e) {
       AppLogger.error('Error saving transaction: $e');
-      
+
       // Report error to automatic error tracking system
       await AutomaticErrorReporter.reportStorageError(
         message: 'Failed to save star transaction',

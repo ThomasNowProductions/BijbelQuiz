@@ -32,7 +32,7 @@ class StoreProvider with ChangeNotifier {
       _isLoading = false;
       _error = e.toString();
       notifyListeners();
-      
+
       // Report error to automatic error tracking system
       await AutomaticErrorReporter.reportNetworkError(
         message: 'Failed to load store items',

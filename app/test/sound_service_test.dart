@@ -238,8 +238,7 @@ void main() {
       await soundService.initialize();
 
       // Set error callback
-      soundService.onError = (message) {
-      };
+      soundService.onError = (message) {};
 
       // Try to play an unknown sound (should trigger error handling)
       await soundService.play('definitely_unknown_sound');

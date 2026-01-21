@@ -545,8 +545,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
     );
   }
 
-  Widget _buildYearInReviewPage(BuildContext context,
-      GameStatsProvider gameStats) {
+  Widget _buildYearInReviewPage(
+      BuildContext context, GameStatsProvider gameStats) {
     final totalQuestions = gameStats.score + gameStats.incorrectAnswers;
     final correctPercentage = totalQuestions > 0
         ? (gameStats.score / totalQuestions * 100).round()
@@ -602,11 +602,13 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                             AnimatedCounter(
                               endNumber: gameStats.score,
                               duration: const Duration(milliseconds: 1500),
-                              style:
-                                  Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                      ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
                             ),
                             strings.AppStrings.correctAnswers,
                             Colors.black),
@@ -617,11 +619,13 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                               endNumber: correctPercentage,
                               duration: const Duration(milliseconds: 1500),
                               suffix: '%',
-                              style:
-                                  Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                      ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
                             ),
                             strings.AppStrings.accuracy,
                             Colors.black),
@@ -633,11 +637,13 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                               duration: const Duration(milliseconds: 1500),
                               decimalPlaces: 1,
                               suffix: ' ${strings.AppStrings.hours}',
-                              style:
-                                  Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                      ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
                             ),
                             strings.AppStrings.hours,
                             Colors.black),
@@ -647,11 +653,13 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                             AnimatedCounter(
                               endNumber: gameStats.currentStreak,
                               duration: const Duration(milliseconds: 1500),
-                              style:
-                                  Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                      ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
                             ),
                             strings.AppStrings.currentStreak,
                             Colors.black),
@@ -681,8 +689,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                             color: Colors.black,
                             width: 2,
                           ),
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 14),
                         ),
                       ),
                       OutlinedButton.icon(
@@ -704,8 +712,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                             color: Colors.black,
                             width: 2,
                           ),
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 14),
                         ),
                       ),
                     ],
@@ -819,8 +827,10 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   OutlinedButton.icon(
                     onPressed: () async {
                       final Uri url = Uri.parse(AppUrls.donateUrl);
-                      if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-                        throw Exception('Could not launch ${AppUrls.donateUrl}');
+                      if (!await launchUrl(url,
+                          mode: LaunchMode.externalApplication)) {
+                        throw Exception(
+                            'Could not launch ${AppUrls.donateUrl}');
                       }
                     },
                     icon: Icon(
@@ -840,7 +850,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                         color: Colors.black,
                         width: 2,
                       ),
-                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 14),
                     ),
                   ),
                 ],

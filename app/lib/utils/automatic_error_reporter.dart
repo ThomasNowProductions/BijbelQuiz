@@ -202,7 +202,8 @@ class AutomaticErrorReporter {
 
       await ErrorReportingService().reportSimpleError(
         message: message,
-        type: AppErrorType.storage, // Audio issues are often file/storage related
+        type:
+            AppErrorType.storage, // Audio issues are often file/storage related
         userMessage: userMessage ?? 'Audio error',
         additionalInfo: {
           'feature': 'audio',
@@ -406,7 +407,8 @@ class AutomaticErrorReporter {
 
       await ErrorReportingService().reportSimpleError(
         message: message,
-        type: AppErrorType.unknown, // Provider errors are state management related
+        type: AppErrorType
+            .unknown, // Provider errors are state management related
         userMessage: userMessage ?? 'Provider error',
         additionalInfo: {
           'feature': 'provider',
@@ -440,7 +442,8 @@ class AutomaticErrorReporter {
 
       await ErrorReportingService().reportSimpleError(
         message: message,
-        type: AppErrorType.storage, // Theme issues are often file/storage related
+        type:
+            AppErrorType.storage, // Theme issues are often file/storage related
         userMessage: userMessage ?? 'Theme error',
         additionalInfo: {
           'feature': 'theme',
@@ -474,7 +477,8 @@ class AutomaticErrorReporter {
 
       await ErrorReportingService().reportSimpleError(
         message: message,
-        type: AppErrorType.unknown, // Service initialization errors are system-related
+        type: AppErrorType
+            .unknown, // Service initialization errors are system-related
         userMessage: userMessage ?? 'Service initialization error',
         additionalInfo: {
           'feature': 'service_initialization',
@@ -484,7 +488,8 @@ class AutomaticErrorReporter {
         },
       );
     } catch (e) {
-      AppLogger.warning('Failed to auto-report service initialization error: $e');
+      AppLogger.warning(
+          'Failed to auto-report service initialization error: $e');
     }
   }
 }

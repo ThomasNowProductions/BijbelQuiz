@@ -222,7 +222,7 @@ class GeminiService {
       AppLogger.info('Gemini API service initialized successfully');
     } catch (e) {
       AppLogger.error('Failed to initialize Gemini API service', e);
-      
+
       // Report error to automatic error tracking system
       await AutomaticErrorReporter.reportNetworkError(
         message: 'Failed to initialize Gemini API service',
@@ -233,7 +233,7 @@ class GeminiService {
           'api_key_configured': _apiKey.isNotEmpty,
         },
       );
-      
+
       _initialized = false;
       rethrow;
     }
@@ -292,11 +292,12 @@ class GeminiService {
       }
     } catch (e) {
       AppLogger.error('Failed to generate color palette', e);
-      
+
       // Report error to automatic error tracking system
       await AutomaticErrorReporter.reportNetworkError(
         message: 'Failed to generate color palette from Gemini API',
-        url: '${GeminiConfig.baseUrl}/models/gemini-flash-latest:generateContent',
+        url:
+            '${GeminiConfig.baseUrl}/models/gemini-flash-latest:generateContent',
         additionalInfo: {
           'description': description,
           'error': e.toString(),
@@ -304,7 +305,7 @@ class GeminiService {
           'service_initialized': _initialized,
         },
       );
-      
+
       rethrow;
     }
   }

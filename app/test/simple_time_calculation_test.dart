@@ -17,12 +17,15 @@ void main() {
 
       // Test formatted time
       final formattedHours = (totalSeconds ~/ 3600).toString().padLeft(2, '0');
-      final formattedMinutes = ((totalSeconds % 3600) ~/ 60).toString().padLeft(2, '0');
+      final formattedMinutes =
+          ((totalSeconds % 3600) ~/ 60).toString().padLeft(2, '0');
       final formattedSeconds = (totalSeconds % 60).toString().padLeft(2, '0');
-      final formattedTime = '$formattedHours:$formattedMinutes:$formattedSeconds';
+      final formattedTime =
+          '$formattedHours:$formattedMinutes:$formattedSeconds';
 
       AppLogger.info('Formatted time: $formattedTime');
-      expect(formattedTime, '02:47:10'); // 10030 seconds = 2 hours, 47 minutes, 10 seconds
+      expect(formattedTime,
+          '02:47:10'); // 10030 seconds = 2 hours, 47 minutes, 10 seconds
     });
 
     test('Test time calculation with zero questions', () {
@@ -44,14 +47,18 @@ void main() {
 
       // Test formatted time
       final formattedHours = (totalSeconds ~/ 3600).toString().padLeft(2, '0');
-      final formattedMinutes = ((totalSeconds % 3600) ~/ 60).toString().padLeft(2, '0');
+      final formattedMinutes =
+          ((totalSeconds % 3600) ~/ 60).toString().padLeft(2, '0');
       final formattedSeconds = (totalSeconds % 60).toString().padLeft(2, '0');
-      final formattedTime = '$formattedHours:$formattedMinutes:$formattedSeconds';
+      final formattedTime =
+          '$formattedHours:$formattedMinutes:$formattedSeconds';
 
       expect(formattedTime, '00:08:20'); // 500 seconds = 8 minutes 20 seconds
     });
 
-    test('Verify user scenario: 2006 questions should show 2.786 hours not 716.6', () {
+    test(
+        'Verify user scenario: 2006 questions should show 2.786 hours not 716.6',
+        () {
       final totalQuestions = 2006;
       final totalSeconds = totalQuestions * 5;
       final hours = totalSeconds / 3600.0;

@@ -471,7 +471,7 @@ class QuestionCacheService {
       AppLogger.info('Cache cleared successfully');
     } catch (e) {
       AppLogger.error('Failed to clear cache', e);
-      
+
       // Report error to automatic error tracking system
       await AutomaticErrorReporter.reportStorageError(
         message: 'Failed to clear question cache',
@@ -499,10 +499,8 @@ class QuestionCacheService {
           ? 'id, question, correct_answer, incorrect_answers, difficulty, type, categories, biblical_reference'
           : 'id, vraag, juiste_antwoord, foute_antwoorden, moeilijkheidsgraad, type, categories, biblical_reference';
 
-      final response = await client
-          .from(tableName)
-          .select(columns)
-          .inFilter('id', ids);
+      final response =
+          await client.from(tableName).select(columns).inFilter('id', ids);
 
       final questions = <QuizQuestion>[];
       for (final row in response) {
@@ -541,7 +539,7 @@ class QuestionCacheService {
       return questions;
     } catch (e) {
       AppLogger.error('Failed to load questions from database', e);
-      
+
       // Report error to automatic error tracking system
       await AutomaticErrorReporter.reportNetworkError(
         message: 'Failed to load questions from database',
@@ -553,7 +551,7 @@ class QuestionCacheService {
           'operation': 'load_questions_from_database',
         },
       );
-      
+
       rethrow;
     }
   }
@@ -561,9 +559,10 @@ class QuestionCacheService {
   /// Load questions from JSON by indices
   Future<List<QuizQuestion>> _loadQuestionsFromJsonByIndices(
       String language, List<int> indices) async {
-    final fileName = language == 'en' ? 'assets/questions-en.json' : 'assets/questions-nl-sv.json';
-    final String response =
-        await rootBundle.loadString(fileName);
+    final fileName = language == 'en'
+        ? 'assets/questions-en.json'
+        : 'assets/questions-nl-sv.json';
+    final String response = await rootBundle.loadString(fileName);
     final List<dynamic> data = json.decode(response) as List;
 
     if (data.isEmpty) {
@@ -589,12 +588,14 @@ class QuestionCacheService {
     // Report parsing errors if any occurred
     if (parsingErrors.isNotEmpty) {
       await AutomaticErrorReporter.reportQuestionError(
-        message: 'Failed to parse ${parsingErrors.length} questions from JSON file',
+        message:
+            'Failed to parse ${parsingErrors.length} questions from JSON file',
         questionId: 'json_parsing_errors',
         additionalInfo: {
           'file': fileName,
           'total_errors': parsingErrors.length,
-          'error_details': parsingErrors.take(5).toList(), // Report first 5 errors
+          'error_details':
+              parsingErrors.take(5).toList(), // Report first 5 errors
           'indices_processed': indices.length,
           'questions_loaded': loadedQuestions.length,
         },
@@ -616,16 +617,16 @@ class QuestionCacheService {
           : 'id, moeilijkheidsgraad, categories, type, biblical_reference';
       final orderColumn = isEnglish ? 'difficulty' : 'moeilijkheidsgraad';
 
-      final response = await client
-          .from(tableName)
-          .select(columns)
-          .order(orderColumn);
+      final response =
+          await client.from(tableName).select(columns).order(orderColumn);
 
       final metadata = <Map<String, dynamic>>[];
       for (final row in response) {
         metadata.add({
           'id': row['id'],
-          'difficulty': isEnglish ? (row['difficulty']?.toString() ?? '') : (row['moeilijkheidsgraad']?.toString() ?? ''),
+          'difficulty': isEnglish
+              ? (row['difficulty']?.toString() ?? '')
+              : (row['moeilijkheidsgraad']?.toString() ?? ''),
           'categories':
               (row['categories'] as List<dynamic>?)?.cast<String>() ?? [],
           'type': row['type']?.toString() ?? 'mc',
@@ -638,7 +639,7 @@ class QuestionCacheService {
       return metadata;
     } catch (e) {
       AppLogger.error('Failed to load metadata from database', e);
-      
+
       // Report error to automatic error tracking system
       await AutomaticErrorReporter.reportNetworkError(
         message: 'Failed to load question metadata from database',
@@ -649,7 +650,7 @@ class QuestionCacheService {
           'operation': 'load_metadata_from_database',
         },
       );
-      
+
       rethrow;
     }
   }
@@ -657,9 +658,10 @@ class QuestionCacheService {
   /// Load metadata from JSON
   Future<List<Map<String, dynamic>>> _loadMetadataFromJson(
       String language) async {
-    final fileName = language == 'en' ? 'assets/questions-en.json' : 'assets/questions-nl-sv.json';
-    final String response =
-        await rootBundle.loadString(fileName);
+    final fileName = language == 'en'
+        ? 'assets/questions-en.json'
+        : 'assets/questions-nl-sv.json';
+    final String response = await rootBundle.loadString(fileName);
     final List<dynamic> data = json.decode(response);
 
     if (data.isEmpty) {
@@ -669,13 +671,15 @@ class QuestionCacheService {
     // Extract and store just the metadata (much smaller memory footprint)
     final metadata = <Map<String, dynamic>>[];
     final parsingErrors = <String>[];
-    
+
     for (int i = 0; i < data.length; i++) {
       try {
         final json = data[i];
         metadata.add({
           'id': json['id'] ?? '',
-          'difficulty': json['moeilijkheidsgraad']?.toString() ?? json['difficulty']?.toString() ?? '',
+          'difficulty': json['moeilijkheidsgraad']?.toString() ??
+              json['difficulty']?.toString() ??
+              '',
           'categories':
               (json['categories'] as List<dynamic>?)?.cast<String>() ?? [],
           'type': json['type']?.toString() ?? 'mc',
@@ -692,12 +696,14 @@ class QuestionCacheService {
     // Report parsing errors if any occurred
     if (parsingErrors.isNotEmpty) {
       await AutomaticErrorReporter.reportQuestionError(
-        message: 'Failed to parse ${parsingErrors.length} metadata entries from JSON file',
+        message:
+            'Failed to parse ${parsingErrors.length} metadata entries from JSON file',
         questionId: 'metadata_json_parsing_errors',
         additionalInfo: {
           'file': fileName,
           'total_errors': parsingErrors.length,
-          'error_details': parsingErrors.take(5).toList(), // Report first 5 errors
+          'error_details':
+              parsingErrors.take(5).toList(), // Report first 5 errors
           'total_entries': data.length,
           'successful_entries': metadata.length,
         },

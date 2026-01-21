@@ -77,7 +77,8 @@ void main() {
       expect(question.correctAnswer, 'God created');
     });
 
-    test('should parse from JSON - true/false with provided incorrect answers', () {
+    test('should parse from JSON - true/false with provided incorrect answers',
+        () {
       final json = {
         'vraag': 'Is God real?',
         'juisteAntwoord': 'Waar',
@@ -92,7 +93,9 @@ void main() {
       expect(question.incorrectAnswers, ['Niet waar']);
     });
 
-    test('should generate incorrect answers for true/false when not provided - Waar', () {
+    test(
+        'should generate incorrect answers for true/false when not provided - Waar',
+        () {
       final json = {
         'vraag': 'Is Jesus the Son of God?',
         'juisteAntwoord': 'Waar',
@@ -105,7 +108,9 @@ void main() {
       expect(question.incorrectAnswers, ['Niet waar']);
     });
 
-    test('should generate incorrect answers for true/false when not provided - Niet waar', () {
+    test(
+        'should generate incorrect answers for true/false when not provided - Niet waar',
+        () {
       final json = {
         'vraag': 'Is the Bible fiction?',
         'juisteAntwoord': 'Niet waar',
@@ -118,7 +123,9 @@ void main() {
       expect(question.incorrectAnswers, ['Waar']);
     });
 
-    test('should generate incorrect answers for true/false when not provided - True', () {
+    test(
+        'should generate incorrect answers for true/false when not provided - True',
+        () {
       final json = {
         'vraag': 'God exists?',
         'juisteAntwoord': 'True',
@@ -131,7 +138,9 @@ void main() {
       expect(question.incorrectAnswers, ['Niet waar']);
     });
 
-    test('should generate incorrect answers for true/false when not provided - False', () {
+    test(
+        'should generate incorrect answers for true/false when not provided - False',
+        () {
       final json = {
         'vraag': 'Is sin good?',
         'juisteAntwoord': 'False',
@@ -297,64 +306,43 @@ void main() {
     });
 
     test('should handle empty incorrect answers list', () {
-      final json = {
-        'fouteAntwoorden': [],
-        'type': 'mc'
-      };
+      final json = {'fouteAntwoorden': [], 'type': 'mc'};
       final question = QuizQuestion.fromJson(json);
       expect(question.incorrectAnswers, isEmpty);
     });
 
     test('should handle non-list incorrect answers', () {
-      final json = {
-        'fouteAntwoorden': 'not a list',
-        'type': 'mc'
-      };
+      final json = {'fouteAntwoorden': 'not a list', 'type': 'mc'};
       final question = QuizQuestion.fromJson(json);
       expect(question.incorrectAnswers, isEmpty);
     });
 
     test('should generate opposites for TF - Waar', () {
-      final json = {
-        'juisteAntwoord': 'Waar',
-        'type': 'tf'
-      };
+      final json = {'juisteAntwoord': 'Waar', 'type': 'tf'};
       final question = QuizQuestion.fromJson(json);
       expect(question.incorrectAnswers, ['Niet waar']);
     });
 
     test('should generate opposites for TF - Niet waar', () {
-      final json = {
-        'juisteAntwoord': 'Niet waar',
-        'type': 'tf'
-      };
+      final json = {'juisteAntwoord': 'Niet waar', 'type': 'tf'};
       final question = QuizQuestion.fromJson(json);
       expect(question.incorrectAnswers, ['Waar']);
     });
 
     test('should generate opposites for TF - True', () {
-      final json = {
-        'juisteAntwoord': 'True',
-        'type': 'tf'
-      };
+      final json = {'juisteAntwoord': 'True', 'type': 'tf'};
       final question = QuizQuestion.fromJson(json);
       expect(question.incorrectAnswers, ['Niet waar']);
     });
 
     test('should generate opposites for TF - False', () {
-      final json = {
-        'juisteAntwoord': 'False',
-        'type': 'tf'
-      };
+      final json = {'juisteAntwoord': 'False', 'type': 'tf'};
       final question = QuizQuestion.fromJson(json);
       expect(question.incorrectAnswers, ['Waar']);
     });
 
     test('should fallback for unknown TF answer', () {
-      final json = {
-        'juisteAntwoord': 'Unknown',
-        'type': 'tf'
-      };
+      final json = {'juisteAntwoord': 'Unknown', 'type': 'tf'};
       final question = QuizQuestion.fromJson(json);
       expect(question.incorrectAnswers, ['Niet waar']);
     });

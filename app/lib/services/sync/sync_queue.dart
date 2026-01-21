@@ -16,7 +16,10 @@ class SyncQueue {
 
   Future<List<SyncItem>> getAll() async {
     final jsonList = _prefs.getStringList(_storageKey) ?? [];
-    return jsonList.map((jsonStr) => SyncItem.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>)).toList();
+    return jsonList
+        .map((jsonStr) =>
+            SyncItem.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>))
+        .toList();
   }
 
   Future<List<SyncItem>> getForUser(String userId) async {

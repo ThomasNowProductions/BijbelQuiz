@@ -120,13 +120,15 @@ class QuizQuestion {
 
   static void _validateQuestion(String question) {
     if (question.isEmpty || question.length > 1000) {
-      throw ArgumentError('question must be non-empty and less than 1000 characters');
+      throw ArgumentError(
+          'question must be non-empty and less than 1000 characters');
     }
   }
 
   static void _validateCorrectAnswer(String correctAnswer) {
     if (correctAnswer.isEmpty || correctAnswer.length > 500) {
-      throw ArgumentError('correctAnswer must be non-empty and less than 500 characters');
+      throw ArgumentError(
+          'correctAnswer must be non-empty and less than 500 characters');
     }
   }
 
@@ -139,14 +141,16 @@ class QuizQuestion {
     }
     for (final answer in incorrectAnswers) {
       if (answer.isEmpty || answer.length > 500) {
-        throw ArgumentError('Each incorrect answer must be non-empty and less than 500 characters');
+        throw ArgumentError(
+            'Each incorrect answer must be non-empty and less than 500 characters');
       }
     }
   }
 
   static void _validateDifficulty(String difficulty) {
     if (difficulty.isEmpty || difficulty.length > 50) {
-      throw ArgumentError('difficulty must be non-empty and less than 50 characters');
+      throw ArgumentError(
+          'difficulty must be non-empty and less than 50 characters');
     }
   }
 
@@ -156,7 +160,8 @@ class QuizQuestion {
     }
     for (final category in categories) {
       if (category.isEmpty || category.length > 50) {
-        throw ArgumentError('Each category must be non-empty and less than 50 characters');
+        throw ArgumentError(
+            'Each category must be non-empty and less than 50 characters');
       }
     }
   }
@@ -173,14 +178,21 @@ class QuizQuestion {
   /// The JSON keys 'id', 'vraag', 'juisteAntwoord', 'fouteAntwoorden', 'moeilijkheidsgraad', and 'type' are used to populate the question's properties.
   factory QuizQuestion.fromJson(Map<String, dynamic> json) {
     final type = _parseQuestionType(json['type']?.toString());
-    final correctAnswer = json['juisteAntwoord']?.toString() ?? json['correctAnswer']?.toString() ?? '';
-    final incorrectAnswers =
-        _parseIncorrectAnswers(json['fouteAntwoorden'] ?? json['incorrectAnswers'], type, correctAnswer);
+    final correctAnswer = json['juisteAntwoord']?.toString() ??
+        json['correctAnswer']?.toString() ??
+        '';
+    final incorrectAnswers = _parseIncorrectAnswers(
+        json['fouteAntwoorden'] ?? json['incorrectAnswers'],
+        type,
+        correctAnswer);
     final categories = _parseCategories(json['categories']);
     final biblicalReference = json['biblicalReference'] as String?;
     final id = json['id']?.toString() ?? '';
-    final question = json['vraag']?.toString() ?? json['question']?.toString() ?? '';
-    final difficulty = json['moeilijkheidsgraad']?.toString() ?? json['difficulty']?.toString() ?? '';
+    final question =
+        json['vraag']?.toString() ?? json['question']?.toString() ?? '';
+    final difficulty = json['moeilijkheidsgraad']?.toString() ??
+        json['difficulty']?.toString() ??
+        '';
 
     // Validate parsed data before creating instance
     _validateId(id);

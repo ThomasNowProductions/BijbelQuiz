@@ -1,10 +1,9 @@
-
 /// Represents the state of a day in the streak tracker
 enum DayState {
   success, // Day with activity
-  fail,    // Day without activity
-  freeze,  // Frozen day (e.g. Sunday)
-  future,  // Future day
+  fail, // Day without activity
+  freeze, // Frozen day (e.g. Sunday)
+  future, // Future day
 }
 
 /// Represents a day with its date and state in the streak tracker
@@ -34,14 +33,14 @@ class StreakCalculator {
     int streak = 0;
     DateTime now = DateTime.now();
     DateTime cursor = DateTime(now.year, now.month, now.day);
-    
+
     while (true) {
       if (isSunday(cursor)) {
         // Sunday is a free day, does not break or add to streak
         cursor = cursor.subtract(const Duration(days: 1));
         continue;
       }
-      
+
       final dayStr = formatDate(cursor);
       if (activeDays.contains(dayStr)) {
         streak += 1;
@@ -50,7 +49,7 @@ class StreakCalculator {
         break;
       }
     }
-    
+
     return streak;
   }
 
@@ -59,12 +58,12 @@ class StreakCalculator {
     final List<DayIndicator> out = [];
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
-    
+
     for (int offset = -2; offset <= 2; offset++) {
       final day = today.add(Duration(days: offset));
       final isFuture = day.isAfter(today);
       final dayStr = formatDate(day);
-      
+
       DayState state;
       if (isFuture) {
         state = DayState.future;
@@ -83,10 +82,10 @@ class StreakCalculator {
           state = DayState.fail;
         }
       }
-      
+
       out.add(DayIndicator(date: day, state: state));
     }
-    
+
     return out;
   }
 }

@@ -42,13 +42,15 @@ class StoreItem {
 
   static void _validateItemKey(String itemKey) {
     if (itemKey.isEmpty || itemKey.length > 50) {
-      throw ArgumentError('itemKey must be non-empty and less than 50 characters');
+      throw ArgumentError(
+          'itemKey must be non-empty and less than 50 characters');
     }
   }
 
   static void _validateItemName(String itemName) {
     if (itemName.isEmpty || itemName.length > 100) {
-      throw ArgumentError('itemName must be non-empty and less than 100 characters');
+      throw ArgumentError(
+          'itemName must be non-empty and less than 100 characters');
     }
   }
 
@@ -91,8 +93,11 @@ class StoreItem {
     }
   }
 
-  static void _validateDiscountDates(DateTime? discountStart, DateTime? discountEnd) {
-    if (discountStart != null && discountEnd != null && discountStart.isAfter(discountEnd)) {
+  static void _validateDiscountDates(
+      DateTime? discountStart, DateTime? discountEnd) {
+    if (discountStart != null &&
+        discountEnd != null &&
+        discountStart.isAfter(discountEnd)) {
       throw ArgumentError('discountStart must be before discountEnd');
     }
   }

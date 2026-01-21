@@ -53,7 +53,8 @@ void main() {
       });
 
       test('should return fallback color for invalid input', () {
-        final result = ColorParser.parseColor('invalid-color', component: 'primary');
+        final result =
+            ColorParser.parseColor('invalid-color', component: 'primary');
         expect(result, isNotNull);
       });
     });
@@ -98,7 +99,8 @@ void main() {
       });
 
       test('should handle invalid color formats gracefully', () {
-        final fallback = ColorParser.parseColor('invalid-color', component: 'primary');
+        final fallback =
+            ColorParser.parseColor('invalid-color', component: 'primary');
         expect(fallback, isNotNull);
       });
     });
@@ -165,7 +167,8 @@ void main() {
       test('should use custom minimum ratio', () {
         const darkGray = Color(0xFF404040);
         const mediumGray = Color(0xFF707070);
-        final result = ColorParser.validateContrast(darkGray, mediumGray, minRatio: 2.0);
+        final result =
+            ColorParser.validateContrast(darkGray, mediumGray, minRatio: 2.0);
         expect(result, isTrue);
       });
     });

@@ -26,7 +26,8 @@ class AuthView extends StatefulWidget {
 class _AuthViewState extends State<AuthView> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
 
   bool _isLoading = false;
@@ -175,7 +176,8 @@ class _AuthViewState extends State<AuthView> {
 
   Future<int> _checkPwned(String password) async {
     try {
-      final sha1Hash = sha1.convert(utf8.encode(password)).toString().toUpperCase();
+      final sha1Hash =
+          sha1.convert(utf8.encode(password)).toString().toUpperCase();
       final prefix = sha1Hash.substring(0, 5);
       final suffix = sha1Hash.substring(5);
 
@@ -183,7 +185,8 @@ class _AuthViewState extends State<AuthView> {
       final response = await http.get(url);
 
       if (response.statusCode != 200) {
-        AppLogger.error('Pwned API request failed with status: ${response.statusCode}');
+        AppLogger.error(
+            'Pwned API request failed with status: ${response.statusCode}');
         return 0; // Assume not pwned on API error
       }
 
@@ -255,7 +258,10 @@ class _AuthViewState extends State<AuthView> {
     final username = _usernameController.text.trim();
 
     // Enhanced field validation with specific messages
-    if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty || username.isEmpty) {
+    if (email.isEmpty ||
+        password.isEmpty ||
+        confirmPassword.isEmpty ||
+        username.isEmpty) {
       setState(() {
         _error = AppStrings.fillAllFields;
       });
@@ -362,10 +368,12 @@ class _AuthViewState extends State<AuthView> {
             'updated_at': DateTime.now().toIso8601String(),
           });
 
-          AppLogger.info('Successfully signed up user: ${response.user!.email} with username: $username');
+          AppLogger.info(
+              'Successfully signed up user: ${response.user!.email} with username: $username');
         } catch (profileError) {
           // If profile creation fails, log it but don't fail the signup
-          AppLogger.error('Failed to create user profile during signup', profileError);
+          AppLogger.error(
+              'Failed to create user profile during signup', profileError);
           // Try to create a basic profile as fallback
           try {
             await Supabase.instance.client.from('user_profiles').insert({
@@ -375,7 +383,8 @@ class _AuthViewState extends State<AuthView> {
             });
             AppLogger.info('Created basic user profile as fallback');
           } catch (fallbackError) {
-            AppLogger.error('Failed to create fallback user profile', fallbackError);
+            AppLogger.error(
+                'Failed to create fallback user profile', fallbackError);
           }
         }
 
@@ -413,8 +422,8 @@ class _AuthViewState extends State<AuthView> {
 
     return Container(
       padding: EdgeInsets.all(widget.isEmbedded ? 0 : 20),
-      decoration: widget.isEmbedded 
-          ? null 
+      decoration: widget.isEmbedded
+          ? null
           : BoxDecoration(
               color: colorScheme.surface,
               borderRadius: BorderRadius.circular(16),
@@ -578,8 +587,7 @@ class _AuthViewState extends State<AuthView> {
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(
-                    color: colorScheme.primary, width: 2),
+                borderSide: BorderSide(color: colorScheme.primary, width: 2),
               ),
             ),
             keyboardType: TextInputType.emailAddress,
@@ -607,8 +615,7 @@ class _AuthViewState extends State<AuthView> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(
-                      color: colorScheme.primary, width: 2),
+                  borderSide: BorderSide(color: colorScheme.primary, width: 2),
                 ),
               ),
               textInputAction: TextInputAction.next,
@@ -635,14 +642,12 @@ class _AuthViewState extends State<AuthView> {
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(
-                    color: colorScheme.primary, width: 2),
+                borderSide: BorderSide(color: colorScheme.primary, width: 2),
               ),
             ),
             obscureText: true,
-            textInputAction: _isLoginMode
-                ? TextInputAction.done
-                : TextInputAction.next,
+            textInputAction:
+                _isLoginMode ? TextInputAction.done : TextInputAction.next,
             enabled: !_isLoading,
           ),
           const SizedBox(height: 16),
@@ -666,8 +671,7 @@ class _AuthViewState extends State<AuthView> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(
-                      color: colorScheme.primary, width: 2),
+                  borderSide: BorderSide(color: colorScheme.primary, width: 2),
                 ),
               ),
               obscureText: true,
@@ -682,9 +686,7 @@ class _AuthViewState extends State<AuthView> {
             width: double.infinity,
             height: 50,
             child: ElevatedButton(
-              onPressed: _isLoading
-                  ? null
-                  : (_isLoginMode ? _signIn : _signUp),
+              onPressed: _isLoading ? null : (_isLoginMode ? _signIn : _signUp),
               style: ElevatedButton.styleFrom(
                 backgroundColor: colorScheme.primary,
                 foregroundColor: colorScheme.onPrimary,
@@ -699,12 +701,13 @@ class _AuthViewState extends State<AuthView> {
                       height: 20,
                       child: CircularProgressIndicator(
                         strokeWidth: 2,
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                            Colors.white),
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                       ),
                     )
                   : Text(
-                      _isLoginMode ? AppStrings.login : AppStrings.createAccount,
+                      _isLoginMode
+                          ? AppStrings.login
+                          : AppStrings.createAccount,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,

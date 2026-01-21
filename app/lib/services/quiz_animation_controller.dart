@@ -26,7 +26,8 @@ class QuizAnimationController {
     } catch (e) {
       // Report error to automatic error tracking system
       AutomaticErrorReporter.reportAnimationError(
-        message: 'Failed to initialize quiz animation controller: ${e.toString()}',
+        message:
+            'Failed to initialize quiz animation controller: ${e.toString()}',
         animationType: 'quiz_stats',
         controllerName: 'QuizAnimationController',
       );

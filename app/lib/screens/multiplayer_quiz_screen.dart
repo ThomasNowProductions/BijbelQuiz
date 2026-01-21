@@ -31,7 +31,6 @@ import '../constants/urls.dart';
 import '../utils/bible_book_mapper.dart';
 import '../services/logger.dart';
 
-
 import '../utils/automatic_error_reporter.dart';
 
 /// Multiplayer quiz screen with split-screen layout
@@ -705,7 +704,8 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
         // Only show bottom bar when not showing results
         if (!_showResults)
           Transform.rotate(
-            angle: isMobile && !isPlayer1 ? 3.14159 : 0, // 180 degrees in radians
+            angle:
+                isMobile && !isPlayer1 ? 3.14159 : 0, // 180 degrees in radians
             child: QuizBottomBar(
               quizState: isPlayer1 ? _player1QuizState : _player2QuizState,
               gameStats: Provider.of<GameStatsProvider>(context),
@@ -785,29 +785,29 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
                             : Transform.rotate(
                                 angle: isMobile && !isPlayer1 ? 3.14159 : 0,
                                 child: QuestionWidget(
-                                    question: isPlayer1
-                                        ? _player1QuizState.question
-                                        : _player2QuizState.question,
-                                    selectedAnswerIndex: isPlayer1
-                                        ? _player1QuizState.selectedAnswerIndex
-                                        : _player2QuizState.selectedAnswerIndex,
-                                    isAnswering: isPlayer1
-                                        ? _player1QuizState.isAnswering
-                                        : _player2QuizState.isAnswering,
-                                    isTransitioning: isPlayer1
-                                        ? _player1QuizState.isTransitioning
-                                        : _player2QuizState.isTransitioning,
-                                    onAnswerSelected: (index) =>
-                                        _handleAnswer(index, isPlayer1),
-                                    language: settings.language,
-                                    performanceService: _performanceService,
-                                    isCompact: true,
-                                    customLetters: isMobile
-                                        ? ['A', 'B', 'C', 'D']
-                                        : (isPlayer1
-                                            ? ['A', 'S', 'D', 'F']
-                                            : ['H', 'J', 'K', 'L']),
-                                  ),
+                                  question: isPlayer1
+                                      ? _player1QuizState.question
+                                      : _player2QuizState.question,
+                                  selectedAnswerIndex: isPlayer1
+                                      ? _player1QuizState.selectedAnswerIndex
+                                      : _player2QuizState.selectedAnswerIndex,
+                                  isAnswering: isPlayer1
+                                      ? _player1QuizState.isAnswering
+                                      : _player2QuizState.isAnswering,
+                                  isTransitioning: isPlayer1
+                                      ? _player1QuizState.isTransitioning
+                                      : _player2QuizState.isTransitioning,
+                                  onAnswerSelected: (index) =>
+                                      _handleAnswer(index, isPlayer1),
+                                  language: settings.language,
+                                  performanceService: _performanceService,
+                                  isCompact: true,
+                                  customLetters: isMobile
+                                      ? ['A', 'B', 'C', 'D']
+                                      : (isPlayer1
+                                          ? ['A', 'S', 'D', 'F']
+                                          : ['H', 'J', 'K', 'L']),
+                                ),
                               ),
                       ),
                     ),

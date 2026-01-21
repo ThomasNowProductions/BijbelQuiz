@@ -25,14 +25,14 @@ class _SyncScreenState extends State<SyncScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _newPasswordController = TextEditingController();
-  final TextEditingController _confirmNewPasswordController = TextEditingController();
+  final TextEditingController _confirmNewPasswordController =
+      TextEditingController();
   final TextEditingController _displayNameController = TextEditingController();
   final TextEditingController _bioController = TextEditingController();
 
   // Auth state management
   StreamSubscription<AuthState>? _authSubscription;
   bool _isLoadingProfile = false;
-
 
   String? _error;
   User? _currentUser;
@@ -66,8 +66,10 @@ class _SyncScreenState extends State<SyncScreen> {
   }
 
   void _setupAuthListener() {
-    _authSubscription = Supabase.instance.client.auth.onAuthStateChange.listen((event) {
-      AppLogger.debug('Auth state changed: ${event.event} for user: ${event.session?.user.email ?? 'none'}');
+    _authSubscription =
+        Supabase.instance.client.auth.onAuthStateChange.listen((event) {
+      AppLogger.debug(
+          'Auth state changed: ${event.event} for user: ${event.session?.user.email ?? 'none'}');
 
       // Prevent race conditions by checking if we're already loading profile
       if (_isLoadingProfile) {
@@ -99,10 +101,12 @@ class _SyncScreenState extends State<SyncScreen> {
     }
 
     _isLoadingProfile = true;
-    
+
     try {
-      final gameStatsProvider = Provider.of<GameStatsProvider>(context, listen: false);
-      final profile = await gameStatsProvider.syncService.getCurrentUserProfile();
+      final gameStatsProvider =
+          Provider.of<GameStatsProvider>(context, listen: false);
+      final profile =
+          await gameStatsProvider.syncService.getCurrentUserProfile();
 
       if (mounted) {
         setState(() {
@@ -138,19 +142,25 @@ class _SyncScreenState extends State<SyncScreen> {
     });
 
     try {
-      final gameStatsProvider = Provider.of<GameStatsProvider>(context, listen: false);
-      final lessonProgressProvider = Provider.of<LessonProgressProvider>(context, listen: false);
-      final settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
+      final gameStatsProvider =
+          Provider.of<GameStatsProvider>(context, listen: false);
+      final lessonProgressProvider =
+          Provider.of<LessonProgressProvider>(context, listen: false);
+      final settingsProvider =
+          Provider.of<SettingsProvider>(context, listen: false);
 
       // Force immediate sync bypassing debouncing
       await _trackSyncStatus('game_stats');
-      await gameStatsProvider.syncService.syncDataImmediate('game_stats', gameStatsProvider.getExportData());
+      await gameStatsProvider.syncService
+          .syncDataImmediate('game_stats', gameStatsProvider.getExportData());
 
       await _trackSyncStatus('lesson_progress');
-      await gameStatsProvider.syncService.syncDataImmediate('lesson_progress', lessonProgressProvider.getExportData());
+      await gameStatsProvider.syncService.syncDataImmediate(
+          'lesson_progress', lessonProgressProvider.getExportData());
 
       await _trackSyncStatus('settings');
-      await gameStatsProvider.syncService.syncDataImmediate('settings', settingsProvider.getExportData());
+      await gameStatsProvider.syncService
+          .syncDataImmediate('settings', settingsProvider.getExportData());
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -175,14 +185,6 @@ class _SyncScreenState extends State<SyncScreen> {
       });
     }
   }
-
-
-
-
-
-
-
-
 
   /// Builds account menu items
   List<Widget> _buildAccountMenuItems() {
@@ -379,16 +381,17 @@ class _SyncScreenState extends State<SyncScreen> {
             child: Text(AppStrings.cancel),
           ),
           ElevatedButton(
-            onPressed: _isUpdatingProfile ? null : () async {
-              Navigator.of(context).pop();
-              await _updateProfile();
-            },
-            child: _isUpdatingProfile 
+            onPressed: _isUpdatingProfile
+                ? null
+                : () async {
+                    Navigator.of(context).pop();
+                    await _updateProfile();
+                  },
+            child: _isUpdatingProfile
                 ? const SizedBox(
-                    width: 16, 
-                    height: 16, 
-                    child: CircularProgressIndicator(strokeWidth: 2)
-                  )
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(strokeWidth: 2))
                 : Text(AppStrings.save),
           ),
         ],
@@ -418,16 +421,17 @@ class _SyncScreenState extends State<SyncScreen> {
             child: Text(AppStrings.cancel),
           ),
           ElevatedButton(
-            onPressed: _isChangingUsername ? null : () async {
-              Navigator.of(context).pop();
-              await _changeUsername();
-            },
-            child: _isChangingUsername 
+            onPressed: _isChangingUsername
+                ? null
+                : () async {
+                    Navigator.of(context).pop();
+                    await _changeUsername();
+                  },
+            child: _isChangingUsername
                 ? const SizedBox(
-                    width: 16, 
-                    height: 16, 
-                    child: CircularProgressIndicator(strokeWidth: 2)
-                  )
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(strokeWidth: 2))
                 : Text(AppStrings.change),
           ),
         ],
@@ -483,16 +487,17 @@ class _SyncScreenState extends State<SyncScreen> {
             child: Text(AppStrings.cancel),
           ),
           ElevatedButton(
-            onPressed: _isChangingPassword ? null : () async {
-              Navigator.of(context).pop();
-              await _changePassword();
-            },
-            child: _isChangingPassword 
+            onPressed: _isChangingPassword
+                ? null
+                : () async {
+                    Navigator.of(context).pop();
+                    await _changePassword();
+                  },
+            child: _isChangingPassword
                 ? const SizedBox(
-                    width: 16, 
-                    height: 16, 
-                    child: CircularProgressIndicator(strokeWidth: 2)
-                  )
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(strokeWidth: 2))
                 : Text(AppStrings.change),
           ),
         ],
@@ -503,16 +508,16 @@ class _SyncScreenState extends State<SyncScreen> {
   /// Checks if data is up to date (within last hour)
   bool _isDataUpToDate() {
     if (_lastSyncTimes.isEmpty) return false;
-    
-    final lastSync = _lastSyncTimes.values.isNotEmpty 
+
+    final lastSync = _lastSyncTimes.values.isNotEmpty
         ? _lastSyncTimes.values.reduce((a, b) => a.isAfter(b) ? a : b)
         : null;
-        
+
     if (lastSync == null) return false;
-    
+
     final now = DateTime.now();
     final difference = now.difference(lastSync);
-    
+
     // Consider data up to date if synced within last hour
     return difference.inMinutes < 60;
   }
@@ -522,18 +527,18 @@ class _SyncScreenState extends State<SyncScreen> {
     if (_lastSyncTimes.isEmpty) {
       return AppStrings.never;
     }
-    
-    final lastSync = _lastSyncTimes.values.isNotEmpty 
+
+    final lastSync = _lastSyncTimes.values.isNotEmpty
         ? _lastSyncTimes.values.reduce((a, b) => a.isAfter(b) ? a : b)
         : null;
-        
+
     if (lastSync == null) {
       return AppStrings.never;
     }
-    
+
     final now = DateTime.now();
     final difference = now.difference(lastSync);
-    
+
     if (difference.inMinutes < 1) {
       return AppStrings.justNow;
     } else if (difference.inMinutes < 60) {
@@ -544,8 +549,6 @@ class _SyncScreenState extends State<SyncScreen> {
       return '${difference.inDays}${AppStrings.daysAgo}';
     }
   }
-
-
 
   Future<void> _loadBlacklistedUsernames() async {
     try {
@@ -650,7 +653,9 @@ class _SyncScreenState extends State<SyncScreen> {
     final newPassword = _newPasswordController.text.trim();
     final confirmNewPassword = _confirmNewPasswordController.text.trim();
 
-    if (currentPassword.isEmpty || newPassword.isEmpty || confirmNewPassword.isEmpty) {
+    if (currentPassword.isEmpty ||
+        newPassword.isEmpty ||
+        confirmNewPassword.isEmpty) {
       setState(() {
         _error = AppStrings.fillAllPasswordFields;
       });
@@ -680,11 +685,11 @@ class _SyncScreenState extends State<SyncScreen> {
       // Update password directly - Supabase handles current password verification internally
       final email = _currentUser!.email!;
       AppLogger.debug('Updating password for user: $email');
-      
+
       await Supabase.instance.client.auth.updateUser(
         UserAttributes(password: newPassword),
       );
-      
+
       AppLogger.debug('Password update completed successfully');
 
       // Clear fields
@@ -778,7 +783,8 @@ class _SyncScreenState extends State<SyncScreen> {
           ),
         );
       }
-      AppLogger.info('Successfully changed username for user: ${_currentUser!.id} to: $newUsername');
+      AppLogger.info(
+          'Successfully changed username for user: ${_currentUser!.id} to: $newUsername');
     } catch (e) {
       setState(() {
         _error = '${AppStrings.failedToChangeUsername}${e.toString()}';
@@ -797,7 +803,7 @@ class _SyncScreenState extends State<SyncScreen> {
 
     if (displayName.isEmpty) {
       setState(() {
-          _error = AppStrings.displayNameRequired;
+        _error = AppStrings.displayNameRequired;
       });
       return;
     }
@@ -824,7 +830,8 @@ class _SyncScreenState extends State<SyncScreen> {
           ),
         );
       }
-      AppLogger.info('Successfully updated profile for user: ${_currentUser!.id}');
+      AppLogger.info(
+          'Successfully updated profile for user: ${_currentUser!.id}');
     } catch (e) {
       setState(() {
         _error = '${AppStrings.failedToUpdateProfile}${e.toString()}';
@@ -843,8 +850,7 @@ class _SyncScreenState extends State<SyncScreen> {
       builder: (context) => AlertDialog(
         title: Text(AppStrings.deleteAccount),
         content: const Text(
-          'Neem contact op met thomasnowprod@proton.me om je account te verwijderen.'
-        ),
+            'Neem contact op met thomasnowprod@proton.me om je account te verwijderen.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
@@ -878,7 +884,6 @@ class _SyncScreenState extends State<SyncScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-
               // Error message
               if (_error != null)
                 Container(
@@ -917,7 +922,9 @@ class _SyncScreenState extends State<SyncScreen> {
                     // Navigate to social screen after login if required
                     if (widget.requiredForSocial && mounted) {
                       Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (_) => const MainNavigationScreen(initialIndex: 2)),
+                        MaterialPageRoute(
+                            builder: (_) =>
+                                const MainNavigationScreen(initialIndex: 2)),
                         (route) => false,
                       );
                     }
@@ -966,7 +973,10 @@ class _SyncScreenState extends State<SyncScreen> {
                               radius: 32,
                               backgroundColor: colorScheme.primary,
                               child: Text(
-                                _userProfile?['display_name']?.substring(0, 1).toUpperCase() ?? '?',
+                                _userProfile?['display_name']
+                                        ?.substring(0, 1)
+                                        .toUpperCase() ??
+                                    '?',
                                 style: theme.textTheme.headlineMedium?.copyWith(
                                   color: colorScheme.onPrimary,
                                   fontWeight: FontWeight.bold,
@@ -974,7 +984,7 @@ class _SyncScreenState extends State<SyncScreen> {
                               ),
                             ),
                             const SizedBox(width: 16),
-                            
+
                             // Profile Information
                             Expanded(
                               child: Column(
@@ -982,28 +992,31 @@ class _SyncScreenState extends State<SyncScreen> {
                                 children: [
                                   // Display Name
                                   Text(
-                                    _userProfile?['display_name'] ?? AppStrings.user,
+                                    _userProfile?['display_name'] ??
+                                        AppStrings.user,
                                     style: theme.textTheme.titleLarge?.copyWith(
                                       fontWeight: FontWeight.bold,
                                       color: colorScheme.primary,
                                     ),
                                   ),
                                   const SizedBox(height: 4),
-                                  
+
                                   // Username
                                   Text(
                                     '@${_userProfile?['username'] ?? 'username'}',
                                     style: theme.textTheme.bodyMedium?.copyWith(
-                                      color: colorScheme.onSurface.withValues(alpha: 0.7),
+                                      color: colorScheme.onSurface
+                                          .withValues(alpha: 0.7),
                                     ),
                                   ),
                                   const SizedBox(height: 4),
-                                  
+
                                   // Email
                                   Text(
                                     _currentUser!.email ?? AppStrings.noEmail,
                                     style: theme.textTheme.bodySmall?.copyWith(
-                                      color: colorScheme.onSurface.withValues(alpha: 0.6),
+                                      color: colorScheme.onSurface
+                                          .withValues(alpha: 0.6),
                                     ),
                                   ),
                                 ],
@@ -1028,25 +1041,37 @@ class _SyncScreenState extends State<SyncScreen> {
                             Row(
                               children: [
                                 Icon(
-                                  _isDataUpToDate() ? Icons.cloud_done : Icons.cloud_sync,
-                                  color: _isDataUpToDate() ? Colors.green : colorScheme.primary,
+                                  _isDataUpToDate()
+                                      ? Icons.cloud_done
+                                      : Icons.cloud_sync,
+                                  color: _isDataUpToDate()
+                                      ? Colors.green
+                                      : colorScheme.primary,
                                 ),
                                 const SizedBox(width: 12),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        _isDataUpToDate() ? AppStrings.updated : AppStrings.notUpdated,
-                                        style: theme.textTheme.bodyMedium?.copyWith(
+                                        _isDataUpToDate()
+                                            ? AppStrings.updated
+                                            : AppStrings.notUpdated,
+                                        style: theme.textTheme.bodyMedium
+                                            ?.copyWith(
                                           fontWeight: FontWeight.w500,
-                                          color: _isDataUpToDate() ? Colors.green : colorScheme.primary,
+                                          color: _isDataUpToDate()
+                                              ? Colors.green
+                                              : colorScheme.primary,
                                         ),
                                       ),
                                       Text(
                                         '${AppStrings.lastSync}: ${_getLastSyncTime()}',
-                                        style: theme.textTheme.bodySmall?.copyWith(
-                                          color: colorScheme.onSurface.withValues(alpha: 0.6),
+                                        style:
+                                            theme.textTheme.bodySmall?.copyWith(
+                                          color: colorScheme.onSurface
+                                              .withValues(alpha: 0.6),
                                         ),
                                       ),
                                     ],
@@ -1055,17 +1080,23 @@ class _SyncScreenState extends State<SyncScreen> {
                                 SizedBox(
                                   height: 40,
                                   child: ElevatedButton.icon(
-                                    onPressed: _isManualSync ? null : _manualSync,
+                                    onPressed:
+                                        _isManualSync ? null : _manualSync,
                                     icon: _isManualSync
                                         ? const SizedBox(
                                             width: 16,
                                             height: 16,
-                                            child: CircularProgressIndicator(strokeWidth: 2),
+                                            child: CircularProgressIndicator(
+                                                strokeWidth: 2),
                                           )
-                                        : const Icon(Icons.sync_rounded, size: 16),
-                                    label: Text(_isManualSync ? AppStrings.syncing : AppStrings.sync),
+                                        : const Icon(Icons.sync_rounded,
+                                            size: 16),
+                                    label: Text(_isManualSync
+                                        ? AppStrings.syncing
+                                        : AppStrings.sync),
                                     style: ElevatedButton.styleFrom(
-                                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 12),
                                     ),
                                   ),
                                 ),
@@ -1097,10 +1128,10 @@ class _SyncScreenState extends State<SyncScreen> {
     _confirmNewPasswordController.dispose();
     _displayNameController.dispose();
     _bioController.dispose();
-    
+
     // Cancel auth subscription to prevent memory leaks
     _authSubscription?.cancel();
-    
+
     super.dispose();
   }
 }

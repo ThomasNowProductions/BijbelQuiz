@@ -83,30 +83,30 @@ class Lesson {
   }
 
   Map<String, dynamic> toJson() => {
-         'id': id,
-         'title': title,
-         'category': category,
-         'description': description,
-         'iconHint': iconHint,
-         'maxQuestions': maxQuestions,
-         'index': index,
-         'isSpecial': isSpecial,
-       };
+        'id': id,
+        'title': title,
+        'category': category,
+        'description': description,
+        'iconHint': iconHint,
+        'maxQuestions': maxQuestions,
+        'index': index,
+        'isSpecial': isSpecial,
+      };
 
   factory Lesson.fromJson(Map<String, dynamic> json) => Lesson(
-         id: json['id']?.toString() ?? '',
-         title: json['title']?.toString() ?? '',
-         category: json['category']?.toString() ?? '',
-         description: json['description']?.toString(),
-         iconHint: json['iconHint']?.toString(),
-         maxQuestions: (json['maxQuestions'] is int)
-             ? json['maxQuestions'] as int
-             : int.tryParse(json['maxQuestions']?.toString() ?? '') ?? 10,
-         index: (json['index'] is int)
-             ? json['index'] as int
-             : int.tryParse(json['index']?.toString() ?? '') ?? 0,
-         isSpecial: json['isSpecial'] == true,
-       );
+        id: json['id']?.toString() ?? '',
+        title: json['title']?.toString() ?? '',
+        category: json['category']?.toString() ?? '',
+        description: json['description']?.toString(),
+        iconHint: json['iconHint']?.toString(),
+        maxQuestions: (json['maxQuestions'] is int)
+            ? json['maxQuestions'] as int
+            : int.tryParse(json['maxQuestions']?.toString() ?? '') ?? 10,
+        index: (json['index'] is int)
+            ? json['index'] as int
+            : int.tryParse(json['index']?.toString() ?? '') ?? 0,
+        isSpecial: json['isSpecial'] == true,
+      );
 
   @override
   String toString() => jsonEncode(toJson());

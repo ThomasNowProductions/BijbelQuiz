@@ -55,7 +55,8 @@ void main() {
     });
 
     test('should convert category to title case', () {
-      final lesson = Lesson.fromCategory(category: 'old_testament_books', index: 0);
+      final lesson =
+          Lesson.fromCategory(category: 'old_testament_books', index: 0);
       expect(lesson.title, 'Old Testament Books');
     });
 
@@ -70,7 +71,8 @@ void main() {
     });
 
     test('should handle category with multiple underscores and hyphens', () {
-      final lesson = Lesson.fromCategory(category: 'new_testament-books', index: 3);
+      final lesson =
+          Lesson.fromCategory(category: 'new_testament-books', index: 3);
       expect(lesson.title, 'New Testament Books');
     });
 
@@ -274,7 +276,8 @@ void main() {
     });
 
     test('should handle complex category names correctly', () {
-      final lesson = Lesson.fromCategory(category: 'new_testament_gospels_matthew', index: 10);
+      final lesson = Lesson.fromCategory(
+          category: 'new_testament_gospels_matthew', index: 10);
       expect(lesson.title, 'New Testament Gospels Matthew');
     });
 
@@ -289,7 +292,8 @@ void main() {
     });
 
     test('should handle category with special characters', () {
-      final lesson = Lesson.fromCategory(category: 'song-of-solomon', index: 21);
+      final lesson =
+          Lesson.fromCategory(category: 'song-of-solomon', index: 21);
       expect(lesson.title, 'Song Of Solomon');
     });
   });

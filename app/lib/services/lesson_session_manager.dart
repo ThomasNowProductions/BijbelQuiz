@@ -63,7 +63,8 @@ class LessonSessionManager {
   }) async {
     // Get providers before async gap
     final analytics = Provider.of<AnalyticsService>(context, listen: false);
-    final progress = Provider.of<LessonProgressProvider>(context, listen: false);
+    final progress =
+        Provider.of<LessonProgressProvider>(context, listen: false);
 
     // Calculate stars
     final stars = calculateStars(sessionLimit);
@@ -77,7 +78,8 @@ class LessonSessionManager {
         'lesson_category': lesson.category,
         'questions_answered': _sessionAnswered,
         'questions_correct': _sessionCorrect,
-        'accuracy_rate': sessionLimit > 0 ? (_sessionCorrect / sessionLimit) : 0,
+        'accuracy_rate':
+            sessionLimit > 0 ? (_sessionCorrect / sessionLimit) : 0,
         'best_streak': _sessionBestStreak,
         'stars': stars,
       },

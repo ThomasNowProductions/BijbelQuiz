@@ -35,7 +35,8 @@ class PlatformFeedbackService {
     } catch (e) {
       // Report error to automatic error tracking system
       await AutomaticErrorReporter.reportServiceInitializationError(
-        message: 'Failed to initialize platform feedback service: ${e.toString()}',
+        message:
+            'Failed to initialize platform feedback service: ${e.toString()}',
         serviceName: 'PlatformFeedbackService',
         initializationStep: 'platform_detection',
       );
