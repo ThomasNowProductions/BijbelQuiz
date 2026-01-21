@@ -5,11 +5,10 @@
     },
     "remoteUser": "vscode",
     "updateRemoteUserUID": true,
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
+    "workspaceFolder": "/workspace",
     "customizations": {
         "vscode": {
-            "settings": {
-                "terminal.integrated.shell.linux": "/bin/bash"
-            },
             "extensions": [
                 "Dart-Code.flutter"
             ]
