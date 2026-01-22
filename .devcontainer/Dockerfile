@@ -28,4 +28,5 @@ RUN git clone https://github.com/flutter/flutter.git /usr/local/flutter -b stabl
 ENV PATH="/usr/local/flutter/bin:/usr/local/flutter/bin/cache/dart-sdk/bin:${PATH}"
 
 # Accept Flutter licenses and pre-cache
+RUN git config --global --add safe.directory /usr/local/flutter
 RUN flutter doctor -v && yes | flutter doctor --android-licenses
