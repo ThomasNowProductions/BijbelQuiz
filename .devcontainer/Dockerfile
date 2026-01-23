@@ -62,7 +62,7 @@ RUN flutter config --android-sdk ${ANDROID_SDK_ROOT}
 
 # Install Android components - move extracted cmdline tools into latest directory
 RUN mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools/latest && \
-    find ${ANDROID_SDK_ROOT}/cmdline-tools -maxdepth 1 -not -name 'latest' -not -path '${ANDROID_SDK_ROOT}/cmdline-tools' -exec mv {} ${ANDROID_SDK_ROOT}/cmdline-tools/latest/ \; 2>/dev/null || true
+    find ${ANDROID_SDK_ROOT}/cmdline-tools -maxdepth 1 -not -name 'latest' -not -path "${ANDROID_SDK_ROOT}/cmdline-tools" -exec mv {} ${ANDROID_SDK_ROOT}/cmdline-tools/latest/ \; 2>/dev/null || true
 
 # Accept Android licenses and install required SDK components
 RUN yes | sdkmanager --licenses && \
