@@ -41,9 +41,9 @@ RUN mkdir -p ${ANDROID_SDK_ROOT} && \
     chown -R vscode:vscode ${ANDROID_SDK_ROOT}
 
 # Download and install Android Command Line Tools
-RUN curl -o /tmp/commandlinetools-linux-9477386_latest.zip https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip && \
-    unzip -q /tmp/commandlinetools-linux-9477386_latest.zip -d ${ANDROID_SDK_ROOT} && \
-    rm /tmp/commandlinetools-linux-9477386_latest.zip && \
+RUN curl -o /tmp/commandlinetools-linux-14742923_latest.zip https://dl.google.com/android/repository/commandlinetools-linux-14742923_latest.zip && \
+    unzip -q /tmp/commandlinetools-linux-14742923_latest.zip -d ${ANDROID_SDK_ROOT} && \
+    rm /tmp/commandlinetools-linux-14742923_latest.zip && \
     chown -R vscode:vscode ${ANDROID_SDK_ROOT}
 
 ENV PATH="${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/platform-tools:${ANDROID_SDK_ROOT}/emulator:${PATH}"
@@ -66,7 +66,7 @@ RUN mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools/latest && \
 
 # Accept Android licenses and install required SDK components
 RUN yes | sdkmanager --licenses && \
-    sdkmanager "platform-tools" "platforms;android-36" "build-tools;28.0.3"
+    sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
 
 # Accept Flutter and Android licenses
 RUN git config --global --add safe.directory /usr/local/flutter && \
