@@ -20,6 +20,8 @@ RUN apt-get update && \
     cmake \
     ninja-build \
     pkg-config \
+    libgtk-3-dev \
+    mesa-utils \
     # Android SDK dependencies
     libc6-dev-i386 \
     lib32stdc++6 \
