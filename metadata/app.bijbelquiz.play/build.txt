@@ -1,0 +1,3 @@
+# Tell F-Droid where to find the Flutter app
+gradle-dirs:
+  - app
