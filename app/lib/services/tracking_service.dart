@@ -5,32 +5,60 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:math';
 import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import '../providers/settings_provider.dart';
 import 'logger.dart';
-import 'package:posthog_flutter/posthog_flutter.dart';
+import '../utils/automatic_error_reporter.dart';
 
-/// PostHog-based tracking service that replaces the in-house Supabase tracking solution
-/// while maintaining the same interface for backward compatibility
+/// PostHog-based tracking service that routes through backend proxy
+/// to protect project API keys - no keys stored in client
 class TrackingService {
   static final TrackingService _instance = TrackingService._internal();
   factory TrackingService() => _instance;
   TrackingService._internal();
 
   static bool _isInitialized = false;
+  late final http.Client _httpClient;
+  String? _backendUrl;
+  String? _distinctId;
+  String? _authToken;
+  String? _anonymousFallbackId;
+  bool _disposed = false;
 
-  /// Initializes the tracking service with PostHog
+  /// Cached RouteObserver instance for singleton behavior
+  RouteObserver<ModalRoute<void>>? _observer;
+
+  /// Queue for offline analytics
+  final List<Map<String, dynamic>> _offlineQueue = [];
+  static const String _queueKey = 'analytics_offline_queue';
+  
+  /// Maximum size of the offline queue - oldest entries are dropped when exceeded
+  static const int _maxOfflineQueueSize = 1000;
+
+  /// Initializes the tracking service with backend proxy
   ///
   /// This should be called once when the app starts.
   Future<void> init() async {
     if (_isInitialized) {
-      AppLogger.info('PostHog tracking service already initialized');
+      AppLogger.info('Proxy tracking service already initialized');
       return;
     }
 
-    AppLogger.info('Initializing PostHog tracking service...');
+    AppLogger.info('Initializing proxy tracking service...');
     final trackingInitStart = DateTime.now();
 
     try {
+      // Initialize HTTP client
+      _httpClient = http.Client();
+
+      // Load backend URL from environment
+      _backendUrl = dotenv.env['BACKEND_URL'];
+      if (_backendUrl == null || _backendUrl!.isEmpty) {
+        _backendUrl = 'https://backend.bijbelquiz.app';
+        AppLogger.info('Using default backend URL: $_backendUrl');
+      }
+
       // Ensure we have a persistent anonymous user ID
       AppLogger.info('Ensuring persistent user ID...');
       final userIdStart = DateTime.now();
@@ -39,56 +67,34 @@ class TrackingService {
       AppLogger.info(
           'Persistent user ID ensured in ${userIdDuration.inMilliseconds}ms');
 
-      // Load PostHog configuration from environment variables
-      AppLogger.info('Loading PostHog configuration...');
-      final configStart = DateTime.now();
-      final apiKey = dotenv.env['POSTHOG_API_KEY'];
-      final host = dotenv.env['POSTHOG_HOST'] ?? 'https://us.i.posthog.com';
-      final configDuration = DateTime.now().difference(configStart);
+      // Load offline queue
+      await _loadOfflineQueue();
 
-      if (apiKey == null ||
-          apiKey.isEmpty ||
-          apiKey == 'YOUR_POSTHOG_API_KEY_HERE') {
-        throw Exception(
-            'PostHog API key not found in environment variables. Please check your .env file.');
-      }
-
-      AppLogger.info(
-          'PostHog configuration loaded in ${configDuration.inMilliseconds}ms');
-
-      // Configure PostHog
-      AppLogger.info('Configuring PostHog...');
-      final posthogConfigStart = DateTime.now();
-      final config = PostHogConfig(apiKey);
-      config.debug = kDebugMode; // Use debug mode in development
-      config.captureApplicationLifecycleEvents = true;
-      config.host = host;
-      final posthogConfigDuration =
-          DateTime.now().difference(posthogConfigStart);
-      AppLogger.info(
-          'PostHog configured in ${posthogConfigDuration.inMilliseconds}ms');
-
-      // Setup PostHog
-      AppLogger.info('Setting up PostHog...');
-      final posthogSetupStart = DateTime.now();
-      await Posthog().setup(config);
-      final posthogSetupDuration = DateTime.now().difference(posthogSetupStart);
-      AppLogger.info(
-          'PostHog setup completed in ${posthogSetupDuration.inMilliseconds}ms');
+      // Process any queued events
+      await _processOfflineQueue();
 
       _isInitialized = true;
       final totalDuration = DateTime.now().difference(trackingInitStart);
       AppLogger.info(
-          'PostHog tracking service initialized successfully in ${totalDuration.inMilliseconds}ms with API key: ${apiKey.substring(0, 8)}...');
+          'Proxy tracking service initialized successfully in ${totalDuration.inMilliseconds}ms');
     } catch (e) {
-      AppLogger.error('Failed to initialize PostHog tracking service: $e', e);
+      AppLogger.error('Failed to initialize proxy tracking service: $e', e);
       rethrow;
     }
   }
 
-  /// Returns a [PosthogObserver] that can be used to automatically track screen views.
-  /// This now returns the actual PostHog observer for automatic screen tracking.
-  PosthogObserver getObserver() => PosthogObserver();
+  /// Sets the authentication token for API requests
+  void setAuthToken(String? token) {
+    _authToken = token;
+    AppLogger.info(_authToken != null ? 'Auth token set for tracking' : 'Auth token cleared');
+  }
+
+  /// Returns a [RouteObserver] that can be used to automatically track screen views.
+  /// Returns a cached singleton instance to ensure consistent observer behavior.
+  RouteObserver<ModalRoute<void>> getObserver() {
+    _observer ??= RouteObserver<ModalRoute<void>>();
+    return _observer!;
+  }
 
   /// Tracks a screen view event.
   ///
@@ -104,23 +110,36 @@ class TrackingService {
       return;
     }
 
-    if (!_isInitialized) {
-      AppLogger.warning('PostHog not initialized, skipping screen tracking');
+    // Skip tracking in debug mode
+    if (kDebugMode) {
+      AppLogger.info('Skipping screen tracking in debug mode: $screenName');
       return;
     }
 
-    AppLogger.info('Tracking screen view with PostHog: $screenName');
+    AppLogger.info('Tracking screen view via proxy: $screenName');
     try {
-      await Posthog().screen(
-        screenName: screenName,
+      await _captureInternal(
+        '\$screen',
         properties: {
-          'screen_name': screenName,
+          '\$screen_name': screenName,
           'timestamp': DateTime.now().toIso8601String(),
         },
       );
-      AppLogger.info('Screen view tracked successfully: $screenName');
+      AppLogger.info('Screen view tracked successfully via proxy: $screenName');
     } catch (e) {
       AppLogger.error('Failed to track screen view: $screenName', e);
+
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportStorageError(
+        message: 'Failed to track screen view',
+        operation: 'screen_tracking',
+        additionalInfo: {
+          'screen_name': screenName,
+          'error': e.toString(),
+          'analytics_enabled': settings.analyticsEnabled,
+          'debug_mode': kDebugMode,
+        },
+      );
     }
   }
 
@@ -139,21 +158,186 @@ class TrackingService {
       return;
     }
 
-    if (!_isInitialized) {
-      AppLogger.warning('PostHog not initialized, skipping event tracking');
+    // Skip tracking in debug mode
+    if (kDebugMode) {
+      AppLogger.info('Skipping event tracking in debug mode: $eventName');
       return;
     }
 
     AppLogger.info(
-        'Tracking event with PostHog: $eventName${properties != null ? ' with properties: $properties' : ''}');
+        'Tracking event via proxy: $eventName${properties != null ? ' with properties: $properties' : ''}');
     try {
-      await Posthog().capture(
-        eventName: eventName,
-        properties: properties,
-      );
-      AppLogger.info('Event tracked successfully: $eventName');
+      await _captureInternal(eventName, properties: properties);
+      AppLogger.info('Event tracked successfully via proxy: $eventName');
     } catch (e) {
       AppLogger.error('Failed to track event: $eventName', e);
+
+      // Report error to automatic error tracking system
+      await AutomaticErrorReporter.reportStorageError(
+        message: 'Failed to track event',
+        operation: 'event_tracking',
+        additionalInfo: {
+          'event_name': eventName,
+          'properties': properties?.toString(),
+          'error': e.toString(),
+          'analytics_enabled': settings.analyticsEnabled,
+          'debug_mode': kDebugMode,
+        },
+      );
+    }
+  }
+
+  /// Internal method to capture events via backend proxy
+  Future<void> _captureInternal(String eventName,
+      {Map<String, Object>? properties}) async {
+    if (!_isInitialized) {
+      AppLogger.warning('Proxy tracking not initialized, queueing event');
+      _queueEvent(eventName, properties);
+      return;
+    }
+
+    // Generate and cache anonymous fallback ID once
+    _anonymousFallbackId ??= _generateAnonymousId();
+    
+    final payload = {
+      'event': eventName,
+      'distinctId': _distinctId ?? _anonymousFallbackId,
+      'properties': {
+        ...?properties,
+        '\$lib': 'bijbelquiz-flutter',
+        '\$lib_version': '1.0.0',
+      },
+      'timestamp': DateTime.now().toIso8601String(),
+    };
+
+    try {
+      final response = await _sendToProxy(payload);
+
+      if (response.statusCode == 200) {
+        AppLogger.info('Event tracked successfully via proxy: $eventName');
+      } else {
+        AppLogger.warning('Failed to track event, queueing for retry');
+        _queueEvent(eventName, properties);
+      }
+    } catch (e) {
+      AppLogger.error('Failed to track event: $eventName', e);
+      _queueEvent(eventName, properties);
+    }
+  }
+
+  /// Send event to backend proxy
+  Future<http.Response> _sendToProxy(Map<String, dynamic> payload) async {
+    final url = Uri.parse('$_backendUrl/api/posthog');
+
+    final headers = <String, String>{
+      'Content-Type': 'application/json',
+    };
+
+    // Add auth token if available
+    if (_authToken != null && _authToken!.isNotEmpty) {
+      headers['Authorization'] = 'Bearer $_authToken';
+    }
+
+    return await _httpClient
+        .post(
+          url,
+          headers: headers,
+          body: jsonEncode(payload),
+        )
+        .timeout(const Duration(seconds: 10));
+  }
+
+  /// Queue event for offline processing
+  void _queueEvent(String eventName, Map<String, Object>? properties) {
+    // Obtain a single id value to ensure consistency
+    final distinctId = _distinctId ?? _generateAnonymousId();
+    
+    _offlineQueue.add({
+      'event': eventName,
+      'distinctId': distinctId,
+      'properties': properties,
+      'timestamp': DateTime.now().toIso8601String(),
+    });
+    
+    // Enforce max queue size - drop oldest entries
+    while (_offlineQueue.length > _maxOfflineQueueSize) {
+      _offlineQueue.removeAt(0);
+    }
+    
+    _saveOfflineQueue();
+  }
+
+  /// Load offline queue from storage
+  Future<void> _loadOfflineQueue() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final queueJson = prefs.getString(_queueKey);
+      if (queueJson != null) {
+        final queue = jsonDecode(queueJson) as List<dynamic>;
+        _offlineQueue.clear();
+        
+        // Safely iterate and accept only map-like entries
+        for (final element in queue) {
+          if (element is Map) {
+            _offlineQueue.add(Map<String, dynamic>.from(element));
+          } else {
+            AppLogger.warning('Skipping invalid queue entry: $element');
+          }
+        }
+        
+        AppLogger.info('Loaded ${_offlineQueue.length} queued events');
+      }
+    } catch (e) {
+      AppLogger.warning('Failed to load offline queue: $e');
+    }
+  }
+
+  /// Save offline queue to storage
+  Future<void> _saveOfflineQueue() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_queueKey, jsonEncode(_offlineQueue));
+    } catch (e) {
+      AppLogger.warning('Failed to save offline queue: $e');
+    }
+  }
+
+  /// Process queued events
+  Future<void> _processOfflineQueue() async {
+    if (_offlineQueue.isEmpty) return;
+
+    AppLogger.info('Processing ${_offlineQueue.length} offline events');
+
+    final events = List<Map<String, dynamic>>.from(_offlineQueue);
+    _offlineQueue.clear();
+    await _saveOfflineQueue();
+
+    // Send events in batch with timeout and auth header
+    try {
+      final url = Uri.parse('$_backendUrl/api/posthog');
+      
+      final headers = <String, String>{
+        'Content-Type': 'application/json',
+        if (_authToken != null) 'Authorization': 'Bearer $_authToken',
+      };
+      
+      final response = await _httpClient
+          .post(
+            url,
+            headers: headers,
+            body: jsonEncode({'events': events}),
+          )
+          .timeout(const Duration(seconds: 10));
+
+      if (response.statusCode != 200) {
+        // Re-queue events if batch failed
+        _offlineQueue.addAll(events);
+        await _saveOfflineQueue();
+      }
+    } catch (e) {
+      // Re-queue events if request failed
+      _offlineQueue.addAll(events);
+      await _saveOfflineQueue();
     }
   }
 
@@ -164,29 +348,17 @@ class TrackingService {
 
     if (!prefs.containsKey(key)) {
       // Generate a new persistent ID and store it
-      final newId =
-          'anon_${DateTime.now().millisecondsSinceEpoch}_${_generateRandomString(12)}';
+      final newId = _generateAnonymousId();
       await prefs.setString(key, newId);
+      _distinctId = newId;
       AppLogger.info('Created new persistent anonymous user ID: $newId');
+    } else {
+      _distinctId = prefs.getString(key);
+      AppLogger.info('Using existing persistent anonymous user ID: $_distinctId');
     }
   }
 
-  /// Gets the persistent anonymous user ID
-  Future<String> _getPersistentUserId() async {
-    final prefs = await SharedPreferences.getInstance();
-    const key = 'tracking_anonymous_user_id';
-
-    // This should not be null since _ensurePersistentUserId is called during init
-    String? storedId = prefs.getString(key);
-    if (storedId == null) {
-      // Fallback: generate a new ID if somehow none exists
-      storedId = _generateAnonymousId();
-      await prefs.setString(key, storedId);
-    }
-    return storedId;
-  }
-
-  /// Generate an anonymous user ID if needed (fallback method)
+  /// Generate an anonymous user ID
   String _generateAnonymousId() {
     return 'anon_${DateTime.now().millisecondsSinceEpoch}_${_generateRandomString(12)}';
   }
@@ -200,7 +372,7 @@ class TrackingService {
         .join();
   }
 
-  /// ===== COMPREHENSIVE FEATURE USAGE TRACKING =====
+  // ===== COMPREHENSIVE FEATURE USAGE TRACKING =====
 
   /// Standardized feature names for consistent tracking
   static const String featureQuizGameplay = 'quiz_gameplay';
@@ -241,7 +413,6 @@ class TrackingService {
   static const String actionFinished = 'finished';
 
   /// Enhanced feature usage tracking with standardized features and actions
-  /// This is the primary method for tracking which features users interact with
   Future<void> trackFeatureUsage(
       BuildContext context, String feature, String action,
       {Map<String, Object>? additionalProperties}) async {
@@ -255,7 +426,7 @@ class TrackingService {
     await capture(context, 'feature_usage', properties: properties);
   }
 
-  /// Track when a user starts using a feature (for engagement metrics)
+  /// Track when a user starts using a feature
   Future<void> trackFeatureStart(BuildContext context, String feature,
       {Map<String, Object>? additionalProperties}) async {
     await trackFeatureUsage(context, feature, actionStarted,
@@ -297,10 +468,9 @@ class TrackingService {
         additionalProperties: additionalProperties);
   }
 
-  /// Specific app usage events - these are the primary tracked events
-  /// All events contain no PII, only anonymous usage patterns
+  /// Specific app usage events
 
-  /// Track when user starts a quiz (without question details)
+  /// Track when user starts a quiz
   Future<void> trackQuizStart(BuildContext context,
       {String? category, int? difficulty}) async {
     final properties = <String, Object>{};
@@ -504,49 +674,24 @@ class TrackingService {
     await trackFeatureUsage(context, featureStreakTracking, actionUsed);
   }
 
-  /// ===== POSTHOG-SPECIFIC METHODS =====
+  /// ===== PROXY-SPECIFIC METHODS =====
 
   /// Disable analytics data collection
   Future<void> disableAnalytics() async {
-    if (!_isInitialized) {
-      AppLogger.warning('PostHog not initialized, cannot disable analytics');
-      return;
-    }
-
-    try {
-      await Posthog().disable();
-      AppLogger.info('PostHog analytics disabled');
-    } catch (e) {
-      AppLogger.error('Failed to disable PostHog analytics', e);
-    }
+    AppLogger.info('Analytics disabled (proxy)');
   }
 
   /// Enable analytics data collection
   Future<void> enableAnalytics() async {
-    if (!_isInitialized) {
-      AppLogger.warning('PostHog not initialized, cannot enable analytics');
-      return;
-    }
-
-    try {
-      await Posthog().enable();
-      AppLogger.info('PostHog analytics enabled');
-    } catch (e) {
-      AppLogger.error('Failed to enable PostHog analytics', e);
-    }
+    AppLogger.info('Analytics enabled (proxy)');
   }
 
   /// Get the current user's distinct ID
   Future<String> getDistinctId() async {
-    try {
-      return await Posthog().getDistinctId();
-    } catch (e) {
-      AppLogger.error('Failed to get distinct ID: $e', e);
-      return await _getPersistentUserId();
-    }
+    return _distinctId ?? _generateAnonymousId();
   }
 
-  /// Identify a user with PostHog
+  /// Identify a user with PostHog via proxy
   Future<void> identifyUser(BuildContext context, String userId,
       {Map<String, Object>? userProperties}) async {
     final settings = Provider.of<SettingsProvider>(context, listen: false);
@@ -559,136 +704,68 @@ class TrackingService {
 
     if (!_isInitialized) {
       AppLogger.warning(
-          'PostHog not initialized, skipping user identification');
+          'Proxy tracking not initialized, skipping user identification');
       return;
     }
 
-    AppLogger.info('Identifying user with PostHog: $userId');
+    AppLogger.info('Identifying user via proxy: $userId');
     try {
-      await Posthog().identify(
-        userId: userId,
-        userProperties: userProperties,
+      await _captureInternal(
+        '\$identify',
+        properties: {
+          '\$user_id': userId,
+          ...?userProperties,
+        },
       );
-      AppLogger.info('User identified successfully: $userId');
+      AppLogger.info('User identified successfully via proxy: $userId');
     } catch (e) {
       AppLogger.error('Failed to identify user: $userId', e);
     }
   }
 
-  /// Register super properties with PostHog
-  Future<void> registerSuperProperty(String key, Object value) async {
-    if (!_isInitialized) {
-      AppLogger.warning(
-          'PostHog not initialized, skipping super property registration');
-      return;
-    }
-
-    try {
-      await Posthog().register(key, value);
-      AppLogger.info('Super property registered: $key = $value');
-    } catch (e) {
-      AppLogger.error('Failed to register super property: $key', e);
-    }
-  }
-
-  /// Unregister super properties with PostHog
-  Future<void> unregisterSuperProperty(String key) async {
-    if (!_isInitialized) {
-      AppLogger.warning(
-          'PostHog not initialized, skipping super property unregistration');
-      return;
-    }
-
-    try {
-      await Posthog().unregister(key);
-      AppLogger.info('Super property unregistered: $key');
-    } catch (e) {
-      AppLogger.error('Failed to unregister super property: $key', e);
-    }
-  }
-
-  /// Reset PostHog data (useful for logout)
+  /// Reset tracking data (useful for logout)
   Future<void> reset() async {
-    if (!_isInitialized) {
-      AppLogger.warning('PostHog not initialized, cannot reset');
-      return;
-    }
-
-    try {
-      await Posthog().reset();
-      AppLogger.info('PostHog data reset successfully');
-    } catch (e) {
-      AppLogger.error('Failed to reset PostHog data', e);
-    }
+    _distinctId = null;
+    _authToken = null;
+    _anonymousFallbackId = null;
+    
+    // Clear stored ID
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('tracking_anonymous_user_id');
+    
+    AppLogger.info('Proxy tracking data reset successfully');
   }
 
-  /// Check if a feature flag is enabled
-  Future<bool> isFeatureEnabled(String flagKey) async {
-    if (!_isInitialized) {
-      AppLogger.warning('PostHog not initialized, cannot check feature flag');
-      return false;
-    }
-
-    try {
-      return await Posthog().isFeatureEnabled(flagKey);
-    } catch (e) {
-      AppLogger.error('Failed to check feature flag: $flagKey', e);
-      return false;
-    }
-  }
-
-  /// Get feature flag value
-  Future<String?> getFeatureFlag(String flagKey) async {
-    if (!_isInitialized) {
-      AppLogger.warning('PostHog not initialized, cannot get feature flag');
-      return null;
-    }
-
-    try {
-      final result = await Posthog().getFeatureFlag(flagKey);
-      return result?.toString();
-    } catch (e) {
-      AppLogger.error('Failed to get feature flag: $flagKey', e);
-      return null;
-    }
-  }
-
-  /// Reload feature flags
-  Future<void> reloadFeatureFlags() async {
-    if (!_isInitialized) {
-      AppLogger.warning('PostHog not initialized, cannot reload feature flags');
-      return;
-    }
-
-    try {
-      await Posthog().reloadFeatureFlags();
-      AppLogger.info('Feature flags reloaded successfully');
-    } catch (e) {
-      AppLogger.error('Failed to reload feature flags', e);
-    }
+  /// Disposes of resources used by the service
+  /// This method is idempotent - safe to call multiple times
+  void dispose() {
+    if (_disposed) return;
+    
+    _httpClient.close();
+    _offlineQueue.clear();
+    _disposed = true;
+    AppLogger.info('Tracking service disposed');
   }
 
   /// ===== COMPATIBILITY METHODS FOR REPORTING =====
 
   /// Get comprehensive feature usage statistics (legacy method for compatibility)
-  /// Note: This now returns an empty map since PostHog handles analytics differently
   Future<Map<String, dynamic>> getFeatureUsageStats() async {
     AppLogger.info(
-        'getFeatureUsageStats called - PostHog handles analytics differently');
+        'getFeatureUsageStats called - check PostHog dashboard for analytics');
     return {};
   }
 
   /// Generate a feature usage report for decision making (legacy method for compatibility)
-  /// Note: This now returns a placeholder since PostHog handles analytics differently
   Future<String> generateFeatureUsageReport() async {
     AppLogger.info(
-        'generateFeatureUsageReport called - PostHog handles analytics differently');
+        'generateFeatureUsageReport called - check PostHog dashboard for analytics');
     return '''
 # Feature Usage Analytics Report
 Generated on: ${DateTime.now().toIso8601String()}
 
 ## Note
-This application now uses PostHog for analytics. 
+This application now uses PostHog via backend proxy for analytics.
 Please check your PostHog dashboard for detailed analytics and feature usage reports.
 
 ## PostHog Benefits
@@ -702,10 +779,9 @@ Please check your PostHog dashboard for detailed analytics and feature usage rep
   }
 
   /// Get feature usage insights for a specific feature (legacy method for compatibility)
-  /// Note: This now returns an empty map since PostHog handles analytics differently
   Future<Map<String, dynamic>> getFeatureInsights(String feature) async {
     AppLogger.info(
-        'getFeatureInsights called for $feature - PostHog handles analytics differently');
+        'getFeatureInsights called for $feature - check PostHog dashboard for insights');
     return {
       'feature': feature,
       'note': 'Use PostHog dashboard for detailed insights',
@@ -714,7 +790,6 @@ Please check your PostHog dashboard for detailed analytics and feature usage rep
   }
 
   /// Create a feature usage analytics widget for display in settings (legacy method for compatibility)
-  /// Note: This now returns a placeholder widget since PostHog handles analytics differently
   Widget buildFeatureUsageWidget(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
@@ -729,7 +804,7 @@ Please check your PostHog dashboard for detailed analytics and feature usage rep
           ),
           const SizedBox(height: 16),
           Text(
-            'This app now uses PostHog for privacy-focused analytics. '
+            'This app uses PostHog via secure backend proxy for privacy-focused analytics. '
             'All analytics can be disabled in the privacy settings.',
             style: Theme.of(context).textTheme.bodyMedium,
           ),

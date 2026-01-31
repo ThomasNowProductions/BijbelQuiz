@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -8,10 +7,8 @@ import 'logger.dart';
 import '../utils/color_parser.dart';
 import '../utils/automatic_error_reporter.dart';
 
-/// Configuration for Gemini API service
+/// Configuration for Gemini API service via backend proxy
 class GeminiConfig {
-  static const String baseUrl =
-      'https://generativelanguage.googleapis.com/v1beta';
   static const Duration requestTimeout = Duration(seconds: 30);
   static const int maxRetries = 3;
   static const Duration retryDelay = Duration(seconds: 1);
@@ -71,7 +68,6 @@ class ColorPalette {
 
   /// Creates a ColorPalette from parsed colors with validation
   factory ColorPalette.fromParsedColors(Map<String, Color> colors) {
-    // Generate on-colors if not provided
     final onColors = ColorParser.generateOnColors(colors);
 
     return ColorPalette(
@@ -114,15 +110,16 @@ class GeminiError implements Exception {
       'GeminiError: $message${statusCode != null ? ' (Status: $statusCode)' : ''}';
 }
 
-/// A service that provides an interface to the Gemini API for generating custom color themes.
+/// A service that provides an interface to the Gemini API through the secure backend proxy.
 ///
-/// This service is a singleton and follows the established patterns used by other services
-/// in the BijbelQuiz app, including proper error handling, logging, and async operations.
+/// This service routes all requests through backend.bijbelquiz.app to keep API keys secure.
+/// No API keys are stored or used in the client application.
 class GeminiService {
   static GeminiService? _instance;
-  late final String _apiKey;
   late final http.Client _httpClient;
   bool _initialized = false;
+  String? _backendUrl;
+  String? _authToken;
 
   // Rate limiting
   DateTime? _lastRequestTime;
@@ -151,89 +148,41 @@ class GeminiService {
 
   /// Gets the current initialization status of the service
   /// Returns true if the service is ready to use, false otherwise
-  bool get isReady => _initialized && _apiKey.isNotEmpty;
-
-  /// Gets the API key for external access
-  String get apiKey => _apiKey;
+  bool get isReady => _initialized && _backendUrl != null;
 
   /// Gets the HTTP client for external access
   http.Client get httpClient => _httpClient;
 
-  /// Initializes the Gemini service by loading the API key from environment variables
+  /// Gets the backend URL
+  String? get backendUrl => _backendUrl;
+
+  /// Sets the authentication token for API requests
+  void setAuthToken(String? token) {
+    _authToken = token;
+    AppLogger.info(_authToken != null ? 'Auth token set' : 'Auth token cleared');
+  }
+
+  /// Initializes the Gemini service via backend proxy
   Future<void> initialize() async {
     try {
-      AppLogger.info('Initializing Gemini API service...');
+      AppLogger.info('Initializing Gemini service via backend proxy...');
 
-      String? apiKey;
-
-      try {
-        // Try to get API key from environment variables loaded by main app
-        apiKey = dotenv.env['GEMINI_API_KEY'];
-
-        if (apiKey != null && apiKey.isNotEmpty) {
-          AppLogger.info('API key loaded from environment variables');
-        } else {
-          AppLogger.warning(
-              'GEMINI_API_KEY not found in environment variables');
-
-          // Fallback to compile-time environment variables (for web builds)
-          try {
-            apiKey = const String.fromEnvironment('GEMINI_API_KEY');
-            if (apiKey.isNotEmpty) {
-              AppLogger.info('API key loaded from compile-time environment');
-            }
-          } catch (e) {
-            AppLogger.warning(
-                'Could not load API key from compile-time environment: $e');
-          }
-
-          // If still no API key, try Platform.environment (for desktop platforms)
-          if (apiKey == null || apiKey.isEmpty) {
-            try {
-              const platform = MethodChannel('app.bijbelquiz.play/env');
-              apiKey = await platform
-                  .invokeMethod('getEnv', {'key': 'GEMINI_API_KEY'});
-              AppLogger.info('API key loaded from system environment');
-            } catch (e) {
-              AppLogger.warning(
-                  'Could not load API key from system environment: $e');
-            }
-          }
-        }
-      } catch (e) {
-        AppLogger.warning('Unexpected error loading API key: $e');
+      // Load backend URL from environment
+      String? envBackendUrl = dotenv.env['BACKEND_URL'];
+      
+      if (envBackendUrl == null || envBackendUrl.isEmpty) {
+        // Fallback to default production URL
+        envBackendUrl = 'https://backend.bijbelquiz.app';
+        AppLogger.info('Using default backend URL: $envBackendUrl');
+      } else {
+        AppLogger.info('Backend URL loaded from environment: $envBackendUrl');
       }
 
-      if (apiKey == null || apiKey.isEmpty) {
-        throw const GeminiError(
-          message:
-              'GEMINI_API_KEY not found in environment variables. Please ensure your .env file contains GEMINI_API_KEY=your_api_key_here or set it as a system environment variable.',
-        );
-      }
-
-      // Validate API key format (basic check)
-      if (apiKey.length < 20) {
-        AppLogger.warning(
-            'GEMINI_API_KEY appears to be too short - please verify it is correct');
-      }
-
-      _apiKey = apiKey;
+      _backendUrl = envBackendUrl;
       _initialized = true;
-      AppLogger.info('Gemini API service initialized successfully');
+      AppLogger.info('Gemini service initialized successfully via backend proxy');
     } catch (e) {
-      AppLogger.error('Failed to initialize Gemini API service', e);
-
-      // Report error to automatic error tracking system
-      await AutomaticErrorReporter.reportNetworkError(
-        message: 'Failed to initialize Gemini API service',
-        url: 'https://generativelanguage.googleapis.com',
-        additionalInfo: {
-          'error': e.toString(),
-          'operation': 'service_initialization',
-          'api_key_configured': _apiKey.isNotEmpty,
-        },
-      );
-
+      AppLogger.error('Failed to initialize Gemini service', e);
       _initialized = false;
       rethrow;
     }
@@ -256,48 +205,47 @@ class GeminiService {
       if (e is GeminiError) {
         throw GeminiError(
           message:
-              'Failed to initialize Gemini API service: ${e.message}. Please check your API key configuration.',
+              'Failed to initialize Gemini service: ${e.message}. Please check your configuration.',
           statusCode: e.statusCode,
           errorCode: e.errorCode,
         );
       } else {
         throw const GeminiError(
           message:
-              'Failed to initialize Gemini API service. Please check your API key configuration.',
+              'Failed to initialize Gemini service. Please check your configuration.',
         );
       }
     }
 
     // Double-check that we're properly initialized
-    if (!_initialized || _apiKey.isEmpty) {
+    if (!_initialized || _backendUrl == null) {
       throw const GeminiError(
         message:
-            'Gemini API service is not properly configured. Please check your GEMINI_API_KEY in the .env file.',
+            'Gemini service is not properly configured. Please check your BACKEND_URL configuration.',
       );
     }
 
     await _ensureRateLimit();
 
-    AppLogger.info('Generating color palette for description: $description');
+    AppLogger.info('Generating color palette via backend proxy: $description');
 
     try {
-      final response = await _makeApiRequest(description);
+      final response = await _makeProxyRequest(description);
 
       if (response.statusCode == 200) {
         final colorPalette = await _parseResponse(response.body);
-        AppLogger.info('Successfully generated color palette');
+        AppLogger.info('Successfully generated color palette via proxy');
         return colorPalette;
       } else {
         throw await _handleErrorResponse(response);
       }
     } catch (e) {
-      AppLogger.error('Failed to generate color palette', e);
+      AppLogger.error('Failed to generate color palette via proxy', e);
 
       // Report error to automatic error tracking system
       await AutomaticErrorReporter.reportNetworkError(
-        message: 'Failed to generate color palette from Gemini API',
-        url:
-            '${GeminiConfig.baseUrl}/models/gemini-flash-latest:generateContent',
+        message: 'Failed to generate color palette via backend proxy',
+        url: '$_backendUrl/api/gemini',
         additionalInfo: {
           'description': description,
           'error': e.toString(),
@@ -323,36 +271,33 @@ class GeminiService {
     _lastRequestTime = DateTime.now();
   }
 
-  /// Makes the HTTP request to the Gemini API
-  Future<http.Response> _makeApiRequest(String description) async {
-    final url = Uri.parse(
-        '${GeminiConfig.baseUrl}/models/gemini-flash-latest:generateContent?key=$_apiKey');
+  /// Makes the HTTP request to the backend proxy
+  Future<http.Response> _makeProxyRequest(String description) async {
+    final url = Uri.parse('$_backendUrl/api/gemini');
 
-    final prompt = _buildPrompt(description);
     final requestBody = json.encode({
-      'contents': [
-        {
-          'parts': [
-            {'text': prompt}
-          ]
-        }
-      ],
-      'generationConfig': {
-        'temperature': 0.7,
-        'topK': 40,
-        'topP': 0.95,
-        'maxOutputTokens': 2048,
-      }
+      'description': description,
+      'temperature': 0.7,
+      'maxOutputTokens': 2048,
     });
 
-    AppLogger.info('Making request to Gemini API');
+    AppLogger.info('Making request to Gemini proxy API');
+
+    final headers = <String, String>{
+      'Content-Type': 'application/json',
+    };
+
+    // Add auth token if available
+    if (_authToken != null && _authToken!.isNotEmpty) {
+      headers['Authorization'] = 'Bearer $_authToken';
+    }
 
     for (int attempt = 1; attempt <= GeminiConfig.maxRetries; attempt++) {
       try {
         final response = await _httpClient
             .post(
               url,
-              headers: {'Content-Type': 'application/json'},
+              headers: headers,
               body: requestBody,
             )
             .timeout(GeminiConfig.requestTimeout);
@@ -361,10 +306,10 @@ class GeminiService {
           return response;
         } else if (response.statusCode == 429 &&
             attempt < GeminiConfig.maxRetries) {
-          // Rate limited, wait and retry
+          // Rate limited by backend, wait and retry
           final delay = GeminiConfig.retryDelay * attempt;
           AppLogger.warning(
-              'Rate limited, retrying in ${delay.inSeconds}s (attempt $attempt)');
+              'Rate limited by backend, retrying in ${delay.inSeconds}s (attempt $attempt)');
           await Future.delayed(delay);
           continue;
         } else {
@@ -384,75 +329,44 @@ class GeminiService {
     throw const GeminiError(message: 'All retry attempts exhausted');
   }
 
-  /// Builds a structured prompt for the Gemini API
-  String _buildPrompt(String description) {
-    return '''
-You are a professional UI/UX designer specializing in color theory and theme creation. Given the following description, create a cohesive color palette for a mobile app interface.
-
-Description: "$description"
-
-Please respond with a JSON object containing hex color codes for the following UI elements:
-- primary: Main brand color for buttons, links, and key elements
-- secondary: Supporting color for secondary buttons and elements
-- tertiary: Alternative color for less prominent elements
-- background: Main background color
-- surface: Color for cards, dialogs, and elevated surfaces
-- onPrimary: Text/icon color on primary background (for contrast)
-- onSecondary: Text/icon color on secondary background (for contrast)
-- onBackground: Text/icon color on background (for contrast)
-- onSurface: Text/icon color on surface (for contrast)
-
-Requirements:
-- All colors should work well together harmoniously
-- Ensure proper contrast ratios for accessibility (WCAG AA guidelines)
-- Colors should be appropriate for a mobile app interface
-- Return valid hex color codes (e.g., "#FF5733")
-- Ensure the JSON is valid and contains all required fields
-- Consider both light and dark theme compatibility
-
-Example response format:
-{
-  "primary": "#2563EB",
-  "secondary": "#7C3AED",
-  "tertiary": "#DC2626",
-  "background": "#FFFFFF",
-  "surface": "#F8FAFC",
-  "onPrimary": "#FFFFFF",
-  "onSecondary": "#FFFFFF",
-  "onBackground": "#1F2937",
-  "onSurface": "#1F2937"
-}
-''';
-  }
-
   /// Parses the API response to extract color information
   Future<ColorPalette> _parseResponse(String responseBody) async {
     try {
       final Map<String, dynamic> response = json.decode(responseBody);
 
-      // Extract the generated text from Gemini's response
-      final candidates = response['candidates'] as List<dynamic>?;
-      if (candidates == null || candidates.isEmpty) {
-        throw const GeminiError(message: 'No response candidates received');
+      // Check for API errors from backend
+      if (response['success'] == false) {
+        final error = response['error'] as Map<String, dynamic>?;
+        throw GeminiError(
+          message: error?['message'] ?? 'Unknown API error',
+          statusCode: error?['statusCode'],
+          errorCode: error?['code'],
+        );
       }
 
-      final content = candidates[0]['content'] as Map<String, dynamic>?;
-      final parts = content?['parts'] as List<dynamic>?;
-      if (parts == null || parts.isEmpty) {
-        throw const GeminiError(message: 'No content parts in response');
+      // Extract palette from successful response
+      final data = response['data'] as Map<String, dynamic>?;
+      if (data == null) {
+        throw const GeminiError(message: 'No data in response');
       }
 
-      final generatedText = parts[0]['text'] as String?;
-      if (generatedText == null || generatedText.trim().isEmpty) {
-        throw const GeminiError(message: 'Empty response text');
+      final paletteJson = data['palette'] as Map<String, dynamic>?;
+      if (paletteJson == null) {
+        throw const GeminiError(message: 'No palette in response data');
       }
 
-      // Use ColorParser to extract and validate colors from the response
-      final extractedColors =
-          ColorParser.extractColorsFromGeminiResponse(generatedText);
+      final palette = ColorPalette.fromJson(paletteJson);
 
       // Validate accessibility compliance
-      final validation = ColorParser.validateColorPalette(extractedColors);
+      final colors = <String, Color>{
+        'primary': ColorParser.parseColor(palette.primary) ?? Colors.blue,
+        'secondary': ColorParser.parseColor(palette.secondary) ?? Colors.purple,
+        'tertiary': ColorParser.parseColor(palette.tertiary) ?? Colors.red,
+        'background': ColorParser.parseColor(palette.background) ?? Colors.white,
+        'surface': ColorParser.parseColor(palette.surface) ?? Colors.grey.shade50,
+      };
+
+      final validation = ColorParser.validateColorPalette(colors);
 
       // Log any accessibility issues
       if (!validation.values.every((isValid) => isValid)) {
@@ -464,11 +378,10 @@ Example response format:
         });
       }
 
-      // Create ColorPalette from parsed colors with proper validation
-      return ColorPalette.fromParsedColors(extractedColors);
+      return palette;
+    } on GeminiError {
+      rethrow;
     } catch (e) {
-      if (e is GeminiError) rethrow;
-
       AppLogger.error(
           'Failed to parse API response, using fallback colors: $e');
 
@@ -481,13 +394,13 @@ Example response format:
   /// Handles error responses from the API
   Future<GeminiError> _handleErrorResponse(http.Response response) async {
     try {
-      final Map<String, dynamic> errorBody = json.decode(response.body);
-      final error = errorBody['error'] as Map<String, dynamic>?;
+      final Map<String, dynamic> body = json.decode(response.body);
+      final error = body['error'] as Map<String, dynamic>?;
 
       return GeminiError(
-        message: error?['message'] as String? ?? 'Unknown API error',
+        message: error?['message'] ?? 'Unknown API error',
         statusCode: response.statusCode,
-        errorCode: error?['code'] as String?,
+        errorCode: error?['code'],
       );
     } catch (e) {
       return GeminiError(
