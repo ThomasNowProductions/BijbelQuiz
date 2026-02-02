@@ -6,7 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/lesson.dart';
 import '../services/logger.dart';
-import '../services/sync_service.dart';
+import '../services/sync_service_v2.dart';
+import '../services/sync/sync_types_v2.dart';
 
 /// Tracks per-lesson unlock state and best stars earned.
 /// Simple linear progression: lesson at index 0 starts unlocked; completing a lesson unlocks the next.
@@ -18,13 +19,14 @@ class LessonProgressProvider extends ChangeNotifier {
   bool _isLoading = true;
   String? _error;
   bool _syncListenerSetup = false;
+  void Function(Map<String, dynamic>)? _syncCallback;
 
   /// Number of lessons unlocked from start (sequential from index 0)
   int _unlockedCount = 1;
 
   /// Map: lessonId -> bestStars (0..3)
   final Map<String, int> _bestStarsByLesson = {};
-  SyncService get syncService => SyncService.instance;
+  SyncServiceV2 get syncService => SyncServiceV2.instance;
 
   bool get isLoading => _isLoading;
   String? get error => _error;
@@ -42,7 +44,7 @@ class LessonProgressProvider extends ChangeNotifier {
       'lesson_progress',
       onSyncError: (key, error) {
         if (key == 'lesson_progress') {
-          _error = 'Synchronisatie mislukt: $error';
+          _error = 'Synchronisatie mislukt: ${error.message}';
           notifyListeners();
         }
       },
@@ -93,7 +95,8 @@ class LessonProgressProvider extends ChangeNotifier {
         final allData = await syncService.fetchAllData();
 
         if (allData != null && allData.containsKey('lesson_progress')) {
-          final syncedData = allData['lesson_progress'];
+          final syncedEntry = allData['lesson_progress'];
+          final syncedData = syncedEntry?.data;
           AppLogger.info(
               'Found synced lesson progress, merging with local data');
 
@@ -236,10 +239,11 @@ class LessonProgressProvider extends ChangeNotifier {
     }
     _syncListenerSetup = true;
     AppLogger.info('Setting up lesson progress sync listener');
-    syncService.addListener('lesson_progress', (data) {
+    _syncCallback = (data) {
       AppLogger.info('Received synced lesson progress update');
       loadImportData(data);
-    });
+    };
+    syncService.addListener('lesson_progress', _syncCallback!);
   }
 
   /// Triggers immediate sync of lesson progress to server
@@ -252,8 +256,11 @@ class LessonProgressProvider extends ChangeNotifier {
   @override
   void dispose() {
     // Remove sync listeners to prevent memory leaks
-    syncService.removeListener('lesson_progress');
+    if (_syncCallback != null) {
+      syncService.removeListener('lesson_progress', _syncCallback!);
+    }
     _syncListenerSetup = false;
+    _syncCallback = null;
     AppLogger.debug('LessonProgressProvider disposed - listeners cleaned up');
     super.dispose();
   }

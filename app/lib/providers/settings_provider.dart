@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../services/logger.dart';
 import '../models/ai_theme.dart';
-import '../services/sync_service.dart';
+import '../services/sync_service_v2.dart';
+import '../services/sync/sync_types_v2.dart';
 import '../utils/automatic_error_reporter.dart';
 import '../error/error_handler.dart';
 import '../error/error_types.dart';
@@ -61,6 +62,7 @@ class SettingsProvider extends ChangeNotifier {
   String? _error;
   String? _selectedCustomThemeKey;
   bool _syncListenerSetup = false;
+  void Function(Map<String, dynamic>)? _syncCallback;
   Set<String> _unlockedThemes = {};
   final Map<String, AITheme> _aiThemes = {};
 
@@ -69,7 +71,7 @@ class SettingsProvider extends ChangeNotifier {
   // Navigation settings
   bool _showNavigationLabels = true;
 
-  SyncService get syncService => SyncService.instance;
+  SyncServiceV2 get syncService => SyncServiceV2.instance;
 
   // Layout type enum
   static const String layoutGrid = 'grid';
@@ -99,7 +101,7 @@ class SettingsProvider extends ChangeNotifier {
       'settings',
       onSyncError: (key, error) {
         if (key == 'settings') {
-          _error = 'Synchronisatie mislukt: $error';
+          _error = 'Synchronisatie mislukt: ${error.message}';
           notifyListeners();
         }
       },
@@ -494,7 +496,7 @@ class SettingsProvider extends ChangeNotifier {
         AppLogger.info('fetchAllData returned: $allData');
 
         if (allData != null && allData.containsKey('settings')) {
-          final syncedSettings = allData['settings'];
+          final syncedSettings = allData['settings']?.data;
           AppLogger.info('Found synced settings: $syncedSettings');
 
           if (syncedSettings != null) {
@@ -515,7 +517,7 @@ class SettingsProvider extends ChangeNotifier {
 
             // Merge AI themes (add themes that don't exist locally)
             final syncedAIThemes =
-                syncedSettings['aiThemes'] as Map<String, dynamic>?;
+                syncedSettings?['aiThemes'] as Map<String, dynamic>?;
             if (syncedAIThemes != null) {
               for (final entry in syncedAIThemes.entries) {
                 final themeId = entry.key;
@@ -1158,17 +1160,21 @@ class SettingsProvider extends ChangeNotifier {
       return;
     }
     _syncListenerSetup = true;
-    syncService.addListener('settings', (data) {
+    _syncCallback = (data) {
       loadImportData(data);
-    });
+    };
+    syncService.addListener('settings', _syncCallback!);
   }
 
   /// Cleans up resources and listeners
   @override
   void dispose() {
     // Remove sync listeners to prevent memory leaks
-    syncService.removeListener('settings');
+    if (_syncCallback != null) {
+      syncService.removeListener('settings', _syncCallback!);
+    }
     _syncListenerSetup = false;
+    _syncCallback = null;
     AppLogger.debug('SettingsProvider disposed - listeners cleaned up');
     super.dispose();
   }

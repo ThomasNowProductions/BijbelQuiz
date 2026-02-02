@@ -5,7 +5,8 @@ import 'package:provider/provider.dart';
 import './settings_provider.dart';
 import '../services/logger.dart';
 import '../services/star_transaction_service.dart';
-import '../services/sync_service.dart';
+import '../services/sync_service_v2.dart';
+import '../services/sync/sync_types_v2.dart';
 import '../services/analytics_service.dart';
 import '../utils/automatic_error_reporter.dart';
 import '../error/error_handler.dart';
@@ -28,7 +29,8 @@ class GameStatsProvider extends ChangeNotifier {
   bool _syncListenerSetup = false;
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   void Function(String message)? onError;
-  SyncService get syncService => SyncService.instance;
+  SyncServiceV2 get syncService => SyncServiceV2.instance;
+  void Function(Map<String, dynamic>)? _syncCallback;
 
   Powerup? _activePowerup;
   DateTime? _powerupActivatedAt;
@@ -103,7 +105,7 @@ class GameStatsProvider extends ChangeNotifier {
       'game_stats',
       onSyncError: (key, error) {
         if (key == 'game_stats') {
-          onError?.call('Synchronisatie mislukt: $error');
+          onError?.call('Synchronisatie mislukt: ${error.message}');
         }
       },
       onSyncSuccess: (key) {
@@ -155,7 +157,8 @@ class GameStatsProvider extends ChangeNotifier {
         AppLogger.info('fetchAllData returned: $allData');
 
         if (allData != null && allData.containsKey('game_stats')) {
-          final syncedStats = allData['game_stats'];
+          final syncedEntry = allData['game_stats'];
+          final syncedStats = syncedEntry?.data;
           AppLogger.info('Found synced game stats: $syncedStats');
 
           if (syncedStats != null) {
@@ -599,11 +602,12 @@ class GameStatsProvider extends ChangeNotifier {
     }
     _syncListenerSetup = true;
     AppLogger.info('Setting up game stats sync listener');
-    syncService.addListener('game_stats', (data) {
+    _syncCallback = (data) {
       AppLogger.info(
           'Received synced game stats update: ${data.keys.toList()}');
       loadImportData(data);
-    });
+    };
+    syncService.addListener('game_stats', _syncCallback!);
   }
 
   /// Triggers immediate sync of game stats to server
@@ -616,8 +620,11 @@ class GameStatsProvider extends ChangeNotifier {
   @override
   void dispose() {
     // Remove sync listeners to prevent memory leaks
-    syncService.removeListener('game_stats');
+    if (_syncCallback != null) {
+      syncService.removeListener('game_stats', _syncCallback!);
+    }
     _syncListenerSetup = false;
+    _syncCallback = null;
     AppLogger.debug('GameStatsProvider disposed - listeners cleaned up');
     super.dispose();
   }

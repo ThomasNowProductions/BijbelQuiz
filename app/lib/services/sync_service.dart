@@ -10,6 +10,12 @@ import '../utils/automatic_error_reporter.dart';
 
 import 'sync/conflict_resolver.dart';
 
+/// DEPRECATED: Use [SyncServiceV2] instead.
+///
+/// This is the old sync service that has race conditions and data loss issues.
+/// It is kept temporarily for backward compatibility during migration.
+/// All providers have been updated to use SyncServiceV2.
+@Deprecated('Use SyncServiceV2 instead')
 class SyncService {
   static final SyncService _instance = SyncService._internal();
   static SyncService get instance => _instance;
