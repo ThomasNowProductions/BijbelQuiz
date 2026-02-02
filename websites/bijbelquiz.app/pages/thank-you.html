@@ -18,6 +18,71 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        .hero-layout {
+            grid-template-columns: 1fr;
+            max-width: 1400px;
+        }
+
+        .hero-content {
+            text-align: left;
+        }
+
+        .links-grid {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            margin-top: 24px;
+            margin-bottom: 32px;
+            width: 100%;
+        }
+
+        .link-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px 18px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--outline);
+            background: var(--surface-highest);
+            text-decoration: none;
+            transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+        }
+
+        .link-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(59, 130, 246, 0.6);
+            box-shadow: 0 16px 28px rgba(15, 23, 42, 0.55);
+        }
+
+        .link-card .material-icons {
+            font-size: 22px;
+            color: var(--primary);
+            margin-top: 2px;
+        }
+
+        .link-card .card-title {
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .link-card .card-subtitle {
+            color: var(--text-secondary);
+            margin-top: 4px;
+            font-size: 0.95rem;
+        }
+
+        .hero-text {
+            max-width: 100%;
+            text-align: left;
+        }
+
+        .hero-description {
+            text-align: left;
+            margin-left: 0;
+            display: block;
+        }
+    </style>
 </head>
 
 <body class="center-screen fade-in">
@@ -30,76 +95,91 @@
                     <h1>Speciaal dank je wel</h1>
                     <p class="hero-description">Deze mensen en diensten hebben ons geholpen om BijbelQuiz te maken.</p>
 
-                    <div class="links-container">
-                        <a href="https://vercel.app" class="btn primary btn-large" target="_blank" rel="noopener">
+                    <div class="links-grid">
+                        <a href="https://vercel.app" class="link-card" target="_blank" rel="noopener">
                             <i class="material-icons">forum</i>
-                            Vercel - Hosting en deployment
+                            <div>
+                                <div class="card-title">Vercel</div>
+                                <div class="card-subtitle">Hosting en deployment</div>
+                            </div>
                         </a>
-                    </div>
-                    <div class="links-container">
-                        <a href="https://instatus.com" class="btn primary btn-large" target="_blank" rel="noopener">
+                        <a href="https://instatus.com" class="link-card" target="_blank" rel="noopener">
                             <i class="material-icons">forum</i>
-                            Instatus - Status monitoring
+                            <div>
+                                <div class="card-title">Instatus</div>
+                                <div class="card-subtitle">Status monitoring</div>
+                            </div>
                         </a>
-                    </div>
-                    <div class="links-container">
-                        <a href="https://posthog.com" class="btn primary btn-large" target="_blank" rel="noopener">
+                        <a href="https://posthog.com" class="link-card" target="_blank" rel="noopener">
                             <i class="material-icons">forum</i>
-                            PostHog - Analytics
+                            <div>
+                                <div class="card-title">PostHog</div>
+                                <div class="card-subtitle">Analytics</div>
+                            </div>
                         </a>
-                    </div>
-                    <div class="links-container">
-                        <a href="https://github.com" class="btn primary btn-large" target="_blank" rel="noopener">
+                        <a href="https://github.com" class="link-card" target="_blank" rel="noopener">
                             <i class="material-icons">forum</i>
-                            GitHub - Version control
+                            <div>
+                                <div class="card-title">GitHub</div>
+                                <div class="card-subtitle">Version control</div>
+                            </div>
                         </a>
-                    </div>
-                    <div class="links-container">
-                        <a href="https://supabase.com" class="btn primary btn-large" target="_blank" rel="noopener">
+                        <a href="https://blacksmith.sh" class="link-card" target="_blank" rel="noopener">
                             <i class="material-icons">forum</i>
-                            Supabase - Databases en authenticatie
+                            <div>
+                                <div class="card-title">Blacksmith</div>
+                                <div class="card-subtitle">GitHub Actions runners</div>
+                            </div>
                         </a>
-                    </div>
-                    <div class="links-container">
-                        <a href="https://spaceship.com" class="btn primary btn-large" target="_blank" rel="noopener">
+                        <a href="https://codeberg.org" class="link-card" target="_blank" rel="noopener">
                             <i class="material-icons">forum</i>
-                            Spaceship - Domein registratie
+                            <div>
+                                <div class="card-title">Codeberg</div>
+                                <div class="card-subtitle">Git hosting</div>
+                            </div>
                         </a>
-                    </div>
-                    <div class="links-container">
-                        <a href="https://formbricks.com" class="btn primary btn-large" target="_blank" rel="noopener">
+                        <a href="https://supabase.com" class="link-card" target="_blank" rel="noopener">
                             <i class="material-icons">forum</i>
-                            Formbricks - Formulieren en feedback
+                            <div>
+                                <div class="card-title">Supabase</div>
+                                <div class="card-subtitle">Databases en authenticatie</div>
+                            </div>
                         </a>
-                    </div>
-                    <div class="links-container">
-                        <a href="#" class="btn primary btn-large">
+                        <a href="https://spaceship.com" class="link-card" target="_blank" rel="noopener">
                             <i class="material-icons">forum</i>
-                            Ma - Voor het bedenken van vragen
+                            <div>
+                                <div class="card-title">Spaceship</div>
+                                <div class="card-subtitle">Domein registratie</div>
+                            </div>
                         </a>
-                    </div>
-                    <div class="links-container">
-                        <a href="#" class="btn primary btn-large">
+                        <a href="https://formbricks.com" class="link-card" target="_blank" rel="noopener">
                             <i class="material-icons">forum</i>
-                            Oma - Voor het bedenken van vragen
+                            <div>
+                                <div class="card-title">Formbricks</div>
+                                <div class="card-subtitle">Formulieren en feedback</div>
+                            </div>
                         </a>
-                    </div>
-                    <div class="links-container">
-                        <a href="https://github.com/ThomasNowProductions/BijbelQuiz/graphs/contributors" class="btn primary btn-large">
+                        <a href="#" class="link-card">
                             <i class="material-icons">forum</i>
-                            Alle GitHub contributors - Voor het helpen met code
+                            <div>
+                                <div class="card-title">Ma</div>
+                                <div class="card-subtitle">Voor het bedenken van vragen</div>
+                            </div>
                         </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Right Column: Phone Screenshot -->
-            <div class="hero-image">
-                <div class="phone-mockup">
-                    <div class="phone-frame">
-                        <div class="phone-screen">
-                            <img src="https://bijbelquiz.app/assets/images/lesson-select-screen.png" alt="BijbelQuiz App Screenshot" class="app-screenshot">
-                        </div>
+                        <a href="#" class="link-card">
+                            <i class="material-icons">forum</i>
+                            <div>
+                                <div class="card-title">Oma</div>
+                                <div class="card-subtitle">Voor het bedenken van vragen</div>
+                            </div>
+                        </a>
+                        <a href="https://github.com/ThomasNowProductions/BijbelQuiz/graphs/contributors" class="link-card">
+                            <i class="material-icons">forum</i>
+                            <div>
+                                <div class="card-title">Alle GitHub contributors</div>
+                                <div class="card-subtitle">Voor het helpen met code</div>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
