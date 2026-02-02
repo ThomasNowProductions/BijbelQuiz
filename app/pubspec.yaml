@@ -69,7 +69,7 @@ dependencies:
   posthog_flutter: ^5.0.0
   mobile_scanner: ^7.1.3
   permission_handler: ^12.0.1
-  flutter_local_notifications: ^18.0.1
+  flutter_local_notifications: ^20.0.0
   timezone: ^0.10.0
 
 dev_dependencies:
