@@ -506,4 +506,93 @@ input[type="text"]:invalid {
   .mode-toggle {
     flex-direction: column;
   }
+}
+
+/* Bible Reference Autocomplete */
+.bible-reference-container {
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.bible-reference-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 12px;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 12px;
+  font-size: 1.08rem;
+  font-family: 'Quicksand', Arial, sans-serif;
+  background: #F8FAFC;
+  color: #0F172A;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+.bible-reference-input:focus {
+  border-color: #2563EB;
+  box-shadow: 0 0 0 2px #2563EB22;
+}
+
+.bible-reference-input.valid {
+  border-color: #10B981;
+  background: #ECFDF5;
+}
+
+.bible-reference-input.invalid {
+  border-color: #DC2626;
+  background: #FEF2F2;
+}
+
+.bible-autocomplete-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1.5px solid #E2E8F0;
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(16, 23, 42, 0.1);
+}
+
+.autocomplete-item {
+  padding: 12px 16px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #0F172A;
+  transition: background 0.15s;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.autocomplete-item:last-child {
+  border-bottom: none;
+}
+
+.autocomplete-item:hover,
+.autocomplete-item.selected {
+  background: #E0E7FF;
+  color: #2563EB;
+}
+
+.bible-reference-validation {
+  margin-top: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  min-height: 20px;
+}
+
+.bible-reference-validation.valid {
+  color: #10B981;
+}
+
+.bible-reference-validation.invalid {
+  color: #DC2626;
+}
+
+.bible-reference-validation.hint {
+  color: #D97706;
 } 

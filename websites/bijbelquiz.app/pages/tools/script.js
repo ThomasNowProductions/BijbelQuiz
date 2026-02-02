@@ -26,6 +26,215 @@ const categoriesList = [
   "Paasmaandag", "Pinkstermaandag"
 ];
 
+// Bible book names for autocomplete and validation
+const bibleBookNames = [
+  "Genesis", "Exodus", "Leviticus", "Numeri", "Deuteronomium",
+  "Jozua", "Richteren", "Ruth", "1 Samuel", "2 Samuel",
+  "1 Koningen", "2 Koningen", "1 Kronieken", "2 Kronieken",
+  "Ezra", "Nehemia", "Esther", "Job", "Psalmen", "Spreuken",
+  "Prediker", "Hooglied", "Jesaja", "Jeremia", "Klaagliederen",
+  "Ezechiël", "Daniël", "Hosea", "Joël", "Amos", "Obadja",
+  "Jona", "Micha", "Nahum", "Habakuk", "Zefanja", "Haggai",
+  "Zacharia", "Maleachi", "Matteüs", "Marcus", "Lucas",
+  "Johannes", "Handelingen", "Romeinen", "1 Korintiërs",
+  "2 Korintiërs", "Galaten", "Efeziërs", "Filippenzen",
+  "Kolossenzen", "1 Tessalonicenzen", "2 Tessalonicenzen",
+  "1 Timoteüs", "2 Timoteüs", "Titus", "Filemon", "Hebreeën",
+  "Jakobus", "1 Petrus", "2 Petrus", "1 Johannes", "2 Johannes",
+  "3 Johannes", "Judas", "Openbaring"
+];
+
+// Common misspellings and their corrections
+const bibleBookCorrections = {
+  "genesis": "Genesis", "gen": "Genesis",
+  "exodus": "Exodus", "ex": "Exodus",
+  "leviticus": "Leviticus", "lev": "Leviticus",
+  "numeri": "Numeri", "num": "Numeri", "nummers": "Numeri",
+  "deuteronomium": "Deuteronomium", "deut": "Deuteronomium",
+  "jozua": "Jozua", "joz": "Jozua",
+  "richteren": "Richteren", "richt": "Richteren",
+  "ruth": "Ruth",
+  "1 samuel": "1 Samuel", "1samuel": "1 Samuel", "1sam": "1 Samuel",
+  "2 samuel": "2 Samuel", "2samuel": "2 Samuel", "2sam": "2 Samuel",
+  "1 koningen": "1 Koningen", "1koningen": "1 Koningen", "1kon": "1 Koningen",
+  "2 koningen": "2 Koningen", "2koningen": "2 Koningen", "2kon": "2 Koningen",
+  "1 kronieken": "1 Kronieken", "1kronieken": "1 Kronieken", "1kron": "1 Kronieken",
+  "2 kronieken": "2 Kronieken", "2kronieken": "2 Kronieken", "2kron": "2 Kronieken",
+  "ezra": "Ezra",
+  "nehemia": "Nehemia", "neh": "Nehemia",
+  "esther": "Esther", "est": "Esther",
+  "job": "Job",
+  "psalmen": "Psalmen", "ps": "Psalmen", "psalm": "Psalmen",
+  "spreuken": "Spreuken", "spr": "Spreuken",
+  "prediker": "Prediker", "pred": "Prediker",
+  "hooglied": "Hooglied", "hoog": "Hooglied",
+  "jesaja": "Jesaja", "jes": "Jesaja", "isaiah": "Jesaja",
+  "jeremia": "Jeremia", "jer": "Jeremia",
+  "klaagliederen": "Klaagliederen", "klagl": "Klaagliederen",
+  "ezechiël": "Ezechiël", "ezechiel": "Ezechiël", "ez": "Ezechiël", "ezech": "Ezechiël",
+  "daniël": "Daniël", "daniel": "Daniël", "dan": "Daniël",
+  "hosea": "Hosea", "hos": "Hosea",
+  "joël": "Joël", "joel": "Joël",
+  "amos": "Amos",
+  "obadja": "Obadja", "obad": "Obadja",
+  "jona": "Jona",
+  "micha": "Micha", "mich": "Micha",
+  "nahum": "Nahum", "nah": "Nahum",
+  "habakuk": "Habakuk", "hab": "Habakuk",
+  "zefanja": "Zefanja", "zef": "Zefanja",
+  "haggai": "Haggai", "hag": "Haggai",
+  "zacharia": "Zacharia", "zach": "Zacharia",
+  "maleachi": "Maleachi", "mal": "Maleachi",
+  "matteüs": "Matteüs", "matteus": "Matteüs", "mat": "Matteüs", "matt": "Matteüs",
+  "marcus": "Marcus", "mar": "Marcus", "mark": "Marcus", "markus": "Marcus",
+  "lukas": "Lukas", "luk": "Lukas", "luke": "Lukas",
+  "johannes": "Johannes", "joh": "Johannes", "john": "Johannes",
+  "handelingen": "Handelingen", "hand": "Handelingen", "acts": "Handelingen",
+  "romeinen": "Romeinen", "rom": "Romeinen", "romans": "Romeinen",
+  "1 korintiërs": "1 Korintiërs", "1korintiërs": "1 Korintiërs", "1kor": "1 Korintiërs",
+  "1 corinthians": "1 Korintiërs",
+  "2 korintiërs": "2 Korintiërs", "2korintiërs": "2 Korintiërs", "2kor": "2 Korintiërs",
+  "2 corinthians": "2 Korintiërs",
+  "galaten": "Galaten", "gal": "Galaten", "galatians": "Galaten",
+  "efeziërs": "Efeziërs", "efeziers": "Efeziërs", "ef": "Efeziërs", "eph": "Efeziërs", "ephesians": "Efeziërs",
+  "filippenzen": "Filippenzen", "fil": "Filippenzen", "phil": "Filippenzen", "philippians": "Filippenzen",
+  "kolossenzen": "Kolossenzen", "kol": "Kolossenzen", "col": "Kolossenzen", "colossians": "Kolossenzen",
+  "1 tessalonicenzen": "1 Tessalonicenzen", "1tessalonicenzen": "1 Tessalonicenzen", "1tess": "1 Tessalonicenzen",
+  "1 thessalonians": "1 Tessalonicenzen",
+  "2 tessalonicenzen": "2 Tessalonicenzen", "2tessalonicenzen": "2 Tessalonicenzen", "2tess": "2 Tessalonicenzen",
+  "2 thessalonians": "2 Tessalonicenzen",
+  "1 timoteüs": "1 Timoteüs", "1timoteüs": "1 Timoteüs", "1tim": "1 Timoteüs",
+  "1 timothy": "1 Timoteüs",
+  "2 timoteüs": "2 Timoteüs", "2timoteüs": "2 Timoteüs", "2tim": "2 Timoteüs",
+  "2 timothy": "2 Timoteüs",
+  "titus": "Titus",
+  "filemon": "Filemon", "fil": "Filemon", "philemon": "Filemon",
+  "hebreeën": "Hebreeën", "hebreeen": "Hebreeën", "heb": "Hebreeën", "hebrews": "Hebreeën",
+  "jakobus": "Jakobus", "jak": "Jakobus", "james": "Jakobus",
+  "1 petrus": "1 Petrus", "1petrus": "1 Petrus", "1pet": "1 Petrus", "1peter": "1 Petrus",
+  "2 petrus": "2 Petrus", "2petrus": "2 Petrus", "2pet": "2 Petrus", "2peter": "2 Petrus",
+  "1 johannes": "1 Johannes", "1johannes": "1 Johannes", "1joh": "1 Johannes", "1john": "1 Johannes",
+  "2 johannes": "2 Johannes", "2johannes": "2 Johannes", "2joh": "2 Johannes", "2john": "2 Johannes",
+  "3 johannes": "3 Johannes", "3johannes": "3 Johannes", "3joh": "3 Johannes", "3john": "3 Johannes",
+  "judas": "Judas", "jude": "Judas",
+  "openbaring": "Openbaring", "openb": "Openbaring", "apocalypse": "Openbaring", "revelation": "Openbaring", "rev": "Openbaring"
+};
+
+// Normalize book name (remove special chars for matching)
+function normalizeBookName(bookName) {
+  return bookName
+    .toLowerCase()
+    .replace(/[ëïéèêâôûîäöüÿç]/g, char => {
+      const map = { 'ë': 'e', 'ï': 'i', 'é': 'e', 'è': 'e', 'ê': 'e', 'â': 'a', 'ô': 'o', 'û': 'u', 'î': 'i', 'ä': 'a', 'ö': 'o', 'ü': 'u', 'ÿ': 'y', 'ç': 'c' };
+      return map[char] || char;
+    })
+    .replace(/[^\w\s]/g, '')
+    .trim();
+}
+
+// Get corrected book name
+function getCorrectedBookName(input) {
+  const normalized = normalizeBookName(input);
+  
+  // First check exact match
+  if (bibleBookNames.includes(input)) {
+    return input;
+  }
+  
+  // Check corrections map
+  if (bibleBookCorrections[normalized]) {
+    return bibleBookCorrections[normalized];
+  }
+  
+  // Try to find partial match
+  const partialMatches = bibleBookNames.filter(book => 
+    normalizeBookName(book).startsWith(normalized) ||
+    normalized.startsWith(normalizeBookName(book))
+  );
+  
+  if (partialMatches.length === 1) {
+    return partialMatches[0];
+  }
+  
+  return null;
+}
+
+// Format the biblical reference properly
+function formatBiblicalReference(input) {
+  if (!input || !input.trim()) return '';
+  
+  input = input.trim();
+  
+  // Try to parse the input
+  // Common formats: "Genesis 1:1", "Gen 1:1", "1:1", "Genesis 1", "Gen 1"
+  
+  // Check for chapter:verse pattern
+  const chapterVerseMatch = input.match(/^(\d+)[:\s]*(\d+)$/);
+  if (chapterVerseMatch && window.lastSelectedBook) {
+    // Just chapter:verse provided, use last selected book
+    return `${window.lastSelectedBook} ${chapterVerseMatch[1]}:${chapterVerseMatch[2]}`;
+  }
+  
+  // Try to extract book name and reference
+  // Match patterns like "Genesis 1:1" or "Gen 1:1" or "Genesis 1" or "1 Cor 1:1"
+  const bookRefMatch = input.match(/^((?:\d\s*)?[a-zA-Zëïéèêâôûîäöüÿç\s]+)[:\s]*(\d.*)$/i);
+  
+  if (bookRefMatch) {
+    let bookPart = bookRefMatch[1].trim();
+    let refPart = bookRefMatch[2].trim();
+    
+    // Remove extra spaces from book part
+    bookPart = bookPart.replace(/\s+/g, ' ');
+    
+    // Try to correct the book name
+    const correctedBook = getCorrectedBookName(bookPart);
+    
+    if (correctedBook) {
+      window.lastSelectedBook = correctedBook;
+      
+      // Clean up the reference part
+      // Handle formats like "1:1", "1 - 2", "1:1-5", "1:1,3", "1:1-2:5"
+      refPart = refPart
+        .replace(/\s*[-–—]\s*/g, '-')  // Normalize dashes
+        .replace(/\s*,\s*/g, ',')      // Normalize commas
+        .replace(/\s+/g, ':');         // Convert spaces to colons for chapter:verse
+      
+      return `${correctedBook} ${refPart}`;
+    }
+  }
+  
+  // If it's just a book name
+  const justBook = getCorrectedBookName(input);
+  if (justBook) {
+    window.lastSelectedBook = justBook;
+    return justBook;
+  }
+  
+  // Return original if we can't parse it
+  return input;
+}
+
+// Validate biblical reference format
+function isValidBiblicalReference(reference) {
+  if (!reference || !reference.trim()) return true; // Empty is valid (optional field)
+  
+  const formatted = formatBiblicalReference(reference);
+  
+  // Check if it starts with a valid book name
+  for (const book of bibleBookNames) {
+    if (formatted.startsWith(book)) {
+      // Check if there's a chapter reference
+      const afterBook = formatted.slice(book.length).trim();
+      if (!afterBook) return true; // Just book name is valid
+      
+      // Validate chapter:verse format
+      return /^\s*\d+([:\-]\d+)*(,\d+([:\-]\d+)*)*$/.test(afterBook);
+    }
+  }
+  
+  return false;
+}
+
 // Toast utility
 function showToast(message, isError = false) {
   let toast = document.createElement('div');
@@ -233,8 +442,7 @@ function renderEditFields(type, question = null) {
     html += `<input type="text" id="editFouteAntwoord1" name="editFouteAntwoord1" required value="${escapeHtml(question && question.fouteAntwoorden[0] ? question.fouteAntwoorden[0] : '')}">`;
     html += `<input type="text" id="editFouteAntwoord2" name="editFouteAntwoord2" required value="${escapeHtml(question && question.fouteAntwoorden[1] ? question.fouteAntwoorden[1] : '')}">`;
     html += `<input type="text" id="editFouteAntwoord3" name="editFouteAntwoord3" required value="${escapeHtml(question && question.fouteAntwoorden[2] ? question.fouteAntwoorden[2] : '')}">`;
-    html += `<label for="editBiblicalReference">Bijbelreferentie (optioneel):</label>`;
-    html += `<input type="text" id="editBiblicalReference" name="editBiblicalReference" value="${escapeHtml(question && question.biblicalReference ? question.biblicalReference : '')}">`;
+    html += renderBibleReferenceInput('editBiblicalReference', 'editBiblicalReference', question && question.biblicalReference ? question.biblicalReference : '');
     html += renderEditCategories(question ? question.categories : []);
   } else if (type === 'fitb') {
     html += `<label for="editVraag">Vraag (gebruik _____ voor het invulveld):</label>`;
@@ -245,8 +453,7 @@ function renderEditFields(type, question = null) {
     html += `<input type="text" id="editFouteAntwoord1" name="editFouteAntwoord1" required value="${escapeHtml(question && question.fouteAntwoorden[0] ? question.fouteAntwoorden[0] : '')}">`;
     html += `<input type="text" id="editFouteAntwoord2" name="editFouteAntwoord2" required value="${escapeHtml(question && question.fouteAntwoorden[1] ? question.fouteAntwoorden[1] : '')}">`;
     html += `<input type="text" id="editFouteAntwoord3" name="editFouteAntwoord3" required value="${escapeHtml(question && question.fouteAntwoorden[2] ? question.fouteAntwoorden[2] : '')}">`;
-    html += `<label for="editBiblicalReference">Bijbelreferentie (optioneel):</label>`;
-    html += `<input type="text" id="editBiblicalReference" name="editBiblicalReference" value="${escapeHtml(question && question.biblicalReference ? question.biblicalReference : '')}">`;
+    html += renderBibleReferenceInput('editBiblicalReference', 'editBiblicalReference', question && question.biblicalReference ? question.biblicalReference : '');
     html += renderEditCategories(question ? question.categories : []);
   } else if (type === 'tf') {
     const isWaar = question && question.juisteAntwoord === 'Waar';
@@ -257,12 +464,14 @@ function renderEditFields(type, question = null) {
     html += `<option value="Waar" ${isWaar ? 'selected' : ''}>Waar</option>`;
     html += `<option value="Niet waar" ${!isWaar ? 'selected' : ''}>Niet waar</option>`;
     html += `</select>`;
-    html += `<label for="editBiblicalReference">Bijbelreferentie (optioneel):</label>`;
-    html += `<input type="text" id="editBiblicalReference" name="editBiblicalReference" value="${escapeHtml(question && question.biblicalReference ? question.biblicalReference : '')}">`;
+    html += renderBibleReferenceInput('editBiblicalReference', 'editBiblicalReference', question && question.biblicalReference ? question.biblicalReference : '');
     html += renderEditCategories(question ? question.categories : []);
   }
   
   container.innerHTML = html;
+  
+  // Setup autocomplete for edit Bible reference input
+  setupBibleReferenceAutocomplete('editBiblicalReference');
 }
 
 // Render category checkboxes for edit form
@@ -390,6 +599,167 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+// Render Bible reference input with autocomplete
+function renderBibleReferenceInput(id, name, value = '') {
+  let html = `<div class="bible-reference-container">`;
+  html += `<label for="${id}">Bijbelreferentie (optioneel):</label>`;
+  html += `<input type="text" id="${id}" name="${name}" class="bible-reference-input" placeholder="Bijv. Genesis 1:1 of Gen 1:1" value="${escapeHtml(value)}" autocomplete="off">`;
+  html += `<div class="bible-autocomplete-dropdown" id="${id}_dropdown"></div>`;
+  html += `<div class="bible-reference-validation" id="${id}_validation"></div>`;
+  html += `</div>`;
+  return html;
+}
+
+// Setup Bible reference autocomplete
+function setupBibleReferenceAutocomplete(inputId) {
+  const input = document.getElementById(inputId);
+  const dropdown = document.getElementById(inputId + '_dropdown');
+  const validation = document.getElementById(inputId + '_validation');
+  
+  if (!input) return;
+  
+  let selectedIndex = -1;
+  let filteredBooks = [];
+  
+  input.addEventListener('input', (e) => {
+    const value = e.target.value;
+    selectedIndex = -1;
+    
+    if (value.length < 1) {
+      dropdown.style.display = 'none';
+      validation.textContent = '';
+      input.classList.remove('valid', 'invalid');
+      return;
+    }
+    
+    // Check if user is typing book name or reference
+    const parts = value.split(/[\s:]+/);
+    const firstPart = parts[0].toLowerCase();
+    
+    // If only one part or first part looks like a book name
+    if (parts.length <= 2 && !/^\d+$/.test(parts[0])) {
+      // Filter book names
+      filteredBooks = bibleBookNames.filter(book => {
+        const normalizedBook = normalizeBookName(book);
+        const normalizedInput = normalizeBookName(firstPart);
+        return normalizedBook.includes(normalizedInput) ||
+               normalizedInput.includes(normalizedBook);
+      });
+      
+      // Add corrections
+      const normalizedFirst = normalizeBookName(firstPart);
+      if (bibleBookCorrections[normalizedFirst] && !filteredBooks.includes(bibleBookCorrections[normalizedFirst])) {
+        filteredBooks.unshift(bibleBookCorrections[normalizedFirst]);
+      }
+      
+      if (filteredBooks.length > 0) {
+        dropdown.innerHTML = filteredBooks.slice(0, 10).map((book, index) => 
+          `<div class="autocomplete-item ${index === selectedIndex ? 'selected' : ''}" data-book="${escapeHtml(book)}">${escapeHtml(book)}</div>`
+        ).join('');
+        dropdown.style.display = 'block';
+        
+        // Add click handlers
+        dropdown.querySelectorAll('.autocomplete-item').forEach(item => {
+          item.addEventListener('click', () => {
+            const book = item.getAttribute('data-book');
+            window.lastSelectedBook = book;
+            const rest = parts.slice(1).join(':');
+            input.value = rest ? `${book} ${rest}` : book;
+            dropdown.style.display = 'none';
+            validateReference();
+          });
+        });
+      } else {
+        dropdown.style.display = 'none';
+      }
+    } else {
+      dropdown.style.display = 'none';
+    }
+    
+    validateReference();
+  });
+  
+  // Keyboard navigation
+  input.addEventListener('keydown', (e) => {
+    if (dropdown.style.display === 'none') return;
+    
+    const items = dropdown.querySelectorAll('.autocomplete-item');
+    
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      selectedIndex = Math.min(selectedIndex + 1, items.length - 1);
+      updateSelection(items);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      selectedIndex = Math.max(selectedIndex - 1, -1);
+      updateSelection(items);
+    } else if (e.key === 'Enter' && selectedIndex >= 0) {
+      e.preventDefault();
+      items[selectedIndex].click();
+    } else if (e.key === 'Escape') {
+      dropdown.style.display = 'none';
+    }
+  });
+  
+  // Format on blur
+  input.addEventListener('blur', () => {
+    setTimeout(() => {
+      dropdown.style.display = 'none';
+      if (input.value.trim()) {
+        const formatted = formatBiblicalReference(input.value);
+        input.value = formatted;
+        validateReference();
+      }
+    }, 200);
+  });
+  
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!input.contains(e.target) && !dropdown.contains(e.target)) {
+      dropdown.style.display = 'none';
+    }
+  });
+  
+  function updateSelection(items) {
+    items.forEach((item, index) => {
+      item.classList.toggle('selected', index === selectedIndex);
+    });
+    if (selectedIndex >= 0 && items[selectedIndex]) {
+      items[selectedIndex].scrollIntoView({ block: 'nearest' });
+    }
+  }
+  
+  function validateReference() {
+    const value = input.value.trim();
+    if (!value) {
+      validation.textContent = '';
+      input.classList.remove('valid', 'invalid');
+      return;
+    }
+    
+    const formatted = formatBiblicalReference(value);
+    const isValid = isValidBiblicalReference(value);
+    
+    if (isValid) {
+      validation.textContent = '✓ Geldige referentie';
+      validation.className = 'bible-reference-validation valid';
+      input.classList.add('valid');
+      input.classList.remove('invalid');
+    } else {
+      const corrected = getCorrectedBookName(value.split(/[\s:]+/)[0]);
+      if (corrected && corrected !== value.split(/[\s:]+/)[0]) {
+        validation.textContent = `Bedoelt u: ${corrected}?`;
+        validation.className = 'bible-reference-validation hint';
+      } else {
+        validation.textContent = '⚠ Ongeldige referentie formaat';
+        validation.className = 'bible-reference-validation invalid';
+      }
+      input.classList.add('invalid');
+      input.classList.remove('valid');
+    }
+  }
+}
+
 function renderFields(type) {
   // Always clear previous dynamic fields and their values
   dynamicFields.innerHTML = '';
@@ -411,10 +781,7 @@ function renderFields(type) {
 `;
     html += `<input type="text" id="fouteAntwoord3" name="fouteAntwoord3" required placeholder="Typ hier een fout antwoord..." aria-required="true">
 `;
-    html += `<label for="biblicalReference">Bijbelreferentie (optioneel):</label>
-`;
-    html += `<input type="text" id="biblicalReference" name="biblicalReference" placeholder="Bijv. Genesis 1:1">
-`;
+    html += renderBibleReferenceInput('biblicalReference', 'biblicalReference');
     html += renderCategories();
   } else if (type === 'fitb') {
     html += `<label for="vraag">Vraag (gebruik _____ voor het invulveld):</label>
@@ -433,10 +800,7 @@ function renderFields(type) {
 `;
     html += `<input type="text" id="fouteAntwoord3" name="fouteAntwoord3" required placeholder="Typ hier een fout antwoord..." aria-required="true">
 `;
-    html += `<label for="biblicalReference">Bijbelreferentie (optioneel):</label>
-`;
-    html += `<input type="text" id="biblicalReference" name="biblicalReference" placeholder="Bijv. Exodus 3:14">
-`;
+    html += renderBibleReferenceInput('biblicalReference', 'biblicalReference');
     html += renderCategories();
   } else if (type === 'tf') {
     html += `<label for="vraag">Stelling:</label>
@@ -447,13 +811,13 @@ function renderFields(type) {
 `;
     html += `<select id="juisteAntwoord" name="juisteAntwoord"><option value="Waar">Waar</option><option value="Niet waar">Niet waar</option></select>
 `;
-    html += `<label for="biblicalReference">Bijbelreferentie (optioneel):</label>
-`;
-    html += `<input type="text" id="biblicalReference" name="biblicalReference" placeholder="Bijv. Johannes 3:16">
-`;
+    html += renderBibleReferenceInput('biblicalReference', 'biblicalReference');
     html += renderCategories();
   }
   dynamicFields.innerHTML = html;
+  
+  // Setup autocomplete for Bible reference inputs
+  setupBibleReferenceAutocomplete('biblicalReference');
 }
 
 form.type.addEventListener('change', e => {
