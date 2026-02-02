@@ -5,6 +5,26 @@ const downloadBtn = document.getElementById('downloadBtn');
 // Declare questions array for use throughout the script
 let questions = [];
 
+// Categories list from categories.json
+const categoriesList = [
+  "Genesis", "Exodus", "Leviticus", "Numeri", "Deuteronomium",
+  "Jozua", "Richteren", "Ruth", "1 Samuël", "2 Samuël",
+  "1 Koningen", "2 Koningen", "1 Kronieken", "2 Kronieken",
+  "Ezra", "Nehemia", "Esther", "Job", "Psalmen", "Spreuken",
+  "Prediker", "Hooglied", "Jesaja", "Jeremia", "Klaagliederen",
+  "Ezechiël", "Daniël", "Hosea", "Joël", "Amos", "Obadja",
+  "Jona", "Micha", "Nahum", "Habakuk", "Zefanja", "Haggai",
+  "Zacharia", "Maleachi", "Matteüs", "Marcus", "Lucas",
+  "Johannes", "Handelingen", "Romeinen", "1 Korintiërs",
+  "2 Korintiërs", "Galaten", "Efeziërs", "Filippenzen",
+  "Kolossenzen", "1 Tessalonicenzen", "2 Tessalonicenzen",
+  "1 Timoteüs", "2 Timoteüs", "Titus", "Filemon", "Hebreeën",
+  "Jakobus", "1 Petrus", "2 Petrus", "1 Johannes", "2 Johannes",
+  "3 Johannes", "Judas", "Openbaring", "Kerst", "Pasen",
+  "Pinksteren", "Hemelvaart", "Goede Vrijdag", "Stille Zaterdag",
+  "Paasmaandag", "Pinkstermaandag"
+];
+
 // Toast utility
 function showToast(message, isError = false) {
   let toast = document.createElement('div');
@@ -34,6 +54,41 @@ function restoreBackup() {
 // Function to save the last selected question type
 function saveLastQuestionType(type) {
   localStorage.setItem('bijbelquiz_last_type', type);
+}
+
+// Generate the next question ID based on existing questions
+function getNextQuestionId() {
+  if (questions.length === 0) {
+    return '000001';
+  }
+  // Find the highest ID number
+  let maxId = 0;
+  questions.forEach(q => {
+    if (q.id) {
+      const idNum = parseInt(q.id, 10);
+      if (!isNaN(idNum) && idNum > maxId) {
+        maxId = idNum;
+      }
+    }
+  });
+  // Generate next ID with leading zeros
+  const nextId = (maxId + 1).toString().padStart(6, '0');
+  return nextId;
+}
+
+// Render category checkboxes
+function renderCategories() {
+  let html = '<label>Categorieën (optioneel):</label>';
+  html += '<div class="categories-container">';
+  categoriesList.forEach(cat => {
+    const catId = 'cat_' + cat.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_]/g, '');
+    html += `<div class="category-item">`;
+    html += `<input type="checkbox" id="${catId}" name="categories" value="${cat}">`;
+    html += `<label for="${catId}">${cat}</label>`;
+    html += `</div>`;
+  });
+  html += '</div>';
+  return html;
 }
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -78,6 +133,7 @@ function renderFields(type) {
 `;
     html += `<input type="text" id="biblicalReference" name="biblicalReference" placeholder="Bijv. Genesis 1:1">
 `;
+    html += renderCategories();
   } else if (type === 'fitb') {
     html += `<label for="vraag">Vraag (gebruik _____ voor het invulveld):</label>
 `;
@@ -99,6 +155,7 @@ function renderFields(type) {
 `;
     html += `<input type="text" id="biblicalReference" name="biblicalReference" placeholder="Bijv. Exodus 3:14">
 `;
+    html += renderCategories();
   } else if (type === 'tf') {
     html += `<label for="vraag">Stelling:</label>
 `;
@@ -112,6 +169,7 @@ function renderFields(type) {
 `;
     html += `<input type="text" id="biblicalReference" name="biblicalReference" placeholder="Bijv. Johannes 3:16">
 `;
+    html += renderCategories();
   }
   dynamicFields.innerHTML = html;
 }
@@ -126,6 +184,12 @@ form.type.addEventListener('change', e => {
 // Initial render
 renderFields(form.type.value);
 
+// Collect selected categories from checkboxes
+function getSelectedCategories() {
+  const checkboxes = form.querySelectorAll('input[name="categories"]:checked');
+  return Array.from(checkboxes).map(cb => cb.value);
+}
+
 // In form submit, use checked checkboxes for categories
 form.addEventListener('submit', function(e) {
   e.preventDefault();
@@ -134,8 +198,10 @@ form.addEventListener('submit', function(e) {
   const juisteAntwoord = form.querySelector('#juisteAntwoord') ? form.querySelector('#juisteAntwoord').value.trim() : '';
   const moeilijkheidsgraad = Number(form.difficulty.value);
   const biblicalReference = form.querySelector('#biblicalReference') ? form.querySelector('#biblicalReference').value.trim() : '';
-  // Always set categories to empty array to match guidelines
-  const categories = [];
+  // Get selected categories from checkboxes
+  const categories = getSelectedCategories();
+  // Generate unique ID
+  const id = getNextQuestionId();
   
   let questionObj = {
     vraag,
@@ -144,7 +210,8 @@ form.addEventListener('submit', function(e) {
     type,
     categories,
     biblicalReference: biblicalReference || null, // Set to null if empty
-    fouteAntwoorden: [] // Always present for all types
+    fouteAntwoorden: [], // Always present for all types
+    id
   };
   
   if (type === 'mc' || type === 'fitb') {
@@ -172,7 +239,7 @@ form.addEventListener('submit', function(e) {
   questions.push(questionObj);
   saveBackup();
   updatePreview();
-  showToast('Vraag toegevoegd!');
+  showToast('Vraag toegevoegd! ID: ' + id);
   form.reset();
   form.type.value = type; // Keep the same question type selected
   saveLastQuestionType(type); // Save the type
@@ -231,4 +298,4 @@ downloadBtn.addEventListener('click', function() {
   updatePreview(true);
 });
 
-document.getElementById('restoreBtn').addEventListener('click', restoreBackup); 
+document.getElementById('restoreBtn').addEventListener('click', restoreBackup);
