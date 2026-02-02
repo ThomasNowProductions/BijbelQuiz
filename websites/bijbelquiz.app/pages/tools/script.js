@@ -4,6 +4,7 @@ const downloadBtn = document.getElementById('downloadBtn');
 
 // Declare questions array for use throughout the script
 let questions = [];
+let editingIndex = null;
 
 // Categories list from categories.json
 const categoriesList = [
@@ -45,6 +46,7 @@ function restoreBackup() {
   if (data) {
     questions = JSON.parse(data);
     updatePreview(true);
+    renderQuestionsList();
     showToast('Backup hersteld!');
   } else {
     showToast('Geen backup gevonden.', true);
@@ -77,19 +79,296 @@ function getNextQuestionId() {
 }
 
 // Render category checkboxes
-function renderCategories() {
+function renderCategories(selectedCategories = []) {
   let html = '<label>Categorieën (optioneel):</label>';
   html += '<div class="categories-container">';
   categoriesList.forEach(cat => {
     const catId = 'cat_' + cat.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_]/g, '');
+    const isChecked = selectedCategories.includes(cat) ? 'checked' : '';
     html += `<div class="category-item">`;
-    html += `<input type="checkbox" id="${catId}" name="categories" value="${cat}">`;
+    html += `<input type="checkbox" id="${catId}" name="categories" value="${cat}" ${isChecked}>`;
     html += `<label for="${catId}">${cat}</label>`;
     html += `</div>`;
   });
   html += '</div>';
   return html;
 }
+
+// Load existing questions from questions-nl-sv.json
+async function loadExistingQuestions() {
+  try {
+    const response = await fetch('questions-nl-sv.json');
+    if (response.ok) {
+      const data = await response.json();
+      if (Array.isArray(data) && data.length > 0) {
+        questions = data;
+        saveBackup();
+        updatePreview();
+        renderQuestionsList();
+        showToast(`${questions.length} vragen geladen!`);
+      }
+    } else {
+      showToast('Kon bestaande vragen niet laden.', true);
+    }
+  } catch (error) {
+    console.log('Geen bestaande vragen gevonden, start met lege lijst');
+  }
+}
+
+// Mode toggle functionality
+const addModeBtn = document.getElementById('addModeBtn');
+const editModeBtn = document.getElementById('editModeBtn');
+const addModeSection = document.getElementById('addModeSection');
+const editModeSection = document.getElementById('editModeSection');
+
+addModeBtn.addEventListener('click', () => {
+  setMode('add');
+});
+
+editModeBtn.addEventListener('click', () => {
+  setMode('edit');
+  renderQuestionsList();
+});
+
+function setMode(mode) {
+  if (mode === 'add') {
+    addModeSection.style.display = '';
+    editModeSection.style.display = 'none';
+    addModeBtn.classList.add('active');
+    editModeBtn.classList.remove('active');
+  } else {
+    addModeSection.style.display = 'none';
+    editModeSection.style.display = '';
+    addModeBtn.classList.remove('active');
+    editModeBtn.classList.add('active');
+    renderQuestionsList();
+  }
+}
+
+// Render questions list for edit mode
+function renderQuestionsList(searchTerm = '') {
+  const container = document.getElementById('questionsList');
+  
+  let filteredQuestions = questions;
+  if (searchTerm) {
+    const term = searchTerm.toLowerCase();
+    filteredQuestions = questions.filter(q => 
+      q.vraag.toLowerCase().includes(term) ||
+      q.id.toLowerCase().includes(term) ||
+      (q.biblicalReference && q.biblicalReference.toLowerCase().includes(term))
+    );
+  }
+  
+  if (filteredQuestions.length === 0) {
+    container.innerHTML = '<p class="no-questions">Geen vragen gevonden.</p>';
+    return;
+  }
+  
+  let html = '';
+  filteredQuestions.forEach((q, index) => {
+    const realIndex = questions.indexOf(q);
+    const typeLabel = q.type === 'mc' ? 'Meerkeuze' : q.type === 'fitb' ? 'Invulvraag' : 'Waar/Niet Waar';
+    const categoriesLabel = q.categories && q.categories.length > 0 ? q.categories.join(', ') : 'Geen categorieën';
+    
+    html += `<div class="question-item" data-index="${realIndex}">`;
+    html += `<div class="question-header">`;
+    html += `<span class="question-id">${q.id}</span>`;
+    html += `<span class="question-type">${typeLabel}</span>`;
+    html += `<span class="question-difficulty">Moeilijkheid: ${q.moeilijkheidsgraad}</span>`;
+    html += `</div>`;
+    html += `<div class="question-text">${escapeHtml(q.vraag)}</div>`;
+    html += `<div class="question-categories">${escapeHtml(categoriesLabel)}</div>`;
+    if (q.biblicalReference) {
+      html += `<div class="question-reference">${escapeHtml(q.biblicalReference)}</div>`;
+    }
+    html += `<div class="question-actions">`;
+    html += `<button type="button" class="edit-btn" onclick="editQuestion(${realIndex})">Bewerken</button>`;
+    html += `<button type="button" class="delete-btn" onclick="deleteQuestion(${realIndex})">Verwijderen</button>`;
+    html += `</div>`;
+    html += `</div>`;
+  });
+  
+  container.innerHTML = html;
+}
+
+// Escape HTML to prevent XSS
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// Search functionality
+const searchInput = document.getElementById('searchQuestions');
+if (searchInput) {
+  searchInput.addEventListener('input', (e) => {
+    renderQuestionsList(e.target.value);
+  });
+}
+
+// Edit question
+function editQuestion(index) {
+  editingIndex = index;
+  const q = questions[index];
+  
+  document.getElementById('editIndex').value = index;
+  document.getElementById('editType').value = q.type;
+  document.getElementById('editDifficulty').value = q.moeilijkheidsgraad;
+  
+  renderEditFields(q.type, q);
+  document.getElementById('editModal').style.display = 'flex';
+}
+
+// Render edit form fields
+function renderEditFields(type, question = null) {
+  const container = document.getElementById('editDynamicFields');
+  let html = '';
+  
+  if (type === 'mc') {
+    html += `<label for="editVraag">Vraag:</label>`;
+    html += `<input type="text" id="editVraag" name="editVraag" required value="${escapeHtml(question ? question.vraag : '')}">`;
+    html += `<label for="editJuisteAntwoord">Juiste antwoord:</label>`;
+    html += `<input type="text" id="editJuisteAntwoord" name="editJuisteAntwoord" required value="${escapeHtml(question ? question.juisteAntwoord : '')}">`;
+    html += `<label>Foute antwoorden:</label>`;
+    html += `<input type="text" id="editFouteAntwoord1" name="editFouteAntwoord1" required value="${escapeHtml(question && question.fouteAntwoorden[0] ? question.fouteAntwoorden[0] : '')}">`;
+    html += `<input type="text" id="editFouteAntwoord2" name="editFouteAntwoord2" required value="${escapeHtml(question && question.fouteAntwoorden[1] ? question.fouteAntwoorden[1] : '')}">`;
+    html += `<input type="text" id="editFouteAntwoord3" name="editFouteAntwoord3" required value="${escapeHtml(question && question.fouteAntwoorden[2] ? question.fouteAntwoorden[2] : '')}">`;
+    html += `<label for="editBiblicalReference">Bijbelreferentie (optioneel):</label>`;
+    html += `<input type="text" id="editBiblicalReference" name="editBiblicalReference" value="${escapeHtml(question && question.biblicalReference ? question.biblicalReference : '')}">`;
+    html += renderEditCategories(question ? question.categories : []);
+  } else if (type === 'fitb') {
+    html += `<label for="editVraag">Vraag (gebruik _____ voor het invulveld):</label>`;
+    html += `<input type="text" id="editVraag" name="editVraag" required value="${escapeHtml(question ? question.vraag : '')}">`;
+    html += `<label for="editJuisteAntwoord">Juiste antwoord:</label>`;
+    html += `<input type="text" id="editJuisteAntwoord" name="editJuisteAntwoord" required value="${escapeHtml(question ? question.juisteAntwoord : '')}">`;
+    html += `<label>Foute antwoorden:</label>`;
+    html += `<input type="text" id="editFouteAntwoord1" name="editFouteAntwoord1" required value="${escapeHtml(question && question.fouteAntwoorden[0] ? question.fouteAntwoorden[0] : '')}">`;
+    html += `<input type="text" id="editFouteAntwoord2" name="editFouteAntwoord2" required value="${escapeHtml(question && question.fouteAntwoorden[1] ? question.fouteAntwoorden[1] : '')}">`;
+    html += `<input type="text" id="editFouteAntwoord3" name="editFouteAntwoord3" required value="${escapeHtml(question && question.fouteAntwoorden[2] ? question.fouteAntwoorden[2] : '')}">`;
+    html += `<label for="editBiblicalReference">Bijbelreferentie (optioneel):</label>`;
+    html += `<input type="text" id="editBiblicalReference" name="editBiblicalReference" value="${escapeHtml(question && question.biblicalReference ? question.biblicalReference : '')}">`;
+    html += renderEditCategories(question ? question.categories : []);
+  } else if (type === 'tf') {
+    const isWaar = question && question.juisteAntwoord === 'Waar';
+    html += `<label for="editVraag">Stelling:</label>`;
+    html += `<input type="text" id="editVraag" name="editVraag" required value="${escapeHtml(question ? question.vraag : '')}">`;
+    html += `<label for="editJuisteAntwoord">Is dit waar?</label>`;
+    html += `<select id="editJuisteAntwoord" name="editJuisteAntwoord">`;
+    html += `<option value="Waar" ${isWaar ? 'selected' : ''}>Waar</option>`;
+    html += `<option value="Niet waar" ${!isWaar ? 'selected' : ''}>Niet waar</option>`;
+    html += `</select>`;
+    html += `<label for="editBiblicalReference">Bijbelreferentie (optioneel):</label>`;
+    html += `<input type="text" id="editBiblicalReference" name="editBiblicalReference" value="${escapeHtml(question && question.biblicalReference ? question.biblicalReference : '')}">`;
+    html += renderEditCategories(question ? question.categories : []);
+  }
+  
+  container.innerHTML = html;
+}
+
+// Render category checkboxes for edit form
+function renderEditCategories(selectedCategories = []) {
+  let html = '<label>Categorieën (optioneel):</label>';
+  html += '<div class="categories-container">';
+  categoriesList.forEach(cat => {
+    const catId = 'editcat_' + cat.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_]/g, '');
+    const isChecked = selectedCategories.includes(cat) ? 'checked' : '';
+    html += `<div class="category-item">`;
+    html += `<input type="checkbox" id="${catId}" name="editCategories" value="${cat}" ${isChecked}>`;
+    html += `<label for="${catId}">${cat}</label>`;
+    html += `</div>`;
+  });
+  html += '</div>';
+  return html;
+}
+
+// Get selected categories from edit form
+function getEditSelectedCategories() {
+  const checkboxes = document.querySelectorAll('#editForm input[name="editCategories"]:checked');
+  return Array.from(checkboxes).map(cb => cb.value);
+}
+
+// Edit type change handler
+document.getElementById('editType').addEventListener('change', (e) => {
+  renderEditFields(e.target.value);
+});
+
+// Save edited question
+document.getElementById('editForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  
+  const index = parseInt(document.getElementById('editIndex').value, 10);
+  const type = document.getElementById('editType').value;
+  const vraag = document.getElementById('editVraag').value.trim();
+  const juisteAntwoord = document.getElementById('editJuisteAntwoord').value.trim();
+  const moeilijkheidsgraad = Number(document.getElementById('editDifficulty').value);
+  const biblicalReference = document.getElementById('editBiblicalReference').value.trim();
+  const categories = getEditSelectedCategories();
+  
+  // Keep the original ID
+  const id = questions[index].id;
+  
+  let updatedQuestion = {
+    vraag,
+    juisteAntwoord,
+    moeilijkheidsgraad,
+    type,
+    categories,
+    biblicalReference: biblicalReference || null,
+    fouteAntwoorden: [],
+    id
+  };
+  
+  if (type === 'mc' || type === 'fitb') {
+    const fouteAntwoorden = [
+      document.getElementById('editFouteAntwoord1').value.trim(),
+      document.getElementById('editFouteAntwoord2').value.trim(),
+      document.getElementById('editFouteAntwoord3').value.trim()
+    ];
+    updatedQuestion.fouteAntwoorden = fouteAntwoorden;
+    
+    if (!vraag || !juisteAntwoord || fouteAntwoorden.some(f => !f)) {
+      showToast('Vul alle verplichte velden in.', true);
+      return;
+    }
+  } else if (type === 'tf') {
+    updatedQuestion.juisteAntwoord = juisteAntwoord === 'Waar' ? 'Waar' : 'Niet waar';
+    updatedQuestion.fouteAntwoorden = [juisteAntwoord === 'Waar' ? 'Niet waar' : 'Waar'];
+    
+    if (!vraag || !juisteAntwoord) {
+      showToast('Vul alle verplichte velden in.', true);
+      return;
+    }
+  }
+  
+  questions[index] = updatedQuestion;
+  saveBackup();
+  renderQuestionsList(searchInput ? searchInput.value : '');
+  updatePreview();
+  
+  document.getElementById('editModal').style.display = 'none';
+  showToast(`Vraag ${id} bijgewerkt!`);
+});
+
+// Cancel edit
+document.getElementById('cancelEditBtn').addEventListener('click', () => {
+  document.getElementById('editModal').style.display = 'none';
+  editingIndex = null;
+});
+
+// Delete question
+function deleteQuestion(index) {
+  if (confirm(`Weet je zeker dat je vraag ${questions[index].id} wilt verwijderen?`)) {
+    questions.splice(index, 1);
+    saveBackup();
+    renderQuestionsList(searchInput ? searchInput.value : '');
+    updatePreview();
+    showToast('Vraag verwijderd!');
+  }
+}
+
+// Make functions global for onclick handlers
+window.editQuestion = editQuestion;
+window.deleteQuestion = deleteQuestion;
 
 window.addEventListener('DOMContentLoaded', () => {
   // Restore last selected question type
@@ -105,6 +384,9 @@ window.addEventListener('DOMContentLoaded', () => {
     restoreBackup();
     document.getElementById('restoreBtn').style.display = '';
     document.getElementById('clearBtn').style.display = '';
+  } else {
+    // Load existing questions from file
+    loadExistingQuestions();
   }
 });
 
@@ -252,8 +534,10 @@ function updatePreview(animate = false) {
   if (questions.length > 0) {
     countBox.textContent = `Aantal vragen in lijst: ${questions.length}`;
     countBox.style.display = '';
+    document.getElementById('clearBtn').style.display = '';
   } else {
     countBox.style.display = 'none';
+    document.getElementById('clearBtn').style.display = 'none';
   }
 }
 
@@ -276,6 +560,9 @@ confirmDeleteBtn.addEventListener('click', function() {
   questions = [];
   saveBackup();
   updatePreview(true);
+  if (editModeSection.style.display !== 'none') {
+    renderQuestionsList();
+  }
   showToast('Alle vragen verwijderd!');
 });
 
@@ -287,15 +574,12 @@ downloadBtn.addEventListener('click', function() {
   const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(questions, null, 2));
   const dlAnchor = document.createElement('a');
   dlAnchor.setAttribute("href", dataStr);
-  dlAnchor.setAttribute("download", "nieuwe_vragen.json");
+  dlAnchor.setAttribute("download", "questions-nl-sv.json");
   document.body.appendChild(dlAnchor);
   dlAnchor.click();
   dlAnchor.remove();
   showToast('Download gestart!');
-  // Clear questions, backup, and preview after export
-  questions = [];
-  saveBackup();
-  updatePreview(true);
+  // Don't clear questions anymore - user might want to continue editing
 });
 
 document.getElementById('restoreBtn').addEventListener('click', restoreBackup);
