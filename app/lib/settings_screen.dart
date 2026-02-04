@@ -500,11 +500,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget _buildSettingRow(
       BuildContext context, _SettingItem item, ColorScheme colorScheme) {
+    final VoidCallback? effectiveOnTap =
+        item.onTap ?? _extractOnTapFromChild(item);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      child: item.onTap != null
+      child: effectiveOnTap != null
           ? InkWell(
-              onTap: item.onTap,
+              onTap: effectiveOnTap,
               borderRadius: BorderRadius.circular(12),
               child: Container(
                 padding:
@@ -595,6 +597,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
     );
+  }
+
+  VoidCallback? _extractOnTapFromChild(_SettingItem item) {
+    final child = item.child;
+    if (child is IconButton) {
+      return child.onPressed;
+    }
+    return null;
   }
 
   Widget _buildThemeDropdown(
