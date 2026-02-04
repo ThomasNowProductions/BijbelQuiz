@@ -652,6 +652,10 @@
   "breakReminderContinue": "Continue",
   "themeUnlockedWithSwitchOption": "unlocked! You can always return to the default theme in settings.",
   "hoursMessage": "hours",
+  "updateAvailable": "Update Available",
+  "updateAvailableMessage": "A new version of BibleQuiz is available. Update now to get the latest features and improvements!",
+  "updateButton": "Update Now",
+  "dismiss": "Dismiss",
 
   "@lessonsCompleted": {
     "description": "Shows progress of completed lessons",

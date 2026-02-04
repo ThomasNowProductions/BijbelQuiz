@@ -652,6 +652,10 @@
   "breakReminderContinue": "Doorgaan",
   "themeUnlockedWithSwitchOption": "ontgrendeld! Je kunt altijd terugkeren naar het standaardthema in de instellingen.",
   "hoursMessage": "uren",
+  "updateAvailable": "Update Beschikbaar",
+  "updateAvailableMessage": "Er is een nieuwe versie van BijbelQuiz beschikbaar. Update nu om de nieuwste functies en verbeteringen te krijgen!",
+  "updateButton": "Nu Updaten",
+  "dismiss": "Negeren",
   "noExpirationDate": "Geen vervaldatum",
 
   "@lessonsCompleted": {

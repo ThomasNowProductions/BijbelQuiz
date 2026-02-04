@@ -2066,6 +2066,19 @@ class AppLocalizationsEn extends AppLocalizations {
       'unlocked! You can always return to the default theme in settings.';
 
   @override
+  String get updateAvailable => 'Update Available';
+
+  @override
+  String get updateAvailableMessage =>
+      'A new version of BibleQuiz is available. Update now to get the latest features and improvements!';
+
+  @override
+  String get updateButton => 'Update Now';
+
+  @override
+  String get dismiss => 'Dismiss';
+
+  @override
   String lessonsCompleted(int unlocked, int total) {
     return '$unlocked out of $total lessons completed';
   }

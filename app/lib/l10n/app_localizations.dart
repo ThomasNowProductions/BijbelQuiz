@@ -4004,6 +4004,30 @@ abstract class AppLocalizations {
   /// **'unlocked! You can always return to the default theme in settings.'**
   String get themeUnlockedWithSwitchOption;
 
+  /// No description provided for @updateAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Available'**
+  String get updateAvailable;
+
+  /// No description provided for @updateAvailableMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'A new version of BibleQuiz is available. Update now to get the latest features and improvements!'**
+  String get updateAvailableMessage;
+
+  /// No description provided for @updateButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Now'**
+  String get updateButton;
+
+  /// No description provided for @dismiss.
+  ///
+  /// In en, this message translates to:
+  /// **'Dismiss'**
+  String get dismiss;
+
   /// Shows progress of completed lessons
   ///
   /// In en, this message translates to:

@@ -2098,6 +2098,19 @@ class AppLocalizationsNl extends AppLocalizations {
       'ontgrendeld! Je kunt altijd terugkeren naar het standaardthema in de instellingen.';
 
   @override
+  String get updateAvailable => 'Update Beschikbaar';
+
+  @override
+  String get updateAvailableMessage =>
+      'Er is een nieuwe versie van BijbelQuiz beschikbaar. Update nu om de nieuwste functies en verbeteringen te krijgen!';
+
+  @override
+  String get updateButton => 'Nu Updaten';
+
+  @override
+  String get dismiss => 'Negeren';
+
+  @override
   String lessonsCompleted(int unlocked, int total) {
     return '$unlocked van de $total lessen voltooid';
   }

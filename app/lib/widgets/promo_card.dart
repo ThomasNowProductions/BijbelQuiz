@@ -9,6 +9,7 @@ class PromoCard extends StatefulWidget {
   final bool isAccountCreation;
   final bool isReferral;
   final bool isShareStats;
+  final bool isUpdate;
   final String? socialMediaType;
   final VoidCallback onDismiss;
   final Function(String) onAction;
@@ -22,6 +23,7 @@ class PromoCard extends StatefulWidget {
     required this.isAccountCreation,
     this.isReferral = false,
     this.isShareStats = false,
+    this.isUpdate = false,
     this.socialMediaType,
     required this.onDismiss,
     required this.onAction,
@@ -69,6 +71,11 @@ class _PromoCardState extends State<PromoCard> {
         cs.primary.withValues(alpha: 0.14),
         cs.primary.withValues(alpha: 0.06)
       ];
+    } else if (widget.isUpdate) {
+      gradientColors = [
+        cs.tertiary.withValues(alpha: 0.12),
+        cs.tertiary.withValues(alpha: 0.04)
+      ];
     } else {
       gradientColors = [
         cs.primary.withValues(alpha: 0.14),
@@ -115,7 +122,9 @@ class _PromoCardState extends State<PromoCard> {
                                     ? Icons.campaign_rounded
                                     : widget.isShareStats
                                         ? Icons.bar_chart_rounded
-                                        : Icons.group_add_rounded,
+                                        : widget.isUpdate
+                                            ? Icons.system_update_rounded
+                                            : Icons.group_add_rounded,
                 color: cs.onSurface.withValues(alpha: 0.7),
                 size: 20,
               ),
@@ -137,8 +146,11 @@ class _PromoCardState extends State<PromoCard> {
                                       : widget.isShareStats
                                           ? AppLocalizations.of(context)!
                                               .shareYourStats
-                                          : AppLocalizations.of(context)!
-                                              .followUs,
+                                          : widget.isUpdate
+                                              ? AppLocalizations.of(context)!
+                                                  .updateAvailable
+                                              : AppLocalizations.of(context)!
+                                                  .followUs,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w800,
                         color: cs.onSurface,
@@ -170,8 +182,11 @@ class _PromoCardState extends State<PromoCard> {
                                 : widget.isShareStats
                                     ? AppLocalizations.of(context)!
                                         .copyStatsLinkToClipboard
-                                    : AppLocalizations.of(context)!
-                                        .followUsMessage,
+                                    : widget.isUpdate
+                                        ? AppLocalizations.of(context)!
+                                            .updateAvailableMessage
+                                        : AppLocalizations.of(context)!
+                                            .followUsMessage,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 12),
@@ -316,6 +331,25 @@ class _PromoCardState extends State<PromoCard> {
                     ),
                     icon: const Icon(Icons.bar_chart_rounded),
                     label: Text(AppLocalizations.of(context)!.shareYourStats),
+                  ),
+                ),
+              ],
+            ),
+          ] else if (widget.isUpdate) ...[
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: () => widget.onAction('update'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: cs.primary,
+                      foregroundColor: cs.onPrimary,
+                      minimumSize: const Size.fromHeight(44),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)),
+                    ),
+                    icon: const Icon(Icons.system_update_rounded),
+                    label: Text(AppLocalizations.of(context)!.updateButton),
                   ),
                 ),
               ],

@@ -9,6 +9,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:bijbelquiz/services/analytics_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:bijbelquiz/services/version_check.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../models/lesson.dart';
 import '../providers/lesson_progress_provider.dart';
@@ -100,6 +102,12 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
   /// Current promo type to display
   PromoType? _currentPromoType;
 
+  /// Whether an update is available (Linux only)
+  bool _updateAvailable = false;
+
+  /// Version check service
+  final VersionCheckService _versionCheckService = VersionCheckService();
+
   // Daily usage streak tracking (persisted locally)
   static const String _activeDaysKey = 'daily_active_days_v1';
   Set<String> _activeDays = {};
@@ -134,6 +142,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _checkAndShowGuide();
+      _checkForUpdates();
     });
 
     unawaited(_loadCachedLessons()
@@ -213,6 +222,21 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
     if (mounted && !_guideCheckCompleted) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _checkAndShowGuide();
+      });
+    }
+    // Check for updates every time the screen is rendered
+    if (mounted) {
+      _checkForUpdates();
+    }
+  }
+
+  Future<void> _checkForUpdates() async {
+    if (_updateAvailable) return;
+    final shouldShow =
+        await _versionCheckService.shouldShowUpdateNotification('linux');
+    if (mounted) {
+      setState(() {
+        _updateAvailable = shouldShow;
       });
     }
   }
@@ -381,14 +405,16 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
 
   /// Determines whether to show a promo card
   bool _shouldShowPromoCard(SettingsProvider settings) {
+    // Don't show promo cards when an update is available
+    if (_updateAvailable) return false;
+
     // Check if user is not logged in - if so, always show account creation promo
     final isLoggedIn = Supabase.instance.client.auth.currentUser != null;
     if (!isLoggedIn) {
       return true;
     }
 
-    // 10% chance to show a popup (only for logged-in users)
-    return Random().nextInt(10) == 0;
+    return false;
   }
 
   PromoType _determinePromoType() {
@@ -1002,7 +1028,39 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
                           cacheExtent: 1000,
                           physics: const BouncingScrollPhysics(),
                           slivers: [
-                            if (_showPromoCard)
+                            if (_updateAvailable)
+                              SliverToBoxAdapter(
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                                  child: RepaintBoundary(
+                                    child: PromoCard(
+                                      isDonation: false,
+                                      isSatisfaction: false,
+                                      isDifficulty: false,
+                                      isAccountCreation: false,
+                                      isUpdate: true,
+                                      onDismiss: () async {
+                                        Provider.of<AnalyticsService>(context, listen: false)
+                                            .capture(context, 'dismiss_update_promo');
+                                        await _versionCheckService
+                                            .dismissUpdateNotification();
+                                        setState(() {
+                                          _updateAvailable = false;
+                                        });
+                                      },
+                                      onAction: (action) async {
+                                        final packageInfo =
+                                            await PackageInfo.fromPlatform();
+                                        final url =
+                                            '${AppUrls.updateUrl}?version=${packageInfo.version}&platform=linux';
+                                        _launchUrl(url);
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              )
+                            else if (_showPromoCard)
                               SliverToBoxAdapter(
                                 child: Padding(
                                   padding:
