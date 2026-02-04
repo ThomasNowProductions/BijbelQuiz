@@ -3,22 +3,39 @@ name: Mirror to Codeberg
 on:
   push:
     branches:
-      - '**'
-  create:
+      - main
+      - master
+    tags:
+      - '*'
   delete:
   workflow_dispatch:
+
+concurrency:
+  group: mirror-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   mirror:
     runs-on: blacksmith-2vcpu-ubuntu-2404
+    timeout-minutes: 10
     steps:
       - name: Checkout all history
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Mirror to Codeberg
         run: |
+          set -e
+
           git remote add codeberg https://ThomasNowProductions:${{ secrets.CODEBERG_TOKEN }}@codeberg.org/ThomasNowProductions/BijbelQuiz.git
-          git push --all codeberg
-          git push --tags codeberg
+
+          git push --all codeberg || { echo "Failed to push branches"; exit 1; }
+          git push --tags codeberg || { echo "Failed to push tags"; exit 1; }
+
+          git remote remove codeberg
+
+      - name: Verify mirror
+        run: |
+          echo "Mirror completed successfully"
