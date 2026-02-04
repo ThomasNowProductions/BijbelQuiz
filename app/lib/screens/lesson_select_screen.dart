@@ -372,7 +372,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
     }
   }
 
-  /// Determines whether to show a promo card based on probability and user interaction history
+  /// Determines whether to show a promo card
   bool _shouldShowPromoCard(SettingsProvider settings) {
     // Check if user is not logged in - if so, always show account creation promo
     final isLoggedIn = Supabase.instance.client.auth.currentUser != null;
@@ -381,48 +381,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
     }
 
     // 10% chance to show a popup (only for logged-in users)
-    if (Random().nextInt(10) != 0) {
-      return false;
-    }
-
-    // For donation popup
-    if (_shouldHidePromo(
-        settings.lastDonationPopup, settings.hasClickedDonationLink)) {
-      return false;
-    }
-
-    // For follow popup
-    if (_shouldHidePromo(
-        settings.lastFollowPopup, settings.hasClickedFollowLink)) {
-      return false;
-    }
-
-    // For satisfaction popup
-    if (_shouldHidePromo(
-        settings.lastSatisfactionPopup, settings.hasClickedSatisfactionLink)) {
-      return false;
-    }
-
-    // For difficulty feedback popup
-    if (_shouldHidePromo(
-        settings.lastDifficultyPopup, settings.hasClickedDifficultyLink)) {
-      return false;
-    }
-
-    // If we get here, we can show a popup
-    return true;
-  }
-
-  /// Checks if a specific promo should be hidden based on last popup date and click status
-  bool _shouldHidePromo(DateTime? lastPopup, bool hasClickedLink) {
-    if (!hasClickedLink || lastPopup == null) {
-      return false; // Don't hide if not clicked or no previous popup date
-    }
-
-    final now = DateTime.now();
-    final nextAllowed =
-        DateTime(lastPopup.year, lastPopup.month + 1, 1); // First of next month
-    return now.isBefore(nextAllowed);
+    return Random().nextInt(10) == 0;
   }
 
   PromoType _determinePromoType() {
@@ -431,11 +390,17 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
       return PromoType.accountCreation;
     }
 
-    final rand = Random().nextDouble();
-    if (rand < 0.125) return PromoType.donation;
-    if (rand < 0.25) return PromoType.difficulty;
-    if (rand < 0.375) return PromoType.satisfaction;
-    return PromoType.follow;
+    final rand = Random().nextInt(4);
+    switch (rand) {
+      case 0:
+        return PromoType.donation;
+      case 1:
+        return PromoType.difficulty;
+      case 2:
+        return PromoType.satisfaction;
+      default:
+        return PromoType.follow;
+    }
   }
 
   void _trackPromoCardShown() {
