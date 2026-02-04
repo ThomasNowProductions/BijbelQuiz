@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 import 'package:crypto/crypto.dart';
@@ -129,14 +130,15 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
     analyticsService.trackFeatureStart(
         context, AnalyticsService.featureLessonSystem);
 
-    _loadLessons(maxLessons: 20);
-    _loadStreakData();
-    _loadCachedLessons();
     _scrollController.addListener(_onScroll);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _checkAndShowGuide();
     });
+
+    unawaited(_loadCachedLessons()
+        .then((_) => unawaited(_loadLessons(maxLessons: 20))));
+    unawaited(_loadStreakData());
   }
 
   void _onScroll() {
@@ -250,22 +252,17 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
         final List<dynamic> jsonList = json.decode(jsonString);
         final cachedLessons = jsonList.map((e) => Lesson.fromJson(e)).toList();
 
-        // If we have cached lessons, show them while we load fresh data
-        if (cachedLessons.isNotEmpty) {
-          if (mounted) {
-            setState(() {
-              _lessons = cachedLessons;
-              _showSkeletons = false;
-              _isInitialLoading = false;
-            });
-          }
+        if (cachedLessons.isNotEmpty && mounted) {
+          setState(() {
+            _lessons = cachedLessons;
+            _showSkeletons = false;
+            _isInitialLoading = false;
+          });
         }
       }
     } catch (e) {
-      // Log error but continue gracefully
       debugPrint('Error loading cached lessons: $e');
     }
-    if (mounted) setState(() {});
   }
 
   Future<void> _saveCachedLessons() async {
@@ -307,19 +304,17 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
     final settings = Provider.of<SettingsProvider>(context, listen: false);
     try {
       if (!append) {
+        final hasCachedData = _lessons.isNotEmpty;
         setState(() {
           _isLoading = true;
           _error = null;
 
-          // Show skeletons during loading if we don't have cached lessons yet
-          if (_lessons.isEmpty) {
+          if (!hasCachedData) {
             _showSkeletons = true;
           }
         });
       }
 
-      // Read current progress to size the visible track dynamically.
-      // Always show at least (unlockedCount + buffer) lessons, with a floor.
       const int buffer = 12;
       const int minVisible = 36;
       final int desired = append
@@ -341,15 +336,12 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
           _lessons = lessons;
         }
 
-        // Stop showing skeletons once we have lessons
         _showSkeletons = false;
         _isInitialLoading = false;
       });
 
-      // Save cached lessons
       await _saveCachedLessons();
 
-      // Ensure at least the first lesson is unlocked for new users.
       if (!append) {
         await progress.ensureUnlockedCountAtLeast(1);
       }
