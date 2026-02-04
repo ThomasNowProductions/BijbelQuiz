@@ -7,6 +7,8 @@ class PromoCard extends StatefulWidget {
   final bool isSatisfaction;
   final bool isDifficulty;
   final bool isAccountCreation;
+  final bool isReferral;
+  final bool isShareStats;
   final String? socialMediaType;
   final VoidCallback onDismiss;
   final Function(String) onAction;
@@ -18,6 +20,8 @@ class PromoCard extends StatefulWidget {
     required this.isSatisfaction,
     required this.isDifficulty,
     required this.isAccountCreation,
+    this.isReferral = false,
+    this.isShareStats = false,
     this.socialMediaType,
     required this.onDismiss,
     required this.onAction,
@@ -107,7 +111,11 @@ class _PromoCardState extends State<PromoCard> {
                             ? Icons.tune_rounded
                             : widget.isAccountCreation
                                 ? Icons.person_add_rounded
-                                : Icons.group_add_rounded,
+                                : widget.isReferral
+                                    ? Icons.campaign_rounded
+                                    : widget.isShareStats
+                                        ? Icons.bar_chart_rounded
+                                        : Icons.group_add_rounded,
                 color: cs.onSurface.withValues(alpha: 0.7),
                 size: 20,
               ),
@@ -123,7 +131,14 @@ class _PromoCardState extends State<PromoCard> {
                                   .difficultyFeedbackTitle
                               : widget.isAccountCreation
                                   ? AppLocalizations.of(context)!.createAccount
-                                  : AppLocalizations.of(context)!.followUs,
+                                  : widget.isReferral
+                                      ? AppLocalizations.of(context)!
+                                          .inviteFriend
+                                      : widget.isShareStats
+                                          ? AppLocalizations.of(context)!
+                                              .shareYourStats
+                                          : AppLocalizations.of(context)!
+                                              .followUs,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w800,
                         color: cs.onSurface,
@@ -150,7 +165,13 @@ class _PromoCardState extends State<PromoCard> {
                             .difficultyFeedbackMessage
                         : widget.isAccountCreation
                             ? AppLocalizations.of(context)!.createAccountMessage
-                            : AppLocalizations.of(context)!.followUsMessage,
+                            : widget.isReferral
+                                ? AppLocalizations.of(context)!.inviteFriendDesc
+                                : widget.isShareStats
+                                    ? AppLocalizations.of(context)!
+                                        .copyStatsLinkToClipboard
+                                    : AppLocalizations.of(context)!
+                                        .followUsMessage,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 12),
@@ -257,6 +278,44 @@ class _PromoCardState extends State<PromoCard> {
                     icon: const Icon(Icons.person_add_rounded),
                     label:
                         Text(AppLocalizations.of(context)!.createAccountButton),
+                  ),
+                ),
+              ],
+            ),
+          ] else if (widget.isReferral) ...[
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: () => widget.onAction('referral'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: cs.primary,
+                      foregroundColor: cs.onPrimary,
+                      minimumSize: const Size.fromHeight(44),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)),
+                    ),
+                    icon: const Icon(Icons.campaign_rounded),
+                    label: Text(AppLocalizations.of(context)!.inviteFriend),
+                  ),
+                ),
+              ],
+            ),
+          ] else if (widget.isShareStats) ...[
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: () => widget.onAction('share_stats'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: cs.primary,
+                      foregroundColor: cs.onPrimary,
+                      minimumSize: const Size.fromHeight(44),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)),
+                    ),
+                    icon: const Icon(Icons.bar_chart_rounded),
+                    label: Text(AppLocalizations.of(context)!.shareYourStats),
                   ),
                 ),
               ],

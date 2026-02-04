@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'dart:math';
+import 'package:crypto/crypto.dart';
+import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:bijbelquiz/services/analytics_service.dart';
@@ -10,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/lesson.dart';
 import '../providers/lesson_progress_provider.dart';
 import '../providers/settings_provider.dart';
+import '../providers/game_stats_provider.dart';
 import '../services/lesson_service.dart';
 import '../screens/quiz_screen.dart';
 import '../screens/guide_screen.dart';
@@ -24,7 +27,15 @@ import '../widgets/lesson_skeleton.dart';
 import '../widgets/promo_card.dart';
 import '../utils/streak_calculator.dart' as streak_utils;
 
-enum PromoType { donation, satisfaction, difficulty, accountCreation, follow }
+enum PromoType {
+  donation,
+  satisfaction,
+  difficulty,
+  accountCreation,
+  follow,
+  referral,
+  shareStats
+}
 
 extension PromoTypeExtension on PromoType {
   String get analyticsName {
@@ -39,6 +50,10 @@ extension PromoTypeExtension on PromoType {
         return 'account_creation';
       case PromoType.follow:
         return 'follow';
+      case PromoType.referral:
+        return 'referral';
+      case PromoType.shareStats:
+        return 'share_stats';
     }
   }
 }
@@ -390,7 +405,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
       return PromoType.accountCreation;
     }
 
-    final rand = Random().nextInt(4);
+    final rand = Random().nextInt(6);
     switch (rand) {
       case 0:
         return PromoType.donation;
@@ -398,8 +413,12 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
         return PromoType.difficulty;
       case 2:
         return PromoType.satisfaction;
-      default:
+      case 3:
         return PromoType.follow;
+      case 4:
+        return PromoType.referral;
+      default:
+        return PromoType.shareStats;
     }
   }
 
@@ -450,6 +469,12 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
         break;
       case PromoType.follow:
         await _handleFollowAction(action);
+        break;
+      case PromoType.referral:
+        await _handleReferralAction();
+        break;
+      case PromoType.shareStats:
+        await _handleShareStatsAction();
         break;
       case null:
         break;
@@ -521,6 +546,114 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
     await settings.markFollowLinkAsClicked();
     await settings.updateLastFollowPopup();
     _launchUrl(url);
+  }
+
+  Future<void> _handleReferralAction() async {
+    Provider.of<AnalyticsService>(context, listen: false)
+        .capture(context, 'tap_referral_promo');
+    final TextEditingController yourNameController = TextEditingController();
+    final TextEditingController friendNameController = TextEditingController();
+
+    final colorScheme = Theme.of(context).colorScheme;
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: Text(AppLocalizations.of(context)!.customizeInvite),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: yourNameController,
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.enterYourName,
+                  border: const OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: friendNameController,
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.enterFriendName,
+                  border: const OutlineInputBorder(),
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              child: Text(AppLocalizations.of(context)!.cancel),
+            ),
+            TextButton(
+              onPressed: () async {
+                final yourName = yourNameController.text.trim();
+                final friendName = friendNameController.text.trim();
+
+                String inviteUrl = 'https://bijbelquiz.app/invite.html';
+                final Map<String, String> queryParams = {};
+                if (yourName.isNotEmpty) queryParams['yourName'] = yourName;
+                if (friendName.isNotEmpty) {
+                  queryParams['friendName'] = friendName;
+                }
+
+                if (queryParams.isNotEmpty) {
+                  inviteUrl = Uri.parse(inviteUrl)
+                      .replace(queryParameters: queryParams)
+                      .toString();
+                }
+
+                await Clipboard.setData(ClipboardData(text: inviteUrl));
+
+                if (dialogContext.mounted) {
+                  showTopSnackBar(dialogContext,
+                      AppLocalizations.of(context)!.inviteLinkCopied,
+                      style: TopSnackBarStyle.success);
+                  Navigator.of(dialogContext).pop();
+                }
+              },
+              child: Text(AppLocalizations.of(context)!.sendInvite),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _handleShareStatsAction() async {
+    Provider.of<AnalyticsService>(context, listen: false)
+        .capture(context, 'tap_share_stats_promo');
+
+    try {
+      final gameStats = Provider.of<GameStatsProvider>(context, listen: false);
+
+      final totalQuestions = gameStats.score + gameStats.incorrectAnswers;
+      final correctPercentage = totalQuestions > 0
+          ? ((gameStats.score / totalQuestions) * 100).round()
+          : 0;
+
+      final statsString =
+          '${gameStats.score}:${gameStats.currentStreak}:${gameStats.longestStreak}:${gameStats.incorrectAnswers}:$totalQuestions:$correctPercentage';
+
+      final bytes = utf8.encode(statsString);
+      final digest = sha256.convert(bytes);
+      final statsHash = digest.toString().substring(0, 16);
+
+      final statsUrl =
+          'https://bijbelquiz.app/score.html?s=$statsString&h=$statsHash';
+
+      await Clipboard.setData(ClipboardData(text: statsUrl));
+
+      if (context.mounted) {
+        showTopSnackBar(context, AppLocalizations.of(context)!.statsLinkCopied,
+            style: TopSnackBarStyle.success);
+      }
+    } catch (e) {
+      if (context.mounted) {
+        showTopSnackBar(context, AppLocalizations.of(context)!.errorCopyingLink,
+            style: TopSnackBarStyle.error);
+      }
+    }
   }
 
   Future<void> _launchUrl(String url) async {
@@ -892,6 +1025,10 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
                                           PromoType.difficulty,
                                       isAccountCreation: _currentPromoType ==
                                           PromoType.accountCreation,
+                                      isReferral: _currentPromoType ==
+                                          PromoType.referral,
+                                      isShareStats: _currentPromoType ==
+                                          PromoType.shareStats,
                                       socialMediaType:
                                           _currentPromoType == PromoType.follow
                                               ? 'follow'
