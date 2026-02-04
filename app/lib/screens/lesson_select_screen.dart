@@ -105,6 +105,9 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
   /// Whether an update is available (Linux only)
   bool _updateAvailable = false;
 
+  /// Whether update check has already been performed (one-time guard)
+  bool _hasCheckedForUpdates = false;
+
   /// Version check service
   final VersionCheckService _versionCheckService = VersionCheckService();
 
@@ -231,13 +234,23 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
   }
 
   Future<void> _checkForUpdates() async {
-    if (_updateAvailable) return;
-    final shouldShow =
-        await _versionCheckService.shouldShowUpdateNotification('linux');
-    if (mounted) {
-      setState(() {
-        _updateAvailable = shouldShow;
-      });
+    // One-time guard: skip if already checked
+    if (_hasCheckedForUpdates) return;
+
+    // Mark as checked immediately to prevent concurrent calls
+    _hasCheckedForUpdates = true;
+
+    try {
+      final shouldShow =
+          await _versionCheckService.shouldShowUpdateNotification('linux');
+      if (mounted) {
+        setState(() {
+          _updateAvailable = shouldShow;
+        });
+      }
+    } catch (e) {
+      // Log error but don't rethrow - update check failures shouldn't break the UI
+      debugPrint('Error checking for updates: $e');
     }
   }
 
@@ -458,6 +471,20 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
         });
     setState(() {
       _showPromoCard = false;
+    });
+  }
+
+  void _onUpdateDismissed() {
+    final analyticsService =
+        Provider.of<AnalyticsService>(context, listen: false);
+    analyticsService.capture(context, 'dismiss_update_card');
+    analyticsService.trackFeatureDismissal(
+        context, AnalyticsService.featurePromoCards,
+        additionalProperties: {
+          'promo_type': 'update',
+        });
+    setState(() {
+      _updateAvailable = false;
     });
   }
 
@@ -1041,20 +1068,25 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
                                       isAccountCreation: false,
                                       isUpdate: true,
                                       onDismiss: () async {
-                                        Provider.of<AnalyticsService>(context, listen: false)
-                                            .capture(context, 'dismiss_update_promo');
                                         await _versionCheckService
                                             .dismissUpdateNotification();
-                                        setState(() {
-                                          _updateAvailable = false;
-                                        });
+                                        _onUpdateDismissed();
                                       },
                                       onAction: (action) async {
-                                        final packageInfo =
-                                            await PackageInfo.fromPlatform();
-                                        final url =
-                                            '${AppUrls.updateUrl}?version=${packageInfo.version}&platform=linux';
-                                        _launchUrl(url);
+                                        try {
+                                          final packageInfo =
+                                              await PackageInfo.fromPlatform();
+                                          final url =
+                                              '${AppUrls.updateUrl}?version=${packageInfo.version}&platform=linux';
+                                          await _launchUrl(url);
+                                        } catch (e) {
+                                          // Log error but don't prevent analytics tracking
+                                          debugPrint('Error getting package info: $e');
+                                        } finally {
+                                          // Report promo action to analytics consistent with other handlers
+                                          Provider.of<AnalyticsService>(context, listen: false)
+                                              .capture(context, 'tap_update_promo');
+                                        }
                                       },
                                     ),
                                   ),

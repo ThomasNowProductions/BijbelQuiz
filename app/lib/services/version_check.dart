@@ -1,50 +1,58 @@
 import 'dart:math';
-import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:universal_io/io.dart';
 import 'package:http/http.dart' as http;
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:bijbelquiz/services/logger.dart';
 
+bool get _isLinux => !kIsWeb && Platform.isLinux;
+
 class VersionInfo {
   final String latestVersion;
-  final String linuxVersion;
-  final String androidVersion;
-  final String webVersion;
+  final String? linuxVersion;
+  final String? androidVersion;
+  final String? webVersion;
 
   VersionInfo({
     required this.latestVersion,
-    required this.linuxVersion,
-    required this.androidVersion,
-    required this.webVersion,
+    this.linuxVersion,
+    this.androidVersion,
+    this.webVersion,
   });
 
   factory VersionInfo.fromMetaTags(Map<String, String> metaTags) {
     return VersionInfo(
       latestVersion: metaTags['app-version'] ?? '',
-      linuxVersion: metaTags['app-version-linux'] ?? '',
-      androidVersion: metaTags['app-version-android'] ?? '',
-      webVersion: metaTags['app-version-web'] ?? '',
+      linuxVersion: metaTags['app-version-linux'],
+      androidVersion: metaTags['app-version-android'],
+      webVersion: metaTags['app-version-web'],
     );
   }
 
   bool isUpdateAvailable(String currentVersion, String platform) {
-    String latest;
+    String? targetVersion;
     switch (platform) {
       case 'linux':
-        latest = linuxVersion;
+        targetVersion = linuxVersion;
       case 'android':
-        latest = androidVersion;
+        targetVersion = androidVersion;
       case 'web':
-        latest = webVersion;
+        targetVersion = webVersion;
       default:
-        latest = latestVersion;
+        targetVersion = latestVersion;
     }
 
-    final result = _compareVersions(currentVersion, latest);
+    // If no valid target version exists, no update is available
+    if (targetVersion == null || targetVersion.isEmpty) {
+      return false;
+    }
+
+    final result = _compareVersions(currentVersion, targetVersion);
+    final isUpdateAvailable = result < 0;
     AppLogger.debug(
-        'Version check: current=$currentVersion, latest=$latest, update=$result');
-    return result < 0;
+        'Version check: current=$currentVersion, target=$targetVersion, comparison=$result, update=$isUpdateAvailable');
+    return isUpdateAvailable;
   }
 
   int _compareVersions(String a, String b) {
@@ -93,15 +101,36 @@ class VersionCheckService {
 
   Map<String, String> _parseMetaTags(String html) {
     final Map<String, String> tags = {};
-    final regex =
-        RegExp(r'<meta\s+name="app-version[^"]*"\s+content="([^"]+)"');
-    final matches = regex.allMatches(html);
+    // Match any <meta ...> tag (case-insensitive, multiline)
+    final metaRegex = RegExp(
+      r'<meta\s+([^>]+)>',
+      caseSensitive: false,
+      multiLine: true,
+    );
+    final matches = metaRegex.allMatches(html);
+
+    // Regex to extract name attribute (supports single/double quotes)
+    // Using non-raw string to properly escape quotes
+    final nameRegex = RegExp(
+      'name\\s*=\\s*["\'](app-version[^"\']*)["\']',
+      caseSensitive: false,
+    );
+    // Regex to extract content attribute (supports single/double quotes)
+    final contentRegex = RegExp(
+      'content\\s*=\\s*["\']([^"\']*)["\']',
+      caseSensitive: false,
+    );
+
     for (final match in matches) {
-      final fullMatch = match.group(0) ?? '';
-      final nameMatch = RegExp(r'name="([^"]+)"').firstMatch(fullMatch);
-      final contentMatch = RegExp(r'content="([^"]+)"').firstMatch(fullMatch);
+      final tagContent = match.group(1) ?? '';
+
+      final nameMatch = nameRegex.firstMatch(tagContent);
+      final contentMatch = contentRegex.firstMatch(tagContent);
+
       if (nameMatch != null && contentMatch != null) {
-        tags[nameMatch.group(1)!] = contentMatch.group(1)!;
+        final name = nameMatch.group(1)!;
+        final content = contentMatch.group(1)!;
+        tags[name] = content;
       }
     }
     return tags;
@@ -109,9 +138,9 @@ class VersionCheckService {
 
   Future<bool> shouldShowUpdateNotification(String platform) async {
     AppLogger.debug(
-        'Checking for updates on platform: $platform, isLinux: ${Platform.isLinux}, kIsWeb: $kIsWeb');
+        'Checking for updates on platform: $platform, isLinux: $_isLinux, kIsWeb: $kIsWeb');
 
-    if (!kIsWeb && !Platform.isLinux) {
+    if (!kIsWeb && !_isLinux) {
       AppLogger.debug('Skipping update check - not Linux or web');
       return false;
     }
