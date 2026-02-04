@@ -381,15 +381,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           icon: Icons.download,
         ),
       ),
-      _SettingItem(
-        title: AppLocalizations.of(context)!.clearQuestionCache,
-        subtitle: AppLocalizations.of(context)!.clearQuestionCacheDesc,
-        onTap: () => _clearCache(context),
-        child: _buildActionButton(
-          context,
-          icon: Icons.delete_sweep,
-        ),
-      ),
+
       _SettingItem(
         title: AppLocalizations.of(context)!.followOnSocialMedia,
         subtitle: AppLocalizations.of(context)!.followOnSocialMediaDesc,
@@ -961,16 +953,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
           builder: (context) => const ImportStatsScreen(),
         ),
       );
-    }
-  }
-
-  void _clearCache(BuildContext context) async {
-    final analytics = Provider.of<AnalyticsService>(context, listen: false);
-    analytics.capture(context, 'clear_question_cache');
-    await QuestionCacheService(ConnectionService()).clearCache();
-    if (context.mounted) {
-      showTopSnackBar(context, AppLocalizations.of(context)!.cacheCleared,
-          style: TopSnackBarStyle.success);
     }
   }
 
