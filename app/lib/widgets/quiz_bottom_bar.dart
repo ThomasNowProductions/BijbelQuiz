@@ -3,7 +3,7 @@ import '../providers/game_stats_provider.dart';
 import '../providers/settings_provider.dart';
 import '../models/quiz_state.dart';
 import '../utils/quiz_action_price_helper.dart';
-import '../l10n/strings_nl.dart' as strings;
+import 'package:bijbelquiz/l10n/app_localizations.dart';
 
 /// Bottom navigation bar for quiz screen with action buttons
 /// (skip question, unlock biblical reference, report question) and cost display.
@@ -132,8 +132,8 @@ class _QuizBottomBarState extends State<QuizBottomBar> {
                 context: context,
                 icon: Icons.skip_next_rounded,
                 label: widget.settings.language == 'en'
-                    ? strings.AppStrings.skip
-                    : strings.AppStrings.overslaan,
+                    ? AppLocalizations.of(context)!.skip
+                    : AppLocalizations.of(context)!.overslaan,
                 cost: _skipCost,
                 canUse: canSkip,
                 onPressed: widget.onSkipPressed,
@@ -145,7 +145,7 @@ class _QuizBottomBarState extends State<QuizBottomBar> {
                 _buildActionButton(
                   context: context,
                   icon: Icons.book_rounded,
-                  label: strings.AppStrings.unlockBiblicalReference,
+                  label: AppLocalizations.of(context)!.unlockBiblicalReference,
                   cost: _biblicalCost,
                   canUse: canUnlock,
                   onPressed: widget.onUnlockPressed,
@@ -156,7 +156,7 @@ class _QuizBottomBarState extends State<QuizBottomBar> {
               _buildActionButton(
                 context: context,
                 icon: Icons.flag_rounded,
-                label: strings.AppStrings.reportQuestion,
+                label: AppLocalizations.of(context)!.reportQuestion,
                 cost: 0,
                 canUse: true,
                 onPressed: widget.onFlagPressed,

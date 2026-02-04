@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../l10n/strings_nl.dart' as strings;
+import 'package:bijbelquiz/l10n/app_localizations.dart';
 
 class PromoCard extends StatefulWidget {
   final bool isDonation;
@@ -115,14 +115,15 @@ class _PromoCardState extends State<PromoCard> {
               Expanded(
                 child: Text(
                   widget.isDonation
-                      ? strings.AppStrings.donate
+                      ? AppLocalizations.of(context)!.donate
                       : widget.isSatisfaction
-                          ? strings.AppStrings.satisfactionSurvey
+                          ? AppLocalizations.of(context)!.satisfactionSurvey
                           : widget.isDifficulty
-                              ? strings.AppStrings.difficultyFeedbackTitle
+                              ? AppLocalizations.of(context)!
+                                  .difficultyFeedbackTitle
                               : widget.isAccountCreation
-                                  ? strings.AppStrings.createAccount
-                                  : strings.AppStrings.followUs,
+                                  ? AppLocalizations.of(context)!.createAccount
+                                  : AppLocalizations.of(context)!.followUs,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w800,
                         color: cs.onSurface,
@@ -141,14 +142,15 @@ class _PromoCardState extends State<PromoCard> {
           const SizedBox(height: 8),
           Text(
             widget.isDonation
-                ? strings.AppStrings.donateExplanation
+                ? AppLocalizations.of(context)!.donateExplanation
                 : widget.isSatisfaction
-                    ? strings.AppStrings.satisfactionSurveyMessage
+                    ? AppLocalizations.of(context)!.satisfactionSurveyMessage
                     : widget.isDifficulty
-                        ? strings.AppStrings.difficultyFeedbackMessage
+                        ? AppLocalizations.of(context)!
+                            .difficultyFeedbackMessage
                         : widget.isAccountCreation
-                            ? strings.AppStrings.createAccountMessage
-                            : strings.AppStrings.followUsMessage,
+                            ? AppLocalizations.of(context)!.createAccountMessage
+                            : AppLocalizations.of(context)!.followUsMessage,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 12),
@@ -166,7 +168,7 @@ class _PromoCardState extends State<PromoCard> {
                           borderRadius: BorderRadius.circular(12)),
                     ),
                     icon: const Icon(Icons.favorite_rounded),
-                    label: Text(strings.AppStrings.donateButton),
+                    label: Text(AppLocalizations.of(context)!.donateButton),
                   ),
                 ),
               ],
@@ -185,7 +187,8 @@ class _PromoCardState extends State<PromoCard> {
                           borderRadius: BorderRadius.circular(12)),
                     ),
                     icon: const Icon(Icons.feedback_rounded),
-                    label: Text(strings.AppStrings.satisfactionSurveyButton),
+                    label: Text(
+                        AppLocalizations.of(context)!.satisfactionSurveyButton),
                   ),
                 ),
               ],
@@ -203,7 +206,8 @@ class _PromoCardState extends State<PromoCard> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12)),
                     ),
-                    child: Text(strings.AppStrings.difficultyTooHard),
+                    child:
+                        Text(AppLocalizations.of(context)!.difficultyTooHard),
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -217,7 +221,7 @@ class _PromoCardState extends State<PromoCard> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12)),
                     ),
-                    child: Text(strings.AppStrings.difficultyGood),
+                    child: Text(AppLocalizations.of(context)!.difficultyGood),
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -231,7 +235,8 @@ class _PromoCardState extends State<PromoCard> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12)),
                     ),
-                    child: Text(strings.AppStrings.difficultyTooEasy),
+                    child:
+                        Text(AppLocalizations.of(context)!.difficultyTooEasy),
                   ),
                 ),
               ],
@@ -250,7 +255,8 @@ class _PromoCardState extends State<PromoCard> {
                           borderRadius: BorderRadius.circular(12)),
                     ),
                     icon: const Icon(Icons.person_add_rounded),
-                    label: Text(strings.AppStrings.createAccountButton),
+                    label:
+                        Text(AppLocalizations.of(context)!.createAccountButton),
                   ),
                 ),
               ],
@@ -269,7 +275,7 @@ class _PromoCardState extends State<PromoCard> {
                           borderRadius: BorderRadius.circular(12)),
                     ),
                     icon: const Icon(Icons.group_add_rounded),
-                    label: Text(strings.AppStrings.followUs),
+                    label: Text(AppLocalizations.of(context)!.followUs),
                   ),
                 ),
               ],

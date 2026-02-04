@@ -5,7 +5,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:flutter/services.dart'; // For Clipboard
 import '../providers/game_stats_provider.dart';
 import '../utils/bijbelquiz_gen_utils.dart';
-import '../l10n/strings_nl.dart' as strings;
+import 'package:bijbelquiz/l10n/app_localizations.dart';
 import '../constants/urls.dart';
 
 class AnimatedCounter extends StatefulWidget {
@@ -175,7 +175,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                       Navigator.of(context).pop();
                     },
                     child: Text(
-                      strings.AppStrings.bijbelquizGenSkip,
+                      AppLocalizations.of(context)!.bijbelquizGenSkip,
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w500,
@@ -284,7 +284,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    strings.AppStrings.bijbelquizGenTitle,
+                    AppLocalizations.of(context)!.bijbelquizGenTitle,
                     style: Theme.of(context).textTheme.displayMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
@@ -293,7 +293,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    '${strings.AppStrings.bijbelquizGenSubtitle} ${BijbelQuizGenPeriod.getStatsYear()}',
+                    '${AppLocalizations.of(context)!.bijbelquizGenSubtitle} ${BijbelQuizGenPeriod.getStatsYear()}',
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                           color: Colors.black,
                         ),
@@ -301,7 +301,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   ),
                   const SizedBox(height: 40),
                   Text(
-                    strings.AppStrings.bijbelquizGenWelcomeText,
+                    AppLocalizations.of(context)!.bijbelquizGenWelcomeText,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: Colors.black,
                         ),
@@ -336,7 +336,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    strings.AppStrings.questionsAnswered,
+                    AppLocalizations.of(context)!.questionsAnswered,
                     style: Theme.of(context).textTheme.displayMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
@@ -345,7 +345,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    strings.AppStrings.bijbelquizGenQuestionsSubtitle,
+                    AppLocalizations.of(context)!
+                        .bijbelquizGenQuestionsSubtitle,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: Colors.black,
                         ),
@@ -382,7 +383,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
           ),
           const SizedBox(height: 24),
           Text(
-            strings.AppStrings.mistakesMade,
+            AppLocalizations.of(context)!.mistakesMade,
             style: Theme.of(context).textTheme.displayMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
@@ -393,7 +394,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
           ),
           const SizedBox(height: 8),
           Text(
-            strings.AppStrings.bijbelquizGenMistakesSubtitle,
+            AppLocalizations.of(context)!.bijbelquizGenMistakesSubtitle,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   color: Colors.black,
                 ),
@@ -450,7 +451,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    strings.AppStrings.timeSpent,
+                    AppLocalizations.of(context)!.timeSpent,
                     style: Theme.of(context).textTheme.displayMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
@@ -459,7 +460,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    strings.AppStrings.bijbelquizGenTimeSubtitle,
+                    AppLocalizations.of(context)!.bijbelquizGenTimeSubtitle,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: Colors.black,
                         ),
@@ -478,7 +479,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   AnimatedCounter(
                     endNumber: _calculateTimeSpentInHours(gameStats),
                     decimalPlaces: 1,
-                    suffix: ' ${strings.AppStrings.hours}',
+                    suffix: ' ${AppLocalizations.of(context)!.hours}',
                     duration: const Duration(milliseconds: 1500),
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           color: Colors.black,
@@ -512,7 +513,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    strings.AppStrings.bijbelquizGenBestStreak,
+                    AppLocalizations.of(context)!.bijbelquizGenBestStreak,
                     style: Theme.of(context).textTheme.displayMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
@@ -521,7 +522,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    strings.AppStrings.bijbelquizGenStreakSubtitle,
+                    AppLocalizations.of(context)!.bijbelquizGenStreakSubtitle,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: Colors.black,
                         ),
@@ -569,7 +570,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    strings.AppStrings.yearInReview,
+                    AppLocalizations.of(context)!.yearInReview,
                     style: Theme.of(context).textTheme.displayMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
@@ -578,7 +579,8 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    strings.AppStrings.bijbelquizGenYearReviewSubtitle,
+                    AppLocalizations.of(context)!
+                        .bijbelquizGenYearReviewSubtitle,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: Colors.black,
                         ),
@@ -610,7 +612,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                                     color: Colors.black,
                                   ),
                             ),
-                            strings.AppStrings.correctAnswers,
+                            AppLocalizations.of(context)!.correctAnswers,
                             Colors.black),
                         const Divider(height: 16, thickness: 1),
                         _buildStatRow(
@@ -627,7 +629,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                                     color: Colors.black,
                                   ),
                             ),
-                            strings.AppStrings.accuracy,
+                            AppLocalizations.of(context)!.accuracy,
                             Colors.black),
                         const Divider(height: 16, thickness: 1),
                         _buildStatRow(
@@ -636,7 +638,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                               endNumber: _calculateTimeSpentInHours(gameStats),
                               duration: const Duration(milliseconds: 1500),
                               decimalPlaces: 1,
-                              suffix: ' ${strings.AppStrings.hours}',
+                              suffix: ' ${AppLocalizations.of(context)!.hours}',
                               style: Theme.of(context)
                                   .textTheme
                                   .headlineSmall
@@ -645,7 +647,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                                     color: Colors.black,
                                   ),
                             ),
-                            strings.AppStrings.hours,
+                            AppLocalizations.of(context)!.hours,
                             Colors.black),
                         const Divider(height: 16, thickness: 1),
                         _buildStatRow(
@@ -661,7 +663,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                                     color: Colors.black,
                                   ),
                             ),
-                            strings.AppStrings.currentStreak,
+                            AppLocalizations.of(context)!.currentStreak,
                             Colors.black),
                       ],
                     ),
@@ -678,7 +680,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                           size: 18,
                         ),
                         label: Text(
-                          strings.AppStrings.copyLink,
+                          AppLocalizations.of(context)!.copyLink,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.black,
@@ -701,7 +703,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                           size: 18,
                         ),
                         label: Text(
-                          strings.AppStrings.shareResults,
+                          AppLocalizations.of(context)!.shareResults,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.black,
@@ -766,7 +768,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    strings.AppStrings.thankYouForSupport,
+                    AppLocalizations.of(context)!.thankYouForSupport,
                     style: Theme.of(context).textTheme.displayMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
@@ -775,7 +777,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    strings.AppStrings.bijbelquizGenThankYouText,
+                    AppLocalizations.of(context)!.bijbelquizGenThankYouText,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                           color: Colors.black,
                         ),
@@ -808,7 +810,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    strings.AppStrings.supportWithDonation,
+                    AppLocalizations.of(context)!.supportWithDonation,
                     style: Theme.of(context).textTheme.displayMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
@@ -817,7 +819,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    strings.AppStrings.bijbelquizGenDonationText,
+                    AppLocalizations.of(context)!.bijbelquizGenDonationText,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                           color: Colors.black,
                         ),
@@ -839,7 +841,7 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
                       color: Colors.black,
                     ),
                     label: Text(
-                      strings.AppStrings.bijbelquizGenDonateButton,
+                      AppLocalizations.of(context)!.bijbelquizGenDonateButton,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,
@@ -908,12 +910,12 @@ class _BijbelQuizGenScreenState extends State<BijbelQuizGenScreen> {
 
     final shareText =
         '''Dit is mijn BijbelQuiz Gen van ${BijbelQuizGenPeriod.getStatsYear()}:
-✅ ${strings.AppStrings.correctAnswersShare}: ${gameStats.score}
-🎯 ${strings.AppStrings.currentStreakShare}: ${gameStats.currentStreak}
-🔥 ${strings.AppStrings.bestStreakShare}: ${gameStats.longestStreak}
-❌ ${strings.AppStrings.mistakesShare}: ${gameStats.incorrectAnswers}
-📊 ${strings.AppStrings.accuracyShare}: $correctPercentage%
-⏱️ ${strings.AppStrings.timeSpentShare}: ${timeSpentHours.toStringAsFixed(1)} uur''';
+✅ ${AppLocalizations.of(context)!.correctAnswersShare}: ${gameStats.score}
+🎯 ${AppLocalizations.of(context)!.currentStreakShare}: ${gameStats.currentStreak}
+🔥 ${AppLocalizations.of(context)!.bestStreakShare}: ${gameStats.longestStreak}
+❌ ${AppLocalizations.of(context)!.mistakesShare}: ${gameStats.incorrectAnswers}
+📊 ${AppLocalizations.of(context)!.accuracyShare}: $correctPercentage%
+⏱️ ${AppLocalizations.of(context)!.timeSpentShare}: ${timeSpentHours.toStringAsFixed(1)} uur''';
 
     await SharePlus.instance.share(
       ShareParams(

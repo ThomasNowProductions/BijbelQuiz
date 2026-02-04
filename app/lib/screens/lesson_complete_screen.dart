@@ -7,7 +7,7 @@ import './quiz_screen.dart';
 import 'package:provider/provider.dart';
 import '../providers/settings_provider.dart';
 import '../services/lesson_service.dart';
-import '../l10n/strings_nl.dart' as strings;
+import 'package:bijbelquiz/l10n/app_localizations.dart';
 
 class LessonCompleteScreen extends StatefulWidget {
   final Lesson lesson;
@@ -143,7 +143,8 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
                                               color: cs.primary, size: 36),
                                           const SizedBox(width: 12),
                                           Text(
-                                            strings.AppStrings.lessonComplete,
+                                            AppLocalizations.of(context)!
+                                                .lessonComplete,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headlineSmall
@@ -193,15 +194,16 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
                                         children: [
                                           _AnimatedNumberCard(
                                             icon: Icons.check_circle_rounded,
-                                            label: strings.AppStrings.correct,
+                                            label: AppLocalizations.of(context)!
+                                                .correct,
                                             target: widget.correct,
                                           ),
                                           const SizedBox(width: 12),
                                           _StatCard(
                                             icon: Icons
                                                 .local_fire_department_rounded,
-                                            label:
-                                                strings.AppStrings.bestStreak,
+                                            label: AppLocalizations.of(context)!
+                                                .bestStreak,
                                             value: '${widget.bestStreak}',
                                           ),
                                         ],
@@ -215,14 +217,16 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
                                       children: [
                                         _AnimatedNumberCard(
                                           icon: Icons.check_circle_rounded,
-                                          label: strings.AppStrings.correct,
+                                          label: AppLocalizations.of(context)!
+                                              .correct,
                                           target: widget.correct,
                                         ),
                                         const SizedBox(width: 12),
                                         _StatCard(
                                           icon: Icons
                                               .local_fire_department_rounded,
-                                          label: strings.AppStrings.bestStreak,
+                                          label: AppLocalizations.of(context)!
+                                              .bestStreak,
                                           value: '${widget.bestStreak}',
                                         ),
                                       ],
@@ -262,7 +266,8 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
                                         const Icon(Icons.refresh_rounded,
                                             size: 18),
                                         const SizedBox(width: 4),
-                                        Text(strings.AppStrings.retryLesson),
+                                        Text(AppLocalizations.of(context)!
+                                            .retryLesson),
                                       ],
                                     ),
                                   ),
@@ -292,7 +297,8 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Text(strings.AppStrings.nextLesson),
+                                        Text(AppLocalizations.of(context)!
+                                            .nextLesson),
                                         const SizedBox(width: 4),
                                         const Icon(Icons.arrow_forward_rounded,
                                             size: 18),
@@ -329,7 +335,8 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
                                         const Icon(Icons.refresh_rounded,
                                             size: 20),
                                         const SizedBox(width: 8),
-                                        Text(strings.AppStrings.retryLesson),
+                                        Text(AppLocalizations.of(context)!
+                                            .retryLesson),
                                       ],
                                     ),
                                   ),
@@ -359,7 +366,8 @@ class _LessonCompleteScreenState extends State<LessonCompleteScreen>
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Text(strings.AppStrings.nextLesson),
+                                        Text(AppLocalizations.of(context)!
+                                            .nextLesson),
                                         const SizedBox(width: 8),
                                         const Icon(Icons.arrow_forward_rounded,
                                             size: 20),
@@ -427,8 +435,8 @@ class _Speedometer extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     return Semantics(
-      label: strings.AppStrings.endScore,
-      hint: strings.AppStrings.endScoreHint,
+      label: AppLocalizations.of(context)!.endScore,
+      hint: AppLocalizations.of(context)!.endScoreHint,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

@@ -7,7 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/lesson.dart';
 import '../services/logger.dart';
 import '../services/sync_service_v2.dart';
-import '../services/sync/sync_types_v2.dart';
 
 /// Tracks per-lesson unlock state and best stars earned.
 /// Simple linear progression: lesson at index 0 starts unlocked; completing a lesson unlocks the next.

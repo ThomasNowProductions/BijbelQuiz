@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../l10n/strings_nl.dart';
+import 'package:bijbelquiz/l10n/app_localizations.dart';
 import '../models/bible_reference.dart';
 import '../services/logger.dart';
 
@@ -299,13 +299,14 @@ class _BibleReferenceWidgetState extends State<BibleReferenceWidget>
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(AppStrings.bibleReferenceCopied(referenceText)),
+          content: Text(AppLocalizations.of(context)!
+              .bibleReferenceCopied(referenceText)),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(Radius.circular(12)),
           ),
           action: SnackBarAction(
-            label: AppStrings.share,
+            label: AppLocalizations.of(context)!.share,
             onPressed: _shareReference,
           ),
         ),
@@ -315,8 +316,8 @@ class _BibleReferenceWidgetState extends State<BibleReferenceWidget>
 
   void _shareReference() {
     final referenceText = widget.reference.fullReference;
-    final shareText = AppStrings.shareBibleReference(
-        referenceText, widget.reference.displayString);
+    final shareText = AppLocalizations.of(context)!
+        .shareBibleReference(referenceText, widget.reference.displayString);
 
     // In a real implementation, you would use share_plus package
     AppLogger.info('Sharing Bible reference: $shareText');
@@ -326,7 +327,8 @@ class _BibleReferenceWidgetState extends State<BibleReferenceWidget>
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(AppStrings.bibleReferenceCopiedForSharing),
+          content: Text(
+              AppLocalizations.of(context)!.bibleReferenceCopiedForSharing),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(Radius.circular(12)),

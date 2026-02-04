@@ -332,6 +332,16 @@ class SyncServiceV2 {
     await _saveSyncState();
   }
 
+  /// Alias for [onAppResume] - called when app resumes (deprecated API compatibility)
+  Future<void> syncOnAppResume() async {
+    await onAppResume();
+  }
+
+  /// Alias for [onAppPause] - called when app pauses (deprecated API compatibility)
+  Future<void> syncOnAppPause() async {
+    await onAppPause();
+  }
+
   /// Retry all failed items
   Future<void> retryFailed() async {
     final failed = _queue.failedItems;
@@ -678,8 +688,6 @@ class SyncServiceV2 {
   Future<void> _handleRealtimeUpdateAsync(PostgresChangePayload payload) async {
     try {
       final newRecord = payload.newRecord;
-      if (newRecord == null) return;
-
       final dataKey = newRecord['data_key'] as String?;
       final data = newRecord['data'] as Map<String, dynamic>?;
       final version = newRecord['version'] as int?;
@@ -781,7 +789,9 @@ class SyncServiceV2 {
   void dispose() {
     _stopRealtimeSubscription();
     _queue.dispose();
-    _debounceTimers.values.forEach((t) => t.cancel());
+    for (final timer in _debounceTimers.values) {
+      timer.cancel();
+    }
     _debounceTimers.clear();
     _isInitialized = false;
   }

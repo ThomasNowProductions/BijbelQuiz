@@ -16,7 +16,7 @@ import '../screens/guide_screen.dart';
 import '../screens/multiplayer_game_setup_screen.dart';
 import '../screens/social_screen.dart';
 import '../widgets/top_snackbar.dart';
-import '../l10n/strings_nl.dart' as strings;
+import 'package:bijbelquiz/l10n/app_localizations.dart';
 import '../constants/urls.dart';
 import '../widgets/progress_header.dart';
 import '../widgets/lesson_tile.dart';
@@ -344,7 +344,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
           context, 'load_lessons_error',
           properties: {'error': e.toString()});
       setState(() {
-        _error = strings.AppStrings.couldNotLoadLessons;
+        _error = AppLocalizations.of(context)!.couldNotLoadLessons;
         _showSkeletons = false;
         _isInitialLoading = false;
       });
@@ -600,7 +600,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
         Provider.of<AnalyticsService>(context, listen: false);
     analyticsService.capture(context, 'tap_locked_lesson',
         properties: {'lesson_id': lessonId});
-    showTopSnackBar(context, strings.AppStrings.lessonLocked,
+    showTopSnackBar(context, AppLocalizations.of(context)!.lessonLocked,
         style: TopSnackBarStyle.warning);
   }
 
@@ -797,7 +797,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
             ),
             const SizedBox(width: 14),
             Text(
-              strings.AppStrings.lessons,
+              AppLocalizations.of(context)!.lessons,
               style: textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w700,
                 letterSpacing: -0.5,
@@ -832,7 +832,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    strings.AppStrings.loading,
+                    AppLocalizations.of(context)!.loading,
                     style: textTheme.bodyMedium?.copyWith(
                       color: colorScheme.onSurface.withValues(alpha: 0.6),
                     ),
@@ -865,7 +865,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
                           ),
                           const SizedBox(height: 16),
                           Text(
-                            strings.AppStrings.couldNotLoadLessons,
+                            AppLocalizations.of(context)!.couldNotLoadLessons,
                             textAlign: TextAlign.center,
                             style: textTheme.titleMedium?.copyWith(
                               color: colorScheme.onSurface,
@@ -887,7 +887,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
                               ),
                             ),
                             icon: const Icon(Icons.refresh_rounded),
-                            label: Text(strings.AppStrings.tryAgain),
+                            label: Text(AppLocalizations.of(context)!.tryAgain),
                           ),
                         ],
                       ),

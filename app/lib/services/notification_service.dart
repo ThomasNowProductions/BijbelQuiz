@@ -7,7 +7,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz_data;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:bijbelquiz/l10n/strings_nl.dart' as strings;
+
 import 'package:bijbelquiz/services/logger.dart';
 
 class NotificationService {
@@ -112,6 +112,7 @@ class NotificationService {
 
   Future<void> scheduleMotivationalNotifications({
     required bool enabled,
+    required String appName,
     int minNotificationsPerDay = 1,
     int maxNotificationsPerDay = 3,
     int startHour = 6,
@@ -161,7 +162,7 @@ class NotificationService {
 
         await _scheduleNotification(
           id: 1000 + i,
-          title: strings.AppStrings.appName,
+          title: appName,
           body: message,
           scheduledTime: scheduledTime,
         );
@@ -349,7 +350,10 @@ class NotificationService {
       }
 
       if (enabled) {
-        await scheduleMotivationalNotifications(enabled: enabled);
+        final language = prefs.getString('language') ?? 'nl';
+        final appName = language == 'en' ? 'BibleQuiz' : 'BijbelQuiz';
+        await scheduleMotivationalNotifications(
+            enabled: enabled, appName: appName);
         return true;
       }
     } catch (e) {

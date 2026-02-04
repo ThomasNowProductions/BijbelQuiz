@@ -42,7 +42,7 @@ class ErrorHandlingTestWidget extends StatelessWidget {
       userMessage:
           'Could not connect to the server. Please check your internet connection.',
       errorCode: 'NET_001',
-      context: {'screen': 'QuizScreen', 'operation': 'loadQuestions'},
+      contextData: {'screen': 'QuizScreen', 'operation': 'loadQuestions'},
     );
 
     ErrorHandler().showError(context: context, error: error);
@@ -54,7 +54,7 @@ class ErrorHandlingTestWidget extends StatelessWidget {
       type: AppErrorType.storage,
       userMessage: 'Could not save your progress. Please try again.',
       errorCode: 'STORAGE_002',
-      context: {'operation': 'saveProgress'},
+      contextData: {'operation': 'saveProgress'},
     );
 
     ErrorHandler().showErrorDialog(

@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'dart:async';
 import 'package:xml/xml.dart' as xml;
-import '../l10n/strings_nl.dart' as strings;
+import 'package:bijbelquiz/l10n/app_localizations.dart';
 import '../constants/urls.dart';
 import '../utils/bible_book_mapper.dart';
 import '../utils/automatic_error_reporter.dart';
@@ -508,7 +508,7 @@ class _BiblicalReferenceDialogState extends State<BiblicalReferenceDialog> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(strings.AppStrings.biblicalReference),
+        title: Text(AppLocalizations.of(context)!.biblicalReference),
         backgroundColor: Theme.of(context).primaryColor,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
       ),
@@ -601,7 +601,7 @@ class _BiblicalReferenceDialogState extends State<BiblicalReferenceDialog> {
                       ),
                       child: Center(
                         child: Text(
-                          strings.AppStrings.resumeToGame,
+                          AppLocalizations.of(context)!.resumeToGame,
                           style: Theme.of(context)
                               .textTheme
                               .labelLarge

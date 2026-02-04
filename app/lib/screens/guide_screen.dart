@@ -9,7 +9,7 @@ import '../services/logger.dart';
 import '../widgets/top_snackbar.dart';
 import '../widgets/auth_view.dart';
 import '../constants/urls.dart';
-import '../l10n/strings_nl.dart' as strings;
+import 'package:bijbelquiz/l10n/app_localizations.dart';
 import '../screens/main_navigation_screen.dart';
 
 class GuideScreen extends StatefulWidget {
@@ -111,7 +111,7 @@ class _GuideScreenState extends State<GuideScreen> {
                   if (_currentPage > 0)
                     Semantics(
                       button: true,
-                      label: strings.AppStrings.previous,
+                      label: AppLocalizations.of(context)!.previous,
                       child: TextButton(
                         onPressed: () {
                           _pageController.previousPage(
@@ -119,14 +119,14 @@ class _GuideScreenState extends State<GuideScreen> {
                             curve: Curves.easeInOut,
                           );
                         },
-                        child: Text(strings.AppStrings.previous),
+                        child: Text(AppLocalizations.of(context)!.previous),
                       ),
                     )
                   else
                     const SizedBox(width: 80),
                   Semantics(
-                    label: strings.AppStrings.pageIndicator(
-                        _currentPage + 1, pages.length),
+                    label: AppLocalizations.of(context)!
+                        .pageIndicator(_currentPage + 1, pages.length),
                     child: Row(
                       children: List.generate(
                         pages.length,
@@ -147,8 +147,8 @@ class _GuideScreenState extends State<GuideScreen> {
                   Semantics(
                     button: true,
                     label: isLastPage
-                        ? strings.AppStrings.getStarted
-                        : strings.AppStrings.next,
+                        ? AppLocalizations.of(context)!.getStarted
+                        : AppLocalizations.of(context)!.next,
                     child: TextButton(
                       onPressed: pages[_currentPage].isAuthPage
                           ? null
@@ -164,8 +164,8 @@ class _GuideScreenState extends State<GuideScreen> {
                             },
                       child: Text(
                         isLastPage
-                            ? strings.AppStrings.getStarted
-                            : strings.AppStrings.next,
+                            ? AppLocalizations.of(context)!.getStarted
+                            : AppLocalizations.of(context)!.next,
                       ),
                     ),
                   ),
@@ -205,8 +205,8 @@ class _GuideScreenState extends State<GuideScreen> {
       }
     } catch (e) {
       if (!mounted) return;
-      final errorMessage = strings.AppStrings.unknownError;
       if (localContext.mounted) {
+        final errorMessage = AppLocalizations.of(localContext)!.unknownError;
         showTopSnackBar(localContext, errorMessage,
             style: TopSnackBarStyle.error);
       }
@@ -240,8 +240,8 @@ List<GuidePage> buildGuidePages(
 
   if (!isLoggedIn) {
     pages.add(GuidePage(
-      title: strings.AppStrings.guideAccount,
-      description: strings.AppStrings.guideAccountDescription,
+      title: AppLocalizations.of(context)!.guideAccount,
+      description: AppLocalizations.of(context)!.guideAccountDescription,
       icon: Icons.account_circle,
       isAuthPage: true,
     ));
@@ -249,23 +249,23 @@ List<GuidePage> buildGuidePages(
 
   pages.addAll([
     GuidePage(
-      title: strings.AppStrings.welcomeTitle,
-      description: strings.AppStrings.welcomeDescription,
+      title: AppLocalizations.of(context)!.welcomeTitle,
+      description: AppLocalizations.of(context)!.welcomeDescription,
       icon: Icons.church,
     ),
     GuidePage(
-      title: strings.AppStrings.howToPlayTitle,
-      description: strings.AppStrings.howToPlayDescription,
+      title: AppLocalizations.of(context)!.howToPlayTitle,
+      description: AppLocalizations.of(context)!.howToPlayDescription,
       icon: Icons.quiz,
     ),
     GuidePage(
-      title: strings.AppStrings.trackProgressTitle,
-      description: strings.AppStrings.trackProgressDescription,
+      title: AppLocalizations.of(context)!.trackProgressTitle,
+      description: AppLocalizations.of(context)!.trackProgressDescription,
       icon: Icons.insights,
     ),
     GuidePage(
-      title: strings.AppStrings.customizeExperienceTitle,
-      description: strings.AppStrings.customizeExperienceDescription,
+      title: AppLocalizations.of(context)!.customizeExperienceTitle,
+      description: AppLocalizations.of(context)!.customizeExperienceDescription,
       icon: Icons.settings,
     ),
   ]);
@@ -275,10 +275,10 @@ List<GuidePage> buildGuidePages(
   if (!settings.hasDonated) {
     pages.add(
       GuidePage(
-        title: strings.AppStrings.supportUsTitle,
-        description: strings.AppStrings.supportUsDescription,
+        title: AppLocalizations.of(context)!.supportUsTitle,
+        description: AppLocalizations.of(context)!.supportUsDescription,
         icon: Icons.favorite,
-        buttonText: strings.AppStrings.donateNow,
+        buttonText: AppLocalizations.of(context)!.donateNow,
         buttonIcon: Icons.volunteer_activism,
         isDonationPage: true,
       ),
@@ -339,7 +339,7 @@ class _GuidePageViewState extends State<GuidePageView> {
         if (safeContext != null && safeContext.mounted) {
           showTopSnackBar(
             safeContext,
-            strings.AppStrings.couldNotOpenDonationPage,
+            AppLocalizations.of(safeContext)!.couldNotOpenDonationPage,
             style: TopSnackBarStyle.error,
           );
         }
@@ -348,7 +348,7 @@ class _GuidePageViewState extends State<GuidePageView> {
       if (safeContext != null && safeContext.mounted) {
         showTopSnackBar(
           safeContext,
-          strings.AppStrings.donationError,
+          AppLocalizations.of(safeContext)!.donationError,
           style: TopSnackBarStyle.error,
         );
       }
@@ -376,7 +376,7 @@ class _GuidePageViewState extends State<GuidePageView> {
               height: 1.4,
             ),
             children: [
-              TextSpan(text: strings.AppStrings.termsAgreementText),
+              TextSpan(text: AppLocalizations.of(context)!.termsAgreementText),
               WidgetSpan(
                 alignment: PlaceholderAlignment.baseline,
                 baseline: TextBaseline.alphabetic,
@@ -391,7 +391,7 @@ class _GuidePageViewState extends State<GuidePageView> {
                     }
                   },
                   child: Text(
-                    strings.AppStrings.termsOfService,
+                    AppLocalizations.of(context)!.termsOfService,
                     style: TextStyle(
                       color: colorScheme.primary,
                       height: 1.4,
@@ -457,8 +457,8 @@ class _GuidePageViewState extends State<GuidePageView> {
     }
 
     // Check if this is the customization page
-    final isCustomizationPage =
-        widget.page.title == strings.AppStrings.customizeExperienceTitle;
+    final isCustomizationPage = widget.page.title ==
+        AppLocalizations.of(context)!.customizeExperienceTitle;
 
     return Padding(
       padding: const EdgeInsets.all(24.0),
@@ -518,7 +518,8 @@ class _GuidePageViewState extends State<GuidePageView> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          strings.AppStrings.couponTitle,
+                                          AppLocalizations.of(context)!
+                                              .couponTitle,
                                           style:
                                               textTheme.titleMedium?.copyWith(
                                             color: colorScheme.onSurface,
@@ -527,7 +528,7 @@ class _GuidePageViewState extends State<GuidePageView> {
                                         ),
                                         const SizedBox(height: 4),
                                         Text(
-                                          strings.AppStrings
+                                          AppLocalizations.of(context)!
                                               .couponRedeemDescription,
                                           style: textTheme.bodyMedium?.copyWith(
                                             color: colorScheme.onSurface
@@ -556,7 +557,7 @@ class _GuidePageViewState extends State<GuidePageView> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    strings.AppStrings.language,
+                                    AppLocalizations.of(context)!.language,
                                     style: textTheme.titleMedium?.copyWith(
                                       color: colorScheme.onSurface,
                                       fontWeight: FontWeight.w600,
@@ -568,13 +569,15 @@ class _GuidePageViewState extends State<GuidePageView> {
                                     items: [
                                       DropdownMenuItem(
                                         value: 'nl',
-                                        child:
-                                            Text(strings.AppStrings.languageNl),
+                                        child: Text(
+                                            AppLocalizations.of(context)!
+                                                .languageNl),
                                       ),
                                       DropdownMenuItem(
                                         value: 'en',
-                                        child:
-                                            Text(strings.AppStrings.languageEn),
+                                        child: Text(
+                                            AppLocalizations.of(context)!
+                                                .languageEn),
                                       ),
                                     ],
                                     onChanged: (String? value) {
@@ -614,7 +617,7 @@ class _GuidePageViewState extends State<GuidePageView> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    strings.AppStrings.gameSpeed,
+                                    AppLocalizations.of(context)!.gameSpeed,
                                     style: textTheme.titleMedium?.copyWith(
                                       color: colorScheme.onSurface,
                                       fontWeight: FontWeight.w600,
@@ -626,15 +629,19 @@ class _GuidePageViewState extends State<GuidePageView> {
                                     items: [
                                       DropdownMenuItem(
                                         value: 'slow',
-                                        child: Text(strings.AppStrings.slow),
+                                        child: Text(
+                                            AppLocalizations.of(context)!.slow),
                                       ),
                                       DropdownMenuItem(
                                         value: 'medium',
-                                        child: Text(strings.AppStrings.medium),
+                                        child: Text(
+                                            AppLocalizations.of(context)!
+                                                .medium),
                                       ),
                                       DropdownMenuItem(
                                         value: 'fast',
-                                        child: Text(strings.AppStrings.fast),
+                                        child: Text(
+                                            AppLocalizations.of(context)!.fast),
                                       ),
                                     ],
                                     onChanged: (String? value) {
@@ -672,7 +679,8 @@ class _GuidePageViewState extends State<GuidePageView> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          strings.AppStrings.muteSoundEffects,
+                                          AppLocalizations.of(context)!
+                                              .muteSoundEffects,
                                           style:
                                               textTheme.titleMedium?.copyWith(
                                             color: colorScheme.onSurface,
@@ -681,7 +689,7 @@ class _GuidePageViewState extends State<GuidePageView> {
                                         ),
                                         const SizedBox(height: 4),
                                         Text(
-                                          strings.AppStrings
+                                          AppLocalizations.of(context)!
                                               .soundEffectsDescription,
                                           style: textTheme.bodyMedium?.copyWith(
                                             color: colorScheme.onSurface
@@ -719,7 +727,8 @@ class _GuidePageViewState extends State<GuidePageView> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          strings.AppStrings.analytics,
+                                          AppLocalizations.of(context)!
+                                              .analytics,
                                           style:
                                               textTheme.titleMedium?.copyWith(
                                             color: colorScheme.onSurface,
@@ -728,8 +737,8 @@ class _GuidePageViewState extends State<GuidePageView> {
                                         ),
                                         const SizedBox(height: 4),
                                         Text(
-                                          strings
-                                              .AppStrings.analyticsDescription,
+                                          AppLocalizations.of(context)!
+                                              .analyticsDescription,
                                           style: textTheme.bodyMedium?.copyWith(
                                             color: colorScheme.onSurface
                                                 .withValues(alpha: 0.7),
@@ -868,7 +877,7 @@ class _GuideScreenTestHarnessState extends State<GuideScreenTestHarness> {
           TextButton(
             onPressed: () => handleGuideCompletion(),
             child: Text(
-              strings.AppStrings.skip,
+              AppLocalizations.of(context)!.skip,
               style: TextStyle(
                 color: colorScheme.primary,
                 fontWeight: FontWeight.w600,
@@ -903,7 +912,7 @@ class _GuideScreenTestHarnessState extends State<GuideScreenTestHarness> {
                   if (_currentPage > 0)
                     TextButton(
                       onPressed: goToPreviousPage,
-                      child: Text(strings.AppStrings.previous),
+                      child: Text(AppLocalizations.of(context)!.previous),
                     )
                   else
                     const SizedBox(width: 80),
@@ -926,8 +935,8 @@ class _GuideScreenTestHarnessState extends State<GuideScreenTestHarness> {
                   ElevatedButton(
                     onPressed: goToNextPage,
                     child: Text(isLastPage
-                        ? strings.AppStrings.getStarted
-                        : strings.AppStrings.next),
+                        ? AppLocalizations.of(context)!.getStarted
+                        : AppLocalizations.of(context)!.next),
                   ),
                 ],
               ),

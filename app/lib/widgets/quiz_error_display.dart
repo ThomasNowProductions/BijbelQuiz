@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../l10n/strings_nl.dart' as strings;
+import 'package:bijbelquiz/l10n/app_localizations.dart';
 import '../error/error_handler.dart';
 import '../error/error_types.dart';
 
@@ -77,7 +77,7 @@ class QuizErrorDisplay extends StatelessWidget {
                     ElevatedButton.icon(
                       onPressed: onRetry,
                       icon: const Icon(Icons.refresh_rounded),
-                      label: Text(strings.AppStrings.tryAgain),
+                      label: Text(AppLocalizations.of(context)!.tryAgain),
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
                             colorScheme.onErrorContainer.withValues(alpha: 0.2),

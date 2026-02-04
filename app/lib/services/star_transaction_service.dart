@@ -90,7 +90,7 @@ class StarTransactionService {
         e,
         type: AppErrorType.storage,
         userMessage: 'Failed to initialize transaction service',
-        context: {'operation': 'initialize'},
+        contextData: {'operation': 'initialize'},
       );
 
       AppLogger.error('Failed to initialize StarTransactionService: $e');
@@ -250,7 +250,11 @@ class StarTransactionService {
         e,
         type: AppErrorType.storage,
         userMessage: 'Failed to add stars',
-        context: {'operation': 'add_stars', 'amount': amount, 'reason': reason},
+        contextData: {
+          'operation': 'add_stars',
+          'amount': amount,
+          'reason': reason
+        },
       );
 
       AppLogger.error('Error adding stars: $e');
@@ -305,7 +309,7 @@ class StarTransactionService {
         e,
         type: AppErrorType.storage,
         userMessage: 'Failed to spend stars',
-        context: {
+        contextData: {
           'operation': 'spend_stars',
           'amount': amount,
           'reason': reason

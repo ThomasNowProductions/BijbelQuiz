@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/game_stats_provider.dart';
-import '../l10n/strings_nl.dart' as strings;
+import 'package:bijbelquiz/l10n/app_localizations.dart';
 import 'metric_item.dart';
 
 /// A widget that displays the quiz metrics (score, streak, best streak, time)
@@ -82,13 +82,13 @@ class QuizMetricsDisplay extends StatelessWidget {
           ],
         ),
         child: isDesktop || isTablet
-            ? _buildDesktopTabletMetrics(colorScheme, gameStats)
-            : _buildMobileMetrics(colorScheme, gameStats),
+            ? _buildDesktopTabletMetrics(context, colorScheme, gameStats)
+            : _buildMobileMetrics(context, colorScheme, gameStats),
       ),
     );
   }
 
-  Widget _buildDesktopTabletMetrics(
+  Widget _buildDesktopTabletMetrics(BuildContext context,
       ColorScheme colorScheme, GameStatsProvider gameStats) {
     return Wrap(
       alignment: WrapAlignment.center,
@@ -98,7 +98,7 @@ class QuizMetricsDisplay extends StatelessWidget {
         MetricItem(
           icon: Icons.star_rounded,
           value: gameStats.score.toString(),
-          label: strings.AppStrings.score,
+          label: AppLocalizations.of(context)!.score,
           colorScheme: colorScheme,
           color: colorScheme.primary,
           animation: scoreAnimation,
@@ -110,7 +110,7 @@ class QuizMetricsDisplay extends StatelessWidget {
         MetricItem(
           icon: Icons.local_fire_department_rounded,
           value: gameStats.currentStreak.toString(),
-          label: strings.AppStrings.streak,
+          label: AppLocalizations.of(context)!.streak,
           colorScheme: colorScheme,
           color: const Color(0xFFF59E0B),
           animation: streakAnimation,
@@ -121,7 +121,7 @@ class QuizMetricsDisplay extends StatelessWidget {
         MetricItem(
           icon: Icons.emoji_events_rounded,
           value: gameStats.longestStreak.toString(),
-          label: strings.AppStrings.best,
+          label: AppLocalizations.of(context)!.best,
           colorScheme: colorScheme,
           color: const Color(0xFFF59E0B),
           animation: longestStreakAnimation,
@@ -132,7 +132,7 @@ class QuizMetricsDisplay extends StatelessWidget {
         MetricItem(
           icon: Icons.timer_rounded,
           value: previousTime.toString(),
-          label: strings.AppStrings.time,
+          label: AppLocalizations.of(context)!.time,
           colorScheme: colorScheme,
           color: timeColorAnimation.value ?? const Color(0xFF10B981),
           animation: timeAnimation,
@@ -144,8 +144,8 @@ class QuizMetricsDisplay extends StatelessWidget {
     );
   }
 
-  Widget _buildMobileMetrics(
-      ColorScheme colorScheme, GameStatsProvider gameStats) {
+  Widget _buildMobileMetrics(BuildContext context, ColorScheme colorScheme,
+      GameStatsProvider gameStats) {
     return Builder(
       builder: (context) {
         final size = MediaQuery.of(context).size;
@@ -157,7 +157,7 @@ class QuizMetricsDisplay extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                strings.AppStrings.screenSizeNotSupported,
+                AppLocalizations.of(context)!.screenSizeNotSupported,
                 style: TextStyle(
                   color: colorScheme.error,
                   fontWeight: FontWeight.bold,
@@ -188,7 +188,7 @@ class QuizMetricsDisplay extends StatelessWidget {
               child: MetricItem(
                 icon: Icons.star_rounded,
                 value: gameStats.score.toString(),
-                label: strings.AppStrings.score,
+                label: AppLocalizations.of(context)!.score,
                 colorScheme: colorScheme,
                 color: colorScheme.primary,
                 animation: scoreAnimation,
@@ -204,7 +204,7 @@ class QuizMetricsDisplay extends StatelessWidget {
               child: MetricItem(
                 icon: Icons.local_fire_department_rounded,
                 value: gameStats.currentStreak.toString(),
-                label: strings.AppStrings.streak,
+                label: AppLocalizations.of(context)!.streak,
                 colorScheme: colorScheme,
                 color: const Color(0xFFF59E0B),
                 animation: streakAnimation,
@@ -219,7 +219,7 @@ class QuizMetricsDisplay extends StatelessWidget {
               child: MetricItem(
                 icon: Icons.emoji_events_rounded,
                 value: gameStats.longestStreak.toString(),
-                label: strings.AppStrings.best,
+                label: AppLocalizations.of(context)!.best,
                 colorScheme: colorScheme,
                 color: const Color(0xFFF59E0B),
                 animation: longestStreakAnimation,
@@ -234,7 +234,7 @@ class QuizMetricsDisplay extends StatelessWidget {
               child: MetricItem(
                 icon: Icons.timer_rounded,
                 value: previousTime.toString(),
-                label: strings.AppStrings.time,
+                label: AppLocalizations.of(context)!.time,
                 colorScheme: colorScheme,
                 color: timeColorAnimation.value ?? const Color(0xFF10B981),
                 animation: timeAnimation,

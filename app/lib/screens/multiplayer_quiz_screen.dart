@@ -26,7 +26,7 @@ import '../widgets/quiz_bottom_bar.dart';
 import '../widgets/question_widget.dart';
 import '../widgets/quiz_skeleton.dart';
 import '../widgets/top_snackbar.dart';
-import '../l10n/strings_nl.dart' as strings;
+import 'package:bijbelquiz/l10n/app_localizations.dart';
 import '../constants/urls.dart';
 import '../utils/bible_book_mapper.dart';
 import '../services/logger.dart';
@@ -284,12 +284,12 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
         _player2QuestionSelector.allQuestionsLoaded = true;
       }
 
+      if (!mounted) return;
+
       if (_player1QuestionSelector.allQuestions.isEmpty ||
           _player2QuestionSelector.allQuestions.isEmpty) {
-        throw Exception(strings.AppStrings.errorNoQuestions);
+        throw Exception(AppLocalizations.of(context)!.errorNoQuestions);
       }
-
-      if (!mounted) return;
 
       // Initialize both players with different questions
       final QuizQuestion player1FirstQuestion =
@@ -320,8 +320,8 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
       final appError = ErrorHandler().fromException(
         e,
         type: AppErrorType.dataLoading,
-        userMessage: strings.AppStrings.errorLoadQuestions,
-        context: {
+        userMessage: AppLocalizations.of(context)!.errorLoadQuestions,
+        contextData: {
           'error_type': e.runtimeType.toString(),
         },
       );
@@ -822,7 +822,7 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
       BuildContext context, String biblicalReference, bool isPlayer1) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(strings.AppStrings.biblicalReference),
+        title: Text(AppLocalizations.of(context)!.biblicalReference),
         backgroundColor: Theme.of(context).primaryColor,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
         leading: IconButton(
@@ -885,7 +885,7 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
                       ),
                       child: Center(
                         child: Text(
-                          strings.AppStrings.resumeToGame,
+                          AppLocalizations.of(context)!.resumeToGame,
                           style: Theme.of(context)
                               .textTheme
                               .labelLarge
@@ -1172,7 +1172,8 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
       );
 
       if (mounted) {
-        showTopSnackBar(context, strings.AppStrings.invalidBiblicalReference,
+        showTopSnackBar(
+            context, AppLocalizations.of(context)!.invalidBiblicalReference,
             style: TopSnackBarStyle.error);
       }
       return;
@@ -1235,7 +1236,7 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
       if (mounted) {
         showTopSnackBar(
           context,
-          strings.AppStrings.questionReportedSuccessfully,
+          AppLocalizations.of(context)!.questionReportedSuccessfully,
           style: TopSnackBarStyle.success,
         );
       }
@@ -1244,7 +1245,7 @@ class _MultiplayerQuizScreenState extends State<MultiplayerQuizScreen>
       if (mounted) {
         showTopSnackBar(
           context,
-          strings.AppStrings.errorReportingQuestion,
+          AppLocalizations.of(context)!.errorReportingQuestion,
           style: TopSnackBarStyle.error,
         );
       }

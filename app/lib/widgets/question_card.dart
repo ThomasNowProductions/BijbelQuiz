@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import '../l10n/strings_nl.dart';
+import 'package:bijbelquiz/l10n/app_localizations.dart';
 import '../models/quiz_question.dart';
 import '../theme/app_theme.dart';
 import '../utils/responsive_utils.dart';
@@ -178,8 +178,8 @@ class _QuestionCardState extends State<QuestionCard>
             children: [
               // Enhanced question card with professional design
               Semantics(
-                label: AppStrings.mcqLabel,
-                hint: AppStrings.mcqHint,
+                label: AppLocalizations.of(context)!.mcqLabel,
+                hint: AppLocalizations.of(context)!.mcqHint,
                 child: Container(
                   decoration: BoxDecoration(
                     color: colorScheme.surface,
@@ -228,8 +228,8 @@ class _QuestionCardState extends State<QuestionCard>
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 4.0),
                               child: Semantics(
-                                label: AppStrings.questionLabel(
-                                    widget.question.question),
+                                label: AppLocalizations.of(context)!
+                                    .questionLabel(widget.question.question),
                                 child: Text(
                                   widget.question.question,
                                   textAlign: TextAlign.center,
@@ -265,8 +265,10 @@ class _QuestionCardState extends State<QuestionCard>
                         SizedBox(height: isDesktop ? 36 : 32),
                         // Answer options with improved spacing
                         Semantics(
-                          label: AppStrings.answerOptionsLabel,
-                          hint: AppStrings.answerOptionsHint(options.length),
+                          label:
+                              AppLocalizations.of(context)!.answerOptionsLabel,
+                          hint: AppLocalizations.of(context)!
+                              .answerOptionsHint(options.length),
                           child: Column(
                             children: List.generate(
                               options.length,
@@ -327,8 +329,8 @@ class _QuestionCardState extends State<QuestionCard>
           child: Column(
             children: [
               Semantics(
-                label: AppStrings.fitbLabel,
-                hint: AppStrings.fitbHint,
+                label: AppLocalizations.of(context)!.fitbLabel,
+                hint: AppLocalizations.of(context)!.fitbHint,
                 child: Container(
                   decoration: BoxDecoration(
                     color: colorScheme.surface,
@@ -383,8 +385,9 @@ class _QuestionCardState extends State<QuestionCard>
                         SizedBox(height: isDesktop ? 36 : 32),
                         // Answer options with improved spacing (like MC)
                         Semantics(
-                          label: AppStrings.answerOptionsLabel,
-                          hint: AppStrings.fitbHint2,
+                          label:
+                              AppLocalizations.of(context)!.answerOptionsLabel,
+                          hint: AppLocalizations.of(context)!.fitbHint2,
                           child: Column(
                             children: List.generate(
                               options.length,
@@ -439,8 +442,8 @@ class _QuestionCardState extends State<QuestionCard>
         break;
       case QuestionType.tf:
         final tfOptions = [
-          AppStrings.trueText,
-          AppStrings.falseText,
+          AppLocalizations.of(context)!.trueText,
+          AppLocalizations.of(context)!.falseText,
         ];
         // Determine correct index based on the actual correct answer
         final lcCorrect = widget.question.correctAnswer.toLowerCase();
@@ -455,8 +458,8 @@ class _QuestionCardState extends State<QuestionCard>
           child: Column(
             children: [
               Semantics(
-                label: AppStrings.tfLabel,
-                hint: AppStrings.tfHint,
+                label: AppLocalizations.of(context)!.tfLabel,
+                hint: AppLocalizations.of(context)!.tfHint,
                 child: Container(
                   decoration: BoxDecoration(
                     color: colorScheme.surface,
@@ -499,8 +502,8 @@ class _QuestionCardState extends State<QuestionCard>
                           padding: EdgeInsets.symmetric(
                               horizontal: isDesktop ? 12 : 8),
                           child: Semantics(
-                            label: AppStrings.questionLabel(
-                                widget.question.question),
+                            label: AppLocalizations.of(context)!
+                                .questionLabel(widget.question.question),
                             child: Text(
                               widget.question.question,
                               textAlign: TextAlign.center,
@@ -525,8 +528,9 @@ class _QuestionCardState extends State<QuestionCard>
                         ),
                         SizedBox(height: isDesktop ? 48 : 36),
                         Semantics(
-                          label: AppStrings.answerOptionsLabel,
-                          hint: AppStrings.tfHint2,
+                          label:
+                              AppLocalizations.of(context)!.answerOptionsLabel,
+                          hint: AppLocalizations.of(context)!.tfHint2,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: List.generate(2, (index) {
@@ -722,7 +726,7 @@ class _FitbAnimatedBlankRowState extends State<_FitbAnimatedBlankRow>
             ? const Color(0xFF10B981)
             : const Color(0xFFEF4444);
     final blankText = widget.selectedAnswerIndex == null
-        ? AppStrings.blank
+        ? AppLocalizations.of(context)!.blank
         : widget.options[widget.selectedAnswerIndex!];
     // Handle both '...' and '_____' as blank indicators
     final questionText = widget.question.question;
@@ -822,7 +826,7 @@ class _FitbAnimatedBlankRowState extends State<_FitbAnimatedBlankRow>
                   return Transform.scale(
                     scale: _scaleAnimation.value,
                     child: Text(
-                      i == 0 ? blankText : AppStrings.blank,
+                      i == 0 ? blankText : AppLocalizations.of(context)!.blank,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style:

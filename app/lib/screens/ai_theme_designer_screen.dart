@@ -7,7 +7,7 @@ import '../providers/game_stats_provider.dart';
 import '../providers/settings_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/top_snackbar.dart';
-import '../l10n/strings_nl.dart' as strings;
+import 'package:bijbelquiz/l10n/app_localizations.dart';
 import '../services/logger.dart';
 import '../services/gemini_service.dart';
 import '../models/ai_theme.dart';
@@ -164,7 +164,7 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
               ),
               const SizedBox(width: 12),
               Text(
-                strings.AppStrings.aiThemeGenerator,
+                AppLocalizations.of(context)!.aiThemeGenerator,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.w700,
                       color: colorScheme.onSurface,
@@ -213,7 +213,7 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
             ),
             const SizedBox(width: 12),
             Text(
-              strings.AppStrings.aiThemeGenerator,
+              AppLocalizations.of(context)!.aiThemeGenerator,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.w700,
                     color: colorScheme.onSurface,
@@ -282,7 +282,7 @@ class _AIThemeDesignerScreenState extends State<AIThemeDesignerScreen> {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              strings.AppStrings.availableStars,
+                              AppLocalizations.of(context)!.availableStars,
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium

@@ -2,7 +2,7 @@ import 'package:bijbelquiz/services/analytics_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../l10n/strings_nl.dart' as strings;
+import 'package:bijbelquiz/l10n/app_localizations.dart';
 import 'sync_screen.dart';
 import '../services/logger.dart';
 import '../services/messaging_service.dart';
@@ -115,7 +115,7 @@ class _SocialScreenState extends State<SocialScreen> {
       if (mounted) {
         setState(() {
           _isLoadingMessages = false;
-          _errorMessage = strings.AppStrings.errorLoadingMessages;
+          _errorMessage = AppLocalizations.of(context)!.errorLoadingMessages;
         });
       }
     }
@@ -193,7 +193,9 @@ class _SocialScreenState extends State<SocialScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(strings.AppStrings.errorUpdatingReaction)),
+          SnackBar(
+              content:
+                  Text(AppLocalizations.of(context)!.errorUpdatingReaction)),
         );
       }
 
@@ -266,7 +268,7 @@ class _SocialScreenState extends State<SocialScreen> {
             ),
             const SizedBox(width: 12),
             Text(
-              strings.AppStrings.social,
+              AppLocalizations.of(context)!.social,
               style: textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w700,
                 color: colorScheme.onSurface.withValues(alpha: 0.7),
@@ -369,7 +371,7 @@ class _SocialScreenState extends State<SocialScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        strings.AppStrings.manageYourBqid,
+                        AppLocalizations.of(context)!.manageYourBqid,
                         style: textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.w600,
                           color: colorScheme.onSurface,
@@ -377,7 +379,7 @@ class _SocialScreenState extends State<SocialScreen> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        strings.AppStrings.manageYourBqidSubtitle,
+                        AppLocalizations.of(context)!.manageYourBqidSubtitle,
                         style: textTheme.bodyMedium?.copyWith(
                           color: colorScheme.onSurface.withValues(alpha: 0.7),
                         ),
@@ -386,7 +388,7 @@ class _SocialScreenState extends State<SocialScreen> {
                   ),
                 ),
                 Semantics(
-                  label: strings.AppStrings.openBQIDSettings,
+                  label: AppLocalizations.of(context)!.openBQIDSettings,
                   excludeSemantics: true,
                   child: Icon(
                     Icons.arrow_forward_ios_rounded,
@@ -433,8 +435,8 @@ class _SocialScreenState extends State<SocialScreen> {
         child: Column(
           children: [
             Semantics(
-              label: strings.AppStrings.sectionIcon(
-                  strings.AppStrings.manageYourBqid),
+              label: AppLocalizations.of(context)!
+                  .sectionIcon(AppLocalizations.of(context)!.manageYourBqid),
               excludeSemantics: true,
               child: Icon(
                 Icons.person_add,
@@ -444,7 +446,8 @@ class _SocialScreenState extends State<SocialScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              _errorMessage ?? strings.AppStrings.errorLoadingMessages,
+              _errorMessage ??
+                  AppLocalizations.of(context)!.errorLoadingMessages,
               style: textTheme.titleMedium?.copyWith(
                 color: colorScheme.onErrorContainer,
               ),
@@ -457,7 +460,7 @@ class _SocialScreenState extends State<SocialScreen> {
                 backgroundColor: colorScheme.primary,
                 foregroundColor: colorScheme.onPrimary,
               ),
-              child: Text(strings.AppStrings.retry),
+              child: Text(AppLocalizations.of(context)!.retry),
             ),
           ],
         ),
@@ -473,7 +476,7 @@ class _SocialScreenState extends State<SocialScreen> {
           children: [
             CircularProgressIndicator(),
             const SizedBox(height: 16),
-            Text(strings.AppStrings.loadingMessages),
+            Text(AppLocalizations.of(context)!.loadingMessages),
           ],
         ),
       ),
@@ -495,7 +498,7 @@ class _SocialScreenState extends State<SocialScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              strings.AppStrings.noActiveMessages,
+              AppLocalizations.of(context)!.noActiveMessages,
               style: textTheme.titleMedium?.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
@@ -503,7 +506,7 @@ class _SocialScreenState extends State<SocialScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              strings.AppStrings.noActiveMessagesSubtitle,
+              AppLocalizations.of(context)!.noActiveMessagesSubtitle,
               style: textTheme.bodyMedium?.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
@@ -571,7 +574,8 @@ class _SocialScreenState extends State<SocialScreen> {
 
         return Semantics(
           button: true,
-          label: strings.AppStrings.reactionButton(emoji, count, isReacted),
+          label: AppLocalizations.of(context)!.reactionButton(
+              emoji, count, isReacted ? 'selected' : 'not_selected'),
           child: InkWell(
             onTap: () => _handleReaction(message.id, emoji),
             borderRadius: BorderRadius.circular(8),

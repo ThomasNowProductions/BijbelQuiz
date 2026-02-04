@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../l10n/strings_nl.dart';
+import 'package:bijbelquiz/l10n/app_localizations.dart';
 import '../models/lesson.dart';
 import '../providers/settings_provider.dart';
 
@@ -97,22 +97,24 @@ class _LessonTileState extends State<LessonTile> with TickerProviderStateMixin {
             ? _tileGradientForIndex(cs, widget.index)
             : _singleColorGradient(cs);
 
-    String semanticLabel =
-        AppStrings.lessonLabel(widget.lesson.index, widget.lesson.title);
+    String semanticLabel = AppLocalizations.of(context)!
+        .lessonLabel(widget.lesson.index, widget.lesson.title);
     String hint = '';
 
     if (!widget.unlocked) {
-      semanticLabel = '$semanticLabel (${AppStrings.locked})';
-      hint = AppStrings.lockedHint;
+      semanticLabel =
+          '$semanticLabel (${AppLocalizations.of(context)!.locked})';
+      hint = AppLocalizations.of(context)!.lockedHint;
     } else if (!widget.playable) {
-      semanticLabel = '$semanticLabel (${AppStrings.unlockedButNotPlayable})';
-      hint = AppStrings.unlockedButNotPlayableHint;
+      semanticLabel =
+          '$semanticLabel (${AppLocalizations.of(context)!.unlockedButNotPlayable})';
+      hint = AppLocalizations.of(context)!.unlockedButNotPlayableHint;
     } else {
-      hint = AppStrings.tapToStart;
+      hint = AppLocalizations.of(context)!.tapToStart;
     }
 
     if (widget.recommended) {
-      semanticLabel = AppStrings.recommended(semanticLabel);
+      semanticLabel = AppLocalizations.of(context)!.recommended(semanticLabel);
     }
 
     return Semantics(
@@ -182,7 +184,8 @@ class _LessonTileState extends State<LessonTile> with TickerProviderStateMixin {
                           border: Border.all(color: cs.outlineVariant),
                         ),
                         child: Text(
-                          AppStrings.lessonNumber(widget.lesson.index),
+                          AppLocalizations.of(context)!
+                              .lessonNumber(widget.lesson.index),
                           style: Theme.of(context)
                               .textTheme
                               .labelLarge
@@ -200,7 +203,8 @@ class _LessonTileState extends State<LessonTile> with TickerProviderStateMixin {
                             Icons.menu_book,
                             color: cs.primary,
                             size: 36,
-                            semanticLabel: AppStrings.bookIconSemanticLabel,
+                            semanticLabel: AppLocalizations.of(context)!
+                                .bookIconSemanticLabel,
                           ),
                         ),
                       ),
@@ -223,7 +227,7 @@ class _LessonTileState extends State<LessonTile> with TickerProviderStateMixin {
                                     Icons.lock_rounded,
                                     color: rainbowColor,
                                     size: 40,
-                                    semanticLabel: AppStrings
+                                    semanticLabel: AppLocalizations.of(context)!
                                         .lockedSpecialLessonSemanticLabel,
                                   );
                                 },
@@ -232,8 +236,8 @@ class _LessonTileState extends State<LessonTile> with TickerProviderStateMixin {
                                 Icons.lock_rounded,
                                 color: cs.onSurface.withValues(alpha: 0.7),
                                 size: 40,
-                                semanticLabel:
-                                    AppStrings.lockedLessonSemanticLabel,
+                                semanticLabel: AppLocalizations.of(context)!
+                                    .lockedLessonSemanticLabel,
                               ),
                       ),
                     ),

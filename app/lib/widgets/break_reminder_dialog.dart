@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../l10n/strings_nl.dart' as strings;
+import 'package:bijbelquiz/l10n/app_localizations.dart';
 import '../services/break_reminder_service.dart';
 
 class BreakReminderDialog extends StatelessWidget {
@@ -21,16 +21,16 @@ class BreakReminderDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(strings.AppStrings.breakReminderTitle),
-      content: Text(strings.AppStrings.breakReminderMessage),
+      title: Text(AppLocalizations.of(context)!.breakReminderTitle),
+      content: Text(AppLocalizations.of(context)!.breakReminderMessage),
       actions: [
         TextButton(
           onPressed: () => _handleDismiss(context),
-          child: Text(strings.AppStrings.breakReminderOk),
+          child: Text(AppLocalizations.of(context)!.breakReminderOk),
         ),
         TextButton(
           onPressed: () => _handleDismiss(context),
-          child: Text(strings.AppStrings.breakReminderContinue),
+          child: Text(AppLocalizations.of(context)!.breakReminderContinue),
         ),
       ],
     );

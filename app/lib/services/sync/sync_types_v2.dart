@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 /// Represents the state of a sync operation
 enum SyncOperationState {
   /// No operation in progress

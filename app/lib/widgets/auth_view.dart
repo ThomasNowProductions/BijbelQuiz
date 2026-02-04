@@ -5,7 +5,7 @@ import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 import '../services/logger.dart';
 import '../utils/automatic_error_reporter.dart';
-import '../l10n/strings_nl.dart';
+import 'package:bijbelquiz/l10n/app_localizations.dart';
 
 class AuthView extends StatefulWidget {
   final bool requiredForSocial;
@@ -43,46 +43,46 @@ class _AuthViewState extends State<AuthView> {
     if (errorString.contains('failed to fetch') ||
         errorString.contains('network error') ||
         errorString.contains('connection')) {
-      return '${AppStrings.connectionError}. ${AppStrings.connectionErrorMsg}';
+      return '${AppLocalizations.of(context)!.connectionError}. ${AppLocalizations.of(context)!.connectionErrorMsg}';
     }
 
     // Authentication errors
     if (errorString.contains('invalid login credentials') ||
         errorString.contains('email not confirmed') ||
         errorString.contains('invalid email or password')) {
-      return AppStrings.invalidEmailOrPassword;
+      return AppLocalizations.of(context)!.invalidEmailOrPassword;
     }
 
     if (errorString.contains('email not confirmed')) {
-      return AppStrings.emailNotConfirmed;
+      return AppLocalizations.of(context)!.emailNotConfirmed;
     }
 
     if (errorString.contains('too many requests')) {
-      return AppStrings.tooManyRequests;
+      return AppLocalizations.of(context)!.tooManyRequests;
     }
 
     if (errorString.contains('password should be at least')) {
-      return AppStrings.passwordTooShortGeneric;
+      return AppLocalizations.of(context)!.passwordTooShortGeneric;
     }
 
     if (errorString.contains('unable to validate email address')) {
-      return AppStrings.invalidEmailAddress;
+      return AppLocalizations.of(context)!.invalidEmailAddress;
     }
 
     if (errorString.contains('user already registered')) {
-      return AppStrings.userAlreadyRegistered;
+      return AppLocalizations.of(context)!.userAlreadyRegistered;
     }
 
     if (errorString.contains('signup is disabled')) {
-      return AppStrings.signupDisabled;
+      return AppLocalizations.of(context)!.signupDisabled;
     }
 
     if (errorString.contains('weak password')) {
-      return AppStrings.weakPassword;
+      return AppLocalizations.of(context)!.weakPassword;
     }
 
     // Generic error fallback
-    return AppStrings.genericError;
+    return AppLocalizations.of(context)!.genericError;
   }
 
   @override
@@ -210,14 +210,14 @@ class _AuthViewState extends State<AuthView> {
 
     if (email.isEmpty || password.isEmpty) {
       setState(() {
-        _error = AppStrings.fillEmailAndPassword;
+        _error = AppLocalizations.of(context)!.fillEmailAndPassword;
       });
       return;
     }
 
     if (!email.contains('@')) {
       setState(() {
-        _error = AppStrings.enterValidEmail;
+        _error = AppLocalizations.of(context)!.enterValidEmail;
       });
       return;
     }
@@ -263,55 +263,55 @@ class _AuthViewState extends State<AuthView> {
         confirmPassword.isEmpty ||
         username.isEmpty) {
       setState(() {
-        _error = AppStrings.fillAllFields;
+        _error = AppLocalizations.of(context)!.fillAllFields;
       });
       return;
     }
 
     if (!email.contains('@')) {
       setState(() {
-        _error = AppStrings.enterValidEmail;
+        _error = AppLocalizations.of(context)!.enterValidEmail;
       });
       return;
     }
 
     if (password != confirmPassword) {
       setState(() {
-        _error = AppStrings.passwordsDoNotMatch;
+        _error = AppLocalizations.of(context)!.passwordsDoNotMatch;
       });
       return;
     }
 
     if (password.length < 6) {
       setState(() {
-        _error = AppStrings.passwordTooShort;
+        _error = AppLocalizations.of(context)!.passwordTooShort;
       });
       return;
     }
 
     // Check if password has been pwned
     setState(() {
-      _error = AppStrings.checkingPassword;
+      _error = AppLocalizations.of(context)!.checkingPassword;
     });
 
     final pwnedCount = await _checkPwned(password);
     if (pwnedCount > 0) {
       setState(() {
-        _error = AppStrings.passwordCompromised;
+        _error = AppLocalizations.of(context)!.passwordCompromised;
       });
       return;
     }
 
     if (username.length < 3) {
       setState(() {
-        _error = AppStrings.usernameTooShort;
+        _error = AppLocalizations.of(context)!.usernameTooShort;
       });
       return;
     }
 
     if (username.length > 20) {
       setState(() {
-        _error = AppStrings.usernameSignupTooLong;
+        _error = AppLocalizations.of(context)!.usernameSignupTooLong;
       });
       return;
     }
@@ -319,27 +319,27 @@ class _AuthViewState extends State<AuthView> {
     // Check for valid username characters
     if (!RegExp(r'^[a-zA-Z0-9_]+$').hasMatch(username)) {
       setState(() {
-        _error = AppStrings.usernameInvalidChars;
+        _error = AppLocalizations.of(context)!.usernameInvalidChars;
       });
       return;
     }
 
     if (_isUsernameBlacklisted(username)) {
       setState(() {
-        _error = AppStrings.usernameNotAllowed;
+        _error = AppLocalizations.of(context)!.usernameNotAllowed;
       });
       return;
     }
 
     // Check if username is already taken
     setState(() {
-      _error = AppStrings.checkingUsername;
+      _error = AppLocalizations.of(context)!.checkingUsername;
     });
 
     final usernameTaken = await _isUsernameTaken(username);
     if (usernameTaken) {
       setState(() {
-        _error = AppStrings.thisUsernameAlreadyTaken;
+        _error = AppLocalizations.of(context)!.thisUsernameAlreadyTaken;
       });
       return;
     }
@@ -395,7 +395,8 @@ class _AuthViewState extends State<AuthView> {
           });
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(AppStrings.accountCreatedMessage),
+              content:
+                  Text(AppLocalizations.of(context)!.accountCreatedMessage),
               backgroundColor: Colors.green,
             ),
           );
@@ -474,7 +475,7 @@ class _AuthViewState extends State<AuthView> {
             Padding(
               padding: const EdgeInsets.only(bottom: 20),
               child: Text(
-                AppStrings.loginWithBqid,
+                AppLocalizations.of(context)!.loginWithBqid,
                 style: theme.textTheme.displaySmall?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: colorScheme.primary,
@@ -502,7 +503,7 @@ class _AuthViewState extends State<AuthView> {
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(
-                      AppStrings.socialFeaturesMessage,
+                      AppLocalizations.of(context)!.socialFeaturesMessage,
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: colorScheme.onSurface,
                         fontWeight: FontWeight.w500,
@@ -528,7 +529,7 @@ class _AuthViewState extends State<AuthView> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
-                      AppStrings.login,
+                      AppLocalizations.of(context)!.login,
                       style: TextStyle(
                         color: _isLoginMode
                             ? colorScheme.primary
@@ -553,7 +554,7 @@ class _AuthViewState extends State<AuthView> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
-                      AppStrings.signup,
+                      AppLocalizations.of(context)!.signup,
                       style: TextStyle(
                         color: !_isLoginMode
                             ? colorScheme.primary
@@ -573,8 +574,8 @@ class _AuthViewState extends State<AuthView> {
           TextField(
             controller: _emailController,
             decoration: InputDecoration(
-              labelText: AppStrings.email,
-              hintText: AppStrings.emailHint,
+              labelText: AppLocalizations.of(context)!.email,
+              hintText: AppLocalizations.of(context)!.emailHint,
               prefixIcon: const Icon(Icons.email_rounded),
               filled: true,
               border: OutlineInputBorder(
@@ -601,8 +602,8 @@ class _AuthViewState extends State<AuthView> {
             TextField(
               controller: _usernameController,
               decoration: InputDecoration(
-                labelText: AppStrings.username,
-                hintText: AppStrings.usernameSignupHint,
+                labelText: AppLocalizations.of(context)!.username,
+                hintText: AppLocalizations.of(context)!.usernameSignupHint,
                 prefixIcon: const Icon(Icons.person_outline_rounded),
                 filled: true,
                 border: OutlineInputBorder(
@@ -628,8 +629,8 @@ class _AuthViewState extends State<AuthView> {
           TextField(
             controller: _passwordController,
             decoration: InputDecoration(
-              labelText: AppStrings.password,
-              hintText: AppStrings.passwordHint,
+              labelText: AppLocalizations.of(context)!.password,
+              hintText: AppLocalizations.of(context)!.passwordHint,
               prefixIcon: const Icon(Icons.lock_rounded),
               filled: true,
               border: OutlineInputBorder(
@@ -657,8 +658,8 @@ class _AuthViewState extends State<AuthView> {
             TextField(
               controller: _confirmPasswordController,
               decoration: InputDecoration(
-                labelText: AppStrings.confirmPassword,
-                hintText: AppStrings.confirmPasswordHint,
+                labelText: AppLocalizations.of(context)!.confirmPassword,
+                hintText: AppLocalizations.of(context)!.confirmPasswordHint,
                 prefixIcon: const Icon(Icons.lock_outline_rounded),
                 filled: true,
                 border: OutlineInputBorder(
@@ -706,8 +707,8 @@ class _AuthViewState extends State<AuthView> {
                     )
                   : Text(
                       _isLoginMode
-                          ? AppStrings.login
-                          : AppStrings.createAccount,
+                          ? AppLocalizations.of(context)!.login
+                          : AppLocalizations.of(context)!.createAccount,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,

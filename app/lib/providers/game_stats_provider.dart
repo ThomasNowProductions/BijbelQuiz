@@ -6,7 +6,7 @@ import './settings_provider.dart';
 import '../services/logger.dart';
 import '../services/star_transaction_service.dart';
 import '../services/sync_service_v2.dart';
-import '../services/sync/sync_types_v2.dart';
+
 import '../services/analytics_service.dart';
 import '../utils/automatic_error_reporter.dart';
 import '../error/error_handler.dart';
@@ -202,7 +202,7 @@ class GameStatsProvider extends ChangeNotifier {
         e,
         type: AppErrorType.storage,
         userMessage: 'Failed to load game stats',
-        context: {'operation': 'load_stats'},
+        contextData: {'operation': 'load_stats'},
       );
       _error = appError.userMessage;
       onError?.call(_error!);
@@ -304,7 +304,7 @@ class GameStatsProvider extends ChangeNotifier {
         e,
         type: AppErrorType.storage,
         userMessage: 'Failed to save game stats',
-        context: {'operation': 'save_stats'},
+        contextData: {'operation': 'save_stats'},
       );
       _error = appError.userMessage;
       notifyListeners();
@@ -351,7 +351,7 @@ class GameStatsProvider extends ChangeNotifier {
         e,
         type: AppErrorType.storage,
         userMessage: 'Failed to reset game stats',
-        context: {'operation': 'reset_stats'},
+        contextData: {'operation': 'reset_stats'},
       );
       _error = appError.userMessage;
       onError?.call(_error!);
@@ -462,7 +462,7 @@ class GameStatsProvider extends ChangeNotifier {
         e,
         type: AppErrorType.storage,
         userMessage: 'Failed to spend points',
-        context: {'operation': 'spend_points', 'required_points': amount},
+        contextData: {'operation': 'spend_points', 'required_points': amount},
       );
       _error = appError.userMessage;
       notifyListeners();
@@ -495,7 +495,7 @@ class GameStatsProvider extends ChangeNotifier {
         e,
         type: AppErrorType.storage,
         userMessage: 'Failed to add stars',
-        context: {'operation': 'add_stars', 'amount': amount},
+        contextData: {'operation': 'add_stars', 'amount': amount},
       );
       _error = appError.userMessage;
       notifyListeners();

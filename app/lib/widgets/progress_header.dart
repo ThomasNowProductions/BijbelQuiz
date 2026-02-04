@@ -6,7 +6,7 @@ import '../providers/lesson_progress_provider.dart';
 import '../screens/quiz_screen.dart';
 import '../services/analytics_service.dart';
 import '../services/greeting_service.dart';
-import '../l10n/strings_nl.dart' as strings;
+import 'package:bijbelquiz/l10n/app_localizations.dart';
 
 enum DayState { success, fail, freeze, future }
 
@@ -41,7 +41,8 @@ class _ProgressHeaderState extends State<ProgressHeader>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _progressAnimation;
-  String _greeting = strings.AppStrings.yourProgress; // Default fallback
+  String _greeting =
+      'Your Progress'; // Default fallback, will be updated in didChangeDependencies
   final GreetingService _greetingService = GreetingService();
 
   @override
@@ -55,16 +56,23 @@ class _ProgressHeaderState extends State<ProgressHeader>
       parent: _animationController,
       curve: Curves.easeOutCubic,
     );
-    _loadGreeting();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) _animationController.forward();
     });
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _loadGreeting();
+  }
+
   void _loadGreeting() {
-    setState(() {
-      _greeting = _greetingService.getRandomGreeting();
-    });
+    if (mounted) {
+      setState(() {
+        _greeting = _greetingService.getRandomGreeting(context);
+      });
+    }
   }
 
   @override
@@ -82,8 +90,8 @@ class _ProgressHeaderState extends State<ProgressHeader>
     final percent = total > 0 ? unlocked / total : 0.0;
 
     return Semantics(
-      label: strings.AppStrings.progressOverview,
-      hint: strings.AppStrings.progressOverviewHint,
+      label: AppLocalizations.of(context)!.progressOverview,
+      hint: AppLocalizations.of(context)!.progressOverviewHint,
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
@@ -108,8 +116,9 @@ class _ProgressHeaderState extends State<ProgressHeader>
                     ?.copyWith(fontWeight: FontWeight.w800)),
             const SizedBox(height: 8),
             Semantics(
-              label: strings.AppStrings.lessonCompletionProgress,
-              hint: strings.AppStrings.lessonsCompleted(unlocked, total),
+              label: AppLocalizations.of(context)!.lessonCompletionProgress,
+              hint: AppLocalizations.of(context)!
+                  .lessonsCompleted(unlocked, total),
               child: Row(
                 children: [
                   Expanded(
@@ -168,7 +177,7 @@ class _ProgressHeaderState extends State<ProgressHeader>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                strings.AppStrings.dailyStreak,
+                                AppLocalizations.of(context)!.dailyStreak,
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleMedium
@@ -178,8 +187,8 @@ class _ProgressHeaderState extends State<ProgressHeader>
                                     ),
                               ),
                               Text(
-                                strings.AppStrings.dailyStreakDescription(
-                                    widget.streakDays),
+                                AppLocalizations.of(context)!
+                                    .dailyStreakDescription(widget.streakDays),
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium
@@ -203,7 +212,8 @@ class _ProgressHeaderState extends State<ProgressHeader>
                             child: Column(
                               children: [
                                 Text(
-                                  _getDayAbbreviation(widget.dayWindow[i].date),
+                                  _getDayAbbreviation(
+                                      context, widget.dayWindow[i].date),
                                   style: Theme.of(context)
                                       .textTheme
                                       .labelSmall
@@ -291,9 +301,9 @@ class _ProgressHeaderState extends State<ProgressHeader>
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Semantics(
-                    label: strings.AppStrings.continueWithLesson(
-                        widget.continueLesson!.title),
-                    hint: strings.AppStrings.continueWithLessonHint,
+                    label: AppLocalizations.of(context)!
+                        .continueWithLesson(widget.continueLesson!.title),
+                    hint: AppLocalizations.of(context)!.continueWithLessonHint,
                     button: true,
                     child: _AnimatedButton(
                       onPressed: () async {
@@ -313,7 +323,7 @@ class _ProgressHeaderState extends State<ProgressHeader>
                         widget.onAfterQuizReturn?.call();
                       },
                       label:
-                          '${strings.AppStrings.continueWith}: ${widget.continueLesson!.title}',
+                          '${AppLocalizations.of(context)!.continueWith}: ${widget.continueLesson!.title}',
                       icon: Icons.play_arrow_rounded,
                       color: cs.primary,
                       textColor: cs.onPrimary,
@@ -321,8 +331,8 @@ class _ProgressHeaderState extends State<ProgressHeader>
                   ),
                   const SizedBox(height: 8),
                   Semantics(
-                    label: strings.AppStrings.practiceMode,
-                    hint: strings.AppStrings.practiceModeHint,
+                    label: AppLocalizations.of(context)!.practiceMode,
+                    hint: AppLocalizations.of(context)!.practiceModeHint,
                     button: true,
                     child: _AnimatedButton(
                       onPressed: () {
@@ -331,7 +341,7 @@ class _ProgressHeaderState extends State<ProgressHeader>
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (_) => const QuizScreen()));
                       },
-                      label: strings.AppStrings.freePractice,
+                      label: AppLocalizations.of(context)!.freePractice,
                       icon: Icons.flash_on_rounded,
                       color: Colors.transparent,
                       textColor: cs.primary,
@@ -341,8 +351,8 @@ class _ProgressHeaderState extends State<ProgressHeader>
                   if (widget.onMultiplayerPressed != null) ...[
                     const SizedBox(height: 8),
                     Semantics(
-                      label: strings.AppStrings.multiplayerMode,
-                      hint: strings.AppStrings.multiplayerModeHint,
+                      label: AppLocalizations.of(context)!.multiplayerMode,
+                      hint: AppLocalizations.of(context)!.multiplayerModeHint,
                       button: true,
                       child: _AnimatedButton(
                         onPressed: () {
@@ -350,7 +360,7 @@ class _ProgressHeaderState extends State<ProgressHeader>
                               .capture(context, 'start_multiplayer_quiz');
                           widget.onMultiplayerPressed!();
                         },
-                        label: strings.AppStrings.multiplayerQuiz,
+                        label: AppLocalizations.of(context)!.multiplayerQuiz,
                         icon: Icons.people,
                         color: Colors.transparent,
                         textColor: cs.primary,
@@ -362,15 +372,15 @@ class _ProgressHeaderState extends State<ProgressHeader>
               ),
             ] else ...[
               Semantics(
-                label: strings.AppStrings.practiceMode,
-                hint: strings.AppStrings.startRandomPracticeQuiz,
+                label: AppLocalizations.of(context)!.practiceMode,
+                hint: AppLocalizations.of(context)!.startRandomPracticeQuiz,
                 button: true,
                 child: _AnimatedButton(
                   onPressed: () {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (_) => const QuizScreen()));
                   },
-                  label: strings.AppStrings.freePractice,
+                  label: AppLocalizations.of(context)!.freePractice,
                   icon: Icons.flash_on_rounded,
                   color: Colors.transparent,
                   textColor: cs.primary,
@@ -380,8 +390,8 @@ class _ProgressHeaderState extends State<ProgressHeader>
               if (widget.onMultiplayerPressed != null) ...[
                 const SizedBox(height: 8),
                 Semantics(
-                  label: strings.AppStrings.multiplayerMode,
-                  hint: strings.AppStrings.multiplayerModeHint,
+                  label: AppLocalizations.of(context)!.multiplayerMode,
+                  hint: AppLocalizations.of(context)!.multiplayerModeHint,
                   button: true,
                   child: _AnimatedButton(
                     onPressed: () {
@@ -389,7 +399,7 @@ class _ProgressHeaderState extends State<ProgressHeader>
                           .capture(context, 'start_multiplayer_quiz');
                       widget.onMultiplayerPressed!();
                     },
-                    label: strings.AppStrings.multiplayerQuiz,
+                    label: AppLocalizations.of(context)!.multiplayerQuiz,
                     icon: Icons.people,
                     color: Colors.transparent,
                     textColor: cs.primary,
@@ -411,23 +421,24 @@ bool _isCurrentDayNotCompleted(DayIndicator indicator) {
   return indicator.date.isAtSameMomentAs(today);
 }
 
-String _getDayAbbreviation(DateTime date) {
+String _getDayAbbreviation(BuildContext context, DateTime date) {
   // Get the day of the week as an abbreviation
+  final l10n = AppLocalizations.of(context)!;
   switch (date.weekday) {
     case DateTime.monday:
-      return strings.AppStrings.monday;
+      return l10n.monday;
     case DateTime.tuesday:
-      return strings.AppStrings.tuesday;
+      return l10n.tuesday;
     case DateTime.wednesday:
-      return strings.AppStrings.wednesday;
+      return l10n.wednesday;
     case DateTime.thursday:
-      return strings.AppStrings.thursday;
+      return l10n.thursday;
     case DateTime.friday:
-      return strings.AppStrings.friday;
+      return l10n.friday;
     case DateTime.saturday:
-      return strings.AppStrings.saturday;
+      return l10n.saturday;
     case DateTime.sunday:
-      return strings.AppStrings.sunday;
+      return l10n.sunday;
     default:
       return '';
   }
@@ -601,7 +612,7 @@ class _AnimatedButtonState extends State<_AnimatedButton>
               Icon(widget.icon,
                   color: widget.textColor,
                   size: 20,
-                  semanticLabel: strings.AppStrings.playButton),
+                  semanticLabel: AppLocalizations.of(context)!.playButton),
               const SizedBox(width: 8),
               Text(
                 widget.label,

@@ -32,7 +32,7 @@ import 'dart:async';
 import 'dart:math';
 import '../widgets/quiz_skeleton.dart';
 import '../widgets/top_snackbar.dart';
-import '../l10n/strings_nl.dart' as strings;
+import 'package:bijbelquiz/l10n/app_localizations.dart';
 import '../services/logger.dart';
 
 // New extracted services
@@ -318,7 +318,7 @@ class _QuizScreenState extends State<QuizScreen>
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
-                strings.AppStrings.notEnoughPoints,
+                AppLocalizations.of(context)!.notEnoughPoints,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 14,
@@ -347,11 +347,11 @@ class _QuizScreenState extends State<QuizScreen>
       builder: (BuildContext dialogContext) {
         return AlertDialog(
           title: Text(
-            strings.AppStrings.timeUp,
+            AppLocalizations.of(context)!.timeUp,
             style: Theme.of(dialogContext).textTheme.headlineSmall,
           ),
           content: Text(
-            strings.AppStrings.timeUpMessage,
+            AppLocalizations.of(context)!.timeUpMessage,
             style: Theme.of(dialogContext).textTheme.bodyLarge,
           ),
           actions: [
@@ -433,7 +433,7 @@ class _QuizScreenState extends State<QuizScreen>
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      strings.AppStrings.retry,
+                      AppLocalizations.of(context)!.retry,
                       style: TextStyle(
                         color: hasEnoughPoints
                             ? Theme.of(dialogContext).colorScheme.primary
@@ -471,7 +471,7 @@ class _QuizScreenState extends State<QuizScreen>
                 _handleNextQuestion(false, _quizState.currentDifficulty);
               },
               child: Text(
-                strings.AppStrings.next,
+                AppLocalizations.of(context)!.next,
                 style: TextStyle(
                   color: Theme.of(dialogContext).colorScheme.primary,
                   fontSize: 16,
@@ -579,8 +579,10 @@ class _QuizScreenState extends State<QuizScreen>
         _questionSelector.allQuestionsLoaded = true;
       }
 
+      if (!mounted) return;
+
       if (_questionSelector.allQuestions.isEmpty) {
-        throw Exception(strings.AppStrings.errorNoQuestions);
+        throw Exception(AppLocalizations.of(context)!.errorNoQuestions);
       }
 
       // Initialize quiz state with PQU (Progressive Question Up-selection)
@@ -649,8 +651,8 @@ class _QuizScreenState extends State<QuizScreen>
       final appError = ErrorHandler().fromException(
         e,
         type: AppErrorType.dataLoading,
-        userMessage: strings.AppStrings.errorLoadQuestions,
-        context: {
+        userMessage: AppLocalizations.of(context)!.errorLoadQuestions,
+        contextData: {
           'lesson_mode': _lessonMode,
           'error_type': e.runtimeType.toString(),
         },
@@ -847,7 +849,7 @@ class _QuizScreenState extends State<QuizScreen>
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              strings.AppStrings.screenSizeNotSupported,
+              AppLocalizations.of(context)!.screenSizeNotSupported,
               style: textTheme.bodyLarge?.copyWith(color: colorScheme.error),
               textAlign: TextAlign.center,
             ),
@@ -1104,7 +1106,7 @@ class _QuizScreenState extends State<QuizScreen>
           Provider.of<GameStatsProvider>(context, listen: false);
       await AutomaticErrorReporter.reportQuestionError(
         message: 'User reported issue with question',
-        userMessage: strings.AppStrings.questionReportedByUser,
+        userMessage: AppLocalizations.of(context)!.questionReportedByUser,
         questionId: questionId,
         questionText: question.question,
         additionalInfo: {
@@ -1121,7 +1123,7 @@ class _QuizScreenState extends State<QuizScreen>
       if (mounted) {
         showTopSnackBar(
           context,
-          strings.AppStrings.questionReportedSuccessfully,
+          AppLocalizations.of(context)!.questionReportedSuccessfully,
           style: TopSnackBarStyle.success,
         );
       }
@@ -1130,7 +1132,7 @@ class _QuizScreenState extends State<QuizScreen>
       if (mounted) {
         showTopSnackBar(
           context,
-          strings.AppStrings.errorReportingQuestion,
+          AppLocalizations.of(context)!.errorReportingQuestion,
           style: TopSnackBarStyle.error,
         );
       }
@@ -1213,7 +1215,8 @@ class _QuizScreenState extends State<QuizScreen>
           });
     } else {
       if (mounted) {
-        showTopSnackBar(context, strings.AppStrings.notEnoughStarsForSkip,
+        showTopSnackBar(
+            context, AppLocalizations.of(context)!.notEnoughStarsForSkip,
             style: TopSnackBarStyle.warning);
       }
     }
@@ -1248,7 +1251,8 @@ class _QuizScreenState extends State<QuizScreen>
       // Report this error automatically since it indicates issues with question data
       await AutomaticErrorReporter.reportBiblicalReferenceError(
         message: 'Could not parse biblical reference',
-        userMessage: strings.AppStrings.invalidBiblicalReferenceInQuestion,
+        userMessage:
+            AppLocalizations.of(context)!.invalidBiblicalReferenceInQuestion,
         reference: question.biblicalReference ?? 'null',
         questionId: question.id,
         additionalInfo: {
@@ -1258,7 +1262,8 @@ class _QuizScreenState extends State<QuizScreen>
       );
 
       if (mounted) {
-        showTopSnackBar(context, strings.AppStrings.invalidBiblicalReference,
+        showTopSnackBar(
+            context, AppLocalizations.of(context)!.invalidBiblicalReference,
             style: TopSnackBarStyle.error);
       }
       return;
@@ -1324,7 +1329,7 @@ class _QuizScreenState extends State<QuizScreen>
       // Not enough stars - this is a user state issue, not an error to report automatically
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) {
-          showTopSnackBar(context, strings.AppStrings.notEnoughStars,
+          showTopSnackBar(context, AppLocalizations.of(context)!.notEnoughStars,
               style: TopSnackBarStyle.warning);
         }
       });

@@ -11,7 +11,7 @@ import '../screens/lesson_select_screen.dart';
 import '../screens/store_screen.dart';
 import '../screens/social_screen.dart';
 import '../settings_screen.dart';
-import '../l10n/strings_nl.dart' as strings;
+import 'package:bijbelquiz/l10n/app_localizations.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key, this.initialIndex = 0});
@@ -128,7 +128,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         clipBehavior: Clip.none,
         children: [
           Semantics(
-            label: strings.AppStrings.social,
+            label: AppLocalizations.of(context)!.social,
             button: true,
             child: const Icon(Icons.groups_outlined),
           ),
@@ -137,7 +137,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               right: -2,
               top: -2,
               child: Semantics(
-                label: strings.AppStrings.newMessagesOrLoginRequired,
+                label: AppLocalizations.of(context)!.newMessagesOrLoginRequired,
                 child: Container(
                   width: 8,
                   height: 8,
@@ -158,7 +158,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         clipBehavior: Clip.none,
         children: [
           Semantics(
-            label: 'Selected - ${strings.AppStrings.social}',
+            label: 'Selected - ${AppLocalizations.of(context)!.social}',
             button: true,
             child: const Icon(Icons.groups),
           ),
@@ -167,7 +167,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               right: -2,
               top: -2,
               child: Semantics(
-                label: strings.AppStrings.newMessagesOrLoginRequired,
+                label: AppLocalizations.of(context)!.newMessagesOrLoginRequired,
                 child: Container(
                   width: 8,
                   height: 8,
@@ -184,7 +184,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             ),
         ],
       ),
-      label: strings.AppStrings.social,
+      label: AppLocalizations.of(context)!.social,
     );
   }
 
@@ -198,7 +198,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         clipBehavior: Clip.none,
         children: [
           Semantics(
-            label: strings.AppStrings.store,
+            label: AppLocalizations.of(context)!.store,
             button: true,
             child: const Icon(Icons.store_outlined),
           ),
@@ -207,7 +207,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               right: -2,
               top: -2,
               child: Semantics(
-                label: strings.AppStrings.activeDiscountsAvailable,
+                label: AppLocalizations.of(context)!.activeDiscountsAvailable,
                 child: Container(
                   width: 8,
                   height: 8,
@@ -228,7 +228,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         clipBehavior: Clip.none,
         children: [
           Semantics(
-            label: 'Selected - ${strings.AppStrings.store}',
+            label: 'Selected - ${AppLocalizations.of(context)!.store}',
             button: true,
             child: const Icon(Icons.store),
           ),
@@ -237,7 +237,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               right: -2,
               top: -2,
               child: Semantics(
-                label: strings.AppStrings.activeDiscountsAvailable,
+                label: AppLocalizations.of(context)!.activeDiscountsAvailable,
                 child: Container(
                   width: 8,
                   height: 8,
@@ -254,7 +254,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             ),
         ],
       ),
-      label: strings.AppStrings.store,
+      label: AppLocalizations.of(context)!.store,
     );
   }
 
@@ -286,17 +286,17 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     final destinations = <NavigationDestination>[
       NavigationDestination(
         icon: Semantics(
-          label: strings.AppStrings.lessons,
+          label: AppLocalizations.of(context)!.lessons,
           button: true,
           child: const Icon(Icons.menu_book_outlined),
         ),
         selectedIcon: Semantics(
           label:
-              '${strings.AppStrings.selected} - ${strings.AppStrings.lessons}',
+              '${AppLocalizations.of(context)!.selected} - ${AppLocalizations.of(context)!.lessons}',
           button: true,
           child: const Icon(Icons.menu_book),
         ),
-        label: strings.AppStrings.lessons,
+        label: AppLocalizations.of(context)!.lessons,
       ),
     ];
 
@@ -308,16 +308,16 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     destinations.add(
       NavigationDestination(
         icon: Semantics(
-          label: strings.AppStrings.settings,
+          label: AppLocalizations.of(context)!.settings,
           button: true,
           child: const Icon(Icons.settings_outlined),
         ),
         selectedIcon: Semantics(
-          label: 'Selected - ${strings.AppStrings.settings}',
+          label: 'Selected - ${AppLocalizations.of(context)!.settings}',
           button: true,
           child: const Icon(Icons.settings),
         ),
-        label: strings.AppStrings.settings,
+        label: AppLocalizations.of(context)!.settings,
       ),
     );
 

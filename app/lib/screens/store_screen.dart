@@ -7,7 +7,7 @@ import '../providers/settings_provider.dart';
 import '../providers/store_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/top_snackbar.dart';
-import '../l10n/strings_nl.dart' as strings;
+import 'package:bijbelquiz/l10n/app_localizations.dart';
 import '../screens/quiz_screen.dart';
 import '../screens/ai_theme_designer_screen.dart';
 import '../screens/coupon_redeem_screen.dart';
@@ -156,7 +156,7 @@ class _StoreScreenState extends State<StoreScreen> {
               ),
               const SizedBox(width: 12),
               Text(
-                strings.AppStrings.store,
+                AppLocalizations.of(context)!.store,
                 style: textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.w700,
                   color: colorScheme.onSurface.withValues(alpha: 0.7),
@@ -200,7 +200,7 @@ class _StoreScreenState extends State<StoreScreen> {
                     ),
                     SizedBox(height: isDesktop ? 32 : 24),
                     Text(
-                      strings.AppStrings.connectionError,
+                      AppLocalizations.of(context)!.connectionError,
                       style: textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.w700,
                         color: colorScheme.error,
@@ -209,7 +209,7 @@ class _StoreScreenState extends State<StoreScreen> {
                     ),
                     SizedBox(height: isDesktop ? 16 : 12),
                     Text(
-                      strings.AppStrings.connectionErrorMsg,
+                      AppLocalizations.of(context)!.connectionErrorMsg,
                       style: textTheme.bodyLarge?.copyWith(
                         color: colorScheme.onSurface.withValues(alpha: 0.7),
                         height: 1.5,
@@ -232,7 +232,7 @@ class _StoreScreenState extends State<StoreScreen> {
                             setState(() {});
                           },
                           icon: const Icon(Icons.refresh_rounded),
-                          label: Text(strings.AppStrings.tryAgain),
+                          label: Text(AppLocalizations.of(context)!.tryAgain),
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(
                               horizontal: isDesktop ? 32 : 24,
@@ -276,7 +276,7 @@ class _StoreScreenState extends State<StoreScreen> {
               ),
               const SizedBox(width: 12),
               Text(
-                strings.AppStrings.store,
+                AppLocalizations.of(context)!.store,
                 style: textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.w700,
                   color: colorScheme.onSurface.withValues(alpha: 0.7),
@@ -298,7 +298,7 @@ class _StoreScreenState extends State<StoreScreen> {
     // Show error if loading failed
     if (storeProvider.error != null) {
       IconData errorIcon = Icons.error_outline_rounded;
-      String errorTitle = strings.AppStrings.errorLoadingStore;
+      String errorTitle = AppLocalizations.of(context)!.errorLoadingStore;
       Color errorColor = colorScheme.error;
 
       return Scaffold(
@@ -321,7 +321,7 @@ class _StoreScreenState extends State<StoreScreen> {
               ),
               const SizedBox(width: 12),
               Text(
-                strings.AppStrings.store,
+                AppLocalizations.of(context)!.store,
                 style: textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.w700,
                   color: colorScheme.onSurface.withValues(alpha: 0.7),
@@ -393,7 +393,7 @@ class _StoreScreenState extends State<StoreScreen> {
                             storeProvider.loadStoreItems();
                           },
                           icon: const Icon(Icons.refresh_rounded),
-                          label: Text(strings.AppStrings.tryAgain),
+                          label: Text(AppLocalizations.of(context)!.tryAgain),
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(
                               horizontal: isDesktop ? 32 : 24,
@@ -435,7 +435,7 @@ class _StoreScreenState extends State<StoreScreen> {
             ),
             const SizedBox(width: 12),
             Text(
-              strings.AppStrings.store,
+              AppLocalizations.of(context)!.store,
               style: textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w700,
                 color: colorScheme.onSurface.withValues(alpha: 0.7),
@@ -510,7 +510,7 @@ class _StoreScreenState extends State<StoreScreen> {
                           ),
                           SizedBox(height: isDesktop ? 12 : 8),
                           Text(
-                            strings.AppStrings.availableStars,
+                            AppLocalizations.of(context)!.availableStars,
                             style: textTheme.titleMedium?.copyWith(
                               color:
                                   colorScheme.onSurface.withValues(alpha: 0.7),
@@ -535,7 +535,7 @@ class _StoreScreenState extends State<StoreScreen> {
                     // Power-ups section
                     _buildSectionHeader(
                       context,
-                      strings.AppStrings.powerUps,
+                      AppLocalizations.of(context)!.powerUps,
                       Icons.flash_on_rounded,
                       colorScheme.primary,
                       isDesktop,
@@ -545,8 +545,10 @@ class _StoreScreenState extends State<StoreScreen> {
 
                     _buildPowerupCard(
                       context,
-                      title: strings.AppStrings.doubleStars5Questions,
-                      description: strings.AppStrings.doubleStars5QuestionsDesc,
+                      title:
+                          AppLocalizations.of(context)!.doubleStars5Questions,
+                      description: AppLocalizations.of(context)!
+                          .doubleStars5QuestionsDesc,
                       icon: Icons.flash_on_rounded,
                       iconColor: colorScheme.primary,
                       cost: _getPriceByKey(context, 'double_stars_5_questions'),
@@ -559,7 +561,8 @@ class _StoreScreenState extends State<StoreScreen> {
                       isDesktop: isDesktop,
                       onPurchase: () {
                         gameStats.activatePowerup(multiplier: 2, questions: 5);
-                        return strings.AppStrings.doubleStarsActivated;
+                        return AppLocalizations.of(context)!
+                            .doubleStarsActivated;
                       },
                     ),
 
@@ -567,8 +570,10 @@ class _StoreScreenState extends State<StoreScreen> {
 
                     _buildPowerupCard(
                       context,
-                      title: strings.AppStrings.tripleStars5Questions,
-                      description: strings.AppStrings.tripleStars5QuestionsDesc,
+                      title:
+                          AppLocalizations.of(context)!.tripleStars5Questions,
+                      description: AppLocalizations.of(context)!
+                          .tripleStars5QuestionsDesc,
                       icon: Icons.flash_on_rounded,
                       iconColor: Colors.deepOrange,
                       cost: _getPriceByKey(context, 'triple_stars_5_questions'),
@@ -581,7 +586,8 @@ class _StoreScreenState extends State<StoreScreen> {
                       isDesktop: isDesktop,
                       onPurchase: () {
                         gameStats.activatePowerup(multiplier: 3, questions: 5);
-                        return strings.AppStrings.tripleStarsActivated;
+                        return AppLocalizations.of(context)!
+                            .tripleStarsActivated;
                       },
                     ),
 
@@ -589,9 +595,10 @@ class _StoreScreenState extends State<StoreScreen> {
 
                     _buildPowerupCard(
                       context,
-                      title: strings.AppStrings.fiveTimesStars5Questions,
-                      description:
-                          strings.AppStrings.fiveTimesStars5QuestionsDesc,
+                      title: AppLocalizations.of(context)!
+                          .fiveTimesStars5Questions,
+                      description: AppLocalizations.of(context)!
+                          .fiveTimesStars5QuestionsDesc,
                       icon: Icons.flash_on_rounded,
                       iconColor: Colors.redAccent,
                       cost: _getPriceByKey(
@@ -605,7 +612,8 @@ class _StoreScreenState extends State<StoreScreen> {
                       isDesktop: isDesktop,
                       onPurchase: () {
                         gameStats.activatePowerup(multiplier: 5, questions: 5);
-                        return strings.AppStrings.fiveTimesStarsActivated;
+                        return AppLocalizations.of(context)!
+                            .fiveTimesStarsActivated;
                       },
                     ),
 
@@ -613,8 +621,9 @@ class _StoreScreenState extends State<StoreScreen> {
 
                     _buildPowerupCard(
                       context,
-                      title: strings.AppStrings.doubleStars60Seconds,
-                      description: strings.AppStrings.doubleStars60SecondsDesc,
+                      title: AppLocalizations.of(context)!.doubleStars60Seconds,
+                      description: AppLocalizations.of(context)!
+                          .doubleStars60SecondsDesc,
                       icon: Icons.timer_rounded,
                       iconColor: Colors.orangeAccent,
                       cost: _getPriceByKey(context, 'double_stars_60_seconds'),
@@ -628,7 +637,8 @@ class _StoreScreenState extends State<StoreScreen> {
                       onPurchase: () {
                         gameStats.activatePowerup(
                             multiplier: 2, time: Duration(seconds: 60));
-                        return strings.AppStrings.doubleStars60SecondsActivated;
+                        return AppLocalizations.of(context)!
+                            .doubleStars60SecondsActivated;
                       },
                     ),
 
@@ -637,7 +647,7 @@ class _StoreScreenState extends State<StoreScreen> {
                     // Themes section
                     _buildSectionHeader(
                       context,
-                      strings.AppStrings.themes,
+                      AppLocalizations.of(context)!.themes,
                       Icons.palette_rounded,
                       colorScheme.secondary,
                       isDesktop,
@@ -647,8 +657,8 @@ class _StoreScreenState extends State<StoreScreen> {
 
                     _buildThemeCard(
                       context,
-                      title: strings.AppStrings.oledThemeName,
-                      description: strings.AppStrings.oledThemeDesc,
+                      title: AppLocalizations.of(context)!.oledThemeName,
+                      description: AppLocalizations.of(context)!.oledThemeDesc,
                       icon: Icons.nights_stay_rounded,
                       iconColor: Colors.black,
                       cost: _getPriceByKey(context, 'oled_theme'),
@@ -667,8 +677,8 @@ class _StoreScreenState extends State<StoreScreen> {
 
                     _buildThemeCard(
                       context,
-                      title: strings.AppStrings.greenThemeName,
-                      description: strings.AppStrings.greenThemeDesc,
+                      title: AppLocalizations.of(context)!.greenThemeName,
+                      description: AppLocalizations.of(context)!.greenThemeDesc,
                       icon: Icons.eco_rounded,
                       iconColor: Colors.green[700]!,
                       cost: _getPriceByKey(context, 'green_theme'),
@@ -687,8 +697,9 @@ class _StoreScreenState extends State<StoreScreen> {
 
                     _buildThemeCard(
                       context,
-                      title: strings.AppStrings.orangeThemeName,
-                      description: strings.AppStrings.orangeThemeDesc,
+                      title: AppLocalizations.of(context)!.orangeThemeName,
+                      description:
+                          AppLocalizations.of(context)!.orangeThemeDesc,
                       icon: Icons.circle_rounded,
                       iconColor: Colors.orange[700]!,
                       cost: _getPriceByKey(context, 'orange_theme'),
@@ -707,8 +718,9 @@ class _StoreScreenState extends State<StoreScreen> {
 
                     _buildThemeCard(
                       context,
-                      title: strings.AppStrings.christmasTheme,
-                      description: strings.AppStrings.christmasThemeDescription,
+                      title: AppLocalizations.of(context)!.christmasTheme,
+                      description: AppLocalizations.of(context)!
+                          .christmasThemeDescription,
                       icon: Icons.card_giftcard_rounded,
                       iconColor: Colors.red[700]!,
                       cost: _getPriceByKey(context, 'christmas_theme'),
@@ -728,9 +740,9 @@ class _StoreScreenState extends State<StoreScreen> {
 
                     _buildThemeCard(
                       context,
-                      title: strings.AppStrings.terminalGreenTheme,
-                      description:
-                          strings.AppStrings.terminalGreenThemeDescription,
+                      title: AppLocalizations.of(context)!.terminalGreenTheme,
+                      description: AppLocalizations.of(context)!
+                          .terminalGreenThemeDescription,
                       icon: Icons.code_rounded,
                       iconColor: Colors.green[700]!,
                       cost: _getPriceByKey(context, 'terminal_green_theme'),
@@ -750,8 +762,9 @@ class _StoreScreenState extends State<StoreScreen> {
 
                     _buildThemeCard(
                       context,
-                      title: strings.AppStrings.oceanBlueTheme,
-                      description: strings.AppStrings.oceanBlueThemeDescription,
+                      title: AppLocalizations.of(context)!.oceanBlueTheme,
+                      description: AppLocalizations.of(context)!
+                          .oceanBlueThemeDescription,
                       icon: Icons.waves_rounded,
                       iconColor: Colors.blue[400]!,
                       cost: _getPriceByKey(context, 'ocean_blue_theme'),
@@ -771,8 +784,9 @@ class _StoreScreenState extends State<StoreScreen> {
 
                     _buildThemeCard(
                       context,
-                      title: strings.AppStrings.roseWhiteTheme,
-                      description: strings.AppStrings.roseWhiteThemeDescription,
+                      title: AppLocalizations.of(context)!.roseWhiteTheme,
+                      description: AppLocalizations.of(context)!
+                          .roseWhiteThemeDescription,
                       icon: Icons.favorite_rounded,
                       iconColor: Colors.pink[400]!,
                       cost: _getPriceByKey(context, 'rose_white_theme'),
@@ -792,8 +806,9 @@ class _StoreScreenState extends State<StoreScreen> {
 
                     _buildThemeCard(
                       context,
-                      title: strings.AppStrings.darkWoodTheme,
-                      description: strings.AppStrings.darkWoodThemeDescription,
+                      title: AppLocalizations.of(context)!.darkWoodTheme,
+                      description: AppLocalizations.of(context)!
+                          .darkWoodThemeDescription,
                       icon: Icons.forest_rounded,
                       iconColor: Colors.brown[700]!,
                       cost: _getPriceByKey(context, 'dark_wood_theme'),
@@ -813,9 +828,9 @@ class _StoreScreenState extends State<StoreScreen> {
 
                     _buildAIThemeCard(
                       context,
-                      title: strings.AppStrings.aiThemeGenerator,
-                      description:
-                          strings.AppStrings.aiThemeGeneratorDescription,
+                      title: AppLocalizations.of(context)!.aiThemeGenerator,
+                      description: AppLocalizations.of(context)!
+                          .aiThemeGeneratorDescription,
                       icon: Icons.smart_toy_rounded,
                       iconColor: Colors.purple,
                       cost: _getPriceByKey(context, 'ai_theme_generator'),
@@ -971,7 +986,8 @@ class _StoreScreenState extends State<StoreScreen> {
                               const SizedBox(width: 12),
                               Expanded(
                                 child: Text(
-                                  strings.AppStrings.powerupActivated,
+                                  AppLocalizations.of(context)!
+                                      .powerupActivated,
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 2,
                                 ),
@@ -991,7 +1007,7 @@ class _StoreScreenState extends State<StoreScreen> {
                                 ),
                               );
                             },
-                            child: Text(strings.AppStrings.goToQuiz,
+                            child: Text(AppLocalizations.of(context)!.goToQuiz,
                                 style: TextStyle(color: colorScheme.primary)),
                           ),
                         ],
@@ -1011,8 +1027,8 @@ class _StoreScreenState extends State<StoreScreen> {
                     },
                   );
                   if (localContext.mounted) {
-                    showTopSnackBar(
-                        localContext, strings.AppStrings.purchaseFailed,
+                    showTopSnackBar(localContext,
+                        AppLocalizations.of(context)!.purchaseFailed,
                         style: TopSnackBarStyle.error);
                   }
                 }
@@ -1031,13 +1047,16 @@ class _StoreScreenState extends State<StoreScreen> {
                   },
                 );
                 if (localContext.mounted) {
-                  showTopSnackBar(localContext,
-                      strings.AppStrings.purchaseErrorString(e.toString()),
+                  showTopSnackBar(
+                      localContext,
+                      AppLocalizations.of(context)!
+                          .purchaseErrorString(e.toString()),
                       style: TopSnackBarStyle.error);
                 }
               }
             } else {
-              showTopSnackBar(localContext, strings.AppStrings.notEnoughStars,
+              showTopSnackBar(
+                  localContext, AppLocalizations.of(context)!.notEnoughStars,
                   style: TopSnackBarStyle.error);
             }
           },
@@ -1102,7 +1121,7 @@ class _StoreScreenState extends State<StoreScreen> {
                                   ),
                                   SizedBox(width: isDesktop ? 2 : 1),
                                   Text(
-                                    strings.AppStrings.discount,
+                                    AppLocalizations.of(context)!.discount,
                                     style: textTheme.labelSmall?.copyWith(
                                       fontWeight: FontWeight.w600,
                                       color: Colors.green[700],
@@ -1152,7 +1171,9 @@ class _StoreScreenState extends State<StoreScreen> {
                           ),
                           SizedBox(width: isDesktop ? 6 : 4),
                           Text(
-                            isDev ? strings.AppStrings.free : '$cost',
+                            isDev
+                                ? AppLocalizations.of(context)!.free
+                                : '$cost',
                             style: textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.w600,
                               color: colorScheme.primary,
@@ -1263,7 +1284,7 @@ class _StoreScreenState extends State<StoreScreen> {
 
                   if (!localContext.mounted) return;
                   final message =
-                      '$title ${strings.AppStrings.themeUnlockedWithSwitchOption}';
+                      '$title ${AppLocalizations.of(context)!.themeUnlockedWithSwitchOption}';
                   showTopSnackBar(localContext, message,
                       style: TopSnackBarStyle.success);
                 } else {
@@ -1281,8 +1302,8 @@ class _StoreScreenState extends State<StoreScreen> {
                     },
                   );
                   if (localContext.mounted) {
-                    showTopSnackBar(
-                        localContext, strings.AppStrings.purchaseFailed,
+                    showTopSnackBar(localContext,
+                        AppLocalizations.of(context)!.purchaseFailed,
                         style: TopSnackBarStyle.error);
                   }
                 }
@@ -1301,13 +1322,16 @@ class _StoreScreenState extends State<StoreScreen> {
                   },
                 );
                 if (localContext.mounted) {
-                  showTopSnackBar(localContext,
-                      strings.AppStrings.purchaseErrorString(e.toString()),
+                  showTopSnackBar(
+                      localContext,
+                      AppLocalizations.of(context)!
+                          .purchaseErrorString(e.toString()),
                       style: TopSnackBarStyle.error);
                 }
               }
             } else {
-              showTopSnackBar(localContext, strings.AppStrings.notEnoughStars,
+              showTopSnackBar(
+                  localContext, AppLocalizations.of(context)!.notEnoughStars,
                   style: TopSnackBarStyle.error);
             }
           },
@@ -1372,7 +1396,7 @@ class _StoreScreenState extends State<StoreScreen> {
                                   ),
                                   SizedBox(width: isDesktop ? 2 : 1),
                                   Text(
-                                    strings.AppStrings.discount,
+                                    AppLocalizations.of(context)!.discount,
                                     style: textTheme.labelSmall?.copyWith(
                                       fontWeight: FontWeight.w600,
                                       color: Colors.green[700],
@@ -1436,7 +1460,9 @@ class _StoreScreenState extends State<StoreScreen> {
                                 ),
                                 SizedBox(width: isDesktop ? 6 : 4),
                                 Text(
-                                  isDev ? strings.AppStrings.free : '$cost',
+                                  isDev
+                                      ? AppLocalizations.of(context)!.free
+                                      : '$cost',
                                   style: textTheme.titleSmall?.copyWith(
                                     fontWeight: FontWeight.w600,
                                     color: colorScheme.primary,
@@ -1535,8 +1561,8 @@ class _StoreScreenState extends State<StoreScreen> {
                     },
                   );
                   if (localContext.mounted) {
-                    showTopSnackBar(
-                        localContext, strings.AppStrings.purchaseFailed,
+                    showTopSnackBar(localContext,
+                        AppLocalizations.of(context)!.purchaseFailed,
                         style: TopSnackBarStyle.error);
                   }
                   return;
@@ -1555,7 +1581,7 @@ class _StoreScreenState extends State<StoreScreen> {
                 );
                 if (localContext.mounted) {
                   showTopSnackBar(localContext,
-                      strings.AppStrings.paymentError(e.toString()),
+                      AppLocalizations.of(context)!.paymentError(e.toString()),
                       style: TopSnackBarStyle.error);
                 }
                 return;
@@ -1584,13 +1610,16 @@ class _StoreScreenState extends State<StoreScreen> {
                   },
                 );
                 if (localContext.mounted) {
-                  showTopSnackBar(localContext,
-                      strings.AppStrings.errorOpeningAiThemeGenerator,
+                  showTopSnackBar(
+                      localContext,
+                      AppLocalizations.of(context)!
+                          .errorOpeningAiThemeGenerator,
                       style: TopSnackBarStyle.error);
                 }
               }
             } else {
-              showTopSnackBar(localContext, strings.AppStrings.notEnoughStars,
+              showTopSnackBar(
+                  localContext, AppLocalizations.of(context)!.notEnoughStars,
                   style: TopSnackBarStyle.error);
             }
           },
@@ -1655,7 +1684,7 @@ class _StoreScreenState extends State<StoreScreen> {
                                   ),
                                   SizedBox(width: isDesktop ? 2 : 1),
                                   Text(
-                                    strings.AppStrings.discount,
+                                    AppLocalizations.of(context)!.discount,
                                     style: textTheme.labelSmall?.copyWith(
                                       fontWeight: FontWeight.w600,
                                       color: Colors.green[700],
@@ -1705,7 +1734,9 @@ class _StoreScreenState extends State<StoreScreen> {
                           ),
                           SizedBox(width: isDesktop ? 6 : 4),
                           Text(
-                            isDev ? strings.AppStrings.free : '$cost',
+                            isDev
+                                ? AppLocalizations.of(context)!.free
+                                : '$cost',
                             style: textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.w600,
                               color: colorScheme.primary,
@@ -1750,7 +1781,7 @@ class _StoreScreenState extends State<StoreScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                strings.AppStrings.couponTitle,
+                AppLocalizations.of(context)!.couponTitle,
                 style: textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.w700,
                   color: colorScheme.onSurface,
@@ -1758,7 +1789,7 @@ class _StoreScreenState extends State<StoreScreen> {
               ),
               const SizedBox(height: 4),
               Text(
-                strings.AppStrings.couponDescription,
+                AppLocalizations.of(context)!.couponDescription,
                 style: textTheme.bodyMedium?.copyWith(
                   color: colorScheme.onSurface.withValues(alpha: 0.6),
                 ),
@@ -1772,7 +1803,7 @@ class _StoreScreenState extends State<StoreScreen> {
             MaterialPageRoute(builder: (_) => const CouponRedeemScreen()),
           ),
           icon: const Icon(Icons.redeem_rounded, size: 20),
-          label: Text(strings.AppStrings.couponRedeem),
+          label: Text(AppLocalizations.of(context)!.couponRedeem),
           style: FilledButton.styleFrom(
             backgroundColor: Colors.teal,
             foregroundColor: Colors.white,

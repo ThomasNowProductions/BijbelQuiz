@@ -4,7 +4,7 @@ import '../services/logger.dart';
 
 import 'error_types.dart';
 import '../widgets/top_snackbar.dart';
-import '../l10n/strings_nl.dart' as strings_en;
+import 'package:bijbelquiz/l10n/app_localizations.dart';
 
 /// Centralized error handling service that provides user-friendly error messages
 /// and consistent error handling across the application
@@ -12,6 +12,9 @@ class ErrorHandler {
   static final ErrorHandler _instance = ErrorHandler._internal();
   factory ErrorHandler() => _instance;
   ErrorHandler._internal();
+
+  /// Gets localized string from context
+  AppLocalizations _l10n(BuildContext context) => AppLocalizations.of(context)!;
 
   /// Displays a user-friendly error message using snackbar
   void showError({
@@ -56,7 +59,7 @@ class ErrorHandler {
       context: context,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
-          title: Text(title ?? strings_en.AppStrings.error),
+          title: Text(title ?? _l10n(context).error),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -75,7 +78,7 @@ class ErrorHandler {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text(strings_en.AppStrings.ok),
+              child: Text(_l10n(context).ok),
               onPressed: () {
                 Navigator.of(dialogContext).pop();
               },
@@ -171,12 +174,16 @@ class ErrorHandler {
     String? userMessage,
     String? errorCode,
     StackTrace? stackTrace,
-    Map<String, dynamic>? context,
+    Map<String, dynamic>? contextData,
     String? questionId,
     Map<String, dynamic>? additionalInfo,
+    BuildContext? context,
   }) {
     String technicalMessage = exception.toString();
-    String finalUserMessage = userMessage ?? _getDefaultUserMessage(type);
+    String finalUserMessage = userMessage ??
+        (context != null
+            ? _getDefaultUserMessage(type, context)
+            : 'Unknown error');
 
     // Handle specific exception types
     if (exception is String) {
@@ -192,7 +199,7 @@ class ErrorHandler {
       userMessage: finalUserMessage,
       errorCode: errorCode,
       stackTrace: stackTrace,
-      context: context,
+      context: contextData,
     );
   }
 
@@ -218,34 +225,34 @@ class ErrorHandler {
   }
 
   /// Gets default user-friendly message based on error type
-  String _getDefaultUserMessage(AppErrorType type) {
+  String _getDefaultUserMessage(AppErrorType type, BuildContext context) {
     switch (type) {
       case AppErrorType.network:
-        return strings_en.AppStrings.connectionError;
+        return _l10n(context).connectionError;
       case AppErrorType.dataLoading:
-        return strings_en.AppStrings.errorLoadQuestions;
+        return _l10n(context).errorLoadQuestions;
       case AppErrorType.authentication:
-        return strings_en.AppStrings.activationError;
+        return _l10n(context).activationError;
       case AppErrorType.permission:
-        return strings_en.AppStrings.permissionDenied;
+        return _l10n(context).permissionDenied;
       case AppErrorType.validation:
-        return strings_en.AppStrings.pleaseEnterValidString;
+        return _l10n(context).pleaseEnterValidString;
       case AppErrorType.payment:
-        return strings_en.AppStrings.purchaseError;
+        return _l10n(context).purchaseError;
       case AppErrorType.ai:
-        return strings_en.AppStrings
+        return _l10n(context)
             .aiError; // Note: this might not exist, will add to localization later
       case AppErrorType.api:
-        return strings_en.AppStrings
+        return _l10n(context)
             .apiError; // Note: this might not exist, will add to localization later
       case AppErrorType.storage:
-        return strings_en.AppStrings
+        return _l10n(context)
             .storageError; // Note: this might not exist, will add to localization later
       case AppErrorType.sync:
-        return strings_en.AppStrings
+        return _l10n(context)
             .syncError; // Note: this might not exist, will add to localization later
       case AppErrorType.unknown:
-        return strings_en.AppStrings.unknownError;
+        return _l10n(context).unknownError;
     }
   }
 }

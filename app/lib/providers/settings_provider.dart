@@ -4,11 +4,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../services/logger.dart';
 import '../models/ai_theme.dart';
 import '../services/sync_service_v2.dart';
-import '../services/sync/sync_types_v2.dart';
+
 import '../utils/automatic_error_reporter.dart';
 import '../error/error_handler.dart';
 import '../error/error_types.dart';
-import '../l10n/strings_nl.dart' as strings;
 
 /// Manages the app's settings including language and theme preferences
 class SettingsProvider extends ChangeNotifier {
@@ -354,7 +353,7 @@ class SettingsProvider extends ChangeNotifier {
         e,
         type: AppErrorType.storage,
         userMessage: errorMessage,
-        context: {'setting_type': 'save_setting'},
+        contextData: {'setting_type': 'save_setting'},
       );
       _error = appError.userMessage;
       notifyListeners();
@@ -391,7 +390,6 @@ class SettingsProvider extends ChangeNotifier {
       AppLogger.info('SharedPreferences instance obtained');
       // Load language
       _language = _prefs?.getString('language') ?? 'nl';
-      strings.AppStrings.setLanguage(_language);
       final themeModeIndex = _prefs?.getInt(_themeModeKey) ?? 0;
       _themeMode = ThemeMode.values[themeModeIndex];
       // Load old boolean slow mode setting for backward compatibility
@@ -517,7 +515,7 @@ class SettingsProvider extends ChangeNotifier {
 
             // Merge AI themes (add themes that don't exist locally)
             final syncedAIThemes =
-                syncedSettings?['aiThemes'] as Map<String, dynamic>?;
+                syncedSettings['aiThemes'] as Map<String, dynamic>?;
             if (syncedAIThemes != null) {
               for (final entry in syncedAIThemes.entries) {
                 final themeId = entry.key;
@@ -589,7 +587,6 @@ class SettingsProvider extends ChangeNotifier {
     await _saveSetting(
       action: () async {
         _language = language;
-        strings.AppStrings.setLanguage(language);
         await _prefs?.setString('language', language);
         AppLogger.info('Language saved successfully: $language');
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/analytics_service.dart';
 import 'multiplayer_quiz_screen.dart';
-import '../l10n/strings_nl.dart' as strings;
+import 'package:bijbelquiz/l10n/app_localizations.dart';
 
 /// Screen for setting up a multiplayer game
 class MultiplayerGameSetupScreen extends StatefulWidget {
@@ -37,7 +37,7 @@ class _MultiplayerGameSetupScreenState
         backgroundColor: colorScheme.surface,
         elevation: 0,
         title: Text(
-          strings.AppStrings.multiplayerQuiz,
+          AppLocalizations.of(context)!.multiplayerQuiz,
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w800,
               ),
@@ -74,7 +74,7 @@ class _MultiplayerGameSetupScreenState
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        strings.AppStrings.multiplayerQuiz,
+                        AppLocalizations.of(context)!.multiplayerQuiz,
                         style:
                             Theme.of(context).textTheme.headlineSmall?.copyWith(
                                   fontWeight: FontWeight.bold,
@@ -84,7 +84,7 @@ class _MultiplayerGameSetupScreenState
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        strings.AppStrings.multiplayerDescription,
+                        AppLocalizations.of(context)!.multiplayerDescription,
                         style: Theme.of(context).textTheme.bodyLarge,
                         textAlign: TextAlign.center,
                       ),
@@ -96,7 +96,7 @@ class _MultiplayerGameSetupScreenState
 
                 // Duration selection
                 Text(
-                  strings.AppStrings.chooseGameDuration,
+                  AppLocalizations.of(context)!.chooseGameDuration,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -121,7 +121,7 @@ class _MultiplayerGameSetupScreenState
                     ),
                   ),
                   child: Text(
-                    strings.AppStrings.startMultiplayerQuiz,
+                    AppLocalizations.of(context)!.startMultiplayerQuiz,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -142,17 +142,20 @@ class _MultiplayerGameSetupScreenState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        strings.AppStrings.gameRules,
+                        AppLocalizations.of(context)!.gameRules,
                         style:
                             Theme.of(context).textTheme.titleMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
                       ),
                       const SizedBox(height: 8),
-                      _buildRuleItem(strings.AppStrings.ruleBothPlayers),
-                      _buildRuleItem(strings.AppStrings.ruleCorrectAnswer),
-                      _buildRuleItem(strings.AppStrings.ruleWinner),
-                      _buildRuleItem(strings.AppStrings.ruleScreenRotation),
+                      _buildRuleItem(
+                          AppLocalizations.of(context)!.ruleBothPlayers),
+                      _buildRuleItem(
+                          AppLocalizations.of(context)!.ruleCorrectAnswer),
+                      _buildRuleItem(AppLocalizations.of(context)!.ruleWinner),
+                      _buildRuleItem(
+                          AppLocalizations.of(context)!.ruleScreenRotation),
                     ],
                   ),
                 ),
@@ -199,7 +202,7 @@ class _MultiplayerGameSetupScreenState
                 ),
                 const SizedBox(width: 12),
                 Text(
-                  '$duration ${strings.AppStrings.minutes}',
+                  '$duration ${AppLocalizations.of(context)!.minutes}',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight:
                             isSelected ? FontWeight.bold : FontWeight.normal,

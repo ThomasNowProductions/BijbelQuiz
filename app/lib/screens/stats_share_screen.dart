@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../l10n/strings_nl.dart' as strings;
+import 'package:bijbelquiz/l10n/app_localizations.dart';
 
 class StatsShareScreen extends StatelessWidget {
   final Map<String, String> statsData;
@@ -82,7 +82,7 @@ class StatsShareScreen extends StatelessWidget {
                           color: Colors.black,
                         ),
                       ),
-                      strings.AppStrings.correctAnswers,
+                      AppLocalizations.of(context)!.correctAnswers,
                       Colors.black,
                     ),
                     const Divider(height: 16, thickness: 1),
@@ -95,7 +95,7 @@ class StatsShareScreen extends StatelessWidget {
                           color: Colors.black,
                         ),
                       ),
-                      strings.AppStrings.accuracy,
+                      AppLocalizations.of(context)!.accuracy,
                       Colors.black,
                     ),
                     const Divider(height: 16, thickness: 1),
@@ -108,7 +108,7 @@ class StatsShareScreen extends StatelessWidget {
                           color: Colors.black,
                         ),
                       ),
-                      strings.AppStrings.hours,
+                      AppLocalizations.of(context)!.hours,
                       Colors.black,
                     ),
                     const Divider(height: 16, thickness: 1),
@@ -121,7 +121,7 @@ class StatsShareScreen extends StatelessWidget {
                           color: Colors.black,
                         ),
                       ),
-                      strings.AppStrings.currentStreak,
+                      AppLocalizations.of(context)!.currentStreak,
                       Colors.black,
                     ),
                   ],

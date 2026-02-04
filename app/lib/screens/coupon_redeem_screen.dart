@@ -7,7 +7,7 @@ import 'dart:math';
 import '../providers/game_stats_provider.dart';
 import '../providers/settings_provider.dart';
 import '../services/coupon_service.dart';
-import '../l10n/strings_nl.dart' as strings;
+import 'package:bijbelquiz/l10n/app_localizations.dart';
 
 class CouponRedeemScreen extends StatefulWidget {
   const CouponRedeemScreen({super.key});
@@ -171,15 +171,15 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen>
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        title: Text(strings.AppStrings.permissionDenied),
+        title: Text(AppLocalizations.of(context)!.permissionDenied),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(strings.AppStrings.qrCode),
+            Text(AppLocalizations.of(context)!.qrCode),
             const SizedBox(height: 8),
             Text(
-              strings.AppStrings.cameraAccessDescription,
+              AppLocalizations.of(context)!.cameraAccessDescription,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],
@@ -192,7 +192,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen>
               });
               Navigator.pop(context);
             },
-            child: Text(strings.AppStrings.cancel),
+            child: Text(AppLocalizations.of(context)!.cancel),
           ),
           TextButton(
             onPressed: () async {
@@ -202,7 +202,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen>
               Navigator.pop(context);
               await openAppSettings();
             },
-            child: Text(strings.AppStrings.openStatusPage),
+            child: Text(AppLocalizations.of(context)!.openStatusPage),
           ),
         ],
       ),
@@ -239,7 +239,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen>
             ),
             const SizedBox(width: 12),
             Text(
-              strings.AppStrings.couponTitle,
+              AppLocalizations.of(context)!.couponTitle,
               style: textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w700,
                 color: colorScheme.onSurface.withValues(alpha: 0.7),
@@ -282,7 +282,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen>
                           ),
                           child: Center(
                             child: Text(
-                              strings.AppStrings.couponCodeLabel,
+                              AppLocalizations.of(context)!.couponCodeLabel,
                               style: textTheme.titleMedium?.copyWith(
                                 fontWeight: FontWeight.w600,
                                 color: _selectedIndex == 0
@@ -317,7 +317,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen>
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  strings.AppStrings.qrCode,
+                                  AppLocalizations.of(context)!.qrCode,
                                   style: textTheme.titleMedium?.copyWith(
                                     fontWeight: FontWeight.w600,
                                     color: _selectedIndex == 1
@@ -359,7 +359,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          strings.AppStrings.couponDialogTitle,
+          AppLocalizations.of(context)!.couponDialogTitle,
           style: textTheme.headlineSmall?.copyWith(
             fontWeight: FontWeight.w700,
             color: colorScheme.onSurface,
@@ -369,8 +369,8 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen>
         TextField(
           controller: controller,
           decoration: InputDecoration(
-            labelText: strings.AppStrings.couponCodeLabel,
-            hintText: strings.AppStrings.couponCodeHint,
+            labelText: AppLocalizations.of(context)!.couponCodeLabel,
+            hintText: AppLocalizations.of(context)!.couponCodeHint,
             border: const OutlineInputBorder(),
           ),
           textCapitalization: TextCapitalization.characters,
@@ -381,7 +381,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen>
             Expanded(
               child: OutlinedButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text(strings.AppStrings.cancel),
+                child: Text(AppLocalizations.of(context)!.cancel),
               ),
             ),
             const SizedBox(width: 16),
@@ -392,7 +392,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen>
                     _redeemCoupon(controller.text.trim());
                   }
                 },
-                child: Text(strings.AppStrings.couponRedeem),
+                child: Text(AppLocalizations.of(context)!.couponRedeem),
               ),
             ),
           ],
@@ -421,7 +421,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen>
             ),
             const SizedBox(height: 16),
             Text(
-              strings.AppStrings.qrScannerMobileOnly,
+              AppLocalizations.of(context)!.qrScannerMobileOnly,
               style: theme.textTheme.titleMedium?.copyWith(
                 color: colorScheme.onSurface.withValues(alpha: 0.6),
               ),
@@ -457,7 +457,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen>
           ),
           const SizedBox(height: 24),
           Text(
-            strings.AppStrings.cameraAccessRequired,
+            AppLocalizations.of(context)!.cameraAccessRequired,
             style: theme.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.w700,
               color: colorScheme.onSurface,
@@ -467,7 +467,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen>
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32),
             child: Text(
-              strings.AppStrings.cameraAccessDescription,
+              AppLocalizations.of(context)!.cameraAccessDescription,
               textAlign: TextAlign.center,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: colorScheme.onSurface.withValues(alpha: 0.7),
@@ -477,14 +477,14 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen>
           const SizedBox(height: 32),
           FilledButton(
             onPressed: _requestCameraPermissionWithRationale,
-            child: Text(strings.AppStrings.grantCameraPermission),
+            child: Text(AppLocalizations.of(context)!.grantCameraPermission),
           ),
           if (_showPermissionRationale) ...[
             const SizedBox(height: 16),
             TextButton(
               onPressed: _showPermissionSettingsDialog,
               child: Text(
-                strings.AppStrings.openSettings,
+                AppLocalizations.of(context)!.openSettings,
                 style: TextStyle(color: colorScheme.primary),
               ),
             ),
@@ -665,7 +665,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen>
                   child: Column(
                     children: [
                       Text(
-                        strings.AppStrings.qrCodeDescription,
+                        AppLocalizations.of(context)!.qrCodeDescription,
                         textAlign: TextAlign.center,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           color: Colors.white,
@@ -681,7 +681,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen>
                       const SizedBox(height: 8),
                       if (_showScannerTutorial)
                         Text(
-                          strings.AppStrings.qrCodeTutorial,
+                          AppLocalizations.of(context)!.qrCodeTutorial,
                           textAlign: TextAlign.center,
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: Colors.white.withValues(alpha: 0.8),
@@ -720,7 +720,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen>
           ),
           const SizedBox(height: 16),
           Text(
-            strings.AppStrings.cameraError,
+            AppLocalizations.of(context)!.cameraError,
             style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.w600,
               color: colorScheme.onSurface,
@@ -730,7 +730,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen>
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32),
             child: Text(
-              '${strings.AppStrings.cameraInitializationError}${error.toString()}',
+              '${AppLocalizations.of(context)!.cameraInitializationError}${error.toString()}',
               textAlign: TextAlign.center,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: colorScheme.onSurface.withValues(alpha: 0.7),
@@ -745,7 +745,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen>
               });
               _checkCameraPermission();
             },
-            child: Text(strings.AppStrings.tryAgain),
+            child: Text(AppLocalizations.of(context)!.tryAgain),
           ),
         ],
       ),
@@ -760,7 +760,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen>
           const CircularProgressIndicator(),
           const SizedBox(height: 16),
           Text(
-            strings.AppStrings.initializingCamera,
+            AppLocalizations.of(context)!.initializingCamera,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ],
@@ -873,7 +873,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen>
       _errorAnimationController.reverse();
     });
 
-    _showResultDialog(context, strings.AppStrings.invalidQRCode,
+    _showResultDialog(context, AppLocalizations.of(context)!.invalidQRCode,
         isSuccess: false);
   }
 
@@ -923,7 +923,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen>
                     Navigator.of(context).pop();
                     onDismiss?.call();
                   },
-                  child: Text(strings.AppStrings.ok),
+                  child: Text(AppLocalizations.of(context)!.ok),
                 ),
               ],
             ),
@@ -950,7 +950,8 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen>
 
     if (redeemedCodes.contains(normalizedCode)) {
       if (!mounted) return;
-      _showResultDialog(context, strings.AppStrings.couponAlreadyRedeemed,
+      _showResultDialog(
+          context, AppLocalizations.of(context)!.couponAlreadyRedeemed,
           isSuccess: false);
       return;
     }
@@ -985,7 +986,7 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen>
         }
 
         // Show special message for ELIM50
-        message = strings.AppStrings.elim50CouponMessage;
+        message = AppLocalizations.of(context)!.elim50CouponMessage;
       } else {
         // Apply normal reward
         if (reward.type == 'stars') {
@@ -994,15 +995,15 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen>
             Provider.of<GameStatsProvider>(context, listen: false)
                 .addStars(amount);
           }
-          message = strings.AppStrings.couponStarsReceived
-              .replaceAll('{amount}', amount.toString());
+          message = AppLocalizations.of(context)!.couponStarsReceived(amount);
         } else if (reward.type == 'theme') {
           final themeId = reward.value as String;
           if (mounted) {
             await Provider.of<SettingsProvider>(context, listen: false)
                 .unlockTheme(themeId);
           }
-          message = strings.AppStrings.couponThemeUnlocked;
+          if (!mounted) return;
+          message = AppLocalizations.of(context)!.couponThemeUnlocked;
         }
       }
 
@@ -1025,17 +1026,17 @@ class _CouponRedeemScreenState extends State<CouponRedeemScreen>
 
       // Map to localized messages
       if (errorMessage == 'Invalid coupon code') {
-        errorMessage = strings.AppStrings.couponInvalid;
+        errorMessage = AppLocalizations.of(context)!.couponInvalid;
       } else if (errorMessage == 'This coupon has expired') {
-        errorMessage = strings.AppStrings.couponExpired;
+        errorMessage = AppLocalizations.of(context)!.couponExpired;
       } else if (errorMessage ==
           'This coupon is no longer valid (maximum uses reached)') {
-        errorMessage = strings.AppStrings.couponMaxUsed;
+        errorMessage = AppLocalizations.of(context)!.couponMaxUsed;
       } else if (errorMessage == 'This coupon has already been redeemed') {
-        errorMessage = strings.AppStrings.couponAlreadyRedeemed;
+        errorMessage = AppLocalizations.of(context)!.couponAlreadyRedeemed;
       } else if (errorMessage ==
           'Maximum of 5 coupons can be redeemed per day') {
-        errorMessage = strings.AppStrings.couponMaxPerDay;
+        errorMessage = AppLocalizations.of(context)!.couponMaxPerDay;
       }
 
       if (!mounted) return;

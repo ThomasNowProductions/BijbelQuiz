@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import '../services/error_reporting_service.dart';
 import '../error/error_handler.dart';
-import '../l10n/strings_nl.dart' as strings_nl;
+import 'package:bijbelquiz/l10n/app_localizations.dart';
+
+// Helper function to get localizations
+AppLocalizations l10n(BuildContext context) => AppLocalizations.of(context)!;
 
 /// A dialog widget that allows users to submit bug reports
 class BugReportDialog extends StatefulWidget {
@@ -53,15 +56,16 @@ class _BugReportDialogState extends State<BugReportDialog> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text(strings_nl.AppStrings.success),
-              content: Text(strings_nl.AppStrings.reportSubmittedSuccessfully),
+              title: Text(l10n(context).success),
+              content: Text(l10n(context)
+                  .reportSubmittedSuccessfully),
               actions: [
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop(); // Close success dialog
                     Navigator.of(context).pop(); // Close bug report dialog
                   },
-                  child: Text(strings_nl.AppStrings.ok),
+                  child: Text(l10n(context).ok),
                 ),
               ],
             );
@@ -73,7 +77,8 @@ class _BugReportDialogState extends State<BugReportDialog> {
         // Show error message
         final error = ErrorHandler().fromException(
           e,
-          userMessage: strings_nl.AppStrings.reportSubmissionFailed,
+          userMessage:
+              l10n(context).reportSubmissionFailed,
         );
         ErrorHandler().showErrorDialog(
           context: context,
@@ -94,7 +99,7 @@ class _BugReportDialogState extends State<BugReportDialog> {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return AlertDialog(
-      title: Text(strings_nl.AppStrings.reportBug),
+      title: Text(l10n(context).reportBug),
       content: SizedBox(
         width: 500, // Fixed width for desktop
         child: Form(
@@ -105,12 +110,13 @@ class _BugReportDialogState extends State<BugReportDialog> {
               TextFormField(
                 controller: _subjectController,
                 decoration: InputDecoration(
-                  labelText: strings_nl.AppStrings.subject,
+                  labelText: l10n(context).subject,
                   border: const OutlineInputBorder(),
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return strings_nl.AppStrings.pleaseEnterSubject;
+                    return l10n(context)
+                        .pleaseEnterSubject;
                   }
                   return null;
                 },
@@ -119,13 +125,15 @@ class _BugReportDialogState extends State<BugReportDialog> {
               TextFormField(
                 controller: _descriptionController,
                 decoration: InputDecoration(
-                  labelText: strings_nl.AppStrings.description,
+                  labelText:
+                      l10n(context).description,
                   border: const OutlineInputBorder(),
                 ),
                 maxLines: 5,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return strings_nl.AppStrings.pleaseEnterDescription;
+                    return l10n(context)
+                        .pleaseEnterDescription;
                   }
                   return null;
                 },
@@ -134,7 +142,8 @@ class _BugReportDialogState extends State<BugReportDialog> {
               TextFormField(
                 controller: _emailController,
                 decoration: InputDecoration(
-                  labelText: strings_nl.AppStrings.emailOptional,
+                  labelText:
+                      l10n(context).emailOptional,
                   border: const OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.emailAddress,
@@ -146,7 +155,7 @@ class _BugReportDialogState extends State<BugReportDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(strings_nl.AppStrings.cancel),
+          child: Text(l10n(context).cancel),
         ),
         ElevatedButton(
           onPressed: _isSubmitting ? null : _submitReport,
@@ -160,7 +169,7 @@ class _BugReportDialogState extends State<BugReportDialog> {
                   height: 20,
                   child: CircularProgressIndicator(strokeWidth: 2),
                 )
-              : Text(strings_nl.AppStrings.submit),
+              : Text(l10n(context).submit),
         ),
       ],
     );
@@ -262,7 +271,8 @@ class _BugReportScreenState extends State<BugReportScreen> {
         // Show error message
         final error = ErrorHandler().fromException(
           e,
-          userMessage: strings_nl.AppStrings.reportSubmissionFailed,
+          userMessage:
+              l10n(context).reportSubmissionFailed,
         );
         ErrorHandler().showErrorDialog(
           context: context,
@@ -281,7 +291,7 @@ class _BugReportScreenState extends State<BugReportScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(strings_nl.AppStrings.reportBug),
+        title: Text(l10n(context).reportBug),
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () => Navigator.of(context).pop(),
@@ -297,12 +307,13 @@ class _BugReportScreenState extends State<BugReportScreen> {
               TextFormField(
                 controller: _subjectController,
                 decoration: InputDecoration(
-                  labelText: strings_nl.AppStrings.subject,
+                  labelText: l10n(context).subject,
                   border: const OutlineInputBorder(),
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return strings_nl.AppStrings.pleaseEnterSubject;
+                    return l10n(context)
+                        .pleaseEnterSubject;
                   }
                   return null;
                 },
@@ -311,13 +322,15 @@ class _BugReportScreenState extends State<BugReportScreen> {
               TextFormField(
                 controller: _descriptionController,
                 decoration: InputDecoration(
-                  labelText: strings_nl.AppStrings.description,
+                  labelText:
+                      l10n(context).description,
                   border: const OutlineInputBorder(),
                 ),
                 maxLines: 8,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return strings_nl.AppStrings.pleaseEnterDescription;
+                    return l10n(context)
+                        .pleaseEnterDescription;
                   }
                   return null;
                 },
@@ -326,7 +339,8 @@ class _BugReportScreenState extends State<BugReportScreen> {
               TextFormField(
                 controller: _emailController,
                 decoration: InputDecoration(
-                  labelText: strings_nl.AppStrings.emailOptional,
+                  labelText:
+                      l10n(context).emailOptional,
                   border: const OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.emailAddress,
@@ -364,11 +378,13 @@ class _BugReportScreenState extends State<BugReportScreen> {
                                 ),
                                 const SizedBox(width: 8),
                                 Text(
-                                  strings_nl.AppStrings.success,
+                                  l10n(context)
+                                      .success,
                                 ),
                               ],
                             )
-                          : Text(strings_nl.AppStrings.submit),
+                          : Text(
+                              l10n(context).submit),
                 ),
               ),
             ],

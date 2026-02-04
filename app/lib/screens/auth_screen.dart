@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/auth_view.dart';
-import '../l10n/strings_nl.dart';
+import 'package:bijbelquiz/l10n/app_localizations.dart';
 
 class AuthScreen extends StatelessWidget {
   final bool requiredForSocial;
@@ -16,7 +16,7 @@ class AuthScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppStrings.account),
+        title: Text(AppLocalizations.of(context)!.account),
         centerTitle: true,
       ),
       body: SafeArea(

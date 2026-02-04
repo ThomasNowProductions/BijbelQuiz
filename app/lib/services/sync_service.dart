@@ -9,6 +9,7 @@ import 'connection_service.dart';
 import '../utils/automatic_error_reporter.dart';
 
 import 'sync/conflict_resolver.dart';
+import 'sync_service_v2.dart';
 
 /// DEPRECATED: Use [SyncServiceV2] instead.
 ///

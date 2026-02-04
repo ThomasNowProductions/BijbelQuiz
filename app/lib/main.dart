@@ -8,6 +8,7 @@ import 'package:app_links/app_links.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:logging/logging.dart' show Level, Logger;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:bijbelquiz/l10n/app_localizations.dart';
 
 import 'providers/settings_provider.dart';
 import 'providers/game_stats_provider.dart';
@@ -28,9 +29,8 @@ import 'screens/main_navigation_screen.dart';
 import 'settings_screen.dart';
 import 'screens/sync_screen.dart';
 import 'screens/stats_share_screen.dart';
-import 'l10n/strings_nl.dart' as strings;
 import 'config/supabase_config.dart';
-import 'services/sync_service.dart';
+import 'services/sync_service_v2.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -498,19 +498,19 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
     return MaterialApp(
       navigatorKey: navigatorKey,
       navigatorObservers: [analyticsService.getObserver()],
-      title: strings.AppStrings.appName,
+      title: navigatorKey.currentContext != null
+          ? AppLocalizations.of(navigatorKey.currentContext!)?.appName
+          : null ?? 'BijbelQuiz',
       theme: ThemeUtils.getLightTheme(settings),
       darkTheme: ThemeUtils.getDarkTheme(settings),
       themeMode: ThemeUtils.getThemeMode(settings),
       localizationsDelegates: const [
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [
-        Locale('nl', ''), // Dutch
-        Locale('en', ''), // English
-      ],
+      supportedLocales: AppLocalizations.supportedLocales,
       locale: Locale(settings.language, ''),
       routes: {
         '/store': (context) => const StoreScreen(),
@@ -589,14 +589,14 @@ class _AppLifecycleObserver extends WidgetsBindingObserver {
         // Check for new messages when app is resumed
         _checkForMessagesOnAppResume();
         // Trigger sync check
-        SyncService.instance.syncOnAppResume();
+        SyncServiceV2.instance.syncOnAppResume();
         break;
       case AppLifecycleState.paused:
         AppLogger.info('App lifecycle: paused');
         // End the current session when app is paused (sent to background)
         _parent._timeTrackingService.endSession();
         // Ensure sync queue is saved
-        SyncService.instance.syncOnAppPause();
+        SyncServiceV2.instance.syncOnAppPause();
         break;
       case AppLifecycleState.inactive:
         AppLogger.info('App lifecycle: inactive');
