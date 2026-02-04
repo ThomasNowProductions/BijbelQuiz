@@ -641,16 +641,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get resetAndLogout => 'Reset and Log Out';
 
   @override
-  String get resetAndLogoutDesc => 'Clear all data and deactivate app';
+  String get resetAndLogoutDesc => 'Clear all data and logout';
 
   @override
   String get showIntroduction => 'Show Introduction';
 
   @override
   String get reportIssue => 'Report Issue';
-
-  @override
-  String get clearQuestionCache => 'Clear Question Cache';
 
   @override
   String get contactUs => 'Contact Us';
@@ -836,7 +833,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get resetAndLogoutConfirmation =>
-      'This will remove all scores, progress, cache, settings and activation. The app will be deactivated and requires a new activation code. This action cannot be undone.';
+      'This will remove all scores, progress, cache, settings and activation. The app will be deactivated and you should login again. This action cannot be undone.';
 
   @override
   String get donationError =>
@@ -1420,10 +1417,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get showIntroductionDesc => 'View the app introduction and tutorial';
-
-  @override
-  String get clearQuestionCacheDesc =>
-      'Remove cached questions to free up storage space';
 
   @override
   String get followOnSocialMediaDesc =>

@@ -1319,7 +1319,7 @@ abstract class AppLocalizations {
   /// No description provided for @resetAndLogoutDesc.
   ///
   /// In en, this message translates to:
-  /// **'Clear all data and deactivate app'**
+  /// **'Clear all data and logout'**
   String get resetAndLogoutDesc;
 
   /// No description provided for @showIntroduction.
@@ -1333,12 +1333,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Report Issue'**
   String get reportIssue;
-
-  /// No description provided for @clearQuestionCache.
-  ///
-  /// In en, this message translates to:
-  /// **'Clear Question Cache'**
-  String get clearQuestionCache;
 
   /// No description provided for @contactUs.
   ///
@@ -1691,7 +1685,7 @@ abstract class AppLocalizations {
   /// No description provided for @resetAndLogoutConfirmation.
   ///
   /// In en, this message translates to:
-  /// **'This will remove all scores, progress, cache, settings and activation. The app will be deactivated and requires a new activation code. This action cannot be undone.'**
+  /// **'This will remove all scores, progress, cache, settings and activation. The app will be deactivated and you should login again. This action cannot be undone.'**
   String get resetAndLogoutConfirmation;
 
   /// No description provided for @donationError.
@@ -2791,12 +2785,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'View the app introduction and tutorial'**
   String get showIntroductionDesc;
-
-  /// No description provided for @clearQuestionCacheDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'Remove cached questions to free up storage space'**
-  String get clearQuestionCacheDesc;
 
   /// No description provided for @followOnSocialMediaDesc.
   ///

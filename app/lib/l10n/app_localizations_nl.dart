@@ -648,16 +648,13 @@ class AppLocalizationsNl extends AppLocalizations {
   String get resetAndLogout => 'Resetten en uitloggen';
 
   @override
-  String get resetAndLogoutDesc => 'Alle gegevens wissen en app deactiveren';
+  String get resetAndLogoutDesc => 'Alle gegevens wissen en uitloggen';
 
   @override
   String get showIntroduction => 'Introductie tonen';
 
   @override
   String get reportIssue => 'Probleem melden';
-
-  @override
-  String get clearQuestionCache => 'Vragencache wissen';
 
   @override
   String get contactUs => 'Neem contact op';
@@ -844,7 +841,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get resetAndLogoutConfirmation =>
-      'Dit verwijdert alle scores, voortgang, cache, instellingen en activatie. De app wordt gedeactiveerd en vereist een nieuwe activatiecode. Deze actie kan niet ongedaan worden gemaakt.';
+      'Dit verwijdert alle scores, voortgang, cache, instellingen en activatie. De app wordt gedeactiveerd en er moet opnieuw worden ingelogd. Deze actie kan niet ongedaan worden gemaakt.';
 
   @override
   String get donationError =>
@@ -1441,10 +1438,6 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get showIntroductionDesc => 'Bekijk de app-introductie en tutorial';
-
-  @override
-  String get clearQuestionCacheDesc =>
-      'Verwijder gecachte vragen om opslagruimte vrij te maken';
 
   @override
   String get followOnSocialMediaDesc =>
