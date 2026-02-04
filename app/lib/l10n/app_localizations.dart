@@ -1769,7 +1769,7 @@ abstract class AppLocalizations {
   /// No description provided for @freePractice.
   ///
   /// In en, this message translates to:
-  /// **'Free Practice (random)'**
+  /// **'Free Practice'**
   String get freePractice;
 
   /// No description provided for @invalidBiblicalReference.

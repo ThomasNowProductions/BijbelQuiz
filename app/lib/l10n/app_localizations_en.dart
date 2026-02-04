@@ -878,7 +878,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get continueLesson => 'Continue With:';
 
   @override
-  String get freePractice => 'Free Practice (random)';
+  String get freePractice => 'Free Practice';
 
   @override
   String get invalidBiblicalReference => 'Invalid Bible reference';
