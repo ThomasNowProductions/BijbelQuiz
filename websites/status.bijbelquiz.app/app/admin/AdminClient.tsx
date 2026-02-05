@@ -13,12 +13,20 @@ type EventItem = {
   endsAt?: number;
 };
 
-const emptyForm = {
+const emptyForm: {
+  title: string;
+  description: string;
+  type: EventItem["type"];
+  severity: EventItem["severity"];
+  status: EventItem["status"];
+  startsAt: string;
+  endsAt: string;
+} = {
   title: "",
   description: "",
-  type: "incident" as const,
-  severity: "minor" as const,
-  status: "ongoing" as const,
+  type: "incident",
+  severity: "minor",
+  status: "ongoing",
   startsAt: "",
   endsAt: ""
 };
