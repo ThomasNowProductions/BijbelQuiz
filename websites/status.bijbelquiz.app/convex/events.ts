@@ -120,6 +120,10 @@ export const adminAddEvent = mutation({
   handler: async (ctx, args) => {
     const expectedSecret = process.env[ADMIN_SECRET_ENV];
     if (!expectedSecret || args.adminSecret !== expectedSecret) {
+      console.warn("[status-admin] Unauthorized adminAddEvent", {
+        hasExpectedSecret: Boolean(expectedSecret),
+        hasProvidedSecret: Boolean(args.adminSecret)
+      });
       throw new Error("Unauthorized");
     }
 
@@ -151,6 +155,10 @@ export const adminResolveEvent = mutation({
   handler: async (ctx, args) => {
     const expectedSecret = process.env[ADMIN_SECRET_ENV];
     if (!expectedSecret || args.adminSecret !== expectedSecret) {
+      console.warn("[status-admin] Unauthorized adminResolveEvent", {
+        hasExpectedSecret: Boolean(expectedSecret),
+        hasProvidedSecret: Boolean(args.adminSecret)
+      });
       throw new Error("Unauthorized");
     }
 
@@ -186,6 +194,10 @@ export const adminUpdateEvent = mutation({
   handler: async (ctx, args) => {
     const expectedSecret = process.env[ADMIN_SECRET_ENV];
     if (!expectedSecret || args.adminSecret !== expectedSecret) {
+      console.warn("[status-admin] Unauthorized adminUpdateEvent", {
+        hasExpectedSecret: Boolean(expectedSecret),
+        hasProvidedSecret: Boolean(args.adminSecret)
+      });
       throw new Error("Unauthorized");
     }
 

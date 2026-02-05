@@ -41,6 +41,10 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ id });
   } catch (error: any) {
+    console.error("[status-admin] Failed to add event", {
+      message: error?.message,
+      stack: error?.stack
+    });
     return NextResponse.json(
       { error: error?.message ?? "Failed to add event" },
       { status: 500 }
@@ -76,6 +80,10 @@ export async function PATCH(request: Request) {
 
     return NextResponse.json({ ok: true });
   } catch (error: any) {
+    console.error("[status-admin] Failed to update/resolve event", {
+      message: error?.message,
+      stack: error?.stack
+    });
     return NextResponse.json(
       { error: error?.message ?? "Failed to resolve event" },
       { status: 500 }
