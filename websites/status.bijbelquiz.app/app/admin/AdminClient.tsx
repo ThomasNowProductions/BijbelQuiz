@@ -9,6 +9,7 @@ type EventItem = {
   type: "incident" | "maintenance";
   severity: "minor" | "major" | "critical";
   status: "ongoing" | "resolved" | "scheduled";
+  impact: "app" | "website";
   startsAt: number;
   endsAt?: number;
 };
@@ -19,6 +20,7 @@ const emptyForm: {
   type: EventItem["type"];
   severity: EventItem["severity"];
   status: EventItem["status"];
+  impact: EventItem["impact"];
   startsAt: string;
   endsAt: string;
 } = {
@@ -27,6 +29,7 @@ const emptyForm: {
   type: "incident",
   severity: "minor",
   status: "ongoing",
+  impact: "app",
   startsAt: "",
   endsAt: ""
 };
@@ -113,6 +116,7 @@ export default function AdminClient() {
       type: event.type,
       severity: event.severity,
       status: event.status,
+      impact: event.impact,
       startsAt: toLocalInput(event.startsAt),
       endsAt: toLocalInput(event.endsAt)
     });
@@ -225,6 +229,22 @@ export default function AdminClient() {
               <option value="ongoing">Ongoing</option>
               <option value="resolved">Resolved</option>
               <option value="scheduled">Scheduled</option>
+            </select>
+          </label>
+          <label>
+            Impact
+            <select
+              value={form.impact}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  impact: e.target.value as EventItem["impact"]
+                })
+              }
+              className="input"
+            >
+              <option value="app">App</option>
+              <option value="website">Website</option>
             </select>
           </label>
           <label>
@@ -373,6 +393,22 @@ export default function AdminClient() {
                         <option value="ongoing">Ongoing</option>
                         <option value="resolved">Resolved</option>
                         <option value="scheduled">Scheduled</option>
+                      </select>
+                    </label>
+                    <label>
+                      Impact
+                      <select
+                        value={editForm.impact}
+                        onChange={(e) =>
+                          setEditForm({
+                            ...editForm,
+                            impact: e.target.value as EventItem["impact"]
+                          })
+                        }
+                        className="input"
+                      >
+                        <option value="app">App</option>
+                        <option value="website">Website</option>
                       </select>
                     </label>
                     <label>

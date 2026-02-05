@@ -9,6 +9,7 @@ const eventInput = {
   type: v.union(v.literal("incident"), v.literal("maintenance")),
   severity: v.union(v.literal("minor"), v.literal("major"), v.literal("critical")),
   status: v.union(v.literal("ongoing"), v.literal("resolved"), v.literal("scheduled")),
+  impact: v.union(v.literal("app"), v.literal("website")),
   startsAt: v.number(),
   endsAt: v.optional(v.number())
 };
@@ -24,6 +25,7 @@ export const listEvents = query({
       .take(50);
     return events.map((event) => ({
       ...event,
+      impact: event.impact ?? "app",
       status: getEffectiveStatus(event, now)
     }));
   }
@@ -45,6 +47,7 @@ export const getStatus = query({
 
     const normalizedEvents = events.map((event) => ({
       ...event,
+      impact: event.impact ?? "app",
       status: getEffectiveStatus(event, now)
     }));
 
@@ -130,6 +133,7 @@ export const adminAddEvent = mutation({
       type: args.type,
       severity: args.severity,
       status: args.status,
+      impact: args.impact,
       startsAt: args.startsAt,
       endsAt: args.endsAt,
       createdAt: Date.now()
@@ -175,6 +179,7 @@ export const adminUpdateEvent = mutation({
     type: v.optional(v.union(v.literal("incident"), v.literal("maintenance"))),
     severity: v.optional(v.union(v.literal("minor"), v.literal("major"), v.literal("critical"))),
     status: v.optional(v.union(v.literal("ongoing"), v.literal("resolved"), v.literal("scheduled"))),
+    impact: v.optional(v.union(v.literal("app"), v.literal("website"))),
     startsAt: v.optional(v.number()),
     endsAt: v.optional(v.number())
   },
@@ -202,6 +207,7 @@ export const adminUpdateEvent = mutation({
       type: args.type ?? event.type,
       severity: args.severity ?? event.severity,
       status: args.status ?? event.status,
+      impact: args.impact ?? event.impact,
       startsAt: args.startsAt ?? event.startsAt,
       endsAt: args.endsAt ?? event.endsAt
     });

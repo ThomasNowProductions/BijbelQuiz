@@ -34,6 +34,7 @@ export async function POST(request: Request) {
       type: body.type,
       severity: body.severity,
       status: body.status,
+      impact: body.impact,
       startsAt: body.startsAt,
       endsAt: body.endsAt
     });
@@ -62,6 +63,7 @@ export async function PATCH(request: Request) {
         type: body.type,
         severity: body.severity,
         status: body.status,
+        impact: body.impact,
         startsAt: body.startsAt,
         endsAt: body.endsAt
       });

@@ -42,10 +42,20 @@ function labelStatus(status: "ongoing" | "resolved" | "scheduled") {
   return "Lopend";
 }
 
+function labelImpact(impact?: "app" | "website") {
+  return impact === "website" ? "Website" : "App";
+}
+
 export default async function StatusPage() {
   const client = getConvexClient();
   const status = await client.query(api.events.getStatus, { windowDays: 90 });
   const copy = statusCopy(status.currentStatus);
+  const activeEvents = status.events.filter(
+    (event: any) => event.status === "ongoing"
+  );
+  const recentEvents = status.events.filter(
+    (event: any) => event.status !== "ongoing"
+  );
 
   return (
     <main>
@@ -62,39 +72,103 @@ export default async function StatusPage() {
                 het BijbelQuiz-platform.
               </p>
             </div>
-            <div className="status-pill">
-              <span
-                className="status-dot"
-                style={{ background: copy.color }}
-              />
-              {copy.title}
+            <div className="status-row">
+              <div className="status-pill">
+                <span
+                  className="status-dot"
+                  style={{ background: copy.color }}
+                />
+                {copy.title}
+              </div>
+              <span className="status-updated">
+                Laatst bijgewerkt: {formatDate(status.lastUpdated)}
+              </span>
             </div>
-            {copy.subtitle ? (
-              <p className="subtitle">{copy.subtitle}</p>
-            ) : null}
+            {copy.subtitle ? <p className="subtitle">{copy.subtitle}</p> : null}
+          </div>
+          <div className="summary-panel">
+            <div className="summary-card">
+              <span className="summary-label">Uptime (90 dagen)</span>
+              <span className="summary-value">
+                {status.uptimePercent.toFixed(3)}%
+              </span>
+            </div>
+            <div className="summary-card">
+              <span className="summary-label">Actieve incidenten</span>
+              <span className="summary-value">{activeEvents.length}</span>
+            </div>
+            <div className="summary-card">
+              <span className="summary-label">Incidenten in venster</span>
+              <span className="summary-value">{status.events.length}</span>
+            </div>
           </div>
         </header>
 
         <div className="section-title">
           <div>
-            <h2>Incidentenlog</h2>
-            <p className="subtitle">Meest recente updates van het team.</p>
+            <h2>Actieve incidenten</h2>
+            <p className="subtitle">Wat nu aandacht vraagt.</p>
           </div>
         </div>
 
         <section className="event-list">
-          {status.events.length === 0 ? (
+          {activeEvents.length === 0 ? (
             <div className="event">
               <div className="event-header">
-                <h3>Geen incidenten gemeld</h3>
+                <h3>Geen actieve incidenten</h3>
                 <span className="badge resolved">Oké</span>
               </div>
               <p className="subtitle">
-                Er zijn nog geen incidenten of onderhoudsmeldingen geregistreerd.
+                Er zijn op dit moment geen lopende incidenten of onderhoud.
               </p>
             </div>
           ) : (
-            status.events.map((event: any) => (
+            activeEvents.map((event: any) => (
+              <article className="event" key={event._id}>
+                <div className="event-header">
+                  <div>
+                    <h3>{event.title}</h3>
+                    <p className="subtitle">
+                      {formatDate(event.startsAt)} · Lopend
+                    </p>
+                  </div>
+                  <div style={{ display: "flex", gap: 8 }}>
+                    <span className={`badge ${event.type}`}>
+                      {labelType(event.type)}
+                    </span>
+                    <span className={`badge impact-${event.impact}`}>
+                      {labelImpact(event.impact)}
+                    </span>
+                    <span className={`badge ${event.status}`}>
+                      {labelStatus(event.status)}
+                    </span>
+                  </div>
+                </div>
+                <p className="subtitle" style={{ marginTop: 12 }}>
+                  {event.description}
+                </p>
+              </article>
+            ))
+          )}
+        </section>
+
+        <div className="section-title">
+          <div>
+            <h2>Recente updates</h2>
+            <p className="subtitle">Meest recente incidenten en onderhoud.</p>
+          </div>
+        </div>
+
+        <section className="event-list">
+          {recentEvents.length === 0 ? (
+            <div className="event">
+              <div className="event-header">
+                <h3>Geen recente updates</h3>
+              </div>
+              <p className="subtitle">Er zijn geen recente meldingen.</p>
+            </div>
+          ) : (
+            recentEvents.map((event: any) => (
               <article className="event" key={event._id}>
                 <div className="event-header">
                   <div>
@@ -109,6 +183,9 @@ export default async function StatusPage() {
                   <div style={{ display: "flex", gap: 8 }}>
                     <span className={`badge ${event.type}`}>
                       {labelType(event.type)}
+                    </span>
+                    <span className={`badge impact-${event.impact}`}>
+                      {labelImpact(event.impact)}
                     </span>
                     <span className={`badge ${event.status}`}>
                       {labelStatus(event.status)}

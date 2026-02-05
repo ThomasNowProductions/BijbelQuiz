@@ -44,6 +44,7 @@ export async function GET() {
         type: event.type,
         severity: event.severity,
         status: event.status,
+        impact: event.impact ?? "app",
         startsAt: new Date(event.startsAt).toISOString(),
         endsAt: event.endsAt ? new Date(event.endsAt).toISOString() : null
       }))

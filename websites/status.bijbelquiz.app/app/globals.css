@@ -72,6 +72,7 @@ a {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  padding-bottom: 12px;
 }
 
 .hero-text h1 {
@@ -123,6 +124,47 @@ a {
   border: 1px solid var(--outline);
 }
 
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.status-updated {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.summary-panel {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--outline);
+  background: rgba(15, 23, 42, 0.6);
+}
+
+.summary-card {
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(51, 65, 85, 0.6);
+}
+
+.summary-label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.summary-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
 .status-dot {
   width: 10px;
   height: 10px;
@@ -160,6 +202,8 @@ a {
   justify-content: space-between;
   margin-top: 64px;
   margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--outline);
 }
 
 .event-list {
@@ -172,6 +216,12 @@ a {
   border-radius: var(--radius-sm);
   border: 1px solid var(--outline);
   background: rgba(30, 41, 59, 0.7);
+  transition: transform 150ms ease, border-color 150ms ease;
+}
+
+.event:hover {
+  transform: translateY(-2px);
+  border-color: rgba(59, 130, 246, 0.6);
 }
 
 .input {
@@ -253,6 +303,16 @@ a {
 .badge.scheduled {
   background: rgba(139, 92, 246, 0.18);
   color: var(--secondary);
+}
+
+.badge.impact-app {
+  background: rgba(59, 130, 246, 0.18);
+  color: var(--primary);
+}
+
+.badge.impact-website {
+  background: rgba(16, 185, 129, 0.18);
+  color: var(--success);
 }
 
 .subtitle {
