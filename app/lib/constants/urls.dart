@@ -22,6 +22,7 @@ class AppUrls {
   static final String privacyUrl = '$baseDomain/privacy';
   static final String termsUrl = '$baseDomain/algemene-voorwaarden';
   static final String statusPageUrl = '$baseDomain/status';
+  static const String statusJsonUrl = 'https://status.bijbelquiz.app/status.json';
 
   // ===== SOCIAL MEDIA URLs (redirect through our own domain) =====
   static String get mastodonUrl => '$baseDomain/mastodon';

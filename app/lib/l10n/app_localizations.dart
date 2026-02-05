@@ -1280,6 +1280,48 @@ abstract class AppLocalizations {
   /// **'Open Status Page'**
   String get openStatusPage;
 
+  /// No description provided for @statusIncidentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Service Incident'**
+  String get statusIncidentTitle;
+
+  /// No description provided for @statusIncidentMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Some services are currently experiencing issues.'**
+  String get statusIncidentMessage;
+
+  /// No description provided for @statusImpactLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Impact'**
+  String get statusImpactLabel;
+
+  /// No description provided for @statusImpactApp.
+  ///
+  /// In en, this message translates to:
+  /// **'App'**
+  String get statusImpactApp;
+
+  /// No description provided for @statusImpactWebsite.
+  ///
+  /// In en, this message translates to:
+  /// **'Website'**
+  String get statusImpactWebsite;
+
+  /// No description provided for @statusImpactAppAndWebsite.
+  ///
+  /// In en, this message translates to:
+  /// **'App & Website'**
+  String get statusImpactAppAndWebsite;
+
+  /// No description provided for @statusImpactUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get statusImpactUnknown;
+
   /// No description provided for @actions.
   ///
   /// In en, this message translates to:

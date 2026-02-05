@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:bijbelquiz/services/analytics_service.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:bijbelquiz/services/version_check.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -108,6 +109,30 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
   /// Whether update check has already been performed (one-time guard)
   bool _hasCheckedForUpdates = false;
 
+  /// Whether status page check has already been performed (one-time guard)
+  bool _hasCheckedStatusPage = false;
+
+  /// Whether status page check is in progress
+  bool _isCheckingStatusPage = false;
+
+  /// Whether to show the status impact card
+  bool _showStatusImpactCard = false;
+
+  /// Status page title
+  String? _statusTitle;
+
+  /// Status page summary
+  String? _statusSummary;
+
+  /// Status page event description (from active events)
+  String? _statusDescription;
+
+  /// Status page event title (from active events)
+  String? _statusEventTitle;
+
+  /// Status page impact (app, website, or app_website)
+  String? _statusImpact;
+
   /// Version check service
   final VersionCheckService _versionCheckService = VersionCheckService();
 
@@ -146,6 +171,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _checkAndShowGuide();
       _checkForUpdates();
+      _checkStatusPage();
     });
 
     unawaited(_loadCachedLessons()
@@ -254,6 +280,98 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
     }
   }
 
+  Future<void> _checkStatusPage({bool force = false}) async {
+    if (_isCheckingStatusPage) return;
+    if (_hasCheckedStatusPage && !force) return;
+
+    _hasCheckedStatusPage = true;
+    _isCheckingStatusPage = true;
+
+    try {
+      final response = await http
+          .get(Uri.parse(AppUrls.statusJsonUrl))
+          .timeout(const Duration(seconds: 8));
+      if (response.statusCode != 200) {
+        debugPrint(
+            'Status page check failed: HTTP ${response.statusCode}');
+        return;
+      }
+
+      final data = json.decode(response.body);
+      if (data is! Map<String, dynamic>) {
+        debugPrint('Status page check failed: invalid JSON payload');
+        return;
+      }
+
+      final status = data['status']?.toString() ?? '';
+      final title = data['title']?.toString() ?? '';
+      final summary = data['summary']?.toString() ?? '';
+      final events = data['events'];
+
+      String? eventDescription;
+      String? eventTitle;
+      if (events is List) {
+        for (final event in events) {
+          if (event is Map) {
+            final titleValue = event['title']?.toString();
+            if (eventTitle == null &&
+                titleValue != null &&
+                titleValue.trim().isNotEmpty) {
+              eventTitle = titleValue.trim();
+            }
+            final value = event['description']?.toString();
+            if (value != null && value.trim().isNotEmpty) {
+              eventDescription = value.trim();
+            }
+            if (eventTitle != null && eventDescription != null) {
+              break;
+            }
+          }
+        }
+      }
+
+      String? impact;
+      if (events is List) {
+        final impacts = <String>{};
+        for (final event in events) {
+          if (event is Map) {
+            final value = event['impact']?.toString();
+            if (value == null || value.isEmpty) {
+              impacts.add('app');
+            } else {
+              impacts.add(value);
+            }
+          }
+        }
+        if (impacts.isNotEmpty) {
+          if (impacts.contains('app') && impacts.contains('website')) {
+            impact = 'app_website';
+          } else {
+            impact = impacts.first;
+          }
+        }
+      }
+
+      final hasError = status.isNotEmpty && status != 'operational';
+      final hasActiveEvents = events is List && events.isNotEmpty;
+      final shouldShow = hasError || hasActiveEvents;
+
+      if (!mounted) return;
+      setState(() {
+        _showStatusImpactCard = shouldShow;
+        _statusTitle = title;
+        _statusSummary = summary;
+        _statusDescription = eventDescription;
+        _statusEventTitle = eventTitle;
+        _statusImpact = impact;
+      });
+    } catch (e) {
+      debugPrint('Error checking status page: $e');
+    } finally {
+      _isCheckingStatusPage = false;
+    }
+  }
+
   @override
   void dispose() {
     _scrollController.dispose();
@@ -279,6 +397,31 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
 
   Future<void> _refreshStreakData() async {
     await _loadStreakData();
+  }
+
+  Future<void> _refreshAll() async {
+    await Future.wait([
+      _loadLessons(maxLessons: 20),
+      _checkStatusPage(force: true),
+    ]);
+  }
+
+  String _formatStatusImpact(AppLocalizations loc) {
+    String impactLabel;
+    switch (_statusImpact) {
+      case 'app':
+        impactLabel = loc.statusImpactApp;
+        break;
+      case 'website':
+        impactLabel = loc.statusImpactWebsite;
+        break;
+      case 'app_website':
+        impactLabel = loc.statusImpactAppAndWebsite;
+        break;
+      default:
+        impactLabel = loc.statusImpactUnknown;
+    }
+    return '${loc.statusImpactLabel}: $impactLabel';
   }
 
   Future<void> _loadCachedLessons() async {
@@ -872,6 +1015,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
+    final loc = AppLocalizations.of(context)!;
     final progress = Provider.of<LessonProgressProvider>(context);
 
     // Responsive: adapt grid by max tile width instead of fixed column count
@@ -912,6 +1056,19 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
         : (progress.unlockedCount.clamp(1, totalLessons) - 1);
     final Lesson? continueLesson =
         totalLessons > 0 ? _lessons[continueIdx] : null;
+
+    final String? statusTitle = (_statusEventTitle != null &&
+            _statusEventTitle!.trim().isNotEmpty)
+        ? _statusEventTitle!.trim()
+        : (_statusTitle != null && _statusTitle!.trim().isNotEmpty)
+            ? _statusTitle!.trim()
+            : loc.statusIncidentTitle;
+    final String? statusMessage = (_statusDescription != null &&
+            _statusDescription!.trim().isNotEmpty)
+        ? _statusDescription!.trim()
+        : (_statusSummary != null && _statusSummary!.trim().isNotEmpty)
+            ? _statusSummary!.trim()
+            : loc.statusIncidentMessage;
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
@@ -1047,7 +1204,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
                         return const SizedBox.shrink();
                       }
                       return RefreshIndicator(
-                        onRefresh: () => _loadLessons(maxLessons: 20),
+                        onRefresh: _refreshAll,
                         color: colorScheme.primary,
                         backgroundColor: colorScheme.surface,
                         child: CustomScrollView(
@@ -1055,6 +1212,29 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
                           cacheExtent: 1000,
                           physics: const BouncingScrollPhysics(),
                           slivers: [
+                            if (_showStatusImpactCard)
+                              SliverToBoxAdapter(
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                                  child: RepaintBoundary(
+                                    child: PromoCard(
+                                      isDonation: false,
+                                      isSatisfaction: false,
+                                      isDifficulty: false,
+                                      isAccountCreation: false,
+                                      isStatus: true,
+                                      isDismissible: false,
+                                      statusTitle: statusTitle,
+                                      statusMessage: statusMessage,
+                                      statusImpactText:
+                                          _formatStatusImpact(loc),
+                                      onDismiss: () {},
+                                      onAction: (_) {},
+                                    ),
+                                  ),
+                                ),
+                              ),
                             if (_updateAvailable)
                               SliverToBoxAdapter(
                                 child: Padding(

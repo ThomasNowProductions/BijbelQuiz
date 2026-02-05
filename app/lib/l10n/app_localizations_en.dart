@@ -623,6 +623,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get openStatusPage => 'Open Status Page';
 
   @override
+  String get statusIncidentTitle => 'Service Incident';
+
+  @override
+  String get statusIncidentMessage =>
+      'Some services are currently experiencing issues.';
+
+  @override
+  String get statusImpactLabel => 'Impact';
+
+  @override
+  String get statusImpactApp => 'App';
+
+  @override
+  String get statusImpactWebsite => 'Website';
+
+  @override
+  String get statusImpactAppAndWebsite => 'App & Website';
+
+  @override
+  String get statusImpactUnknown => 'Unknown';
+
+  @override
   String get actions => 'Actions';
 
   @override

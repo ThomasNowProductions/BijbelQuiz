@@ -630,6 +630,28 @@ class AppLocalizationsNl extends AppLocalizations {
   String get openStatusPage => 'Open statuspagina';
 
   @override
+  String get statusIncidentTitle => 'Serviceproblemen';
+
+  @override
+  String get statusIncidentMessage =>
+      'Er zijn momenteel problemen met onze services.';
+
+  @override
+  String get statusImpactLabel => 'Impact';
+
+  @override
+  String get statusImpactApp => 'App';
+
+  @override
+  String get statusImpactWebsite => 'Website';
+
+  @override
+  String get statusImpactAppAndWebsite => 'App en website';
+
+  @override
+  String get statusImpactUnknown => 'Onbekend';
+
+  @override
   String get actions => 'Acties';
 
   @override
