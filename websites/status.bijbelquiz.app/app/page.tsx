@@ -1,5 +1,8 @@
 import { getConvexClient, api } from "../lib/convex";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 function formatDate(value: number) {
   return new Intl.DateTimeFormat("en-GB", {
     dateStyle: "medium",
