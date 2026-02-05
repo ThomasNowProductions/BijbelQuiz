@@ -10,7 +10,7 @@ const quicksand = Quicksand({
 
 export const metadata = {
   title: "BijbelQuiz Status",
-  description: "Service health and uptime for BijbelQuiz."
+  description: "Service-status en uptime van BijbelQuiz."
 };
 
 export default function RootLayout({
@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={quicksand.variable}>
+    <html lang="nl" className={quicksand.variable}>
       <head>
         <link
           href="https://fonts.googleapis.com/icon?family=Material+Icons"

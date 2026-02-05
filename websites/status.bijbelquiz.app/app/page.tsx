@@ -4,7 +4,7 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 function formatDate(value: number) {
-  return new Intl.DateTimeFormat("en-GB", {
+  return new Intl.DateTimeFormat("nl-NL", {
     dateStyle: "medium",
     timeStyle: "short"
   }).format(new Date(value));
@@ -13,23 +13,33 @@ function formatDate(value: number) {
 function statusCopy(status: "operational" | "degraded" | "major") {
   if (status === "major") {
     return {
-      title: "Major Outage",
-      subtitle: "We are actively fixing a critical service disruption.",
+      title: "Grote storing",
+      subtitle: "We werken actief aan het oplossen van een kritieke storing.",
       color: "var(--error)"
     };
   }
   if (status === "degraded") {
     return {
-      title: "Degraded Performance",
-      subtitle: "Some services are slower than usual. Updates below.",
+      title: "Verminderde prestaties",
+      subtitle: "Sommige diensten zijn trager dan normaal. Updates hieronder.",
       color: "var(--warning)"
     };
   }
   return {
-    title: "All Systems Operational",
+    title: "Alle systemen operationeel",
     subtitle: "",
     color: "var(--success)"
   };
+}
+
+function labelType(type: "incident" | "maintenance") {
+  return type === "incident" ? "Incident" : "Onderhoud";
+}
+
+function labelStatus(status: "ongoing" | "resolved" | "scheduled") {
+  if (status === "resolved") return "Opgelost";
+  if (status === "scheduled") return "Gepland";
+  return "Lopend";
 }
 
 export default async function StatusPage() {
@@ -48,8 +58,8 @@ export default async function StatusPage() {
               </span>
               <h1>BijbelQuiz Status</h1>
               <p className="hero-description">
-                Live service health, incident updates, and planned maintenance
-                for the BijbelQuiz platform.
+                Live service-status, incident-updates en gepland onderhoud voor
+                het BijbelQuiz-platform.
               </p>
             </div>
             <div className="status-pill">
@@ -67,8 +77,8 @@ export default async function StatusPage() {
 
         <div className="section-title">
           <div>
-            <h2>Event Timeline</h2>
-            <p className="subtitle">Most recent updates from the team.</p>
+            <h2>Incidentenlog</h2>
+            <p className="subtitle">Meest recente updates van het team.</p>
           </div>
         </div>
 
@@ -76,11 +86,11 @@ export default async function StatusPage() {
           {status.events.length === 0 ? (
             <div className="event">
               <div className="event-header">
-                <h3>No incidents reported</h3>
-                <span className="badge resolved">Clear</span>
+                <h3>Geen incidenten gemeld</h3>
+                <span className="badge resolved">Oké</span>
               </div>
               <p className="subtitle">
-                There have been no incidents or maintenance events recorded yet.
+                Er zijn nog geen incidenten of onderhoudsmeldingen geregistreerd.
               </p>
             </div>
           ) : (
@@ -92,14 +102,16 @@ export default async function StatusPage() {
                     <p className="subtitle">
                       {formatDate(event.startsAt)}
                       {event.endsAt
-                        ? ` · Resolved ${formatDate(event.endsAt)}`
-                        : " · Ongoing"}
+                        ? ` · Opgelost ${formatDate(event.endsAt)}`
+                        : " · Lopend"}
                     </p>
                   </div>
                   <div style={{ display: "flex", gap: 8 }}>
-                    <span className={`badge ${event.type}`}>{event.type}</span>
+                    <span className={`badge ${event.type}`}>
+                      {labelType(event.type)}
+                    </span>
                     <span className={`badge ${event.status}`}>
-                      {event.status}
+                      {labelStatus(event.status)}
                     </span>
                   </div>
                 </div>
