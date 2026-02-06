@@ -374,27 +374,40 @@ export default function AdminClient() {
         {message ? <p className="subtitle">{message}</p> : null}
       </section>
 
-      <form className="card" onSubmit={submit} style={{ marginTop: 32 }}>
-        <h3>Create Event</h3>
+      <form
+        className="card"
+        onSubmit={editingId ? updateEvent : submit}
+        style={{ marginTop: 32 }}
+      >
+        <h3>{editingId ? "Edit Event" : "Create Event"}</h3>
         <div className="grid" style={{ marginTop: 16 }}>
           <label>
             Title
             <input
               required
-              value={form.title}
-              onChange={(e) => setForm({ ...form, title: e.target.value })}
+              value={editingId ? editForm.title : form.title}
+              onChange={(e) =>
+                editingId
+                  ? setEditForm({ ...editForm, title: e.target.value })
+                  : setForm({ ...form, title: e.target.value })
+              }
               className="input"
             />
           </label>
           <label>
             Type
             <select
-              value={form.type}
+              value={editingId ? editForm.type : form.type}
               onChange={(e) =>
-                setForm({
-                  ...form,
-                  type: e.target.value as EventItem["type"]
-                })
+                editingId
+                  ? setEditForm({
+                      ...editForm,
+                      type: e.target.value as EventItem["type"]
+                    })
+                  : setForm({
+                      ...form,
+                      type: e.target.value as EventItem["type"]
+                    })
               }
               className="input"
             >
@@ -405,12 +418,17 @@ export default function AdminClient() {
           <label>
             Severity
             <select
-              value={form.severity}
+              value={editingId ? editForm.severity : form.severity}
               onChange={(e) =>
-                setForm({
-                  ...form,
-                  severity: e.target.value as EventItem["severity"]
-                })
+                editingId
+                  ? setEditForm({
+                      ...editForm,
+                      severity: e.target.value as EventItem["severity"]
+                    })
+                  : setForm({
+                      ...form,
+                      severity: e.target.value as EventItem["severity"]
+                    })
               }
               className="input"
             >
@@ -422,12 +440,17 @@ export default function AdminClient() {
           <label>
             Status
             <select
-              value={form.status}
+              value={editingId ? editForm.status : form.status}
               onChange={(e) =>
-                setForm({
-                  ...form,
-                  status: e.target.value as EventItem["status"]
-                })
+                editingId
+                  ? setEditForm({
+                      ...editForm,
+                      status: e.target.value as EventItem["status"]
+                    })
+                  : setForm({
+                      ...form,
+                      status: e.target.value as EventItem["status"]
+                    })
               }
               className="input"
             >
@@ -439,12 +462,17 @@ export default function AdminClient() {
           <label>
             Impact
             <select
-              value={form.impact}
+              value={editingId ? editForm.impact : form.impact}
               onChange={(e) =>
-                setForm({
-                  ...form,
-                  impact: e.target.value as EventItem["impact"]
-                })
+                editingId
+                  ? setEditForm({
+                      ...editForm,
+                      impact: e.target.value as EventItem["impact"]
+                    })
+                  : setForm({
+                      ...form,
+                      impact: e.target.value as EventItem["impact"]
+                    })
               }
               className="input"
             >
@@ -456,8 +484,12 @@ export default function AdminClient() {
             Starts At
             <input
               type="datetime-local"
-              value={form.startsAt}
-              onChange={(e) => setForm({ ...form, startsAt: e.target.value })}
+              value={editingId ? editForm.startsAt : form.startsAt}
+              onChange={(e) =>
+                editingId
+                  ? setEditForm({ ...editForm, startsAt: e.target.value })
+                  : setForm({ ...form, startsAt: e.target.value })
+              }
               className="input"
             />
           </label>
@@ -465,8 +497,12 @@ export default function AdminClient() {
             Ends At (optional)
             <input
               type="datetime-local"
-              value={form.endsAt}
-              onChange={(e) => setForm({ ...form, endsAt: e.target.value })}
+              value={editingId ? editForm.endsAt : form.endsAt}
+              onChange={(e) =>
+                editingId
+                  ? setEditForm({ ...editForm, endsAt: e.target.value })
+                  : setForm({ ...form, endsAt: e.target.value })
+              }
               className="input"
             />
           </label>
@@ -475,163 +511,37 @@ export default function AdminClient() {
           Description
           <textarea
             required
-            value={form.description}
+            value={editingId ? editForm.description : form.description}
             onChange={(e) =>
-              setForm({ ...form, description: e.target.value })
+              editingId
+                ? setEditForm({ ...editForm, description: e.target.value })
+                : setForm({ ...form, description: e.target.value })
             }
             className="input"
             rows={4}
           />
         </label>
-        <button
-          type="submit"
-          className="button"
-          disabled={loading}
-          style={{ marginTop: 16 }}
-        >
-          {loading ? "Working..." : "Publish Event"}
-        </button>
+        <div style={{ display: "flex", gap: 12, marginTop: 16 }}>
+          <button type="submit" className="button" disabled={loading}>
+            {loading
+              ? "Working..."
+              : editingId
+              ? "Save Changes"
+              : "Publish Event"}
+          </button>
+          {editingId ? (
+            <button
+              type="button"
+              className="button button-outline"
+              onClick={cancelEdit}
+              disabled={loading}
+            >
+              Cancel
+            </button>
+          ) : null}
+        </div>
       </form>
 
-      {editingId ? (
-        <section className="card" style={{ marginTop: 32 }}>
-          <h3>Edit Event</h3>
-          <form onSubmit={updateEvent} style={{ marginTop: 16 }}>
-            <div className="grid">
-              <label>
-                Title
-                <input
-                  required
-                  value={editForm.title}
-                  onChange={(e) =>
-                    setEditForm({ ...editForm, title: e.target.value })
-                  }
-                  className="input"
-                />
-              </label>
-              <label>
-                Type
-                <select
-                  value={editForm.type}
-                  onChange={(e) =>
-                    setEditForm({
-                      ...editForm,
-                      type: e.target.value as EventItem["type"]
-                    })
-                  }
-                  className="input"
-                >
-                  <option value="incident">Incident</option>
-                  <option value="maintenance">Maintenance</option>
-                </select>
-              </label>
-              <label>
-                Severity
-                <select
-                  value={editForm.severity}
-                  onChange={(e) =>
-                    setEditForm({
-                      ...editForm,
-                      severity: e.target.value as EventItem["severity"]
-                    })
-                  }
-                  className="input"
-                >
-                  <option value="minor">Minor</option>
-                  <option value="major">Major</option>
-                  <option value="critical">Critical</option>
-                </select>
-              </label>
-              <label>
-                Status
-                <select
-                  value={editForm.status}
-                  onChange={(e) =>
-                    setEditForm({
-                      ...editForm,
-                      status: e.target.value as EventItem["status"]
-                    })
-                  }
-                  className="input"
-                >
-                  <option value="ongoing">Ongoing</option>
-                  <option value="resolved">Resolved</option>
-                  <option value="scheduled">Scheduled</option>
-                </select>
-              </label>
-              <label>
-                Impact
-                <select
-                  value={editForm.impact}
-                  onChange={(e) =>
-                    setEditForm({
-                      ...editForm,
-                      impact: e.target.value as EventItem["impact"]
-                    })
-                  }
-                  className="input"
-                >
-                  <option value="app">App</option>
-                  <option value="website">Website</option>
-                </select>
-              </label>
-              <label>
-                Starts At
-                <input
-                  type="datetime-local"
-                  value={editForm.startsAt}
-                  onChange={(e) =>
-                    setEditForm({
-                      ...editForm,
-                      startsAt: e.target.value
-                    })
-                  }
-                  className="input"
-                />
-              </label>
-              <label>
-                Ends At (optional)
-                <input
-                  type="datetime-local"
-                  value={editForm.endsAt}
-                  onChange={(e) =>
-                    setEditForm({ ...editForm, endsAt: e.target.value })
-                  }
-                  className="input"
-                />
-              </label>
-            </div>
-            <label style={{ marginTop: 16, display: "block" }}>
-              Description
-              <textarea
-                required
-                value={editForm.description}
-                onChange={(e) =>
-                  setEditForm({
-                    ...editForm,
-                    description: e.target.value
-                  })
-                }
-                className="input"
-                rows={4}
-              />
-            </label>
-            <div style={{ display: "flex", gap: 12, marginTop: 16 }}>
-              <button type="submit" className="button" disabled={loading}>
-                {loading ? "Working..." : "Save Changes"}
-              </button>
-              <button
-                type="button"
-                className="button button-outline"
-                onClick={cancelEdit}
-                disabled={loading}
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
-        </section>
-      ) : null}
     </div>
   );
 }
