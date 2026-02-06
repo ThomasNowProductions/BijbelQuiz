@@ -1,7 +1,7 @@
 import AdminClient from "./AdminClient";
 
 export const metadata = {
-  title: "Status Admin | BijbelQuiz"
+  title: "Statusbeheer | BijbelQuiz"
 };
 
 export default function AdminPage() {

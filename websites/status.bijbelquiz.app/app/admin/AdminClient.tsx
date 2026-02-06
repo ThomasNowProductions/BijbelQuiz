@@ -34,6 +34,28 @@ const emptyForm: {
   endsAt: ""
 };
 
+const typeLabels: Record<EventItem["type"], string> = {
+  incident: "Incident",
+  maintenance: "Onderhoud"
+};
+
+const severityLabels: Record<EventItem["severity"], string> = {
+  minor: "Gering",
+  major: "Ernstig",
+  critical: "Kritiek"
+};
+
+const statusLabels: Record<EventItem["status"], string> = {
+  ongoing: "Lopend",
+  resolved: "Afgerond",
+  scheduled: "Gepland"
+};
+
+const impactLabels: Record<EventItem["impact"], string> = {
+  app: "App",
+  website: "Website"
+};
+
 function toLocalInput(value?: number) {
   if (!value) return "";
   const date = new Date(value);
@@ -106,10 +128,10 @@ export default function AdminClient() {
 
     if (!res.ok) {
       const error = await res.json();
-      setMessage(error.error ?? "Failed to create event");
+      setMessage(error.error ?? "Kon gebeurtenis niet aanmaken");
     } else {
       setForm(emptyForm);
-      setMessage("Event created.");
+      setMessage("Gebeurtenis aangemaakt.");
       await loadEvents();
     }
     setLoading(false);
@@ -126,9 +148,9 @@ export default function AdminClient() {
 
     if (!res.ok) {
       const error = await res.json();
-      setMessage(error.error ?? "Failed to resolve event");
+      setMessage(error.error ?? "Kon gebeurtenis niet afronden");
     } else {
-      setMessage("Event resolved.");
+      setMessage("Gebeurtenis afgerond.");
       await loadEvents();
     }
     setLoading(false);
@@ -165,9 +187,9 @@ export default function AdminClient() {
 
     if (!res.ok) {
       const error = await res.json();
-      setMessage(error.error ?? "Failed to update event");
+      setMessage(error.error ?? "Kon gebeurtenis niet bijwerken");
     } else {
-      setMessage("Event updated.");
+      setMessage("Gebeurtenis bijgewerkt.");
       await loadEvents();
     }
     setLoading(false);
@@ -202,9 +224,9 @@ export default function AdminClient() {
 
     if (!res.ok) {
       const error = await res.json();
-      setMessage(error.error ?? "Failed to update event impact");
+      setMessage(error.error ?? "Kon impact van gebeurtenis niet bijwerken");
     } else {
-      setMessage("Event impact updated.");
+      setMessage("Impact bijgewerkt.");
       await loadEvents();
     }
     setLoading(false);
@@ -253,9 +275,9 @@ export default function AdminClient() {
 
     if (!res.ok) {
       const error = await res.json();
-      setMessage(error.error ?? "Failed to update event");
+      setMessage(error.error ?? "Kon gebeurtenis niet bijwerken");
     } else {
-      setMessage("Event updated.");
+      setMessage("Gebeurtenis bijgewerkt.");
       setEditingId(null);
       setEditForm(emptyForm);
       await loadEvents();
@@ -266,10 +288,10 @@ export default function AdminClient() {
   type ColumnKey = "draft" | "ongoing" | "planned" | "completed";
 
   const columns: { id: ColumnKey; label: string }[] = [
-    { id: "draft", label: "Draft" },
-    { id: "ongoing", label: "Ongoing" },
-    { id: "planned", label: "Planned" },
-    { id: "completed", label: "Completed" }
+    { id: "draft", label: "Concept" },
+    { id: "ongoing", label: "Lopend" },
+    { id: "planned", label: "Gepland" },
+    { id: "completed", label: "Afgerond" }
   ];
 
   const statusByColumn: Record<Exclude<ColumnKey, "draft">, EventItem["status"]> =
@@ -317,7 +339,7 @@ export default function AdminClient() {
     if (loading) return;
     const id = readDragId(event);
     if (!id) {
-      setMessage("Could not read dragged event.");
+      setMessage("Kon de gesleepte gebeurtenis niet lezen.");
       return;
     }
     const eventItem = events.find((item) => item._id === id);
@@ -344,7 +366,7 @@ export default function AdminClient() {
     if (loading) return;
     const id = readDragId(event);
     if (!id) {
-      setMessage("Could not read dragged event.");
+      setMessage("Kon de gesleepte gebeurtenis niet lezen.");
       return;
     }
     const eventItem = events.find((item) => item._id === id);
@@ -367,18 +389,18 @@ export default function AdminClient() {
 
   return (
     <div className="container" style={{ paddingTop: 32 }}>
-      <h1>Admin Console</h1>
+      <h1>Beheerconsole</h1>
       <p className="subtitle">
-        Add incidents and maintenance updates. This area is secured with Basic
-        Auth and a Convex admin secret.
+        Voeg incidenten en onderhoudsupdates toe. Dit gedeelte is beveiligd met
+        Basic Auth en een Convex admin-secret.
       </p>
 
       <section className="event-board" style={{ marginTop: 24 }}>
         <div className="board-header">
-          <h2>Status Board</h2>
+          <h2>Statusbord</h2>
           <p className="subtitle">
-            Drag events into a group to update status. Drop into Website or App
-            lanes to update impact on the vertical axis.
+            Sleep gebeurtenissen naar een kolom om de status te wijzigen. Drop in
+            Website- of App-lanes om de impact op de verticale as te wijzigen.
           </p>
         </div>
         <div className="board-grid">
@@ -402,7 +424,9 @@ export default function AdminClient() {
                     onDrop={(event) => onDropLane(column.id, impact, event)}
                   >
                     <div className="impact-lane-header">
-                      <span className={`badge impact-${impact}`}>{impact}</span>
+                      <span className={`badge impact-${impact}`}>
+                        {impactLabels[impact]}
+                      </span>
                       <span className="subtitle">
                         {
                           getColumnEvents(column.id).filter(
@@ -424,7 +448,7 @@ export default function AdminClient() {
                     <div className="board-card-title">
                       <strong>{eventItem.title}</strong>
                       <span className={`badge ${eventItem.type}`}>
-                        {eventItem.type}
+                        {typeLabels[eventItem.type]}
                       </span>
                     </div>
                     <p className="subtitle board-card-date">
@@ -435,13 +459,13 @@ export default function AdminClient() {
                     </p>
                     <div className="board-card-tags">
                       <span className={`badge ${eventItem.status}`}>
-                        {eventItem.status}
+                        {statusLabels[eventItem.status]}
                       </span>
                       <span className={`badge impact-${eventItem.impact}`}>
-                        {eventItem.impact}
+                        {impactLabels[eventItem.impact]}
                       </span>
                       <span className={`badge severity-${eventItem.severity}`}>
-                        {eventItem.severity}
+                        {severityLabels[eventItem.severity]}
                       </span>
                     </div>
                     <div className="board-card-actions">
@@ -451,7 +475,7 @@ export default function AdminClient() {
                         onClick={() => startEdit(eventItem)}
                         disabled={loading}
                       >
-                        Edit
+                        Bewerken
                       </button>
                       {eventItem.status !== "resolved" ? (
                         <button
@@ -460,7 +484,7 @@ export default function AdminClient() {
                           onClick={() => resolveEvent(eventItem._id)}
                           disabled={loading}
                         >
-                          Resolve
+                          Afronden
                         </button>
                       ) : null}
                     </div>
@@ -469,7 +493,9 @@ export default function AdminClient() {
                       {!getColumnEvents(column.id).filter(
                         (item) => item.impact === impact
                       ).length ? (
-                        <div className="board-empty subtitle">No events here.</div>
+                        <div className="board-empty subtitle">
+                          Geen gebeurtenissen.
+                        </div>
                       ) : null}
                     </div>
                   </div>
@@ -486,10 +512,10 @@ export default function AdminClient() {
         onSubmit={editingId ? updateEvent : submit}
         style={{ marginTop: 32 }}
       >
-        <h3>{editingId ? "Edit Event" : "Create Event"}</h3>
+        <h3>{editingId ? "Gebeurtenis bewerken" : "Gebeurtenis aanmaken"}</h3>
         <div className="grid" style={{ marginTop: 16 }}>
           <label>
-            Title
+            Titel
             <input
               required
               value={editingId ? editForm.title : form.title}
@@ -519,11 +545,11 @@ export default function AdminClient() {
               className="input"
             >
               <option value="incident">Incident</option>
-              <option value="maintenance">Maintenance</option>
+              <option value="maintenance">Onderhoud</option>
             </select>
           </label>
           <label>
-            Severity
+            Ernst
             <select
               value={editingId ? editForm.severity : form.severity}
               onChange={(e) =>
@@ -539,9 +565,9 @@ export default function AdminClient() {
               }
               className="input"
             >
-              <option value="minor">Minor</option>
-              <option value="major">Major</option>
-              <option value="critical">Critical</option>
+              <option value="minor">Gering</option>
+              <option value="major">Ernstig</option>
+              <option value="critical">Kritiek</option>
             </select>
           </label>
           <label>
@@ -561,9 +587,9 @@ export default function AdminClient() {
               }
               className="input"
             >
-              <option value="ongoing">Ongoing</option>
-              <option value="resolved">Resolved</option>
-              <option value="scheduled">Scheduled</option>
+              <option value="ongoing">Lopend</option>
+              <option value="resolved">Afgerond</option>
+              <option value="scheduled">Gepland</option>
             </select>
           </label>
           <label>
@@ -588,7 +614,7 @@ export default function AdminClient() {
             </select>
           </label>
           <label>
-            Starts At
+            Starttijd
             <input
               type="datetime-local"
               value={editingId ? editForm.startsAt : form.startsAt}
@@ -601,7 +627,7 @@ export default function AdminClient() {
             />
           </label>
           <label>
-            Ends At (optional)
+            Eindtijd (optioneel)
             <input
               type="datetime-local"
               value={editingId ? editForm.endsAt : form.endsAt}
@@ -615,7 +641,7 @@ export default function AdminClient() {
           </label>
         </div>
         <label style={{ marginTop: 16, display: "block" }}>
-          Description
+          Beschrijving
           <textarea
             required
             value={editingId ? editForm.description : form.description}
@@ -631,10 +657,10 @@ export default function AdminClient() {
         <div style={{ display: "flex", gap: 12, marginTop: 16 }}>
           <button type="submit" className="button" disabled={loading}>
             {loading
-              ? "Working..."
+              ? "Bezig..."
               : editingId
-              ? "Save Changes"
-              : "Publish Event"}
+              ? "Wijzigingen opslaan"
+              : "Gebeurtenis publiceren"}
           </button>
           {editingId ? (
             <button
@@ -643,7 +669,7 @@ export default function AdminClient() {
               onClick={cancelEdit}
               disabled={loading}
             >
-              Cancel
+              Annuleren
             </button>
           ) : null}
         </div>
