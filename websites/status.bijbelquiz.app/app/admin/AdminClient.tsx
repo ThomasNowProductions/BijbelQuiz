@@ -296,7 +296,42 @@ export default function AdminClient() {
     eventItem: EventItem
   ) => {
     event.dataTransfer.setData("text/plain", eventItem._id);
+    event.dataTransfer.setData("text", eventItem._id);
     event.dataTransfer.effectAllowed = "move";
+  };
+
+  const readDragId = (event: React.DragEvent<HTMLDivElement>) =>
+    event.dataTransfer.getData("text/plain") ||
+    event.dataTransfer.getData("text");
+
+  const allowDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  };
+
+  const onDropColumn = async (
+    column: ColumnKey,
+    event: React.DragEvent<HTMLDivElement>
+  ) => {
+    event.preventDefault();
+    if (loading) return;
+    const id = readDragId(event);
+    if (!id) {
+      setMessage("Could not read dragged event.");
+      return;
+    }
+    const eventItem = events.find((item) => item._id === id);
+    if (!eventItem) return;
+
+    if (column === "draft") {
+      setDraftIds((prev) => (prev.includes(id) ? prev : [...prev, id]));
+      return;
+    }
+
+    setDraftIds((prev) => prev.filter((draftId) => draftId !== id));
+    const nextStatus = statusByColumn[column];
+    if (eventItem.status === nextStatus) return;
+    await updateStatus(eventItem, nextStatus);
   };
 
   const onDropLane = async (
@@ -305,8 +340,13 @@ export default function AdminClient() {
     event: React.DragEvent<HTMLDivElement>
   ) => {
     event.preventDefault();
+    event.stopPropagation();
     if (loading) return;
-    const id = event.dataTransfer.getData("text/plain");
+    const id = readDragId(event);
+    if (!id) {
+      setMessage("Could not read dragged event.");
+      return;
+    }
     const eventItem = events.find((item) => item._id === id);
     if (!eventItem) return;
 
@@ -346,17 +386,19 @@ export default function AdminClient() {
             <div
               key={column.id}
               className="board-column"
+              onDragOver={allowDrop}
+              onDrop={(event) => onDropColumn(column.id, event)}
             >
               <div className="board-column-header">
                 <h3>{column.label}</h3>
                 <span className="subtitle">{getColumnEvents(column.id).length}</span>
               </div>
-              <div className="board-column-body">
+              <div className="board-column-body" onDragOver={allowDrop}>
                 {(["website", "app"] as const).map((impact) => (
                   <div
                     key={impact}
                     className="impact-lane"
-                    onDragOver={(event) => event.preventDefault()}
+                    onDragOver={allowDrop}
                     onDrop={(event) => onDropLane(column.id, impact, event)}
                   >
                     <div className="impact-lane-header">

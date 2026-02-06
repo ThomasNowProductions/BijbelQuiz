@@ -31,6 +31,21 @@ export const listEvents = query({
   }
 });
 
+export const adminListEvents = query({
+  args: {},
+  handler: async (ctx) => {
+    const events = await ctx.db
+      .query("events")
+      .withIndex("by_starts")
+      .order("desc")
+      .take(50);
+    return events.map((event) => ({
+      ...event,
+      impact: event.impact ?? "app"
+    }));
+  }
+});
+
 export const getStatus = query({
   args: { windowDays: v.optional(v.number()) },
   handler: async (ctx, args) => {

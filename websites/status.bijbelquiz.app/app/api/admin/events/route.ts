@@ -14,7 +14,7 @@ function getAdminSecret() {
 export async function GET() {
   try {
     const client = getConvexClient();
-    const events = await client.query(api.events.listEvents, {});
+    const events = await client.query(api.events.adminListEvents, {});
     return NextResponse.json({ events });
   } catch (error) {
     return NextResponse.json({ error: "Failed to load events" }, { status: 500 });
