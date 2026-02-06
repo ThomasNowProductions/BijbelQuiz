@@ -392,6 +392,27 @@ a {
   gap: 6px;
 }
 
+.impact-lane {
+  border: 1px dashed var(--outline);
+  border-radius: 12px;
+  padding: 10px;
+  background: rgba(15, 23, 42, 0.3);
+  display: grid;
+  gap: 10px;
+  min-height: 140px;
+}
+
+.impact-lane-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.impact-lane-body {
+  display: grid;
+  gap: 10px;
+}
+
 .board-card-actions {
   display: flex;
   gap: 8px;

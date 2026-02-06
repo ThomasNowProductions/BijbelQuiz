@@ -173,6 +173,43 @@ export default function AdminClient() {
     setLoading(false);
   };
 
+  const updateImpact = async (
+    eventItem: EventItem,
+    nextImpact: EventItem["impact"]
+  ) => {
+    if (eventItem.impact === nextImpact) return;
+    setLoading(true);
+    setMessage(null);
+
+    const payload = {
+      action: "update",
+      id: eventItem._id,
+      title: eventItem.title,
+      description: eventItem.description,
+      type: eventItem.type,
+      severity: eventItem.severity,
+      status: eventItem.status,
+      impact: nextImpact,
+      startsAt: eventItem.startsAt,
+      endsAt: eventItem.endsAt
+    };
+
+    const res = await fetch("/api/admin/events", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    if (!res.ok) {
+      const error = await res.json();
+      setMessage(error.error ?? "Failed to update event impact");
+    } else {
+      setMessage("Event impact updated.");
+      await loadEvents();
+    }
+    setLoading(false);
+  };
+
   const startEdit = (event: EventItem) => {
     setEditingId(event._id);
     setEditForm({
@@ -262,8 +299,9 @@ export default function AdminClient() {
     event.dataTransfer.effectAllowed = "move";
   };
 
-  const onDropColumn = async (
+  const onDropLane = async (
     column: ColumnKey,
+    impact: EventItem["impact"],
     event: React.DragEvent<HTMLDivElement>
   ) => {
     event.preventDefault();
@@ -271,6 +309,10 @@ export default function AdminClient() {
     const id = event.dataTransfer.getData("text/plain");
     const eventItem = events.find((item) => item._id === id);
     if (!eventItem) return;
+
+    if (eventItem.impact !== impact) {
+      await updateImpact(eventItem, impact);
+    }
 
     if (column === "draft") {
       setDraftIds((prev) => (prev.includes(id) ? prev : [...prev, id]));
@@ -282,7 +324,6 @@ export default function AdminClient() {
     if (eventItem.status === nextStatus) return;
     await updateStatus(eventItem, nextStatus);
   };
-
 
   return (
     <div className="container" style={{ paddingTop: 32 }}>
@@ -296,7 +337,8 @@ export default function AdminClient() {
         <div className="board-header">
           <h2>Status Board</h2>
           <p className="subtitle">
-            Drag events into a group to update status. Draft is local-only.
+            Drag events into a group to update status. Drop into Website or App
+            lanes to update impact on the vertical axis.
           </p>
         </div>
         <div className="board-grid">
@@ -304,15 +346,33 @@ export default function AdminClient() {
             <div
               key={column.id}
               className="board-column"
-              onDragOver={(event) => event.preventDefault()}
-              onDrop={(event) => onDropColumn(column.id, event)}
             >
               <div className="board-column-header">
                 <h3>{column.label}</h3>
                 <span className="subtitle">{getColumnEvents(column.id).length}</span>
               </div>
               <div className="board-column-body">
-                {getColumnEvents(column.id).map((eventItem) => (
+                {(["website", "app"] as const).map((impact) => (
+                  <div
+                    key={impact}
+                    className="impact-lane"
+                    onDragOver={(event) => event.preventDefault()}
+                    onDrop={(event) => onDropLane(column.id, impact, event)}
+                  >
+                    <div className="impact-lane-header">
+                      <span className={`badge impact-${impact}`}>{impact}</span>
+                      <span className="subtitle">
+                        {
+                          getColumnEvents(column.id).filter(
+                            (item) => item.impact === impact
+                          ).length
+                        }
+                      </span>
+                    </div>
+                    <div className="impact-lane-body">
+                      {getColumnEvents(column.id)
+                        .filter((item) => item.impact === impact)
+                        .map((eventItem) => (
                   <div
                     key={eventItem._id}
                     className="board-card"
@@ -363,10 +423,15 @@ export default function AdminClient() {
                       ) : null}
                     </div>
                   </div>
+                        ))}
+                      {!getColumnEvents(column.id).filter(
+                        (item) => item.impact === impact
+                      ).length ? (
+                        <div className="board-empty subtitle">No events here.</div>
+                      ) : null}
+                    </div>
+                  </div>
                 ))}
-                {!getColumnEvents(column.id).length ? (
-                  <div className="board-empty subtitle">No events here.</div>
-                ) : null}
               </div>
             </div>
           ))}
