@@ -48,6 +48,7 @@ export default function AdminClient() {
   const [editForm, setEditForm] = useState(emptyForm);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+  const [draftIds, setDraftIds] = useState<string[]>([]);
 
   const loadEvents = async () => {
     const res = await fetch("/api/admin/events", { cache: "no-store" });
@@ -60,6 +61,31 @@ export default function AdminClient() {
   useEffect(() => {
     loadEvents();
   }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const stored = window.localStorage.getItem("status-admin-drafts");
+    if (!stored) return;
+    try {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed)) {
+        setDraftIds(parsed.filter((id) => typeof id === "string"));
+      }
+    } catch {
+      setDraftIds([]);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    window.localStorage.setItem("status-admin-drafts", JSON.stringify(draftIds));
+  }, [draftIds]);
+
+  useEffect(() => {
+    if (!events.length || !draftIds.length) return;
+    const validIds = new Set(events.map((event) => event._id));
+    setDraftIds((prev) => prev.filter((id) => validIds.has(id)));
+  }, [events, draftIds.length]);
 
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -103,6 +129,45 @@ export default function AdminClient() {
       setMessage(error.error ?? "Failed to resolve event");
     } else {
       setMessage("Event resolved.");
+      await loadEvents();
+    }
+    setLoading(false);
+  };
+
+  const updateStatus = async (
+    eventItem: EventItem,
+    nextStatus: EventItem["status"]
+  ) => {
+    setLoading(true);
+    setMessage(null);
+
+    const payload = {
+      action: "update",
+      id: eventItem._id,
+      title: eventItem.title,
+      description: eventItem.description,
+      type: eventItem.type,
+      severity: eventItem.severity,
+      status: nextStatus,
+      impact: eventItem.impact,
+      startsAt: eventItem.startsAt,
+      endsAt:
+        nextStatus === "resolved"
+          ? eventItem.endsAt ?? Date.now()
+          : eventItem.endsAt
+    };
+
+    const res = await fetch("/api/admin/events", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    if (!res.ok) {
+      const error = await res.json();
+      setMessage(error.error ?? "Failed to update event");
+    } else {
+      setMessage("Event updated.");
       await loadEvents();
     }
     setLoading(false);
@@ -161,6 +226,64 @@ export default function AdminClient() {
     setLoading(false);
   };
 
+  type ColumnKey = "draft" | "ongoing" | "planned" | "completed";
+
+  const columns: { id: ColumnKey; label: string }[] = [
+    { id: "draft", label: "Draft" },
+    { id: "ongoing", label: "Ongoing" },
+    { id: "planned", label: "Planned" },
+    { id: "completed", label: "Completed" }
+  ];
+
+  const statusByColumn: Record<Exclude<ColumnKey, "draft">, EventItem["status"]> =
+    {
+      ongoing: "ongoing",
+      planned: "scheduled",
+      completed: "resolved"
+    };
+
+  const getColumnEvents = (column: ColumnKey) => {
+    if (column === "draft") {
+      const draftSet = new Set(draftIds);
+      return events.filter((event) => draftSet.has(event._id));
+    }
+    const status = statusByColumn[column];
+    const draftSet = new Set(draftIds);
+    return events.filter(
+      (event) => !draftSet.has(event._id) && event.status === status
+    );
+  };
+
+  const onDragStart = (
+    event: React.DragEvent<HTMLDivElement>,
+    eventItem: EventItem
+  ) => {
+    event.dataTransfer.setData("text/plain", eventItem._id);
+    event.dataTransfer.effectAllowed = "move";
+  };
+
+  const onDropColumn = async (
+    column: ColumnKey,
+    event: React.DragEvent<HTMLDivElement>
+  ) => {
+    event.preventDefault();
+    if (loading) return;
+    const id = event.dataTransfer.getData("text/plain");
+    const eventItem = events.find((item) => item._id === id);
+    if (!eventItem) return;
+
+    if (column === "draft") {
+      setDraftIds((prev) => (prev.includes(id) ? prev : [...prev, id]));
+      return;
+    }
+
+    setDraftIds((prev) => prev.filter((draftId) => draftId !== id));
+    const nextStatus = statusByColumn[column];
+    if (eventItem.status === nextStatus) return;
+    await updateStatus(eventItem, nextStatus);
+  };
+
+
   return (
     <div className="container" style={{ paddingTop: 32 }}>
       <h1>Admin Console</h1>
@@ -169,7 +292,89 @@ export default function AdminClient() {
         Auth and a Convex admin secret.
       </p>
 
-      <form className="card" onSubmit={submit} style={{ marginTop: 24 }}>
+      <section className="event-board" style={{ marginTop: 24 }}>
+        <div className="board-header">
+          <h2>Status Board</h2>
+          <p className="subtitle">
+            Drag events into a group to update status. Draft is local-only.
+          </p>
+        </div>
+        <div className="board-grid">
+          {columns.map((column) => (
+            <div
+              key={column.id}
+              className="board-column"
+              onDragOver={(event) => event.preventDefault()}
+              onDrop={(event) => onDropColumn(column.id, event)}
+            >
+              <div className="board-column-header">
+                <h3>{column.label}</h3>
+                <span className="subtitle">{getColumnEvents(column.id).length}</span>
+              </div>
+              <div className="board-column-body">
+                {getColumnEvents(column.id).map((eventItem) => (
+                  <div
+                    key={eventItem._id}
+                    className="board-card"
+                    draggable
+                    onDragStart={(event) => onDragStart(event, eventItem)}
+                  >
+                    <div className="board-card-title">
+                      <strong>{eventItem.title}</strong>
+                      <span className={`badge ${eventItem.type}`}>
+                        {eventItem.type}
+                      </span>
+                    </div>
+                    <p className="subtitle board-card-date">
+                      {new Date(eventItem.startsAt).toLocaleString()}
+                    </p>
+                    <p className="board-card-description">
+                      {eventItem.description}
+                    </p>
+                    <div className="board-card-tags">
+                      <span className={`badge ${eventItem.status}`}>
+                        {eventItem.status}
+                      </span>
+                      <span className={`badge impact-${eventItem.impact}`}>
+                        {eventItem.impact}
+                      </span>
+                      <span className={`badge severity-${eventItem.severity}`}>
+                        {eventItem.severity}
+                      </span>
+                    </div>
+                    <div className="board-card-actions">
+                      <button
+                        className="button button-outline"
+                        type="button"
+                        onClick={() => startEdit(eventItem)}
+                        disabled={loading}
+                      >
+                        Edit
+                      </button>
+                      {eventItem.status !== "resolved" ? (
+                        <button
+                          className="button button-outline"
+                          type="button"
+                          onClick={() => resolveEvent(eventItem._id)}
+                          disabled={loading}
+                        >
+                          Resolve
+                        </button>
+                      ) : null}
+                    </div>
+                  </div>
+                ))}
+                {!getColumnEvents(column.id).length ? (
+                  <div className="board-empty subtitle">No events here.</div>
+                ) : null}
+              </div>
+            </div>
+          ))}
+        </div>
+        {message ? <p className="subtitle">{message}</p> : null}
+      </section>
+
+      <form className="card" onSubmit={submit} style={{ marginTop: 32 }}>
         <h3>Create Event</h3>
         <div className="grid" style={{ marginTop: 16 }}>
           <label>
@@ -286,191 +491,147 @@ export default function AdminClient() {
         >
           {loading ? "Working..." : "Publish Event"}
         </button>
-        {message ? <p className="subtitle">{message}</p> : null}
       </form>
 
-      <section style={{ marginTop: 32 }}>
-        <div className="section-title">
-          <h2>Existing Events</h2>
-          <span className="subtitle">{events.length} total</span>
-        </div>
-        <div className="event-list">
-          {events.map((event) => (
-            <article key={event._id} className="event">
-              <div className="event-header">
-                <div>
-                  <h3>{event.title}</h3>
-                  <p className="subtitle">
-                    {new Date(event.startsAt).toLocaleString()}
-                  </p>
-                </div>
-                <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-                  <span className={`badge ${event.type}`}>{event.type}</span>
-                  <span className={`badge ${event.status}`}>
-                    {event.status}
-                  </span>
-                  <button
-                    className="button button-outline"
-                    onClick={() => startEdit(event)}
-                    disabled={loading}
-                  >
-                    Edit
-                  </button>
-                  {event.status !== "resolved" ? (
-                    <button
-                      className="button button-outline"
-                      onClick={() => resolveEvent(event._id)}
-                      disabled={loading}
-                    >
-                      Resolve
-                    </button>
-                  ) : null}
-                </div>
-              </div>
-              <p className="subtitle" style={{ marginTop: 12 }}>
-                {event.description}
-              </p>
-              {editingId === event._id ? (
-                <form className="card" onSubmit={updateEvent} style={{ marginTop: 16 }}>
-                  <h3>Edit Event</h3>
-                  <div className="grid" style={{ marginTop: 16 }}>
-                    <label>
-                      Title
-                      <input
-                        required
-                        value={editForm.title}
-                        onChange={(e) =>
-                          setEditForm({ ...editForm, title: e.target.value })
-                        }
-                        className="input"
-                      />
-                    </label>
-                    <label>
-                      Type
-                      <select
-                        value={editForm.type}
-                        onChange={(e) =>
-                          setEditForm({
-                            ...editForm,
-                            type: e.target.value as EventItem["type"]
-                          })
-                        }
-                        className="input"
-                      >
-                        <option value="incident">Incident</option>
-                        <option value="maintenance">Maintenance</option>
-                      </select>
-                    </label>
-                    <label>
-                      Severity
-                      <select
-                        value={editForm.severity}
-                        onChange={(e) =>
-                          setEditForm({
-                            ...editForm,
-                            severity: e.target.value as EventItem["severity"]
-                          })
-                        }
-                        className="input"
-                      >
-                        <option value="minor">Minor</option>
-                        <option value="major">Major</option>
-                        <option value="critical">Critical</option>
-                      </select>
-                    </label>
-                    <label>
-                      Status
-                      <select
-                        value={editForm.status}
-                        onChange={(e) =>
-                          setEditForm({
-                            ...editForm,
-                            status: e.target.value as EventItem["status"]
-                          })
-                        }
-                        className="input"
-                      >
-                        <option value="ongoing">Ongoing</option>
-                        <option value="resolved">Resolved</option>
-                        <option value="scheduled">Scheduled</option>
-                      </select>
-                    </label>
-                    <label>
-                      Impact
-                      <select
-                        value={editForm.impact}
-                        onChange={(e) =>
-                          setEditForm({
-                            ...editForm,
-                            impact: e.target.value as EventItem["impact"]
-                          })
-                        }
-                        className="input"
-                      >
-                        <option value="app">App</option>
-                        <option value="website">Website</option>
-                      </select>
-                    </label>
-                    <label>
-                      Starts At
-                      <input
-                        type="datetime-local"
-                        value={editForm.startsAt}
-                        onChange={(e) =>
-                          setEditForm({
-                            ...editForm,
-                            startsAt: e.target.value
-                          })
-                        }
-                        className="input"
-                      />
-                    </label>
-                    <label>
-                      Ends At (optional)
-                      <input
-                        type="datetime-local"
-                        value={editForm.endsAt}
-                        onChange={(e) =>
-                          setEditForm({ ...editForm, endsAt: e.target.value })
-                        }
-                        className="input"
-                      />
-                    </label>
-                  </div>
-                  <label style={{ marginTop: 16, display: "block" }}>
-                    Description
-                    <textarea
-                      required
-                      value={editForm.description}
-                      onChange={(e) =>
-                        setEditForm({
-                          ...editForm,
-                          description: e.target.value
-                        })
-                      }
-                      className="input"
-                      rows={4}
-                    />
-                  </label>
-                  <div style={{ display: "flex", gap: 12, marginTop: 16 }}>
-                    <button type="submit" className="button" disabled={loading}>
-                      {loading ? "Working..." : "Save Changes"}
-                    </button>
-                    <button
-                      type="button"
-                      className="button button-outline"
-                      onClick={cancelEdit}
-                      disabled={loading}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </form>
-              ) : null}
-            </article>
-          ))}
-        </div>
-      </section>
+      {editingId ? (
+        <section className="card" style={{ marginTop: 32 }}>
+          <h3>Edit Event</h3>
+          <form onSubmit={updateEvent} style={{ marginTop: 16 }}>
+            <div className="grid">
+              <label>
+                Title
+                <input
+                  required
+                  value={editForm.title}
+                  onChange={(e) =>
+                    setEditForm({ ...editForm, title: e.target.value })
+                  }
+                  className="input"
+                />
+              </label>
+              <label>
+                Type
+                <select
+                  value={editForm.type}
+                  onChange={(e) =>
+                    setEditForm({
+                      ...editForm,
+                      type: e.target.value as EventItem["type"]
+                    })
+                  }
+                  className="input"
+                >
+                  <option value="incident">Incident</option>
+                  <option value="maintenance">Maintenance</option>
+                </select>
+              </label>
+              <label>
+                Severity
+                <select
+                  value={editForm.severity}
+                  onChange={(e) =>
+                    setEditForm({
+                      ...editForm,
+                      severity: e.target.value as EventItem["severity"]
+                    })
+                  }
+                  className="input"
+                >
+                  <option value="minor">Minor</option>
+                  <option value="major">Major</option>
+                  <option value="critical">Critical</option>
+                </select>
+              </label>
+              <label>
+                Status
+                <select
+                  value={editForm.status}
+                  onChange={(e) =>
+                    setEditForm({
+                      ...editForm,
+                      status: e.target.value as EventItem["status"]
+                    })
+                  }
+                  className="input"
+                >
+                  <option value="ongoing">Ongoing</option>
+                  <option value="resolved">Resolved</option>
+                  <option value="scheduled">Scheduled</option>
+                </select>
+              </label>
+              <label>
+                Impact
+                <select
+                  value={editForm.impact}
+                  onChange={(e) =>
+                    setEditForm({
+                      ...editForm,
+                      impact: e.target.value as EventItem["impact"]
+                    })
+                  }
+                  className="input"
+                >
+                  <option value="app">App</option>
+                  <option value="website">Website</option>
+                </select>
+              </label>
+              <label>
+                Starts At
+                <input
+                  type="datetime-local"
+                  value={editForm.startsAt}
+                  onChange={(e) =>
+                    setEditForm({
+                      ...editForm,
+                      startsAt: e.target.value
+                    })
+                  }
+                  className="input"
+                />
+              </label>
+              <label>
+                Ends At (optional)
+                <input
+                  type="datetime-local"
+                  value={editForm.endsAt}
+                  onChange={(e) =>
+                    setEditForm({ ...editForm, endsAt: e.target.value })
+                  }
+                  className="input"
+                />
+              </label>
+            </div>
+            <label style={{ marginTop: 16, display: "block" }}>
+              Description
+              <textarea
+                required
+                value={editForm.description}
+                onChange={(e) =>
+                  setEditForm({
+                    ...editForm,
+                    description: e.target.value
+                  })
+                }
+                className="input"
+                rows={4}
+              />
+            </label>
+            <div style={{ display: "flex", gap: 12, marginTop: 16 }}>
+              <button type="submit" className="button" disabled={loading}>
+                {loading ? "Working..." : "Save Changes"}
+              </button>
+              <button
+                type="button"
+                className="button button-outline"
+                onClick={cancelEdit}
+                disabled={loading}
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </section>
+      ) : null}
     </div>
   );
 }
