@@ -303,58 +303,61 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
         return;
       }
 
-      final status = data['status']?.toString() ?? '';
       final title = data['title']?.toString() ?? '';
       final summary = data['summary']?.toString() ?? '';
       final events = data['events'];
+      final appImpactEvents = <Map<String, dynamic>>[];
+      if (events is List) {
+        for (final event in events) {
+          if (event is Map<String, dynamic>) {
+            final impactValue = event['impact']?.toString();
+            final normalizedImpact =
+                (impactValue == null || impactValue.isEmpty)
+                    ? 'app'
+                    : impactValue;
+            if (normalizedImpact == 'app' ||
+                normalizedImpact == 'app_website') {
+              appImpactEvents.add(event);
+            }
+          } else if (event is Map) {
+            final impactValue = event['impact']?.toString();
+            final normalizedImpact =
+                (impactValue == null || impactValue.isEmpty)
+                    ? 'app'
+                    : impactValue;
+            if (normalizedImpact == 'app' ||
+                normalizedImpact == 'app_website') {
+              appImpactEvents.add(Map<String, dynamic>.from(event));
+            }
+          }
+        }
+      }
 
       String? eventDescription;
       String? eventTitle;
-      if (events is List) {
-        for (final event in events) {
-          if (event is Map) {
-            final titleValue = event['title']?.toString();
-            if (eventTitle == null &&
-                titleValue != null &&
-                titleValue.trim().isNotEmpty) {
-              eventTitle = titleValue.trim();
-            }
-            final value = event['description']?.toString();
-            if (value != null && value.trim().isNotEmpty) {
-              eventDescription = value.trim();
-            }
-            if (eventTitle != null && eventDescription != null) {
-              break;
-            }
-          }
+      for (final event in appImpactEvents) {
+        final titleValue = event['title']?.toString();
+        if (eventTitle == null &&
+            titleValue != null &&
+            titleValue.trim().isNotEmpty) {
+          eventTitle = titleValue.trim();
+        }
+        final value = event['description']?.toString();
+        if (value != null && value.trim().isNotEmpty) {
+          eventDescription = value.trim();
+        }
+        if (eventTitle != null && eventDescription != null) {
+          break;
         }
       }
 
       String? impact;
-      if (events is List) {
-        final impacts = <String>{};
-        for (final event in events) {
-          if (event is Map) {
-            final value = event['impact']?.toString();
-            if (value == null || value.isEmpty) {
-              impacts.add('app');
-            } else {
-              impacts.add(value);
-            }
-          }
-        }
-        if (impacts.isNotEmpty) {
-          if (impacts.contains('app') && impacts.contains('website')) {
-            impact = 'app_website';
-          } else {
-            impact = impacts.first;
-          }
-        }
+      if (appImpactEvents.isNotEmpty) {
+        impact = 'app';
       }
 
-      final hasError = status.isNotEmpty && status != 'operational';
-      final hasActiveEvents = events is List && events.isNotEmpty;
-      final shouldShow = hasError || hasActiveEvents;
+      final hasAppImpactEvents = appImpactEvents.isNotEmpty;
+      final shouldShow = hasAppImpactEvents;
 
       if (!mounted) return;
       setState(() {
