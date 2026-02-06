@@ -399,7 +399,8 @@ a {
   background: rgba(15, 23, 42, 0.3);
   display: grid;
   gap: 10px;
-  min-height: 140px;
+  height: 220px;
+  overflow: auto;
 }
 
 .impact-lane-header {
@@ -411,6 +412,7 @@ a {
 .impact-lane-body {
   display: grid;
   gap: 10px;
+  min-height: 0;
 }
 
 .board-card-actions {
