@@ -50,7 +50,7 @@
     },
     {
       "source": "/status",
-      "destination": "https://bijbelquiz.instatus.com/"
+      "destination": "https://status.bijbelquiz.app"
     },
     {
       "source": "/nooki",
