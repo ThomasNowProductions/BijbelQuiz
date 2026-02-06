@@ -390,19 +390,8 @@ export default function AdminClient() {
   return (
     <div className="container" style={{ paddingTop: 32 }}>
       <h1>Beheerconsole</h1>
-      <p className="subtitle">
-        Voeg incidenten en onderhoudsupdates toe. Dit gedeelte is beveiligd met
-        Basic Auth en een Convex admin-secret.
-      </p>
 
       <section className="event-board" style={{ marginTop: 24 }}>
-        <div className="board-header">
-          <h2>Statusbord</h2>
-          <p className="subtitle">
-            Sleep gebeurtenissen naar een kolom om de status te wijzigen. Drop in
-            Website- of App-lanes om de impact op de verticale as te wijzigen.
-          </p>
-        </div>
         <div className="board-grid">
           {columns.map((column) => (
             <div
@@ -504,7 +493,6 @@ export default function AdminClient() {
             </div>
           ))}
         </div>
-        {message ? <p className="subtitle">{message}</p> : null}
       </section>
 
       <form
