@@ -292,8 +292,7 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
           .get(Uri.parse(AppUrls.statusJsonUrl))
           .timeout(const Duration(seconds: 8));
       if (response.statusCode != 200) {
-        debugPrint(
-            'Status page check failed: HTTP ${response.statusCode}');
+        debugPrint('Status page check failed: HTTP ${response.statusCode}');
         return;
       }
 
@@ -1060,18 +1059,18 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
     final Lesson? continueLesson =
         totalLessons > 0 ? _lessons[continueIdx] : null;
 
-    final String? statusTitle = (_statusEventTitle != null &&
-            _statusEventTitle!.trim().isNotEmpty)
-        ? _statusEventTitle!.trim()
-        : (_statusTitle != null && _statusTitle!.trim().isNotEmpty)
-            ? _statusTitle!.trim()
-            : loc.statusIncidentTitle;
-    final String? statusMessage = (_statusDescription != null &&
-            _statusDescription!.trim().isNotEmpty)
-        ? _statusDescription!.trim()
-        : (_statusSummary != null && _statusSummary!.trim().isNotEmpty)
-            ? _statusSummary!.trim()
-            : loc.statusIncidentMessage;
+    final String? statusTitle =
+        (_statusEventTitle != null && _statusEventTitle!.trim().isNotEmpty)
+            ? _statusEventTitle!.trim()
+            : (_statusTitle != null && _statusTitle!.trim().isNotEmpty)
+                ? _statusTitle!.trim()
+                : loc.statusIncidentTitle;
+    final String? statusMessage =
+        (_statusDescription != null && _statusDescription!.trim().isNotEmpty)
+            ? _statusDescription!.trim()
+            : (_statusSummary != null && _statusSummary!.trim().isNotEmpty)
+                ? _statusSummary!.trim()
+                : loc.statusIncidentMessage;
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
@@ -1264,11 +1263,14 @@ class _LessonSelectScreenState extends State<LessonSelectScreen>
                                           await _launchUrl(url);
                                         } catch (e) {
                                           // Log error but don't prevent analytics tracking
-                                          debugPrint('Error getting package info: $e');
+                                          debugPrint(
+                                              'Error getting package info: $e');
                                         } finally {
                                           // Report promo action to analytics consistent with other handlers
-                                          Provider.of<AnalyticsService>(context, listen: false)
-                                              .capture(context, 'tap_update_promo');
+                                          Provider.of<AnalyticsService>(context,
+                                                  listen: false)
+                                              .capture(
+                                                  context, 'tap_update_promo');
                                         }
                                       },
                                     ),

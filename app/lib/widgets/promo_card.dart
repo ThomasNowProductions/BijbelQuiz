@@ -59,10 +59,10 @@ class _PromoCardState extends State<PromoCard> {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    final statusTitle = (widget.statusTitle != null &&
-            widget.statusTitle!.trim().isNotEmpty)
-        ? widget.statusTitle!.trim()
-        : AppLocalizations.of(context)!.serverStatus;
+    final statusTitle =
+        (widget.statusTitle != null && widget.statusTitle!.trim().isNotEmpty)
+            ? widget.statusTitle!.trim()
+            : AppLocalizations.of(context)!.serverStatus;
     final statusMessage = (widget.statusMessage != null &&
             widget.statusMessage!.trim().isNotEmpty)
         ? widget.statusMessage!.trim()
@@ -137,19 +137,19 @@ class _PromoCardState extends State<PromoCard> {
                     ? Icons.favorite_rounded
                     : widget.isStatus
                         ? Icons.warning_rounded
-                    : widget.isSatisfaction
-                        ? Icons.feedback_rounded
-                        : widget.isDifficulty
-                            ? Icons.tune_rounded
-                            : widget.isAccountCreation
-                                ? Icons.person_add_rounded
-                                : widget.isReferral
-                                    ? Icons.campaign_rounded
-                                    : widget.isShareStats
-                                        ? Icons.bar_chart_rounded
-                                        : widget.isUpdate
-                                            ? Icons.system_update_rounded
-                                            : Icons.group_add_rounded,
+                        : widget.isSatisfaction
+                            ? Icons.feedback_rounded
+                            : widget.isDifficulty
+                                ? Icons.tune_rounded
+                                : widget.isAccountCreation
+                                    ? Icons.person_add_rounded
+                                    : widget.isReferral
+                                        ? Icons.campaign_rounded
+                                        : widget.isShareStats
+                                            ? Icons.bar_chart_rounded
+                                            : widget.isUpdate
+                                                ? Icons.system_update_rounded
+                                                : Icons.group_add_rounded,
                 color: cs.onSurface.withValues(alpha: 0.7),
                 size: 20,
               ),
@@ -160,24 +160,27 @@ class _PromoCardState extends State<PromoCard> {
                       ? AppLocalizations.of(context)!.donate
                       : widget.isStatus
                           ? statusTitle
-                      : widget.isSatisfaction
-                          ? AppLocalizations.of(context)!.satisfactionSurvey
-                          : widget.isDifficulty
-                              ? AppLocalizations.of(context)!
-                                  .difficultyFeedbackTitle
-                              : widget.isAccountCreation
-                                  ? AppLocalizations.of(context)!.createAccount
-                                  : widget.isReferral
+                          : widget.isSatisfaction
+                              ? AppLocalizations.of(context)!.satisfactionSurvey
+                              : widget.isDifficulty
+                                  ? AppLocalizations.of(context)!
+                                      .difficultyFeedbackTitle
+                                  : widget.isAccountCreation
                                       ? AppLocalizations.of(context)!
-                                          .inviteFriend
-                                      : widget.isShareStats
+                                          .createAccount
+                                      : widget.isReferral
                                           ? AppLocalizations.of(context)!
-                                              .shareYourStats
-                                          : widget.isUpdate
+                                              .inviteFriend
+                                          : widget.isShareStats
                                               ? AppLocalizations.of(context)!
-                                                  .updateAvailable
-                                              : AppLocalizations.of(context)!
-                                                  .followUs,
+                                                  .shareYourStats
+                                              : widget.isUpdate
+                                                  ? AppLocalizations.of(
+                                                          context)!
+                                                      .updateAvailable
+                                                  : AppLocalizations.of(
+                                                          context)!
+                                                      .followUs,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w800,
                         color: cs.onSurface,
@@ -200,23 +203,26 @@ class _PromoCardState extends State<PromoCard> {
                 ? AppLocalizations.of(context)!.donateExplanation
                 : widget.isStatus
                     ? statusMessage
-                : widget.isSatisfaction
-                    ? AppLocalizations.of(context)!.satisfactionSurveyMessage
-                    : widget.isDifficulty
+                    : widget.isSatisfaction
                         ? AppLocalizations.of(context)!
-                            .difficultyFeedbackMessage
-                        : widget.isAccountCreation
-                            ? AppLocalizations.of(context)!.createAccountMessage
-                            : widget.isReferral
-                                ? AppLocalizations.of(context)!.inviteFriendDesc
-                                : widget.isShareStats
+                            .satisfactionSurveyMessage
+                        : widget.isDifficulty
+                            ? AppLocalizations.of(context)!
+                                .difficultyFeedbackMessage
+                            : widget.isAccountCreation
+                                ? AppLocalizations.of(context)!
+                                    .createAccountMessage
+                                : widget.isReferral
                                     ? AppLocalizations.of(context)!
-                                        .copyStatsLinkToClipboard
-                                    : widget.isUpdate
+                                        .inviteFriendDesc
+                                    : widget.isShareStats
                                         ? AppLocalizations.of(context)!
-                                            .updateAvailableMessage
-                                        : AppLocalizations.of(context)!
-                                            .followUsMessage,
+                                            .copyStatsLinkToClipboard
+                                        : widget.isUpdate
+                                            ? AppLocalizations.of(context)!
+                                                .updateAvailableMessage
+                                            : AppLocalizations.of(context)!
+                                                .followUsMessage,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           if (widget.isStatus &&

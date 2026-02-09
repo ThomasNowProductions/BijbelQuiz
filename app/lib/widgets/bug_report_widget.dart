@@ -57,8 +57,7 @@ class _BugReportDialogState extends State<BugReportDialog> {
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text(l10n(context).success),
-              content: Text(l10n(context)
-                  .reportSubmittedSuccessfully),
+              content: Text(l10n(context).reportSubmittedSuccessfully),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -77,8 +76,7 @@ class _BugReportDialogState extends State<BugReportDialog> {
         // Show error message
         final error = ErrorHandler().fromException(
           e,
-          userMessage:
-              l10n(context).reportSubmissionFailed,
+          userMessage: l10n(context).reportSubmissionFailed,
         );
         ErrorHandler().showErrorDialog(
           context: context,
@@ -115,8 +113,7 @@ class _BugReportDialogState extends State<BugReportDialog> {
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return l10n(context)
-                        .pleaseEnterSubject;
+                    return l10n(context).pleaseEnterSubject;
                   }
                   return null;
                 },
@@ -125,15 +122,13 @@ class _BugReportDialogState extends State<BugReportDialog> {
               TextFormField(
                 controller: _descriptionController,
                 decoration: InputDecoration(
-                  labelText:
-                      l10n(context).description,
+                  labelText: l10n(context).description,
                   border: const OutlineInputBorder(),
                 ),
                 maxLines: 5,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return l10n(context)
-                        .pleaseEnterDescription;
+                    return l10n(context).pleaseEnterDescription;
                   }
                   return null;
                 },
@@ -142,8 +137,7 @@ class _BugReportDialogState extends State<BugReportDialog> {
               TextFormField(
                 controller: _emailController,
                 decoration: InputDecoration(
-                  labelText:
-                      l10n(context).emailOptional,
+                  labelText: l10n(context).emailOptional,
                   border: const OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.emailAddress,
@@ -271,8 +265,7 @@ class _BugReportScreenState extends State<BugReportScreen> {
         // Show error message
         final error = ErrorHandler().fromException(
           e,
-          userMessage:
-              l10n(context).reportSubmissionFailed,
+          userMessage: l10n(context).reportSubmissionFailed,
         );
         ErrorHandler().showErrorDialog(
           context: context,
@@ -312,8 +305,7 @@ class _BugReportScreenState extends State<BugReportScreen> {
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return l10n(context)
-                        .pleaseEnterSubject;
+                    return l10n(context).pleaseEnterSubject;
                   }
                   return null;
                 },
@@ -322,15 +314,13 @@ class _BugReportScreenState extends State<BugReportScreen> {
               TextFormField(
                 controller: _descriptionController,
                 decoration: InputDecoration(
-                  labelText:
-                      l10n(context).description,
+                  labelText: l10n(context).description,
                   border: const OutlineInputBorder(),
                 ),
                 maxLines: 8,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return l10n(context)
-                        .pleaseEnterDescription;
+                    return l10n(context).pleaseEnterDescription;
                   }
                   return null;
                 },
@@ -339,8 +329,7 @@ class _BugReportScreenState extends State<BugReportScreen> {
               TextFormField(
                 controller: _emailController,
                 decoration: InputDecoration(
-                  labelText:
-                      l10n(context).emailOptional,
+                  labelText: l10n(context).emailOptional,
                   border: const OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.emailAddress,
@@ -378,13 +367,11 @@ class _BugReportScreenState extends State<BugReportScreen> {
                                 ),
                                 const SizedBox(width: 8),
                                 Text(
-                                  l10n(context)
-                                      .success,
+                                  l10n(context).success,
                                 ),
                               ],
                             )
-                          : Text(
-                              l10n(context).submit),
+                          : Text(l10n(context).submit),
                 ),
               ),
             ],
