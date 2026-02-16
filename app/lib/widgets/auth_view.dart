@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:convert';
-import 'package:crypto/crypto.dart';
-import 'package:http/http.dart' as http;
 import '../services/logger.dart';
 import '../utils/automatic_error_reporter.dart';
 import 'package:bijbelquiz/l10n/app_localizations.dart';
@@ -174,36 +172,6 @@ class _AuthViewState extends State<AuthView> {
     }
   }
 
-  Future<int> _checkPwned(String password) async {
-    try {
-      final sha1Hash =
-          sha1.convert(utf8.encode(password)).toString().toUpperCase();
-      final prefix = sha1Hash.substring(0, 5);
-      final suffix = sha1Hash.substring(5);
-
-      final url = Uri.parse('https://api.pwnedpasswords.com/range/$prefix');
-      final response = await http.get(url);
-
-      if (response.statusCode != 200) {
-        AppLogger.error(
-            'Pwned API request failed with status: ${response.statusCode}');
-        return 0; // Assume not pwned on API error
-      }
-
-      final lines = response.body.split('\n');
-      for (final line in lines) {
-        final parts = line.split(':');
-        if (parts.length == 2 && parts[0] == suffix) {
-          return int.tryParse(parts[1].trim()) ?? 0;
-        }
-      }
-      return 0;
-    } catch (e) {
-      AppLogger.error('Error checking password against pwned database', e);
-      return 0; // Assume not pwned on error
-    }
-  }
-
   Future<void> _signIn() async {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
@@ -285,19 +253,6 @@ class _AuthViewState extends State<AuthView> {
     if (password.length < 6) {
       setState(() {
         _error = AppLocalizations.of(context)!.passwordTooShort;
-      });
-      return;
-    }
-
-    // Check if password has been pwned
-    setState(() {
-      _error = AppLocalizations.of(context)!.checkingPassword;
-    });
-
-    final pwnedCount = await _checkPwned(password);
-    if (pwnedCount > 0) {
-      setState(() {
-        _error = AppLocalizations.of(context)!.passwordCompromised;
       });
       return;
     }
