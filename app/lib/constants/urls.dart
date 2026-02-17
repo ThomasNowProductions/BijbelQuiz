@@ -1,6 +1,7 @@
 class AppUrls {
   // Base domains
   static const String baseDomain = 'https://bijbelquiz.app';
+  static const String backendDomain = 'https://backend.bijbelquiz.app';
 
   // Homepage
   static final String homepage = baseDomain;
@@ -9,9 +10,8 @@ class AppUrls {
   // Bible API
   static final String bibleApiBase = 'https://www.online-bijbel.nl/api.php';
 
-  // AI API
-  static final String geminiApiBase =
-      'https://generativelanguage.googleapis.com/v1beta';
+  // AI API (proxied through our backend for security)
+  static final String geminiApiBase = '$backendDomain/api/gemini';
 
   // ===== APP-SPECIFIC URLs =====
   // App pages

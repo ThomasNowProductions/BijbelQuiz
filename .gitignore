@@ -173,13 +173,14 @@ temp/
 # ==============================================================================
 
 # Web build outputs
-website/build/
-website/dist/
-website/.next/
-website/out/
-website/.nuxt
-website/.vercel/
-website/.turbo/
+build/
+dist/
+.next/
+out/
+.nuxt
+.vercel/
+.turbo/
+node_modules
 
 # ==============================================================================
 # SYMBOLS & DEBUG

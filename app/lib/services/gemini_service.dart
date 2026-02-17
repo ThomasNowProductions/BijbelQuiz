@@ -1,17 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'logger.dart';
 import '../utils/color_parser.dart';
 import '../utils/automatic_error_reporter.dart';
+import '../constants/urls.dart';
 
 /// Configuration for Gemini API service
 class GeminiConfig {
-  static const String baseUrl =
-      'https://generativelanguage.googleapis.com/v1beta';
   static const Duration requestTimeout = Duration(seconds: 30);
   static const int maxRetries = 3;
   static const Duration retryDelay = Duration(seconds: 1);
@@ -120,7 +117,6 @@ class GeminiError implements Exception {
 /// in the BijbelQuiz app, including proper error handling, logging, and async operations.
 class GeminiService {
   static GeminiService? _instance;
-  late final String _apiKey;
   late final http.Client _httpClient;
   bool _initialized = false;
 
@@ -128,109 +124,41 @@ class GeminiService {
   DateTime? _lastRequestTime;
   static const Duration _minRequestInterval = Duration(seconds: 1);
 
-  /// Private constructor for singleton pattern
   GeminiService._internal() {
     _httpClient = http.Client();
   }
 
-  /// Gets the singleton instance of the service
   static GeminiService get instance {
     _instance ??= GeminiService._internal();
     return _instance!;
   }
 
-  /// Ensures the service is initialized before use
   Future<void> _ensureInitialized() async {
     if (!_initialized) {
       await initialize();
     }
   }
 
-  /// Checks if the service is properly initialized and ready to use
   bool get isInitialized => _initialized;
+  bool get isReady => _initialized;
 
-  /// Gets the current initialization status of the service
-  /// Returns true if the service is ready to use, false otherwise
-  bool get isReady => _initialized && _apiKey.isNotEmpty;
-
-  /// Gets the API key for external access
-  String get apiKey => _apiKey;
-
-  /// Gets the HTTP client for external access
   http.Client get httpClient => _httpClient;
 
-  /// Initializes the Gemini service by loading the API key from environment variables
   Future<void> initialize() async {
     try {
-      AppLogger.info('Initializing Gemini API service...');
-
-      String? apiKey;
-
-      try {
-        // Try to get API key from environment variables loaded by main app
-        apiKey = dotenv.env['GEMINI_API_KEY'];
-
-        if (apiKey != null && apiKey.isNotEmpty) {
-          AppLogger.info('API key loaded from environment variables');
-        } else {
-          AppLogger.warning(
-              'GEMINI_API_KEY not found in environment variables');
-
-          // Fallback to compile-time environment variables (for web builds)
-          try {
-            apiKey = const String.fromEnvironment('GEMINI_API_KEY');
-            if (apiKey.isNotEmpty) {
-              AppLogger.info('API key loaded from compile-time environment');
-            }
-          } catch (e) {
-            AppLogger.warning(
-                'Could not load API key from compile-time environment: $e');
-          }
-
-          // If still no API key, try Platform.environment (for desktop platforms)
-          if (apiKey == null || apiKey.isEmpty) {
-            try {
-              const platform = MethodChannel('app.bijbelquiz.play/env');
-              apiKey = await platform
-                  .invokeMethod('getEnv', {'key': 'GEMINI_API_KEY'});
-              AppLogger.info('API key loaded from system environment');
-            } catch (e) {
-              AppLogger.warning(
-                  'Could not load API key from system environment: $e');
-            }
-          }
-        }
-      } catch (e) {
-        AppLogger.warning('Unexpected error loading API key: $e');
-      }
-
-      if (apiKey == null || apiKey.isEmpty) {
-        throw const GeminiError(
-          message:
-              'GEMINI_API_KEY not found in environment variables. Please ensure your .env file contains GEMINI_API_KEY=your_api_key_here or set it as a system environment variable.',
-        );
-      }
-
-      // Validate API key format (basic check)
-      if (apiKey.length < 20) {
-        AppLogger.warning(
-            'GEMINI_API_KEY appears to be too short - please verify it is correct');
-      }
-
-      _apiKey = apiKey;
+      AppLogger.info(
+          'Initializing Gemini API service (using backend proxy)...');
       _initialized = true;
       AppLogger.info('Gemini API service initialized successfully');
     } catch (e) {
       AppLogger.error('Failed to initialize Gemini API service', e);
 
-      // Report error to automatic error tracking system
       await AutomaticErrorReporter.reportNetworkError(
         message: 'Failed to initialize Gemini API service',
-        url: 'https://generativelanguage.googleapis.com',
+        url: AppUrls.geminiApiBase,
         additionalInfo: {
           'error': e.toString(),
           'operation': 'service_initialization',
-          'api_key_configured': _apiKey.isNotEmpty,
         },
       );
 
@@ -269,10 +197,9 @@ class GeminiService {
     }
 
     // Double-check that we're properly initialized
-    if (!_initialized || _apiKey.isEmpty) {
+    if (!_initialized) {
       throw const GeminiError(
-        message:
-            'Gemini API service is not properly configured. Please check your GEMINI_API_KEY in the .env file.',
+        message: 'Gemini API service is not properly configured.',
       );
     }
 
@@ -296,8 +223,7 @@ class GeminiService {
       // Report error to automatic error tracking system
       await AutomaticErrorReporter.reportNetworkError(
         message: 'Failed to generate color palette from Gemini API',
-        url:
-            '${GeminiConfig.baseUrl}/models/gemini-flash-latest:generateContent',
+        url: AppUrls.geminiApiBase,
         additionalInfo: {
           'description': description,
           'error': e.toString(),
@@ -323,10 +249,9 @@ class GeminiService {
     _lastRequestTime = DateTime.now();
   }
 
-  /// Makes the HTTP request to the Gemini API
+  /// Makes the HTTP request to the Gemini API proxy
   Future<http.Response> _makeApiRequest(String description) async {
-    final url = Uri.parse(
-        '${GeminiConfig.baseUrl}/models/gemini-flash-latest:generateContent?key=$_apiKey');
+    final url = Uri.parse(AppUrls.geminiApiBase);
 
     final prompt = _buildPrompt(description);
     final requestBody = json.encode({
@@ -345,7 +270,7 @@ class GeminiService {
       }
     });
 
-    AppLogger.info('Making request to Gemini API');
+    AppLogger.info('Making request to Gemini API proxy');
 
     for (int attempt = 1; attempt <= GeminiConfig.maxRetries; attempt++) {
       try {
@@ -361,7 +286,6 @@ class GeminiService {
           return response;
         } else if (response.statusCode == 429 &&
             attempt < GeminiConfig.maxRetries) {
-          // Rate limited, wait and retry
           final delay = GeminiConfig.retryDelay * attempt;
           AppLogger.warning(
               'Rate limited, retrying in ${delay.inSeconds}s (attempt $attempt)');
