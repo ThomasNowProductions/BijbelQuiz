@@ -95,8 +95,6 @@ class _LocalApiScreenState extends State<LocalApiScreen> {
                       context, settings, apiService, colorScheme),
                   const SizedBox(height: 16),
                   _buildApiKeysSection(context, apiService, colorScheme),
-                  const SizedBox(height: 16),
-                  _buildQuickActionsCard(context, apiService, colorScheme),
                 ],
               ),
             ),
@@ -364,118 +362,75 @@ class _LocalApiScreenState extends State<LocalApiScreen> {
         ],
       ),
       isThreeLine: key.lastUsedAt != null,
-      trailing: PopupMenuButton<String>(
-        onSelected: (value) =>
-            _handleKeyAction(context, apiService, key, value),
-        itemBuilder: (context) => [
-          PopupMenuItem(
-            value: 'copy',
-            child: Row(
-              children: [
-                const Icon(Icons.copy, size: 20),
-                const SizedBox(width: 8),
-                Text(AppLocalizations.of(context)!.copy),
-              ],
-            ),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          IconButton(
+            icon: const Icon(Icons.copy),
+            onPressed: () async {
+              await Clipboard.setData(ClipboardData(text: key.key));
+              if (mounted) {
+                showTopSnackBar(
+                  context,
+                  AppLocalizations.of(context)!.localApiKeyCopied,
+                  style: TopSnackBarStyle.success,
+                );
+              }
+            },
+            tooltip: AppLocalizations.of(context)!.copy,
           ),
-          PopupMenuItem(
-            value: 'rename',
-            child: Row(
-              children: [
-                const Icon(Icons.edit, size: 20),
-                const SizedBox(width: 8),
-                Text(AppLocalizations.of(context)!.localApiRenameKey),
-              ],
-            ),
-          ),
-          PopupMenuItem(
-            value: 'toggle',
-            child: Row(
-              children: [
-                Icon(key.isEnabled ? Icons.visibility_off : Icons.visibility,
-                    size: 20),
-                const SizedBox(width: 8),
-                Text(key.isEnabled
-                    ? AppLocalizations.of(context)!.localApiDisableKey
-                    : AppLocalizations.of(context)!.localApiEnableKey),
-              ],
-            ),
-          ),
-          PopupMenuItem(
-            value: 'regenerate',
-            child: Row(
-              children: [
-                const Icon(Icons.refresh, size: 20),
-                const SizedBox(width: 8),
-                Text(AppLocalizations.of(context)!.localApiRegenerateKey),
-              ],
-            ),
-          ),
-          PopupMenuItem(
-            value: 'delete',
-            child: Row(
-              children: [
-                Icon(Icons.delete, size: 20, color: colorScheme.error),
-                const SizedBox(width: 8),
-                Text(AppLocalizations.of(context)!.localApiDeleteKey,
-                    style: TextStyle(color: colorScheme.error)),
-              ],
-            ),
+          PopupMenuButton<String>(
+            onSelected: (value) =>
+                _handleKeyAction(context, apiService, key, value),
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 'rename',
+                child: Row(
+                  children: [
+                    const Icon(Icons.edit, size: 20),
+                    const SizedBox(width: 8),
+                    Text(AppLocalizations.of(context)!.localApiRenameKey),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 'toggle',
+                child: Row(
+                  children: [
+                    Icon(
+                        key.isEnabled ? Icons.visibility_off : Icons.visibility,
+                        size: 20),
+                    const SizedBox(width: 8),
+                    Text(key.isEnabled
+                        ? AppLocalizations.of(context)!.localApiDisableKey
+                        : AppLocalizations.of(context)!.localApiEnableKey),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 'regenerate',
+                child: Row(
+                  children: [
+                    const Icon(Icons.refresh, size: 20),
+                    const SizedBox(width: 8),
+                    Text(AppLocalizations.of(context)!.localApiRegenerateKey),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 'delete',
+                child: Row(
+                  children: [
+                    Icon(Icons.delete, size: 20, color: colorScheme.error),
+                    const SizedBox(width: 8),
+                    Text(AppLocalizations.of(context)!.localApiDeleteKey,
+                        style: TextStyle(color: colorScheme.error)),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildQuickActionsCard(
-    BuildContext context,
-    LocalApiService apiService,
-    ColorScheme colorScheme,
-  ) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(Icons.flash_on, color: colorScheme.primary),
-                const SizedBox(width: 8),
-                Text(
-                  AppLocalizations.of(context)!.localApiQuickActions,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                ElevatedButton.icon(
-                  onPressed: apiService.apiKeys.isEmpty
-                      ? null
-                      : () => _copyAllKeys(context, apiService),
-                  icon: const Icon(Icons.content_copy),
-                  label:
-                      Text(AppLocalizations.of(context)!.localApiCopyAllKeys),
-                ),
-                ElevatedButton.icon(
-                  onPressed: () => _showAddKeyDialog(context, apiService),
-                  icon: const Icon(Icons.add),
-                  label: Text(AppLocalizations.of(context)!.localApiAddKey),
-                ),
-                OutlinedButton.icon(
-                  onPressed: () => _showApiDocumentation(context),
-                  icon: const Icon(Icons.code),
-                  label:
-                      Text(AppLocalizations.of(context)!.localApiDocumentation),
-                ),
-              ],
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -487,14 +442,6 @@ class _LocalApiScreenState extends State<LocalApiScreen> {
     String action,
   ) async {
     switch (action) {
-      case 'copy':
-        await Clipboard.setData(ClipboardData(text: key.key));
-        if (mounted) {
-          showTopSnackBar(
-              context, AppLocalizations.of(context)!.localApiKeyCopied,
-              style: TopSnackBarStyle.success);
-        }
-        break;
       case 'rename':
         _showRenameDialog(context, apiService, key);
         break;
