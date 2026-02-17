@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:cryptography/cryptography.dart';
 import 'package:bijbelquiz/services/analytics_service.dart';
+import 'package:bijbelquiz/screens/local_api_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'providers/settings_provider.dart';
@@ -342,6 +343,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   () => settings.setMotivationalNotificationsEnabled(value));
             },
             colorScheme,
+          ),
+        ),
+      // Local API (not on web)
+      if (!kIsWeb)
+        _SettingItem(
+          title: AppLocalizations.of(context)!.localApi,
+          subtitle: AppLocalizations.of(context)!.localApiDesc,
+          onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const LocalApiScreen()),
+          ),
+          child: _buildActionButton(
+            context,
+            icon: Icons.api,
           ),
         ),
       // Actions

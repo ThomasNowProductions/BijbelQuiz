@@ -7,6 +7,7 @@ import 'question_cache_service.dart';
 import 'gemini_service.dart';
 import 'star_transaction_service.dart';
 import 'time_tracking_service.dart';
+import 'local_api_service.dart';
 import '../providers/settings_provider.dart';
 import '../providers/game_stats_provider.dart';
 import '../providers/lesson_progress_provider.dart';
@@ -35,6 +36,7 @@ class ServiceContainer {
   StarTransactionService? _starTransactionService;
   MessagingService? _messagingService;
   NotificationService? _notificationService;
+  LocalApiService? _localApiService;
 
   // Initialization state tracking
   final Map<String, Completer<void>> _initializationCompleters = {};
@@ -150,6 +152,16 @@ class ServiceContainer {
 
       _starTransactionService = StarTransactionService.instance;
       // This will be initialized properly later when providers are available
+    }));
+
+    // Local API service (needs providers and question cache)
+    unawaited(_initializeService('local_api', () async {
+      await _waitForService('settings_provider');
+      await _waitForService('game_stats_provider');
+      await _waitForService('question_cache');
+
+      _localApiService = LocalApiService.instance;
+      await _localApiService!.loadSettings();
     }));
 
     AppLogger.info('Optional services initialization started');
@@ -270,6 +282,8 @@ class ServiceContainer {
 
   NotificationService? get notificationService => _notificationService;
 
+  LocalApiService? get localApiService => _localApiService;
+
   /// Check if all critical services are ready
   bool get areCriticalServicesReady {
     return _analyticsService != null &&
@@ -301,6 +315,8 @@ class ServiceContainer {
         return _messagingService != null;
       case 'notification':
         return _notificationService != null;
+      case 'local_api':
+        return _localApiService != null;
       default:
         return false;
     }
@@ -325,6 +341,7 @@ class ServiceContainer {
             _isServiceInitialized('star_transaction'),
         'messaging': _messagingService != null,
         'notification': _notificationService != null,
+        'local_api': _localApiService != null,
       },
       'failed_services': _failedServices.toList(),
       'all_critical_ready': areCriticalServicesReady,

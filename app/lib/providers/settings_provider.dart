@@ -66,6 +66,14 @@ class SettingsProvider extends ChangeNotifier {
   final Map<String, AITheme> _aiThemes = {};
 
   // API settings
+  static const String _localApiEnabledKey = 'local_api_enabled';
+  static const String _localApiPortKey = 'local_api_port';
+
+  bool _localApiEnabled = false;
+  int _localApiPort = 7777;
+
+  bool get localApiEnabled => _localApiEnabled;
+  int get localApiPort => _localApiPort;
 
   // Navigation settings
   bool _showNavigationLabels = true;
@@ -468,6 +476,11 @@ class SettingsProvider extends ChangeNotifier {
       _motivationalNotificationsEnabled = _getBoolSetting(
           _motivationalNotificationsEnabledKey,
           defaultValue: true);
+
+      // Load local API settings
+      _localApiEnabled =
+          _getBoolSetting(_localApiEnabledKey, defaultValue: false);
+      _localApiPort = _prefs?.getInt(_localApiPortKey) ?? 7777;
 
       final unlocked = _prefs?.getStringList(_unlockedThemesKey);
       if (unlocked != null) {
@@ -932,6 +945,37 @@ class SettingsProvider extends ChangeNotifier {
     );
   }
 
+  /// Updates the local API enabled setting
+  Future<void> setLocalApiEnabled(bool enabled) async {
+    AppLogger.info(
+        'Changing local API setting from $_localApiEnabled to $enabled');
+    await _saveSetting(
+      action: () async {
+        _localApiEnabled = enabled;
+        await _prefs?.setBool(_localApiEnabledKey, enabled);
+        AppLogger.info('Local API setting saved successfully: $enabled');
+      },
+      errorMessage: 'Failed to save local API setting',
+    );
+  }
+
+  /// Updates the local API port setting
+  Future<void> setLocalApiPort(int port) async {
+    if (port < 1024 || port > 65535) {
+      throw ArgumentError('Port must be between 1024 and 65535');
+    }
+
+    AppLogger.info('Changing local API port from $_localApiPort to $port');
+    await _saveSetting(
+      action: () async {
+        _localApiPort = port;
+        await _prefs?.setInt(_localApiPortKey, port);
+        AppLogger.info('Local API port saved successfully: $port');
+      },
+      errorMessage: 'Failed to save local API port setting',
+    );
+  }
+
   // Helper method to safely get a boolean setting with type checking
   bool _getBoolSetting(String key, {required bool defaultValue}) {
     try {
@@ -979,6 +1023,8 @@ class SettingsProvider extends ChangeNotifier {
       'automaticBugReporting': _automaticBugReporting,
       'motivationalNotificationsEnabled': _motivationalNotificationsEnabled,
       'aiThemes': _aiThemes.map((key, value) => MapEntry(key, value.toJson())),
+      'localApiEnabled': _localApiEnabled,
+      'localApiPort': _localApiPort,
     };
   }
 
@@ -1025,6 +1071,8 @@ class SettingsProvider extends ChangeNotifier {
     _difficultyPreference = data['difficultyPreference'];
 
     // Load API settings
+    _localApiEnabled = data['localApiEnabled'] ?? false;
+    _localApiPort = data['localApiPort'] ?? 7777;
 
     // Load navigation settings
     _showNavigationLabels = data['showNavigationLabels'] ?? true;
@@ -1123,6 +1171,8 @@ class SettingsProvider extends ChangeNotifier {
     }
 
     // Save API settings
+    await _prefs?.setBool(_localApiEnabledKey, _localApiEnabled);
+    await _prefs?.setInt(_localApiPortKey, _localApiPort);
 
     // Save navigation settings
     await _prefs?.setBool(_showNavigationLabelsKey, _showNavigationLabels);

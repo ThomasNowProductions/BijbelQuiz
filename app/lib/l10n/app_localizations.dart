@@ -4070,6 +4070,282 @@ abstract class AppLocalizations {
   /// **'Dismiss'**
   String get dismiss;
 
+  /// No description provided for @localApi.
+  ///
+  /// In en, this message translates to:
+  /// **'Local API'**
+  String get localApi;
+
+  /// No description provided for @localApiDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable a local HTTP API to access quiz data from other applications'**
+  String get localApiDesc;
+
+  /// No description provided for @localApiEnable.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable API'**
+  String get localApiEnable;
+
+  /// No description provided for @localApiEnableDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Start or stop the local API server'**
+  String get localApiEnableDesc;
+
+  /// No description provided for @localApiPort.
+  ///
+  /// In en, this message translates to:
+  /// **'API Port'**
+  String get localApiPort;
+
+  /// No description provided for @localApiPortRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Port must be between 1024 and 65535'**
+  String get localApiPortRange;
+
+  /// No description provided for @localApiStopToChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop server to change'**
+  String get localApiStopToChange;
+
+  /// No description provided for @localApiStopToChangePort.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop server to change port'**
+  String get localApiStopToChangePort;
+
+  /// No description provided for @localApiKey.
+  ///
+  /// In en, this message translates to:
+  /// **'API Key'**
+  String get localApiKey;
+
+  /// No description provided for @localApiKeyCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'API key copied to clipboard!'**
+  String get localApiKeyCopied;
+
+  /// No description provided for @localApiAllKeysCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'All API keys copied to clipboard!'**
+  String get localApiAllKeysCopied;
+
+  /// No description provided for @copy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get copy;
+
+  /// API server running message with port
+  ///
+  /// In en, this message translates to:
+  /// **'API server running on port {port}'**
+  String localApiRunning(int port);
+
+  /// Short status showing port
+  ///
+  /// In en, this message translates to:
+  /// **'Running on port {port}'**
+  String localApiRunningOnPort(int port);
+
+  /// No description provided for @localApiStopped.
+  ///
+  /// In en, this message translates to:
+  /// **'API server stopped'**
+  String get localApiStopped;
+
+  /// No description provided for @localApiGenerateKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate New Key'**
+  String get localApiGenerateKey;
+
+  /// No description provided for @localApiNotAvailableWeb.
+  ///
+  /// In en, this message translates to:
+  /// **'Local API is not available on web platform'**
+  String get localApiNotAvailableWeb;
+
+  /// No description provided for @localApiDocumentation.
+  ///
+  /// In en, this message translates to:
+  /// **'API Documentation'**
+  String get localApiDocumentation;
+
+  /// No description provided for @localApiServerStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Server Status'**
+  String get localApiServerStatus;
+
+  /// No description provided for @localApiKeys.
+  ///
+  /// In en, this message translates to:
+  /// **'API Keys'**
+  String get localApiKeys;
+
+  /// No description provided for @localApiAddKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Key'**
+  String get localApiAddKey;
+
+  /// No description provided for @localApiNoKeys.
+  ///
+  /// In en, this message translates to:
+  /// **'No API keys configured'**
+  String get localApiNoKeys;
+
+  /// No description provided for @localApiCreateKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Key'**
+  String get localApiCreateKey;
+
+  /// No description provided for @localApiKeyName.
+  ///
+  /// In en, this message translates to:
+  /// **'Key Name'**
+  String get localApiKeyName;
+
+  /// No description provided for @localApiKeyNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. My Script'**
+  String get localApiKeyNameHint;
+
+  /// No description provided for @localApiRenameKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename Key'**
+  String get localApiRenameKey;
+
+  /// No description provided for @localApiEnableKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Key'**
+  String get localApiEnableKey;
+
+  /// No description provided for @localApiDisableKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Disable Key'**
+  String get localApiDisableKey;
+
+  /// No description provided for @localApiRegenerateKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Regenerate Key'**
+  String get localApiRegenerateKey;
+
+  /// No description provided for @localApiRegenerateKeyConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'This will generate a new key and invalidate the old one. Any applications using this key will need to be updated.'**
+  String get localApiRegenerateKeyConfirm;
+
+  /// No description provided for @localApiDeleteKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Key'**
+  String get localApiDeleteKey;
+
+  /// No description provided for @localApiDeleteKeyConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'This action cannot be undone. Any applications using this key will lose access.'**
+  String get localApiDeleteKeyConfirm;
+
+  /// No description provided for @localApiQuickActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions'**
+  String get localApiQuickActions;
+
+  /// No description provided for @localApiCopyAllKeys.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy All Keys'**
+  String get localApiCopyAllKeys;
+
+  /// No description provided for @localApiCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Created'**
+  String get localApiCreated;
+
+  /// No description provided for @localApiRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Requests'**
+  String get localApiRequests;
+
+  /// No description provided for @localApiLastUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'Last used'**
+  String get localApiLastUsed;
+
+  /// No description provided for @localApiEndpoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Endpoints'**
+  String get localApiEndpoints;
+
+  /// No description provided for @localApiHealthEndpoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Check server health status'**
+  String get localApiHealthEndpoint;
+
+  /// No description provided for @localApiQuestionsEndpoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Get quiz questions with optional filters'**
+  String get localApiQuestionsEndpoint;
+
+  /// No description provided for @localApiProgressEndpoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Get user lesson progress'**
+  String get localApiProgressEndpoint;
+
+  /// No description provided for @localApiStatsEndpoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Get user game statistics'**
+  String get localApiStatsEndpoint;
+
+  /// No description provided for @localApiStarsBalanceEndpoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Get current stars balance'**
+  String get localApiStarsBalanceEndpoint;
+
+  /// No description provided for @localApiStarsAddEndpoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add stars to balance'**
+  String get localApiStarsAddEndpoint;
+
+  /// No description provided for @localApiStarsSpendEndpoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Spend stars from balance'**
+  String get localApiStarsSpendEndpoint;
+
+  /// No description provided for @localApiAuthHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Authentication'**
+  String get localApiAuthHeader;
+
   /// Shows progress of completed lessons
   ///
   /// In en, this message translates to:

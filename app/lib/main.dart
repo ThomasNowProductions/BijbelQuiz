@@ -392,6 +392,21 @@ class _BijbelQuizAppState extends State<BijbelQuizApp> {
         gameStatsProvider: gameStatsProvider,
         lessonProgressProvider: lessonProgressProvider,
       );
+
+      // Initialize Local API Service with providers
+      final localApiService = _serviceContainer.localApiService;
+      if (localApiService != null) {
+        localApiService.initialize(
+          gameStatsProvider: gameStatsProvider,
+          lessonProgressProvider: lessonProgressProvider,
+          settingsProvider:
+              Provider.of<SettingsProvider>(context, listen: false),
+          questionCacheService: _serviceContainer.questionCacheService!,
+        );
+        if (localApiService.isEnabled) {
+          await localApiService.startServer();
+        }
+      }
     } catch (e) {
       AppLogger.warning('Failed to initialize star transaction service: $e');
     }

@@ -2133,6 +2133,154 @@ class AppLocalizationsNl extends AppLocalizations {
   String get dismiss => 'Negeren';
 
   @override
+  String get localApi => 'Lokale API';
+
+  @override
+  String get localApiDesc =>
+      'Schakel een lokale HTTP API in om quizgegevens te openen vanuit andere applicaties';
+
+  @override
+  String get localApiEnable => 'API Inschakelen';
+
+  @override
+  String get localApiEnableDesc => 'Start of stop de lokale API-server';
+
+  @override
+  String get localApiPort => 'API Poort';
+
+  @override
+  String get localApiPortRange => 'Poort moet tussen 1024 en 65535 zijn';
+
+  @override
+  String get localApiStopToChange => 'Stop server om te wijzigen';
+
+  @override
+  String get localApiStopToChangePort => 'Stop server om poort te wijzigen';
+
+  @override
+  String get localApiKey => 'API Sleutel';
+
+  @override
+  String get localApiKeyCopied => 'API-sleutel gekopieerd naar klembord!';
+
+  @override
+  String get localApiAllKeysCopied =>
+      'Alle API-sleutels gekopieerd naar klembord!';
+
+  @override
+  String get copy => 'Kopiëren';
+
+  @override
+  String localApiRunning(int port) {
+    return 'API-server draait op poort $port';
+  }
+
+  @override
+  String localApiRunningOnPort(int port) {
+    return 'Actief op poort $port';
+  }
+
+  @override
+  String get localApiStopped => 'API-server gestopt';
+
+  @override
+  String get localApiGenerateKey => 'Nieuwe Sleutel Genereren';
+
+  @override
+  String get localApiNotAvailableWeb =>
+      'Lokale API is niet beschikbaar op het webplatform';
+
+  @override
+  String get localApiDocumentation => 'API Documentatie';
+
+  @override
+  String get localApiServerStatus => 'Server Status';
+
+  @override
+  String get localApiKeys => 'API Sleutels';
+
+  @override
+  String get localApiAddKey => 'Sleutel Toevoegen';
+
+  @override
+  String get localApiNoKeys => 'Geen API-sleutels geconfigureerd';
+
+  @override
+  String get localApiCreateKey => 'Sleutel Aanmaken';
+
+  @override
+  String get localApiKeyName => 'Sleutelnaam';
+
+  @override
+  String get localApiKeyNameHint => 'bijv. Mijn Script';
+
+  @override
+  String get localApiRenameKey => 'Sleutel Hernoemen';
+
+  @override
+  String get localApiEnableKey => 'Sleutel Inschakelen';
+
+  @override
+  String get localApiDisableKey => 'Sleutel Uitschakelen';
+
+  @override
+  String get localApiRegenerateKey => 'Sleutel Regenereren';
+
+  @override
+  String get localApiRegenerateKeyConfirm =>
+      'Dit genereert een nieuwe sleutel en maakt de oude ongeldig. Applicaties die deze sleutel gebruiken moeten worden bijgewerkt.';
+
+  @override
+  String get localApiDeleteKey => 'Sleutel Verwijderen';
+
+  @override
+  String get localApiDeleteKeyConfirm =>
+      'Deze actie kan niet ongedaan worden gemaakt. Applicaties die deze sleutel gebruiken verliezen toegang.';
+
+  @override
+  String get localApiQuickActions => 'Snelle Acties';
+
+  @override
+  String get localApiCopyAllKeys => 'Kopieer Alle Sleutels';
+
+  @override
+  String get localApiCreated => 'Aangemaakt';
+
+  @override
+  String get localApiRequests => 'Verzoeken';
+
+  @override
+  String get localApiLastUsed => 'Laatst gebruikt';
+
+  @override
+  String get localApiEndpoints => 'Beschikbare Endpoints';
+
+  @override
+  String get localApiHealthEndpoint => 'Controleer serverstatus';
+
+  @override
+  String get localApiQuestionsEndpoint =>
+      'Haal quizvragen op met optionele filters';
+
+  @override
+  String get localApiProgressEndpoint => 'Haal lesvoortgang op';
+
+  @override
+  String get localApiStatsEndpoint => 'Haal spelstatistieken op';
+
+  @override
+  String get localApiStarsBalanceEndpoint => 'Haal huidige sterrenbalans op';
+
+  @override
+  String get localApiStarsAddEndpoint => 'Sterren toevoegen aan balans';
+
+  @override
+  String get localApiStarsSpendEndpoint => 'Sterren besteden van balans';
+
+  @override
+  String get localApiAuthHeader => 'Authenticatie';
+
+  @override
   String lessonsCompleted(int unlocked, int total) {
     return '$unlocked van de $total lessen voltooid';
   }

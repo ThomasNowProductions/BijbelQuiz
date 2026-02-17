@@ -2101,6 +2101,153 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dismiss => 'Dismiss';
 
   @override
+  String get localApi => 'Local API';
+
+  @override
+  String get localApiDesc =>
+      'Enable a local HTTP API to access quiz data from other applications';
+
+  @override
+  String get localApiEnable => 'Enable API';
+
+  @override
+  String get localApiEnableDesc => 'Start or stop the local API server';
+
+  @override
+  String get localApiPort => 'API Port';
+
+  @override
+  String get localApiPortRange => 'Port must be between 1024 and 65535';
+
+  @override
+  String get localApiStopToChange => 'Stop server to change';
+
+  @override
+  String get localApiStopToChangePort => 'Stop server to change port';
+
+  @override
+  String get localApiKey => 'API Key';
+
+  @override
+  String get localApiKeyCopied => 'API key copied to clipboard!';
+
+  @override
+  String get localApiAllKeysCopied => 'All API keys copied to clipboard!';
+
+  @override
+  String get copy => 'Copy';
+
+  @override
+  String localApiRunning(int port) {
+    return 'API server running on port $port';
+  }
+
+  @override
+  String localApiRunningOnPort(int port) {
+    return 'Running on port $port';
+  }
+
+  @override
+  String get localApiStopped => 'API server stopped';
+
+  @override
+  String get localApiGenerateKey => 'Generate New Key';
+
+  @override
+  String get localApiNotAvailableWeb =>
+      'Local API is not available on web platform';
+
+  @override
+  String get localApiDocumentation => 'API Documentation';
+
+  @override
+  String get localApiServerStatus => 'Server Status';
+
+  @override
+  String get localApiKeys => 'API Keys';
+
+  @override
+  String get localApiAddKey => 'Add Key';
+
+  @override
+  String get localApiNoKeys => 'No API keys configured';
+
+  @override
+  String get localApiCreateKey => 'Create Key';
+
+  @override
+  String get localApiKeyName => 'Key Name';
+
+  @override
+  String get localApiKeyNameHint => 'e.g. My Script';
+
+  @override
+  String get localApiRenameKey => 'Rename Key';
+
+  @override
+  String get localApiEnableKey => 'Enable Key';
+
+  @override
+  String get localApiDisableKey => 'Disable Key';
+
+  @override
+  String get localApiRegenerateKey => 'Regenerate Key';
+
+  @override
+  String get localApiRegenerateKeyConfirm =>
+      'This will generate a new key and invalidate the old one. Any applications using this key will need to be updated.';
+
+  @override
+  String get localApiDeleteKey => 'Delete Key';
+
+  @override
+  String get localApiDeleteKeyConfirm =>
+      'This action cannot be undone. Any applications using this key will lose access.';
+
+  @override
+  String get localApiQuickActions => 'Quick Actions';
+
+  @override
+  String get localApiCopyAllKeys => 'Copy All Keys';
+
+  @override
+  String get localApiCreated => 'Created';
+
+  @override
+  String get localApiRequests => 'Requests';
+
+  @override
+  String get localApiLastUsed => 'Last used';
+
+  @override
+  String get localApiEndpoints => 'Available Endpoints';
+
+  @override
+  String get localApiHealthEndpoint => 'Check server health status';
+
+  @override
+  String get localApiQuestionsEndpoint =>
+      'Get quiz questions with optional filters';
+
+  @override
+  String get localApiProgressEndpoint => 'Get user lesson progress';
+
+  @override
+  String get localApiStatsEndpoint => 'Get user game statistics';
+
+  @override
+  String get localApiStarsBalanceEndpoint => 'Get current stars balance';
+
+  @override
+  String get localApiStarsAddEndpoint => 'Add stars to balance';
+
+  @override
+  String get localApiStarsSpendEndpoint => 'Spend stars from balance';
+
+  @override
+  String get localApiAuthHeader => 'Authentication';
+
+  @override
   String lessonsCompleted(int unlocked, int total) {
     return '$unlocked out of $total lessons completed';
   }
