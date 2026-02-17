@@ -5,6 +5,11 @@
 
 set -e  # Exit on any error
 
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Change to the app directory
+cd "$SCRIPT_DIR/../app"
+
 echo "🚀 Starting BijbelQuiz build process..."
 
 # Colors for output
