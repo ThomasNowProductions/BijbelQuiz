@@ -2143,8 +2143,15 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
+  String get dailyStreakDescriptionZero => 'Begin vandaag aan je reeks!';
+
+  @override
+  String get dailyStreakDescriptionOne =>
+      'Je gebruikt BijbelQuiz al 1 dag op rij!';
+
+  @override
   String dailyStreakDescription(int streakDays) {
-    return 'Je gebruikt BijbelQuiz al $streakDays dagen op rij';
+    return 'Je gebruikt BijbelQuiz al $streakDays dagen op rij!';
   }
 
   @override

@@ -4082,10 +4082,22 @@ abstract class AppLocalizations {
   /// **'Continue with lesson: {lessonTitle}'**
   String continueWithLesson(String lessonTitle);
 
-  /// Description of daily streak with day count
+  /// Description when user has no streak yet
   ///
   /// In en, this message translates to:
-  /// **'You have been using BibleQuiz for {streakDays} days in a row'**
+  /// **'Start your streak today!'**
+  String get dailyStreakDescriptionZero;
+
+  /// Description when user has a 1-day streak
+  ///
+  /// In en, this message translates to:
+  /// **'You have been using BibleQuiz for 1 day in a row!'**
+  String get dailyStreakDescriptionOne;
+
+  /// Description of daily streak with day count (2+ days)
+  ///
+  /// In en, this message translates to:
+  /// **'You have been using BibleQuiz for {streakDays} days in a row!'**
   String dailyStreakDescription(int streakDays);
 
   /// Message when user receives stars from coupon

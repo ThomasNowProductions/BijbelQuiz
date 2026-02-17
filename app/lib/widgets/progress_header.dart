@@ -187,8 +187,15 @@ class _ProgressHeaderState extends State<ProgressHeader>
                                     ),
                               ),
                               Text(
-                                AppLocalizations.of(context)!
-                                    .dailyStreakDescription(widget.streakDays),
+                                widget.streakDays == 0
+                                    ? AppLocalizations.of(context)!
+                                        .dailyStreakDescriptionZero
+                                    : widget.streakDays == 1
+                                        ? AppLocalizations.of(context)!
+                                            .dailyStreakDescriptionOne
+                                        : AppLocalizations.of(context)!
+                                            .dailyStreakDescription(
+                                                widget.streakDays),
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium

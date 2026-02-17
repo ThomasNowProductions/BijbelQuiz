@@ -681,13 +681,23 @@
   },
   "continueWithLesson": "Continue with lesson: {lessonTitle}",
 
+  "@dailyStreakDescriptionZero": {
+    "description": "Description when user has no streak yet"
+  },
+  "dailyStreakDescriptionZero": "Start your streak today!",
+
+  "@dailyStreakDescriptionOne": {
+    "description": "Description when user has a 1-day streak"
+  },
+  "dailyStreakDescriptionOne": "You have been using BibleQuiz for 1 day in a row!",
+
   "@dailyStreakDescription": {
-    "description": "Description of daily streak with day count",
+    "description": "Description of daily streak with day count (2+ days)",
     "placeholders": {
       "streakDays": {"type": "int"}
     }
   },
-  "dailyStreakDescription": "You have been using BibleQuiz for {streakDays} days in a row",
+  "dailyStreakDescription": "You have been using BibleQuiz for {streakDays} days in a row!",
 
   "@couponStarsReceived": {
     "description": "Message when user receives stars from coupon",

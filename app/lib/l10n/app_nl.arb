@@ -682,13 +682,23 @@
   },
   "continueWithLesson": "Ga verder met les: {lessonTitle}",
 
+  "@dailyStreakDescriptionZero": {
+    "description": "Description when user has no streak yet"
+  },
+  "dailyStreakDescriptionZero": "Begin vandaag aan je reeks!",
+
+  "@dailyStreakDescriptionOne": {
+    "description": "Description when user has a 1-day streak"
+  },
+  "dailyStreakDescriptionOne": "Je gebruikt BijbelQuiz al 1 dag op rij!",
+
   "@dailyStreakDescription": {
-    "description": "Description of daily streak with day count",
+    "description": "Description of daily streak with day count (2+ days)",
     "placeholders": {
       "streakDays": {"type": "int"}
     }
   },
-  "dailyStreakDescription": "Je gebruikt BijbelQuiz al {streakDays} dagen op rij",
+  "dailyStreakDescription": "Je gebruikt BijbelQuiz al {streakDays} dagen op rij!",
 
   "@couponStarsReceived": {
     "description": "Message when user receives stars from coupon",
