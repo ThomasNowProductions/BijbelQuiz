@@ -30,7 +30,9 @@ class _AuthViewState extends State<AuthView> {
 
   bool _isLoading = false;
   String? _error;
-  bool _isLoginMode = true; // true for login, false for signup
+  bool _isLoginMode = true;
+  bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
   List<String>? _blacklistedUsernames;
 
   /// Converts technical error messages to user-friendly messages
@@ -587,6 +589,18 @@ class _AuthViewState extends State<AuthView> {
               labelText: AppLocalizations.of(context)!.password,
               hintText: AppLocalizations.of(context)!.passwordHint,
               prefixIcon: const Icon(Icons.lock_rounded),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _obscurePassword
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _obscurePassword = !_obscurePassword;
+                  });
+                },
+              ),
               filled: true,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -601,7 +615,7 @@ class _AuthViewState extends State<AuthView> {
                 borderSide: BorderSide(color: colorScheme.primary, width: 2),
               ),
             ),
-            obscureText: true,
+            obscureText: _obscurePassword,
             textInputAction:
                 _isLoginMode ? TextInputAction.done : TextInputAction.next,
             enabled: !_isLoading,
@@ -616,6 +630,18 @@ class _AuthViewState extends State<AuthView> {
                 labelText: AppLocalizations.of(context)!.confirmPassword,
                 hintText: AppLocalizations.of(context)!.confirmPasswordHint,
                 prefixIcon: const Icon(Icons.lock_outline_rounded),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _obscureConfirmPassword
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _obscureConfirmPassword = !_obscureConfirmPassword;
+                    });
+                  },
+                ),
                 filled: true,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -630,7 +656,7 @@ class _AuthViewState extends State<AuthView> {
                   borderSide: BorderSide(color: colorScheme.primary, width: 2),
                 ),
               ),
-              obscureText: true,
+              obscureText: _obscureConfirmPassword,
               textInputAction: TextInputAction.done,
               enabled: !_isLoading,
             ),
