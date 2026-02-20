@@ -964,64 +964,85 @@ class _QuizScreenState extends State<QuizScreen>
         isDesktop: isDesktop,
       ),
       body: SafeArea(
-        child: Center(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              maxWidth: isDesktop ? 800 : (isTablet ? 600 : double.infinity),
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: context.responsiveHorizontalPadding(
-                    isDesktop ? 32 : (isTablet ? 24 : 16)),
-                vertical: context.responsiveVerticalPadding(20),
-              ),
-              child: Center(
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // Compact metrics row above the question
-                      MetricsWidget(
-                        scoreAnimation: _animationController.scoreAnimation,
-                        streakAnimation: _animationController.streakAnimation,
-                        longestStreakAnimation:
-                            _animationController.longestStreakAnimation,
-                        timeAnimation: _animationController.timeAnimation,
-                        timeColorAnimation: _timerManager.timeColorAnimation,
-                        previousScore: _previousScore,
-                        previousStreak: _previousStreak,
-                        previousLongestStreak: _previousLongestStreak,
-                        previousTime: _previousTime,
-                        isDesktop: isDesktop,
-                        isTablet: isTablet,
-                        isSmallPhone: isSmallPhone,
-                      ),
-                      ResponsiveSizedBox(height: isDesktop ? 24 : 20),
-                      // Question card below metrics with vertical scroll animation
-                      Semantics(
-                        label: 'Question: ${_quizState.question.question}',
-                        child: SlideTransition(
-                          position: _verticalSlideAnimation,
-                          child: QuestionWidget(
-                            question: _quizState.question,
-                            selectedAnswerIndex: _quizState.selectedAnswerIndex,
-                            isAnswering: _quizState.isAnswering,
-                            isTransitioning: _quizState.isTransitioning,
-                            onAnswerSelected: _handleAnswer,
-                            language: settings.language,
-                            performanceService: _performanceService,
+        child: Stack(
+          children: [
+            // Main content area with question card
+            Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth:
+                      isDesktop ? 800 : (isTablet ? 600 : double.infinity),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: context.responsiveHorizontalPadding(
+                        isDesktop ? 32 : (isTablet ? 24 : 16)),
+                    vertical: context.responsiveVerticalPadding(20),
+                  ),
+                  child: Center(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // Spacer to push content below the overlay metrics
+                          SizedBox(height: isDesktop ? 80 : 70),
+                          // Question card below metrics with vertical scroll animation
+                          Semantics(
+                            label: 'Question: ${_quizState.question.question}',
+                            child: SlideTransition(
+                              position: _verticalSlideAnimation,
+                              child: QuestionWidget(
+                                question: _quizState.question,
+                                selectedAnswerIndex:
+                                    _quizState.selectedAnswerIndex,
+                                isAnswering: _quizState.isAnswering,
+                                isTransitioning: _quizState.isTransitioning,
+                                onAnswerSelected: _handleAnswer,
+                                language: settings.language,
+                                performanceService: _performanceService,
+                              ),
+                            ),
                           ),
-                        ),
+                          const SizedBox(height: 16),
+                        ],
                       ),
-                      const SizedBox(height: 16),
-                    ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
+            // Overlay metrics widget - fixed at top center
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: context.responsiveHorizontalPadding(
+                        isDesktop ? 32 : (isTablet ? 24 : 16)),
+                  ),
+                  child: MetricsWidget(
+                    scoreAnimation: _animationController.scoreAnimation,
+                    streakAnimation: _animationController.streakAnimation,
+                    longestStreakAnimation:
+                        _animationController.longestStreakAnimation,
+                    timeAnimation: _animationController.timeAnimation,
+                    timeColorAnimation: _timerManager.timeColorAnimation,
+                    previousScore: _previousScore,
+                    previousStreak: _previousStreak,
+                    previousLongestStreak: _previousLongestStreak,
+                    previousTime: _previousTime,
+                    isDesktop: isDesktop,
+                    isTablet: isTablet,
+                    isSmallPhone: isSmallPhone,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
