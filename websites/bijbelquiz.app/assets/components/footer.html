@@ -9,8 +9,25 @@
     <span class="footer-separator">•</span>
     <a href="https://bijbelquiz.app/pers" class="footer-link">Pers</a>
     <span class="footer-separator">•</span>
-    <a href="https://bijbelquiz.app/status" class="footer-link" id="service-status-link">
-        <span id="service-status" class="service-status">Status wordt geladen...</span>
+    <a href="https://status.bijbelquiz.app" class="footer-link" id="service-status-link">
+        <span id="service-status" class="service-status" data-status="loading">Status wordt geladen...</span>
     </a>
 </div>
 <p>&copy; 2026 BijbelQuiz</p>
+<script>
+(function() {
+    var statusEl = document.getElementById('service-status');
+    fetch('https://status.bijbelquiz.app/status.json')
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            var status = data.status || 'operational';
+            var title = data.title || 'Operationeel';
+            statusEl.textContent = title;
+            statusEl.dataset.status = status;
+        })
+        .catch(function() {
+            statusEl.textContent = 'Status onbekend';
+            statusEl.dataset.status = 'unknown';
+        });
+})();
+</script>
