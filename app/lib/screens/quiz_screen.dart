@@ -102,6 +102,10 @@ class _QuizScreenState extends State<QuizScreen>
   late ProgressiveQuestionSelector _questionSelector;
   late QuizAnswerHandler _answerHandler;
 
+  // Vertical transition animation for question changes
+  late AnimationController _verticalTransitionController;
+  late Animation<Offset> _verticalSlideAnimation;
+
   @override
   void initState() {
     super.initState();
@@ -212,6 +216,21 @@ class _QuizScreenState extends State<QuizScreen>
       soundService: _soundService,
       platformFeedbackService: _platformFeedbackService,
     );
+
+    // Initialize vertical transition animation
+    _verticalTransitionController = AnimationController(
+      duration: const Duration(milliseconds: 350),
+      vsync: this,
+    );
+    _verticalSlideAnimation = Tween<Offset>(
+      begin: const Offset(0, 1.0),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _verticalTransitionController,
+      curve: Curves.easeOutCubic,
+    ));
+    // Start at end position so questions are visible
+    _verticalTransitionController.value = 1.0;
   }
 
   @override
@@ -222,6 +241,7 @@ class _QuizScreenState extends State<QuizScreen>
     // Dispose new managers
     _timerManager.dispose();
     _animationController.dispose();
+    _verticalTransitionController.dispose();
 
     // Dispose services
     _performanceService.dispose();
@@ -821,7 +841,20 @@ class _QuizScreenState extends State<QuizScreen>
     // Compute next question; selector enforces uniqueness and auto-resets as needed
     final QuizQuestion nextQuestion =
         _questionSelector.pickNextQuestion(calculatedNewDifficulty, context);
+
+    // Trigger vertical scroll animation
+    currentQuestionIndex++;
+    if (!mounted) return;
     setState(() {
+      _verticalSlideAnimation = Tween<Offset>(
+        begin: const Offset(0, 1.0),
+        end: Offset.zero,
+      ).animate(CurvedAnimation(
+        parent: _verticalTransitionController,
+        curve: Curves.easeOutCubic,
+      ));
+      _verticalTransitionController.forward(from: 0);
+
       final optimalTimerDuration = _performanceService.getOptimalTimerDuration(
           Duration(seconds: settings.gameSpeedTimerDuration));
       _quizState = QuizState(
@@ -966,17 +999,20 @@ class _QuizScreenState extends State<QuizScreen>
                         isSmallPhone: isSmallPhone,
                       ),
                       ResponsiveSizedBox(height: isDesktop ? 24 : 20),
-                      // Question card below metrics
+                      // Question card below metrics with vertical scroll animation
                       Semantics(
                         label: 'Question: ${_quizState.question.question}',
-                        child: QuestionWidget(
-                          question: _quizState.question,
-                          selectedAnswerIndex: _quizState.selectedAnswerIndex,
-                          isAnswering: _quizState.isAnswering,
-                          isTransitioning: _quizState.isTransitioning,
-                          onAnswerSelected: _handleAnswer,
-                          language: settings.language,
-                          performanceService: _performanceService,
+                        child: SlideTransition(
+                          position: _verticalSlideAnimation,
+                          child: QuestionWidget(
+                            question: _quizState.question,
+                            selectedAnswerIndex: _quizState.selectedAnswerIndex,
+                            isAnswering: _quizState.isAnswering,
+                            isTransitioning: _quizState.isTransitioning,
+                            onAnswerSelected: _handleAnswer,
+                            language: settings.language,
+                            performanceService: _performanceService,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 16),

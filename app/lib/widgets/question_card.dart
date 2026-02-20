@@ -150,17 +150,8 @@ class _QuestionCardState extends State<QuestionCard>
     Widget content =
         _buildQuestionContent(context, colorScheme, isDesktop, isPowerActive);
 
-    return AnimatedBuilder(
-      animation: _animationController.fadeAnimation,
-      builder: (context, child) {
-        return FadeTransition(
-          opacity: _animationController.fadeAnimation,
-          child: SlideTransition(
-            position: _animationController.slideAnimation,
-            child: child,
-          ),
-        );
-      },
+    return FadeTransition(
+      opacity: _animationController.fadeAnimation,
       child: content,
     );
   }
