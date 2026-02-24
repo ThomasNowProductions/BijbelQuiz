@@ -80,4 +80,7 @@ jobs:
           packageName: app.bijbelquiz.play
           releaseFiles: app/build/app/outputs/bundle/release/app-release.aab
           track: production
+          releaseName: ${{ github.event.release.name }}
+          whatsNew: ${{ github.event.release.body }}
+          mappingFile: app/build/app/outputs/mapping/release/mapping.txt
           checkForArtifacts: true
