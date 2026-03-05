@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   mirror:
-    runs-on: blacksmith-2vcpu-ubuntu-2404
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - name: Checkout all history
@@ -29,7 +29,7 @@ jobs:
         run: |
           set -e
 
-          git remote add codeberg https://ThomasNowProductions:${{ secrets.CODEBERG_TOKEN }}@codeberg.org/ThomasNowProductions/BijbelQuiz.git
+          git remote add codeberg https://thomasboom:${{ secrets.CODEBERG_TOKEN }}@codeberg.org/thomasboom/BijbelQuiz.git
 
           git push --all codeberg || { echo "Failed to push branches"; exit 1; }
           git push --tags codeberg || { echo "Failed to push tags"; exit 1; }
